@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 2.1.0?>
+
+<ManagedProjectBuildInfo>
+<project id="pncore.cdt.managedbuild.target.gnu.exe.2047668870" name="Executable (Gnu)" projectType="cdt.managedbuild.target.gnu.exe">
+<configuration id="cdt.managedbuild.config.gnu.exe.debug.95448706" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug" artifactName="pncore" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" artifactExtension="" cleanCommand="rm -rf">
+<toolChain superClass="cdt.managedbuild.toolchain.gnu.exe.debug" id="cdt.managedbuild.toolchain.gnu.exe.debug.735541163" name="%ToolChainName.Dbg">
+<builder superClass="cdt.managedbuild.target.gnu.builder.exe.debug" id="cdt.managedbuild.target.gnu.builder.exe.debug.1614954141" name="%BuilderName.Dbg.Debug"/>
+<tool superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug" id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.246786146" name="GCC C Compiler"/>
+<tool superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug" id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.504708856" name="GCC C++ Compiler">
+<option superClass="gnu.cpp.compiler.option.include.paths" id="gnu.cpp.compiler.option.include.paths.502891765" valueType="includePath">
+<listOptionValue value="../../../../__src/pncommon/" builtIn="false"/>
+<listOptionValue value="../../../../__src/pneditorcommon/" builtIn="false"/>
+<listOptionValue value="../../../../__library/common/" builtIn="false"/>
+<listOptionValue value="/usr/include/libxml2/" builtIn="false"/>
+<listOptionValue value="/usr/include/CEGUI/" builtIn="false"/>
+</option>
+<option superClass="gnu.cpp.compiler.option.warnings.allwarn" id="gnu.cpp.compiler.option.warnings.allwarn.751451296" value="false" valueType="boolean"/>
+<option superClass="gnu.cpp.compiler.option.other.other" id="gnu.cpp.compiler.option.other.other.1227422543" value="-c -fmessage-length=0 `fox-config --cflags` -pthread" valueType="string"/>
+<option superClass="gnu.cpp.compiler.option.preprocessor.def" id="gnu.cpp.compiler.option.preprocessor.def.983818065" valueType="definedSymbols">
+<listOptionValue value="_DEBUG" builtIn="false"/>
+</option>
+</tool>
+<tool superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug" id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.559439326" name="GCC C Linker"/>
+<tool superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.750910634" name="GCC C++ Linker">
+<option superClass="gnu.cpp.link.option.paths" id="gnu.cpp.link.option.paths.812585443" valueType="stringList">
+<listOptionValue value="../../pncommon/Debug/" builtIn="false"/>
+<listOptionValue value="../../pneditorcommon/Debug/" builtIn="false"/>
+</option>
+<option superClass="gnu.cpp.link.option.libs" id="gnu.cpp.link.option.libs.578073546" valueType="libs">
+<listOptionValue value="pncommon-dbg" builtIn="false"/>
+<listOptionValue value="pneditorcommon-dbg" builtIn="false"/>
+<listOptionValue value="CEGUIBase" builtIn="false"/>
+<listOptionValue value="boost_thread" builtIn="false"/>
+<listOptionValue value="boost_filesystem" builtIn="false"/>
+</option>
+<option superClass="gnu.cpp.link.option.flags" id="gnu.cpp.link.option.flags.1831673588" value="`fox-config --libs`" valueType="string"/>
+</tool>
+<tool superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug" id="cdt.managedbuild.tool.gnu.assembler.exe.debug.1537256490" name="GCC Assembler">
+<option superClass="gnu.both.asm.option.include.paths" id="gnu.both.asm.option.include.paths.915684678"/>
+</tool>
+</toolChain>
+</configuration>
+<configuration id="cdt.managedbuild.config.gnu.exe.release.1282662" name="Release" parent="cdt.managedbuild.config.gnu.exe.release" artifactName="pncore" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" cleanCommand="rm -rf">
+<toolChain superClass="cdt.managedbuild.toolchain.gnu.exe.release" id="cdt.managedbuild.toolchain.gnu.exe.release.1257574581" name="%ToolChainName.Rel">
+<tool superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release" id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1974340792" name="GCC C Compiler"/>
+<tool superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release" id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1267470840" name="GCC C++ Compiler">
+<option superClass="gnu.cpp.compiler.option.include.paths" id="gnu.cpp.compiler.option.include.paths.969162029" valueType="includePath">
+<listOptionValue value="../../../../__src/pncommon/" builtIn="false"/>
+<listOptionValue value="/usr/include/CEGUI/" builtIn="false"/>
+<listOptionValue value="/usr/include/libxml2/" builtIn="false"/>
+<listOptionValue value="../../../../__src/pneditorcommon/" builtIn="false"/>
+<listOptionValue value="../../../../__library/common/" builtIn="false"/>
+</option>
+<option superClass="gnu.cpp.compiler.option.preprocessor.def" id="gnu.cpp.compiler.option.preprocessor.def.2016347140"/>
+<option superClass="gnu.cpp.compiler.option.other.other" id="gnu.cpp.compiler.option.other.other.1462513422" value="-c -fmessage-length=0 `fox-config --cflags` -pthread" valueType="string"/>
+</tool>
+<tool superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release" id="cdt.managedbuild.tool.gnu.c.linker.exe.release.500377245" name="GCC C Linker"/>
+<tool superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.990910901" name="GCC C++ Linker">
+<option superClass="gnu.cpp.link.option.libs" id="gnu.cpp.link.option.libs.9783303" valueType="libs">
+<listOptionValue value="boost_filesystem" builtIn="false"/>
+<listOptionValue value="pncommon" builtIn="false"/>
+<listOptionValue value="boost_thread" builtIn="false"/>
+<listOptionValue value="CEGUIBase" builtIn="false"/>
+<listOptionValue value="pneditorcommon" builtIn="false"/>
+</option>
+<option superClass="gnu.cpp.link.option.paths" id="gnu.cpp.link.option.paths.1093224746" valueType="stringList">
+<listOptionValue value="../../pncommon/Release" builtIn="false"/>
+<listOptionValue value="../../pneditorcommon/Release" builtIn="false"/>
+</option>
+<option superClass="gnu.cpp.link.option.flags" id="gnu.cpp.link.option.flags.1609805445" value="`fox-config --libs`" valueType="string"/>
+</tool>
+<tool superClass="cdt.managedbuild.tool.gnu.assembler.exe.release" id="cdt.managedbuild.tool.gnu.assembler.exe.release.1931479239" name="GCC Assembler"/>
+</toolChain>
+</configuration>
+</project>
+</ManagedProjectBuildInfo>

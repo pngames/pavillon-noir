@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<GUILayout>
+	<Window Type="WindowsLook/StaticText" Name="PNConsole">
+		<Property Name="Alpha" Value="0.500000" />
+		<Property Name="Enabled" Value="false" />
+		<Property Name="AlwaysOnTop" Value="true" />
+		<Property Name="BackColours" Value="0xFFFFFFFF" />
+		<Property Name="Position" Value="x:0.00000 y:0.60000" />
+		<Property Name="Size" Value="w:1.000000 h:1.000000" />
+		<!--<Property Name="RelativeRect" Value="l:0.000000 t:0.60000 r:1.000000 b:1.000000" />-->
+			<Window Type="TaharezLook/Listbox" Name="PNConsole/ListBox">
+				<Property Name="Font" Value="VeraSe-8" />
+				<Property Name="Alpha" Value="1.000000" />
+				<Property Name="Position" Value="x:0.00000 y:0.00000" />
+				<Property Name="Size" Value="w:1.000000 h:0.360000" />
+				<!--<Property Name="RelativeRect" Value="l:0.000000 t:0.000000 r:1.000000 b:0.920000" />-->
+				<Property Name="HorzFormatting" Value="WordWrapCentred" />
+				<Property Name="VertFormatting" Value="VertCentred" />
+				<Property Name="AlwaysOnTop" Value="True" />	
+			</Window>
+			<Window Type="TaharezLook/Editbox" Name="PNConsole/EditBox">
+				<Property Name="Font" Value="VeraSe-8" />
+				<Property Name="Alpha" Value="1.000000" />
+				<Property Name="Position" Value="x:0.00000 y:0.36000" />
+				<Property Name="Size" Value="w:1.000000 h:0.040000" />
+				<!--<Property Name="RelativeRect" Value="l:0.000000 t:0.920000 r:1.000000 b:1.000000" />-->
+				<Property Name="HorzFormatting" Value="WordWrapCentred" />
+				<Property Name="VertFormatting" Value="VertCentred" />
+				<Property Name="AlwaysOnTop" Value="True" />
+				</Window>
+		</Window>
+</GUILayout>

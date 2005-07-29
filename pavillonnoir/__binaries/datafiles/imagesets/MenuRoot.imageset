@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<Imageset Name="MenuRootImage" Imagefile="./datafiles/imagesets/MenuRoot.tga" NativeHorzRes="800" NativeVertRes="600" AutoScaled="true">
+	<Image Name="MenuRootBackground" XPos="50" YPos="50" Width="100" Height="100" />
+</Imageset>
+

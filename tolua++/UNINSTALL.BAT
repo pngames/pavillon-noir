@@ -1,0 +1,1 @@
+del "%SystemRoot%\tolua++.exe"
