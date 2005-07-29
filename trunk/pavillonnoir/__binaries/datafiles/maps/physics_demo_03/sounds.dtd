@@ -1,0 +1,14 @@
+<!--
+	http://www.pavillon-noir.org/
+	XML DTD for sounds (sounds.xml)
+-->
+
+<!ELEMENT listsounds (sound*)>
+<!ELEMENT sound EMPTY>
+
+<!ATTLIST sound id ID #REQUIRED>
+<!ATTLIST sound ref CDATA #REQUIRED>
+<!ATTLIST sound intensity CDATA #IMPLIED>
+<!ATTLIST sound x CDATA #REQUIRED>
+<!ATTLIST sound y CDATA #REQUIRED>
+<!ATTLIST sound z CDATA #REQUIRED>

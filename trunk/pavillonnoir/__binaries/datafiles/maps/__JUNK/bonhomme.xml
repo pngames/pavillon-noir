@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<!DOCTYPE listentities SYSTEM "entities-1.0.dtd">
+<listentities>
+  <entity id="1" label="plop" mdref="bonhomme.pno" static="false" x="0" y="0" z="0" xx="0" yy="0" zz="0" ww="0" />
+</listentities>

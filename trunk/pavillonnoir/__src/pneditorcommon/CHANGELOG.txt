@@ -1,0 +1,3 @@
+0.0.1 (2005/03/02)
+* [Cedric] new : add project pneditorcommon
+* [Cedric] new : add CHANGELOG in pneditorcommon

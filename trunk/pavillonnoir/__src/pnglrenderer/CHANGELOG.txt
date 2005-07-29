@@ -1,0 +1,9 @@
+0.0.1 (2004/04/01):
+* [Thomas, JM] step: vertex/clor/normal rendering finished and tested
+0.0.1 (2004/03/20):
+* [Florent] new : press f12 to show and to hide fps, f11 shows triangle count
+0.0.1 (2004/03/05):
+* [Florent] new : add PNTexture use by CEGUI and common renderer
+* [Florent] new : add PNCEGUIRenderer
+0.0.1 (2004/03/01):
+* [thomas] new : add CHANGELOG.txt

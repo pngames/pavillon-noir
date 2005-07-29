@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE model SYSTEM "model-1.0.dtd">
+<model path="domino_60x5x120.pnm">
+  <listmaterials>
+    <material path="domino_60x5x120_01 - Par defaut.pnt" />
+  </listmaterials>
+</model>

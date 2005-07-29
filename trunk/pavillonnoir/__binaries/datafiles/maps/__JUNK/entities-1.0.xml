@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE listentities SYSTEM "entities-1.0.dtd">
+<listentities>
+
+  <entity id="31" label="plop" mdref="groundLevel2.pno" static="true" x="0" y="-720" z="0" xx="0" yy="0" zz="0" ww="0" />
+
+  <entity id="1" label="plop" mdref="carre texture1.pno" static="false" x="0" y="0" z="-38" xx="0" yy="0" zz="0" ww="0" />
+  <entity id="2" label="plop" mdref="carre texture2.pno" static="false" x="0" y="0" z="0" xx="0" yy="0" zz="0" ww="0" />
+  <entity id="3" label="plop" mdref="carre texture3.pno" static="false" x="0" y="0" z="38" xx="0" yy="0" zz="0" ww="0" />
+  <entity id="5" label="plop" mdref="carre texture4.pno" static="false" x="38" y="0" z="0" xx="0" yy="0" zz="0" ww="0" />
+  <entity id="6" label="plop" mdref="carre texture5.pno" static="false" x="-38" y="0" z="0" xx="0" yy="0" zz="0" ww="0" />
+  <!--entity id="7" label="plop" mdref="carre texture.pno" static="false" x="-60" y="0" z="-120" xx="0" yy="0" zz="0" ww="0" />
+  <entity id="8" label="plop" mdref="carre texture.pno" static="false" x="0" y="0" z="-120" xx="0" yy="0" zz="0" ww="0" />
+  <entity id="9" label="plop" mdref="carre texture.pno" static="false" x="60" y="0" z="-120" xx="0" yy="0" zz="0" ww="0" /-->
+
+</listentities>

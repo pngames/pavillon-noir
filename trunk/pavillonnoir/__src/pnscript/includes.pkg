@@ -1,0 +1,33 @@
+$#include "pndefs.h"
+$#include <vector>
+$#include <list>
+$#include "PNObject.hpp"
+$#include "PN3DObject.hpp"
+$#include "PN3DSkeletonObject.hpp"
+$#include "PNPoint.hpp"
+$#include "PNLuaGameUtil.h"
+$#include "PNQuatf.hpp"
+$#include "PNVector3f.hpp"
+$#include "PN3DCamera.hpp"
+$#include "PNGameMap.hpp"
+$#include "PNLuaGameMap.hpp"
+$#include "PNVector3f.hpp"
+$#include "PNWayPoint.hpp"
+$#include "PNPathFinding.hpp"
+$using namespace PN;
+
+
+
+	// Streamable types; these are fixed size!
+	typedef char					pnchar;
+	typedef unsigned char			pnuchar;
+	typedef bool					pnbool;
+	typedef unsigned short			pnushort;
+	typedef short					pnshort;
+	typedef unsigned int			pnuint;
+	typedef unsigned int			pnwchar;
+	typedef int						pnint;
+	typedef float					pnfloat;
+	typedef double					pndouble;
+	// Time since January 1, 1970 (UTC)
+	typedef long					pntime;
