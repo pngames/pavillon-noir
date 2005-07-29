@@ -1,0 +1,97 @@
+import os
+Import('env')
+
+# OPAL headers
+headers = Split("""
+	AccelerationSensor.h
+	AccelerationSensorData.h
+	AttractorMotor.h
+	AttractorMotorData.h
+	Blueprint.h
+	BlueprintInstance.h
+	BlueprintManager.h
+	BoxShapeData.h
+	CapsuleShapeData.h
+	CollisionEventHandler.h
+	Defines.h
+	EventHandler.h
+	GearedMotor.h
+	GearedMotorData.h
+	InclineSensor.h
+	InclineSensorData.h
+	Joint.h
+	JointBreakEventHandler.h
+	JointData.h
+	Logger.h
+	Matrix44r.h
+	MeshShapeData.h
+	Motor.h
+	MotorData.h
+	opal.h
+	OpalMath.h
+	PlaneShapeData.h
+	Point3r.h
+	Portability.h
+	PostStepEventHandler.h
+	Quaternion.h
+	RaycastSensor.h
+	RaycastSensorData.h
+	Rayr.h
+	Sensor.h
+	SensorData.h
+	ServoMotor.h
+	ServoMotorData.h
+	ShapeData.h
+	Simulator.h
+	Singleton.h
+	Solid.h
+	SolidData.h
+	Space.h
+	SphereShapeData.h
+	SpringMotor.h
+	SpringMotorData.h
+	ThrusterMotor.h
+	ThrusterMotorData.h
+	Vec3r.h
+	VolumeSensor.h
+	VolumeSensorData.h
+""")
+
+# OPAL sources
+sources = Split("""
+	AccelerationSensor.cpp
+	AttractorMotor.cpp
+	Blueprint.cpp
+	BlueprintInstance.cpp
+	BlueprintManager.cpp
+	CollisionEventHandler.cpp
+	GearedMotor.cpp
+	InclineSensor.cpp
+	Joint.cpp
+	Logger.cpp
+	Motor.cpp
+	RaycastSensor.cpp
+	Sensor.cpp
+	ServoMotor.cpp
+	Simulator.cpp
+	Solid.cpp
+	SolidData.cpp
+	Space.cpp
+	SpringMotor.cpp
+	ThrusterMotor.cpp
+	VolumeSensor.cpp
+""")
+
+# Add in XML source if desired
+if env['XML']:
+	if env['debug'] == True:
+		env.Append(LIBS = ['tinyxmld'])
+	else:
+		env.Append(LIBS = ['tinyxml'])
+
+objects = env.SharedObject(sources)
+
+# Add lib installation to 'install' alias
+env.Alias('install', env.Install(os.path.join(env['prefix'], 'include/opal'), headers))
+
+Return('objects')

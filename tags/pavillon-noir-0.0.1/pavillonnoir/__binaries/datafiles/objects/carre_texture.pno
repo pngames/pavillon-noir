@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE model SYSTEM "model-1.0.dtd">
+<model path="carre_texture.pnm">
+  <listmaterials>
+    <material path="test dds_01 - Default.pnt" />
+  </listmaterials>
+</model>

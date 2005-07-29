@@ -1,0 +1,2 @@
+* ameliorer la gestion de la camera (matter celle d'edenProject)
+* point d'entree pour les materials et ajout dans les renderobject

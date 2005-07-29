@@ -1,0 +1,13 @@
+$#include "TestClass.hpp"
+$using namespace PN;
+class TestClass
+{
+public:
+	int a;
+	int b;
+    
+	TestClass();
+	~TestClass();
+        
+	char* print();   
+};

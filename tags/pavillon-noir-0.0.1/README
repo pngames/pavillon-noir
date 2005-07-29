@@ -1,0 +1,24 @@
+Pavillon Noir
+-----------------------------
+http://www.pavillon-noir.org
+
+Pavillon Noir is a 3D adventure/action game based on the role playing game
+"Pavillon Noir, la révolte" by Renaud Maroy.
+
+This project is licensed under the GNU General Public License. Graphics, sounds
+and musics resources are all licensed under the Free Art License. An exception
+is made for pnmaxplugin, it is licensed under the GNU Lesser General Public
+License because it uses 3D Studio Max(tm) SDK.
+
+Documentation is licensed under the terms of GNU Free Documentation License.
+
+Copies of GPL, Free Art License,LGPL and FDL are locally available in COPYING, FAL,
+pnmaxplugin/COPYING and pavillonnoir/__doc/COPYING files.
+
+To get Debian/Ubuntu binary packages of libraries used by the project, just add these
+lines into your sources.list :
+
+deb http://www.pavillon-noir.org/debian unstable main
+deb-src http://www.pavillon-noir.org/debian unstable main
+
+and just do an apt-get update && apt-get install pavillon-noir-libs !

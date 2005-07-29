@@ -1,0 +1,6 @@
+0.0.1 (2004/03/19):
+* [maxime] new : add class PNGLShape (cpp & hpp)
+0.0.1 (2005/03/01):
+* [thomas] modif : delete stlport support under Linux
+0.0.1 (2004/02/18):
+* [maxime] new : add CHANGELOG.txt
