@@ -47,6 +47,7 @@ namespace PN {
 	static const std::string mapsFilePath = dataFilePath + "maps/";
 	static const std::string musicFilePath = dataFilePath + "music/";
 	static const std::string soundsFilePath = dataFilePath + "sounds/";
+	static const std::string videosFilePath = dataFilePath + "videos/";
 	static const std::string defaultObjFilePath = objectFilePath + "3ddynobject.pno";
   }
 //////////////////////////////////////////////////////////////////////////
