@@ -20,7 +20,8 @@
 				<Property Name="Font" Value="VeraSe-12" />
 				<Property Name="Position" Value="x:0.100000 y:0.35" />
 				<Property Name="Size" Value="w:0.800000 h:0.100000" />
-				<Property Name="Text" Value="Credits" />
+				<!-- <Property Name="Text" Value="Credits" /> -->
+				<Property Name="Text" Value="Scene 1" />
 			</Window>
 			<Window Type="TaharezLook/Button" Name="MenuRoot/Options">
 				<Property Name="Font" Value="VeraSe-12" />

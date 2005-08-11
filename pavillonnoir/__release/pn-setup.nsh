@@ -92,6 +92,13 @@ Function .onInit
 FunctionEnd
 
 Section "Binaires" SecBin
+  SetOutPath "$INSTDIR"
+  File "..\..\AUTHORS"
+  File "..\..\CHANGELOG"
+  File "..\..\COPYING"
+  File "..\..\FAL"
+  File "..\..\README"
+  
   SetOutPath "$INSTDIR\pavillonnoir\__binaries"
   File    /x .svn /x *.log "..\__binaries\*.*"
 
