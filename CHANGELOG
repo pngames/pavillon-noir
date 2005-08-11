@@ -1,8 +1,9 @@
 Pavillon Noir, Le Jeu: 
 
-version 0.0.2 (***)
+version 0.0.2 (11/08/2005)
 	New Features:
-	* Adding first version of first scene video
+	* Adding first version of first scene video (pavillonnoir/__binaries/datafiles/videos)
+	* [Temporary] Adding button to lauch video under Windows based on mplayer
 
 version 0.0.1 (29/07/2005):
-	* First Release !
+	* First Release ! Technical demonstartion of Pavillon Noir engine (3D rendering, physics, scripting...)
