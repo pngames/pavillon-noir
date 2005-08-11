@@ -38,4 +38,3 @@ PNGUIMenuRootManager::PNGUIMenuRootManager()
 PNGUIMenuRootManager::~PNGUIMenuRootManager()
 {
 }
-

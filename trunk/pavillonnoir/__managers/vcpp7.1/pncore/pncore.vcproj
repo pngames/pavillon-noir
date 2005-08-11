@@ -196,6 +196,31 @@
 				RelativePath=".\ressources.rc">
 			</File>
 		</Filter>
+		<Filter
+			Name="CEGUI"
+			Filter="">
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\layouts\ESCMenu.layout">
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\layouts\MenuRoot.layout">
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\layouts\MenuRootbis.layout">
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\layouts\MenuRootOptions.layout">
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\layouts\PNConsole.layout">
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\layouts\PNGUIGame.layout">
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\layouts\PNInfoPanel.layout">
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\..\__src\pncore\CHANGELOG.txt">
 		</File>

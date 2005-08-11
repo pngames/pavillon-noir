@@ -53,22 +53,24 @@ namespace fs = boost::filesystem;
 
 namespace PN
 {
-	PNGUIMenuRoot::PNGUIMenuRoot()
-	{
-		//CEGUI::Imageset* windowsImages = CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/MenuRoot.imageset");
+  PNGUIMenuRoot::PNGUIMenuRoot()
+  {
+	//CEGUI::Imageset* windowsImages = CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/MenuRoot.imageset");
 
-		CEGUI::Window* sheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/MenuRoot.layout"); 
-		//	CEGUI::StaticImage* backGround = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Background");
-		//	backGround->disable();
-		CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Load")->disable();
-		CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Credits")->disable();
-		CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Options")->disable();
-		CEGUI::System::getSingleton().getGUISheet()->addChildWindow(sheet);
+	CEGUI::Window* sheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/MenuRoot.layout"); 
+	//	CEGUI::StaticImage* backGround = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Background");
+	//	backGround->disable();
+	CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Load")->disable();
+#ifndef WIN32
+	CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Credits")->disable();
+#endif
+	CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Options")->disable();
+	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(sheet);
 
-		PNConsole::addFonction("loadlevel", &PNGUIMenuRoot::loadLevel, "loadlevel [level]");
+	PNConsole::addFonction("loadlevel", &PNGUIMenuRoot::loadLevel, "loadlevel [level]");
 
-		setupEventHandlers();	
-	}
+	setupEventHandlers();	
+  }
 
   PNGUIMenuRoot::~PNGUIMenuRoot()
   {
@@ -119,7 +121,7 @@ namespace PN
 	////Changes Background music volume (specific for the demo, please delete later)
 	//////////////////////////////////////////////////////////////////////////
 	PNSoundInterface*	si = PNSoundInterface::getInstance();
-	  si->changeSoundVolume("theme", 0.3);
+	si->changeSoundVolume("theme", 0.3);
 	//////////////////////////////////////////////////////////////////////////
 
     PNGameLoadMapEventData* data = new PNGameLoadMapEventData();
@@ -169,13 +171,42 @@ namespace PN
   */
   bool PNGUIMenuRoot::handleCredits(const CEGUI::EventArgs& e)
   {
-	hideMenuRoot();
+	/*hideMenuRoot();
 
-	  if (PN3DGround::getInstance()->unserialize(fs::path(DEF::objectFilePath + "groundLevel3.pno", fs::native)) != PNEC_SUCCES)
-				return false;
+	if (PN3DGround::getInstance()->unserialize(fs::path(DEF::objectFilePath + "groundLevel3.pno", fs::native)) != PNEC_SUCCES)
+	  return false;
 
-	PNGUIGame*		guigame = new PNGUIGame();
-	
+	PNGUIGame*		guigame = new PNGUIGame();*/
+
+#ifdef WIN32
+
+	STARTUPINFO si;
+	PROCESS_INFORMATION pi;
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&pi, sizeof(pi));
+
+	std::string	command = std::string("win32\\mplayer\\mplayer.exe -really-quiet -fs ") + DEF::videosFilePath + "scene1.avi";
+	// Start the child process.
+	if (!CreateProcess(NULL, (LPSTR)command.c_str(), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
+	{
+	  printf("CreateProcess failed (%d).\n", GetLastError());
+	  return false;
+	}
+
+	if (PNSoundInterface::getInstance() != NULL)
+	  PNSoundInterface::getInstance()->changeSoundVolume("theme", 0.0);
+
+	// Wait until child process exits.
+	//WaitForSingleObject(pi.hProcess, INFINITE);
+
+	// Close process and thread handles.
+	CloseHandle(pi.hProcess);
+	CloseHandle(pi.hThread);
+
+#endif
+
 	return true;
   }
 
