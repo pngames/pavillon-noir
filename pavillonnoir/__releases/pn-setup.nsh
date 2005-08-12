@@ -115,9 +115,9 @@ Section "Binaires" SecBin
   CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
   
   ; pncore release and debug shortcuts
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Pavillon Noir.lnk" "$INSTDIR\pavillonnoir\__binaries\win32\pncore.exe"
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Pavillon Noir (Debug).lnk" "$INSTDIR\pavillonnoir\__binaries\win32\pncore-dbg.exe"
-  CreateShortCut "$DESKTOP\Pavillon Noir.lnk" "$INSTDIR\pavillonnoir\__binaries\win32\pncore.exe"
+  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\${PRODUCT_NAME}.lnk" "$INSTDIR\pavillonnoir\__binaries\win32\pncore.exe"
+  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\${PRODUCT_NAME} (Debug).lnk" "$INSTDIR\pavillonnoir\__binaries\win32\pncore-dbg.exe"
+  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\pavillonnoir\__binaries\win32\pncore.exe"
   
   ; pneditor release and debug shortcuts
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\PNEditor.lnk" "$INSTDIR\pavillonnoir\__binaries\win32\pneditor.exe"
@@ -131,17 +131,19 @@ SectionEnd
 Section "Données" SecData
   SetOutPath "$INSTDIR\pavillonnoir\__binaries"
   File /r /x .svn /x Thumbs.db /x __JUNK "..\__binaries\datafiles"
+SectionEnd
 
-; Shortcuts
-  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-  !insertmacro MUI_STARTMENU_WRITE_END
+Section "OpenAl" SecOpenAl
+  SetOutPath "$INSTDIR\pavillonnoir\__library\win32\install"
+  File "..\__library\win32\install\OpenALwEAX.exe"
+  ExecWait '"$INSTDIR\pavillonnoir\__library\win32\install\OpenALwEAX.exe"'
 SectionEnd
 
 Section -AdditionalIcons
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
   WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
   CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
+  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Site Internet ${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Désinstallation.lnk" "$INSTDIR\uninst.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
