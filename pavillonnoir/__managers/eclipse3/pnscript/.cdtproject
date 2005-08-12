@@ -8,6 +8,7 @@
 <extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
 <extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
 <extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="org.eclipse.cdt.core.domsourceindexer" point="org.eclipse.cdt.core.CIndexer"/>
 <data>
 <item id="cdt_indexer">
 <indexEnabled indexValue="true"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?fileVersion 3.0.0?>
+<?fileVersion 2.1.0?>
 
 <ManagedProjectBuildInfo>
 <project id="pneditorcommon.cdt.managedbuild.target.gnu.so.1368331172" name="Shared Library (Gnu)" projectType="cdt.managedbuild.target.gnu.so">
@@ -19,7 +19,7 @@
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.linker.so.debug.2053286812" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.debug"/>
 <tool command="g++ `fox-config --libs`" id="cdt.managedbuild.tool.gnu.cpp.linker.so.debug.1398655649" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.debug">
-<option id="gnu.cpp.link.option.libs.746758527" superClass="gnu.cpp.link.option.libs"/>
+<option id="gnu.cpp.link.option.libs.746758527" superClass="gnu.cpp.link.option.libs" valueType="libs"/>
 <option id="gnu.cpp.link.option.paths.609281626" superClass="gnu.cpp.link.option.paths"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.debug.2090434733" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.debug"/>
