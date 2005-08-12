@@ -183,16 +183,16 @@ int	  main(int argc, char* argv[])
 	  std::string zicPath = DEF::musicFilePath + "Honneur_PavillonNoir.ogg";
 	  std::string sound = DEF::soundsFilePath + "arrive.ogg";
 	  std::string sound2 = DEF::soundsFilePath + "redalert.ogg";
-	 
+
 	  si->createNewSound("arrive", sound.c_str(), FALSE, 0.0, 0.0, 0.0);
 	  si->createNewSound("redalert", sound2.c_str(), FALSE, 0.0, 0.0, 0.0);
-	
+
 	  if (si->createNewSound("theme", zicPath.c_str(), TRUE, 0.0, 0.0, 0.0) != 0)
 	  {
 		si->changeSoundVolume("theme", 0.4);	
 		si->playSound("theme");
 	  }
-}
+	}
 
 	//////////////////////////////////////////////////////////////////////////
 
