@@ -83,6 +83,8 @@ pnint		PNPluginManager::addPlugin(const fs::path& file)
 	return PNEC_PLUGIN_INVALID;
   }
 
+  pnerror(PN_LOGLVL_INFO, "%s loading succed.", file.native_file_string().c_str());
+
   push_front(plugin);
 
   return PNEC_SUCCES;

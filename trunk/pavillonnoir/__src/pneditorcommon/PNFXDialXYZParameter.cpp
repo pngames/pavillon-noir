@@ -129,7 +129,7 @@ namespace PN {
 	  default:
 		break;
 	  }
-	  _oldValue = pos;
+	  _oldValue = (pnint)pos;
 	  _field->setText(str);
 	  _param->getConfigurableObject()->update(_param);
 	}
