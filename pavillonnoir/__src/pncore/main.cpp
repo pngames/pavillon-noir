@@ -137,7 +137,7 @@ int	  main(int argc, char* argv[])
   loadPlugins->addPlugin("plugins/libpnopal-dbg.so");
   loadPlugins->addPlugin("plugins/libpnscript-dbg.so");
   loadPlugins->addPlugin("plugins/libpnsound-dbg.so");*/
-  loadPlugins->addPlugin("../__managers/eclipse3/pnglrenderer/Debug/libpnglrenderer.so");
+  loadPlugins->addPlugin("../__managers/eclipse3/pnglrenderer/Debug/libpnglrenderer-dbg.so");
   loadPlugins->addPlugin("../__managers/eclipse3/pnimporter/Debug/libpnimporter-dbg.so");
   loadPlugins->addPlugin("../__managers/eclipse3/pnopal/Debug/libpnopal-dbg.so");
   loadPlugins->addPlugin("../__managers/eclipse3/pnscript/Debug/libpnscript-dbg.so");
@@ -145,8 +145,8 @@ int	  main(int argc, char* argv[])
 # else
   loadPlugins->addPlugin("../__managers/eclipse3/pnglrenderer/Release/libpnglrenderer.so");
   loadPlugins->addPlugin("../__managers/eclipse3/pnimporter/Release/libpnimporter.so");
-  loadPlugins->addPlugin("../__managers/eclipse3/pnopal/Release/libpnopal-dbg.so");
-  loadPlugins->addPlugin("../__managers/eclipse3/pnscript/Release/libpnscript-dbg.so");
+  loadPlugins->addPlugin("../__managers/eclipse3/pnopal/Release/libpnopal.so");
+  loadPlugins->addPlugin("../__managers/eclipse3/pnscript/Release/libpnscript.so");
   loadPlugins->addPlugin("../__managers/eclipse3/pnsound/Release/libpnsound.so");
 # endif
 #endif

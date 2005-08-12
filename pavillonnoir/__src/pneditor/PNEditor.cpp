@@ -1180,7 +1180,7 @@ int main(int argc, char *argv[])
 # endif
 #else
 # ifdef DEBUG
-  plugMan->addPlugin("../__managers/eclipse3/pnglrenderer/Debug/libpnglrenderer.so");
+  plugMan->addPlugin("../__managers/eclipse3/pnglrenderer/Debug/libpnglrenderer-dbg.so");
   plugMan->addPlugin("../__managers/eclipse3/pnimporter/Debug/libpnimporter-dbg.so");
 # else
   plugMan->addPlugin("../__managers/eclipse3/pnglrenderer/Release/libpnglrenderer.so");
