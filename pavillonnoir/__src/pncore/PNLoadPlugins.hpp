@@ -54,6 +54,7 @@ namespace  PN{
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
+    void  addDefaultPlugin(const std::string& plugName);
 	void  addPlugin(const boost::filesystem::path& file);
 	void  addDirectory(const boost::filesystem::path& dir);
 	void  launchPlugins();

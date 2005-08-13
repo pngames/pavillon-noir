@@ -3,8 +3,9 @@
 
 <ManagedProjectBuildInfo>
 <project id="pneditor.cdt.managedbuild.target.gnu.exe.1341063876" name="Executable (Gnu)" projectType="cdt.managedbuild.target.gnu.exe">
-<configuration artifactName="pneditor" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.exe.debug.876541377" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug">
+<configuration artifactExtension="" artifactName="pneditor-dbg" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.exe.debug.876541377" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug" postannouncebuildStep="Copy to binaries directory" postbuildStep="mkdir ../../../../__binaries/linux ; cp pneditor-dbg ../../../../__binaries/linux/pneditor-dbg" preannouncebuildStep="" prebuildStep="">
 <toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.480904316" name="%ToolChainName.Dbg" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
+<builder id="cdt.managedbuild.target.gnu.builder.exe.debug.534100962" name="Gnu Make.Debug" superClass="cdt.managedbuild.target.gnu.builder.exe.debug"/>
 <tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.365324964" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.2081676702" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug">
 <option id="gnu.cpp.compiler.option.preprocessor.def.1019193902" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
@@ -37,9 +38,10 @@
 </option>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.exe.debug.2096328451" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug"/>
+<macros/>
 </toolChain>
 </configuration>
-<configuration artifactName="pneditor" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.exe.release.1805820256" name="Release" parent="cdt.managedbuild.config.gnu.exe.release">
+<configuration artifactName="pneditor" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.exe.release.1805820256" name="Release" parent="cdt.managedbuild.config.gnu.exe.release" postannouncebuildStep="Copy to binaries directory" postbuildStep="mkdir ../../../../__binaries/linux ; cp pneditor ../../../../__binaries/linux/pneditor" preannouncebuildStep="" prebuildStep="">
 <toolChain id="cdt.managedbuild.toolchain.gnu.exe.release.592522780" name="%ToolChainName.Rel" superClass="cdt.managedbuild.toolchain.gnu.exe.release">
 <tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.627008010" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1224410891" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release">
@@ -71,6 +73,7 @@
 </option>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.exe.release.1646345470" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.release"/>
+<macros/>
 </toolChain>
 </configuration>
 </project>

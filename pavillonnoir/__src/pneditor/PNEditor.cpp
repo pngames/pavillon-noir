@@ -1162,31 +1162,15 @@ void PNEditor::makeViewerNonCurrent()
 int main(int argc, char *argv[])
 {
   PN::PNPluginManager*	plugMan = PN::PNPluginManager::getInstance();
-#ifdef WIN32
+
   chdir("../");
-#else
-  chdir("../../../__binaries/");
-#endif
+
   char buf[512] = "";
   fxmessage("now in : %s\n", getcwd(buf, 511));
 
-#ifdef WIN32
-# ifdef DEBUG
-  plugMan->addPlugin("win32/plugins/Debug/pnimporter-dbg.pnp");
-  plugMan->addPlugin("win32/plugins/Debug/pnglrenderer-dbg.pnp");
-# else
-  plugMan->addPlugin("win32/plugins/pnimporter.pnp");
-  plugMan->addPlugin("win32/plugins/pnglrenderer.pnp");
-# endif
-#else
-# ifdef DEBUG
-  plugMan->addPlugin("../__managers/eclipse3/pnglrenderer/Debug/libpnglrenderer-dbg.so");
-  plugMan->addPlugin("../__managers/eclipse3/pnimporter/Debug/libpnimporter-dbg.so");
-# else
-  plugMan->addPlugin("../__managers/eclipse3/pnglrenderer/Release/libpnglrenderer.so");
-  plugMan->addPlugin("../__managers/eclipse3/pnimporter/Release/libpnimporter.so");
-# endif
-#endif
+  plugMan->addDefaultPlugin("pnglrenderer");
+  plugMan->addDefaultPlugin("pnimporter");
+  plugMan->addDefaultPlugin("pnexporter");
 
   for (PN::PNPluginManager::iterator i = plugMan->begin(); i != plugMan->end(); i++)
   {

@@ -39,4 +39,32 @@
 #include "PNPlugin.hpp"
 #include "PNPluginManager.hpp"
 
+#include <string>
+
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+  namespace DEF
+  {
+    static const std::string defaultWin32RPluginFilePath = "win32/plugins/";
+    static const std::string defaultWin32DPluginFilePath = defaultWin32RPluginFilePath + "Debug/";
+    static const std::string defaultLinuxRPluginFilePath = "linux/plugins/";    
+    static const std::string defaultLinuxDPluginFilePath = defaultLinuxRPluginFilePath + "Debug/";
+    
+#ifdef WIN32
+# ifdef DEBUG
+#   define defaultPluginFilePath defaulWin32DtPluginFilePath
+# else
+#   define defaultPluginFilePath defaulWin32RtPluginFilePath
+# endif
+#else
+# ifdef DEBUG
+#   define defaultPluginFilePath defaultLinuxDPluginFilePath
+# else
+#   define defaultPluginFilePath defaultLinuxRPluginFilePath
+# endif
+#endif
+  }
+//////////////////////////////////////////////////////////////////////////
+}
+
 #endif /*_PNPLUGINS_H_*/
