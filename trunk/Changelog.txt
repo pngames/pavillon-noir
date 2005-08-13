@@ -4,6 +4,13 @@ version 0.0.2 (11/08/2005)
 	New Features:
 	* Adding first version of first scene video (pavillonnoir/__binaries/datafiles/videos)
 	* [Temporary] Adding button to lauch video under Windows based on mplayer
+	* Add OpenAl installer support into win32 installer
+
+	Bug Fixes:
+	* Fix release shortcut problem in win32 installer : it was override by web site shortcut
+
+	SRC:
+	* Update to CDT 3.0
 
 version 0.0.1 (29/07/2005):
 	* First Release ! Technical demonstartion of Pavillon Noir engine (3D rendering, physics, scripting...)
