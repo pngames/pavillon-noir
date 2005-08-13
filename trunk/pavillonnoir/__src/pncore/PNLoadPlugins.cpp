@@ -61,6 +61,20 @@ namespace PN {
 
   /*!
   \brief
+   Add a single one plugin file from plugins default directory to load
+  \param plugName
+   Plugin name
+  */
+  void  PNLoadPlugins::addDefaultPlugin(const std::string& plugName)
+  {
+  	pnuint error = _plist->addDefaultPlugin(plugName);
+
+	if (error != PNEC_SUCCES)
+	  pnerror(PN_LOGLVL_ERROR, "%s: %s", plugName.c_str(), pnGetErrorString(error));
+  }
+
+  /*!
+  \brief
    Add a single one plugin file to load
   \param file
    Boost path to the plugin file

@@ -30,6 +30,7 @@
 #ifndef _PNPLUGINMANAGER_HPP_
 # define _PNPLUGINMANAGER_HPP_
 
+#include <string>
 #include <list>
 #include <boost/filesystem/path.hpp>
 
@@ -50,6 +51,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
 public:
+  pnint						addDefaultPlugin(const std::string& plugName);
   pnint						addPlugin(const boost::filesystem::path& file);
   pnint						addDirectory(const boost::filesystem::path& dir, pnbool recursive);
 };

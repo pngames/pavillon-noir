@@ -65,6 +65,15 @@ PNPluginManager::~PNPluginManager()
 
 //////////////////////////////////////////////////////////////////////////
 
+pnint		PNPluginManager::addDefaultPlugin(const std::string& plugName)
+{
+#ifdef DEBUG
+  return addPlugin(DEF::defaultPluginFilePath + plugName + "-dbg.pnp");
+#else
+  return addPlugin(DEF::defaultPluginFilePath + plugName + "pnp");
+#endif
+}
+
 pnint		PNPluginManager::addPlugin(const fs::path& file)
 {
   pnerror(PN_LOGLVL_INFO, "Loading plugin: %s ...", file.native_file_string().c_str());

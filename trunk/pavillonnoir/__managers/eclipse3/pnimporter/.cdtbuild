@@ -3,7 +3,7 @@
 
 <ManagedProjectBuildInfo>
 <project id="pnimporter.cdt.managedbuild.target.gnu.so.566207456" name="Shared Library (Gnu)" projectType="cdt.managedbuild.target.gnu.so">
-<configuration artifactExtension="so" artifactName="pnimporter-dbg" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.so.debug.2036014526" name="Debug" parent="cdt.managedbuild.config.gnu.so.debug">
+<configuration artifactExtension="so" artifactName="pnimporter-dbg" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.so.debug.2036014526" name="Debug" parent="cdt.managedbuild.config.gnu.so.debug" postannouncebuildStep="Copy to plugin directory" postbuildStep="mkdir ../../../../__binaries/linux ../../../../__binaries/linux/plugins ../../../../__binaries/linux/plugins/debug ; cp libpnimporter-dbg.so ../../../../__binaries/linux/plugins/Debug/pnimporter-dbg.pnp" preannouncebuildStep="" prebuildStep="">
 <toolChain id="cdt.managedbuild.toolchain.gnu.so.debug.153664250" name="%ToolChainName.Dbg" superClass="cdt.managedbuild.toolchain.gnu.so.debug">
 <builder id="cdt.managedbuild.target.gnu.builder.so.debug.754625409" name="%BuilderName.Dbg.Debug" superClass="cdt.managedbuild.target.gnu.builder.so.debug"/>
 <tool id="cdt.managedbuild.tool.gnu.c.compiler.so.debug.1926718541" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.so.debug"/>
@@ -24,9 +24,10 @@
 </option>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.debug.1648013005" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.debug"/>
+<macros/>
 </toolChain>
 </configuration>
-<configuration artifactExtension="so" artifactName="pnimporter" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.so.release.1298471348" name="Release" parent="cdt.managedbuild.config.gnu.so.release">
+<configuration artifactExtension="so" artifactName="pnimporter" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.so.release.1298471348" name="Release" parent="cdt.managedbuild.config.gnu.so.release" postannouncebuildStep="Copy to plugin directory" postbuildStep="mkdir ../../../../__binaries/linux ../../../../__binaries/linux/plugins ; cp libpnimporter.so ../../../../__binaries/linux/plugins/pnimporter.pnp" preannouncebuildStep="" prebuildStep="">
 <toolChain id="cdt.managedbuild.toolchain.gnu.so.release.1868150018" name="%ToolChainName.Rel" superClass="cdt.managedbuild.toolchain.gnu.so.release">
 <tool id="cdt.managedbuild.tool.gnu.c.compiler.so.release.1019735883" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.so.release"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.so.release.1918717763" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.so.release">
@@ -43,6 +44,7 @@
 </option>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.release.2056303343" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.release"/>
+<macros/>
 </toolChain>
 </configuration>
 </project>
