@@ -32,6 +32,7 @@
 
 !include "pn-setup.nsh"
 
+SectionGroup /e "Développement"
 Section /o "Sources" SecSrc
   SetOutPath "$INSTDIR\pavillonnoir"
   File /r /x .svn "..\__src"
@@ -40,10 +41,6 @@ Section /o "Sources" SecSrc
   File /r /x .svn /x *.exe /x *.rar "..\__releases"
   SetOutPath "$INSTDIR"
   File /r /x .svn /x *.scb /x *.suo /x Debug /x Release "..\..\pnmaxplugin"
-
-; Shortcuts
-  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-  !insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
 
 Section /o "Dépendances" SecDep
@@ -51,16 +48,13 @@ Section /o "Dépendances" SecDep
   File /r /x .svn "..\__library\*.*"
   SetOutPath "$INSTDIR\tolua++"
   File /r /x .svn "..\..\tolua++\*.*"
-
-; Shortcuts
-  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-  !insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
+SectionGroupEnd
 
 ; Section descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SecBin} "Binaires de Pavillon Noir."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecData} "Données supleémentaires, notament les différentes cartes et ressources 3D..."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecData} "Données suplémentaires, notament les différentes cartes et ressources 3D..."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecSrc} "Source de Pavillon Noir."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecDep} "Dépendances de compilation."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END

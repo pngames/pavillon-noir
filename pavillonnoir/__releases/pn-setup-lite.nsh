@@ -35,5 +35,5 @@
 ; Section descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SecBin} "Binaires de Pavillon Noir."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecData} "Données supleémentaires, notament les différentes cartes et ressources 3D..."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecData} "Données suplémentaires, notament les différentes cartes et ressources 3D..."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END

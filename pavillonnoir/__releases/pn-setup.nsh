@@ -91,10 +91,11 @@ Function .onInit
   !insertmacro MUI_LANGDLL_DISPLAY
 FunctionEnd
 
-Section "Binaires" SecBin
+SectionGroup /e "Jeu"
+Section "!Binaires" SecBin
   SetOutPath "$INSTDIR"
   File "..\..\AUTHORS"
-  File "..\..\CHANGELOG"
+  File "..\..\Changelog.txt"
   File "..\..\COPYING"
   File "..\..\FAL"
   File "..\..\README"
@@ -132,8 +133,9 @@ Section "Données" SecData
   SetOutPath "$INSTDIR\pavillonnoir\__binaries"
   File /r /x .svn /x Thumbs.db /x __JUNK "..\__binaries\datafiles"
 SectionEnd
+SectionGroupEnd
 
-Section "OpenAl" SecOpenAl
+Section -SecOpenAl
   SetOutPath "$INSTDIR\pavillonnoir\__library\win32\install"
   File "..\__library\win32\install\OpenALwEAX.exe"
   ExecWait '"$INSTDIR\pavillonnoir\__library\win32\install\OpenALwEAX.exe"'
