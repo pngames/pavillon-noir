@@ -160,12 +160,6 @@
 				RelativePath="..\..\..\__src\pnglrenderer\myCEGUI.h">
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pnglrenderer\mygl.h">
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pnglrenderer\myglu.h">
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pnglrenderer\PNGLMaterial.hpp">
 			</File>
 			<File

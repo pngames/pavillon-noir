@@ -32,12 +32,6 @@
 
 #include <SDL/SDL.h>
 
-#include <renderers/OpenGLGUIRenderer/openglrenderer.h>
-
-#include <IL/il.h>
-#include <IL/ilu.h>
-#include <IL/ilut.h>
-
 #include "pndefs.h"
 #include "pnevent.h"
 
@@ -62,6 +56,8 @@
 #include "PN3DCamera.hpp"
 
 //#include "PNGLRenderUpdateEventData.hpp"
+
+#include <renderers/OpenGLGUIRenderer/openglrenderer.h>
 
 using namespace PN;
 using namespace std;
@@ -133,6 +129,10 @@ PNGLRenderer::disable(pnrenderflag flag)
 }
 
 //////////////////////////////////////////////////////////////////////////
+
+#include <IL/il.h>
+#include <IL/ilu.h>
+#include <IL/ilut.h>
 
 void
 PNGLRenderer::init()
@@ -690,6 +690,7 @@ PNGLRenderer::renderLink(const PNPoint& p1, const PNPoint& p2, const pnfloat* co
 }
 
 //////////////////////////////////////////////////////////////////////////
+// GUI
 
 guiType
 PNGLRenderer::getGUIType()

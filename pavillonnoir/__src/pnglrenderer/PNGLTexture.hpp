@@ -30,7 +30,7 @@
 #ifndef _PNGLTEXTURE_HPP_
 # define _PNGLTEXTURE_HPP_
 
-#include "mygl.h"
+#include <GL/glew.h>
 
 #include "PNGLRenderer.hpp"
 
