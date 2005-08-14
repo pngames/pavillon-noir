@@ -17,3 +17,4 @@ name		| current version
 * lua		: 
 	- Installeur dans /__dev/tolua++
 * tolua++	: 1.0.4
+* glew		: 1.3.3
