@@ -30,7 +30,6 @@
 #include <iostream>
 
 #include "pndefs.h"
-#include "mygl.h"
 
 #include "PNGLRenderer.hpp"
 #include "PNGLRendererObject.hpp"

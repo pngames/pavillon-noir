@@ -29,15 +29,13 @@
 
 #include <boost/filesystem/operations.hpp>
 #include <iostream>
-#include <GL/glew.h>
+
+#include "pndefs.h"
+#include "PNGLTexture.hpp"
 
 #include <IL/il.h>
 #include <IL/ilu.h>
 #include <IL/ilut.h>
-
-#include "pndefs.h"
-
-#include "PNGLTexture.hpp"
 
 namespace fs = boost::filesystem;
 
