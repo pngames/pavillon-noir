@@ -31,9 +31,10 @@
 
 #include "pndefs.h"
 
-#include "PNGLMaterial.hpp"
 #include "PNGLRenderer.hpp"
 #include "PNGLTexture.hpp"
+
+#include "PNGLMaterial.hpp"
 
 using namespace PN;
 namespace fs = boost::filesystem;

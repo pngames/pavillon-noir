@@ -30,7 +30,7 @@
 #ifndef _PNGLRENDERERCAMERA_HPP_
 # define _PNGLRENDERERCAMERA_HPP_
 
-#include "mygl.h"
+#include <GL/glew.h>
 
 #include "PN3DCamera.hpp"
 

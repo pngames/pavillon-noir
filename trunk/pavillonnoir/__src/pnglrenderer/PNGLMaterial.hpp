@@ -31,9 +31,9 @@
 # define _PNGLMATERIAL_HPP_
 
 #include <map>
+#include <GL/glew.h>
 
 #include "pndefs.h"
-#include "mygl.h"
 
 #include "PNGLRenderer.hpp"
 #include "PNRenderMaterial.hpp"

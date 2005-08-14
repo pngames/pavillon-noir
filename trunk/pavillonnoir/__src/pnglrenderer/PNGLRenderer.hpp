@@ -32,9 +32,7 @@
 
 #include <list>
 #include <map>
-
-#include "mygl.h"
-#include "myglu.h"
+#include <GL/glew.h>
 
 #include "pnrender.h"
 

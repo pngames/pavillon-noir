@@ -27,8 +27,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#include "mygl.h"
-#include "myglu.h"
+#include <GL/glew.h>
 
 #include "pndefs.h"
 #include "pnmath.h"
