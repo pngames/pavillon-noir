@@ -22,6 +22,8 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="../../../__src/pneditorcommon;../../../__src/pncommon;../../../__library/win32/include/fox;../../../__library/win32/include/stlport;../../../__library/win32/include/;../../../__library/common/"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;HAVE_GL_H;HAVE_GLU_H;FOXDLL"
+				MinimalRebuild="TRUE"
+				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
 				PrecompiledHeaderFile=""
