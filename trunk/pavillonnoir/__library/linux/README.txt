@@ -3,14 +3,14 @@ Third party library:
 name		| comment
 
 * libxml2	: -
-* iconv	: -
-* zlib	: -
+* iconv		: -
+* zlib		: -
 * Fox		: 1.4.*
 	- debian package in "debian" directory for 1.4.10
 * SDL		: -
-* CEGUI	:
+* CEGUI		:
 	- repository debian: deb http://people.debian.org/~fog/ogre/ unstable main
-* boost	: -
+* boost		: -
 * xerces	: -
 * ode		: 
 * lua		: 
@@ -18,4 +18,4 @@ name		| comment
 * openal	: -
 * opengl	: -
 * tinyxml	: 2.3.4 (debian package in "debian" directory)
-* glew	: -
+* glew		: -
