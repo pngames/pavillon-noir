@@ -52,9 +52,9 @@ namespace PN {
     
 #ifdef WIN32
 # ifdef DEBUG
-#   define defaultPluginFilePath defaulWin32DtPluginFilePath
+#   define defaultPluginFilePath defaultWin32DPluginFilePath
 # else
-#   define defaultPluginFilePath defaulWin32RtPluginFilePath
+#   define defaultPluginFilePath defaultWin32RPluginFilePath
 # endif
 #else
 # ifdef DEBUG
