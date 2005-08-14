@@ -36,7 +36,7 @@
 
 static const std::string	PNO_XML_HEADER				=
 "<?xml version=\"1.0\"?>\n"
-"<!DOCTYPE model SYSTEM \"model-1.0.dtd\">\n";
+"<!DOCTYPE model SYSTEM \"object-1.0.dtd\">\n";
 
 static const std::string	PNO_XMLNODE_ROOT			= "model";
 static const std::string	PNO_XMLNODE_LISTMATERIALS	= "listmaterials";
