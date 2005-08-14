@@ -70,7 +70,7 @@ pnint		PNPluginManager::addDefaultPlugin(const std::string& plugName)
 #ifdef DEBUG
   return addPlugin(DEF::defaultPluginFilePath + plugName + "-dbg.pnp");
 #else
-  return addPlugin(DEF::defaultPluginFilePath + plugName + "pnp");
+  return addPlugin(DEF::defaultPluginFilePath + plugName + ".pnp");
 #endif
 }
 
