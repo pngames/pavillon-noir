@@ -30,64 +30,66 @@
 #ifndef _PN3DGROUND_HPP_
 # define _PN3DGROUND_HPP_
 
-#include  <list>
+#include <list>
+#include <boost/filesystem/path.hpp>
 
 #include "PN3DObject.hpp"
-#include "PNTriangle.hpp"
-#include "PNBoundingSphere.hpp"
 #include "PNWorldCollision.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class	PN3DCamera;
+class PN3DCamera;
+class PNTriangle;
+class PNFace;
+class PNRendererObject;
+class PNBoundingSphere;
 
 typedef 	 std::list<PN3DObject *> LIST_3DOBJ;
 
 class PNAPI				PN3DGround : PN3DObject
 {
-	private:
-	PN3DGround			();
-	PN3DGround			(const boost::filesystem::path& file);
-	~PN3DGround			();
+private:
+  PN3DGround();
+  PN3DGround(const boost::filesystem::path& file);
+  ~PN3DGround();
 
-	public:
-	static PN3DGround*	getInstance();	
+public:
+  static PN3DGround*	getInstance();	
 
-	public:
-  pnint	unserialize			(const boost::filesystem::path& file);
-  pnint	serialize				(const boost::filesystem::path& file);
+public:
+  pnint					unserialize(const boost::filesystem::path& file);
+  pnint					serialize(const boost::filesystem::path& file);
 
-	public:
-	virtual bool	collisionProcess				(const PNBoundingSphere & bSphere, const PNVector3f & translation, PNVector3f & trResult);
-	virtual void  handleStaticCollision		(PN3DObject & object, pnfloat rX, pnfloat rY, pnfloat rZ);
+public:
+  virtual bool			collisionProcess(const PNBoundingSphere& bSphere, const PNVector3f& translation, PNVector3f& trResult);
+  virtual void			handleStaticCollision(PN3DObject& object, pnfloat rX, pnfloat rY, pnfloat rZ);
 
-	public:
-  virtual void		setConfig();
+public:
+  virtual void			setConfig();
 
-	public:
-  virtual void	  partialRender	(void);
-  virtual void	  totalRender		(void);
-  virtual void	  find3DObjects	(PN3DCamera& camera);
-	virtual void		render				(PN3DCamera & camera);
+public:
+  virtual void			partialRender(void);
+  virtual void			totalRender(void);
+  virtual void			find3DObjects(PN3DCamera& camera);
+  virtual void			render(PN3DCamera& camera);
 
-	private:
-	bool	_convertIntoGroundRepresentation (PN3DObject & groundModel);
-	void	_dump	();
+private:
+  bool					_convertIntoGroundRepresentation(PN3DObject& groundModel);
+  void					_dump();
 
-	private:
-	pnuint								_nbFace;
-	pnuint								_nbVertex;
-	PNFace *							_faces;
-	PNRendererObject *		_renderer;
-	PNTriangle *					_triangles;
-	pnuint								_nbTriangle;
+private:
+  pnuint				_nbFace;
+  pnuint				_nbVertex;
+  PNFace*				_faces;
+  PNRendererObject*		_renderer;
+  PNTriangle*			_triangles;
+  pnuint				_nbTriangle;
 
-	PNWorldCollision			_worldCollision;
-
+  PNWorldCollision		_worldCollision;
 };
 
 //////////////////////////////////////////////////////////////////////////
-} /* END namespace PN */
+}; /* END namespace PN */
 
 #endif /*_PN3DGROUND_HPP_*/

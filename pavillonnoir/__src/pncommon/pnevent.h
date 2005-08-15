@@ -144,6 +144,17 @@ typedef enum
   PN_EVENT_SCR_ENDED,			/// script ended
 
   //////////////////////////////////////////////////////////////////////////
+  // VIDEO
+
+  PN_EVENT_VIDEO_CMD,			/// control video
+  PN_EVENT_VIDEO_START,			/// start playing video
+  PN_EVENT_VIDEO_STARTED,		/// video starting playing
+  PN_EVENT_VIDEO_END,			/// end playing video
+  PN_EVENT_VIDEO_ENDED,			/// video ending playing
+  PN_EVENT_VIDEO_RESTART,		/// restart video
+  PN_EVENT_VIDEO_RESTARTED,		/// video restarting
+
+  //////////////////////////////////////////////////////////////////////////
 
   // ...
 

@@ -81,13 +81,13 @@ struct				pnevent
 *
 * The callback system takes "delegates":
 *
-* void staticFunction(const std::string&, std::istream&)
+* void staticFunction(pnEventType, PNObject*, PNEventData*)
 * {}
 * 
 * class MyClass
 * {
-*   static void staticMemberFunction(const std::string&, std::istream&);
-*   void memberFunction(const std::string&, std::istream&);
+*   static void staticMemberFunction(pnEventType, PNObject*, PNEventData*);
+*   void memberFunction(pnEventType, PNObject*, PNEventData*);
 * }
 *
 * void test()
@@ -96,14 +96,14 @@ struct				pnevent
 *
 *  addCallback(type, staticFunction);
 *  addCallback(type, MyClass::staticMemberFunction);
-*  addCallback(type, PNConsole::Callback(&toto, &MyClass::memberFunction));
+*  addCallback(type, EventCallback(&toto, &MyClass::memberFunction));
 *
 *  // same thing for deleteCallback
 * }
 */
-class PNAPI				PNEventManager : public PNObject
+class PNAPI						PNEventManager : public PNObject
 {
-  friend void initEventManager();
+  friend void					initEventManager();
 private:
   /// Unique instance of events manager
   static PNEventManager*		_instance;

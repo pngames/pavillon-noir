@@ -34,7 +34,9 @@
 
 #include "pndefs.h"
 #include "pnevent.h"
+#include "pnresources.h"
 
+#include "PNVideoEventData.hpp"
 #include "PNGLRenderer.hpp"
 
 #include "PNGLRendererObject.hpp"
@@ -88,6 +90,10 @@ PNGLRenderer::PNGLRenderer()
 
   _converter[PN_T2F_N3F_V3F] = GL_T2F_N3F_V3F;
   _converter[PN_T2F_C4F_N3F_V3F] = GL_T2F_C4F_N3F_V3F;
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  PNEventManager::getInstance()->addCallback(PN_EVENT_VIDEO_START, EventCallback(this, &PNGLRenderer::_onPlayVideo));
 }
 
 PNGLRenderer::~PNGLRenderer()
@@ -98,6 +104,38 @@ PNGLRenderer::~PNGLRenderer()
   delete CEGUI::System::getSingletonPtr();
 }
 
+//////////////////////////////////////////////////////////////////////////
+
+void		PNGLRenderer::_onPlayVideo(pnEventType type, PNObject* source, PNEventData* ed)
+{
+  PNVideoEventData*	videoEventData = (PNVideoEventData*)ed;
+
+#ifdef WIN32
+
+  STARTUPINFO si;
+  PROCESS_INFORMATION pi;
+
+  ZeroMemory(&si, sizeof(si));
+  si.cb = sizeof(si);
+  ZeroMemory(&pi, sizeof(pi));
+
+  std::string	command = std::string("win32\\mplayer\\mplayer.exe -really-quiet -fs ") + videoEventData->path;
+  // Start the child process.
+  if (!CreateProcess(NULL, (LPSTR)command.c_str(), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
+  {
+	printf("CreateProcess failed (%d).\n", GetLastError());
+	return ;
+  }
+
+  // Wait until child process exits.
+  //WaitForSingleObject(pi.hProcess, INFINITE);
+
+  // Close process and thread handles.
+  CloseHandle(pi.hProcess);
+  CloseHandle(pi.hThread);
+
+#endif
+}
 
 //////////////////////////////////////////////////////////////////////////
 
