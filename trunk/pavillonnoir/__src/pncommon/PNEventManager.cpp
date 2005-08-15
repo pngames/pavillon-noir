@@ -83,8 +83,8 @@ PNEventManager::PNEventManager()
   _eventEnums["PN_EVENT_INFO_PANEL"] = PN_EVENT_INFO_PANEL;
   _eventNames[PN_EVENT_INFO_PANEL] = "PN_EVENT_INFO_PANEL";
 
-	//////////////////////////////////////////////////////////////////////////
-	// MAPS LOADING
+  //////////////////////////////////////////////////////////////////////////
+  // MAPS LOADING
 
   _eventEnums["PN_EVENT_ML_START"] = PN_EVENT_ML_START;
   _eventNames[PN_EVENT_ML_START] = "PN_EVENT_ML_START";
@@ -109,8 +109,8 @@ PNEventManager::PNEventManager()
   _eventEnums["PN_EVENT_M_END"] = PN_EVENT_M_END;
   _eventNames[PN_EVENT_M_END] = "PN_EVENT_M_END";
 
-	//////////////////////////////////////////////////////////////////////////
-	// OBJECTS DISPLACEMENT
+  //////////////////////////////////////////////////////////////////////////
+  // OBJECTS DISPLACEMENT
 
   _eventEnums["PN_EVENT_OM_START"] = PN_EVENT_OM_START;
   _eventNames[PN_EVENT_OM_START] = "PN_EVENT_OM_START";
@@ -123,8 +123,8 @@ PNEventManager::PNEventManager()
   _eventEnums["PN_EVENT_OM"] = PN_EVENT_OM;
   _eventNames[PN_EVENT_OM] = "PN_EVENT_OM";
 
-	//////////////////////////////////////////////////////////////////////////
-	// OBJECTS LOCAL ANIMATIONS
+  //////////////////////////////////////////////////////////////////////////
+  // OBJECTS LOCAL ANIMATIONS
 
   _eventEnums["PN_EVENT_OA_STARTED"] = PN_EVENT_OA_STARTED;
   _eventNames[PN_EVENT_OA_STARTED] = "PN_EVENT_OA_STARTED";
@@ -135,8 +135,8 @@ PNEventManager::PNEventManager()
   _eventEnums["PN_EVENT_OA_ENDED"] = PN_EVENT_OA_ENDED;
   _eventNames[PN_EVENT_OA_ENDED] = "PN_EVENT_OA_ENDED";
 
-	//////////////////////////////////////////////////////////////////////////
-	// PHYSIC
+  //////////////////////////////////////////////////////////////////////////
+  // PHYSIC
 
   _eventEnums["PN_EVENT_COLLISION"] = PN_EVENT_COLLISION;
   _eventNames[PN_EVENT_COLLISION] = "PN_EVENT_COLLISION";
@@ -145,8 +145,8 @@ PNEventManager::PNEventManager()
   _eventEnums["PN_EVENT_COLLISION_2C"] = PN_EVENT_COLLISION_2C;
   _eventNames[PN_EVENT_COLLISION_2C] = "PN_EVENT_COLLISION_2C";
 
-	//////////////////////////////////////////////////////////////////////////
-	// FIGHT
+  //////////////////////////////////////////////////////////////////////////
+  // FIGHT
 
   _eventEnums["PN_EVENT_CH_ATTACK"] = PN_EVENT_CH_ATTACK;
   _eventNames[PN_EVENT_CH_ATTACK] = "PN_EVENT_CH_ATTACK";
@@ -165,8 +165,8 @@ PNEventManager::PNEventManager()
   _eventEnums["PN_EVENT_CH_DIES"] = PN_EVENT_CH_DIES;
   _eventNames[PN_EVENT_CH_DIES] = "PN_EVENT_CH_DIES";
 
-	//////////////////////////////////////////////////////////////////////////
-	// FRUSTRUM
+  //////////////////////////////////////////////////////////////////////////
+  // FRUSTRUM
 
   _eventEnums["PN_EVENT_F_IN"] = PN_EVENT_F_IN;
   _eventNames[PN_EVENT_F_IN] = "PN_EVENT_F_IN";
@@ -177,8 +177,8 @@ PNEventManager::PNEventManager()
   _eventEnums["PN_EVENT_FCH_OUT"] = PN_EVENT_FCH_OUT;
   _eventNames[PN_EVENT_FCH_OUT] = "PN_EVENT_FCH_OUT";
 
-	//////////////////////////////////////////////////////////////////////////
-	// UPDATE
+  //////////////////////////////////////////////////////////////////////////
+  // UPDATE
 
   _eventEnums["PN_EVENT_RU_STARTING"] = PN_EVENT_RU_STARTING;
   _eventNames[PN_EVENT_RU_STARTING] = "PN_EVENT_RU_STARTING";
@@ -189,8 +189,8 @@ PNEventManager::PNEventManager()
   _eventEnums["PN_EVENT_PU_ENDING"] = PN_EVENT_PU_ENDING;
   _eventNames[PN_EVENT_PU_ENDING] = "PN_EVENT_PU_ENDING";
 
-	//////////////////////////////////////////////////////////////////////////
-	// SCRIPTING
+  //////////////////////////////////////////////////////////////////////////
+  // SCRIPTING
 
   _eventEnums["PN_EVENT_SCR_START"] = PN_EVENT_SCR_START;
   _eventNames[PN_EVENT_SCR_START] = "PN_EVENT_SCR_START";
@@ -200,6 +200,24 @@ PNEventManager::PNEventManager()
   _eventNames[PN_EVENT_SCR_END] = "PN_EVENT_SCR_END";
   _eventEnums["PN_EVENT_SCR_ENDED"] = PN_EVENT_SCR_ENDED;
   _eventNames[PN_EVENT_SCR_ENDED] = "PN_EVENT_SCR_ENDED";
+
+  //////////////////////////////////////////////////////////////////////////
+  // VIDEO
+
+  _eventEnums["PN_EVENT_VIDEO_CMD"] = PN_EVENT_VIDEO_CMD;
+  _eventNames[PN_EVENT_VIDEO_CMD] = "PN_EVENT_VIDEO_CMD";
+  _eventEnums["PN_EVENT_VIDEO_START"] = PN_EVENT_VIDEO_START;
+  _eventNames[PN_EVENT_VIDEO_START] = "PN_EVENT_VIDEO_START";
+  _eventEnums["PN_EVENT_VIDEO_STARTED"] = PN_EVENT_VIDEO_STARTED;
+  _eventNames[PN_EVENT_VIDEO_STARTED] = "PN_EVENT_VIDEO_STARTED";
+  _eventEnums["PN_EVENT_VIDEO_END"] = PN_EVENT_VIDEO_END;
+  _eventNames[PN_EVENT_VIDEO_END] = "PN_EVENT_VIDEO_END";
+  _eventEnums["PN_EVENT_VIDEO_ENDED"] = PN_EVENT_VIDEO_ENDED;
+  _eventNames[PN_EVENT_VIDEO_ENDED] = "PN_EVENT_VIDEO_ENDED";
+  _eventEnums["PN_EVENT_VIDEO_RESTART"] = PN_EVENT_VIDEO_RESTART;
+  _eventNames[PN_EVENT_VIDEO_RESTART] = "PN_EVENT_VIDEO_RESTART";
+  _eventEnums["PN_EVENT_VIDEO_RESTARTED"] = PN_EVENT_VIDEO_RESTARTED;
+  _eventNames[PN_EVENT_VIDEO_RESTARTED] = "PN_EVENT_VIDEO_RESTARTED";
 }
 
 PNEventManager::~PNEventManager()
@@ -239,14 +257,18 @@ PNEventManager::run()
 void
 PNEventManager::init()
 {
-	boost::thread thrd(&initEventManager);
+  boost::thread thrd(&initEventManager);
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 void	PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* data)
 {
-  _events.push(pnevent(type, source, data));
+  pnevent eventParams(type, source, data);
+
+  _events.push(eventParams);
+
+  eventParams.data = NULL;
 
   if (_events.size() == 1)
   {

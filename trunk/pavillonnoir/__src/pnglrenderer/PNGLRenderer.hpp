@@ -35,6 +35,7 @@
 #include <GL/glew.h>
 
 #include "pnrender.h"
+#include "pnevent.h"
 
 #include "PNRendererInterface.hpp"
 #include "PNGLRendererCamera.hpp"
@@ -52,6 +53,7 @@ class PNRendererObject;
 class PN3DObject;
 class PNFace;
 class PNGLTexture;
+class PNEventData;
 
 #define PNGL_MAX_FACES		4096
 
@@ -63,6 +65,12 @@ private:
   PNGLRenderer();
   ~PNGLRenderer();
 
+  //////////////////////////////////////////////////////////////////////////
+
+  void						_onPlayVideo(pnEventType, PNObject*, PNEventData*);
+
+  //////////////////////////////////////////////////////////////////////////
+
   PNGLRendererCamera		_renderCam;
 
   pnbool					_isProgramLooping;
@@ -70,7 +78,7 @@ private:
   pnuint					_widht;
   pnuint					_height;
   
-  pnuint                    _lastRenderTime; 
+  pnuint                    _lastRenderTime;
 public:
   static PNGLRenderer*		getInstance();
 
