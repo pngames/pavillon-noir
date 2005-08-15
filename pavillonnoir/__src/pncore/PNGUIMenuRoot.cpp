@@ -30,23 +30,33 @@
 #include <iostream>
 #include <stdio.h>
 
+//////////////////////////////////////////////////////////////////////////
+
+#include "pndefs.h"
 #include "pnresources.h"
+#include "pnevent.h"
+
+//////////////////////////////////////////////////////////////////////////
 
 #include "PNGUIMenuRoot.hpp"
 #include "PNGUIGame.hpp"
+#include "PNGUIEscMenu.hpp"
+
+//////////////////////////////////////////////////////////////////////////
+
+#include "PNVideoEventData.hpp"
+#include "PNGameEventData.hpp"
 #include "PN3DSkeletonObject.hpp"
 #include "PN3DCamera.hpp"
+#include "PN3DGround.hpp"
 #include "PNGameMap.hpp"
 #include "PNPhysicsInterface.hpp"
-#include "PN3DGround.hpp"
-#include "PNGameEventData.hpp"
 #include "PNConsole.hpp"
-#include "PNGUIEscMenu.hpp"
 
 ////Changes music volume (specific for the demo, please delete later)
 #include "PNSoundInterface.hpp"
-//////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////////////////
 
 using namespace PN;
 namespace fs = boost::filesystem;
@@ -178,34 +188,11 @@ namespace PN
 
 	PNGUIGame*		guigame = new PNGUIGame();*/
 
-#ifdef WIN32
-
-	STARTUPINFO si;
-	PROCESS_INFORMATION pi;
-
-	ZeroMemory(&si, sizeof(si));
-	si.cb = sizeof(si);
-	ZeroMemory(&pi, sizeof(pi));
-
-	std::string	command = std::string("win32\\mplayer\\mplayer.exe -really-quiet -fs ") + DEF::videosFilePath + "scene1.avi";
-	// Start the child process.
-	if (!CreateProcess(NULL, (LPSTR)command.c_str(), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
-	{
-	  printf("CreateProcess failed (%d).\n", GetLastError());
-	  return false;
-	}
-
 	if (PNSoundInterface::getInstance() != NULL)
 	  PNSoundInterface::getInstance()->changeSoundVolume("theme", 0.0);
 
-	// Wait until child process exits.
-	//WaitForSingleObject(pi.hProcess, INFINITE);
-
-	// Close process and thread handles.
-	CloseHandle(pi.hProcess);
-	CloseHandle(pi.hThread);
-
-#endif
+	PNVideoEventData* videoEventData = new PNVideoEventData(DEF::videosFilePath + "scene1.avi");
+	PNEventManager::getInstance()->addEvent(PN_EVENT_VIDEO_START, NULL, videoEventData);
 
 	return true;
   }

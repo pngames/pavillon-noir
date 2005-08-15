@@ -346,6 +346,9 @@
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNTexture.hpp">
 			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNVideoEventData.hpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="ia"
