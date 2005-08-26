@@ -3,7 +3,6 @@
 	<name>pneditor</name>
 	<comment></comment>
 	<projects>
-		<project>pncommon</project>
 		<project>pneditorcommon</project>
 	</projects>
 	<buildSpec>
