@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE model SYSTEM "object-1.0.dtd">
+<model path="dragon.pnm">
+  <listmaterials>
+    <material path="dragon_Material #0.pnt" />
+    <material path="dragon_Material #1.pnt" />
+    <material path="dragon_Material #2.pnt" />
+  </listmaterials>
+  <skeleton path="dragon.pns" />
+  <listanims>
+  </listanims>
+</model>

@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<GUILayout>
+	<Window Type="DefaultWindow" Name="MenuRoot">	
+			<Property Name="Alpha" Value="1.00000" />
+			<Property Name="Position" Value="x:0.330000 y:0.100000" />
+			<Property Name="Size" Value="w:0.330000 h:0.800000" />
+			<Window Type="TaharezLook/Button" Name="MenuRoot/New">
+				<Property Name="Font" Value="VeraSe-12" />
+				<Property Name="Position" Value="x:0.100000 y:0.05000" />
+				<Property Name="Size" Value="w:0.800000 h:0.100000" />
+				<Property Name="Text" Value="New Game" />
+			</Window>
+			<Window Type="TaharezLook/Button" Name="MenuRoot/Load">
+				<Property Name="Font" Value="VeraSe-12" />
+				<Property Name="Position" Value="x:0.100000 y:0.2000" />
+				<Property Name="Size" Value="w:0.800000 h:0.100000" />
+				<Property Name="Text" Value="Load Game" />
+			</Window>
+			<Window Type="TaharezLook/Button" Name="MenuRoot/Credits">
+				<Property Name="Font" Value="VeraSe-12" />
+				<Property Name="Position" Value="x:0.100000 y:0.35" />
+				<Property Name="Size" Value="w:0.800000 h:0.100000" />
+				<!-- <Property Name="Text" Value="Credits" /> -->
+				<Property Name="Text" Value="Scene 1" />
+			</Window>
+			<Window Type="TaharezLook/Button" Name="MenuRoot/Options">
+				<Property Name="Font" Value="VeraSe-12" />
+				<Property Name="Position" Value="x:0.100000 y:0.5000" />
+				<Property Name="Size" Value="w:0.800000 h:0.10000" />
+				<Property Name="Text" Value="Options" />
+			</Window>
+			<Window Type="TaharezLook/Button" Name="MenuRoot/Exit">
+				<Property Name="Font" Value="VeraSe-12" />
+				<Property Name="Position" Value="x:0.100000 y:0.650" />
+				<Property Name="Size" Value="w:0.800000 h:0.10000" />
+				<Property Name="Text" Value="Exit" />
+			</Window>
+	</Window>
+</GUILayout>

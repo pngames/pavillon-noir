@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE listentities SYSTEM "entities-1.0.dtd">
+<listentities>
+  <entity id="1" label="plop" mdref="3ddynobject.pno" static="false" x="1" y="0" z="2" xx="0.1" yy="0.5" zz="0.1" ww="0.9">
+    <action ref="PN_EVENT_COLLISION">
+      <script ref="script_1.lua" />
+      <script ref="script_2.lua" />
+    </action>
+    <action ref="PN_EVENT_ACTION">
+      <script ref="script_9.lua" />
+    </action>
+  </entity>
+  <entity id="2" label="foo" mdref="model_2.obj" static="false" x="4" y="2" z="0" xx="0.9" yy="0.2" zz="0.2" ww="0.1" />
+  <entity id="3" label="plop" mdref="3ddynobject.pno" static="false" x="1" y="0" z="2" xx="0.1" yy="0.5" zz="0.1" ww="0.9">
+    <action ref="PN_EVENT_COLLISION">
+      <script ref="script_1.lua" />
+      <script ref="script_2.lua" />
+    </action>
+    <action ref="PN_EVENT_ACTION">
+      <script ref="script_9.lua" />
+    </action>
+  </entity>
+  <entity id="4" label="foo" mdref="model_2.obj" static="false" x="4" y="2" z="0" xx="0.9" yy="0.2" zz="0.2" ww="0.1" />
+</listentities>

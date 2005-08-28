@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 3.0.0?>
+
+<ManagedProjectBuildInfo>
+<project id="pnsound.cdt.managedbuild.target.gnu.so.715299440" name="Shared Library (Gnu)" projectType="cdt.managedbuild.target.gnu.so">
+<configuration artifactExtension="so" artifactName="pnsound-dbg" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.so.debug.965801346" name="Debug" parent="cdt.managedbuild.config.gnu.so.debug" postannouncebuildStep="Copy to plugin directory" postbuildStep="mkdir ../../../../__binaries/linux ../../../../__binaries/linux/plugins ../../../../__binaries/linux/plugins/debug ; cp libpnsound-dbg.so ../../../../__binaries/linux/plugins/Debug/pnsound-dbg.pnp" preannouncebuildStep="" prebuildStep="">
+<toolChain id="cdt.managedbuild.toolchain.gnu.so.debug.142671463" name="%ToolChainName.Dbg" superClass="cdt.managedbuild.toolchain.gnu.so.debug">
+<builder id="cdt.managedbuild.target.gnu.builder.so.debug.2047603919" name="Gnu Make.Debug" superClass="cdt.managedbuild.target.gnu.builder.so.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.so.debug.1816776287" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.so.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.so.debug.1714564478" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.so.debug">
+<option id="gnu.cpp.compiler.option.include.paths.629367737" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+<listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
+<listOptionValue builtIn="false" value="../../../../__library/common/"/>
+<listOptionValue builtIn="false" value="/usr/include/AL"/>
+</option>
+<option id="gnu.cpp.compiler.option.preprocessor.def.1417616154" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+<listOptionValue builtIn="false" value="_DEBUG"/>
+</option>
+<option id="gnu.cpp.compiler.option.other.other.1673548449" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread" valueType="string"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.c.linker.so.debug.74825674" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.debug.342081097" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.debug">
+<option id="gnu.cpp.link.option.libs.1095239204" superClass="gnu.cpp.link.option.libs" valueType="libs">
+<listOptionValue builtIn="false" value="openal"/>
+<listOptionValue builtIn="false" value="vorbis"/>
+<listOptionValue builtIn="false" value="vorbisfile"/>
+<listOptionValue builtIn="false" value="ogg"/>
+</option>
+<option id="gnu.cpp.link.option.paths.1480316017" superClass="gnu.cpp.link.option.paths"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.assembler.so.debug.2073397371" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.debug"/>
+<macros/>
+</toolChain>
+</configuration>
+<configuration artifactExtension="so" artifactName="pnsound" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.so.release.766583488" name="Release" parent="cdt.managedbuild.config.gnu.so.release" postannouncebuildStep="Copy to plugin directory" postbuildStep="mkdir ../../../../__binaries/linux ../../../../__binaries/linux/plugins ; cp libpnsound.so ../../../../__binaries/linux/plugins/pnsound.pnp" preannouncebuildStep="" prebuildStep="">
+<toolChain id="cdt.managedbuild.toolchain.gnu.so.release.1422164234" name="%ToolChainName.Rel" superClass="cdt.managedbuild.toolchain.gnu.so.release">
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.so.release.195383469" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.so.release"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.so.release.244096588" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.so.release">
+<option id="gnu.cpp.compiler.option.include.paths.798588359" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+<listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
+<listOptionValue builtIn="false" value="../../../../__library/common/"/>
+</option>
+<option id="gnu.cpp.compiler.option.other.other.1310435904" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread" valueType="string"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.c.linker.so.release.1508895695" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.release"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.release.744946731" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.release">
+<option id="gnu.cpp.link.option.libs.1659903645" superClass="gnu.cpp.link.option.libs" valueType="libs">
+<listOptionValue builtIn="false" value="openal"/>
+</option>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.assembler.so.release.1532010862" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.release"/>
+<macros/>
+</toolChain>
+</configuration>
+<macros/>
+</project>
+</ManagedProjectBuildInfo>

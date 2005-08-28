@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE entities SYSTEM "entities.dtd">
+<listentities>
+<entity id="0" label="bonhomme" mdref="bonhomme.pno" envtype="dynamic" objtype="dynamic" class="PN3DSkeletonObject" x="-10.7777" y="-33.9763" z="9.57364" xx="0" yy="0" zz="0" ww="1">
+</entity>
+</listentities>
