@@ -195,17 +195,11 @@ CString  PNExporter::transformToUTF8(CString str)
 	{
 	  switch (str[i])
 	  {
-	  case 0xC8:
-	  case 0xC9:
-	  case 0xCA:
+	  case 0xC8:	// `
+	  case 0xC9:	// '
+	  case 0xCA:	// ^
 	  case 0xCB:
 		str.SetAt(i, 'E');
-		break;
-	  case 0xE8:
-	  case 0xE9:
-	  case 0xEA:
-	  case 0xEB:
-		str.SetAt(i, 'e');
 		break;
 	  case 0xC0:
 	  case 0xC1:
@@ -214,6 +208,16 @@ CString  PNExporter::transformToUTF8(CString str)
 	  case 0xC5:
 	  case 0xC6:
 		str.SetAt(i, 'A');
+		break;
+	  case 0xC7:
+		str.SetAt(i, 'C');
+		break;
+	  case 0xD2:
+	  case 0xD3:
+	  case 0xD4:
+	  case 0xD5:
+	  case 0xD6:
+		str.SetAt(i, 'O');
 		break;
 	  case 0xE0:
 	  case 0xE1:
@@ -224,6 +228,21 @@ CString  PNExporter::transformToUTF8(CString str)
 	  case 0xE6:
 		str.SetAt(i, 'a');
 		break;
+	  case 0xE7:
+		str.SetAt(i, 'c');
+		break;
+	  case 0xE8:
+	  case 0xE9:
+	  case 0xEA:
+	  case 0xEB:
+		str.SetAt(i, 'e');
+		break;
+	  case 0xF2:
+	  case 0xF3:
+	  case 0xF4:
+	  case 0xF5:
+	  case 0xF6:
+		str.SetAt(i, 'o');
 	  default:
 		str.SetAt(i, '_');
 	  }
