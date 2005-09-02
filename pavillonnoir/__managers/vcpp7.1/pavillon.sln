@@ -128,13 +128,13 @@ Global
 		{7290FB2A-EAE3-4A36-8731-3BF4FF32CF86}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionItems) = postSolution
-		..\..\..\CHANGELOG = ..\..\..\CHANGELOG
 		..\..\__src\CHANGELOG.txt = ..\..\__src\CHANGELOG.txt
 		..\..\__releases\pn-setup-full-0.0.1.nsi = ..\..\__releases\pn-setup-full-0.0.1.nsi
 		..\..\__releases\pn-setup-full.nsh = ..\..\__releases\pn-setup-full.nsh
 		..\..\__releases\pn-setup-lite-0.0.1.nsi = ..\..\__releases\pn-setup-lite-0.0.1.nsi
 		..\..\__releases\pn-setup-lite.nsh = ..\..\__releases\pn-setup-lite.nsh
 		..\..\__releases\pn-setup.nsh = ..\..\__releases\pn-setup.nsh
+		..\..\__src\TODO.txt = ..\..\__src\TODO.txt
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

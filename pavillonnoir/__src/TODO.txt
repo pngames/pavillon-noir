@@ -1,10 +1,8 @@
 GENERAL:
 
-* mettre en place l'arborescence make ou cons pour linux avant la premiere release jeux vu ke cdt est trop casse couille et puis c'est plus general
-
-* creer une classe abstraite Serializable					(serialize, unserialize)
+* creer une classe abstraite Serializable								(serialize, unserialize)
 * creer une classe abstraite XMLSerializable derive de Serializable		(meme chose avec des balise en parametre)
-* creer une classe abstraite Animated						(play, pause, setAnimation...)
+* creer une classe abstraite Animated									(play, pause, setAnimation...)
 
 EDITEUR:
 
@@ -15,3 +13,7 @@ PNGLRENDERER:
 * trouver une solution concernant CEGUI sous ubuntu
 * trouver pourquoi cette connerie de test de profondeur de fonctionne pas
 * utiliser le systeme de PNConfigurable avec le lanceur fox pour pouvoir choisir les options de chaque module (definition, plein ecran...)
+
+PNMAXPLUGIN
+
+* remplacer le switch case de la conversion des chaines de charactere par un tableau ou trouver une lib avec ce genere de traitement ca doit bien exister c'est qd meme assez standard
