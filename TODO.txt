@@ -1,0 +1,64 @@
+PRIORITAIRE:
+------------
+
+_______
+PNOPAL:
+
+* regler les problemes de fonctionnement sous linux
+* utiliser le format de fichier OPAL:
+	- ajouter un exporter physique a pnmxplugin
+	- ajouter un plugin d'import
+	- ajouter u format des pno une entree pour l'objet physique
+
+______
+CEGUI:
+
+* trouver une solution concernant CEGUI sous ubuntu
+
+______________
+MAIN D'OEUVRE:
+
+* passer tout le monde sur le scripting sauf:
+	- 1 CEGUI
+	- 1 EDITEUR
+	- 1 IA
+	- 1 PHYSIQUE
+	- 1 RENDU
+	- 1 COMMON
+
+________________________________________________________________________________
+________________________________________________________________________________
+
+________
+GENERAL:
+
+* creer une classe abstraite Serializable					(serialize, unserialize)
+* creer une classe abstraite XMLSerializable derive de Serializable		(meme chose avec des balise en parametre)
+* creer une classe abstraite Animated						(play, pause, setAnimation...)
+
+____
+JEU:
+
+* mettre en place les liens en entre actions et animations (deplacement, combat...)
+* mettre en place l'escrime
+
+________
+EDITEUR:
+
+* mettre les proprietes des objets modifies dans l'editeur au niveau de la map (et non dans un pno). Comme ca on considerera le pno comme les proprietes par defaut. Ca permet de pouvoir prendre en comptes des modif sans creer un nouveau pno.
+
+_____________
+PNGLRENDERER:
+
+* trouver pourquoi cette connerie de test de profondeur de fonctionne pas
+* utiliser le systeme de PNConfigurable avec le lanceur fox pour pouvoir choisir les options de chaque module (definition, plein ecran...)
+
+____________
+PNMAXPLUGIN:
+
+* remplacer le switch case de la conversion des chaines de charactere par un tableau ou trouver une lib avec ce genere de traitement ca doit bien exister c'est qd meme assez standard
+
+_____________________
+INSTALLEURS/PACKAGES:
+
+* etudier l'installeur graphique pour Linux qu'a trouve Max (me rappelle plus le nom et le lien)
