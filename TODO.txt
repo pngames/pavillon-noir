@@ -61,4 +61,4 @@ PNMAXPLUGIN:
 _____________________
 INSTALLEURS/PACKAGES:
 
-* etudier l'installeur graphique pour Linux qu'a trouve Max (me rappelle plus le nom et le lien)
+* etudier l'installeur graphique pour Linux qu'a trouve Max (http://autopackage.org/)
