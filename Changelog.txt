@@ -9,6 +9,9 @@ version 0.0.2 (11/08/2005)
 	Bug Fixes:
 	* Fix release shortcut problem in win32 installer : it was override by web site shortcut
 
+	Commons Lib:
+	* Adding target distance management for PN3DObjects
+
 	SRC:
 	* Update to CDT 3.0
 
