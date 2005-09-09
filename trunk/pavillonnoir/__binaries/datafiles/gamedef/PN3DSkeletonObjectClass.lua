@@ -1,9 +1,19 @@
 
-function PN3DSkeletonObjectClass()
+function PN3DSkeletonObjectClass(id)
+	pnprint("PN3DSkeletonObjectClass creating\n")
     local obj = PN3DSkeletonObject:new_local()
+    obj:setId(id)
+    obj.id = id
+    pnprint("PN3DSkeletonObjectClass creating 2\n")
     obj.__index = obj
+    pnprint("PN3DSkeletonObjectClass creating 3\n")
     obj.className = "PN3DSkeletonObjectClass"
-
+    pnprint("PN3DSkeletonObjectClass creating 4\n")
+	if (obj.id ~= "") then 
+		gameMap.entities[obj.id] = obj
+	end
+	pnprint("PN3DSkeletonObjectClass creating 5\n")
+	
     function  obj:luaUpdate(deltaTime)
        self.__index:update(deltaTime)
     end

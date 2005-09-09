@@ -1,9 +1,13 @@
 
-function PN3DObjectClass()
+function PN3DObjectClass(id)
     local obj = PN3DObject:new_local()
     obj.__index = obj
     obj.className = "PN3DObjectClass"
-
+    obj:setId(id)
+    obj.id = id
+    if (obj.id ~= "") then 
+		gameMap.entities[obj.id] = obj
+	end
     function  obj:luaUpdate(deltaTime)
        self.__index:update(deltaTime)
     end

@@ -6,8 +6,9 @@ gameMap.entities = {}
 
 function gameMap:spawn2(entity, id)
 	pnprint("[LUA enter function] gameMap:spawn2\n")
-	self.entities[id] = entity
-   self:addToMap2(entity, id)
+	--self.entities[id] = entity
+	
+    self:addToMap2(entity, id)
    pnprint("[LUA exit function] gameMap:spawn2\n")
 end 
 

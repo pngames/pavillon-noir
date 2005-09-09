@@ -60,11 +60,11 @@ void  PNLuaGameMap::addToMap(const std::string& entityName, const std::string& i
 {
   std::string luaOrder = "";
   if (entityName.length() == 0)
-	  luaOrder +=  "gameMap:spawn2(PN3DObjectClass(), \"" + id + "\")\n";
+	  luaOrder +=  "entity = PN3DObjectClass(\"" + id + "\")\n gameMap:spawn2(entity, \"" + id + "\")\n";
   else
   {
     loadLuaScript(std::string(entityName).append(".lua").c_str());
-		luaOrder +=  "gameMap:spawn2(" + entityName+"Class(), \"" + id + "\")\n";
+		luaOrder +=  "entity = " + entityName + "Class(\"" + id + "\")\n gameMap:spawn2(entity, \"" + id + "\")\n";
   }
   int err  = lua_dostring(_lvm, luaOrder.c_str());
   return;
