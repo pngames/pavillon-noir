@@ -1,0 +1,3 @@
+Faire en sorte que quand on lance la map PF_Test_01 ca marche.
+ou au moins que ca aille jusqu'au unserialize du graph.
+Verifie la CharacterClass.lua

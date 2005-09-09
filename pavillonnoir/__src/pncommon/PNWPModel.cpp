@@ -50,12 +50,12 @@ PNWPModel::PNWPModel(void) : _mypath("nopath")
   _selectcolor[2] = 1.0f;
   _selectcolor[3] = 1.0f;
   _color = _dflcolor;
-  _min.x = -1.0f;
-  _min.y = -1.0f;
-  _min.z = -1.0f;
-  _max.x = 1.0f;
-  _max.y = 1.0f;
-  _max.z = 1.0f;
+  _min.x = -15.0f;
+  _min.y = -15.0f;
+  _min.z = -15.0f;
+  _max.x = 15.0f;
+  _max.y = 15.0f;
+  _max.z = 15.0f;
   _center.set(0.0f, 0.0f, 0.0f);
 }
 
@@ -89,7 +89,7 @@ void
 PNWPModel::render(PN3DSkeleton* sk)
 {
   PNRendererInterface* pnri = PNRendererInterface::getInstance();
-  pnri->renderSphere(1.0f, 20, 20, _color);
+  pnri->renderSphere(15.0f, 20, 20, _color);
 }
 
 void

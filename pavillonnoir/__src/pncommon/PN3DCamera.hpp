@@ -51,7 +51,7 @@ public:
   ~PN3DCamera();
 
   //////////////////////////////////////////////////////////////////////////
-  
+
 public:
   /// Displacement and view mode
   typedef enum
@@ -61,7 +61,7 @@ public:
   }							pnmovingmode;
 
   //////////////////////////////////////////////////////////////////////////
-	
+
   /// Return unique rendering camera
   static PN3DCamera*		getRenderCam();
 
