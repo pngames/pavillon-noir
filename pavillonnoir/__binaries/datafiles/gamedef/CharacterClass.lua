@@ -1,6 +1,6 @@
 function CharacterClass()
 	Character = PN3DSkeletonObjectClass()
-	Character.__index = Character
+	-- Character.__index = Character
 	Character.hurry = false
 	Character.pathFinding = PNPathFinding:new_local()
 	Character.toReach = PN3DObject:new_local()

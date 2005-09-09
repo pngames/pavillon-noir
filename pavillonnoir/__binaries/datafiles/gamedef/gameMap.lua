@@ -1,13 +1,19 @@
 	
 gameMap = getGameMap()
 tolua:takeownership(gameMap)
-gameMap.entities = {}
-	
+gameMap.entities = {}	
+gameMap.entities.all = {}
+gameMap.entities.className = {}
 
 function gameMap:spawn2(entity, id)
 	pnprint("[LUA enter function] gameMap:spawn2\n")
 	--self.entities[id] = entity
-	
+	if (self.entities.className[entity.className] ~= nil) then
+		self.entities.className[entity.className][id] = entity
+	else
+		self.entities.className[entity.className] = {}
+		self.entities.className[entity.className][id] = entity
+	end
     self:addToMap2(entity, id)
    pnprint("[LUA exit function] gameMap:spawn2\n")
 end 
@@ -15,10 +21,10 @@ end
 function gameMap:clear()
 	pnprint("[LUA enter function] gameMap:clear\n")
     pnprint("\n")
-	for id, entity in pairs(self.entities) do 
+	for id, entity in pairs(self.entities.all) do 
       pnprint(id)
       pnprint("\n")
-      self.entities[id] = nil
+      self.entities.all[id] = nil
       pnprint("\n")
 	end
     self.entities = {}
@@ -36,7 +42,7 @@ end
 function gameMap:onUpdate(deltaTime)
    --pnprint("LUA GameMap: onUpdate()")
    --pnprint(deltaTime)
-	for id, entity in pairs(self.entities) do 
+	for id, entity in pairs(self.entities.all) do 
 		entity:luaUpdate(deltaTime)
 	end
 end
@@ -71,22 +77,22 @@ end
 
 function gameMap:OnLuaActionMoveForward(id, state)
     pnprint("LUA GameMap:OnLuaActionMoveForward()\n")
-    self.entities[id]:OnLuaActionMoveForward(state)
+    self.entities.all[id]:OnLuaActionMoveForward(state)
 end	
 
 function gameMap:OnLuaActionMoveBackward(id, state)
     pnprint("LUA GameMap:OnLuaActionMoveBackward()\n")
-    self.entities[id]:OnLuaActionMoveBackward(state)
+    self.entities.all[id]:OnLuaActionMoveBackward(state)
 end		
 
 function gameMap:OnLuaActionMoveLeft(id, state)
     pnprint("LUA GameMap:OnLuaActionMoveLeft()\n")
-    self.entities[id]:OnLuaActionMoveLeft(state)
+    self.entities.all[id]:OnLuaActionMoveLeft(state)
 end	
 
 function gameMap:OnLuaActionMoveRight(id, state)
     pnprint("LUA GameMap:OnLuaActionMoveRight()\n")
-    self.entities[id]:OnLuaActionMoveRight(state)
+    self.entities.all[id]:OnLuaActionMoveRight(state)
 end		
 --camera = PN3DCamera:getRenderCam()
 --camera:setMovingSpeed(1.0)
