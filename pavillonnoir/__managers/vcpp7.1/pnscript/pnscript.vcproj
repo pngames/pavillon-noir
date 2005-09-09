@@ -249,6 +249,9 @@
 			<File
 				RelativePath="..\..\..\__binaries\datafiles\gamedef\PN3DSkeletonObjectClass.lua">
 			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\RenderCamera.lua">
+			</File>
 		</Filter>
 		<File
 			RelativePath="..\..\..\__src\pnscript\CHANGELOG.txt">
