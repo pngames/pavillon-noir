@@ -139,11 +139,15 @@ public:
   /// Displacment and view mode
   typedef enum
   {
-	MMODE_FREE,				/// 3D object move freely
-	MMODE_VIEW_LOCKED,		/// 3D object alway try to be in front of _target
-	MMODE_VIEW_ABS_LOCKED,	/// 3D object alway in front of _target
-	NB_MMODE				/// number of moving modes in 3DObject
-  }			  				movingmode;
+	MMODE_FREE,				        /// 3D object move freely
+    MMODE_DISTANCE_LOCKED,		    /// 3D object alway try to be in front of _target
+    MMODE_DISTANCE_ABS_LOCKED,	    /// 3D object alway in front of _target
+	MMODE_VIEW_LOCKED,		        /// 3D object alway try to be in front of _target
+	MMODE_VIEW_ABS_LOCKED,	        /// 3D object alway in front of _target
+    MMODE_VIEW_DISTANCE_LOCKED,		/// 3D object alway try to be in front of _target
+    MMODE_VIEW_DISTANCE_ABS_LOCKED, /// 3D object alway in front of _target
+	NB_MMODE				        /// number of moving modes in 3DObject
+  }			  				        movingmode;
 
   /// Return displacement mode of 3D object (free, locked, ...)
   movingmode				getMovingMode();

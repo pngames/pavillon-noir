@@ -46,6 +46,8 @@ PNGLRendererCamera::PNGLRendererCamera()
   //_targetDirection = _rightDirection.getVector();
 
   _playerCamera = this;
+
+  _id = "renderCam";
 }
 
 PNGLRendererCamera::~PNGLRendererCamera()

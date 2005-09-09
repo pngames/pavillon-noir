@@ -15,9 +15,8 @@ loadLuaScript("PlayerClass.lua")
    pnprint("PlayerClass.lua loaded\n")
 loadLuaScript("CharacterClass.lua")
    pnprint("CharacterClass.lua loaded\n")
---camera = gameMap:getCamera()
---camSpeed = camera:getMovingSpeed()
---camSpeed = 0.2
---camera:setMovingSpeed(camSpeed)
 pnprint("[LUA] Init file loaded")
+
+
+
 

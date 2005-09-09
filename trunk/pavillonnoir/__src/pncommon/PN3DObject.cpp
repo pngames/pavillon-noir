@@ -796,7 +796,7 @@ PN3DObject::updateTranslation(pnfloat step)
   // targetDistance
 
   if (_targetDistance > 0.0f &&
-	  (_movingMode == MMODE_VIEW_ABS_LOCKED || _movingMode == MMODE_VIEW_LOCKED))
+	  (_movingMode == MMODE_DISTANCE_ABS_LOCKED || _movingMode == MMODE_DISTANCE_LOCKED))
   {
 	PNVector3f	targetVector = _target->getCoord();
 	targetVector -= _coord;
