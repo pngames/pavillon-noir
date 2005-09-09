@@ -164,7 +164,7 @@ int	  main(int argc, char* argv[])
 
 	  if (si->createNewSound("theme", zicPath.c_str(), TRUE, 0.0, 0.0, 0.0) != 0)
 	  {
-		si->changeSoundVolume("theme", 0.4);	
+		si->changeSoundVolume("theme", 0.0);	
 		si->playSound("theme");
 	  }
 	}

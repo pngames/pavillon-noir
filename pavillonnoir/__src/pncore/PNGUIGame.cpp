@@ -313,7 +313,37 @@ void  PNGUIGame::_commandChangeSoundVolume(const std::string&, std::istream& i)
 	PNConsole::writeLine("Error : wrong arguments to function stopsound");
 }
 
-//////////////////////////////////////////////////////////////////////////
+void  PNGUIGame::_commandShowWP(const std::string&, std::istream& i)
+{
+  PN3DObjList::iterator it;
+  
+  for (it = PN3DCamera::getRenderCam()->_list3DObj.begin(); it != PN3DCamera::getRenderCam()->_list3DObj.end(); it++)
+  {
+	PN3DObject*	obj = (PN3DObject*)*it;
+
+	if (obj != NULL && obj->getObjType() == PN3DObject::OBJTYPE_WAYPOINT)
+	{
+	  obj->setRenderMode(PN3DObject::RENDER_MODEL);
+	}
+  }
+}
+
+void  PNGUIGame::_commandHideWP(const std::string&, std::istream& i)
+{
+  PN3DObjList::iterator it;
+
+  for (it = PN3DCamera::getRenderCam()->_list3DObj.begin(); it != PN3DCamera::getRenderCam()->_list3DObj.end(); it++)
+  {
+	PN3DObject*	obj = (PN3DObject*)*it;
+
+	if (obj != NULL && obj->getObjType() == PN3DObject::OBJTYPE_WAYPOINT)
+	{
+	  obj->setRenderMode(NULL);
+	}
+  }
+}
+
+  //////////////////////////////////////////////////////////////////////////
 
 void  PNGUIGame::_setPhysics(const std::string&, std::istream& i)
 {
@@ -420,6 +450,11 @@ _myri = PNRendererInterface::getInstance();
   PNConsole::addFonction("physics", &PNGUIGame::_setPhysics, "Physical simulation, 0=false or 1=true");
   PNConsole::addFonction("addforce", &PNGUIGame::_addForce, "Add force to a physical object, addforce object_number x y z duration");
   PNConsole::addFonction("setdyn", &PNGUIGame::_setAlldynamic, "Set all physical objects dynamic, 0=false or 1=true");
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  PNConsole::addFonction("showwp", &PNGUIGame::_commandShowWP, "Show WayPoints");
+  PNConsole::addFonction("hidewp", &PNGUIGame::_commandHideWP, "Hide WayPoints");
 
  // PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE_HIDE, EventCallback(this, &PNGUIGame::inputHandleModifierState));
  // PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE_SHOW, EventCallback(this, &PNGUIGame::inputHandleModifierState));
