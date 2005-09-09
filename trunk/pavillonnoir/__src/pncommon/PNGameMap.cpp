@@ -38,6 +38,8 @@
 #include "PNPhysicsInterface.hpp"
 #include "PN3DCamera.hpp"
 #include "PNRendererInterface.hpp"
+#include "PNWayPoint.hpp"
+#include "PNIAGraph.hpp"
 
 #include "PNGameMap.hpp"
 
@@ -53,6 +55,7 @@ using namespace std;
 PNGameMap::PNGameMap()
 {
   PNPhysicsInterface::getInstance()->createSimulation();
+  _graph = new PNIAGraph;
 }
 
 PNGameMap::~PNGameMap()
@@ -153,7 +156,6 @@ int	  PNGameMap::_parseListEntities(xmlNode* node)
   return error;
 }
 
-
 int	PNGameMap::unserialize(xmlNode* node)
 {
   //////////////////////////////////////////////////////////////////////////
@@ -185,9 +187,9 @@ int	PNGameMap::unserialize(xmlNode* node)
   return error;
 }
 
-
-pnint PNGameMap::unserialize(const fs::path& file)
+pnint PNGameMap::unserialize(const fs::path& dir)
 {
+  fs::path file(dir.string() + "/entities.xml");
   pnerror(PN_LOGLVL_INFO, "Loading GameMap: %s ...", file.native_file_string().c_str());
 
   if (!fs::exists(file))
@@ -204,7 +206,7 @@ pnint PNGameMap::unserialize(const fs::path& file)
   if (ctxt == NULL) 
 	return PNEC_ALLOC_PARSER_CONTEXT;
 
-  doc = xmlCtxtReadFile(ctxt, file.string().c_str(), NULL, XML_PARSE_DTDVALID); // parse the file, + DTD validation 
+  doc = xmlCtxtReadFile(ctxt, file.string().c_str(), NULL, XML_PARSE_DTDVALID); // parse the file, + DTD validation
   xmlFreeParserCtxt(ctxt);							// free up the parser context
 
   if (doc == NULL)									// check if parsing suceeded
@@ -235,10 +237,12 @@ pnint PNGameMap::unserialize(const fs::path& file)
 
   xmlFreeDoc(doc);									// free the document
 
+  _graph->unserialize(dir.string() + "/waypoints.xml");
+
   return error;
 }
 
-pnint PNGameMap::serialize(const fs::path& file)
+pnint PNGameMap::serialize(const fs::path& dir)
 {
   return 0;
 }
@@ -262,9 +266,8 @@ void PNGameMap::clear()
   {
     delete (it->second);
   }
-    _entityList.clear();
-    PN3DCamera::getRenderCam()->_list3DObj.clear();
-    PNImportManager::getInstance()->clean(); //fixeMe
-    //PNPhysicsInterface::clean();
+  _entityList.clear();
+  PN3DCamera::getRenderCam()->_list3DObj.clear();
+  PNImportManager::getInstance()->clean(); //fixeMe
+  //PNPhysicsInterface::clean();
 }
-

@@ -141,7 +141,7 @@ long	PNFoxMainWindow::onCmdLauchGame(FXObject*,FXSelector,void*)
 
 	*_returnState = true;
 	mapPath = _mapSelector->getItemText(_mapSelector->getCurrentItem()).text();
-	mapPath += "/entities.xml";
+	//mapPath += "/entities.xml";
 
 	std::FILE* configFile = fopen("config.cfg", "w");
 	fwrite( mapPath.c_str(), sizeof( char ), mapPath.length(), configFile);

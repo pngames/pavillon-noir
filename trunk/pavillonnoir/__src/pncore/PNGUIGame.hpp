@@ -97,6 +97,8 @@ namespace PN{
 	static void  _commandStopSound(const std::string&, std::istream& i);
 	static void  _commandLoadedSounds(const std::string&, std::istream& i);
 	static void  _commandChangeSoundVolume(const std::string&, std::istream& i);
+	static void  _commandShowWP(const std::string&, std::istream& i);
+	static void  _commandHideWP(const std::string&, std::istream& i);
 	static void  _setPhysics(const std::string&, std::istream& i);
 	static void  _addForce(const std::string&, std::istream& i);
 	static void	 _setAlldynamic(const std::string&, std::istream& i);

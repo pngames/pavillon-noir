@@ -131,7 +131,7 @@ namespace PN
 	////Changes Background music volume (specific for the demo, please delete later)
 	//////////////////////////////////////////////////////////////////////////
 	PNSoundInterface*	si = PNSoundInterface::getInstance();
-	si->changeSoundVolume("theme", 0.3);
+	si->changeSoundVolume("theme", 0.0);
 	//////////////////////////////////////////////////////////////////////////
 
     PNGameLoadMapEventData* data = new PNGameLoadMapEventData();

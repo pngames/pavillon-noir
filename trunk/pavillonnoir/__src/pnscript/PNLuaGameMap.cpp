@@ -66,6 +66,7 @@ void  PNLuaGameMap::addToMap(const std::string& entityName, const std::string& i
     loadLuaScript(std::string(entityName).append(".lua").c_str());
 		luaOrder +=  "entity = " + entityName + "Class(\"" + id + "\")\n gameMap:spawn2(entity, \"" + id + "\")\n";
   }
+  pnerror(PN_LOGLVL_DEBUG, "%s -> Lua", luaOrder.c_str());
   int err  = lua_dostring(_lvm, luaOrder.c_str());
   return;
 }
