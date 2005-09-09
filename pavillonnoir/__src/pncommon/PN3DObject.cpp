@@ -59,6 +59,7 @@ namespace PN {
  */
 PN3DObject::PN3DObject()
 {
+  _id = "";
   _animId = -1;
   _running = false;
   _paused = false;
