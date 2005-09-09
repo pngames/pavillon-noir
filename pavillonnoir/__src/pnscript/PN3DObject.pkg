@@ -252,6 +252,9 @@ public:
 
   /// Render object using PNRendererInterface
    void					render();
+   
+   void setId(std::string id);
+   std::string getId();
 };
 
 

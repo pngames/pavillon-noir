@@ -57,6 +57,16 @@ class PNPhysicalObject;
 /// Base object for all object evolving in the scene
 class PNAPI					PN3DObject : public PNObject
 {
+
+
+  ///object identifier
+protected:
+  std::string _id;
+public:
+  inline void setId(std::string id){_id = id;}
+  inline std::string getId(){return _id;}
+  ///////////////////////////////////////////////////////////////////////////
+private:
   /// Rotation axis activated
   typedef enum
   {
@@ -75,7 +85,7 @@ class PNAPI					PN3DObject : public PNObject
 protected:
   /// Bit mask indicate in witch axis do the 3D object rotate
   pnuint					_rotActivation;
-
+  
   //////////////////////////////////////////////////////////////////////////
 
 public:
@@ -425,6 +435,8 @@ public:
 
   /// Render object using PNRendererInterface
   virtual void					render();
+
+
 };
 
 //////////////////////////////////////////////////////////////////////////
