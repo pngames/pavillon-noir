@@ -20,7 +20,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include;../../../__library/win32/include/lua;../../../__library/win32/include/stlport;../../../__library/common/"
+				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include;../../../__library/win32/include/lua;../../../__library/common/"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PNSCRIPT_EXPORTS"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -33,7 +33,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="boost_filesystem-vc71-mt-p.lib lua.lib lualib.lib tolua++.lib"
+				AdditionalDependencies="lua.lib lualib.lib tolua++.lib"
 				OutputFile="../../../__binaries/win32/plugins/Debug/pnscript-dbg.pnp"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
@@ -75,7 +75,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include;../../../__library/win32/include/lua;../../../__library/win32/include/stlport;../../../__library/common/"
+				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include;../../../__library/win32/include/lua;../../../__library/common/"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PNSCRIPT_EXPORTS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -86,7 +86,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="boost_filesystem-vc71-mt-p.lib lua.lib lualib.lib tolua++.lib"
+				AdditionalDependencies="lua.lib lualib.lib tolua++.lib"
 				OutputFile="../../../__binaries/win32/plugins/pnscript.pnp"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
