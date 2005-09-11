@@ -19,7 +19,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../__library/win32/include/CEGUI;../../../__library/win32/include/sdl;../../../__src/pncommon;../../../__library/win32/include;../../../__library/win32/include/stlport;../../../__library/common/"
+				AdditionalIncludeDirectories="../../../__library/win32/include/CEGUI;../../../__library/win32/include/sdl;../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PNGLRENDERER_EXPORTS"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -32,7 +32,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="DevIL.lib ILU.lib ILUT.lib SDL.lib SDLmain.lib CEGUIBase_D.lib OpenGLGUIRenderer_d.lib boost_filesystem-vc71-mt-p.lib opengl32.lib glu32.lib glew32.lib"
+				AdditionalDependencies="DevIL.lib ILU.lib ILUT.lib SDL.lib SDLmain.lib CEGUIBase_D.lib OpenGLGUIRenderer_d.lib opengl32.lib glu32.lib glew32.lib"
 				OutputFile="../../../__binaries/win32/plugins/Debug/pnglrenderer-dbg.pnp"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
@@ -71,7 +71,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="../../../__library/win32/include/CEGUI;../../../__library/win32/include/sdl;../../../__src/pncommon;../../../__library/win32/include;../../../__library/win32/include/stlport;../../../__library/common/"
+				AdditionalIncludeDirectories="../../../__library/win32/include/CEGUI;../../../__library/win32/include/sdl;../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PNGLRENDERER_EXPORTS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -82,7 +82,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="DevIL.lib ILU.lib ILUT.lib SDL.lib SDLmain.lib CEGUIBase.lib OpenGLGUIRenderer.lib boost_filesystem-vc71-mt-p.lib opengl32.lib glu32.lib glew32.lib"
+				AdditionalDependencies="DevIL.lib ILU.lib ILUT.lib SDL.lib SDLmain.lib CEGUIBase.lib OpenGLGUIRenderer.lib opengl32.lib glu32.lib glew32.lib"
 				OutputFile="../../../__binaries/win32/plugins/pnglrenderer.pnp"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"

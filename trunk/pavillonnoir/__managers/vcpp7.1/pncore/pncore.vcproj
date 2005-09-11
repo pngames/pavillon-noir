@@ -19,7 +19,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include/stlport;../../../__library/win32/include/fox;../../../__library/win32/include/;../../../__library/win32/include/CEGUI;../../../__library/common/"
+				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include/fox;../../../__library/win32/include/;../../../__library/win32/include/CEGUI;../../../__library/common/"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;FOXDLL"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -32,7 +32,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="FOXDLLD-1.4.lib boost_filesystem-vc71-mt-p.lib CEGUIBase_D.lib"
+				AdditionalDependencies="FOXDLLD-1.4.lib CEGUIBase_D.lib"
 				OutputFile="../../../__binaries/win32/pncore-dbg.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
@@ -71,7 +71,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include/stlport;../../../__library/win32/include/fox;../../../__library/win32/include/;../../../__library/win32/include/CEGUI;../../../__library/common/"
+				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include/fox;../../../__library/win32/include/;../../../__library/win32/include/CEGUI;../../../__library/common/"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;FOXDLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -82,7 +82,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="FOXDLL-1.4.lib boost_filesystem-vc71-mt-p.lib CEGUIBase.lib"
+				AdditionalDependencies="FOXDLL-1.4.lib CEGUIBase.lib"
 				OutputFile="../../../__binaries/win32/pncore.exe"
 				Version=""
 				LinkIncremental="1"
