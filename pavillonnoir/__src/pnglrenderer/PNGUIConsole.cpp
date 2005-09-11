@@ -34,10 +34,6 @@
 #include "PNGUIConsole.hpp"
 #include "pnrender.h"
 
-#ifdef WIN32
-# define vsnprintf		_vsnprintf
-#endif
-
 using namespace PN;
 
 
