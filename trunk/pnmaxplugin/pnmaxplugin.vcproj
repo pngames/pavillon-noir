@@ -1,138 +1,203 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7.10"
+	Version="8,00"
 	Name="pnmaxplugin"
 	ProjectGUID="{FBE8C34C-1861-41C3-87AF-BECA84744864}"
-	Keyword="MFCProj">
+	Keyword="MFCProj"
+	SignManifests="true"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="2"
+			InheritedPropertySheets="UpgradeFromVC71.vsprops"
 			UseOfMFC="2"
-			CharacterSet="2">
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="false"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="C:\3dsmax7\maxsdk\include;../pavillonnoir/__src/pncommon"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
-				MinimalRebuild="FALSE"
+				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				TreatWChar_tAsBuiltInType="FALSE"
-				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="2"
+				TreatWChar_tAsBuiltInType="false"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile="./Debug/$(TargetName).pch"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="TRUE"
+				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
-				CompileAs="0"/>
+				CompileAs="0"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1036"
+				AdditionalIncludeDirectories="$(IntDir)"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="core.lib geom.lib gfx.lib mesh.lib maxutil.lib maxscrpt.lib paramblk2.lib IGame.lib"
 				OutputFile="C:\3dsmax7\plugins\$(ProjectName)-dbg.dle"
 				LinkIncremental="2"
-				SuppressStartupBanner="TRUE"
+				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="C:\3dsmax7\maxsdk\lib"
 				ModuleDefinitionFile=""
-				GenerateDebugInformation="TRUE"
+				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug\$(ProjectName).pdb"
 				SubSystem="2"
 				ImportLibrary=".\Debug\$(TargetName).lib"
-				TargetMachine="1"/>
+				TargetMachine="1"
+			/>
 			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="FALSE"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCXDCMakeTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCBscMakeTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1036"
-				AdditionalIncludeDirectories="$(IntDir)"/>
+				Name="VCFxCopTool"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCAppVerifierTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
+				Name="VCWebDeploymentTool"
+			/>
 			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="2"
+			InheritedPropertySheets="UpgradeFromVC71.vsprops"
 			UseOfMFC="2"
-			CharacterSet="2">
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="false"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="C:\3dsmax7\maxsdk\include;../pavillonnoir/__src/pncommon"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
-				MinimalRebuild="FALSE"
+				MinimalRebuild="false"
 				RuntimeLibrary="2"
-				TreatWChar_tAsBuiltInType="TRUE"
-				UsePrecompiledHeader="2"
+				TreatWChar_tAsBuiltInType="true"
+				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile="./Release/$(TargetName).pch"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="3"/>
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1036"
+				AdditionalIncludeDirectories="$(IntDir)"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="core.lib geom.lib gfx.lib mesh.lib maxutil.lib maxscrpt.lib paramblk2.lib IGame.lib"
 				OutputFile="C:\3dsmax7\plugins\$(ProjectName).dle"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="C:\3dsmax7\maxsdk\lib"
-				GenerateDebugInformation="TRUE"
+				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Release\$(ProjectName).pdb"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				ImportLibrary=".\release\$(TargetName).lib"
-				TargetMachine="1"/>
+				TargetMachine="1"
+			/>
 			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="FALSE"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCXDCMakeTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCBscMakeTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1036"
-				AdditionalIncludeDirectories="$(IntDir)"/>
+				Name="VCFxCopTool"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCAppVerifierTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
+				Name="VCWebDeploymentTool"
+			/>
 			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -141,192 +206,246 @@
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
 			<File
-				RelativePath=".\PNExporter.cpp">
+				RelativePath=".\PNExporter.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNMainWin.cpp">
+				RelativePath=".\PNMainWin.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\pnmaxplugin.cpp">
+				RelativePath=".\pnmaxplugin.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNSaveThread.cpp">
+				RelativePath=".\PNSaveThread.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\stdafx.cpp">
+				RelativePath=".\stdafx.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
 			<File
-				RelativePath=".\PNExporter.hpp">
+				RelativePath=".\PNExporter.hpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNMainWin.hpp">
+				RelativePath=".\PNMainWin.hpp"
+				>
 			</File>
 			<File
-				RelativePath=".\pnmaxplugin.h">
+				RelativePath=".\pnmaxplugin.h"
+				>
 			</File>
 			<File
-				RelativePath=".\PNSaveThread.hpp">
+				RelativePath=".\PNSaveThread.hpp"
+				>
 			</File>
 			<File
-				RelativePath=".\Resource.h">
+				RelativePath=".\Resource.h"
+				>
 			</File>
 			<File
-				RelativePath=".\stdafx.h">
+				RelativePath=".\stdafx.h"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
 			<File
-				RelativePath=".\res\pnmaxplugin-mfc.ico">
+				RelativePath=".\res\pnmaxplugin-mfc.ico"
+				>
 			</File>
 			<File
-				RelativePath=".\pnmaxplugin-mfc.rc">
+				RelativePath=".\pnmaxplugin-mfc.rc"
+				>
 			</File>
 			<File
-				RelativePath=".\res\pnmaxplugin-mfc.rc2">
+				RelativePath=".\res\pnmaxplugin-mfc.rc2"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="animation"
-			Filter="">
+			>
 			<File
-				RelativePath=".\a_exportBody.cpp">
+				RelativePath=".\a_exportBody.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\a_exportHeader.cpp">
+				RelativePath=".\a_exportHeader.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\pavillonnoir\__src\pncommon\pna_format.h">
+				RelativePath="..\pavillonnoir\__src\pncommon\pna_format.h"
+				>
 			</File>
 			<File
-				RelativePath=".\PNAnimationExporter.cpp">
+				RelativePath=".\PNAnimationExporter.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNAnimationExporter.hpp">
+				RelativePath=".\PNAnimationExporter.hpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNAnimationWin.cpp">
+				RelativePath=".\PNAnimationWin.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNAnimationWin.hpp">
+				RelativePath=".\PNAnimationWin.hpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="model"
-			Filter="">
+			>
 			<File
-				RelativePath=".\m_exportBody.cpp">
+				RelativePath=".\m_exportBody.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\m_exportHeader.cpp">
+				RelativePath=".\m_exportHeader.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\pavillonnoir\__src\pncommon\pnm_format.h">
+				RelativePath="..\pavillonnoir\__src\pncommon\pnm_format.h"
+				>
 			</File>
 			<File
-				RelativePath=".\PNModelExporter.cpp">
+				RelativePath=".\PNModelExporter.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNModelExporter.hpp">
+				RelativePath=".\PNModelExporter.hpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="material"
-			Filter="">
+			>
 			<File
-				RelativePath=".\PNMaterialExporter.cpp">
+				RelativePath=".\PNMaterialExporter.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNMaterialExporter.hpp">
+				RelativePath=".\PNMaterialExporter.hpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNMaterialWin.cpp">
+				RelativePath=".\PNMaterialWin.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNMaterialWin.hpp">
+				RelativePath=".\PNMaterialWin.hpp"
+				>
 			</File>
 			<File
-				RelativePath="..\pavillonnoir\__src\pncommon\pnt_format.h">
+				RelativePath="..\pavillonnoir\__src\pncommon\pnt_format.h"
+				>
 			</File>
 			<File
-				RelativePath=".\t_export.cpp">
+				RelativePath=".\t_export.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\t_exportBody.cpp">
+				RelativePath=".\t_exportBody.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\t_exportHeader.cpp">
+				RelativePath=".\t_exportHeader.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="skeleton"
-			Filter="">
+			>
 			<File
-				RelativePath="..\pavillonnoir\__src\pncommon\pns_format.h">
+				RelativePath="..\pavillonnoir\__src\pncommon\pns_format.h"
+				>
 			</File>
 			<File
-				RelativePath=".\PNSBone.cpp">
+				RelativePath=".\PNSBone.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNSBone.hpp">
+				RelativePath=".\PNSBone.hpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNSkeletonExporter.cpp">
+				RelativePath=".\PNSkeletonExporter.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNSkeletonExporter.hpp">
+				RelativePath=".\PNSkeletonExporter.hpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNSkeletonWin.cpp">
+				RelativePath=".\PNSkeletonWin.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNSkeletonWin.hpp">
+				RelativePath=".\PNSkeletonWin.hpp"
+				>
 			</File>
 			<File
-				RelativePath=".\s_exportBody.cpp">
+				RelativePath=".\s_exportBody.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\s_exportHeader.cpp">
+				RelativePath=".\s_exportHeader.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="3dobject"
-			Filter="">
+			>
 			<File
-				RelativePath=".\PN3DObjectExporter.cpp">
+				RelativePath=".\PN3DObjectExporter.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PN3DObjectExporter.hpp">
+				RelativePath=".\PN3DObjectExporter.hpp"
+				>
 			</File>
 			<File
-				RelativePath="..\pavillonnoir\__src\pncommon\pno_format.h">
+				RelativePath="..\pavillonnoir\__src\pncommon\pno_format.h"
+				>
 			</File>
 			<File
-				RelativePath=".\PNObjectWindow.cpp">
+				RelativePath=".\PNObjectWindow.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\PNObjectWindow.hpp">
+				RelativePath=".\PNObjectWindow.hpp"
+				>
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\CHANGELOG.txt">
+			RelativePath=".\CHANGELOG.txt"
+			>
 		</File>
 		<File
-			RelativePath=".\ReadMe.txt">
+			RelativePath=".\ReadMe.txt"
+			>
 		</File>
 	</Files>
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value="pnmaxplugin-mfc.rc"/>
+			Value="pnmaxplugin-mfc.rc"
+		/>
 	</Globals>
 </VisualStudioProject>
