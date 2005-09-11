@@ -33,6 +33,7 @@
 #ifdef WIN32
 # include <Windows.h>
 //#include <sys/timeb.h>
+# define vsnprintf		_vsnprintf
 #else
 # include <errno.h>
 #endif
@@ -294,6 +295,7 @@ std::string	PNConsole::getTime()
   time_t t;
 
   time(&t);
+  /// TODO: corriger fuite de memoire ici : ctime fait un malloc donc il faut le liberer
   tmp = ctime(&t);
   tmp.replace(tmp.length()-1, 1, " ");
 
