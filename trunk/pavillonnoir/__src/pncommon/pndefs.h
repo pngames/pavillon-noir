@@ -267,6 +267,12 @@ namespace PN {
 #endif
 
 }
+
+#ifdef WIN32
+# define chdir(path)		_chdir(path)
+# define getcwd(buf, nb)	_getcwd(buf, nb)
+#endif
+
 	/**
 	* These are some of the ISO C99 standard single-precision transcendental functions.
 	* On LINUX, specify _GNU_SOURCE or _ISOC99_SOURCE to enable native implementation;
