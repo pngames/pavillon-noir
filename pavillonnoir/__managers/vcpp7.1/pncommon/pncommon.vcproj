@@ -19,7 +19,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../__library/win32/include/stlport;../../../__library/win32/include/;../../../__library/common/"
+				AdditionalIncludeDirectories="../../../__library/win32/include/;../../../__library/common/"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PNCOMMON_EXPORTS"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -32,7 +32,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="boost_filesystem-vc71-mt-p.lib boost_thread-vc71-mt-p.lib libxml2.lib iconv.lib"
+				AdditionalDependencies="libxml2.lib iconv.lib"
 				OutputFile="../../../__binaries/win32/pncommon-dbg.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
@@ -70,7 +70,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../__library/win32/include/stlport;../../../__library/win32/include/;../../../__library/common/"
+				AdditionalIncludeDirectories="../../../__library/win32/include/;../../../__library/common/"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PNCOMMON_EXPORTS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -81,7 +81,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="boost_filesystem-vc71-mt-p.lib boost_thread-vc71-mt-p.lib libxml2.lib iconv.lib"
+				AdditionalDependencies="libxml2.lib iconv.lib"
 				OutputFile="../../../__binaries/win32/pncommon.dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
