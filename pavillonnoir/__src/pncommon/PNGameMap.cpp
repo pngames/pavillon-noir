@@ -40,6 +40,7 @@
 #include "PNRendererInterface.hpp"
 #include "PNWayPoint.hpp"
 #include "PNIAGraph.hpp"
+#include "PNCharacter.hpp"
 
 #include "PNGameMap.hpp"
 
@@ -55,7 +56,6 @@ using namespace std;
 PNGameMap::PNGameMap()
 {
   PNPhysicsInterface::getInstance()->createSimulation();
-  _graph = new PNIAGraph;
 }
 
 PNGameMap::~PNGameMap()
@@ -130,6 +130,9 @@ int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
 	/*pnerror(PN_LOGLVL_DEBUG, "PNGameMap - Entity child: %s", current->name);*/
   }
 
+  if (object->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
+	((PNCharacter*)object)->buildGraph(*_wpFile);
+
   return PNEC_SUCCES;
 }
 
@@ -190,6 +193,8 @@ int	PNGameMap::unserialize(xmlNode* node)
 pnint PNGameMap::unserialize(const fs::path& dir)
 {
   fs::path file(dir.string() + "/entities.xml");
+  _wpFile = new fs::path(dir.string() + "/waypoints.xml");
+
   pnerror(PN_LOGLVL_INFO, "Loading GameMap: %s ...", file.native_file_string().c_str());
 
   if (!fs::exists(file))
@@ -236,8 +241,6 @@ pnint PNGameMap::unserialize(const fs::path& dir)
   // clean
 
   xmlFreeDoc(doc);									// free the document
-
-  _graph->unserialize(dir.string() + "/waypoints.xml");
 
   return error;
 }

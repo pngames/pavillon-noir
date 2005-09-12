@@ -51,7 +51,7 @@ class PNAPI PNGameMap : public PNObject
 protected:
   std::map<std::string, PNObject *> _entityList;
   PN3DCamera*                       _camera;
-  PNIAGraph*						_graph;
+  boost::filesystem::path			*_wpFile;
 
   //PN3DGround* _ground;
   //PN3DSkeletonObject* _player;
