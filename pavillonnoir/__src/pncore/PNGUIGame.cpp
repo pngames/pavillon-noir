@@ -50,6 +50,8 @@
 
 #include "PNMatrixTR4f.hpp"
 #include "PNQuatf.hpp"
+#include "PNWayPoint.hpp"
+#include "PNCharacter.hpp"
 
 using namespace PN;
 namespace fs = boost::filesystem;
@@ -343,6 +345,24 @@ void  PNGUIGame::_commandHideWP(const std::string&, std::istream& i)
   }
 }
 
+//FIXME: this is the cradest way to test PF!
+void  PNGUIGame::_commandMoveTo(const std::string&, std::istream& i)
+{
+  PN3DObjList::iterator it;
+  PNPoint				p(4900.0, 0.0, 4900.0);
+
+  for (it = PN3DCamera::getRenderCam()->_list3DObj.begin(); it != PN3DCamera::getRenderCam()->_list3DObj.end(); it++)
+  {
+	PN3DObject*	obj = (PN3DObject*)*it;
+
+	if (obj != NULL && obj->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
+	{
+	  ((PNCharacter*)obj)->moveTo(p);
+	  pnerror(PN_LOGLVL_DEBUG, "a PNCharacter has been told to move");
+	}
+  }
+}
+
   //////////////////////////////////////////////////////////////////////////
 
 void  PNGUIGame::_setPhysics(const std::string&, std::istream& i)
@@ -455,6 +475,7 @@ _myri = PNRendererInterface::getInstance();
   
   PNConsole::addFonction("showwp", &PNGUIGame::_commandShowWP, "Show WayPoints");
   PNConsole::addFonction("hidewp", &PNGUIGame::_commandHideWP, "Hide WayPoints");
+  PNConsole::addFonction("moveto", &PNGUIGame::_commandMoveTo, "Move selected character to given position");
 
  // PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE_HIDE, EventCallback(this, &PNGUIGame::inputHandleModifierState));
  // PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE_SHOW, EventCallback(this, &PNGUIGame::inputHandleModifierState));
