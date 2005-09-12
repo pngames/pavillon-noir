@@ -175,6 +175,7 @@ struct CEGUIEXPORT Key
         Delete          =0xD3,    /* Delete on arrow keypad */
         LeftWindows     =0xDB,    /* Left Windows key */
         RightWindow     =0xDC,    /* Right Windows key */
+        RightWindows    =0xDC,    /* Right Windows key - Correct spelling :) */
         AppMenu         =0xDD,    /* AppMenu key */
         Power           =0xDE,    /* System Power */
         Sleep           =0xDF,    /* System Sleep */
@@ -255,6 +256,7 @@ public:
 	MouseButton	button;			//!< one of the MouseButton enumerated values describing the mouse button causing the event (for button inputs only)
 	uint		sysKeys;		//!< current state of the system keys and mouse buttons.
 	float		wheelChange;	//!< Holds the amount the scroll wheel has changed.
+	uint        clickCount;     //!< Holds number of mouse button down events currently counted in a multi-click sequence (for button inputs only).
 };
 
 

@@ -321,29 +321,31 @@ protected:
 	/*!
 	\brief
 		create a PushButton based widget to use as the increase button for this scroll bar.
+
+    \param name
+        String holding the name that must be passed when creating the component widget.
 	*/
-	virtual PushButton*	createIncreaseButton(void) const		= 0;
+	virtual PushButton*	createIncreaseButton(const String& name) const		= 0;
 
 
 	/*!
 	\brief
 		create a PushButton based widget to use as the decrease button for this scroll bar.
+
+    \param name
+        String holding the name that must be passed when creating the component widget.
 	*/
-	virtual PushButton*	createDecreaseButton(void) const		= 0;
+	virtual PushButton*	createDecreaseButton(const String& name) const		= 0;
 
 
 	/*!
 	\brief
 		create a Thumb based widget to use as the thumb for this scroll bar.
-	*/
-	virtual Thumb*	createThumb(void) const		= 0;
 
-
-	/*!
-	\brief
-		layout the scroll bar component widgets
+    \param name
+        String holding the name that must be passed when creating the component widget.
 	*/
-	virtual void	layoutComponentWidgets(void)	= 0;
+	virtual Thumb*	createThumb(const String& name) const		= 0;
 
 
 	/*!
@@ -466,7 +468,6 @@ protected:
 		Overridden event handlers
 	*************************************************************************/
 	virtual void	onMouseButtonDown(MouseEventArgs& e);
-	virtual void	onSized(WindowEventArgs& e);
 	virtual	void	onMouseWheel(MouseEventArgs& e);
 
 

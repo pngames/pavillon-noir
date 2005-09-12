@@ -27,6 +27,11 @@
 #include "CEGUIWindow.h"
 #include "elements/CEGUITooltipProperties.h"
 
+#if defined(_MSC_VER)
+#	pragma warning(push)
+#	pragma warning(disable : 4251)
+#endif
+
 // Start of CEGUI namespace section
 namespace CEGUI
 {
@@ -76,6 +81,15 @@ namespace CEGUI
 
         /*!
         \brief
+            return the current target window for this Tooltip.
+
+        \return
+            Pointer to the target window for this Tooltip or 0 for none.
+        */
+        const Window* getTargetWindow();
+
+        /*!
+        \brief
             Resets the timer on the tooltip when in the Active / Inactive states.  This is used internally
             to control the tooltip, it is not normally necessary to call this method yourself.
 
@@ -96,8 +110,8 @@ namespace CEGUI
 
         /*!
         \brief
-            Set the number of seconds the mouse should hover stationary over the target window before
-            the tooltip gets activated.
+            Set the number of seconds the tooltip should be displayed for before it automatically
+            de-activates itself.  0 indicates that the tooltip should never timesout and auto-deactivate.
 
         \param seconds
             float value representing a number of seconds.
@@ -119,8 +133,8 @@ namespace CEGUI
 
         /*!
         \brief
-            Set the number of seconds that should be taken to fade the tooltip into and out of
-            visibility.
+            Set the number of seconds the mouse should hover stationary over the target window before
+            the tooltip gets activated.
 
         \param seconds
             float value representing a number of seconds.
@@ -142,8 +156,8 @@ namespace CEGUI
 
         /*!
         \brief
-            Set the number of seconds the tooltip should be displayed for before it automatically
-            de-activates itself.  use a value of 0 if you never want the tooltip to timeout.
+            Set the number of seconds that should be taken to fade the tooltip into and out of
+            visibility.
 
         \param seconds
             float value representing a number of seconds.
@@ -152,6 +166,16 @@ namespace CEGUI
             Nothing.
          */
         void setFadeTime(float seconds);
+
+        // 
+        /*!
+        \brief
+            Causes the tooltip to position itself appropriately.
+
+        \return
+            Nothing.
+        */
+        void positionSelf(void);
 
     protected:
         /*************************************************************************
@@ -175,9 +199,6 @@ namespace CEGUI
         void switchToFadeInState(void);
         void switchToFadeOutState(void);
 
-        // method to get the tooltip to position itself appropriately.
-        void positionSelf(void);
-
 
 		/*!
 		\brief
@@ -194,6 +215,16 @@ namespace CEGUI
 			if (class_name==(const utf8*)"Tooltip")	return true;
 			return Window::testClassName_impl(class_name);
 		}
+
+        /*!
+        \brief
+            Return the size of the area that will be occupied by the tooltip text, given
+            any current formatting options.
+
+        \return
+            Size object describing the size of the rendered tooltip text in pixels.
+        */
+        virtual Size getTextSize() const;
 
         /*************************************************************************
             Event triggers
@@ -264,6 +295,7 @@ namespace CEGUI
         ************************************************************************/
         void updateSelf(float elapsed);
         void onMouseEnters(MouseEventArgs& e);
+        void onTextChanged(WindowEventArgs& e);
 
         /************************************************************************
             Enumerations
@@ -306,5 +338,9 @@ namespace CEGUI
 
 } // End of  CEGUI namespace section
 
+
+#if defined(_MSC_VER)
+#	pragma warning(pop)
+#endif
 
 #endif  // end of guard _CEGUITooltip_h_

@@ -794,23 +794,13 @@ protected:
 
 	/*!
 	\brief
-		Setup size and position for the component widgets attached to this Combobox.
-
-	\return
-		Nothing.
-	*/
-	virtual void	layoutComponentWidgets()	= 0;
-
-
-	/*!
-	\brief
 		Create, initialise, and return a pointer to an Editbox widget to be used as part
 		of this Combobox.
 
 	\return
 		Pointer to an Editbox derived class.
 	*/
-	virtual	Editbox*	createEditbox(void) const		= 0;
+	virtual	Editbox*	createEditbox(const String& name) const		= 0;
 
 
 	/*!
@@ -821,7 +811,7 @@ protected:
 	\return
 		Pointer to a PushButton derived class.
 	*/
-	virtual	PushButton*	createPushButton(void) const	= 0;
+	virtual	PushButton*	createPushButton(const String& name) const	= 0;
 
 
 	/*!
@@ -832,7 +822,7 @@ protected:
 	\return
 		Pointer to a ComboDropList derived class.
 	*/
-	virtual	ComboDropList*	createDropList(void) const	= 0;
+	virtual	ComboDropList*	createDropList(const String& name) const	= 0;
 
 
 	/*!
@@ -1029,7 +1019,6 @@ protected:
 		Overridden Event handlers
 	*************************************************************************/
 	virtual	void	onFontChanged(WindowEventArgs& e);
-    virtual	void	onSized(WindowEventArgs& e);
 	virtual void	onTextChanged(WindowEventArgs& e);
 	virtual void	onActivated(ActivationEventArgs& e);
 

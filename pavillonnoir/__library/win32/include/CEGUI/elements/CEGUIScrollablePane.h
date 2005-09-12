@@ -28,6 +28,11 @@
 #include "CEGUIWindow.h"
 #include "elements/CEGUIScrollablePaneProperties.h"
 
+#if defined(_MSC_VER)
+#	pragma warning(push)
+#	pragma warning(disable : 4251)
+#endif
+
 // Start of CEGUI namespace section
 namespace CEGUI
 {
@@ -360,12 +365,6 @@ namespace CEGUI
 
         /*!
         \brief
-            Perform look and feel specific layout of the component widgets.
-        */
-        virtual void layoutComponentWidgets(void) = 0;
-
-        /*!
-        \brief
             Return a Rect that described the pane's viewable area, relative
             to this Window, in pixels.
 
@@ -574,5 +573,9 @@ namespace CEGUI
 
 } // End of  CEGUI namespace section
 
+
+#if defined(_MSC_VER)
+#	pragma warning(pop)
+#endif
 
 #endif	// end of guard _CEGUIScrollablePane_h_
