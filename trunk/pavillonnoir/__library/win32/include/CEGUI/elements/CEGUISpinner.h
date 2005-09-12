@@ -283,7 +283,7 @@ namespace CEGUI
         \return
             Pointer to a valid PushButton based object.
         */
-        virtual PushButton* createIncreaseButton(void) const = 0;
+        virtual PushButton* createIncreaseButton(const String& name) const = 0;
 
         /*!
         \brief
@@ -293,7 +293,7 @@ namespace CEGUI
         \return
             Pointer to a valid PushButton based object.
         */
-        virtual PushButton* createDecreaseButton(void) const = 0;
+        virtual PushButton* createDecreaseButton(const String& name) const = 0;
 
         /*!
         \brief
@@ -303,23 +303,11 @@ namespace CEGUI
         \return
             Pointer to a valid Editbox based object.
         */
-        virtual Editbox* createEditbox(void) const = 0;
-
-        /*!
-        \brief
-            Performs required layout of the component widgets that make up the
-            Spinner widget.
-
-        \return
-            Nothing.
-        */
-        virtual void layoutComponentWidgets(void) = 0;
-
+        virtual Editbox* createEditbox(const String& name) const = 0;
 
         /*************************************************************************
         	Overrides for Event handler methods
         *************************************************************************/
-        virtual void onSized(WindowEventArgs& e);
         virtual	void onFontChanged(WindowEventArgs& e);
         virtual void onTextChanged(WindowEventArgs& e);
         virtual void onActivated(ActivationEventArgs& e);
