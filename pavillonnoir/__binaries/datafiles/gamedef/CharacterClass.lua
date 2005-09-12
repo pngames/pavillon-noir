@@ -47,7 +47,7 @@ function CharacterClass(id)
 	function Character:startFight()
 		--do something
 	end
-
+	
 	function Character:manageFight()
 		--do something
 	end
@@ -63,13 +63,13 @@ function CharacterClass(id)
 	end
 	
 	function Character:onLuaUpdate(deltaTime)
-		self:onUpdate(deltatime)
+		self:onUpdate(deltaTime)
 	end
 	
 	function Character:OnLuaActionMoveTo(target)
-		
+		--do something
 	end
+
 	pnprint("ma\n")
 	return Character	
-	pnprint("rr\n")
 end
