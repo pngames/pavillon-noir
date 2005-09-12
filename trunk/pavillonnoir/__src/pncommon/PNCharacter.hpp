@@ -59,6 +59,9 @@ public:
   PNCharacter();
   virtual ~PNCharacter();
 
+  /* Use given class to find path */
+  void									buildGraph(boost::filesystem::path& file);
+
   /* IA main loop function */
   void									beSmart();
 

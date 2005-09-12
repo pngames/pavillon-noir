@@ -31,6 +31,8 @@
 #include "PNWayPoint.hpp"
 #include "PNCharacter.hpp"
 
+namespace fs = boost::filesystem;
+
 namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
@@ -47,9 +49,16 @@ PNCharacter::~PNCharacter()
 }
 
 void
+PNCharacter::buildGraph(fs::path& file)
+{
+  _pf.unserialize(file);
+}
+
+void
 PNCharacter::beSmart()
 {
   // set hurry or not
+  pnerror(PN_LOGLVL_DEBUG, "I'm C++smart !");
   if (_state == PN_IA_TRAVELLING)
   {
 	if (_coord == _toReach.getCoord())

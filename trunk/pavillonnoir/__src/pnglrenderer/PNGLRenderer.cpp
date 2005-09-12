@@ -57,6 +57,9 @@
 #include "PNPhysicsInterface.hpp"
 #include "PN3DCamera.hpp"
 
+#include "PNWayPoint.hpp"
+#include "PNCharacter.hpp"
+
 //#include "PNGLRenderUpdateEventData.hpp"
 
 #include <renderers/OpenGLGUIRenderer/openglrenderer.h>
@@ -440,6 +443,8 @@ PNGLRenderer::run()
 			obj->render();
 		  }
 		  popMatrix();
+		  if (obj->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
+			((PNCharacter*)obj)->beSmart();
 		}
 		popMatrix(); // Return to current context
 	  }
