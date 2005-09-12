@@ -31,6 +31,7 @@
 # define _PNCONSOLE_HPP_
 
 #include <map>
+#include <vector>
 #include <sstream>
 #include <fastdelegate/FastDelegate.h>
 
@@ -108,6 +109,7 @@ protected:
   virtual void		_writePerror(pnloglevel lvl, const pnchar* message)=0;
   
   static  std::string	getTime();
+  static  int			getFonctionCompletion(const std::string& cmd, std::vector< std::string >& candidates);
 protected:
   void				_cmdHelp(const std::string&, std::istream& i);
 private:

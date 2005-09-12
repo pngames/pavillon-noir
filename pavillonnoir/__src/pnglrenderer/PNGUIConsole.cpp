@@ -56,7 +56,7 @@ PNGUIConsole::PNGUIConsole()
   CEGUI::Editbox* _editBox =  (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().getWindow("PNConsole/EditBox");
 
   _editBox->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIConsole::textChangedHandler, this));
-  _editBox->subscribeEvent(CEGUI::Editbox::EventTextAccepted, CEGUI::Event::Subscriber(&PNGUIConsole::textAccepteddHandler,this));
+ // _editBox->subscribeEvent(CEGUI::Editbox::EventTextAccepted, CEGUI::Event::Subscriber(&PNGUIConsole::textAccepteddHandler,this));
   //rootSheet->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIConsole::eventKeyPressedHandler, this));
 
   //////////////////////////////////////////////////////////////////////////
@@ -232,7 +232,7 @@ void  PNGUIConsole::addItemToListBox(CEGUI::ListboxTextItem* item)
 Called when the return key is pressed in the input box and calls the right registered function.
 Save the command for the history.
 */
-bool  PNGUIConsole::textAccepteddHandler(const CEGUI::EventArgs& e)
+bool  PNGUIConsole::textAccepteddHandler(/*const CEGUI::EventArgs& e*/)
 {
   CEGUI::String line;
 
@@ -310,6 +310,69 @@ bool  PNGUIConsole::textChangedHandler(const CEGUI::EventArgs& e)
 	  eb->setText(tmp.c_str());
 	  eb->setCaratIndex((CEGUI::uint)tmp.length());
 	}
+  }
+  if (me->scancode == CEGUI::Key::Tab)
+  {
+	std::string cmd = eb->getText().c_str();
+	std::string text;
+	std::vector<std::string> candidates;
+	unsigned int matchcnt = PNConsole::getFonctionCompletion(cmd, candidates);
+
+	if (!matchcnt)
+	  _writeLine("type 'help' in order to get a complete list of possible commands.");
+
+	std::vector<std::string>::iterator p_beg = candidates.begin();
+	std::vector<std::string>::iterator p_end = candidates.end();
+
+	if (matchcnt > 1)
+	{
+	  text = "possible commands: ";
+	  for (;p_beg != p_end; p_beg++)
+		text += (*p_beg ) + "  ";
+
+	  text += "\n";
+	  _writeLine(text.c_str());
+
+	  bool dobreak = false;
+	  unsigned int cnt = cmd.size();
+
+	  do
+	  {
+		p_beg = candidates.begin();
+		p_end = candidates.end();
+
+		char matchc = (*p_beg)[cnt];
+		p_beg++;
+
+		for (;p_beg != p_end; p_beg++)
+		{
+		  std::string curcmd = *p_beg;
+		  if ((cnt >= curcmd.length()) || (matchc != curcmd[cnt]))
+		  {
+			dobreak = true;
+			break;
+		  }
+		}
+		cnt++;
+	  } while(!dobreak);
+
+	  std::string cmdc = *candidates.begin();
+	  cmdc = cmdc.substr(0, cnt-1);
+	  eb->setText(cmdc.c_str());
+	  eb->setCaratIndex(cmdc.length());
+	}
+
+	if (matchcnt == 1)
+	{
+	  text = *p_beg;
+	  eb->setText(text.c_str());
+	  eb->setCaratIndex(text.length());
+	}
+  }
+
+  if (me->scancode == CEGUI::Key::Return || me->scancode == CEGUI::Key::NumpadEnter)
+  {
+	textAccepteddHandler();
   }
   return true;
 }

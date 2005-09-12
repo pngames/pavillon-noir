@@ -72,7 +72,7 @@ namespace PN{
 
 	void  setlistboxItemSize(int size);
 
-	bool  textAccepteddHandler(const CEGUI::EventArgs& e);
+	bool  textAccepteddHandler(/*const CEGUI::EventArgs& e*/);
 	bool  eventKeyPressedHandler(const CEGUI::EventArgs& e);
 	bool  textChangedHandler(const CEGUI::EventArgs& e);
 	void  consoleVisibility(pnEventType type, PNObject* source, PNEventData* data);

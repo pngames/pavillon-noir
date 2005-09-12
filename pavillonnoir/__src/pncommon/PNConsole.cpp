@@ -302,6 +302,24 @@ std::string	PNConsole::getTime()
   return tmp;
 }
 
+int		PNConsole::getFonctionCompletion(const std::string& cmd, std::vector<std::string>& candidates)
+{
+  unsigned int matchfound = 0;
+
+  MapFonction::iterator iter_beg = _fonctionMap.begin();
+  MapFonction::iterator iter_end = _fonctionMap.end();
+
+  for ( ;iter_beg != iter_end; iter_beg++)
+  {        
+	if (iter_beg->first.find(cmd) == 0)
+	{
+	  candidates.push_back(iter_beg->first);
+	  matchfound++;
+	}
+  }
+  return matchfound;
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 void	PNConsole::_cmdHelp(const std::string&, std::istream& i)
