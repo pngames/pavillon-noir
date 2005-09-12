@@ -167,6 +167,12 @@ private:
 		String targetName;
 	};
 
+    struct FalagardMapping
+    {
+        String windowName;
+        String targetName;
+        String lookName;
+    };
 
 	/*************************************************************************
 		Implementation Data
@@ -174,9 +180,12 @@ private:
 	String	d_name;			//!< the name of this scheme.
 
 	std::vector<LoadableUIElement>		d_imagesets;
+	std::vector<LoadableUIElement>		d_imagesetsFromImages;
 	std::vector<LoadableUIElement>		d_fonts;
 	std::vector<UIModule>				d_widgetModules;
 	std::vector<AliasMapping>			d_aliasMappings;
+    std::vector<LoadableUIElement>		d_looknfeels;
+    std::vector<FalagardMapping>        d_falagardMappings;
 };
 
 } // End of  CEGUI namespace section

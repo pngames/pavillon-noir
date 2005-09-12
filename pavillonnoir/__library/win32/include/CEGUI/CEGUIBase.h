@@ -34,6 +34,8 @@
 // bring in configuration options
 #include "CEGUIConfig.h"
 
+// add CEGUI version defines
+#include "CEGUIVersion.h"
 
 /*************************************************************************
 	Dynamic Library import / export control conditional
@@ -57,9 +59,23 @@
 #   pragma warning(disable : 4786)
 #endif
 
-// No thanks Bill.
-#if defined( __WIN32__ ) || defined( _WIN32 )
-#   define NOMINMAX
+
+// Detect macros for min / max and undefine (with a warning where possible)
+#if defined(max)
+#   if defined(_MSC_VER)
+#       pragma message("Macro defintion of max detected - undefining")
+#   elif defined (__GNUC__)
+#       warning ("Macro defintion of max detected - undefining")
+#   endif
+#   undef max
+#endif
+#if defined(min)
+#   if defined(_MSC_VER)
+#       pragma message("Macro defintion of min detected - undefining")
+#   elif defined (__GNUC__)
+#       warning ("Macro defintion of min detected - undefining")
+#   endif
+#   undef min
 #endif
 
 
@@ -118,6 +134,11 @@ typedef unsigned char   uint8;
 static const float		DefaultNativeHorzRes	= 640.0f;		//!< Default native horizontal resolution (for fonts and imagesets)
 static const float		DefaultNativeVertRes	= 480.0f;		//!< Default native vertical resolution (for fonts and imagesets)
 
+
+/*************************************************************************
+    Additional typedefs
+*************************************************************************/
+typedef std::ostream OutStream;     //!< Output stream class.
 }  // end of CEGUI namespace section
 
 

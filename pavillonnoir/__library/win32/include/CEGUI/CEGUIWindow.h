@@ -36,6 +36,8 @@
 #include "CEGUISystem.h"
 #include "CEGUIInputEvent.h"
 #include "CEGUIWindowProperties.h"
+#include "CEGUIUDim.h"
+#include "CEGUIRenderCache.h"
 #include <vector>
 
 
@@ -64,6 +66,27 @@ enum MetricsMode
 	Inherited		//!< Metrics are inherited from parent.
 };
 
+/*!
+\brief
+    Enumerated type used when specifying vertical alignments.
+ */
+enum VerticalAlignment
+{
+    VA_TOP,        //!< Elements position specifies an offset of it's top edge from the top edge of it's parent.
+    VA_CENTRE,     //!< Elements position specifies an offset of it's vertical centre from the vertical centre of it's parent.
+    VA_BOTTOM      //!< Elements position specifies an offset of it's bottom edge from the bottom edge of it's parent.
+};
+
+/*!
+\brief
+    Enumerated type used when specifying horizontal alignments.
+ */
+enum HorizontalAlignment
+{
+    HA_LEFT,        //!< Elements position specifies an offset of it's left edge from the left edge of it's parent.
+    HA_CENTRE,      //!< Elements position specifies an offset of it's horizontal centre from the horizontal centre of it's parent.
+    HA_RIGHT        //!< Elements position specifies an offset of it's right edge from the right edge of it's parent.
+};
 
 /*!
 \brief
@@ -112,6 +135,8 @@ public:
 	static const String EventDragDropItemEnters;	//!< A DragContainer has been dragged over this window.
 	static const String EventDragDropItemLeaves;	//!< A DragContainer has left this window.
 	static const String EventDragDropItemDropped;	//!< A DragContainer was dropped on this Window.
+    static const String EventVerticalAlignmentChanged;    //!< The vertical alignment of the window has changed.
+    static const String EventHorizontalAlignmentChanged;  //!< The vertical alignment of the window has changed.
 
 	// generated externally (inputs)
 	static const String EventMouseEnters;				//!< Mouse cursor has entered the Window.
@@ -161,7 +186,7 @@ public:
 	\return
 		String object holding the Window type.
 	*/
-	const String& getType(void) const		{return d_type;}
+	const String& getType(void) const;
 
 
 	/*!
@@ -198,10 +223,14 @@ public:
 	\brief
 		return true if the Window is currently disabled
 
+	\param localOnly
+	   States whether to only return the state set for this window, and so not factor in
+	   inherited state from ancestor windows.
+
 	\return
 		true if the window is disabled, false if the window is enabled.
 	*/
-	bool	isDisabled(void) const;
+	bool	isDisabled(bool localOnly = false) const;
 
 
 	/*!
@@ -211,10 +240,14 @@ public:
 		A true return from this function does not mean that the window is not completely obscured by other windows, just that the window
 		is processed when rendering and is not hidden.
 
+	\param localOnly
+	   States whether to only return the state set for this window, and so not factor in
+	   inherited state from ancestor windows.
+
 	\return
 		true if the window is drawn, false if the window is hidden and therefore ignored when rendering.
 	*/
-	bool	isVisible(void) const;
+	bool	isVisible(bool localOnly = false) const;
 
 
 	/*!
@@ -347,10 +380,6 @@ public:
 	\brief
 		return a pointer to the child window that is attached to 'this' at the given index.
 
-	\note
-		Window indeces are of limited value to client code, since any time a window is added, removed, or
-		it's z-order is changed the indeces all change.
-
 	\param idx
 		Index of the child window whos pointer should be returned.  This value is not bounds checked,
 		client code should ensure that this is less than the value returned by getChildCount().
@@ -417,10 +446,13 @@ public:
 	\brief
 		return the Font object active for the Window.
 
+	\param useDefault
+	   Sepcifies whether to return the default font if Window has no preference set.
+
 	\return
 		Pointer to the Font being used by this Window.  If the window has no assigned font, the default font is returned.
 	*/
-	const Font*		getFont(void) const;
+	const Font*		getFont(bool useDefault = true) const;
 
 
 	/*!
@@ -705,10 +737,13 @@ public:
 	\brief
 		Return a pointer to the mouse cursor image to use when the mouse is within this window.
 
+	\param useDefault
+	   Sepcifies whether to return the default font if Window has no preference set.
+
 	\return
 		Pointer to the mouse cursor image that will be used when the mouse enters this window.  May return NULL indicating no cursor.
 	*/
-	const Image*	getMouseCursor(void) const;
+	const Image*	getMouseCursor(bool useDefault = true) const;
 
 
 	/*!
@@ -718,7 +753,7 @@ public:
 	\return
 		Rect object describing this windows area, relative to the parent window, in parent relative metrics.
 	*/
-	Rect	getRelativeRect(void) const				{return d_rel_area;}
+    Rect	getRelativeRect(void) const				{ return d_area.asRelative(getParentSize()); }
 
 
 	/*!
@@ -728,7 +763,7 @@ public:
 	\return
 		Point object describing this windows position, relative to the parent window, in parent relative metrics.
 	*/
-	Point	getRelativePosition(void) const			{return d_rel_area.getPosition();}
+	Point	getRelativePosition(void) const			{ return d_area.getPosition().asRelative(getParentSize()); }
 
 
 	/*!
@@ -738,7 +773,7 @@ public:
 	\return
 		float value describing this windows X position, relative to the parent window, in parent relative metrics.
 	*/
-	float	getRelativeXPosition(void) const		{return d_rel_area.d_left;}
+	float	getRelativeXPosition(void) const		{ return d_area.d_min.d_x.asRelative(getParentWidth()); }
 
 
 	/*!
@@ -748,7 +783,7 @@ public:
 	\return
 		float value describing this windows Y position, relative to the parent window, in parent relative metrics.
 	*/
-	float	getRelativeYPosition(void) const		{return d_rel_area.d_top;}
+	float	getRelativeYPosition(void) const		{ return d_area.d_min.d_y.asRelative(getParentHeight()); }
 
 
 	/*!
@@ -758,7 +793,7 @@ public:
 	\return
 		Size object describing this windows size in parent relative metrics.
 	*/
-	Size	getRelativeSize(void) const				{return d_rel_area.getSize();}
+    Size	getRelativeSize(void) const				{ return d_area.getSize().asRelative(getParentSize()).asSize(); }
 
 
 	/*!
@@ -768,7 +803,7 @@ public:
 	\return
 		float value describing this windows width in parent relative metrics.
 	*/
-	float	getRelativeWidth(void) const			{return d_rel_area.getWidth();}
+	float	getRelativeWidth(void) const			{ return d_area.getWidth().asRelative(getParentWidth()); }
 
 
 	/*!
@@ -778,7 +813,7 @@ public:
 	\return
 		float value describing this windows height in parent relative metrics.
 	*/
-	float	getRelativeHeight(void) const			{return d_rel_area.getHeight();}
+	float	getRelativeHeight(void) const			{ return d_area.getHeight().asRelative(getParentHeight()); }
 
 
 	/*!
@@ -788,7 +823,7 @@ public:
 	\return
 		Rect object describing this windows area, relative to the parent window, in absolute metrics
 	*/
-	Rect	getAbsoluteRect(void) const				{return d_abs_area;}
+    Rect	getAbsoluteRect(void) const				{ return Rect(d_area.getPosition().asAbsolute(getParentSize()), d_pixelSize); }
 
 
 	/*!
@@ -798,7 +833,7 @@ public:
 	\return
 		Point object describing this windows position, relative to the parent window, in absolute metrics.
 	*/
-	Point	getAbsolutePosition(void) const			{return d_abs_area.getPosition();}
+	Point	getAbsolutePosition(void) const			{ return d_area.getPosition().asAbsolute(getParentSize()); }
 
 
 	/*!
@@ -808,7 +843,7 @@ public:
 	\return
 		float value describing this windows X position, relative to the parent window, in absolute metrics.
 	*/
-	float	getAbsoluteXPosition(void) const		{return d_abs_area.d_left;}
+	float	getAbsoluteXPosition(void) const		{ return d_area.d_min.d_x.asAbsolute(getParentWidth()); }
 
 
 	/*!
@@ -818,7 +853,7 @@ public:
 	\return
 		float value describing this windows Y position, relative to the parent window, in absolute metrics.
 	*/
-	float	getAbsoluteYPosition(void) const		{return d_abs_area.d_top;}
+	float	getAbsoluteYPosition(void) const		{ return d_area.d_min.d_y.asAbsolute(getParentHeight()); }
 
 
 	/*!
@@ -828,7 +863,7 @@ public:
 	\return
 		Size object describing this windows size in absolute metrics.
 	*/
-	Size	getAbsoluteSize(void) const				{return d_abs_area.getSize();}
+	Size	getAbsoluteSize(void) const				{ return d_pixelSize; }
 
 
 	/*!
@@ -838,7 +873,7 @@ public:
 	\return
 		float value describing this windows width in absolute metrics.
 	*/
-	float	getAbsoluteWidth(void) const			{return d_abs_area.getWidth();}
+	float	getAbsoluteWidth(void) const			{ return d_pixelSize.d_width; }
 
 
 	/*!
@@ -848,7 +883,7 @@ public:
 	\return
 	float value describing this windows height in absolute metrics.
 	*/
-	float	getAbsoluteHeight(void) const			{return d_abs_area.getHeight();}
+	float	getAbsoluteHeight(void) const			{ return d_pixelSize.d_height; }
 
 
 	/*!
@@ -1102,6 +1137,102 @@ public:
 		true if this window was inherited from \a class_name. false if not.
 	*/
 	bool testClassName(const String& class_name) const		{return testClassName_impl(class_name);}
+
+    /*!
+    \brief
+        Get the vertical alignment.
+
+        Returns the vertical alignment for the window.  This setting affects how the windows position is
+        interpreted relative to its parent.
+
+    \return
+        One of the VerticalAlignment enumerated values.
+     */
+    VerticalAlignment getVerticalAlignment() const  {return d_vertAlign;}
+
+    /*!
+    \brief
+        Get the horizontal alignment.
+
+        Returns the horizontal alignment for the window.  This setting affects how the windows position is
+        interpreted relative to its parent.
+
+    \return
+        One of the HorizontalAlignment enumerated values.
+     */
+    HorizontalAlignment getHorizontalAlignment() const  {return d_horzAlign;}
+
+    /*!
+    \brief
+        Return the RenderCache object for this Window.
+
+    \return
+        Reference to the RenderCache object for this Window.
+    */
+    RenderCache& getRenderCache()   { return d_renderCache; }
+
+    /*!
+    \brief
+        Get the name of the LookNFeel assigned to this window.
+
+    \return
+        String object holding the name of the look assigned to this window.
+        Returns the empty string if no look is assigned.
+    */
+    const String& getLookNFeel();
+
+	/*!
+	\brief
+		Get whether or not this Window is the modal target.
+
+	\return
+		Returns true if this Window is the modal target, otherwise false.
+	*/
+	bool getModalState(void) const	{return (System::getSingleton().getModalTarget() == this);}
+
+
+	/*!
+	\brief
+	   Returns a named user string.
+
+    \param name
+        String object holding the name of the string to be returned.
+
+    \return
+        String object holding the data stored for the requested user string.
+
+    \exception UnknownObjectException thrown if a user string named \a name does not exist.
+    */
+    const String& getUserString(const String& name) const;
+
+    /*!
+    \brief
+        Return whether a user string with the specified name exists.
+
+    \param name
+        String object holding the name of the string to be checked.
+
+    \return
+        - true if a user string named \a name exists.
+        - false if no such user string exists.
+    */
+    bool isUserStringDefined(const String& name) const;
+
+    /*!
+    \brief
+        Returns the active sibling window.
+
+        This searches the immediate children of this window's parent, and returns a pointer
+        to the active window.  The method will return this if we are the immediate child of our
+        parent that is active.  If our parent is not active, or if no immediate child of our
+        parent is active then 0 is returned.  If this window has no parent, and this window is
+        not active then 0 is returned, else this is returned.
+
+    \return
+        A pointer to the immediate child window attached to our parent that is currently active,
+        or 0 if no immediate child of our parent is active.
+    */
+    Window* getActiveSibling();
 
     /*************************************************************************
 		Manipulator functions
@@ -1966,6 +2097,94 @@ public:
      */
     void setRiseOnClickEnabled(bool setting)    { d_riseOnClick = setting; }
 
+    /*!
+    \brief
+        Set the vertical alignment.
+
+        Modifies the vertical alignment for the window.  This setting affects how the windows position is
+        interpreted relative to its parent.
+
+    \param alignment
+        One of the VerticalAlignment enumerated values.
+
+    \return
+        Nothing.
+     */
+    void setVerticalAlignment(const VerticalAlignment alignment);
+
+    /*!
+    \brief
+        Set the horizontal alignment.
+
+        Modifies the horizontal alignment for the window.  This setting affects how the windows position is
+        interpreted relative to its parent.
+
+    \param alignment
+        One of the HorizontalAlignment enumerated values.
+
+    \return
+        Nothing.
+     */
+    void setHorizontalAlignment(const HorizontalAlignment alignment);
+
+    /*!
+    \brief
+        Set the LookNFeel that shoule be used for this window.
+
+    \param falagardType
+        String object holding the mapped falagard type name (since actual window type will be "Falagard/something")
+        and not what was passed to WindowManager.  This will be returned from getType instead of the base type.
+
+    \param look
+        String object holding the name of the look to be assigned to the window.
+
+    \return
+        Nothing.
+
+    \exception InvalidRequestException thrown if the window already has a look assigned to it.
+    */
+    void setLookNFeel(const String& falagardType, const String& look);
+
+	/*!
+	\brief
+		Set the modal state for this Window.
+
+	\param state
+		Boolean value defining if this Window should be the modal target.
+		If true, this Window will be activated and set as the modal target.
+		If false, the modal target will be cleared if this Window is currently the modal target.
+
+	\return
+		Nothing.
+	*/
+	void setModalState(bool state);
+
+    /*!
+    \brief
+        method called to perform extended laying out of attached child windows.
+
+        The system may call this at various times (like when it is resized for example), and it
+        may be invoked directly where required.
+
+    \return
+        Nothing.
+    */
+    virtual void performChildWindowLayout();
+
+    /*!
+    \brief
+       Sets the value a named user string, creating it as required.
+
+    \param name
+        String object holding the name of the string to be returned.
+
+    \param value
+        String object holding the value to be assigned to the user string.
+
+    \return
+        Nothing.
+    */
+    void setUserString(const String& name, const String& value);
 
     /*************************************************************************
 		Co-ordinate and Size Conversion Functions
@@ -2230,6 +2449,554 @@ public:
 	Rect	screenToWindow(const Rect& rect) const;
 
 
+    /*!
+    \brief
+        Convert the given X co-ordinate from unified to relative metrics.
+
+    \param val
+        X co-ordinate specified as a UDim relative to this Window (so {0, 0} is this windows left edge).
+
+    \return
+        A relative metric value that is equivalent to \a val, given the Window objects current width.
+    */
+    float unifiedToRelativeX(const UDim& val) const;
+
+
+    /*!
+    \brief
+        Convert the given Y co-ordinate from unified to relative metrics.
+
+    \param val
+        Y co-ordinate specified in as a UDim relative to this Window (so {0, 0} is this windows top edge).
+
+    \return
+        A relative metric value that is equivalent to \a val, given the Window objects current height.
+    */
+    float	unifiedToRelativeY(const UDim& val) const;
+
+
+    /*!
+    \brief
+        Convert the given UVector2 value from unified to relative metrics.
+
+    \param val
+        UVector2 object that describes a position specified in unified dimensions relative to this Window (so {{0, 0}, {0, 0}) is this windows top-left corner).
+
+    \return
+        A Vector2 object describing a relative metric point that is equivalent to \a val, given the Window objects current size.
+    */
+    Vector2 unifiedToRelative(const UVector2& val) const;
+
+
+    /*!
+    \brief
+        Convert the given area from unfied to relative metrics.
+
+    \param val
+        URect object describing the area specified in unified dimensions relative to this Window.
+
+    \return
+        A Rect object describing a relative metric area that is equivalent to \a val, given the Window objects current size.
+    */
+    Rect unifiedToRelative(const URect& val) const;
+
+
+    /*!
+    \brief
+        Convert the given X co-ordinate from unified to absolute metrics.
+
+    \param val
+        X co-ordinate specified as a UDim relative to this Window (so {0, 0} is this windows left edge).
+
+    \return
+        An absolute metric value that is equivalent to \a val, given the Window objects current width.
+    */
+    float unifiedToAbsoluteX(const UDim& val) const;
+
+
+    /*!
+    \brief
+        Convert the given Y co-ordinate from unified to absolute metrics.
+
+    \param val
+        Y co-ordinate specified in as a UDim relative to this Window (so {0, 0} is this windows top edge).
+
+    \return
+        An absolute metric value that is equivalent to \a val, given the Window objects current height.
+    */
+    float	unifiedToAbsoluteY(const UDim& val) const;
+
+
+    /*!
+    \brief
+        Convert the given UVector2 value from unified to absolute metrics.
+
+    \param val
+        UVector2 object that describes a position specified in unified dimensions relative to this Window (so {{0, 0}, {0, 0}) is this windows top-left corner).
+
+    \return
+        A Vector2 object describing a absolute metric point that is equivalent to \a val, given the Window objects current size.
+    */
+    Vector2 unifiedToAbsolute(const UVector2& val) const;
+
+
+    /*!
+    \brief
+        Convert the given area from unfied to absolute metrics.
+
+    \param val
+        URect object describing the area specified in unified dimensions relative to this Window.
+
+    \return
+        A Rect object describing an absolute metric area that is equivalent to \a val, given the Window objects current size.
+    */
+    Rect unifiedToAbsolute(const URect& val) const;
+
+
+    /*!
+    \brief
+        Convert a window co-ordinate value, specified as a UDim, to a screen relative pixel co-ordinate.
+
+    \param x
+        UDim x co-ordinate value to be converted
+
+    \return
+        float value describing a pixel screen co-ordinate that is equivalent to window UDim co-ordinate \a x.
+    */
+    float windowToScreenX(const UDim& x) const;
+
+
+    /*!
+    \brief
+        Convert a window co-ordinate value, specified as a UDim, to a screen relative pixel co-ordinate.
+
+    \param y
+        UDim y co-ordinate value to be converted
+
+    \return
+        float value describing a screen co-ordinate that is equivalent to window UDim co-ordinate \a y.
+    */
+    float windowToScreenY(const UDim& y) const;
+
+
+    /*!
+    \brief
+        Convert a window co-ordinate point, specified as a UVector2, to a screen relative pixel co-ordinate point.
+
+    \param vec
+        UVector2 object describing the point to be converted
+
+    \return
+        Vector2 object describing a screen co-ordinate position that is equivalent to window based UVector2 \a vec.
+    */
+    Vector2 windowToScreen(const UVector2& vec) const;
+
+
+    /*!
+    \brief
+        Convert a window area, specified as a URect, to a screen area.
+
+    \param rect
+        URect object describing the area to be converted
+
+    \return
+        Rect object describing a screen area that is equivalent to window area \a rect.
+    */
+    Rect windowToScreen(const URect& rect) const;
+
+
+    /*!
+    \brief
+        Convert a screen relative UDim co-ordinate value to a window co-ordinate value, specified in whichever metrics mode is active.
+
+    \param x
+        UDim x co-ordinate value to be converted
+
+    \return
+        float value describing a window co-ordinate value that is equivalent to screen UDim co-ordinate \a x.
+    */
+    float screenToWindowX(const UDim& x) const;
+
+
+    /*!
+    \brief
+        Convert a screen relative UDim co-ordinate value to a window co-ordinate value, specified in whichever metrics mode is active.
+
+    \param y
+        UDim y co-ordinate value to be converted
+
+    \return
+        float value describing a window co-ordinate value that is equivalent to screen UDim co-ordinate \a y.
+    */
+    float screenToWindowY(const UDim& y) const;
+
+
+    /*!
+    \brief
+        Convert a screen relative UVector2 point to a window co-ordinate point, specified in whichever metrics mode is active.
+
+    \param vec
+        UVector2 object describing the point to be converted
+
+    \return
+        Vector2 object describing a window co-ordinate point that is equivalent to screen based UVector2 point \a vec.
+    */
+    Vector2 screenToWindow(const UVector2& vec) const;
+
+
+    /*!
+    \brief
+        Convert a URect screen area to a window area, specified in whichever metrics mode is active.
+
+    \param rect
+        URect object describing the area to be converted
+
+    \return
+        Rect object describing a window area that is equivalent to URect screen area \a rect.
+    */
+    Rect screenToWindow(const URect& rect) const;
+
+
+    /*************************************************************************
+        Interface to unified co-ordinate system
+    *************************************************************************/
+    /*!
+    \brief
+        Set the window area.
+
+        Sets the area occupied by this window.  The defined area is offset from the
+        top-left corner of this windows parent window or from the top-left corner of
+        the display if this window has no parent (i.e. it is the root window).
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \param xpos
+        UDim describing the new x co-ordinate (left edge) of the window area.
+    
+    \param ypos
+        UDim describing the new y co-ordinate (top-edge) of the window area.
+    
+    \param width
+        UDim describing the new width of the window area.
+    
+    \param height
+        UDim describing the new height of the window area.
+     */
+    void setWindowArea(const UDim& xpos, const UDim& ypos, const UDim& width, const UDim& height);
+    
+    /*!
+    \brief
+        Set the window area.
+
+        Sets the area occupied by this window.  The defined area is offset from the
+        top-left corner of this windows parent window or from the top-left corner of
+        the display if this window has no parent (i.e. it is the root window).
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \param pos
+        UVector2 describing the new position (top-left corner) of the window area.
+        
+    \param size
+        UVector2 describing the new size of the window area.
+     */
+    void setWindowArea(const UVector2& pos, const UVector2& size);
+    
+    /*!
+    \brief
+        Set the window area.
+
+        Sets the area occupied by this window.  The defined area is offset from the
+        top-left corner of this windows parent window or from the top-left corner of
+        the display if this window has no parent (i.e. it is the root window).
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \param area
+        URect describing the new area rectangle of the window area.
+     */
+    void setWindowArea(const URect& area);
+    
+    /*!
+    \brief
+        Set the window's position.
+
+        Sets the position of the area occupied by this window.  The position is offset from the
+        top-left corner of this windows parent window or from the top-left corner of
+        the display if this window has no parent (i.e. it is the root window).
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \param pos
+        UVector2 describing the new position (top-left corner) of the window area.
+     */
+    void setWindowPosition(const UVector2& pos);
+
+    /*!
+    \brief
+        Set the window's X position.
+
+        Sets the x position (left edge) of the area occupied by this window.  The position is
+        offset from the left edge of this windows parent window or from the left edge of
+        the display if this window has no parent (i.e. it is the root window).
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \param x
+        UDim describing the new x position of the window area.
+     */
+    void setWindowXPosition(const UDim& x);
+
+    /*!
+    \brief
+        Set the window's Y position.
+
+        Sets the y position (top edge) of the area occupied by this window.  The position is
+        offset from the top edge of this windows parent window or from the top edge of
+        the display if this window has no parent (i.e. it is the root window).
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \param y
+        UDim describing the new y position of the window area.
+     */
+    void setWindowYPosition(const UDim& y);
+
+    /*!
+    \brief
+        Set the window's size.
+
+        Sets the size of the area occupied by this window.
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \param size
+        UVector2 describing the new size of the window area.
+     */
+    void setWindowSize(const UVector2& size);
+
+    /*!
+    \brief
+        Set the window's width.
+
+        Sets the width of the area occupied by this window.
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \param width
+        UDim describing the new width of the window area.
+     */
+    void setWindowWidth(const UDim& width);
+
+    /*!
+    \brief
+        Set the window's height.
+
+        Sets the height of the area occupied by this window.
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \param height
+        UDim describing the new height of the window area.
+     */
+    void setWindowHeight(const UDim& height);
+
+    /*!
+    \brief
+        Set the window's maximum size.
+
+        Sets the maximum size that this windows area may occupy (whether size changes occur by user
+        interaction, general system operation, or by direct setting by client code).
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \param size
+        UVector2 describing the new maximum size of the window area.
+     */
+    void setWindowMaxSize(const UVector2& size);
+
+    /*!
+    \brief
+        Set the window's minimum size.
+
+        Sets the minimum size that this windows area may occupy (whether size changes occur by user
+        interaction, general system operation, or by direct setting by client code).
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \param size
+        UVector2 describing the new minimum size of the window area.
+     */
+    void setWindowMinSize(const UVector2& size);
+
+    /*!
+    \brief
+        Return the windows area.
+
+        Returns the area occupied by this window.  The defined area is offset from the
+        top-left corner of this windows parent window or from the top-left corner of
+        the display if this window has no parent (i.e. it is the root window).
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \return
+        URect describing the rectangle of the window area.
+     */
+    const URect& getWindowArea() const;
+
+    /*!
+    \brief
+        Get the window's position.
+
+        Gets the position of the area occupied by this window.  The position is offset from the
+        top-left corner of this windows parent window or from the top-left corner of
+        the display if this window has no parent (i.e. it is the root window).
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \return
+        UVector2 describing the position (top-left corner) of the window area.
+     */
+    const UVector2& getWindowPosition() const;
+
+    /*!
+    \brief
+        Get the window's X position.
+
+        Gets the x position (left edge) of the area occupied by this window.  The position is
+        offset from the left edge of this windows parent window or from the left edge of
+        the display if this window has no parent (i.e. it is the root window).
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \return
+        UDim describing the x position of the window area.
+     */
+    const UDim& getWindowXPosition() const;
+
+    /*!
+    \brief
+        Get the window's Y position.
+
+        Gets the y position (top edge) of the area occupied by this window.  The position is
+        offset from the top edge of this windows parent window or from the top edge of
+        the display if this window has no parent (i.e. it is the root window).
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \return
+        UDim describing the y position of the window area.
+     */
+    const UDim& getWindowYPosition() const;
+
+    /*!
+    \brief
+        Get the window's size.
+
+        Gets the size of the area occupied by this window.
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \return
+        UVector2 describing the size of the window area.
+     */
+    UVector2 getWindowSize() const;
+
+    /*!
+    \brief
+        Get the window's width.
+
+        Gets the width of the area occupied by this window.
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \return
+        UDim describing the width of the window area.
+     */
+    UDim getWindowWidth() const;
+
+    /*!
+    \brief
+        Get the window's height.
+
+        Gets the height of the area occupied by this window.
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \return
+        UDim describing the height of the window area.
+     */
+    UDim getWindowHeight() const;
+
+    /*!
+    \brief
+        Get the window's maximum size.
+
+        Gets the maximum size that this windows area may occupy (whether size changes occur by user
+        interaction, general system operation, or by direct setting by client code).
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \return
+        UVector2 describing the maximum size of the window area.
+     */
+    const UVector2& getWindowMaxSize() const;
+
+    /*!
+    \brief
+        Get the window's minimum size.
+
+        Gets the minimum size that this windows area may occupy (whether size changes occur by user
+        interaction, general system operation, or by direct setting by client code).
+
+    \note
+        This method makes use of "Unified Dimensions".  These contain both parent relative and
+        absolute pixel components, which are used in determining the final value used.
+
+    \return
+        UVector2 describing the minimum size of the window area.
+     */
+    const UVector2& getWindowMinSize() const;
+
+
 	/*************************************************************************
 		Main render function.
 	*************************************************************************/
@@ -2260,6 +3027,18 @@ public:
 	*/
 	void	update(float elapsed);
 
+
+    /*!
+    \brief
+        Writes an xml representation of this window object to \a out_stream.
+
+    \param out_stream
+        Stream where xml data should be output.
+
+    \return
+        Nothing.
+    */
+    virtual void writeXMLToStream(OutStream& out_stream) const;
 
 protected:
 	/*************************************************************************
@@ -2714,7 +3493,29 @@ protected:
     */
     virtual void    onDragDropItemDropped(DragDropEventArgs& e);
 
+    
+    /*!
+    \brief
+        Handler called when the vertical alignment setting for the window is changed.
 
+    \param e
+        WindowEventArgs object initialised as follows:
+        - window field is set to point to the Window object whos alignment has changed (typically 'this').
+    */
+    virtual void    onVerticalAlignmentChanged(WindowEventArgs& e);
+
+    
+    /*!
+    \brief
+        Handler called when the horizontal alignment setting for the window is changed.
+
+    \param e
+        WindowEventArgs object initialised as follows:
+        - window field is set to point to the Window object whos alignment has changed (typically 'this').
+    */
+    virtual void    onHorizontalAlignmentChanged(WindowEventArgs& e);
+
+    
 	/*************************************************************************
 		Implementation Functions
 	*************************************************************************/
@@ -2741,7 +3542,16 @@ protected:
 	\return
 		Nothing
 	*/
-	virtual	void	drawSelf(float z)	= 0;
+	virtual	void	drawSelf(float z);
+
+
+	/*!
+	\brief
+	   Update the rendering cache.
+
+	   Populates the Window's RenderCache with imagery to be sent to the renderer.
+    */
+    virtual void populateRenderCache()  {}
 
 
 	/*!
@@ -2869,6 +3679,7 @@ protected:
 	// child stuff
 	typedef	std::vector<Window*>	ChildList;
 	ChildList		d_children;			//!< The list of child Window objects attached to this.
+    ChildList       d_drawList;         //!< Child window objects arranged in rendering order.
 
 	// general data
 	MetricsMode		d_metricsMode;		//!< Holds the active metrics mode for this window
@@ -2879,14 +3690,21 @@ protected:
 	String			d_text;				//!< Holds the text / label / caption for this Window.
 	uint			d_ID;				//!< User ID assigned to this Window
 	float			d_alpha;			//!< Alpha transparency setting for the Window
-	Rect			d_abs_area;			//!< This Window objects area (pixels relative to parent)
-	Rect			d_rel_area;			//!< This Window objects area (decimal fractions relative to parent)
+    URect			d_area;             //!< This Window objects area as defined by a URect.
+    Size            d_pixelSize;        //!< Current constrained pixel size of the window.
 	const Image*	d_mouseCursor;		//!< Holds pointer to the Window objects current mouse cursor image.
 	void*			d_userData;			//!< Holds pointer to some user assigned data.
 
+	typedef std::map<String, String>   UserStringMap;
+	UserStringMap  d_userStrings;      //!< Holds a collection of named user string values.
+
+    // positional alignments
+    HorizontalAlignment d_horzAlign;    //!< Specifies the base for horizontal alignment.
+    VerticalAlignment   d_vertAlign;    //!< Specifies the base for vertical alignment.
+    
 	// maximum and minimum sizes
-	Size	d_minSize;					//!< current minimum size for the window (this is always stored in pixels).
-	Size	d_maxSize;					//!< current maximum size for the window (this is always stored in pixels).
+	UVector2       d_minSize;          //!< current minimum size for the window.
+	UVector2       d_maxSize;          //!< current maximum size for the window.
 
 	// settings
 	bool	d_enabled;					//!< true when Window is enabled
@@ -2915,6 +3733,13 @@ protected:
     Tooltip* d_customTip;       //!< Possible custom Tooltip for this window.
     bool     d_weOwnTip;        //!< true if this Window created the custom Tooltip.
     bool     d_inheritsTipText; //!< true if the Window inherits tooltip text from its parent (when none set for itself).
+
+    // rendering
+    RenderCache d_renderCache;  //!< Object which acts as a cache for Images to be drawn by this Window.
+    mutable bool d_needsRedraw;      //!< true if window image cache needs to be regenerated.
+
+    // Look'N'Feel stuff
+    String  d_lookName;         //!< Name of the Look assigned to this window (if any).
 
 protected:
 	/*************************************************************************
@@ -2968,10 +3793,21 @@ protected:
     static  WindowProperties::Tooltip           d_tooltipProperty;
     static  WindowProperties::InheritsTooltipText d_inheritsTooltipProperty;
     static  WindowProperties::RiseOnClick       d_riseOnClickProperty;
+    static  WindowProperties::VerticalAlignment   d_vertAlignProperty;
+    static  WindowProperties::HorizontalAlignment d_horzAlignProperty;
+    static	WindowProperties::UnifiedAreaRect	d_unifiedAreaRectProperty;
+    static	WindowProperties::UnifiedPosition	d_unifiedPositionProperty;
+    static	WindowProperties::UnifiedXPosition	d_unifiedXPositionProperty;
+    static	WindowProperties::UnifiedYPosition	d_unifiedYPositionProperty;
+    static	WindowProperties::UnifiedSize		d_unifiedSizeProperty;
+    static	WindowProperties::UnifiedWidth		d_unifiedWidthProperty;
+    static	WindowProperties::UnifiedHeight		d_unifiedHeightProperty;
+    static	WindowProperties::UnifiedMinSize	d_unifiedMinSizeProperty;
+    static	WindowProperties::UnifiedMaxSize	d_unifiedMaxSizeProperty;
 
 
 	/*************************************************************************
-		Private implementation functions
+		implementation functions
 	*************************************************************************/
 	/*!
 	\brief
@@ -3024,6 +3860,70 @@ protected:
      */
     void doRiseOnClick(void);
 
+    
+    /*!
+    \brief
+        Implementation method to modify window area while correctly applying min / max size processing, and
+        firing any appropriate events.
+
+    /note
+        This is the implementation function for setting size and position.
+        In order to simplify area management, from this point on, all modifications to window size and
+        position (area rect) should come through here.
+
+    /param pos
+        UVector2 object describing the new area position.
+
+    /param size
+        UVector2 object describing the new area size.
+
+    /param topLeftSizing
+        - true to indicate the the operation is a sizing operation on the top and/or left edges of the area,
+            and so window movement should be inhibited if size is at max or min.
+        - false to indicate the operation is not a strict sizing operation on the top and/or left edges and
+            that the window position may change as required
+    
+    /param fireEvents
+        - true if events should be fired as normal.
+        - false to inhibit firing of events (required, for example, if you need to call this from
+            the onSize/onMove handlers).
+     */
+    void setWindowArea_impl(const UVector2& pos, const UVector2& size, bool topLeftSizing = false, bool fireEvents = true);
+
+    /*!
+    \brief
+        Add the given window to the drawing list at an appropriate position for it's settings and the
+        required direction.  Basically, when \a at_back is false, the window will appear in front of
+        all other windows with the same 'always on top' setting.  When \a at_back is true, the window
+        will appear behind all other windows wih the same 'always on top' setting.
+
+    \param wnd
+        Window object to be added to the drawing list.
+
+    \param at_back
+        Indicates whether the window should be placed at the back of other windows in the same group.
+        If this is false, the window is place in front of other windows in the group.
+
+    \return
+        Nothing.
+    */
+    void addWindowToDrawList(Window& wnd, bool at_back = false);
+
+    /*!
+    \brief
+        Removes the window from the drawing list.  If the window is not attached to the drawing list
+        then nothing happens.
+
+    \param wnd
+        Window object to be removed from the drawing list.
+
+    \return
+        Nothing.
+    */
+    void removeWindowFromDrawList(const Window& wnd);
+
+    virtual int writePropertiesXML(OutStream& out_stream) const;
+    virtual int writeChildWindowsXML(OutStream& out_stream) const;
 	
 	/*************************************************************************
 		May not copy or assign Window objects
@@ -3036,6 +3936,7 @@ protected:
 	*************************************************************************/
 	const String	d_type;			//!< String holding the type name for the Window (is also the name of the WindowFactory that created us)
 	const String	d_name;			//!< The name of the window (GUI system unique).
+	String    d_falagardType;       //!< Type name of the window as defined in a Falagard mapping.
 };
 
 } // End of  CEGUI namespace section

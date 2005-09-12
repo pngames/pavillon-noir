@@ -29,6 +29,7 @@
 #include "CEGUIBase.h"
 #include "CEGUIString.h"
 #include "CEGUIColourRect.h"
+#include "CEGUIRenderCache.h"
 
 // Start of CEGUI namespace section
 namespace CEGUI
@@ -77,7 +78,7 @@ public:
 		String object containing the current text for the list box item.
 	*/
 	const String&	getText(void) const		{return d_itemText;}
-
+	const String&	getTooltipText(void) const		{return d_tooltipText;}
 
 	/*!
 	\brief
@@ -188,6 +189,7 @@ public:
 	*/
 	void	setText(const String& text)		{d_itemText = text;}
 
+	void	setTooltipText(const String& text)		{d_tooltipText = text;}
 
 	/*!
 	\brief
@@ -384,6 +386,7 @@ public:
 	*/
 	virtual	void	draw(const Vector3& position, float alpha, const Rect& clipper) const	= 0;
 
+    virtual void    draw(RenderCache& cache,const Rect& targetRect, float zBase,  float alpha, const Rect* clipper) const = 0;
 
 	/*************************************************************************
 		Operators
@@ -426,6 +429,7 @@ protected:
 		Implementation Data
 	*************************************************************************/
 	String	d_itemText;		//!< Text for this list box item.  If not rendered, this is still used for list sorting.
+	String  d_tooltipText;  //!< Text for the individual tooltip of this item
 	uint	d_itemID;		//!< ID code assigned by client code.  This has no meaning within the GUI system.
 	void*	d_itemData;		//!< Pointer to some client code data.  This has no meaning within the GUI system.
 	bool	d_selected;		//!< true if this item is selected.  false if the item is not selected.

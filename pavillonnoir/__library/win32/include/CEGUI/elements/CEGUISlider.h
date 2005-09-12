@@ -187,15 +187,11 @@ protected:
 	/*!
 	\brief
 		create a Thumb based widget to use as the thumb for this slider.
-	*/
-	virtual Thumb*	createThumb(void) const		= 0;
 
-
-	/*!
-	\brief
-		layout the slider component widgets
+    \param name
+        String containing the name to be assigned to the thumb upon creation.
 	*/
-	virtual void	layoutComponentWidgets(void)	= 0;
+	virtual Thumb*	createThumb(const String& name) const		= 0;
 
 
 	/*!
@@ -297,7 +293,6 @@ protected:
 		Overridden event handlers
 	*************************************************************************/
 	virtual void	onMouseButtonDown(MouseEventArgs& e);
-	virtual void	onSized(WindowEventArgs& e);
 	virtual	void	onMouseWheel(MouseEventArgs& e);
 
 

@@ -77,15 +77,21 @@ namespace CEGUI
         // XML related strings
         static const String GUISchemeElement;               //!< Root GUIScheme element.
         static const String ImagesetElement;                //!< Element specifying an Imageset
+        static const String ImagesetFromImageElement;       //!< Element specifying an Imageset to be created directly via an image file.
         static const String FontElement;                    //!< Element specifying a Font
         static const String WindowSetElement;               //!< Element specifying a module and set of WindowFactory elements.
         static const String WindowFactoryElement;           //!< Element specifying a WindowFactory type.
-        static const String WindowAliasElement;         //!< Element specifying a WindowFactory type alias
-        static const char   NameAttribute[];                //!< Attribute specifying the name of some object.
-        static const char   FilenameAttribute[];            //!< Attribute specifying the name of some file.
-        static const char   AliasAttribute[];               //!< Attribute specifying an alias name.
-        static const char   TargetAttribute[];              //!< Attribute specifying target for an alias.
-        static const char   ResourceGroupAttribute[];       //!< Attribute specifying resource group for some loadable resource.
+        static const String WindowAliasElement;             //!< Element specifying a WindowFactory type alias
+        static const String FalagardMappingElement;         //!< Element specifying a Falagard window mapping
+        static const String LookNFeelElement;               //!< Element specifying a LookNFeel.
+        static const String NameAttribute;                  //!< Attribute specifying the name of some object.
+        static const String FilenameAttribute;              //!< Attribute specifying the name of some file.
+        static const String AliasAttribute;                 //!< Attribute specifying an alias name.
+        static const String TargetAttribute;                //!< Attribute specifying target for an alias.
+        static const String ResourceGroupAttribute;         //!< Attribute specifying resource group for some loadable resource.
+        static const String WindowTypeAttribute;            //!< Attribute specifying the type of a window being created via a mapping.
+        static const String TargetTypeAttribute;            //!< Attribute specifying the base target type of a falagard mapped window type.
+        static const String LookNFeelAttribute;             //!< Attribute specifying the name of a LookNFeel for a falagard mapping..
 
 
         /*************************************************************************

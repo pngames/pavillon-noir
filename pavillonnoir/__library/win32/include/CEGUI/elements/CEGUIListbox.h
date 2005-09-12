@@ -163,6 +163,7 @@ public:
 	*/
 	bool	isMultiselectEnabled(void) const	{return d_multiselect;}
 
+	bool	isItemTooltipsEnabled(void) const	{return d_itemTooltips;}
 
 	/*!
 	\brief
@@ -370,7 +371,7 @@ public:
 	*/
 	void	setShowHorzScrollbar(bool setting);
 
-
+	void	setItemTooltipsEnabled(bool setting);
 	/*!
 	\brief
 		Set the select state of an attached ListboxItem.
@@ -496,46 +497,39 @@ protected:
 	\brief
 		create and return a pointer to a Scrollbar widget for use as vertical scroll bar
 
+	\param name
+	   String holding the name to be given to the created widget component.
+
 	\return
 		Pointer to a Scrollbar to be used for scrolling the list vertically.
 	*/
-	virtual Scrollbar*	createVertScrollbar(void) const		= 0;
+	virtual Scrollbar*	createVertScrollbar(const String& name) const		= 0;
  
 
 	/*!
 	\brief
 		create and return a pointer to a Scrollbar widget for use as horizontal scroll bar
 
+	\param name
+	   String holding the name to be given to the created widget component.
+
 	\return
 		Pointer to a Scrollbar to be used for scrolling the list horizontally.
 	*/
-	virtual Scrollbar*	createHorzScrollbar(void) const		= 0;
+	virtual Scrollbar*	createHorzScrollbar(const String& name) const		= 0;
 
 
 	/*!
 	\brief
-		Setup size and position for the component widgets attached to this Listbox
-
-	\return
-		Nothing.
-	*/
-	virtual void	layoutComponentWidgets()	= 0;
-
-
-	/*!
-	\brief
-		Perform rendering of the widget control frame and other 'static' areas.  This
+		Perform caching of the widget control frame and other 'static' areas.  This
 		method should not render the actual items.  Note that the items are typically
 		rendered to layer 3, other layers can be used for rendering imagery behind and
 		infront of the items.
 
-	\param z
-		Z co-ordinate for layer 0.
-
 	\return
 		Nothing.
 	*/
-	virtual	void	renderListboxBaseImagery(float z)		= 0;
+	virtual	void cacheListboxBaseImagery() = 0;
 
 
 	/*************************************************************************
@@ -546,19 +540,6 @@ protected:
 		Add list box specific events
 	*/
 	void	addListboxEvents(void);
-
-
-	/*!
-	\brief
-		Perform the actual rendering for this Window.
-
-	\param z
-		float value specifying the base Z co-ordinate that should be used when rendering
-
-	\return
-		Nothing
-	*/
-	virtual	void	drawSelf(float z);
 
 
 	/*!
@@ -640,6 +621,15 @@ protected:
 		return Window::testClassName_impl(class_name);
 	}
 
+	/*!
+	\brief
+	   Internal handler that is triggered when the user interacts with the scrollbars.
+    */
+    bool handle_scrollChange(const EventArgs& args);
+
+    // overridden from Window base class.
+    void populateRenderCache();
+
 
 	/*************************************************************************
 		New event handlers
@@ -692,6 +682,7 @@ protected:
 	virtual void	onSized(WindowEventArgs& e);
 	virtual void	onMouseButtonDown(MouseEventArgs& e);
 	virtual	void	onMouseWheel(MouseEventArgs& e);
+	virtual void	onMouseMove(MouseEventArgs& e);
 
 
 	/*************************************************************************
@@ -702,6 +693,7 @@ protected:
 	bool	d_multiselect;			//!< true if multi-select is enabled
 	bool	d_forceVertScroll;		//!< true if vertical scrollbar should always be displayed
 	bool	d_forceHorzScroll;		//!< true if horizontal scrollbar should always be displayed
+	bool	d_itemTooltips;			//!< true if each item should have an individual tooltip
 	Scrollbar*	d_vertScrollbar;	//!< vertical scroll-bar widget
 	Scrollbar*	d_horzScrollbar;	//!< horizontal scroll-bar widget
 	LBItemList	d_listItems;		//!< list of items in the list box.
@@ -716,6 +708,7 @@ private:
 	static ListboxProperties::MultiSelect			d_multiSelectProperty;
 	static ListboxProperties::ForceVertScrollbar	d_forceVertProperty;
 	static ListboxProperties::ForceHorzScrollbar	d_forceHorzProperty;
+	static ListboxProperties::ItemTooltips			d_itemTooltipsProperty;
 
 	/*************************************************************************
 		Private methods
