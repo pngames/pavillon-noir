@@ -1,17 +1,11 @@
 function CharacterClass(id)
-	pnprint("premier\n")
-	Character = PN3DSkeletonObjectClass(id)
+	local Character = PN3DSkeletonObjectClass(id)
 	-- Character.__index = Character
 	Character.hurry = false
-	pnprint("macaque\n")
 	Character.pathFinding = PNPathFinding:new_local()
-	pnprint("zroot\n")
 	Character.toReach = PN3DObject:new_local()
-	pnprint("starf\n")
 	Character.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2}
-	pnprint("zut\n")
 	Character.state = Character.stateEnum.PN_IA_PASSIVE
-	pnprint("pwet\n")
 	Character.pastStates = {}
 	
 	function Character:beSmart()
@@ -24,6 +18,7 @@ function CharacterClass(id)
 					end
 					-- setDirect and rotate
 					self:setTarget(self.toReach)
+					self:setMovingMode(self.MMODE_VIEW_ABS_LOCKED)
 			end
 		end
 	end
@@ -34,6 +29,7 @@ function CharacterClass(id)
 		self.pathFinding:moveNext(self.toReach)
 		-- setDirect and rotate
 		self:setTarget(self.toReach)
+		self:setMovingMode(self.MMODE_VIEW_ABS_LOCKED)
 	end
 
 	function Character:hear()
@@ -70,6 +66,5 @@ function CharacterClass(id)
 		--do something
 	end
 
-	pnprint("ma\n")
 	return Character	
 end
