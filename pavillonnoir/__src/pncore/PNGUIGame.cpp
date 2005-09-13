@@ -47,6 +47,8 @@
 #include "PNSoundInterface.hpp"
 #include "PNPhysicsInterface.hpp"
 #include "PNGameEventData.hpp"
+#include "PNGameInterface.hpp"
+#include "PNGameMap.hpp"
 
 #include "PNMatrixTR4f.hpp"
 #include "PNQuatf.hpp"
@@ -351,16 +353,17 @@ void  PNGUIGame::_commandMoveTo(const std::string&, std::istream& i)
   PN3DObjList::iterator it;
   PNPoint				p(4900.0, 0.0, 4900.0);
 
-  for (it = PN3DCamera::getRenderCam()->_list3DObj.begin(); it != PN3DCamera::getRenderCam()->_list3DObj.end(); it++)
-  {
-	PN3DObject*	obj = (PN3DObject*)*it;
+  PNGameInterface::getInstance()->getGameMap()->executeScript("temp/ia_tests.lua");
+ // for (it = PN3DCamera::getRenderCam()->_list3DObj.begin(); it != PN3DCamera::getRenderCam()->_list3DObj.end(); it++)
+ // {
+	//PN3DObject*	obj = (PN3DObject*)*it;
 
-	if (obj != NULL && obj->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
-	{
-	  ((PNCharacter*)obj)->moveTo(p);
-	  pnerror(PN_LOGLVL_DEBUG, "a PNCharacter has been told to move");
-	}
-  }
+	//if (obj != NULL && obj->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
+	//{
+	//  ((PNCharacter*)obj)->moveTo(p);
+	//  pnerror(PN_LOGLVL_DEBUG, "a PNCharacter has been told to move");
+	//}
+ // }
 }
 
   //////////////////////////////////////////////////////////////////////////

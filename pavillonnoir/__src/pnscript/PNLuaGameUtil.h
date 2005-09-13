@@ -43,6 +43,7 @@ namespace PN{
   void  onUpdate(float deltaTime);
   void  onInit();
   void  onReset();
+  void	sendGameActionEvent(std::string id, std::string action, ...);
   PNLuaGameMap* getGameMap();
 }
 
