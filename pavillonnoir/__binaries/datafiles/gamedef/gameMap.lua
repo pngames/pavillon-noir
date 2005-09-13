@@ -40,11 +40,12 @@ function gameMap:spwan(entity, id, position, orientation, model)
 end 
 
 function gameMap:onUpdate(deltaTime)
-   --pnprint("LUA GameMap: onUpdate()")
+	pnprint("=> LUA GameMap: onUpdate()")
    --pnprint(deltaTime)
 	for id, entity in pairs(self.entities.all) do 
 		entity:luaUpdate(deltaTime)
 	end
+	pnprint("<= LUA GameMap: onUpdate()")
 end
 
 function gameMap:onInit()
