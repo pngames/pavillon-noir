@@ -70,14 +70,17 @@ public:
   pnint unserialize(const boost::filesystem::path& dir);
   /// Save object to file
   pnint serialize(const boost::filesystem::path& dir);
-
+	
   //////////////////////////////////////////////////////////////////////////
   // Will be operational when pnscript will instantiate PNGameMap
   // std::map<std::string, PN3DObject *>&  getEntityList();
 
+  virtual void executeScript(const std::string& ScriptName){}
   //add an object to the gameMap
   virtual void addToMap(const std::string& entityName,const std::string& id);
   virtual void clear();
+
+
   /////////////////////////////////////////////////////////////////////////
 };
 

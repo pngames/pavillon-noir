@@ -44,6 +44,8 @@ namespace PN
         ~PNLuaGameMap(void);
         void addToMap(const std::string& entityName,const std::string& id);
         void addToMap2(PNObject& entity, char* id);
+		//execute mapScript
+		void executeScript(const std::string& ScriptName);
         // void addToMap2(PNObject& entity);
         void clear();
     };

@@ -39,7 +39,7 @@ extern "C"
 #include "PNObject.hpp"
 #include "PNLuaGameMap.hpp"
 #include "PNLuaGameUtil.h"
-
+#include "PNLuaGame.hpp"
 using namespace PN; 
 
 
@@ -86,4 +86,11 @@ void        PNLuaGameMap::clear()
     lua_dostring(_lvm, luaOrder.c_str());
     PNGameMap::clear();
     return;
+}
+
+
+//execute mapScript
+void PNLuaGameMap::executeScript(const std::string& ScriptName)
+{
+	((PNLuaGame*)PNLuaGame::getInstance())->loadLuaScript(ScriptName.c_str());
 }
