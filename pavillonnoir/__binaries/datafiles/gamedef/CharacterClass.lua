@@ -75,12 +75,12 @@ function CharacterClass(id)
 	
 	--temp function
 	function Character:luaUpdate(deltaTime)
-		self:onLuaUpdate(deltaTime)
+		self:beSmart()
+		self:update(deltaTime)
 	end 
 	
 	function Character:onLuaUpdate(deltaTime)
-		self:beSmart()
-		self:onUpdate(deltaTime)
+		self:luaUpdate(deltaTime)
 	end
 	
 	function Character:OnLuaActionMoveTo(target)
