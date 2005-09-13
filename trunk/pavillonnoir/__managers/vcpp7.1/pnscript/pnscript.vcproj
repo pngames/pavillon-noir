@@ -252,6 +252,13 @@
 			<File
 				RelativePath="..\..\..\__binaries\datafiles\gamedef\RenderCamera.lua">
 			</File>
+			<Filter
+				Name="temp"
+				Filter="">
+				<File
+					RelativePath="..\..\..\__binaries\datafiles\gamedef\temp\ia_tests.lua">
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath="..\..\..\__src\pnscript\CHANGELOG.txt">

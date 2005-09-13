@@ -77,6 +77,8 @@ public:
   //return the gameMap
   virtual PNGameMap* getGameMap()=0;
 
+
+
   //Event CallBack
   virtual void onUpdate(pnuint deltaTime){};
   virtual void onInit(pnEventType evt, PNObject* source, PNEventData* data){};
