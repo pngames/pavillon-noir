@@ -23,6 +23,7 @@
 <option id="gnu.cpp.link.option.paths.609281626" superClass="gnu.cpp.link.option.paths"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.debug.2090434733" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.debug"/>
+<macros/>
 </toolChain>
 </configuration>
 <configuration artifactExtension="so" artifactName="pneditorcommon" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.so.release.1501204647" name="Release" parent="cdt.managedbuild.config.gnu.so.release">
@@ -38,6 +39,7 @@
 <tool id="cdt.managedbuild.tool.gnu.c.linker.so.release.2002332879" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.release"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.release.518192622" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.release"/>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.release.1584768644" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.release"/>
+<macros/>
 </toolChain>
 </configuration>
 </project>

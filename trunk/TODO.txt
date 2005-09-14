@@ -34,7 +34,6 @@ GENERAL:
 
 * creer une classe abstraite Serializable					(serialize, unserialize)
 * creer une classe abstraite XMLSerializable derive de Serializable		(meme chose avec des balise en parametre)
-* creer une classe abstraite Animated						(play, pause, setAnimation...)
 
 ____
 JEU:
