@@ -824,7 +824,7 @@ PN3DObject::updateRotation(pnfloat step)
 	double	ps = (_targetDirection.getX() * targetVector.x / norm) + (_targetDirection.getZ() * targetVector.z / norm);
 	double	pcy = (_targetDirection.getX() * targetVector.z / norm) - (_targetDirection.getZ() * targetVector.x / norm);
 
-	pnfloat yangle = acosf(ps);
+	pnfloat yangle = acosf((float)ps);
 	yangle = pcy > 0 ? -yangle : yangle;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -837,7 +837,7 @@ PN3DObject::updateRotation(pnfloat step)
 	PNVector3f	pc;
 	pc.crossProduct(_targetDirection.getVector(), targetVector);
 
-	pnfloat xangle = acosf(ABS(ps));
+	pnfloat xangle = acosf((float)ABS(ps));
 	if (pc.scalarProduct(_rightTargetDirection.getVector()) < 0)
 	  xangle = -xangle;
 
