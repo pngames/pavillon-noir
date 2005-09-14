@@ -204,5 +204,6 @@ int	  main(int argc, char* argv[])
   std::cout << "Appuyez sur une touche pour continuer" << std::endl;
   fread(&c, 1, 1, stdin);
 */
-  return 1;
+
+  return 0;
 }

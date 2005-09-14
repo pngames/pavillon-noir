@@ -35,14 +35,13 @@
 #include "pnmath.h"
 
 #include "PNObject.hpp"
+#include "IPNAnimated.hpp"
 
 #include "PNPoint.hpp"
 #include "PNQuatf.hpp"
 #include "PNMatrixTR4f.hpp"
 #include "PNVector3f.hpp"
 #include "PNNormal3f.hpp"
-#include "PNBoundingBox.hpp"
-#include "PNPhysicalObject.hpp"
 
 typedef struct _xmlNode		xmlNode;
 
@@ -55,12 +54,10 @@ class PNFace;
 class PNPhysicalObject;
 
 /// Base object for all object evolving in the scene
-class PNAPI					PN3DObject : public PNObject
+class PNAPI					PN3DObject : public PNObject, public IPNAnimated
 {
-
-
-  ///object identifier
 protected:
+  ///object identifier
   std::string _id;
 public:
   inline void setId(std::string id){_id = id;}
@@ -200,27 +197,6 @@ protected:
 protected:
   /// Sub Objects to render
   pnuint					_renderMode;
-
-  /// Id of playing local animation
-  pnint						_animId;
-
-  /// Indicate if animation running
-  pnbool					_running;
-  /// Indicate if animation paused
-  pnbool					_paused;
-  /// Indicate if animation loop
-  pnbool					_looping;
-
-  /// Current time in animation
-  pnuint					_animTimeCurrent;
-  /// System time when animation started
-  pnuint					_animTimeStart;
-  /// Transition time between two animations
-  pnuint					_animTransTime;
-  /// System time when animation paused
-  pnuint					_animTimePause;
-  /// Animation speed
-  pndouble					_animSpeed;
 
   /// Translation and rotation speed
   pnfloat					_movingSpeed;
@@ -364,21 +340,6 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   
-  /// Set animation to play and the time used to make the transition between last animation and this
-  virtual pnuint				startAnimation(pnint animation, pnuint transTime);
-  /// Stop current animation and reset position
-  virtual void					stopAnimation();
-
-  /// Pause current animation
-  virtual void					pause();
-
-  /// Set speed for current animation, ex: 2.0f = 2 times normal speed
-  virtual void					setAnimSpeed(pndouble speed);
-  /// Set the automatic looping of animation enable or disable
-  virtual void					setEnableLoop(pnbool enabled);
-
-  //////////////////////////////////////////////////////////////////////////
-  
   /// Retrieve number of vertex owned by 3d object
   virtual pnuint				getNbVertexComputed();
 
@@ -439,8 +400,6 @@ public:
 
   /// Render object using PNRendererInterface
   virtual void					render();
-
-
 };
 
 //////////////////////////////////////////////////////////////////////////
