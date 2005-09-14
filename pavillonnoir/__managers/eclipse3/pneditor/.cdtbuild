@@ -13,12 +13,11 @@
 <listOptionValue builtIn="false" value="HAVE_GL_H"/>
 <listOptionValue builtIn="false" value="HAVE_GLU_H"/>
 </option>
-<option id="gnu.cpp.compiler.option.other.other.259110870" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 `fox-config --cflags` -pthread" valueType="string"/>
+<option id="gnu.cpp.compiler.option.other.other.259110870" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 `fox-config --cflags` `xml2-config --cflags` -pthread" valueType="string"/>
 <option id="gnu.cpp.compiler.option.include.paths.189298552" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
 <listOptionValue builtIn="false" value="../../../../__src/pneditorcommon/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
-<listOptionValue builtIn="false" value="/usr/include/libxml2"/>
 </option>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.2021718500" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug"/>
@@ -28,7 +27,6 @@
 <listOptionValue builtIn="false" value="pncommon-dbg"/>
 <listOptionValue builtIn="false" value="efence"/>
 <listOptionValue builtIn="false" value="pneditorcommon-dbg"/>
-<listOptionValue builtIn="false" value="xml2"/>
 <listOptionValue builtIn="false" value="boost_thread"/>
 <listOptionValue builtIn="false" value="boost_filesystem"/>
 </option>
@@ -49,7 +47,7 @@
 <listOptionValue builtIn="false" value="HAVE_GL_H"/>
 <listOptionValue builtIn="false" value="HAVE_GLU_H"/>
 </option>
-<option id="gnu.cpp.compiler.option.other.other.1588214135" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 `fox-config --cflags` -pthread" valueType="string"/>
+<option id="gnu.cpp.compiler.option.other.other.1588214135" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 `fox-config --cflags` `xml2-config --cflags` -pthread" valueType="string"/>
 <option id="gnu.cpp.compiler.option.include.paths.380176402" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
 <listOptionValue builtIn="false" value="/usr/include/libxml2"/>

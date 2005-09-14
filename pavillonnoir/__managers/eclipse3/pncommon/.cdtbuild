@@ -12,7 +12,7 @@
 <listOptionValue builtIn="false" value="/usr/include/libxml2/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
 </option>
-<option id="gnu.cpp.compiler.option.other.other.2009894802" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread" valueType="string"/>
+<option id="gnu.cpp.compiler.option.other.other.2009894802" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `xml2-config --cflags`" valueType="string"/>
 <option id="gnu.cpp.compiler.option.preprocessor.def.36657938" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 <listOptionValue builtIn="false" value="_DEBUG"/>
 </option>
@@ -30,6 +30,7 @@
 <listOptionValue builtIn="false" value="m"/>
 </option>
 <option id="gnu.cpp.link.option.userobjs.1944002968" superClass="gnu.cpp.link.option.userobjs"/>
+<option id="gnu.cpp.link.option.flags.1250881221" superClass="gnu.cpp.link.option.flags" value="" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.debug.881133969" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.debug"/>
 <macros/>
@@ -43,7 +44,7 @@
 <listOptionValue builtIn="false" value="/usr/include/libxml2/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
 </option>
-<option id="gnu.cpp.compiler.option.other.other.1214055524" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread" valueType="string"/>
+<option id="gnu.cpp.compiler.option.other.other.1214055524" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `xml2-config --cflags`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.linker.so.release.589725531" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.release"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.release.961229038" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.release">
@@ -54,8 +55,10 @@
 <listOptionValue builtIn="false" value="xml2"/>
 <listOptionValue builtIn="false" value="boost_filesystem"/>
 </option>
+<option id="gnu.cpp.link.option.flags.322452740" superClass="gnu.cpp.link.option.flags" value="`xml2-config --libs`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.release.396151495" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.release"/>
+<macros/>
 </toolChain>
 </configuration>
 </project>

@@ -582,59 +582,6 @@ PN3DObject::setMovingMode(PN3DObject::movingmode mmode)
 //////////////////////////////////////////////////////////////////////////
 
 pnuint
-PN3DObject::startAnimation(pnint animation, pnuint transTime)
-{
-  _animId = animation;
-  _animTimeStart = PNRendererInterface::getInstance()->getTicks();
-
-  _running = true;
-  _paused = false;
-
-  PNEventManager::getInstance()->addEvent(PN_EVENT_OA_STARTED, this, NULL);
-
-  return PNEC_SUCCES;
-}
-
-void
-PN3DObject::stopAnimation()
-{
-  _running = false;
-
-  PNEventManager::getInstance()->addEvent(PN_EVENT_OA_ENDED, this, NULL);
-}
-
-void
-PN3DObject::pause()
-{
-  if (_paused)
-  {
-	_paused = false;
-	_animTimeStart += PNRendererInterface::getInstance()->getTicks() - _animTimePause;
-
-	PNEventManager::getInstance()->addEvent(PN_EVENT_OA_PAUSED, this, NULL);
-  }
-  else
-  {
-	_paused = true;
-	_animTimePause = PNRendererInterface::getInstance()->getTicks();
-  }
-}
-
-void
-PN3DObject::setAnimSpeed(pndouble speed)
-{
-  _animSpeed = speed;
-}
-
-void
-PN3DObject::setEnableLoop(pnbool enabled)
-{
-  _looping = enabled;
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-pnuint
 PN3DObject::getNbVertexComputed()
 {
   return _model->getNbVertexComputed();
