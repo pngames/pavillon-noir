@@ -56,6 +56,6 @@ function PN3DSkeletonObjectClass(id)
 		end 
 	end
 	-------------------------------------------------------
-
+	pnprint("exit "PN3DSkeletonObjectClass\n")
     return obj
 end
