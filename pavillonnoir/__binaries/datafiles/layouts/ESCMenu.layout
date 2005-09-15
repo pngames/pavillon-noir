@@ -2,11 +2,11 @@
 <GUILayout>
 	<Window Type="DefaultWindow" Name="PNESCMenu">
 		<Property Name="Alpha" Value="0.200000" />
-		<Window Type="TaharezLook/StaticText" Name="PNESCMenu/back">
+		<Window Type="Vanilla/StaticText" Name="PNESCMenu/back">
 			<Property Name="AbsoluteRect" Value="l:0.000000 t:0.000000 r:640.000000 b:480.000000" />
 			<Property Name="RelativeRect" Value="l:0.000000 t:0.000000 r:1.000000 b:1.000000" />
 			</Window>
-		<Window Type="TaharezLook/FrameWindow" Name="PNESCMenu/FrameWindow">
+		<Window Type="Vanilla/FrameWindow" Name="PNESCMenu/FrameWindow">
 			<Property Name="AbsoluteRect" Value="l:196.000000 t:42.000000 r:410.000000 b:401.000000" />
 			<Property Name="AlwaysOnTop" Value="True" />
 			<Property Name="CloseButtonEnabled" Value="False" />
@@ -15,37 +15,37 @@
 			<Property Name="RelativeRect" Value="l:0.305625 t:0.087500 r:0.640000 b:0.835417" />
 			<Property Name="SizingEnabled" Value="False" />
 			<Property Name="TitlebarEnabled" Value="False" />
-			<Window Type="TaharezLook/Button" Name="PNESCMenu/resume">
+			<Window Type="Vanilla/Button" Name="PNESCMenu/resume">
 				<Property Name="AbsoluteRect" Value="l:21.000000 t:21.000000 r:192.000000 b:56.000000" />
 				<Property Name="RelativeRect" Value="l:0.099375 t:0.058750 r:0.897814 b:0.156667" />
 				<Property Name="Text" Value="resume" />
 				</Window>
-			<Window Type="TaharezLook/Button" Name="PNESCMenu/loadGame">
+			<Window Type="Vanilla/Button" Name="PNESCMenu/loadGame">
 				<Property Name="AbsoluteRect" Value="l:21.000000 t:115.000000 r:192.000000 b:150.000000" />
 				<Property Name="RelativeRect" Value="l:0.099679 t:0.319927 r:0.898744 b:0.417844" />
 				<Property Name="Text" Value="load game" />
 				</Window>
-			<Window Type="TaharezLook/Button" Name="PNESCMenu/saveGame">
+			<Window Type="Vanilla/Button" Name="PNESCMenu/saveGame">
 				<Property Name="AbsoluteRect" Value="l:21.000000 t:161.000000 r:192.000000 b:196.000000" />
 				<Property Name="RelativeRect" Value="l:0.099679 t:0.449093 r:0.898744 b:0.547010" />
 				<Property Name="Text" Value="save game" />
 				</Window>
-			<Window Type="TaharezLook/Button" Name="PNESCMenu/options">
+			<Window Type="Vanilla/Button" Name="PNESCMenu/options">
 				<Property Name="AbsoluteRect" Value="l:23.000000 t:208.000000 r:194.000000 b:243.000000" />
 				<Property Name="RelativeRect" Value="l:0.105929 t:0.580343 r:0.904994 b:0.678260" />
 				<Property Name="Text" Value="options" />
 				</Window>
-			<Window Type="TaharezLook/Button" Name="PNESCMenu/mainMenu">
+			<Window Type="Vanilla/Button" Name="PNESCMenu/mainMenu">
 				<Property Name="AbsoluteRect" Value="l:23.000000 t:256.000000 r:194.000000 b:291.000000" />
 				<Property Name="RelativeRect" Value="l:0.105929 t:0.713678 r:0.904994 b:0.811595" />
 				<Property Name="Text" Value="main menu" />
 				</Window>
-			<Window Type="TaharezLook/Button" Name="PNESCMenu/newGame">
+			<Window Type="Vanilla/Button" Name="PNESCMenu/newGame">
 				<Property Name="AbsoluteRect" Value="l:21.000000 t:68.000000 r:192.000000 b:103.000000" />
 				<Property Name="RelativeRect" Value="l:0.099679 t:0.188848 r:0.898744 b:0.286765" />
 				<Property Name="Text" Value="new game" />
 				</Window>
-			<Window Type="TaharezLook/Button" Name="PNESCMenu/quitGame">
+			<Window Type="Vanilla/Button" Name="PNESCMenu/quitGame">
 				<Property Name="AbsoluteRect" Value="l:23.000000 t:306.000000 r:194.000000 b:341.000000" />
 				<Property Name="AlwaysOnTop" Value="True" />
 				<Property Name="RelativeRect" Value="l:0.107491 t:0.851177 r:0.906557 b:0.949094" />
