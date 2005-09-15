@@ -2,8 +2,12 @@ function CharacterClass(id)
 	local Character = PN3DSkeletonObjectClass(id)
 	Character.className = "Character"
 	Character.hurry = false
+	pnprint("create pathFinding\n")
 	Character.pathFinding = PNPathFinding:new_local(Character:getCoord())
+	pnprint("pathFinding created\n")
+	pnprint("create pathFinding\n")
 	Character.pathFinding:unserialize(gameMap:getWpFile())
+	pnprint("pathFinding created\n")
 	Character.toReach = PN3DObject:new_local()
 	Character.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2}
 	Character.state = Character.stateEnum.PN_IA_PASSIVE
