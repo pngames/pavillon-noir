@@ -37,13 +37,14 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
-PNPathFinding::PNPathFinding()
+/*  PNPathFinding::PNPathFinding()
 {
-}
+  _pos = PNPoint(0,0,0);
+}*/
 
-PNPathFinding::PNPathFinding(PNPoint *pos)
+  PNPathFinding::PNPathFinding(const PNPoint &pos) : _pos(pos)
 {
-  _pos = pos;
+//  _pos = pos;
 }
 
 PNPathFinding::~PNPathFinding()
@@ -51,7 +52,7 @@ PNPathFinding::~PNPathFinding()
 }
 
 void
-PNPathFinding::moveTo(PNPoint &p)
+PNPathFinding::moveTo(const PNPoint &p)
 {
 
   _dest.set(p);
@@ -75,7 +76,7 @@ PNPathFinding::moveTo(PNWayPoint *wp)
 */
 
 PNWayPoint*
-PNPathFinding::closestWP(PNPoint &p)
+PNPathFinding::closestWP(const PNPoint &p)
 {
   bool							  begin = true;
   pnfloat							  distance;
@@ -110,17 +111,17 @@ PNPathFinding::moveNext(PN3DObject& o)
   //manage first call to moveNext
   if (_travellist.empty() && _firstcall)
   {
-	_next = closestWP(*_pos);
+	_next = closestWP(_pos);
 	_firstcall = false;
 	o.setCoord(_next->getCoord());
 	return;
   }
 
   //handle end of travel
-  if (_next == _goal || *_pos == _dest)
+  if (_next == _goal || _pos == _dest)
   {
 	o.setCoord(_dest);
-	if (*_pos == _dest)
+	if (_pos == _dest)
 	{
 	  _firstcall = true;
 	  _travellist.clear();

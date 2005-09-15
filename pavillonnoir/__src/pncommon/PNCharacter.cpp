@@ -37,7 +37,7 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
-PNCharacter::PNCharacter() : _pf(&_coord)
+PNCharacter::PNCharacter() : _pf(_coord)
 {
   _state = PN_IA_PASSIVE;
   _hurry = false;
