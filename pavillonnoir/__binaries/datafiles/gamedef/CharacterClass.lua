@@ -1,6 +1,7 @@
 function CharacterClass(id)
 	local Character = PN3DSkeletonObjectClass(id)
 	Character.className = "Character"
+	Character:setMovingSpeed(0.5)
 	Character.hurry = false
 	pnprint("create pathFinding\n")
 	Character.pathFinding = PNPathFinding:new_local(Character:getCoord())
@@ -14,32 +15,21 @@ function CharacterClass(id)
 	Character.pastStates = {}
 	
 	function Character:beSmart()
-		pnprint("besmart0\n")
-		pnprint(self.state)
-		pnprint("\nbesmart0bis\n")
 		if (self.state == self.stateEnum.PN_IA_TRAVELLING) then --ca pete ici, la 
-			pnprint("besmart1\n")
-			if (self:getCoord() == self.toReach:getCoord()) then
-				pnprint("besmart2\n")
+			local distance = self:getCoord():getDistance(self.toReach:getCoord())
+			if (distance <= 50.0) then
 				self.pathFinding:moveNext(self.toReach)
-				pnprint("besmart3\n")
-					if (self:getCoord() == self.toReach:getCoord()) then
-						pnprint("besmart4\n")
+				local distance2 = self:getCoord():getDistance(self.toReach:getCoord())
+					if (distance2 <= 50.0) then
 						self:restoreState()
-						pnprint("besmart5\n")
 						self:OnLuaActionMoveForward(false)
-						pnprint("besmart6\n")
 						return
 					end
-					-- setDirect and rotate
-					pnprint("besmart7\n")
 					self:setTarget(self.toReach)
-					pnprint("besmart8\n")
 					self:setMovingMode(self.MMODE_VIEW_ABS_LOCKED)
-					pnprint("besmart9\n")
 			end
 		end
-		pnprint("exit besmart\n")
+		
 	end
 
 	function Character:moveTo(p)
@@ -74,14 +64,20 @@ function CharacterClass(id)
 	end
 
 	function Character:restoreState()
+		pnprint("=> Character:restoreState()\n")
 		self.state = self.pastStates[0]
 		table.remove(self.pastStates,0)
+		pnprint("<= Character:restoreState()\n")
 	end
 	
 	--temp function
 	function Character:luaUpdate(deltaTime)
 		self:beSmart()
 		self:update(deltaTime)
+		pnprint(self:getCoord().x)
+		pnprint(self:getCoord().y)
+		pnprint(self:getCoord().z)
+		pnprint("\n")
 	end 
 	
 	function Character:onLuaUpdate(deltaTime)
