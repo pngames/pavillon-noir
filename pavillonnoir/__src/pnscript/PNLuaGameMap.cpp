@@ -55,6 +55,20 @@ PNLuaGameMap::~PNLuaGameMap(void)
 {
 }
 
+//void  PNLuaGameMap::loadScript(const std::string& file, const std::string& id, const std::string& events)
+//{
+//	t_scripts_infos *new_elem = new t_scripts_infos();
+//
+//	new_elem->events = events;
+//	new_elem->file = file;
+//
+//	_entitiesActions[id] = new_elem;
+//}
+
+//void  PNLuaGameMap::unloadScript(const std::string& file, const std::string& id, const std::string& events)
+//{
+//	
+//}
 
 void  PNLuaGameMap::addToMap(const std::string& entityName, const std::string& id)
 {
