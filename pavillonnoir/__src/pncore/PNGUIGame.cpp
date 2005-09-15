@@ -417,6 +417,23 @@ void  PNGUIGame::_addForce(const std::string&, std::istream& i)
   PNPhysicsInterface::getInstance()->addForceToObj(nb, x, y, z, duration);
 }
 
+void  PNGUIGame::_setScriptingDebug(const std::string&, std::istream& i)
+{
+  bool	b;
+  i >> b;
+
+  if (b == true)
+  {
+	PNConsole::writeLine("Lua debug logging activated");
+	PNGameInterface::getInstance()->setDebug(true);
+  }
+  else
+  {
+	PNConsole::writeLine("Lua debug logging desactivated");
+	PNGameInterface::getInstance()->setDebug(false);
+  }
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 PNGUIGame::PNGUIGame()
@@ -473,6 +490,10 @@ _myri = PNRendererInterface::getInstance();
   PNConsole::addFonction("physics", &PNGUIGame::_setPhysics, "Physical simulation, 0=false or 1=true");
   PNConsole::addFonction("addforce", &PNGUIGame::_addForce, "Add force to a physical object, addforce object_number x y z duration");
   PNConsole::addFonction("setdyn", &PNGUIGame::_setAlldynamic, "Set all physical objects dynamic, 0=false or 1=true");
+
+  //////////////////////////////////////////////////////////////////////////
+
+  PNConsole::addFonction("setscriptingdebug", &PNGUIGame::_setScriptingDebug, "Activates or deactivates the scripting's debug logging to file \"pnscript.log\", 0=false or 1=true");
 
   //////////////////////////////////////////////////////////////////////////
   
