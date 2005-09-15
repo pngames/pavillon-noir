@@ -32,13 +32,21 @@
 
 #include "PNGameMap.hpp"
 
+//typedef struct s_scripts_infos
+//{
+//	std::string file;
+//	std::string events;
+//} t_scripts_infos;
+
 namespace PN
 {
-    class PN3DSkeletonObject;
+	/*typedef std::map<std::string , t_scripts_infos *>  scriptInfosMap;*/
+	class PN3DSkeletonObject;
     class PNLuaGameMap : public PNGameMap
     {
     protected:
-        lua_State* _lvm;
+        lua_State*		_lvm;
+		/*scriptInfosMap	_entitiesActions;*/
     public:
         PNLuaGameMap(lua_State *lvm);
         ~PNLuaGameMap(void);
@@ -48,6 +56,8 @@ namespace PN
 		void executeScript(const std::string& ScriptName);
         // void addToMap2(PNObject& entity);
         void clear();
+		void loadScript(const std::string& file, const std::string& id, const std::string& events);
+		void unloadScript(const std::string& file, const std::string& id, const std::string& events);
     };
 }
 #endif

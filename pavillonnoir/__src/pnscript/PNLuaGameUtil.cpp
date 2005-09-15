@@ -30,6 +30,7 @@
 #include "pndefs.h"
 #include "pnerror.h"
 #include "stdio.h"
+#include "PNConsole.hpp"
 #include "PNLuaGame.hpp"
 #include "PNLuaGameUtil.h"
 
@@ -40,10 +41,21 @@ namespace PN{
 		(PNLuaGame::loadLuaScript(file, reload));
 	}
 
-	pnint pnprint(const pnchar* format)
+	pnint pnprint(const pnchar* format, int where)
 	{
-		printf("[LUA] %s", format);
-		return 0;
+		// writes in the console
+	  	if (where == 0)
+			printf("[LUA] %s", format);
+		// writes in the GUI console
+		if (where == 1)
+		  PNConsole::writeLine("[LUA] %s", format);
+		/// writes in the Lua debug log file
+		if (where == 2)
+		{
+		  PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
+		  fprintf(vm->getDebugLogHandle(), "\n----\n[LUA] %s\n-----\n", format);
+		}
+		 return 0;
 	}
 
 
