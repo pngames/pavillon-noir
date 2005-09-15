@@ -136,24 +136,37 @@ const fs::path& PNLuaGame::getGameRoot()
     return (this->_gameRootDirectory);
 }
 
+void PNLuaGame::setDebug(bool b)
+{
+	this->debug = b;
+
+	if (b == true)
+	{
+	  // Line hook activated - function called everytime a line is interpreted
+	  lua_sethook(this->L, (lua_Hook) luaDebugLineHook, LUA_MASKLINE, NULL);
+	}
+	else
+	{
+	  // Line hook deactivated
+	  lua_sethook(this->L, (lua_Hook) luaDebugLineHook, NULL, NULL);
+	}
+}
+
+bool PNLuaGame::getLuaDebugLogging()
+{
+	return(this->debug);
+}
 
 void PNLuaGame::init()
 {
-  int ret;
+	int ret;
     DEBUG_PRINTER("Entering PNLuaGame::init()\n");
     fs::path currentDiectory = fs::current_path();
     std::cout << "currentDiectory : " <<  currentDiectory.native_file_string() <<  std::endl;
     int errorCode = PNEC_SUCCES;
 
-	/* Setting of the debug hooks */
-	// Description on top of the file
-	fwrite("########### LUA DEBUG LOG FILE ###########\n\n", strlen("########### LUA DEBUG LOG FILE ###########\n\n"), sizeof(char), getDebugLogHandle());
-	// Call Hook - function called everytime a function is called
-	//lua_sethook(this->L, (lua_Hook) luaDebugCallHook, LUA_MASKCALL, NULL);
-	// Return hook - function called everytime a value is returned
-	//lua_sethook(this->L, (lua_Hook) luaDebugReturnHook, LUA_MASKRET, NULL);
-	// Line hook - function called everytime a line is interpreted
-	//lua_sethook(this->L, (lua_Hook) luaDebugLineHook, LUA_MASKLINE, NULL);
+	// Description on top of the debug file
+	fprintf(getDebugLogHandle(), "########### LUA DEBUG LOG FILE ###########\n\n");
 	////////////////////////////////
 
     ret = lua_baselibopen(this->L);
@@ -177,9 +190,6 @@ void PNLuaGame::init()
     return;
 }
 
-
-
-
 PNLuaGame::~PNLuaGame()
 {
     if (this->L != 0)
@@ -194,6 +204,7 @@ PNLuaGame::PNLuaGame()
     this->L = NULL;
     this->L = lua_open();
     this->_gameStarted = false;
+	this->debug = false;
 	this->debug_log = fopen(DEF_LUA_LOG_FILE, "w");
 }
 
