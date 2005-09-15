@@ -31,6 +31,7 @@
 # define _PNLUASANDBOXUTIL_H
 #include "stdio.h"
 #include "PNLuaGameMap.hpp"
+
 namespace PN{
   void loadLuaScript(const pnchar* file, int reload = 0);
 
@@ -43,12 +44,11 @@ namespace PN{
   void  onUpdate(float deltaTime);
   void  onInit();
   void  onReset();
+  void	activateDebug(bool b);
   void	sendGameActionEvent(std::string id, std::string action, ...);
   PNLuaGameMap* getGameMap();
 
   /* Debug Hooks */
-  void	luaDebugCallHook(lua_State *S, lua_Debug *ar);
-  void	luaDebugReturnHook(lua_State *S, lua_Debug *ar);
   void	luaDebugLineHook(lua_State *S, lua_Debug *ar);
 }
 

@@ -56,6 +56,7 @@ namespace PN
   private:
     lua_State*				  L;
     FILE*					  debug_log;  
+	bool					  debug;
 	boost::filesystem::path	  _modsDirectory;
     boost::filesystem::path	  _gameRootDirectory;
     PNLuaGameMap*             _gameMap;
@@ -75,6 +76,9 @@ namespace PN
     lua_State* getLuaState(){ return this->L;}
 	//Returns file handle to debug log file
 	FILE* getDebugLogHandle(){ return this->debug_log;}
+	//Sets debug logging (true or false)
+	void  setDebug(bool b);
+	bool  getLuaDebugLogging();
     //Set the script to the RUNNING state and runthe script; 
     //return true if succeed, else return false
     pnerrorcode						run(void);
