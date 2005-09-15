@@ -2,7 +2,8 @@ function CharacterClass(id)
 	local Character = PN3DSkeletonObjectClass(id)
 	Character.className = "Character"
 	Character.hurry = false
-	Character.pathFinding = PNPathFinding:new_local()
+	Character.pathFinding = PNPathFinding:new_local(Character:getCoord())
+	Character.pathFinding:unserialize(gameMap:getWpFile())
 	Character.toReach = PN3DObject:new_local()
 	Character.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2}
 	Character.state = Character.stateEnum.PN_IA_PASSIVE
@@ -86,6 +87,7 @@ function CharacterClass(id)
 	function Character:OnLuaActionMoveTo(target)
 		--do something
 	end
+
 
 	return Character	
 end

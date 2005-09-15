@@ -3,6 +3,7 @@ class PNLuaGameMap
 { 
   public:	
 	void addToMap2(PNObject& entity, char* id);
+	const std::string&	getWpFile();
 };
 
 
