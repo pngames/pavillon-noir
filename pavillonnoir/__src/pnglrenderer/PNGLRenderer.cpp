@@ -762,8 +762,10 @@ PNGLRenderer::initGUI()
 	CEGUI::Logger::getSingleton().setLoggingLevel(CEGUI::Insane);
 	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/TaharezLook.scheme");
 	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/WindowsLook.scheme");
-
-	CEGUI::System::getSingleton().setDefaultMouseCursor((CEGUI::utf8*)"TaharezLook", (CEGUI::utf8*)"MouseArrow");
+	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/VanillaSkin.scheme");
+	
+	CEGUI::System::getSingleton().setDefaultMouseCursor("Vanilla-Images", "MouseArrow");
+	//CEGUI::System::getSingleton().setDefaultMouseCursor("TaharezLook", "MouseArrow");
 
 	CEGUI::FontManager::getSingleton().createFont("./datafiles/fonts/verase-12.font");
 	CEGUI::FontManager::getSingleton().createFont("./datafiles/fonts/verase-8.font");
