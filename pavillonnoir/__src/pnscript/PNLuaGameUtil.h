@@ -45,6 +45,11 @@ namespace PN{
   void  onReset();
   void	sendGameActionEvent(std::string id, std::string action, ...);
   PNLuaGameMap* getGameMap();
+
+  /* Debug Hooks */
+  void	luaDebugCallHook(lua_State *S, lua_Debug *ar);
+  void	luaDebugReturnHook(lua_State *S, lua_Debug *ar);
+  void	luaDebugLineHook(lua_State *S, lua_Debug *ar);
 }
 
 #endif

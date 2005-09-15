@@ -40,6 +40,8 @@ extern "C"
 #include "PNGameInterface.hpp"
 #include "PNLuaGameMap.hpp"
 #include <set>
+// Default lua debug log file
+#define DEF_LUA_LOG_FILE "pnScript.log"
 
 /* mini machine virtuelle lua*/
 namespace PN
@@ -53,7 +55,8 @@ namespace PN
 
   private:
     lua_State*				  L;
-    boost::filesystem::path	  _modsDirectory;
+    FILE*					  debug_log;  
+	boost::filesystem::path	  _modsDirectory;
     boost::filesystem::path	  _gameRootDirectory;
     PNLuaGameMap*             _gameMap;
     std::set<std::string>     _loadedScripts;
@@ -70,6 +73,8 @@ namespace PN
   public:
 
     lua_State* getLuaState(){ return this->L;}
+	//Returns file handle to debug log file
+	FILE* getDebugLogHandle(){ return this->debug_log;}
     //Set the script to the RUNNING state and runthe script; 
     //return true if succeed, else return false
     pnerrorcode						run(void);
