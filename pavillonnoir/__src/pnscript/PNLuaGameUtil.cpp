@@ -100,6 +100,43 @@ namespace PN{
 		//return( sum ? (sum / count) : 0 );
 	}
 
+	void	luaDebugCallHook(lua_State *S, lua_Debug *ar)
+	{
+	  //printf("\n----\nEntered Lua Call Hook\n");
+	  char* buf = (char*) malloc(512 * sizeof(char));
+	  PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
+
+	  lua_getinfo(vm->getLuaState(), "Snl", ar);
+	  sprintf(buf, "##Call: File \"%s\" -- function \"%s\" -- line : \"%d\"\n", ar->source, ar->name, ar->currentline);
+	  fwrite(buf, strlen(buf), sizeof(char), vm->getDebugLogHandle());
+	  free(buf);
+	}
+
+	void	luaDebugReturnHook(lua_State *S, lua_Debug *ar)
+	{
+	  //printf("\n----\nEntered Lua Return Hook\n");
+	  char* buf = (char*) malloc(512 * sizeof(char));
+	  PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
+
+	  lua_getinfo(vm->getLuaState(), "Snl", ar);
+	  sprintf(buf, "##Return: File \"%s\" -- function \"%s\" -- line : \"%d\"\n", ar->source, ar->name, ar->currentline);
+	  fwrite(buf, strlen(buf), sizeof(char), vm->getDebugLogHandle());
+	  free(buf);
+	}
+
+	void	luaDebugLineHook(lua_State *S, lua_Debug *ar)
+	{
+	  //printf("\n----\nEntered Lua Line Hook\n");
+	  char* buf = (char*) malloc(512 * sizeof(char));
+	  PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
+
+	  lua_getinfo(vm->getLuaState(), "Snl", ar);
+	  sprintf(buf, "##Line: File \"%s\" -- function \"%s\" -- line : \"%d\"\n", ar->source, ar->name, ar->currentline);
+	  fwrite(buf, strlen(buf), sizeof(char), vm->getDebugLogHandle());
+	  free(buf);
+	}
+
+
 	/*  void  onUpdate(float deltaTime)
 	{
 	PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();

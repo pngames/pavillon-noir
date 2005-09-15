@@ -44,6 +44,7 @@
 #include "PNGameEventData.hpp"
 #include "PNLuaGameMap.hpp"
 #include "PNLuaGame.hpp"
+#include "PNLuaGameUtil.h"
 #include "PNConsole.hpp"
 #include "pnbind.h"
 #include "PNGameEventData.hpp"
@@ -142,7 +143,19 @@ void PNLuaGame::init()
     DEBUG_PRINTER("Entering PNLuaGame::init()\n");
     fs::path currentDiectory = fs::current_path();
     std::cout << "currentDiectory : " <<  currentDiectory.native_file_string() <<  std::endl;
-    int errorCode = PNEC_SUCCES;  
+    int errorCode = PNEC_SUCCES;
+
+	/* Setting of the debug hooks */
+	// Description on top of the file
+	fwrite("########### LUA DEBUG LOG FILE ###########\n\n", strlen("########### LUA DEBUG LOG FILE ###########\n\n"), sizeof(char), getDebugLogHandle());
+	// Call Hook - function called everytime a function is called
+	//lua_sethook(this->L, (lua_Hook) luaDebugCallHook, LUA_MASKCALL, NULL);
+	// Return hook - function called everytime a value is returned
+	//lua_sethook(this->L, (lua_Hook) luaDebugReturnHook, LUA_MASKRET, NULL);
+	// Line hook - function called everytime a line is interpreted
+	//lua_sethook(this->L, (lua_Hook) luaDebugLineHook, LUA_MASKLINE, NULL);
+	////////////////////////////////
+
     ret = lua_baselibopen(this->L);
     ret = lua_iolibopen(this->L);
     ret = lua_strlibopen(this->L); 
@@ -172,6 +185,7 @@ PNLuaGame::~PNLuaGame()
     if (this->L != 0)
         lua_close(this->L);
     this->L = NULL;
+	fclose(getDebugLogHandle());
     delete _gameMap;
 }
 
@@ -180,6 +194,7 @@ PNLuaGame::PNLuaGame()
     this->L = NULL;
     this->L = lua_open();
     this->_gameStarted = false;
+	this->debug_log = fopen(DEF_LUA_LOG_FILE, "w");
 }
 
 //load a lua script file 
