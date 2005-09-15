@@ -47,24 +47,24 @@ class PNAPI PNPathFinding : public PNIAGraph
   PNWayPoint							*_next;
   PNWayPoint							*_goal;
   PNPoint								_dest;
-  PNPoint								*_pos;
+  const PNPoint&						_pos;
   std::list<PNWayPoint*>				_travellist;
   std::map<PNWayPoint*, PNWayPoint *>	_travelmap;
 
 public:
-  PNPathFinding();
-  PNPathFinding(PNPoint *pos);
+  //PNPathFinding();
+  PNPathFinding(const PNPoint &pos);
   virtual ~PNPathFinding();
 
   /* functions that set destination point and first waypoint to use */
-  void									moveTo(PNPoint& p);
+  void									moveTo(const PNPoint& p);
   void									moveTo(PNWayPoint* wp);
 
   /*
   ** functions that finds the closest WP to specified point
   ** without heuristics for the moment
   */
-  PNWayPoint							*closestWP(PNPoint& p);
+  PNWayPoint							*closestWP(const PNPoint& p);
 
   /* fills specified PNPoint with the coords of WP '_next' */
   void									getNext(PN3DObject& o);
