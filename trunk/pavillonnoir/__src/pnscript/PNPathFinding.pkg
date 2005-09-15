@@ -47,6 +47,8 @@ public:
   PNPathFinding(PNPoint *pos);
  ~PNPathFinding();
 
+  int unserialize(const std::string& file);
+  
   /* functions that set destination point and first waypoint to use */
   void								moveTo(PNPoint &p);
   void								moveTo(PNWayPoint *wp);

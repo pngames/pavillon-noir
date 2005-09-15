@@ -80,6 +80,7 @@ public:
   virtual void addToMap(const std::string& entityName,const std::string& id);
   virtual void clear();
 
+   const std::string&	getWpFile();
 
   /////////////////////////////////////////////////////////////////////////
 };

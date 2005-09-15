@@ -130,8 +130,8 @@ int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
 	/*pnerror(PN_LOGLVL_DEBUG, "PNGameMap - Entity child: %s", current->name);*/
   }
 
-  if (object->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
-	((PNCharacter*)object)->buildGraph(*_wpFile);
+//  if (object->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
+//	((PNCharacter*)object)->buildGraph(*_wpFile);
 
   return PNEC_SUCCES;
 }
@@ -274,3 +274,8 @@ void PNGameMap::clear()
   PNImportManager::getInstance()->clean(); //fixeMe
   //PNPhysicsInterface::clean();
 }
+
+ const std::string&	PNGameMap::getWpFile()
+ {
+   return _wpFile->string();
+ }
