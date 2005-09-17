@@ -6,7 +6,6 @@
 	ProjectGUID="{5E3085FC-E465-40AF-A13C-10AEC29E6497}"
 	RootNamespace="pnimporter"
 	Keyword="Win32Proj"
-	SignManifests="true"
 	>
 	<Platforms>
 		<Platform
@@ -21,7 +20,7 @@
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="2"
-			InheritedPropertySheets="UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="C:\Program Files\Microsoft Visual Studio 8\VC\VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -66,6 +65,7 @@
 				OutputFile="../../../__binaries/win32/plugins/Debug/pnimporter-dbg.pnp"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/pnimporter.pdb"
 				SubSystem="2"
@@ -102,7 +102,7 @@
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="2"
-			InheritedPropertySheets="UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="C:\Program Files\Microsoft Visual Studio 8\VC\VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -141,10 +141,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="boost_filesystem-vc71-mt-p.lib"
 				OutputFile="../../../__binaries/win32/plugins/pnimporter.pnp"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"

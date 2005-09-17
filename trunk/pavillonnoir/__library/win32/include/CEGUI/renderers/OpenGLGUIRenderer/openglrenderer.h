@@ -89,13 +89,13 @@ typedef unsigned short wchar_t;
 #include "CEGUITexture.h"
 
 
-#if defined(_WIN32)
+/*#if defined(_WIN32)
 #  if defined(_DEBUG)
 #     pragma comment(lib, "CEGUIBase_d.lib")
 #  else
 #     pragma comment(lib, "CEGUIBase.lib")
 #  endif
-#endif
+#endif*/
 
 #if defined(_MSC_VER)
 #	pragma warning(push)

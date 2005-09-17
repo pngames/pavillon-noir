@@ -290,6 +290,34 @@
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNWorldCollision.hpp">
 			</File>
+			<Filter
+				Name="tools"
+				Filter="">
+				<File
+					RelativePath="..\..\..\__src\pncommon\IPNAnimated.cpp">
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\IPNAnimated.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNBoundingBox.cpp">
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNBoundingBox.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNBoundingSphere.cpp">
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNBoundingSphere.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNFace.cpp">
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNFace.hpp">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="error"
@@ -331,34 +359,6 @@
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNVideoEventData.hpp">
 			</File>
-			<Filter
-				Name="tools"
-				Filter="">
-				<File
-					RelativePath="..\..\..\__src\pncommon\IPNAnimated.cpp">
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\IPNAnimated.hpp">
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNBoundingBox.cpp">
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNBoundingBox.hpp">
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNBoundingSphere.cpp">
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNBoundingSphere.hpp">
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNFace.cpp">
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNFace.hpp">
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="ia"

@@ -6,7 +6,6 @@
 	ProjectGUID="{48EFC9E1-605C-4AF8-9A63-56B20CFF81A8}"
 	RootNamespace="pnglrenderer"
 	Keyword="Win32Proj"
-	SignManifests="true"
 	>
 	<Platforms>
 		<Platform
@@ -21,7 +20,7 @@
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="2"
-			InheritedPropertySheets="UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="C:\Program Files\Microsoft Visual Studio 8\VC\VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -63,10 +62,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="DevIL.lib ILU.lib ILUT.lib SDL.lib SDLmain.lib CEGUIBase_D.lib OpenGLGUIRenderer_d.lib opengl32.lib glu32.lib glew32.lib"
+				AdditionalDependencies="DevIL.lib ILU.lib ILUT.lib SDL.lib SDLmain.lib OpenGLGUIRenderer_d-vc8.lib opengl32.lib glu32.lib glew32.lib CEGUIBase_d-vc8.lib"
 				OutputFile="../../../__binaries/win32/plugins/Debug/pnglrenderer-dbg.pnp"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/pnglrenderer.pdb"
 				SubSystem="2"
@@ -96,6 +96,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="cd &quot;../../../__binaries/win32&quot;&#x0D;&#x0A;copy /y CEGUIFalagardBase_d-vc8.dll CEGUIFalagardBase_d.dll&#x0D;&#x0A;copy /y CEGUITaharezLook_d-vc8.dll CEGUITaharezLook_d.dll&#x0D;&#x0A;copy /y CEGUIWindowsLook_d-vc8.dll CEGUIWindowsLook_d.dll&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -103,7 +104,7 @@
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="2"
-			InheritedPropertySheets="UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="C:\Program Files\Microsoft Visual Studio 8\VC\VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -143,10 +144,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="DevIL.lib ILU.lib ILUT.lib SDL.lib SDLmain.lib CEGUIBase.lib OpenGLGUIRenderer.lib boost_filesystem-vc71-mt-p.lib opengl32.lib glu32.lib glew32.lib"
+				AdditionalDependencies="DevIL.lib ILU.lib ILUT.lib SDL.lib SDLmain.lib OpenGLGUIRenderer-vc8.lib opengl32.lib glu32.lib glew32.lib CEGUIBase-vc8.lib"
 				OutputFile="../../../__binaries/win32/plugins/pnglrenderer.pnp"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -177,6 +179,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="cd &quot;../../../__binaries/win32&quot;&#x0D;&#x0A;copy /y CEGUIFalagardBase-vc8.dll CEGUIFalagardBase.dll&#x0D;&#x0A;copy /y CEGUITaharezLook-vc8.dll CEGUITaharezLook.dll&#x0D;&#x0A;copy /y CEGUIWindowsLook-vc8.dll CEGUIWindowsLook.dll&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

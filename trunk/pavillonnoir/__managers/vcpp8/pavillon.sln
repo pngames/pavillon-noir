@@ -48,14 +48,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pnopal", "pnopal\pnopal.vcp
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5257CA84-9DC2-4C90-AD0A-7FAC2CEA90CE}"
-	ProjectSection(SolutionItems) = postProject
-		..\..\__src\CHANGELOG.txt = ..\..\__src\CHANGELOG.txt
-		..\..\__releases\pn-setup-full-0.0.1.nsi = ..\..\__releases\pn-setup-full-0.0.1.nsi
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Changelog.txt = ..\..\..\Changelog.txt
 		..\..\__releases\pn-setup-full.nsh = ..\..\__releases\pn-setup-full.nsh
-		..\..\__releases\pn-setup-lite-0.0.1.nsi = ..\..\__releases\pn-setup-lite-0.0.1.nsi
 		..\..\__releases\pn-setup-lite.nsh = ..\..\__releases\pn-setup-lite.nsh
 		..\..\__releases\pn-setup.nsh = ..\..\__releases\pn-setup.nsh
-		..\..\__src\TODO.txt = ..\..\__src\TODO.txt
+		..\..\..\TODO.txt = ..\..\..\TODO.txt
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pnscript", "pnscript\pnscript.vcproj", "{9AC16F21-A703-4526-8899-084020BF8313}"
