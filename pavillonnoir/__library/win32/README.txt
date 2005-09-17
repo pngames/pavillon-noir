@@ -9,12 +9,16 @@ name		| current version
 * SDL 		: 1.2.9
 * CEGUI		: 0.4
 * boost		: 1.33
-* xerces	: 2.5.0.0
+* xerces	: 2.7.0.0
 * openal	: 1.2.8
 	- Installeur dans le rep "install", obligatoire sous windows.
 * opal		: 
-* lua		: 
-* tolua++	:
+* ode		: 
+* vorbis	: 
+* ogg		: 
+* lua		: 5.0.2
+* tolua++	: 1.0.6
 	- Installeur dans /__dev/tolua++
 * tolua++	: 1.0.4
 * glew		: 1.3.3
+* devIL		: 1.6.7
