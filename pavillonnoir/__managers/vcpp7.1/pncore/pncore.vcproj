@@ -45,7 +45,13 @@
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				Description="Copy des Look&amp;Feel CEGUI"
+				CommandLine="cd &quot;../../../__binaries/win32&quot;
+copy /y CEGUIFalagardBase_d-vc7.1.dll CEGUIFalagardBase_d.dll
+copy /y CEGUITaharezLook_d-vc7.1.dll CEGUITaharezLook_d.dll
+copy /y CEGUIWindowsLook_d-vc7.1.dll CEGUIWindowsLook_d.dll
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -96,7 +102,13 @@
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				Description="Copy des Look&amp;Feel CEGUI"
+				CommandLine="cd &quot;../../../__binaries/win32&quot;
+copy /y CEGUIFalagardBase-vc7.1.dll CEGUIFalagardBase.dll
+copy /y CEGUITaharezLook-vc7.1.dll CEGUITaharezLook.dll
+copy /y CEGUIWindowsLook-vc7.1.dll CEGUIWindowsLook.dll
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool

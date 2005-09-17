@@ -6,7 +6,6 @@
 	ProjectGUID="{DAF47D27-1558-479B-ABBF-35861BD4F8C6}"
 	RootNamespace="pnsound"
 	Keyword="Win32Proj"
-	SignManifests="true"
 	>
 	<Platforms>
 		<Platform
@@ -21,7 +20,7 @@
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="2"
-			InheritedPropertySheets="UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="C:\Program Files\Microsoft Visual Studio 8\VC\VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -67,6 +66,7 @@
 				OutputFile="../../../__binaries/win32/plugins/Debug/pnsound-dbg.pnp"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/pnsound.pdb"
 				SubSystem="2"
@@ -103,7 +103,7 @@
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="2"
-			InheritedPropertySheets="UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="C:\Program Files\Microsoft Visual Studio 8\VC\VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -142,10 +142,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OpenAL32.lib ogg_static.lib vorbis_static.lib vorbisfile_static.lib vorbisenc.lib ALut.lib boost_filesystem-vc71-mt-p.lib"
+				AdditionalDependencies="OpenAL32.lib ogg_static.lib vorbis_static.lib vorbisfile_static.lib vorbisenc.lib ALut.lib"
 				OutputFile="../../../__binaries/win32/plugins/pnsound.pnp"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"

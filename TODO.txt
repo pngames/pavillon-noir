@@ -8,12 +8,12 @@ PNOPAL:
 * utiliser le format de fichier OPAL:
 	- ajouter un exporter physique a pnmxplugin
 	- ajouter un plugin d'import
-	- ajouter u format des pno une entree pour l'objet physique
+	- ajouter ou format des pno une entree pour l'objet physique
 
 ______
 CEGUI:
 
-* trouver une solution concernant CEGUI sous ubuntu
+* utiliser le systeme de PNConfigurable avec le lanceur fox pour pouvoir choisir les options de chaque module (definition, plein ecran...)
 
 ______________
 MAIN D'OEUVRE:
@@ -38,7 +38,8 @@ GENERAL:
 ____
 JEU:
 
-* mettre en place les liens en entre actions et animations (deplacement, combat...)
+* mettre en place les liens entre actions et animations (deplacement, combat...)
+* mettre en place la resolution d'action de combat de base
 * mettre en place l'escrime
 
 ________
@@ -50,7 +51,11 @@ _____________
 PNGLRENDERER:
 
 * trouver pourquoi cette connerie de test de profondeur de fonctionne pas
-* utiliser le systeme de PNConfigurable avec le lanceur fox pour pouvoir choisir les options de chaque module (definition, plein ecran...)
+
+_____________
+GUI/CORE:
+
+* mettre en place une gestion d'etat (chargement, menu, jeu, etc.)
 
 ____________
 PNMAXPLUGIN:
@@ -61,5 +66,3 @@ _____________________
 INSTALLEURS/PACKAGES:
 
 * etudier l'installeur graphique pour Linux qu'a trouve Max (http://autopackage.org/)
-
-
