@@ -63,10 +63,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="lua.lib lualib.lib tolua.lib"
+				AdditionalDependencies="luad-vc8.lib lualibd-vc8.lib tolua++d-vc8.lib"
 				OutputFile="../../../__binaries/win32/plugins/Debug/pnscript-dbg.pnp"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/pnscript.pdb"
 				SubSystem="2"
@@ -103,7 +104,7 @@
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="2"
-			InheritedPropertySheets="UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="C:\Program Files\Microsoft Visual Studio 8\VC\VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -144,10 +145,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="boost_filesystem-vc71-mt-p.lib lua.lib lualib.lib tolua++.lib"
+				AdditionalDependencies="luad-vc8.lib lualibd-vc8.lib tolua++d-vc8.lib"
 				OutputFile="../../../__binaries/win32/plugins/pnscript.pnp"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"

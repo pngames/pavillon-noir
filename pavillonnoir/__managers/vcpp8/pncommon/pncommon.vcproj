@@ -65,6 +65,7 @@
 				OutputFile="../../../__binaries/win32/pncommon-dbg.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/pncommon.pdb"
 				SubSystem="2"
@@ -101,7 +102,7 @@
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="2"
-			InheritedPropertySheets="UpgradeFromVC71.vsprops"
+			InheritedPropertySheets="C:\Program Files\Microsoft Visual Studio 8\VC\VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -140,10 +141,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="boost_filesystem-vc71-mt-p.lib boost_thread-vc71-mt-p.lib libxml2.lib iconv.lib"
+				AdditionalDependencies="libxml2.lib iconv.lib"
 				OutputFile="../../../__binaries/win32/pncommon.dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -231,22 +233,6 @@
 			>
 			<File
 				RelativePath="..\..\..\__src\pncommon\IAutoTestable.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNBoundingBox.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNBoundingBox.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNBoundingSphere.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNBoundingSphere.hpp"
 				>
 			</File>
 			<File
@@ -339,10 +325,6 @@
 				RelativePath="..\..\..\__src\pncommon\pnresources.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\pnxml.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="3D"
@@ -400,14 +382,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncommon\PNFace.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNFace.hpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pncommon\pnm_format.h"
 				>
 			</File>
@@ -431,6 +405,42 @@
 				RelativePath="..\..\..\__src\pncommon\PNWorldCollision.hpp"
 				>
 			</File>
+			<Filter
+				Name="tools"
+				>
+				<File
+					RelativePath="..\..\..\__src\pncommon\IPNAnimated.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\IPNAnimated.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNBoundingBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNBoundingBox.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNBoundingSphere.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNBoundingSphere.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNFace.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNFace.hpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="error"
@@ -549,6 +559,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNGameMap.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\pnxml.h"
 				>
 			</File>
 		</Filter>
