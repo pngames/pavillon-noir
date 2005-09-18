@@ -246,7 +246,7 @@ PNEventManager::run()
       _cond.wait(lk);
     }
 
-    pnevent& event = _events.top();
+    pnevent& event = _events.front();
 
 	sendEvent(event.type, event.source, event.data);
 
