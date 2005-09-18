@@ -34,7 +34,7 @@
 # pragma warning( disable: 4275 )
 #endif
 
-#include <stack>
+#include <queue>
 #include <boost/utility.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
@@ -129,7 +129,7 @@ public:
 
 private:
   /// Events stack type
-  typedef std::stack<pnevent>	STACKEVENTS;
+  typedef std::queue<pnevent>	STACKEVENTS;
   /// Events stack
   STACKEVENTS					_events;
   /// Indicate if event manager running, used to stop it
@@ -145,24 +145,24 @@ private:
   eventEnumMap					_eventEnums;
 public:
   /// Load object from file
-  pnint		unserialize(const boost::filesystem::path& file);
+  pnint					unserialize(const boost::filesystem::path& file);
   /// Save object to file
-  pnint		serialize(const boost::filesystem::path& file);
+  pnint					serialize(const boost::filesystem::path& file);
 
   //////////////////////////////////////////////////////////////////////////
 
   /// Run event manager in background task
-  void		init();
+  void					init();
   /// Stop event manager
-  void		stop();
+  void					stop();
 
   //////////////////////////////////////////////////////////////////////////
 
   /// Add event of type \c type on stack (non blocking)
-  void		addEvent(pnEventType type, PNObject* source, PNEventData* data);
+  void					addEvent(pnEventType type, PNObject* source, PNEventData* data);
 
   /// Send event directly (blocking)
-  void		sendEvent(pnEventType type, PNObject* source, PNEventData* data);
+  void					sendEvent(pnEventType type, PNObject* source, PNEventData* data);
 
   //////////////////////////////////////////////////////////////////////////
   
@@ -175,12 +175,12 @@ public:
 
 private:
   /// Table of callback list arranged by type
-  PNCallBackList	_callbacktList[PN_NUMBER_EVENTS];
+  PNCallBackList		_callbacktList[PN_NUMBER_EVENTS];
 public:
   /// Attach new callback to events of type \c type
-  void	addCallback(pnEventType type, const EventCallback& callback);
+  void					addCallback(pnEventType type, const EventCallback& callback);
   /// Detach callback from events of type \c type
-  void	deleteCallback(pnEventType type, const EventCallback& callback);
+  void					deleteCallback(pnEventType type, const EventCallback& callback);
 };
 
   //////////////////////////////////////////////////////////////////////////
