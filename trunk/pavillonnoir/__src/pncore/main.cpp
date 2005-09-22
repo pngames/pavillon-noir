@@ -161,11 +161,11 @@ int	  main(int argc, char* argv[])
 	  //si->createNewSound("redalert", sound2.c_str(), FALSE, 0.0, 0.0, 0.0);
 	  si->createNewSound("click", click_menu.c_str(), FALSE, 0.0, 0.0, 0.0);
 
-	  if (si->createNewSound("theme", zicPath.c_str(), TRUE, 0.0, 0.0, 0.0) != 0)
+	 /* if (si->createNewSound("theme", zicPath.c_str(), TRUE, 0.0, 0.0, 0.0) != 0)
 	  {
 		si->changeSoundVolume("theme", 0.0);	
-		si->playSound("theme");
-	  }
+		//si->playSound("theme");
+	  }*/
 	}
 
 	//////////////////////////////////////////////////////////////////////////
