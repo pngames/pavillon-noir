@@ -153,11 +153,13 @@ int	  main(int argc, char* argv[])
 	  si->setListenerPosition(0.0, 0.0, 0.0);
 
 	  std::string zicPath = DEF::musicFilePath + "Honneur_PavillonNoir.ogg";
-	  std::string sound = DEF::soundsFilePath + "arrive.ogg";
-	  std::string sound2 = DEF::soundsFilePath + "redalert.ogg";
-
-	  si->createNewSound("arrive", sound.c_str(), FALSE, 0.0, 0.0, 0.0);
-	  si->createNewSound("redalert", sound2.c_str(), FALSE, 0.0, 0.0, 0.0);
+	  //std::string sound = DEF::soundsFilePath + "arrive.ogg";
+	  //std::string sound2 = DEF::soundsFilePath + "redalert.ogg";
+	  std::string click_menu = DEF::soundsFilePath + "menu_click.ogg";
+		
+	  //si->createNewSound("arrive", sound.c_str(), FALSE, 0.0, 0.0, 0.0);
+	  //si->createNewSound("redalert", sound2.c_str(), FALSE, 0.0, 0.0, 0.0);
+	  si->createNewSound("click", click_menu.c_str(), FALSE, 0.0, 0.0, 0.0);
 
 	  if (si->createNewSound("theme", zicPath.c_str(), TRUE, 0.0, 0.0, 0.0) != 0)
 	  {
