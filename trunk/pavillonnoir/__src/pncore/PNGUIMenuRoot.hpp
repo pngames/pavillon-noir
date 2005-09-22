@@ -56,6 +56,7 @@ namespace PN{
 	 bool overButton(const CEGUI::EventArgs& e);
 	bool  handleNew(const CEGUI::EventArgs& e);
 	bool  handleQuit(const CEGUI::EventArgs& e);
+	static void  callbackQuit(const int& enu);
 	bool  handleLoad(const CEGUI::EventArgs& e);
 	bool  handleCredits(const CEGUI::EventArgs& e);
 	bool  handleOptions(const CEGUI::EventArgs& e);

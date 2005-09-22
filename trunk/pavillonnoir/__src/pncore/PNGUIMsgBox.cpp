@@ -4,10 +4,12 @@ using namespace PN;
 
 namespace PN
 {
-  PNGUIMsgBox::PNGUIMsgBox(const std::string& title, const std::string& text, unsigned int msgtype, CEGUI::Window* parentWin)
+  PNGUIMsgBox::PNGUIMsgBox(const std::string& title, const std::string& text, unsigned int msgtype, const Callback& fonction, CEGUI::Window* parentWin)
   {
 	CEGUI::Font* defaultFont = CEGUI::System::getSingleton().getDefaultFont();
 	std::string tmp;
+
+	fonctionCallback = fonction;
 
 	if (!parentWin) 
 	  _parentWin = CEGUI::System::getSingleton().getGUISheet();
@@ -64,13 +66,11 @@ namespace PN
 	_frameWin->setText(title.c_str());
 	_frameWin->setAlwaysOnTop(true);
 	_frameWin->setCloseButtonEnabled(true);
-	//_frameWin->setPosition(CEGUI::Point(0.5f - boxWidth * 0.5f, 0.5f - boxHeight * 0.5f));
+	
+	_frameWin->setPosition(CEGUI::Point(0.5f - boxWidth * 0.5f, 0.5f - boxHeight * 0.5f));
 	_frameWin->setSize(CEGUI::Size(boxWidth, boxHeight));
-	//_frameWin->setSize(CEGUI::Size(0.5, 0.5));
 	_frameWin->setSizingEnabled(false);
 	
-
-
 	_msgTxt = static_cast<CEGUI::StaticText*>(CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"Vanilla/StaticText", ("_msg_box_text_" + convert.str()).c_str() ) );
 	_msgTxt->setText(text.c_str());
 	_msgTxt->setPosition(CEGUI::Point(0.05f, 0.05f));
@@ -81,10 +81,56 @@ namespace PN
 	_frameWin->addChildWindow(_msgTxt);
 
 
+	switch (msgtype)
+	{
+	case YES_NO:
+	  {
+		CEGUI::PushButton* btnYES = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_yes_" + convert.str()).c_str()));
+		btnYES->setSize(CEGUI::Size(0.45f, 0.15f));
+		btnYES->setPosition( CEGUI::Point(0.025f, 0.825f));
+		btnYES->setText("Oui");
+		_frameWin->addChildWindow(btnYES);
+		btnYES->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickYes , this));
 
+		CEGUI::PushButton* btnNO = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_no_" + convert.str()).c_str()));
+		btnNO->setSize(CEGUI::Size(0.45f, 0.15f));
+		btnNO->setPosition(CEGUI::Point(0.525f, 0.825f));
+		btnNO->setText("Non");
+		_frameWin->addChildWindow(btnNO);
+		btnNO->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickNo, this));
+	  }
+	  break;
+	case OK_CANCEL:
+	  {
+		CEGUI::PushButton* btnOK = static_cast< CEGUI::PushButton* >( CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_ok_" + convert.str()).c_str()));
+		btnOK->setSize(CEGUI::Size(0.45f, 0.15f));
+		btnOK->setPosition( CEGUI::Point(0.025f, 0.825f));
+		btnOK->setText("Ok");
+		_frameWin->addChildWindow(btnOK);
+		btnOK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickOk, this));
+
+		CEGUI::PushButton* btnCANCEL = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ( "_msg_box_btn_cancel_" + convert.str() ).c_str() ) );
+		btnCANCEL->setSize(CEGUI::Size(0.45f, 0.15f));
+		btnCANCEL->setPosition(CEGUI::Point(0.525f, 0.825f));
+		btnCANCEL->setText("Annuler");
+		_frameWin->addChildWindow(btnCANCEL);
+		btnCANCEL->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickCancel ,this));
+	  }
+	  break;
+	case OK:
+	  {
+		CEGUI::PushButton* btnOK = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_ok_" + convert.str()).c_str()));
+		btnOK->setSize(CEGUI::Size(0.5f, 0.15f));
+		btnOK->setPosition(CEGUI::Point(0.25f, 0.75f));
+		btnOK->setText("Ok");
+		_frameWin->addChildWindow(btnOK);
+		btnOK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickOk, this));
+	  }
+	  break;
+	}
+	
 	_parentWin->addChildWindow(_frameWin);
 	_parentWin->setMutedState(true);
-	_frameWin->subscribeEvent(CEGUI::Window::EventDestructionStarted, CEGUI::Event::Subscriber(&PNGUIMsgBox::eventCloseMsgBox, this));
   }
 
   PNGUIMsgBox::~PNGUIMsgBox()
@@ -93,9 +139,35 @@ namespace PN
 
   /********************************************************************************************/
  
-  bool	PNGUIMsgBox::eventCloseMsgBox(const CEGUI::EventArgs& e)
+  void PNGUIMsgBox::deleteMsgBox(msgboxtype msgt)
   {
+	_parentWin->setMutedState(false);
+	//TODO appeler le callback avec l'enum en param de la fonction
+	_frameWin->destroy();
+	fonctionCallback(msgt);
+  }
 
+  bool PNGUIMsgBox::onClickOk(const CEGUI::EventArgs& arg)
+  {
+	deleteMsgBox(OK);
+	return true;
+  }
+
+  bool PNGUIMsgBox::onClickCancel(const CEGUI::EventArgs& arg)
+  {
+	deleteMsgBox(CANCEL);
+	return true;
+  }
+
+  bool PNGUIMsgBox::onClickYes(const CEGUI::EventArgs& arg)
+  {
+	deleteMsgBox(YES);
+	return true;
+  }
+
+  bool PNGUIMsgBox::onClickNo(const CEGUI::EventArgs& arg)
+  {
+	deleteMsgBox(NO);
 	return true;
   }
 
