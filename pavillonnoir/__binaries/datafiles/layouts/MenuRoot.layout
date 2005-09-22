@@ -6,7 +6,8 @@
 			<Property Name="RelativeRect" Value="l:0.000000 t:0.000000 r:1.000000 b:1.000000" />
 			<Property Name="UnifiedAreaRect" Value="{{0.000000,0.000000},{0.000000,0.000000},{1.000000,0.000000},{1.000000,0.000000}}" />
 			<Property Name="Image" Value="set:MenuRootImage image:MenuRootBackground" />
-			<Property Name="FrameEnabled" Value="false"/>			
+			<Property Name="FrameEnabled" Value="false"/>
+			<Property Name="Disabled" Value="true"/>			
 		</Window>
 
 		<Window Type="Vanilla/Button" Name="MenuRoot/New">
