@@ -180,11 +180,19 @@ namespace PN
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-
-	PNRendererInterface::getInstance()->endRendering();
+	
+	PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous reelement quitter\nle plus fabuleux jeu\nde l'histoire ?", PNGUIMsgBox::YES_NO, callbackQuit, _mainSheet);
+	
+	
 	return true;
   }
  
+  void PNGUIMenuRoot::callbackQuit(const int& enu)
+  {
+	if (enu == PNGUIMsgBox::YES)
+	  PNRendererInterface::getInstance()->endRendering();
+  }
+
   bool PNGUIMenuRoot::handleLoad(const CEGUI::EventArgs& e)
   {
 	if (_mainSheet->isMuted() == true)
@@ -229,9 +237,6 @@ namespace PN
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-
-	PNGUIMsgBox* tmp = new PNGUIMsgBox("test", "test", PNGUIMsgBox::OK_CANCEL, _mainSheet);
-
 
 	//PNGUIEscMenu* toto =  new PNGUIEscMenu();
 	//toto->showEscMenu();

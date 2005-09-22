@@ -3,6 +3,7 @@
 
 #include "myCEGUI.h"
 #include "pndefs.h"
+#include <fastdelegate/FastDelegate.h>
 
 namespace PN
 {
@@ -16,10 +17,16 @@ namespace PN
 	{
 	  YES_NO,
 	  OK_CANCEL,
-	  OK
+	  OK,
+	  NO,
+	  YES,
+	  CANCEL
 	} msgboxtype;
+	typedef fastdelegate::FastDelegate1<const int&> Callback;
+
   protected:
   private:
+	Callback			fonctionCallback;
 	CEGUI::FrameWindow*	_frameWin;
 	CEGUI::StaticText*	_msgTxt;
 	CEGUI::Window*		_parentWin;
@@ -29,13 +36,17 @@ namespace PN
   public:
   protected:
   private:
-	 bool	eventCloseMsgBox(const CEGUI::EventArgs& e);
-	 int	str_to_vector(const std::string& str, const std::string& separators, std::vector<std::string>* p_result);
+	bool	onClickOk(const CEGUI::EventArgs& arg);
+	bool	onClickCancel(const CEGUI::EventArgs& arg);
+	bool	onClickYes(const CEGUI::EventArgs& arg);
+	bool	onClickNo(const CEGUI::EventArgs& arg);
+	void	deleteMsgBox(msgboxtype msgt);
+	int		str_to_vector(const std::string& str, const std::string& separators, std::vector<std::string>* p_result);
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
-	PNGUIMsgBox(const std::string& title, const std::string& text, unsigned int msgtype, CEGUI::Window* parentWin = NULL);
+	PNGUIMsgBox(const std::string& title, const std::string& text, unsigned int msgtype, const Callback& fonction, CEGUI::Window* parentWin = NULL);
 	~PNGUIMsgBox();
   };
 }
