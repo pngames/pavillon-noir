@@ -41,6 +41,7 @@
 #include "PNGUIMenuRoot.hpp"
 #include "PNGUIGame.hpp"
 #include "PNGUIEscMenu.hpp"
+#include "PNGUIMsgBox.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -67,15 +68,15 @@ namespace PN
   {
 	CEGUI::Imageset* windowsImages = CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/MenuRoot.imageset");
 
-	CEGUI::Window* sheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/MenuRoot.layout"); 
+	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/MenuRoot.layout"); 
 	//	CEGUI::StaticImage* backGround = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Background");
 	//	backGround->disable();
 	CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Load")->disable();
 #ifndef WIN32
 	CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Credits")->disable();
 #endif
-	CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Options")->disable();
-	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(sheet);
+	//CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Options")->disable();
+	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 
 	PNConsole::addFonction("loadlevel", &PNGUIMenuRoot::loadLevel, "loadlevel [level]");
 
@@ -95,6 +96,12 @@ namespace PN
 	wmgr.getWindow((CEGUI::utf8*)"MenuRoot/Load")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMenuRoot::handleLoad, this));
 	wmgr.getWindow((CEGUI::utf8*)"MenuRoot/Credits")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMenuRoot::handleCredits, this));
 	wmgr.getWindow((CEGUI::utf8*)"MenuRoot/Options")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMenuRoot::handleOptions, this));
+	
+	wmgr.getWindow((CEGUI::utf8*)"MenuRoot/Credits")->subscribeEvent(CEGUI::ButtonBase::EventMouseEnters, CEGUI::Event::Subscriber(&PNGUIMenuRoot::overButton, this));
+	wmgr.getWindow((CEGUI::utf8*)"MenuRoot/Exit")->subscribeEvent(CEGUI::ButtonBase::EventMouseEnters, CEGUI::Event::Subscriber(&PNGUIMenuRoot::overButton, this));
+	wmgr.getWindow((CEGUI::utf8*)"MenuRoot/New")->subscribeEvent(CEGUI::ButtonBase::EventMouseEnters, CEGUI::Event::Subscriber(&PNGUIMenuRoot::overButton, this));
+	wmgr.getWindow((CEGUI::utf8*)"MenuRoot/Load")->subscribeEvent(CEGUI::ButtonBase::EventMouseEnters, CEGUI::Event::Subscriber(&PNGUIMenuRoot::overButton, this));
+	wmgr.getWindow((CEGUI::utf8*)"MenuRoot/Options")->subscribeEvent(CEGUI::ButtonBase::EventMouseEnters, CEGUI::Event::Subscriber(&PNGUIMenuRoot::overButton, this));
   }
 
   void  PNGUIMenuRoot::loadLevel(const std::string&, std::istream& i)
@@ -103,12 +110,20 @@ namespace PN
 	i >> level;
   }
 
+   bool PNGUIMenuRoot::overButton(const CEGUI::EventArgs& e)
+   {
+	 PNSoundInterface::getInstance()->playSound("click");
+	 return true;
+   }
+
   /*!
   \brief
   Called when the "New Game" button is pressed in CEGUI menu root
   */
   bool PNGUIMenuRoot::handleNew(const CEGUI::EventArgs& e)
   {
+	if (_mainSheet->isMuted() == true)
+	  return true;
 	hideMenuRoot();
 
 	//////////////////////////////////////////////////////////////////////////
@@ -163,12 +178,18 @@ namespace PN
   */
   bool PNGUIMenuRoot::handleQuit(const CEGUI::EventArgs& e)
   {
+	if (_mainSheet->isMuted() == true)
+	  return true;
+
 	PNRendererInterface::getInstance()->endRendering();
 	return true;
   }
  
   bool PNGUIMenuRoot::handleLoad(const CEGUI::EventArgs& e)
   {
+	if (_mainSheet->isMuted() == true)
+	  return true;
+
 	//Transition to the load state
 	//State::gStateMgr->changeState(LOAD);
 
@@ -181,6 +202,9 @@ namespace PN
   */
   bool PNGUIMenuRoot::handleCredits(const CEGUI::EventArgs& e)
   {
+	if (_mainSheet->isMuted() == true)
+	  return true;
+
 	/*hideMenuRoot();
 
 	if (PN3DGround::getInstance()->unserialize(fs::path(DEF::objectFilePath + "groundLevel3.pno", fs::native)) != PNEC_SUCCES)
@@ -203,9 +227,15 @@ namespace PN
   */
   bool PNGUIMenuRoot::handleOptions(const CEGUI::EventArgs& e)
   {
+	if (_mainSheet->isMuted() == true)
+	  return true;
+
+	PNGUIMsgBox* tmp = new PNGUIMsgBox("test", "test", PNGUIMsgBox::OK_CANCEL, _mainSheet);
+
+
 	//PNGUIEscMenu* toto =  new PNGUIEscMenu();
 	//toto->showEscMenu();
-	PNGUIEscMenu::getInstance()->showEscMenu();
+	//PNGUIEscMenu::getInstance()->showEscMenu();
 	//hideMenuRoot();
 	//CEGUI::System::getSingleton().getGUISheet()->addChildWindow(CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/myschemas/demolayout.xml"));
 	//Transition to the Credits state
@@ -220,8 +250,9 @@ namespace PN
   void	PNGUIMenuRoot::hideMenuRoot()
   {
 	CEGUI::MouseCursor::getSingleton().hide();
-	CEGUI::Window* win= CEGUI::WindowManager::getSingleton().getWindow("MenuRoot");
-	win->hide();
+	//CEGUI::Window* win= CEGUI::WindowManager::getSingleton().getWindow("MenuRoot");
+	//win->hide();
+	_mainSheet->hide();
   }
 
   /*!
@@ -231,8 +262,9 @@ namespace PN
   void	PNGUIMenuRoot::showMenuRoot()
   {
 	CEGUI::MouseCursor::getSingleton().show();
-	CEGUI::Window* win= CEGUI::WindowManager::getSingleton().getWindow("MenuRoot");
-	win->show();
+	//CEGUI::Window* win= CEGUI::WindowManager::getSingleton().getWindow("MenuRoot");
+	//win->show();
+	_mainSheet->show();
   }
 
 };
