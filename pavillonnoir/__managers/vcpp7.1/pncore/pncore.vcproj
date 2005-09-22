@@ -156,6 +156,9 @@ copy /y CEGUIWindowsLook-vc7.1.dll CEGUIWindowsLook.dll
 				RelativePath="..\..\..\__src\pncore\PNGUIMenuRootManager.cpp">
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncore\PNGUIMsgBox.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncore\PNLoadPlugins.cpp">
 			</File>
 		</Filter>
@@ -183,6 +186,9 @@ copy /y CEGUIWindowsLook-vc7.1.dll CEGUIWindowsLook.dll
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncore\PNGUIMenuRootManager.hpp">
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncore\PNGUIMsgBox.hpp">
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncore\PNLoadPlugins.hpp">
