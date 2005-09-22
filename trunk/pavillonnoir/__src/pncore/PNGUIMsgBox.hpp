@@ -20,9 +20,10 @@ namespace PN
 	  OK,
 	  NO,
 	  YES,
-	  CANCEL
+	  CANCEL,
+	  CONF
 	} msgboxtype;
-	typedef fastdelegate::FastDelegate1<const int&> Callback;
+	typedef fastdelegate::FastDelegate1<const unsigned int&> Callback;
 
   protected:
   private:
@@ -30,12 +31,18 @@ namespace PN
 	CEGUI::FrameWindow*	_frameWin;
 	CEGUI::StaticText*	_msgTxt;
 	CEGUI::Window*		_parentWin;
+	float _boxWidth;
+	float _boxHeight;
+	float _textWidth;
+	float _textHeight;
+
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
   protected:
   private:
+	void	genericCreationWindow(const std::string& title, const std::string& text, unsigned int msgtype, const Callback& fonction, CEGUI::Window* parentWin, std::string convert);
 	bool	onClickOk(const CEGUI::EventArgs& arg);
 	bool	onClickCancel(const CEGUI::EventArgs& arg);
 	bool	onClickYes(const CEGUI::EventArgs& arg);
@@ -47,6 +54,7 @@ namespace PN
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
 	PNGUIMsgBox(const std::string& title, const std::string& text, unsigned int msgtype, const Callback& fonction, CEGUI::Window* parentWin = NULL);
+	PNGUIMsgBox(const std::string& text, unsigned int msgtype, const Callback& fonction, const std::string& actionName, CEGUI::Window* parentWin = NULL);
 	~PNGUIMsgBox();
   };
 }

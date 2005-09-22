@@ -183,11 +183,10 @@ namespace PN
 	
 	PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous reelement quitter\nle plus fabuleux jeu\nde l'histoire ?", PNGUIMsgBox::YES_NO, callbackQuit, _mainSheet);
 	
-	
 	return true;
   }
  
-  void PNGUIMenuRoot::callbackQuit(const int& enu)
+  void PNGUIMenuRoot::callbackQuit(const unsigned int& enu)
   {
 	if (enu == PNGUIMsgBox::YES)
 	  PNRendererInterface::getInstance()->endRendering();
