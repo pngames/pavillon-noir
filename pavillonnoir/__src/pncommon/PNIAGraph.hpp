@@ -34,6 +34,7 @@
 #include <map>
 
 #include "PNObject.hpp"
+#include "IPNSerializable.hpp"
 
 #define LNK_FROM_MKP	"from"
 #define	LNK_TO_MKP		"to"
@@ -50,7 +51,7 @@ class PNWayPoint;
 typedef std::list<PNWayPoint*>	WPLIST;
 typedef std::map<int,PNWayPoint*> WPIDMAP;
 
-class PNAPI PNIAGraph : public PNObject
+class PNAPI PNIAGraph : public PNObject, public IPNSerializable
 {
 private:
 	WPLIST					_wayPoints;

@@ -72,7 +72,7 @@ PNObject*	PNIAnimationImporter::doImport(const fs::path& path)
 {
   pnerror(PN_LOGLVL_INFO, "Import %s", path.string().c_str());
 
-  PNObject* obj = new PNI3DAnimation();
+  PNI3DAnimation* obj = new PNI3DAnimation();
 
   pnuint error = obj->unserialize(path);
 

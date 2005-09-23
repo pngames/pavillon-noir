@@ -72,7 +72,7 @@ PNObject*	PNISkeletonImporter::doImport(const fs::path& path)
 {
   pnerror(PN_LOGLVL_INFO, "Import %s", path.string().c_str());
 
-  PNObject* obj = new PNI3DSkeleton();
+  PNI3DSkeleton* obj = new PNI3DSkeleton();
 
   pnuint error = obj->unserialize(path);
 

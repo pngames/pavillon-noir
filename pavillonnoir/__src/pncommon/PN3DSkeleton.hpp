@@ -31,6 +31,7 @@
 # define _PN3DSKELETON_HPP_
 
 #include "PNObject.hpp"
+#include "IPNSerializable.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -39,7 +40,7 @@ class PNMatrixTR4f;
 class PN3DAnimation;
 
 /// Skeleton
-class /*PNAPI*/	PN3DSkeleton : public PNObject
+class /*PNAPI*/	PN3DSkeleton : public PNObject, public IPNSerializable
 {
 public:
   /// Destructor for PN3DSkeleton.

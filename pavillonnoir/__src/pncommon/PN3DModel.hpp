@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "PNObject.hpp"
+#include "IPNSerializable.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -43,7 +44,7 @@ class PNPoint;
 class PNFace;
 
 /// Model
-class /*PNAPI*/				PN3DModel : public PNObject
+class /*PNAPI*/				PN3DModel : public PNObject, public IPNSerializable
 {
 public:
   /// Destructor for PN3DModel.
@@ -52,7 +53,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
   
   /// Get 3D model associated file
-  virtual boost::filesystem::path*	getFile()=0;
+  virtual					boost::filesystem::path*	getFile()=0;
 
   //////////////////////////////////////////////////////////////////////////
   

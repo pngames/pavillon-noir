@@ -41,8 +41,10 @@
 #include <boost/thread/condition.hpp>
 #include <iostream>
 
-#include "PNCallBackList.hpp"
 #include "PNObject.hpp"
+#include "IPNSerializable.hpp"
+
+#include "PNCallBackList.hpp"
 #include "PNEventData.hpp"
 
 namespace PN {
@@ -104,7 +106,7 @@ struct				pnevent
 *  // same thing for deleteCallback
 * }
 */
-class PNAPI						PNEventManager : public PNObject
+class PNAPI						PNEventManager : public PNObject, public IPNSerializable
 {
 private:
   /// Unique instance of events manager
