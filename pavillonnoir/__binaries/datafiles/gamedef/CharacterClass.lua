@@ -7,7 +7,7 @@ function CharacterClass(id)
 	Character.pathFinding = PNPathFinding:new_local(Character:getCoord())
 	pnprint("pathFinding created\n")
 	pnprint("create pathFinding\n")
-	Character.pathFinding:unserialize(gameMap:getWpFile())
+	Character.pathFinding:unserializeFromFile(gameMap:getWpFile())
 	pnprint("pathFinding created\n")
 	Character.toReach = PN3DObject:new_local()
 	Character.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2}

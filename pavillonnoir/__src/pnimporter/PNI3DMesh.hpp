@@ -34,6 +34,7 @@
 #include <stdio.h>
 
 #include "PNObject.hpp"
+#include "IPNSerializable.hpp"
 
 #include "pnm_format.h"
 
@@ -46,7 +47,7 @@ class PN3DSkeleton;
 class PNRendererObject;
 class PNFace;
 
-class				PNI3DMesh : public PNObject
+class				PNI3DMesh : public PNObject, public IPNSerializable
 {
   friend class		PNIVertex;
 private:
@@ -89,7 +90,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
  
-  pnint				unserialize(std::istream& i);
+  pnint				unserializeFromStream(std::istream& i);
 
   //////////////////////////////////////////////////////////////////////////
  

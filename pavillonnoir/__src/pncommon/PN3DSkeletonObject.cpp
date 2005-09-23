@@ -115,7 +115,7 @@ PN3DSkeletonObject::_parseSkeleton(xmlNode* node)
 }
 
 int
-PN3DSkeletonObject::unserialize(xmlNode* root)
+PN3DSkeletonObject::unserializeFromXML(xmlNode* root)
 {
   _model = NULL;
   _skeleton = NULL;

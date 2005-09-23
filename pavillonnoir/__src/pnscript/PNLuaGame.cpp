@@ -299,7 +299,7 @@ void  PNLuaGame::onLoadMap(pnEventType evt, PNObject* source, PNEventData* data)
     }
     PNConsole::writeLine("PNGame::Start of loading map -> %s", loadMapData->mapName.c_str());
     PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STARTED, 0, data);
-    _gameMap->unserialize(loadMapData->mapName.c_str());
+    _gameMap->unserializeFromFile(loadMapData->mapName.c_str());
     PNConsole::writeLine("PNGame:: End of Loading map -> %s", loadMapData->mapName.c_str());
     PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_ENDED, 0, data);
     this->_gameStarted = true;

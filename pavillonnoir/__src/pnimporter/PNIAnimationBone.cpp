@@ -42,7 +42,7 @@ namespace PN {
 
 PNIAnimationBone::PNIAnimationBone(std::istream& i)
 {
-  unserialize(i);
+  unserializeFromStream(i);
 }
 
 pnuint		PNIAnimationBone::getId()
@@ -51,7 +51,7 @@ pnuint		PNIAnimationBone::getId()
 }
 //////////////////////////////////////////////////////////////////////////
 
-pnint		PNIAnimationBone::unserialize(std::istream& i)
+pnint		PNIAnimationBone::unserializeFromStream(std::istream& i)
 {
   pnaBone_t	bone;
 

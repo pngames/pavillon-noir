@@ -59,8 +59,7 @@ public:
   static PN3DGround*	getInstance();	
 
 public:
-  pnint					unserialize(const boost::filesystem::path& file);
-  pnint					serialize(const boost::filesystem::path& file);
+  pnint					unserializeFromFile(const boost::filesystem::path& file);
 
 public:
   virtual bool			collisionProcess(const PNBoundingSphere& bSphere, const PNVector3f& translation, PNVector3f& trResult);

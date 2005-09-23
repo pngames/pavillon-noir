@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "PN3DAnimation.hpp"
+
 #include "PNIAnimationBone.hpp"
 
 #include "pna_format.h"
@@ -48,8 +49,6 @@ private:
   typedef std::vector<PNIAnimationBone>	BoneList;
   BoneList					_bones;
 
-  boost::filesystem::path	_path;
-
   pnaHeader_t				_header;
 public:
   PNI3DAnimation();
@@ -57,17 +56,12 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   // PN3DModel
-
-  boost::filesystem::path* getFile();
-
-  //////////////////////////////////////////////////////////////////////////
   
   pnuint					getTotalTime();
 
   //////////////////////////////////////////////////////////////////////////
 
-  pnint 					unserialize(const boost::filesystem::path& file);
-  pnint						unserialize(std::istream& i);
+  pnint						unserializeFromStream(std::istream& i);
 
   //////////////////////////////////////////////////////////////////////////
   

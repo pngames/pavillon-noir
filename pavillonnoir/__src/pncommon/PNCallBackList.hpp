@@ -60,12 +60,6 @@ public:
   virtual void  sendEvent(pnevent* event);
   /// Call all  callback with these arguments
   virtual void  sendEvent(pnEventType type, PNObject* source, PNEventData* data);
-
-  //////////////////////////////////////////////////////////////////////////
-  /// Load object from file
-  virtual pnint	unserialize(const boost::filesystem::path& file);
-  /// Save object to file
-  virtual pnint	serialize(const boost::filesystem::path& file);
 };
 
 //////////////////////////////////////////////////////////////////////////

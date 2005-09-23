@@ -462,7 +462,7 @@ namespace PN
 
 	  boost::filesystem::path p(_path->getText().text(), boost::filesystem::no_check);
 	  _ed->makeViewerCurrent();
-	  obj->unserialize(p);
+	  obj->unserializeFromFile(p);
 	  _ed->makeViewerNonCurrent();
 
 	  obj->setCoord(x, y, z);

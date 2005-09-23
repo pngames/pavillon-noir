@@ -93,10 +93,8 @@ public:
 	PNWayPoint				*getWPFromId(int id);
 
 	/* save/load a graph to/from a file/stream */
-	pnint serialize(const boost::filesystem::path& file);
-	pnint serialize(std::ostream& o);
-	pnint unserialize(const boost::filesystem::path& file);
-	pnint unserialize(std::istream& i);
+	pnint serializeInStream(std::ostream& o);
+	pnint unserializeFromFile(const boost::filesystem::path& file);
 	int	  processChild(xmlTextReader* _reader);
 };
 

@@ -34,6 +34,8 @@
 #include <iostream>
 
 #include "PNObject.hpp"
+#include "IPNSerializable.hpp"
+
 #include "PNPoint.hpp"
 #include "PNQuatf.hpp"
 
@@ -58,7 +60,7 @@ class PNMatrixTR4f;
 class PNQuatf;
 class PNPoint;
 
-class				PNIAnimationBone : public PNObject
+class				PNIAnimationBone : public PNObject, public IPNSerializable
 {
   pnuint			_id;
 
@@ -73,7 +75,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   
-  pnint				unserialize(std::istream& i);
+  pnint				unserializeFromStream(std::istream& i);
 
   //////////////////////////////////////////////////////////////////////////
   

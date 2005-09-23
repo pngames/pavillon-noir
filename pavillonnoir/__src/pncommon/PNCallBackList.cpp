@@ -63,16 +63,4 @@ void  PNCallBackList::sendEvent(pnEventType type, PNObject* source, PNEventData*
 }
 
 //////////////////////////////////////////////////////////////////////////
-
-int		PNCallBackList::unserialize(const fs::path& file)
-{
-  return PNEC_NOT_IMPLEMENTED;
-}
-
-int		PNCallBackList::serialize(const fs::path& file)
-{
-  return PNEC_NOT_IMPLEMENTED;
-}
-
-//////////////////////////////////////////////////////////////////////////
 }

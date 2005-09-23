@@ -55,24 +55,6 @@ PNI3DMaterial::~PNI3DMaterial()
 
 //////////////////////////////////////////////////////////////////////////
 
-boost::filesystem::path*
-PNI3DMaterial::getFile()
-{
-  return &_path;
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-pnint
-PNI3DMaterial::unserialize(const fs::path& file)
-{
-  std::cout << "start unserialize " << file.native_file_string() << " : " << std::endl;
-
-  _path = file;
-
-  return PN3DMaterial::unserialize(file);
-}
-
 int
 PNI3DMaterial::_parse(std::istream& istm)
 {
@@ -117,13 +99,13 @@ PNI3DMaterial::_parse(std::istream& istm)
 }
 
 pnint
-PNI3DMaterial::unserialize(std::istream& istm)
+PNI3DMaterial::unserializeFromStream(std::istream& istm)
 {
   int err = _parse(istm);
 
   if (err != PNEC_SUCCES)
   {
-	pnerror(PN_LOGLVL_ERROR, "%s : %s", _path.string().c_str(), pnGetErrorString(err));
+	pnerror(PN_LOGLVL_ERROR, "%s : %s", _file.string().c_str(), pnGetErrorString(err));
 	return err;
   }
 
