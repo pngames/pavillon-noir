@@ -148,12 +148,6 @@ private:
   /// Map to convert event type identifier to event type name
   eventEnumMap					_eventEnums;
 public:
-  /// Load object from file
-  pnint					unserialize(const boost::filesystem::path& file);
-  /// Save object to file
-  pnint					serialize(const boost::filesystem::path& file);
-
-  //////////////////////////////////////////////////////////////////////////
 
   /// Run event manager in background task
   void					init();

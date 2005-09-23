@@ -58,12 +58,6 @@ PNI3DModel::dispose()
 
 //////////////////////////////////////////////////////////////////////////
 
-fs::path*
-PNI3DModel::getFile()
-{
-  return &_path;
-}
-
 void
 PNI3DModel::render(std::vector<PN3DMaterial*>& mats, PN3DSkeleton* sk)
 {
@@ -262,17 +256,7 @@ PNI3DModel::computeFaces(std::vector<PN3DMaterial*>& mat, PNFace* faces, pnuint 
 
 //////////////////////////////////////////////////////////////////////////
 
-int
-PNI3DModel::unserialize(const fs::path& file)
-{
-  std::cout << "start unserialize " << file.native_file_string() << " : " << std::endl;
-
-  _path = file;
-
-  return PN3DModel::unserialize(file);
-}
-
-pnint				PNI3DModel::unserialize(std::istream& i)
+pnint				PNI3DModel::unserializeFromStream(std::istream& i)
 {
   _istream = &i;
 

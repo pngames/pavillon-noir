@@ -345,6 +345,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncommon\IPNXMLSerializable.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\IPNXMLSerializable.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\pndefs.h"
 				>
 			</File>

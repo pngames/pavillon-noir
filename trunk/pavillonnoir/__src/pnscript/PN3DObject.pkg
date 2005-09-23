@@ -108,12 +108,12 @@ public:
   // PNObject
 
   /// Load 3DObject from xml file
-   int					unserialize(const boost::filesystem::path& file);
+   int					unserializeFromFile(const boost::filesystem::path& file);
   /// Load 3DObject from xml file
    int					unserialize();
 
   /// Save 3DObject into xml file
-   int					serialize(std::ostream& o);
+   int					serializeInStream(std::ostream& o);
   /// Save 3DObject into xml file
    int					serialize();
 

@@ -46,7 +46,7 @@ PNI3DMesh::PNI3DMesh(PNI3DModel& parent) :
 _parent(parent), _robject(NULL),
 _vertBuffer(NULL), _normBuffer(NULL), _texCoordBuffer(NULL), _colorBuffer(NULL)
 {
-  unserialize(*parent._istream);
+  unserializeFromStream(*parent._istream);
 }
 
 PNI3DMesh::~PNI3DMesh()
@@ -218,7 +218,7 @@ PNI3DMesh::_parseFaces()
 //////////////////////////////////////////////////////////////////////////
 
 pnint
-PNI3DMesh::unserialize(std::istream& i)
+PNI3DMesh::unserializeFromStream(std::istream& i)
 {
   i.read((char*)&_header, sizeof(_header));
 

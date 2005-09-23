@@ -421,7 +421,7 @@ long PNEditor::onCmdOpen(FXObject*, FXSelector, void*)
 	wpGroup = new FXGLGroup;
 	_graph = new PNIAGraph;
 	boost::filesystem::path wppath(_dir + "waypoints.xml", boost::filesystem::no_check);
-	_graph->unserialize(wppath);
+	_graph->unserializeFromFile(wppath);
 	fxmessage("%d Waypoints in %s\n", _graph->getNbWayPoints(), wppath.string().c_str());
 	buildWPGroup();
 	if (_wpenabled)
@@ -550,7 +550,7 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 
   // Waypoints
   pnerror(PN_LOGLVL_DEBUG, "Saving waypoints in %s", wppath.string().c_str());
-  _graph->serialize(wppath);
+  _graph->serializeInFile(wppath);
   return 1;
 }
 
@@ -763,7 +763,7 @@ long PNEditor::onCmdCopyObj(FXObject* obj, FXSelector sel, void* ptr)
   PN3DObject* cp = new PN3DObject();
 
   viewer->makeCurrent();
-  cp->unserialize(*orig->getFile()); //FIXME
+  cp->unserializeFromFile(*orig->getFile()); //FIXME
   viewer->makeNonCurrent();
 
   cp->setCoord(orig->getCoord());
@@ -884,7 +884,7 @@ int	  PNEditor::_parseEntity(void* node)
 	return PNEC_FAILED_TO_PARSE;
 
   fs::path  file(DEF::objectFilePath + mdref, fs::native);
-  pnint obj_error = object->unserialize(file);
+  pnint obj_error = object->unserializeFromFile(file);
   if (obj_error != PNEC_SUCCES)
   {
 	pnerror(PN_LOGLVL_ERROR, "%s%s : %s", DEF::objectFilePath.c_str(), mdref.c_str(), pnGetErrorString(obj_error));

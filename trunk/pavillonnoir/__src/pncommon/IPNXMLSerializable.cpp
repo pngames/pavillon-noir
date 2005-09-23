@@ -1,5 +1,5 @@
 /*
- * IPNSerializable.cpp
+ * IPNXMLSerializable.cpp
  * 
  * Description :
  * Base interface for serialization support
@@ -29,10 +29,11 @@
  
 #include <fstream>
 #include <boost/filesystem/operations.hpp>
+#include <libxml/xmlreader.h>
 
 #include "pndefs.h"
 
-#include "IPNSerializable.hpp"
+#include "IPNXMLSerializable.hpp"
 
 using namespace PN;
 using namespace std;
@@ -41,30 +42,11 @@ namespace fs = boost::filesystem;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-/**
- * @brief Get 3DObject associated file for serialize/unserialize system.
- *
- * @return File
- */
-boost::filesystem::path*
-IPNSerializable::getFile()
+pnint
+IPNXMLSerializable::unserializeFromXML(xmlNode* root)
 {
-  return &_file;
+  return PNEC_NOT_IMPLEMENTED;
 }
-
-/**
- * @brief	Modify 3DObject associated file for serialize/unserialize system
- *
- * @param	file		File
- * @return	void
- */
-void
-IPNSerializable::setFile(const boost::filesystem::path& file)
-{
-  _file = file;
-}
-
-//////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief		Load object from file
@@ -76,47 +58,46 @@ IPNSerializable::setFile(const boost::filesystem::path& file)
  * @see			pnGetErrorString
  */
 pnint
-IPNSerializable::unserializeFromFile(const boost::filesystem::path& file)
+IPNXMLSerializable::unserializeFromFile(const boost::filesystem::path& file)
 {
+  pnerror(PN_LOGLVL_INFO, "Loading XMLObject: %s ...", file.native_file_string().c_str());
+
   if (!fs::exists(file))
 	return PNEC_FILE_NOT_FOUND;
 
   if (fs::is_directory(file))
 	return PNEC_NOT_A_FILE;
 
-  setFile(file);
+  _file = file;
 
-  ifstream	i(file.string().c_str(), ifstream::binary);
+  xmlParserCtxtPtr	ctxt;
+  xmlDocPtr			doc;
 
-  return unserializeFromStream(i);
-}
+  LIBXML_TEST_VERSION ctxt = xmlNewParserCtxt();	// create a parser context
 
-/**
- * @brief		Load object from stream
- *
- * @param i		Stream to load from
- *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succed
- *
- * @see			pnGetErrorString
- */
-pnint
-IPNSerializable::unserializeFromStream(istream& i)
-{
-  return PNEC_NOT_IMPLEMENTED;
-}
+  if (ctxt == NULL) 
+	return PNEC_ALLOC_PARSER_CONTEXT;
 
-/**
-* @brief		Load object
-*
-* @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succed
-*
-* @see			pnGetErrorString
-*/
-pnint
-IPNSerializable::unserialize()
-{
-  return unserializeFromFile(_file);
+  doc = xmlCtxtReadFile(ctxt, file.string().c_str(), NULL, XML_PARSE_DTDVALID); // parse the file, + DTD validation 
+  xmlFreeParserCtxt(ctxt);							// free up the parser context
+
+  if (doc == NULL)									// check if parsing suceeded
+	return PNEC_FAILED_TO_PARSE;
+
+  xmlNodePtr  node = xmlDocGetRootElement(doc);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  _file = file;
+
+  pnint error = unserializeFromXML(node);
+
+  //////////////////////////////////////////////////////////////////////////
+  // clean
+
+  xmlFreeDoc(doc);									// free the document
+
+  return error;
 }
 
 /**
@@ -129,13 +110,11 @@ IPNSerializable::unserialize()
  * @see			pnGetErrorString
  */
 pnint
-IPNSerializable::serializeInFile(const boost::filesystem::path& file)
+IPNXMLSerializable::serializeInFile(const boost::filesystem::path& file)
 {
   if (fs::exists(file))
 	if (fs::is_directory(file))
 	  return PNEC_NOT_A_FILE;
-
-  setFile(file);
 
   ofstream	o(file.string().c_str(), ofstream::binary);
 
@@ -152,22 +131,24 @@ IPNSerializable::serializeInFile(const boost::filesystem::path& file)
  * @see			pnGetErrorString
  */
 pnint
-IPNSerializable::serializeInStream(ostream& o)
+IPNXMLSerializable::serializeInStream(ostream& o)
 {
-  return PNEC_NOT_IMPLEMENTED;
+  return serializeInXML(o, true);
 }
 
 /**
-* @brief		Save object
-*
-* @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succed
-*
-* @see			pnGetErrorString
-*/
+ * @brief		Save object to stream
+ *
+ * @param o		Stream to load from
+ *
+ * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succed
+ *
+ * @see			pnGetErrorString
+ */
 pnint
-IPNSerializable::serialize()
+IPNXMLSerializable::serializeInXML(ostream& o, bool header)
 {
-  return serializeInFile(_file);
+  return PNEC_NOT_IMPLEMENTED;
 }
 
 //////////////////////////////////////////////////////////////////////////

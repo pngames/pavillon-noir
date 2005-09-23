@@ -110,7 +110,7 @@ int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
 
   bool isStatic = (!strcmp((const char*)xmlGetProp(current, (const xmlChar *)"envtype"), "dynamic"))?false:true;
 
-  pnint obj_error = object->unserialize(file);
+  pnint obj_error = object->unserializeFromFile(file);
 
   if (obj_error != PNEC_SUCCES)
 	pnerror(PN_LOGLVL_ERROR, "%s : %s", (const char*)xmlGetProp(current, (const xmlChar *)"mdref"), pnGetErrorString(obj_error));
@@ -159,7 +159,7 @@ int	  PNGameMap::_parseListEntities(xmlNode* node)
   return error;
 }
 
-int	PNGameMap::unserialize(xmlNode* node)
+int	PNGameMap::unserializeFromXML(xmlNode* node)
 {
   //////////////////////////////////////////////////////////////////////////
 
@@ -190,38 +190,15 @@ int	PNGameMap::unserialize(xmlNode* node)
   return error;
 }
 
-pnint PNGameMap::unserialize(const fs::path& dir)
+pnint PNGameMap::unserializeFromFile(const fs::path& dir)
 {
-  fs::path file(dir.string() + "/entities.xml");
   _wpFile = new fs::path(dir.string() + "/waypoints.xml");
-
-  pnerror(PN_LOGLVL_INFO, "Loading GameMap: %s ...", file.native_file_string().c_str());
-
-  if (!fs::exists(file))
-	return PNEC_FILE_NOT_FOUND;
-
-  if (fs::is_directory(file))
-	return PNEC_NOT_A_FILE;
-
-  xmlParserCtxtPtr	ctxt;
-  xmlDocPtr			doc;
-
-  LIBXML_TEST_VERSION ctxt = xmlNewParserCtxt();	// create a parser context
-
-  if (ctxt == NULL) 
-	return PNEC_ALLOC_PARSER_CONTEXT;
-
-  doc = xmlCtxtReadFile(ctxt, file.string().c_str(), NULL, XML_PARSE_DTDVALID); // parse the file, + DTD validation
-  xmlFreeParserCtxt(ctxt);							// free up the parser context
-
-  if (doc == NULL)									// check if parsing suceeded
-	return PNEC_FAILED_TO_PARSE;
-
-  xmlNodePtr  node = xmlDocGetRootElement(doc);
 
   //////////////////////////////////////////////////////////////////////////
 
-  pnint error = unserialize(node);
+  fs::path file(dir.string() + "/entities.xml");
+
+  pnint error = IPNXMLSerializable::unserializeFromFile(file);
 
   //////////////////////////////////////////////////////////////////////////
   /*
@@ -237,17 +214,8 @@ pnint PNGameMap::unserialize(const fs::path& dir)
   std::cout << "Appuyez sur une touche pour continuer" << std::endl;
   fread(&c, 1, 1, stdin);
   */
-  //////////////////////////////////////////////////////////////////////////
-  // clean
-
-  xmlFreeDoc(doc);									// free the document
 
   return error;
-}
-
-pnint PNGameMap::serialize(const fs::path& dir)
-{
-  return 0;
 }
 
 /*

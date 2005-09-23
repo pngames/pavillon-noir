@@ -52,11 +52,6 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   
-  /// Get 3D model associated file
-  virtual					boost::filesystem::path*	getFile()=0;
-
-  //////////////////////////////////////////////////////////////////////////
-  
   /// Render model according to materials list and skeleton
   virtual void				render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk = NULL)=0;
   /// Render model according to skeleton

@@ -50,7 +50,6 @@ class 				PNI3DModel : public PN3DModel
 {
   friend class	PNI3DMesh;
 private:
-  boost::filesystem::path	_path;
   std::istream*		_istream;
 
   pnmHeader_t		_header;
@@ -73,10 +72,6 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   // PN3DModel
-  //////////////////////////////////////////////////////////////////////////
-
-  boost::filesystem::path* getFile();
-
   //////////////////////////////////////////////////////////////////////////
 
   void				render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk = NULL);
@@ -113,8 +108,7 @@ public:
   // PNObject
   //////////////////////////////////////////////////////////////////////////
   
-  pnint 			unserialize(const boost::filesystem::path& file);
-  pnint				unserialize(std::istream& i);
+  pnint				unserializeFromStream(std::istream& i);
 
   //////////////////////////////////////////////////////////////////////////
   // MAIN

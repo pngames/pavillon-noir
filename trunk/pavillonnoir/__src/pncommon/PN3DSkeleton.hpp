@@ -40,31 +40,26 @@ class PNMatrixTR4f;
 class PN3DAnimation;
 
 /// Skeleton
-class /*PNAPI*/	PN3DSkeleton : public PNObject, public IPNSerializable
+class /*PNAPI*/					PN3DSkeleton : public PNObject, public IPNSerializable
 {
 public:
   /// Destructor for PN3DSkeleton.
   virtual ~PN3DSkeleton() {}
 
   //////////////////////////////////////////////////////////////////////////
-
-  /// Get 3D skeleton associated file
-  virtual boost::filesystem::path*	getFile()=0;
-
-  //////////////////////////////////////////////////////////////////////////
   
   /// Render skeleton in wire
-  virtual void								render()=0;
+  virtual void					render()=0;
 
   /// Update skeleton bones according to animation
-  virtual pnbool							update(pnuint time, PN3DAnimation* anim)=0;
+  virtual pnbool				update(pnuint time, PN3DAnimation* anim)=0;
   /// Update skeleton bones according to animation
-  virtual pnbool							update(pndouble rtime, PN3DAnimation* anim)=0;
+  virtual pnbool				update(pndouble rtime, PN3DAnimation* anim)=0;
 
   //////////////////////////////////////////////////////////////////////////
   
   /// Get transformation to apply to vertices
-  virtual const PNMatrixTR4f&				getMatrix(pnuint id) const=0;
+  virtual const PNMatrixTR4f&	getMatrix(pnuint id) const=0;
 };
 
 //////////////////////////////////////////////////////////////////////////

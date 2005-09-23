@@ -36,25 +36,36 @@
 namespace PN
 {
 
-class PNAPI			IPNSerializable
+class PNAPI							IPNSerializable
 {
 public:
   virtual ~IPNSerializable() {}
 
-  /// Load object from file
-  virtual pnint unserialize(const boost::filesystem::path& file);
-  /// Load object from stream
-  virtual pnint unserialize(std::istream& i);
-  /// Load object
-  virtual pnint unserialize();
-  /// Save object to file
-  virtual pnint serialize(const boost::filesystem::path& file);
-  /// Save object to stream
-  virtual pnint serialize(std::ostream& o);
-  /// Save object
-  virtual pnint serialize();	
-protected:
+  //////////////////////////////////////////////////////////////////////////
 
+  /// Object associated file for serialize/unserialize system
+  virtual boost::filesystem::path*	getFile();
+
+  /// Modify object associated file for serialize/unserialize system
+  virtual void						setFile(const boost::filesystem::path& file);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  /// Load object from file
+  virtual pnint						unserializeFromFile(const boost::filesystem::path& file);
+  /// Load object from stream
+  virtual pnint						unserializeFromStream(std::istream& i);
+  /// Load object
+  virtual pnint						unserialize();
+  /// Save object to file
+  virtual pnint						serializeInFile(const boost::filesystem::path& file);
+  /// Save object to stream
+  virtual pnint						serializeInStream(std::ostream& o);
+  /// Save object
+  virtual pnint						serialize();	
+protected:
+  ///fichier representant l'objet
+  boost::filesystem::path			_file;
 };
 
 }

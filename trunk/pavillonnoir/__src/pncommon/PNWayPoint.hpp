@@ -102,9 +102,8 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  pnint serialize(std::ostream& o);
-  pnint unserialize(std::istream& i);
-  pnint unserialize(xmlTextReader* _reader);
+  pnint serializeInStream(std::ostream& o);
+  pnint unserializeFromXML(xmlTextReader* _reader);
 };
 
 //////////////////////////////////////////////////////////////////////////
