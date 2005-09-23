@@ -342,7 +342,7 @@ void  PNGUIGame::_commandHideWP(const std::string&, std::istream& i)
 
 	if (obj != NULL && obj->getObjType() == PN3DObject::OBJTYPE_WAYPOINT)
 	{
-	  obj->setRenderMode(NULL);
+	  obj->setRenderMode(0);
 	}
   }
 }

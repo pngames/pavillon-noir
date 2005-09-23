@@ -40,13 +40,6 @@ using namespace PN;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-void	initEventManager()
-{
-  PNEventManager::getInstance()->run();
-}
-
-//////////////////////////////////////////////////////////////////////////
-
 PNEventManager*	PNEventManager::_instance = NULL;
 
 PNEventManager::PNEventManager()
@@ -257,14 +250,14 @@ PNEventManager::run()
 void
 PNEventManager::init()
 {
-  boost::thread thrd(&initEventManager);
+  boost::thread thrd(fastdelegate::FastDelegate0<void>(this, &PNEventManager::run));
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-void	PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* data)
+void	PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* data, bool destruct/* = true*/)
 {
-  pnevent eventParams(type, source, data);
+  pnevent eventParams(type, source, data, destruct);
 
   _events.push(eventParams);
 
