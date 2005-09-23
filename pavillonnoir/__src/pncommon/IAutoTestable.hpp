@@ -43,6 +43,8 @@ namespace PN {
 class IAutoTestable
 {
 public:
+  virtual ~IAutoTestable() {}
+
   virtual bool	___IsEqualsTo(IAutoTestable* testable, std::string& bugReport) = 0;
   virtual bool	___IsNotEqualsTo(IAutoTestable* testable, std::string& bugReport) = 0;
 };

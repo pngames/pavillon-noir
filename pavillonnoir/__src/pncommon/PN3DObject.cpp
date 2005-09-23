@@ -92,6 +92,10 @@ PN3DObject::PN3DObject()
   _movingSpeed = 1.0f;
 
   _objType = OBJTYPE_3DOBJ;
+  
+  _startedEventType = PN_EVENT_OA_STARTED;
+  _stopedEventType = PN_EVENT_OA_ENDED;
+  _pausedEventType = PN_EVENT_OA_PAUSED;
 }
 
 /*!
@@ -104,6 +108,7 @@ PN3DObject::PN3DObject()
 PN3DObject::~PN3DObject()
 {  
 }
+
 
 //////////////////////////////////////////////////////////////////////////
 

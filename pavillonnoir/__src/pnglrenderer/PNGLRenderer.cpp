@@ -62,10 +62,13 @@
 
 //#include "PNGLRenderUpdateEventData.hpp"
 
+#include "PNGLVideo.hpp"
+
 #include <renderers/OpenGLGUIRenderer/openglrenderer.h>
 
 using namespace PN;
 using namespace std;
+namespace fs = boost::filesystem;
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -113,31 +116,11 @@ void		PNGLRenderer::_onPlayVideo(pnEventType type, PNObject* source, PNEventData
 {
   PNVideoEventData*	videoEventData = (PNVideoEventData*)ed;
 
-#ifdef WIN32
-
-  STARTUPINFO si;
-  PROCESS_INFORMATION pi;
-
-  ZeroMemory(&si, sizeof(si));
-  si.cb = sizeof(si);
-  ZeroMemory(&pi, sizeof(pi));
-
-  std::string	command = std::string("win32\\mplayer\\mplayer.exe -really-quiet -fs ") + videoEventData->path;
-  // Start the child process.
-  if (!CreateProcess(NULL, (LPSTR)command.c_str(), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
-  {
-	printf("CreateProcess failed (%d).\n", GetLastError());
-	return ;
-  }
-
-  // Wait until child process exits.
-  //WaitForSingleObject(pi.hProcess, INFINITE);
-
-  // Close process and thread handles.
-  CloseHandle(pi.hProcess);
-  CloseHandle(pi.hThread);
-
-#endif
+  PNGLVideo		video;
+  
+  video.unserialize(fs::path(videoEventData->path, fs::native));
+  
+  video.startAnimation();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -214,21 +197,21 @@ PNGLRenderer::setSDLFlags(int *flags, bool fullscreen)
   videoFlags |= SDL_GL_DOUBLEBUFFER;
   videoFlags |= SDL_HWPALETTE;
 
-  /*if (videoInfo->hw_available)
-  {*/
+  if (videoInfo->hw_available)
+  {
 	std::cout << "Surface stored in video memory" << std::endl;
 	videoFlags |= SDL_HWSURFACE;
-  /*}
+  }
   else
   {
 	std::cout << "Surface stored in system memory" << std::endl;
 	videoFlags |= SDL_SWSURFACE;
   }
   if (videoInfo->blit_hw)
-  {*/
+  {
 	std::cout << "Surface blit uses hardware acceleration" << std::endl;
 	videoFlags |= SDL_HWACCEL;
-  //}
+  }
 
   if (fullscreen == true)
 	videoFlags |= SDL_FULLSCREEN;
@@ -757,12 +740,17 @@ Init CEGUI stuff.
 void
 PNGLRenderer::initGUI()
 {
+  PNDEBUG_STEP;
   try
   {
 	CEGUI::Logger::getSingleton().setLoggingLevel(CEGUI::Insane);
+	PNDEBUG_STEP;
 	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/TaharezLook.scheme");
+	PNDEBUG_STEP;
 	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/WindowsLook.scheme");
+	PNDEBUG_STEP;
 	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/VanillaSkin.scheme");
+	PNDEBUG_STEP;
 	
 	CEGUI::System::getSingleton().setDefaultMouseCursor("Vanilla-Images", "MouseArrow");
 	//CEGUI::System::getSingleton().setDefaultMouseCursor("TaharezLook", "MouseArrow");
