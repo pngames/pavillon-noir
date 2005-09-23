@@ -52,14 +52,6 @@ PNI3DAnimation::~PNI3DAnimation()
 
 //////////////////////////////////////////////////////////////////////////
 
-fs::path*
-PNI3DAnimation::getFile()
-{
-  return &_path;
-}
-
-//////////////////////////////////////////////////////////////////////////
-
 pnuint
 PNI3DAnimation::getTotalTime()
 {
@@ -69,17 +61,7 @@ PNI3DAnimation::getTotalTime()
 //////////////////////////////////////////////////////////////////////////
 
 pnint
-PNI3DAnimation::unserialize(const fs::path& file)
-{
-  std::cout << "start unserialize " << file.native_file_string() << " : " << std::endl;
-
-  _path = file;
-
-  return PN3DAnimation::unserialize(file);
-}
-
-pnint
-PNI3DAnimation::unserialize(std::istream& istm)
+PNI3DAnimation::unserializeFromStream(std::istream& istm)
 {
   int err = PNEC_SUCCES;
 

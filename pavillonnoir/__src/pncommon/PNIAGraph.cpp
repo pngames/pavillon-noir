@@ -277,14 +277,7 @@ PNIAGraph::getWPFromId(int id)
 }
 
 pnint
-PNIAGraph::serialize(const boost::filesystem::path& file)
-{
-  IPNSerializable::serialize(file);
-  return 0;
-}
-
-pnint
-PNIAGraph::serialize(std::ostream& o)
+PNIAGraph::serializeInStream(std::ostream& o)
 {
   WPLIST::iterator	i;
 
@@ -293,7 +286,7 @@ PNIAGraph::serialize(std::ostream& o)
   o << "<graph>" << std::endl;
   o << "<listwp>" << std::endl;
   for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
-	(*i)->serialize(o);
+	(*i)->serializeInStream(o);
   o << "</listwp>" << std::endl;
   o << "<listlnk>" << std::endl;
   for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
@@ -310,7 +303,7 @@ PNIAGraph::serialize(std::ostream& o)
 }
 
 pnint
-PNIAGraph::unserialize(const boost::filesystem::path& file)
+PNIAGraph::unserializeFromFile(const boost::filesystem::path& file)
 {
   int				ret;
   xmlTextReaderPtr	_reader;
@@ -339,12 +332,6 @@ PNIAGraph::unserialize(const boost::filesystem::path& file)
   return PNEC_SUCCES;
 }
 
-pnint
-PNIAGraph::unserialize(std::istream& i)
-{
-  return 0;
-}
-
 int
 PNIAGraph::processChild(xmlTextReader* _reader)
 {
@@ -357,7 +344,7 @@ PNIAGraph::processChild(xmlTextReader* _reader)
   {
 	PNWayPoint*	wp = new PNWayPoint(this);
 
-	wp->unserialize(_reader);
+	wp->unserializeFromXML(_reader);
 	addWayPoint(wp);
   }
 

@@ -74,7 +74,7 @@ PNObject*	PNIAnimationImporter::doImport(const fs::path& path)
 
   PNI3DAnimation* obj = new PNI3DAnimation();
 
-  pnuint error = obj->unserialize(path);
+  pnuint error = obj->unserializeFromFile(path);
 
   if (error != PNEC_SUCCES)
   {

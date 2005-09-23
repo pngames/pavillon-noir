@@ -72,7 +72,7 @@ PN3DGround::PN3DGround()
 
 PN3DGround::PN3DGround(const fs::path& file)
 {
-  unserialize(file);
+  unserializeFromFile(file);
 
   return ;
 }
@@ -96,11 +96,11 @@ PN3DGround::getInstance()
 * \brief Call when a game is loaded.
 */
 pnint
-PN3DGround::unserialize(const fs::path& file)
+PN3DGround::unserializeFromFile(const fs::path& file)
 {
   PN3DObject ground;
 
-  if (ground.unserialize(file) != PNEC_SUCCES)
+  if (ground.unserializeFromFile(file) != PNEC_SUCCES)
 	return (PNEC_ERROR);
 
   if (!_convertIntoGroundRepresentation(ground))
@@ -110,15 +110,6 @@ PN3DGround::unserialize(const fs::path& file)
   }
 
   return (PNEC_SUCCES);
-}
-
-/*
-* \brief Call when a game is saved.
-*/
-pnint
-PN3DGround::serialize(const fs::path& file)
-{
-  return (-1);
 }
 
 bool

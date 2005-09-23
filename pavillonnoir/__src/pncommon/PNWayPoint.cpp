@@ -178,7 +178,7 @@ PNWayPoint::print()
 }
 
 pnint
-PNWayPoint::serialize(std::ostream& o)
+PNWayPoint::serializeInStream(std::ostream& o)
 {
   o << "<wp id=\"" << _id << "\" x=\"" << _coord.x << "\" y=\"" << _coord.y << "\" z=\""
 	<< _coord.z << "\"/>" << std::endl;
@@ -186,13 +186,7 @@ PNWayPoint::serialize(std::ostream& o)
 }
 
 pnint
-PNWayPoint::unserialize(std::istream& i)
-{
-  return 0;
-}
-
-pnint
-PNWayPoint::unserialize(xmlTextReader* _reader)
+PNWayPoint::unserializeFromXML(xmlTextReader* _reader)
 {
   xmlChar *attr;
 

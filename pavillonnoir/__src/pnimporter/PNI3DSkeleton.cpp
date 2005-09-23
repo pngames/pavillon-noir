@@ -54,12 +54,6 @@ PNI3DSkeleton::~PNI3DSkeleton()
 
 //////////////////////////////////////////////////////////////////////////
 
-fs::path*
-PNI3DSkeleton::getFile()
-{
-  return &_path;
-}
-
 const PNMatrixTR4f&
 PNI3DSkeleton::getMatrix(pnuint id) const
 {
@@ -104,17 +98,7 @@ PNI3DSkeleton::update(pndouble rtime, PN3DAnimation* anim)
 //////////////////////////////////////////////////////////////////////////
 
 pnint
-PNI3DSkeleton::unserialize(const fs::path& file)
-{
-  std::cout << "start unserialize " << file.native_file_string() << " : " << std::endl;
-
-  _path = file;
-
-  return PN3DSkeleton::unserialize(file);
-}
-
-pnint
-PNI3DSkeleton::unserialize(std::istream& istm)
+PNI3DSkeleton::unserializeFromStream(std::istream& istm)
 {
   int err = PNEC_SUCCES;
 

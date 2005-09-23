@@ -47,11 +47,6 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  /// Get 3D material associated file
-  virtual boost::filesystem::path*	getFile()=0;
-
-  //////////////////////////////////////////////////////////////////////////
-
   /// Get render materials compatible with render interface
   virtual PNRenderMaterial*			getRenderMaterial()=0;
 };

@@ -35,7 +35,7 @@
 #include <map>
 
 #include "PNObject.hpp"
-#include "IPNSerializable.hpp"
+#include "IPNXMLSerializable.hpp"
 
 typedef struct _xmlNode		xmlNode;
 
@@ -47,7 +47,7 @@ class PNWayPoint;
 class PNIAGraph;
 class PN3DCamera;
 
-class PNAPI PNGameMap : public PNObject, public IPNSerializable
+class PNAPI PNGameMap : public PNObject, public IPNXMLSerializable
 {
 protected:
   std::map<std::string, PNObject *> _entityList;
@@ -66,11 +66,9 @@ public:
   ~PNGameMap();
 
   /// Parse XML root node
-  pnint	unserialize(xmlNode* node);
+  pnint	unserializeFromXML(xmlNode* node);
   /// Load object from file
-  pnint unserialize(const boost::filesystem::path& dir);
-  /// Save object to file
-  pnint serialize(const boost::filesystem::path& dir);
+  pnint unserializeFromFile(const boost::filesystem::path& dir);
 	
   //////////////////////////////////////////////////////////////////////////
   // Will be operational when pnscript will instantiate PNGameMap

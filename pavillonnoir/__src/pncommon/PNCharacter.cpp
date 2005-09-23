@@ -51,7 +51,7 @@ PNCharacter::~PNCharacter()
 void
 PNCharacter::buildGraph(fs::path& file)
 {
-  _pf.unserialize(file);
+  _pf.unserializeFromFile(file);
 }
 
 void

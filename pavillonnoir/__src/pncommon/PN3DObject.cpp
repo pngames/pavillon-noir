@@ -109,32 +109,6 @@ PN3DObject::~PN3DObject()
 {  
 }
 
-
-//////////////////////////////////////////////////////////////////////////
-
-/**
- * @brief Get 3DObject associated file for serialize/unserialize system.
- *
- * @return File
- */
-boost::filesystem::path*
-PN3DObject::getFile()
-{
-  return &_file;
-}
-
-/**
- * @brief	Modify 3DObject associated file for serialize/unserialize system
- *
- * @param	file		File
- * @return	void
- */
-void
-PN3DObject::setFile(const boost::filesystem::path& file)
-{
-  _file = file;
-}
-
 //////////////////////////////////////////////////////////////////////////
 
 pnint
@@ -186,7 +160,7 @@ PN3DObject::_parseModel(xmlNode* node)
 }
 
 pnint
-PN3DObject::unserialize(xmlNode* root)
+PN3DObject::unserializeFromXML(xmlNode* root)
 {
   _model = NULL;
   _materials.clear();
@@ -214,71 +188,6 @@ PN3DObject::unserialize(xmlNode* root)
 }
 
 /**
-* @brief		Load 3DObject from xml file
-*
-* @param file	File to load
-*
-* @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succed
-*
-* @see			pnGetErrorString
-*/
-pnint
-PN3DObject::unserialize(const fs::path& file)
-{
-  pnerror(PN_LOGLVL_INFO, "Loading 3DObject: %s ...", file.native_file_string().c_str());
-
-  if (!fs::exists(file))
-	return PNEC_FILE_NOT_FOUND;
-
-  if (fs::is_directory(file))
-	return PNEC_NOT_A_FILE;
-
-  _file = file;
-
-  xmlParserCtxtPtr	ctxt;
-  xmlDocPtr			doc;
-
-  LIBXML_TEST_VERSION ctxt = xmlNewParserCtxt();	// create a parser context
-
-  if (ctxt == NULL) 
-	return PNEC_ALLOC_PARSER_CONTEXT;
-
-  doc = xmlCtxtReadFile(ctxt, file.string().c_str(), NULL, XML_PARSE_DTDVALID); // parse the file, + DTD validation 
-  xmlFreeParserCtxt(ctxt);							// free up the parser context
-
-  if (doc == NULL)									// check if parsing suceeded
-	return PNEC_FAILED_TO_PARSE;
-
-  xmlNodePtr  node = xmlDocGetRootElement(doc);
-
-  //////////////////////////////////////////////////////////////////////////
-  
-  _file = file;
-
-  pnint error = unserialize(node);
-
-  //////////////////////////////////////////////////////////////////////////
-  // clean
-
-  xmlFreeDoc(doc);									// free the document
-
-  return error;
-}
-
-/**
-* @brief		Load 3DObject from xml file
-*
-* @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succed
-*
-* @see			pnGetErrorString
-*/
-pnint
-PN3DObject::unserialize()
-{
-  return unserialize(_file);
-}
-
-/**
 * @brief		Save PN3DObject to xml file
 *
 * @param file	File to save
@@ -288,11 +197,12 @@ PN3DObject::unserialize()
 * @see			pnGetErrorString
 */
 pnint
-PN3DObject::serialize(std::ostream& o)
+PN3DObject::serializeInXML(std::ostream& o, bool header)
 {
   pnint err = PNEC_SUCCES;
 
-  o << PNO_XML_HEADER;
+  if (header)
+	o << PNO_XML_HEADER;
 
   o << "<" << PNO_XMLNODE_ROOT << " " << PNO_XMLPROP_PATH << "=\"" << (_model == NULL ? "none" :_model->getFile()->leaf()) << "\">" << endl;
 
@@ -302,19 +212,6 @@ PN3DObject::serialize(std::ostream& o)
   o << "</" << PNO_XMLNODE_ROOT << ">" << endl;
 
   return err;
-}
-
-/**
-* @brief		Save PN3DObject to xml file
-*
-* @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succed
-*
-* @see			pnGetErrorString
-*/
-pnint
-PN3DObject::serialize()
-{
-  return IPNSerializable::serialize(_file);
 }
 
 /**

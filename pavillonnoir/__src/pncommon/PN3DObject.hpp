@@ -36,15 +36,13 @@
 
 #include "PNObject.hpp"
 #include "IPNAnimated.hpp"
-#include "IPNSerializable.hpp"
+#include "IPNXMLSerializable.hpp"
 
 #include "PNPoint.hpp"
 #include "PNQuatf.hpp"
 #include "PNMatrixTR4f.hpp"
 #include "PNVector3f.hpp"
 #include "PNNormal3f.hpp"
-
-typedef struct _xmlNode		xmlNode;
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -55,7 +53,7 @@ class PNFace;
 class PNPhysicalObject;
 
 /// Base object for all object evolving in the scene
-class PNAPI					PN3DObject : public PNObject, public IPNAnimated, public IPNSerializable
+class PNAPI					PN3DObject : public PNObject, public IPNAnimated, public IPNXMLSerializable
 {
 protected:
   ///object identifier
@@ -167,8 +165,12 @@ public:
 	OBJTYPE_GROUND,			/// Ground partitioned for optimization and static
 	OBJTYPE_CAMERA,			/// A camera
 	OBJTYPE_CHARACTER,		/// Game character
-	NB_OBJTYPE
+	NB_OBJTYPE 
   }							objType;
+
+protected:
+  /// Type of the 3d object
+  objType					_objType;
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -188,13 +190,7 @@ public:
   const PNNormal3f&			getTopDirection() const;
 
   //////////////////////////////////////////////////////////////////////////
-  
-protected:
-  /// File path associated with this object for serialize/unserialize system
-  boost::filesystem::path	_file;
-
-  /// Type of the 3d object
-  objType					_objType;
+ 
 protected:
   /// Sub Objects to render
   pnuint					_renderMode;
@@ -244,27 +240,13 @@ public:
   virtual ~PN3DObject();
 
   //////////////////////////////////////////////////////////////////////////
-  
-  /// Get 3DObject associated file for serialize/unserialize system
-  virtual boost::filesystem::path*	getFile();
-
-  /// Modify 3DObject associated file for serialize/unserialize system
-  virtual void						setFile(const boost::filesystem::path& file);
-
-  //////////////////////////////////////////////////////////////////////////
   // PNObject
 
   /// Parse XML root node
-  virtual pnint					unserialize(xmlNode* node);
-  /// Load 3DObject from XML file
-  virtual pnint					unserialize(const boost::filesystem::path& file);
-  /// Load 3DObject from XML file
-  virtual pnint					unserialize();
+  virtual pnint					unserializeFromXML(xmlNode* node);
 
   /// Save 3DObject into XML file
-  virtual pnint					serialize(std::ostream& o);
-  /// Save 3DObject into XML file
-  virtual pnint					serialize();
+  virtual pnint					serializeInXML(std::ostream& o, bool header);
 
   //////////////////////////////////////////////////////////////////////////
   

@@ -40,8 +40,6 @@ namespace PN {
 class						PNI3DMaterial : public PN3DMaterial
 {
 private:
-  boost::filesystem::path	_path;
-
   pntHeader_t				_header;
   std::string				_texture;
 
@@ -53,12 +51,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  boost::filesystem::path*	getFile();
-
-  //////////////////////////////////////////////////////////////////////////
-
-  pnint 					unserialize(const boost::filesystem::path& file);
-  pnint						unserialize(std::istream& i);
+  pnint						unserializeFromStream(std::istream& i);
 
   pnint						_parse(std::istream& istm);
 

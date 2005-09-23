@@ -79,7 +79,7 @@ PNObject*	PNIMaterialImporter::doImport(const fs::path& path)
 
   PNI3DMaterial* mat = new PNI3DMaterial();
 
-  pnuint error = mat->unserialize(path);
+  pnuint error = mat->unserializeFromFile(path);
 
   if (error != PNEC_SUCCES)
   {

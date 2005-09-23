@@ -118,7 +118,7 @@ void		PNGLRenderer::_onPlayVideo(pnEventType type, PNObject* source, PNEventData
 
   PNGLVideo		video;
   
-  video.unserialize(fs::path(videoEventData->path, fs::native));
+  video.unserializeFromFile(fs::path(videoEventData->path, fs::native));
   
   video.startAnimation();
 }

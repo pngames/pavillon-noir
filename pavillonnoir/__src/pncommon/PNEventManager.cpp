@@ -300,16 +300,6 @@ void	PNEventManager::deleteCallback(pnEventType type, const EventCallback& callb
 
 //////////////////////////////////////////////////////////////////////////
 
-pnint		PNEventManager::unserialize(const fs::path& file)
-{
-  return PNEC_NOT_IMPLEMENTED;
-}
-
-pnint		PNEventManager::serialize(const fs::path& file)
-{
-  return PNEC_NOT_IMPLEMENTED;
-}
-
 void		PNEventManager::stop()
 {
   _run = false;
