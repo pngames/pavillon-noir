@@ -33,6 +33,7 @@
 #include <set>
 
 #include "PNObject.hpp"
+#include "IPNSerializable.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -41,7 +42,7 @@ class PNEventData;
 struct pnevent;
 
 /// Callback manager for one event type
-class PNAPI		PNCallBackList: PNObject
+class PNAPI		PNCallBackList: public PNObject, public IPNSerializable
 {
   /// Event callbacks list type
   typedef std::set<EventCallback>	CallbackSet;

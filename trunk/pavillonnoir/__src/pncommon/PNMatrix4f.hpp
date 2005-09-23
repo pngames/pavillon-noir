@@ -31,6 +31,7 @@
 # define _PNMATRIX4F_HPP_
 
 #include <string.h>
+#include <iostream>
 
 #include "PNObject.hpp"
 

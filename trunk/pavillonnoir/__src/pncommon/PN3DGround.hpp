@@ -34,6 +34,7 @@
 #include <boost/filesystem/path.hpp>
 
 #include "PN3DObject.hpp"
+
 #include "PNWorldCollision.hpp"
 
 namespace PN {
@@ -47,7 +48,7 @@ class PNBoundingSphere;
 
 typedef 	 std::list<PN3DObject *> LIST_3DOBJ;
 
-class PNAPI				PN3DGround : PN3DObject
+class PNAPI				PN3DGround : public PN3DObject
 {
 private:
   PN3DGround();

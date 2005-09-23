@@ -279,7 +279,7 @@ PNIAGraph::getWPFromId(int id)
 pnint
 PNIAGraph::serialize(const boost::filesystem::path& file)
 {
-  PNObject::serialize(file);
+  IPNSerializable::serialize(file);
   return 0;
 }
 

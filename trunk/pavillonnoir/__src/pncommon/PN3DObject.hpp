@@ -36,6 +36,7 @@
 
 #include "PNObject.hpp"
 #include "IPNAnimated.hpp"
+#include "IPNSerializable.hpp"
 
 #include "PNPoint.hpp"
 #include "PNQuatf.hpp"
@@ -54,7 +55,7 @@ class PNFace;
 class PNPhysicalObject;
 
 /// Base object for all object evolving in the scene
-class PNAPI					PN3DObject : public PNObject, public IPNAnimated
+class PNAPI					PN3DObject : public PNObject, public IPNAnimated, public IPNSerializable
 {
 protected:
   ///object identifier

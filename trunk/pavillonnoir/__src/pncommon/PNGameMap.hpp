@@ -35,6 +35,7 @@
 #include <map>
 
 #include "PNObject.hpp"
+#include "IPNSerializable.hpp"
 
 typedef struct _xmlNode		xmlNode;
 
@@ -42,11 +43,11 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
-  class PNWayPoint;
-  class PNIAGraph;
-  class PN3DCamera;
+class PNWayPoint;
+class PNIAGraph;
+class PN3DCamera;
 
-class PNAPI PNGameMap : public PNObject
+class PNAPI PNGameMap : public PNObject, public IPNSerializable
 {
 protected:
   std::map<std::string, PNObject *> _entityList;

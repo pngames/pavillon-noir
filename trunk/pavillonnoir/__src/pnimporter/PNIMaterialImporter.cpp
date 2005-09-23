@@ -77,7 +77,7 @@ PNObject*	PNIMaterialImporter::doImport(const fs::path& path)
 {
   pnerror(PN_LOGLVL_INFO, "Import %s", path.string().c_str());
 
-  PNObject* mat = new PNI3DMaterial();
+  PNI3DMaterial* mat = new PNI3DMaterial();
 
   pnuint error = mat->unserialize(path);
 

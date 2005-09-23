@@ -72,7 +72,7 @@ PNObject*	PNIModelImporter::doImport(const fs::path& path)
 {
   pnerror(PN_LOGLVL_INFO, "Import %s", path.string().c_str());
 
-  PNObject* obj = new PNI3DModel();
+  PNI3DModel* obj = new PNI3DModel();
 
   pnuint error = obj->unserialize(path);
 

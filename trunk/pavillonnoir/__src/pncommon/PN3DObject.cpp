@@ -314,7 +314,7 @@ PN3DObject::serialize(std::ostream& o)
 pnint
 PN3DObject::serialize()
 {
-  return PNObject::serialize(_file);
+  return IPNSerializable::serialize(_file);
 }
 
 /**

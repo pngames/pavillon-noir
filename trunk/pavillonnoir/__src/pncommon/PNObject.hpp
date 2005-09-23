@@ -30,9 +30,6 @@
 #ifndef _PNOBJECT_HPP_
 # define _PNOBJECT_HPP_
 
-#include <boost/filesystem/path.hpp>
-#include <iostream>
-
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
@@ -41,21 +38,6 @@ class PNAPI PNObject
 {
 public:
   virtual ~PNObject() {}
-
-  //////////////////////////////////////////////////////////////////////////
-
-  /// Load object from file
-  virtual pnint unserialize(const boost::filesystem::path& file);
-  /// Load object from stream
-  virtual pnint unserialize(std::istream& i);
-  /// Load object
-  virtual pnint unserialize();
-  /// Save object to file
-  virtual pnint serialize(const boost::filesystem::path& file);
-  /// Save object to stream
-  virtual pnint serialize(std::ostream& o);
-  /// Save object
-  virtual pnint serialize();
 };
 
 //////////////////////////////////////////////////////////////////////////

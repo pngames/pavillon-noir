@@ -33,6 +33,9 @@
 #include "pndefs.h"
 #include "pnmath.h"
 
+#include "PNObject.hpp"
+#include "IPNSerializable.hpp"
+
 #include "PNPoint.hpp"
 #include "PNQuatf.hpp"
 
@@ -48,7 +51,7 @@ typedef enum
   PN_PHYS_ROCKLIGHT
 } physicalmaterial;
 
-class PNPhysicalObject
+class PNPhysicalObject: public PNObject, public IPNSerializable
 {
 public:
   virtual ~PNPhysicalObject(void) {}
