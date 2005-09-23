@@ -171,7 +171,7 @@
 				OutputFile="../../../__binaries/win32/pneditor.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
-				GenerateManifest="false"
+				GenerateManifest="true"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
 				TargetMachine="1"

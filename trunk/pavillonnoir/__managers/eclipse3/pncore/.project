@@ -3,6 +3,8 @@
 	<name>pncore</name>
 	<comment></comment>
 	<projects>
+		<project>pncommon</project>
+		<project>pneditorcommon</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

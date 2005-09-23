@@ -59,19 +59,22 @@ struct				pnevent
   PNObject*			source;
   /// Data of event
   PNEventData*  	data;
+  /// Indicate if data is deleted after sendEvent
+  pnbool			destructData;
 
   /// Make event from sender \c s of type \c t and data \d
-  pnevent(pnEventType t, PNObject* s, PNEventData* d)
+  pnevent(pnEventType t, PNObject* s, PNEventData* d, pnbool dtd)
   {
     type = t;
     source = s;
     data = d;
+	destructData = dtd;
   }
 
   /// Destructor for pnevent
   ~pnevent()
   {
-    if (data != NULL)
+    if (data != NULL && destructData)
       delete data;
   }
 };
@@ -103,7 +106,6 @@ struct				pnevent
 */
 class PNAPI						PNEventManager : public PNObject
 {
-  friend void					initEventManager();
 private:
   /// Unique instance of events manager
   static PNEventManager*		_instance;
@@ -159,7 +161,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
   /// Add event of type \c type on stack (non blocking)
-  void					addEvent(pnEventType type, PNObject* source, PNEventData* data);
+  void					addEvent(pnEventType type, PNObject* source, PNEventData* data, bool destruct = true);
 
   /// Send event directly (blocking)
   void					sendEvent(pnEventType type, PNObject* source, PNEventData* data);

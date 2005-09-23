@@ -72,9 +72,9 @@ namespace PN
 	//	CEGUI::StaticImage* backGround = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Background");
 	//	backGround->disable();
 	CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Load")->disable();
-#ifndef WIN32
-	CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Credits")->disable();
-#endif
+
+	//CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Credits")->disable();
+
 	//CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Options")->disable();
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 

@@ -218,6 +218,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pnglrenderer\PNGLVideo.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pnglrenderer\PNGUIConsole.cpp"
 				>
 			</File>
@@ -265,6 +269,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pnglrenderer\PNGLTexture.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pnglrenderer\PNGLVideo.hpp"
 				>
 			</File>
 			<File

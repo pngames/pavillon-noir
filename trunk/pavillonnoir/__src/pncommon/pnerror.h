@@ -80,9 +80,11 @@ extern PNAPI const pnchar*	pnGetErrorString(pnint code);
 };
 
 #ifdef DEBUG
-# define PNDEBUG_TODO(msg)	PN::pnerror(PN_LOGLVL_TODO, "%s in file %s at line %i", msg, __FILE__, __LINE__)
+# define PNDEBUG_TODO(msg)	PN::pnerror(PN_LOGLVL_TODO, "file %s at line %i", __FILE__, __LINE__)
+# define PNDEBUG_STEP		PN::pnerror(PN_LOGLVL_INFO, "file %s at line %i", __FILE__, __LINE__)
 #else
 # define PNDEBUG_TODO(msg)
+# define PNDEBUG_STEP
 #endif
 
 #endif /*_PNERROR_H_*/

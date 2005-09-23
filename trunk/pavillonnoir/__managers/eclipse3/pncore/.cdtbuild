@@ -3,7 +3,7 @@
 
 <ManagedProjectBuildInfo>
 <project id="pncore.cdt.managedbuild.target.gnu.exe.2047668870" name="Executable (Gnu)" projectType="cdt.managedbuild.target.gnu.exe">
-<configuration artifactExtension="" artifactName="pncore-dbg" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.exe.debug.95448706" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug" postannouncebuildStep="Copy to binaries directory" postbuildStep="mkdir ../../../../__binaries/linux ; cp pncore-dbg ../../../../__binaries/linux/pncore-dbg" preannouncebuildStep="" prebuildStep="">
+<configuration artifactExtension="" artifactName="pncore-dbg" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.exe.debug.95448706" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug" postannouncebuildStep="Copy to binaries directory" postbuildStep="@mkdir -vp ../../../../__binaries/linux ; cp -vf pncore-dbg ../../../../__binaries/linux/pncore-dbg" preannouncebuildStep="" prebuildStep="">
 <toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.735541163" name="%ToolChainName.Dbg" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
 <builder id="cdt.managedbuild.target.gnu.builder.exe.debug.1614954141" name="%BuilderName.Dbg.Debug" superClass="cdt.managedbuild.target.gnu.builder.exe.debug"/>
 <tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.246786146" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug"/>
@@ -35,7 +35,7 @@
 <listOptionValue builtIn="false" value="boost_thread"/>
 <listOptionValue builtIn="false" value="boost_filesystem"/>
 </option>
-<option id="gnu.cpp.link.option.flags.1831673588" superClass="gnu.cpp.link.option.flags" value="`fox-config --libs` `xml2-config --libs`" valueType="string"/>
+<option id="gnu.cpp.link.option.flags.1831673588" superClass="gnu.cpp.link.option.flags" value="`fox-config --libs` `xml2-config --libs` `xine-config --libs`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.exe.debug.1537256490" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug">
 <option id="gnu.both.asm.option.include.paths.915684678" superClass="gnu.both.asm.option.include.paths"/>
@@ -43,7 +43,7 @@
 <macros/>
 </toolChain>
 </configuration>
-<configuration artifactName="pncore" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.exe.release.1282662" name="Release" parent="cdt.managedbuild.config.gnu.exe.release" postannouncebuildStep="Copy to binaries directory" postbuildStep="mkdir ../../../../__binaries/linux ; cp pncore ../../../../__binaries/linux/pncore" preannouncebuildStep="" prebuildStep="">
+<configuration artifactName="pncore" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.exe.release.1282662" name="Release" parent="cdt.managedbuild.config.gnu.exe.release" postannouncebuildStep="Copy to binaries directory" postbuildStep="@mkdir -vp ../../../../__binaries/linux ; cp -vf pncore ../../../../__binaries/linux/pncore" preannouncebuildStep="" prebuildStep="">
 <toolChain id="cdt.managedbuild.toolchain.gnu.exe.release.1257574581" name="%ToolChainName.Rel" superClass="cdt.managedbuild.toolchain.gnu.exe.release">
 <tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1974340792" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1267470840" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release">

@@ -33,7 +33,7 @@
 namespace PN
 {
 
-class PNAPI		IPNAnimated
+class PNAPI			IPNAnimated
 {
 public:
   IPNAnimated();
@@ -41,6 +41,8 @@ public:
 	
   /// Set animation to play and the time used to make the transition between last animation and this
   virtual pnuint	startAnimation(pnint animation, pnuint transTime);
+  /// Starting animation
+  virtual pnuint	startAnimation();
   /// Stop current animation and reset position
   virtual void		stopAnimation();
 
@@ -53,6 +55,10 @@ public:
   virtual void		setEnableLoop(pnbool enabled);
 	
 protected:
+  pnint				_startedEventType;
+  pnint				_stopedEventType;
+  pnint				_pausedEventType;
+
   /// Id of playing local animation
   pnint				_animId;
 

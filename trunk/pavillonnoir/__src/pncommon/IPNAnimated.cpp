@@ -39,6 +39,8 @@ namespace PN
 
 IPNAnimated::IPNAnimated()
 {
+  _startedEventType = -1;
+  _stopedEventType = -1;
 }
 
 IPNAnimated::~IPNAnimated()
@@ -50,12 +52,23 @@ IPNAnimated::startAnimation(pnint animation, pnuint transTime)
 {
   _animId = animation;
   _animTimeStart = PNRendererInterface::getInstance()->getTicks();
+  
+  return startAnimation();
+}
 
+pnuint
+IPNAnimated::startAnimation()
+{
   _running = true;
   _paused = false;
-
-  PNEventManager::getInstance()->addEvent(PN_EVENT_OA_STARTED, (PNObject* )this, NULL);
-
+  
+  printf("IPNAnimated::startAnimation()\n");
+  
+  if (_startedEventType > -1)
+    PNEventManager::getInstance()->addEvent((pnEventType)_startedEventType, (PNObject* )this, NULL);
+  
+  printf("IPNAnimated::startAnimation()\n");
+  
   return PNEC_SUCCES;
 }
 
@@ -64,7 +77,8 @@ IPNAnimated::stopAnimation()
 {
   _running = false;
 
-  PNEventManager::getInstance()->addEvent(PN_EVENT_OA_ENDED, (PNObject* )this, NULL);
+  if (_stopedEventType > -1)
+    PNEventManager::getInstance()->addEvent((pnEventType)_stopedEventType, (PNObject* )this, NULL);
 }
 
 void
@@ -75,7 +89,8 @@ IPNAnimated::pause()
 	_paused = false;
 	_animTimeStart += PNRendererInterface::getInstance()->getTicks() - _animTimePause;
 
-	PNEventManager::getInstance()->addEvent(PN_EVENT_OA_PAUSED, (PNObject* )this, NULL);
+    if (_pausedEventType > -1)
+	  PNEventManager::getInstance()->addEvent((pnEventType)_pausedEventType, (PNObject* )this, NULL);
   }
   else
   {
