@@ -31,6 +31,7 @@
 # define _PN3DANIMATION_HPP_
 
 #include "PNObject.hpp"
+#include "IPNSerializable.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -40,7 +41,7 @@ class PNQuatf;
 class PNPoint;
 
 /// Animation
-class /*PNAPI*/		PN3DAnimation : public PNObject
+class /*PNAPI*/		PN3DAnimation : public PNObject, public IPNSerializable
 {
 public:
   /// Destructor for PN3DAnimation.

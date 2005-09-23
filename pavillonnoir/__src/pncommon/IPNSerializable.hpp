@@ -1,8 +1,8 @@
 /*
- * PNGLVideo.hpp
+ * IPNSerializable.hpp
  * 
  * Description :
- * PNGLVideo declaration
+ * Base interface for serialization support
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -26,44 +26,37 @@
  * Pavillon Noir; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
+ 
+#ifndef _IPNSERIALIZATION_HPP_
+# define _IPNSERIALIZATION_HPP_
 
-#ifndef _PNGLVIDEO_HPP_
-# define _PNGLVIDEO_HPP_
-
-#include <string>
 #include <boost/filesystem/path.hpp>
+#include <iostream>
 
-#ifndef WIN32
-# include <X11/X.h>
-# include <X11/Xlib.h>
-# include <X11/Xutil.h>
+namespace PN
+{
 
-# include <xine.h>
-# include <xine/xineutils.h>
-#endif
-
-#include "PNObject.hpp"
-#include "IPNAnimated.hpp"
-#include "IPNSerializable.hpp"
-
-namespace PN {
-	
-class				PNGLVideo : public PNObject, public IPNAnimated, public IPNSerializable
+class PNAPI			IPNSerializable
 {
 public:
-  PNGLVideo();
-  ~PNGLVideo();
+  virtual ~IPNSerializable() {}
 
-  pnint				unserialize(const boost::filesystem::path& file);
-	
-  pnuint			startAnimation();
-private:
-  std::string		_path;
-  std::string		_command;
+  /// Load object from file
+  virtual pnint unserialize(const boost::filesystem::path& file);
+  /// Load object from stream
+  virtual pnint unserialize(std::istream& i);
+  /// Load object
+  virtual pnint unserialize();
+  /// Save object to file
+  virtual pnint serialize(const boost::filesystem::path& file);
+  /// Save object to stream
+  virtual pnint serialize(std::ostream& o);
+  /// Save object
+  virtual pnint serialize();	
+protected:
 
-  void				_playVideo();
 };
 
-};
+}
 
-#endif /*_PNGLVIDEO_HPP_*/
+#endif /*!_IPNSERIALIZATION_HPP_*/

@@ -31,6 +31,7 @@
 # define _PNQUATF_H_
 
 #include <string.h>
+#include <iostream>
 
 #include "PNObject.hpp"
 

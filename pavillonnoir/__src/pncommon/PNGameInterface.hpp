@@ -31,13 +31,16 @@
 # define _PNGAMEINTERFACE_HPP_
 
 #include <boost/filesystem/path.hpp>
+
 #include "pnevent.h"
+
 #include "PNInterface.hpp"
-#include "PNGameMap.hpp"
 
 namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
+
+class PNGameMap;
 
 class PNAPI PNGameInterface: public PNInterface
 {

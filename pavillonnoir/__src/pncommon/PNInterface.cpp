@@ -27,6 +27,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+#include <boost/filesystem/path.hpp>
+
 #include "pndefs.h"
 #include "PNInterface.hpp"
 

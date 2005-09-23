@@ -30,6 +30,8 @@
 #ifndef _PNRENDERMATERIAL_HPP_
 # define _PNRENDERMATERIAL_HPP_
 
+#include <boost/filesystem/path.hpp>
+
 #include "pnmath.h"
 
 #include "PNObject.hpp"
