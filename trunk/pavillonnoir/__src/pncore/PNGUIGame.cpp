@@ -458,7 +458,7 @@ _myri = PNRendererInterface::getInstance();
   _rootWin->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIGame::eventKeyPressedHandler, this));
   _rootWin->subscribeEvent(CEGUI::Window::EventKeyUp, CEGUI::Event::Subscriber(&PNGUIGame::eventKeyReleasedHandler, this));
   _rootWin->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseClickdHandler, this));
-  _rootWin->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseClickdHandler, this));
+ // _rootWin->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseClickdHandler, this));
   _rootWin->subscribeEvent(CEGUI::Window::EventMouseWheel, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseWheel, this));
 
   //////////////////////////////////////////////////////////////////////////

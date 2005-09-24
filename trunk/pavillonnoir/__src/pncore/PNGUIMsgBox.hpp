@@ -31,6 +31,7 @@ namespace PN
 	CEGUI::FrameWindow*	_frameWin;
 	CEGUI::StaticText*	_msgTxt;
 	CEGUI::Window*		_parentWin;
+	CEGUI::Window*		_backWin;
 	float _boxWidth;
 	float _boxHeight;
 	float _textWidth;
@@ -48,13 +49,16 @@ namespace PN
 	bool	onClickYes(const CEGUI::EventArgs& arg);
 	bool	onClickNo(const CEGUI::EventArgs& arg);
 	void	deleteMsgBox(msgboxtype msgt);
+	bool	eventKeyConfHandler(const CEGUI::EventArgs& e);
+	bool	eventMouseClickConfHandler(const CEGUI::EventArgs& e);
+	bool	eventMouseWheelConfHandler(const CEGUI::EventArgs& e);
 	int		str_to_vector(const std::string& str, const std::string& separators, std::vector<std::string>* p_result);
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
 	PNGUIMsgBox(const std::string& title, const std::string& text, unsigned int msgtype, const Callback& fonction, CEGUI::Window* parentWin = NULL);
-	PNGUIMsgBox(const std::string& text, unsigned int msgtype, const Callback& fonction, const std::string& actionName, CEGUI::Window* parentWin = NULL);
+	//PNGUIMsgBox(const std::string& text, unsigned int msgtype, const Callback& fonction, const std::string& actionName, CEGUI::Window* parentWin = NULL);
 	~PNGUIMsgBox();
   };
 }
