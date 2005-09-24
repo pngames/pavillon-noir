@@ -52,7 +52,7 @@ PNGLVideo::~PNGLVideo()
 pnint
 PNGLVideo::unserializeFromFile(const boost::filesystem::path& file)
 {		  
-  _file = file.native_file_string();
+  _file = file;
 
   return PNEC_SUCCES;
 }
