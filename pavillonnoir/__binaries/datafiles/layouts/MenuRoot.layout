@@ -7,7 +7,8 @@
 			<Property Name="UnifiedAreaRect" Value="{{0.000000,0.000000},{0.000000,0.000000},{1.000000,0.000000},{1.000000,0.000000}}" />
 			<Property Name="Image" Value="set:MenuRootImage image:MenuRootBackground" />
 			<Property Name="FrameEnabled" Value="false"/>
-			<Property Name="Disabled" Value="true"/>			
+			<Property Name="Disabled" Value="true"/>	
+					
 		</Window>
 
 		<Window Type="Vanilla/Button" Name="MenuRoot/New">
@@ -15,6 +16,7 @@
 			<Property Name="RelativeRect" Value="l:0.750000 t:0.510000 r:0.900000 b:0.550000" />
 			<Property Name="Text" Value="New Game" />
 			<Property Name="UnifiedAreaRect" Value="{{0.750000,0.000000},{0.510000,0.000000},{0.900000,0.000000},{0.550000,0.000000}}" />
+			<Property Name="Tooltip" Value="Nouvelle Partie"/>			
 			</Window>
 		<Window Type="Vanilla/Button" Name="MenuRoot/Load">
 			<!--<Property Name="AbsoluteRect" Value="l:597.000000 t:358.000000 r:716.000000 b:382.000000" />-->
@@ -39,6 +41,7 @@
 			<Property Name="RelativeRect" Value="l:0.750000 t:0.900000 r:0.900000 b:0.940000" />
 			<Property Name="Text" Value="Exit" />
 			<Property Name="UnifiedAreaRect" Value="{{0.750000,0.000000},{0.900000,0.000000},{0.900000,0.000000},{0.940000,0.000000}}" />
+			<Property Name="Tooltip" Value="Quitter"/>			
 			</Window>
 		</Window>
 </GUILayout>

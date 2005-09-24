@@ -248,7 +248,7 @@ PNGLRenderer::initSDL(int widht, int height, int bpp, char* title, bool fullscre
   screen = SDL_SetVideoMode(widht, height, bpp, videoFlags);
   SDL_WM_SetCaption(title, NULL);
   SDL_EnableUNICODE(1);
-  SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
+ // SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
   
   std::cout << "--== SDL init end ==--" << std::endl;
   return;
@@ -752,6 +752,8 @@ PNGLRenderer::initGUI()
 	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/VanillaSkin.scheme");
 	PNDEBUG_STEP;
 	
+	CEGUI::System::getSingleton().setTooltip("WindowsLook/Tooltip");
+
 	CEGUI::System::getSingleton().setDefaultMouseCursor("Vanilla-Images", "MouseArrow");
 	//CEGUI::System::getSingleton().setDefaultMouseCursor("TaharezLook", "MouseArrow");
 
