@@ -43,7 +43,7 @@ namespace PN
   public:
   protected:
   private:
-	void	genericCreationWindow(const std::string& title, const std::string& text, unsigned int msgtype, const Callback& fonction, CEGUI::Window* parentWin, std::string convert);
+	void	genericCreationWindow(const std::string& title, const std::string& text, unsigned int msgtype, CEGUI::Window* parentWin, std::string convert);
 	bool	onClickOk(const CEGUI::EventArgs& arg);
 	bool	onClickCancel(const CEGUI::EventArgs& arg);
 	bool	onClickYes(const CEGUI::EventArgs& arg);

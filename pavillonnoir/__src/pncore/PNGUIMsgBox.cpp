@@ -11,15 +11,16 @@ namespace PN
 	std::stringstream convert;
 	convert << winID;
 	winID++;
+	fonctionCallback = fonction;
 
 	if (msgtype == CONF)
 	{
 		std::string tmp = "Veuillez presser\nune touche du clavier\nou un bouton de la souris\npour cette action :\n";
 		tmp += text;
-		genericCreationWindow(title, tmp, msgtype, fonction, parentWin, convert.str());
+		genericCreationWindow(title, tmp, msgtype, parentWin, convert.str());
 	}
 	else
-		genericCreationWindow(title, text, msgtype, fonction, parentWin, convert.str());
+		genericCreationWindow(title, text, msgtype, parentWin, convert.str());
 
 	switch (msgtype)
 	{
@@ -70,16 +71,14 @@ namespace PN
 	  break;
 	case CONF:
 		{
-	//	CEGUI::MouseCursor::getSingleton().hide();
+		//CEGUI::MouseCursor::getSingleton().hide();
 		  float height = CEGUI::System::getSingleton().getRenderer()->getHeight();
 		  float width = CEGUI::System::getSingleton().getRenderer()->getWidth();
 
-		  //CEGUI::Point((0.5f-_boxWidth*0.5f)*width , (0.5f-_boxHeight*0.5f)*height);
-		  // CEGUI::Size(_boxWidth*width, _boxHeight*height);
+		  //TODO crash si la console ou le panneau d'info apparait avec cette option
 		  CEGUI::Rect* re = new CEGUI::Rect( CEGUI::Point((0.5f-_boxWidth*0.5f)*width , (0.5f-_boxHeight*0.5f)*height), CEGUI::Size(_boxWidth*(width-1), _boxHeight*(height-1)));
 		  CEGUI::MouseCursor::getSingleton().setConstraintArea(re);
 
-//Rect(float left, float top, float right, float bottom);
 			_frameWin->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIMsgBox::eventKeyConfHandler, this));
 			_frameWin->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&PNGUIMsgBox::eventMouseClickConfHandler, this));
 			_frameWin->subscribeEvent(CEGUI::Window::EventMouseWheel, CEGUI::Event::Subscriber(&PNGUIMsgBox::eventMouseWheelConfHandler, this));
@@ -127,11 +126,11 @@ namespace PN
 	  return true;
   }
 
-  void PNGUIMsgBox::genericCreationWindow(const std::string& title, const std::string& text, unsigned int msgtype, const Callback& fonction, CEGUI::Window* parentWin, std::string convert)
+  void PNGUIMsgBox::genericCreationWindow(const std::string& title, const std::string& text, unsigned int msgtype, CEGUI::Window* parentWin, std::string convert)
   {
 	CEGUI::Font* defaultFont = CEGUI::System::getSingleton().getDefaultFont();
 	std::string tmp;
-	fonctionCallback = fonction;
+
 
 	if (!parentWin) 
 	  _parentWin = CEGUI::System::getSingleton().getGUISheet();
@@ -225,8 +224,10 @@ _msgTxt->setVerticalScrollbarEnabled(false);
 	  {*/
 	//CEGUI::GlobalEventSet
 	if (msgt == CONF)
+	{
+	  //CEGUI::MouseCursor::getSingleton().show();
 	  CEGUI::MouseCursor::getSingleton().setConstraintArea(NULL);
-
+	}
 	  //std::cout << "QUIT VALUE : " << msgt << std::endl;
 	_parentWin->setMutedState(false);
 
