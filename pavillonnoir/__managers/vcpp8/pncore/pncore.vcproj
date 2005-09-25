@@ -142,12 +142,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="FOXDLL-1.4.lib CEGUIBase-vc8.lib"
+				AdditionalDependencies="FOXDLL-1.4.lib CEGUIBase_d-vc8.lib"
 				OutputFile="../../../__binaries/win32/pncore.exe"
 				Version=""
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
-				GenerateManifest="false"
+				GenerateManifest="true"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
