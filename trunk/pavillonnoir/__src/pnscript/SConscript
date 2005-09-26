@@ -14,7 +14,6 @@ PNLuaGameMap.cpp
 PNLuaGameUtil.cpp
 PNScriptPlugDesc.cpp
 pndlmain.cpp
-pnbind.cpp
 """.split()
 obj.target = 'pnscript' + env['suffix'] + '.pnp'
 obj.instdir = env['install_prefix'] + env['install_path'] + '/plugins'
