@@ -1,0 +1,56 @@
+#! /usr/bin/env python
+
+Import('env')
+
+obj = env.genobj('shlib', env)
+obj.src = """IPNAnimated.cpp
+IPNSerializable.cpp
+IPNXMLSerializable.cpp
+PN3DCamera.cpp
+PN3DGround.cpp
+PN3DObject.cpp
+PN3DSkeletonObject.cpp
+PNBoundingBox.cpp
+PNBoundingSphere.cpp
+PNCallBackList.cpp
+PNCharacter.cpp
+PNConfigurableParameter.cpp
+PNConsole.cpp
+PNEventManager.cpp
+PNExportInterface.cpp
+PNExportManager.cpp
+PNFace.cpp
+PNGameInterface.cpp
+PNGameMap.cpp
+PNIAGraph.cpp
+PNImportInterface.cpp
+PNImportManager.cpp
+PNInterface.cpp
+PNLine.cpp
+PNMatrix4f.cpp
+PNMatrixTR4f.cpp
+PNNormal3f.cpp
+PNObject.cpp
+PNPathFinding.cpp
+PNPhysicsInterface.cpp
+PNPlane.cpp
+PNPlugin.cpp
+PNPluginManager.cpp
+PNPoint.cpp
+PNQuatf.cpp
+PNRendererInterface.cpp
+PNSoundInterface.cpp
+PNTriangle.cpp
+PNVector3f.cpp
+PNWPModel.cpp
+PNWayPoint.cpp
+PNWorldCollision.cpp
+pnerror.cpp
+""".split()
+obj.target = 'libpncommon' + env['suffix']
+obj.vnum = env['package_version']
+obj.instdir = env['install_prefix'] + env['install_path']
+obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],env['XML_FLAGS'],env['Boost_FLAGS']])
+obj.linkflags = ' '.join([env['XML_LDFLAGS'],env['Boost_LDFLAGS'],'-ldl','-lm'])
+obj.execute()
+

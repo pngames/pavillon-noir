@@ -1,0 +1,27 @@
+#! /usr/bin/env python
+
+Import('env')
+
+obj = env.genobj('shlib', env)
+obj.src = """PNFXActiveStringParameter.cpp
+PNFXAnimListParameter.cpp
+PNFXDialXYZParameter.cpp
+PNFXDirParameter.cpp
+PNFXFileParameter.cpp
+PNFXIntParameter.cpp
+PNFXLinksParameter.cpp
+PNFXMaterialListParameter.cpp
+PNFXRealParameter.cpp
+PNFXScriptListParameter.cpp
+PNFXStringParameter.cpp
+PNGLContext.cpp
+PNPropertiesGrid.cpp
+PNPropertiesPopup.cpp
+pneditorcommon.cpp
+""".split()
+obj.target = 'libpneditorcommon' + env['suffix']
+obj.vnum = env['package_version']
+obj.instdir = env['install_prefix'] + env['install_path']
+obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],env['FOX_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath])
+obj.linkflags = ' '.join([env['FOX_LDFLAGS']])
+obj.execute()
