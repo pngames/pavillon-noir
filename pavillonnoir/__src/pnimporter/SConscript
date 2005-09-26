@@ -1,0 +1,34 @@
+#! /usr/bin/env python
+
+Import('env')
+
+obj = env.genobj('shlib', env)
+obj.src = """PNI3DAnimation.cpp
+PNI3DMaterial.cpp
+PNI3DMesh.cpp
+PNI3DModel.cpp
+PNI3DSkeleton.cpp
+PNIAnimationBone.cpp
+PNIAnimationImporter.cpp
+PNIBone.cpp
+PNIImporter.cpp
+PNIImporterPlugDesc.cpp
+PNIMaterialImporter.cpp
+PNIModelImporter.cpp
+PNISkeletonImporter.cpp
+PNIVertex.cpp
+a_parseBody.cpp
+a_parseHeader.cpp
+m_parseBody.cpp
+m_parseHeader.cpp
+pndlmain.cpp
+s_parseBody.cpp
+s_parseHeader.cpp
+""".split()
+obj.target = 'pnimporter' + env['suffix'] + '.pnp'
+obj.instdir = env['install_prefix'] + env['install_path'] + '/plugins'
+obj.libpaths = [env.Dir('#./build/pncommon/').abspath]
+obj.libs = ['pncommon'+env['suffix']]
+obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath])
+obj.linkflags = ' '.join(['-lpncommon'+env['suffix']])
+obj.execute()

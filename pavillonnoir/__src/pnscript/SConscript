@@ -1,0 +1,24 @@
+#! /usr/bin/env python
+
+Import('env')
+import os
+
+os.chdir(env.Dir("#./__src/pnscript").abspath)
+os.system("sh GenBinding.sh")
+os.chdir(env.Dir("#.").abspath)
+
+obj = env.genobj('shlib', env)
+obj.src = """PNLuaGame.cpp
+PNLuaGameMap.cpp
+PNLuaGameUtil.cpp
+PNScriptPlugDesc.cpp
+pndlmain.cpp
+pnbind.cpp
+""".split()
+obj.target = 'pnscript' + env['suffix'] + '.pnp'
+obj.instdir = env['install_prefix'] + env['install_path'] + '/plugins'
+obj.libpaths = [env.Dir('#./build/pncommon/').abspath]
+obj.libs = ['pncommon'+env['suffix']]
+obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath,env['TOLUA_FLAGS'],env['LUA50_FLAGS']])
+obj.linkflags = ' '.join(['-lpncommon'+env['suffix'],env['TOLUA_LDFLAGS'],env['LUA50_LDFLAGS']])
+obj.execute()

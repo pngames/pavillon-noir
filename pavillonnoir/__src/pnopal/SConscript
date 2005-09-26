@@ -1,0 +1,18 @@
+#! /usr/bin/env python
+
+Import('env')
+
+obj = env.genobj('shlib', env)
+obj.src = """PNOpal.cpp
+PNOpalEvents.cpp
+PNOpalObject.cpp
+PNOpalPlugDesc.cpp
+pndlmain.cpp
+""".split()
+obj.target = 'pnopal' + env['suffix'] + '.pnp'
+obj.instdir = env['install_prefix'] + env['install_path'] + '/plugins'
+obj.libpaths = [env.Dir('#./build/pncommon/').abspath]
+obj.libs = ['pncommon'+env['suffix']]
+obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath,env['OPAL_FLAGS']])
+obj.linkflags = ' '.join(['-lpncommon'+env['suffix'],env['OPAL_LDFLAGS']])
+obj.execute()
