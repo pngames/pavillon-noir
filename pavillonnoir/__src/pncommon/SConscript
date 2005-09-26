@@ -49,7 +49,7 @@ pnerror.cpp
 """.split()
 obj.target = 'libpncommon' + env['suffix']
 obj.vnum = env['package_version']
-obj.instdir = env['install_prefix'] + env['install_path']
+obj.instdir = env['install_prefix'] + env['install_path'] + '/linux'
 obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],env['XML_FLAGS'],env['Boost_FLAGS']])
 obj.linkflags = ' '.join([env['XML_LDFLAGS'],env['Boost_LDFLAGS'],'-ldl','-lm'])
 obj.execute()
