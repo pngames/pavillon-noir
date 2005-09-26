@@ -47,8 +47,8 @@ namespace PN {
   {
     static const std::string defaultWin32RPluginFilePath = "win32/plugins/";
     static const std::string defaultWin32DPluginFilePath = defaultWin32RPluginFilePath + "Debug/";
-    static const std::string defaultLinuxRPluginFilePath = "pavillon-noir/plugins/";    
-    static const std::string defaultLinuxDPluginFilePath = defaultLinuxRPluginFilePath;
+    static const std::string defaultLinuxRPluginFilePath = "linux/plugins/";    
+    static const std::string defaultLinuxDPluginFilePath = defaultLinuxRPluginFilePath + "Debug/";
     
 #ifdef WIN32
 # ifdef DEBUG
