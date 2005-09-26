@@ -1,0 +1,68 @@
+#! /usr/bin/env python
+
+"""
+help       -> scons -h
+compile    -> scons
+clean      -> scons -c
+install    -> scons install
+uninstall  -> scons -c install
+configure  -> scons configure prefix=/tmp/ita debug=full extraincludes=/usr/local/include:/tmp/include prefix=/usr/local
+
+Run from a subdirectory -> scons -u
+The variables are saved automatically after the first run
+"""
+
+###################################################################
+# LOAD THE ENVIRONMENT AND SET UP THE TOOLS
+###################################################################
+
+## Load the builders in config
+env = Environment( tools="""
+default
+generic
+fastdelegate
+boost
+libxml2
+fox
+sdl
+devil
+glew
+cegui
+lua50
+tolua++
+opal
+openal
+ogg
+vorbisfile
+""".split(), toolpath=['./','./bksys'])
+env['package_version'] = "0.0.2"
+env['package_name'] = "pavillon-noir"
+
+if env.has_key('PREFIX'):
+	env['install_prefix'] = env['PREFIX']
+else:
+	env['install_prefix'] = '/usr/local/games'
+env['install_path'] = '/pavillon-noir'
+
+if env['ARGS'].get('debug', None):
+	env['suffix'] = '-dbg'
+else:
+	env['suffix'] = ''
+
+###################################################################
+# SCRIPTS FOR BUILDING THE TARGETS
+###################################################################
+
+## target processing is done in the subdirectory
+#env.subdirs('src')
+
+## builddir/srcdir example
+SetOption('duplicate', 'soft-copy')
+env.BuildDir('#build/', '#__src/', 0)
+env.subdirs('build')
+
+###################################################################
+# CONVENIENCE FUNCTIONS TO EMULATE 'make dist' and 'make distclean'
+###################################################################
+
+env.dist(env['package_name'], env['package_version'])
