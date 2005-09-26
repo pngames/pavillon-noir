@@ -16,6 +16,8 @@ The variables are saved automatically after the first run
 # LOAD THE ENVIRONMENT AND SET UP THE TOOLS
 ###################################################################
 
+import os
+
 ## Load the builders in config
 env = Environment( tools="""
 default
@@ -65,6 +67,10 @@ if env['_INSTALL'] == 1:
 	if env.GetOption('clean'):
 		env.Execute(Delete(env['install_prefix']+env['install_path']+'/datafiles'))
 	else:
+		if not os.path.exists(env['install_prefix']+env['install_path']):
+			env.Mkdir(env['install_prefix']+env['install_path'])
+		if os.path.exists(env['install_prefix']+env['install_path']+'/datafiles'):
+			env.Execute(Delete(env['install_prefix']+env['install_path']+'/datafiles'))
 		env.Execute(Copy(env['install_prefix']+env['install_path']+'/datafiles', "__binaries/datafiles"))
 
 ###################################################################
