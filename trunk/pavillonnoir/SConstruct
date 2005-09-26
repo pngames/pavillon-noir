@@ -43,8 +43,8 @@ if env.has_key('PREFIX'):
 else:
 	env['install_prefix'] = '/usr/local/games'
 env['install_path'] = '/pavillon-noir'
-
-if env['ARGS'].get('debug', None):
+	
+if env['DEBUG'] == 1:
 	env['suffix'] = '-dbg'
 else:
 	env['suffix'] = ''
@@ -60,6 +60,12 @@ else:
 SetOption('duplicate', 'soft-copy')
 env.BuildDir('#build/', '#__src/', 0)
 env.subdirs('build')
+
+if env['_INSTALL'] == 1:
+	if env.GetOption('clean'):
+		env.Execute(Delete(env['install_prefix']+env['install_path']+'/datafiles'))
+	else:
+		env.Execute(Copy(env['install_prefix']+env['install_path']+'/datafiles', "__binaries/datafiles"))
 
 ###################################################################
 # CONVENIENCE FUNCTIONS TO EMULATE 'make dist' and 'make distclean'
