@@ -10,5 +10,6 @@ pnimporter/SConscript
 pnopal/SConscript
 pnscript/SConscript
 pnsound/SConscript
+pnglrenderer/SConscript
 """.split())
 

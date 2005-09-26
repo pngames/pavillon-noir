@@ -337,6 +337,7 @@ def generate(env):
 		( 'PREFIX', 'prefix for installation' ),
 		( 'EXTRAINCLUDES', 'extra include paths for the project' ),
 		( 'ISCONFIGURED', 'is the project configured' ),
+		( 'DEBUG','is the project in debug mode'),
 	)
 	opts.Update(env)
 	
@@ -360,9 +361,11 @@ def generate(env):
 		if env['ARGS'].get('debug', None):
 			debuglevel = env['ARGS'].get('debug', None)
 			env.pprint('CYAN','** Enabling debug for the project **')
+			env['DEBUG'] = 1
 			if (debuglevel == "full"): env['GENCXXFLAGS'] = ['-D_DEBUG', '-g3', '-Wall', '-O0', '-fmessage-length=0', '-pthread']
 			else: env['GENCXXFLAGS'] = ['-D_DEBUG', '-g', '-Wall', '-O0', '-fmessage-length=0', '-pthread']
 		else:
+			env['DEBUG'] = 0
 			if os.environ.has_key('CXXFLAGS'):
 				# user-defined flags (gentooers will be elighted)
 				env['GENCXXFLAGS'] = SCons.Util.CLVar( os.environ['CXXFLAGS'] )
