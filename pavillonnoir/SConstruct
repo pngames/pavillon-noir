@@ -18,6 +18,13 @@ The variables are saved automatically after the first run
 
 import os
 
+# custom functions
+
+def find_path(path):
+	path_list = path.split('/')
+	path_list.pop()
+	return '/'.join(path_list)
+
 ## Load the builders in config
 env = Environment( tools="""
 default
@@ -44,12 +51,14 @@ if env.has_key('PREFIX'):
 	env['install_prefix'] = env['PREFIX']
 else:
 	env['install_prefix'] = '/usr/local/games'
-env['install_path'] = '/pavillon-noir'
-	
+env['install_path'] = '/pavillon-noir/__binaries'
+
 if env['DEBUG'] == 1:
 	env['suffix'] = '-dbg'
+	env['debug_path'] = '/Debug'
 else:
 	env['suffix'] = ''
+	env['debug_path'] = ''
 
 ###################################################################
 # SCRIPTS FOR BUILDING THE TARGETS
@@ -63,15 +72,14 @@ SetOption('duplicate', 'soft-copy')
 env.BuildDir('#build/', '#__src/', 0)
 env.subdirs('build')
 
-if env['_INSTALL'] == 1:
-	if env.GetOption('clean'):
-		env.Execute(Delete(env['install_prefix']+env['install_path']+'/datafiles'))
-	else:
-		if not os.path.exists(env['install_prefix']+env['install_path']):
-			env.Mkdir(env['install_prefix']+env['install_path'])
-		if os.path.exists(env['install_prefix']+env['install_path']+'/datafiles'):
-			env.Execute(Delete(env['install_prefix']+env['install_path']+'/datafiles'))
-		env.Execute(Copy(env['install_prefix']+env['install_path']+'/datafiles', "__binaries/datafiles"))
+datafiles = os.popen("find __binaries/datafiles -type f | grep -v '.svn'").read().split('\n')
+
+for i in datafiles:
+	if len(i) < 1:
+		datafiles.remove(i)
+
+for i in datafiles:
+	env.bksys_install(env['install_prefix']+'/pavillon-noir/'+find_path(i),[i])
 
 ###################################################################
 # CONVENIENCE FUNCTIONS TO EMULATE 'make dist' and 'make distclean'
