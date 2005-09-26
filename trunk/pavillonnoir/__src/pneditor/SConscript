@@ -10,7 +10,7 @@ PNPropertiesPanel.cpp
 PNWaypointObject.cpp
 """.split()
 obj.target = 'pneditor' + env['suffix']
-obj.instdir = env['install_prefix'] + env['install_path']
+obj.instdir = env['install_prefix'] + env['install_path'] + '/linux'
 obj.libpaths = [env.Dir('#./build/pncommon/').abspath, env.Dir('#./build/pneditorcommon/').abspath]
 obj.libs = ['pncommon'+env['suffix'], 'pneditorcommon'+env['suffix']]
 obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath,'-I'+env.Dir('#./__src/pneditorcommon/').abspath,env['FOX_FLAGS'],env['Boost_FLAGS'],env['XML_FLAGS'],'-DHAVE_GL_H -DHAVE_GLU'])

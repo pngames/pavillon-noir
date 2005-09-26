@@ -10,7 +10,7 @@ PNOpalPlugDesc.cpp
 pndlmain.cpp
 """.split()
 obj.target = 'pnopal' + env['suffix'] + '.pnp'
-obj.instdir = env['install_prefix'] + env['install_path'] + '/plugins'
+obj.instdir = env['install_prefix'] + env['install_path'] + '/linux/plugins' + env['debug_path']
 obj.libpaths = [env.Dir('#./build/pncommon/').abspath]
 obj.libs = ['pncommon'+env['suffix']]
 obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath,env['OPAL_FLAGS']])
