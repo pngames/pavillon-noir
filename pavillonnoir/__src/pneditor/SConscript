@@ -15,4 +15,6 @@ obj.libpaths = [env.Dir('#./build/pncommon/').abspath, env.Dir('#./build/pnedito
 obj.libs = ['pncommon'+env['suffix'], 'pneditorcommon'+env['suffix']]
 obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath,'-I'+env.Dir('#./__src/pneditorcommon/').abspath,env['FOX_FLAGS'],env['Boost_FLAGS'],env['XML_FLAGS'],'-DHAVE_GL_H -DHAVE_GLU'])
 obj.linkflags = ' '.join([env['FOX_LDFLAGS'],env['Boost_LDFLAGS'],'-lpncommon'+env['suffix'],env['XML_LDFLAGS'],'-lpneditorcommon'+env['suffix']])
+if env['DEBUG'] == 1:
+	obj.linkflags = ' '.join([obj.linkflags,env['EFENCE_LDFLAGS']])
 obj.execute()
