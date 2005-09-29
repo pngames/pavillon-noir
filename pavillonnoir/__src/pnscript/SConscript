@@ -3,10 +3,10 @@
 Import('env')
 import os
 
-if not env.has_key('ISCONFIGURED'):
+if not os.path.exists(env.File("#./__src/pnscript/pnbind.cpp").abspath) or not os.path.exists(env.File("#./__src/pnscript/pnbind.h").abspath):
 	os.chdir(env.Dir("#./__src/pnscript").abspath)
 	os.system("sh GenBinding.sh")
-	os.chdir(env.Dir("#.").abspath)
+	os.chdir(env.Dir("#./").abspath)
 
 obj = env.genobj('shlib', env)
 obj.src = """PNLuaGame.cpp
@@ -20,8 +20,9 @@ obj.target = 'pnscript' + env['suffix'] + '.pnp'
 obj.instdir = env['install_prefix'] + env['install_path'] + '/linux/plugins' + env['debug_path']
 #obj.libpaths = [env.Dir('#./build/pncommon/').abspath]
 #obj.libs = ['pncommon'+env['suffix']]
-obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath,env['TOLUA_FLAGS'],env['LUA50_FLAGS']])
-obj.linkflags = ' '.join([env['TOLUA_LDFLAGS'],env['LUA50_LDFLAGS']])
+obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath,env['LUA50_FLAGS'],env['TOLUA_FLAGS']])
+obj.linkflags = ' '.join([env['LUA50_LDFLAGS']])
+obj.libs = env['TOLUA_LDFLAGS']
 if env['DEBUG'] == 1:
 	obj.linkflags = ' '.join([obj.linkflags,env['EFENCE_LDFLAGS']])
 obj.execute()
