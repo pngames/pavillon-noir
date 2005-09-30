@@ -82,6 +82,8 @@ void
 PNGLVideo::_playVideo()
 {
   system(_command.c_str());
+
+  stopAnimation();
 }
 
 };
