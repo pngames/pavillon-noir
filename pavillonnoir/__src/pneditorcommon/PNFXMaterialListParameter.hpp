@@ -33,6 +33,7 @@
 
 #include <fx.h>
 #include <map>
+
 #include "PNConfigurableParameter.hpp"
 
 namespace PN {
@@ -50,13 +51,13 @@ namespace PN {
 	FXButton*					_buttonDelete;
 	FXButton*					_buttonAdd;
 
-	bool						_changed;w
+	bool						_changed;
 	//FXImage ? FXBouton avec image (cliquable = defaut) ?  // temoin de modification
 
   protected:
 	PNFXMaterialListParameter() {}
 	PNFXMaterialListParameter(PNFXMaterialListParameter&) {}
-  public
+  public:
 	PNFXMaterialListParameter(FXComposite* p, PNConfigurableParameter* param);
 	~PNFXMaterialListParameter();
 
