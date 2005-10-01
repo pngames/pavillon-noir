@@ -372,7 +372,6 @@ PNGLRenderer::run()
 	  //////////////////////////////////////
 
 	  _renderCam.update(deltaTime);
-	  //PN3DGround::getInstance()->handleStaticCollision(_renderCam, 50, 100, 50);
 
 	  ////////////////////////////////
 	  // Initialise le buffer de rendu
@@ -400,9 +399,9 @@ PNGLRenderer::run()
 
 	  glLightfv(GL_LIGHT0, GL_POSITION, Light1Pos);
 
-	  PN3DObjList& objectToRend = _renderCam.getListObj();
+	  const PN3DObjList& objectToRend = _renderCam.getListObj();
 
-	  for (PN3DObjList::iterator it = objectToRend.begin(); it != objectToRend.end(); it++)
+	  for (PN3DObjList::const_iterator it = objectToRend.begin(); it != objectToRend.end(); it++)
 	  {
 		pushMatrix(); // Create temporary context for 3Dobject placement
 		{

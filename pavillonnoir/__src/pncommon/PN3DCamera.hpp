@@ -32,6 +32,8 @@
 
 #include <list>
 
+#include "pnevent.h"
+
 #include "PN3DObject.hpp"
 
 namespace PN {
@@ -66,14 +68,16 @@ public:
   static PN3DCamera*		getRenderCam();
 
   /// Return list of 3d objects in camera frustrum
-  PN3DObjList&				getListObj();
-
-  PN3DObjList				_list3DObj; // just for test, normally  protected
+  const PN3DObjList&		getListObj();
 protected:
-  //PN3DObjList _list3DObj;
+  PN3DObjList				_list3DObj;
+
+  void						_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed);
+
+  //////////////////////////////////////////////////////////////////////////
 
   /// Unique rendering camera
-  static PN3DCamera*			_playerCamera;
+  static PN3DCamera*		_playerCamera;
 };
 
 //////////////////////////////////////////////////////////////////////////

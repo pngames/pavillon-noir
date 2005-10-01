@@ -257,7 +257,9 @@ PNEventManager::init()
 
 void	PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* data, bool destruct/* = true*/)
 {
-  pnevent eventParams(type, source, data, destruct);
+  data->destructData = destruct;
+
+  pnevent eventParams(type, source, data);
 
   _events.push(eventParams);
 

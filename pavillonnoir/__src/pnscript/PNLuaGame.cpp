@@ -201,11 +201,12 @@ PNLuaGame::~PNLuaGame()
 
 PNLuaGame::PNLuaGame()
 {
-    this->L = NULL;
-    this->L = lua_open();
-    this->_gameStarted = false;
-	this->debug = false;
-	this->debug_log = fopen(DEF_LUA_LOG_FILE, "w");
+  this->L = NULL;
+  this->L = lua_open();
+  this->_gameStarted = false;
+  this->debug = false;
+  this->debug_log = fopen(DEF_LUA_LOG_FILE, "w");
+  _gameMap = NULL;
 }
 
 //load a lua script file 

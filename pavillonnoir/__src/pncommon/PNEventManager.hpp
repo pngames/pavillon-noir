@@ -61,22 +61,19 @@ struct				pnevent
   PNObject*			source;
   /// Data of event
   PNEventData*  	data;
-  /// Indicate if data is deleted after sendEvent
-  pnbool			destructData;
 
   /// Make event from sender \c s of type \c t and data \d
-  pnevent(pnEventType t, PNObject* s, PNEventData* d, pnbool dtd)
+  pnevent(pnEventType t, PNObject* s, PNEventData* d)
   {
     type = t;
     source = s;
     data = d;
-	destructData = dtd;
   }
 
   /// Destructor for pnevent
   ~pnevent()
   {
-    if (data != NULL && destructData)
+    if (data != NULL && data->destructData)
       delete data;
   }
 };
