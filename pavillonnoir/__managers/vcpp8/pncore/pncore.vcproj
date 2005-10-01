@@ -96,7 +96,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd &quot;../../../__binaries/win32&quot;&#x0D;&#x0A;copy /y CEGUIFalagardBase_d-vc8.dll CEGUIFalagardBase_d.dll&#x0D;&#x0A;copy /y CEGUITaharezLook_d-vc8.dll CEGUITaharezLook_d.dll&#x0D;&#x0A;copy /y CEGUIWindowsLook_d-vc8.dll CEGUIWindowsLook_d.dll&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -178,7 +178,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd &quot;../../../__binaries/win32&quot;&#x0D;&#x0A;copy /y CEGUIFalagardBase-vc8.dll CEGUIFalagardBase.dll&#x0D;&#x0A;copy /y CEGUITaharezLook-vc8.dll CEGUITaharezLook.dll&#x0D;&#x0A;copy /y CEGUIWindowsLook-vc8.dll CEGUIWindowsLook.dll&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>
