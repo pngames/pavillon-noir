@@ -2,8 +2,11 @@
 <!DOCTYPE model SYSTEM "object-1.0.dtd">
 <model path="bonhomme.pnm">
   <listmaterials>
+    <material path="bonhomme10_Materiau.pnt" />
+    <material path="cube_60x60x60.pnt" />
   </listmaterials>
   <skeleton path="bonhomme.pns" />
   <listanims>
+    <anim path="animation test.pna" />
   </listanims>
 </model>
