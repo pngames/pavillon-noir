@@ -50,10 +50,13 @@ namespace PN {
 	FXButton*					_buttonDelete;
 	FXButton*					_buttonAdd;
 
+	bool						_changed;w
+	//FXImage ? FXBouton avec image (cliquable = defaut) ?  // temoin de modification
+
   protected:
 	PNFXMaterialListParameter() {}
 	PNFXMaterialListParameter(PNFXMaterialListParameter&) {}
-  public:
+  public
 	PNFXMaterialListParameter(FXComposite* p, PNConfigurableParameter* param);
 	~PNFXMaterialListParameter();
 
@@ -68,6 +71,7 @@ namespace PN {
   public:
 	long	onDelete(FXObject*,FXSelector,void* ptr);
 	long	onAdd(FXObject* obj,FXSelector sel,void* ptr);
+	long	onReset(FXObject* obj,FXSelector sel,void* ptr);
 	void	buildList(void);
 	void	update(void);
   };

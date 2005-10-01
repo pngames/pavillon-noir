@@ -72,6 +72,7 @@ namespace PN {
 	pnerror(PN_LOGLVL_DEBUG, "PNFXMaterialListParameter::PNFXMaterialListParameter(FXComposite* p, PNConfigurableParameter* param)");
 	_parent = p;
 	_param = param;
+	_changed = FALSE;
 	_listBox = new FXListBox(this, NULL, 0, LAYOUT_FILL_X | FRAME_SUNKEN | FRAME_THICK, 0,0,50,0);
 	_buttonAdd = new FXButton(this, "Add", NULL, this, ID_ADD,FRAME_RAISED|FRAME_THICK);
 	_buttonDelete = new FXButton(this, "Delete", NULL, this, ID_DELETE,FRAME_RAISED|FRAME_THICK);

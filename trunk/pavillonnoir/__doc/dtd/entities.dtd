@@ -4,7 +4,7 @@
 -->
 
 <!ELEMENT listentities (entity*)>
-<!ELEMENT entity (action*)>
+<!ELEMENT entity (action*, model?)>
 <!ELEMENT action (script+)>
 <!ELEMENT script EMPTY>
 
@@ -25,3 +25,21 @@
 <!ATTLIST action ref CDATA #REQUIRED>
 
 <!ATTLIST script ref CDATA #REQUIRED>
+
+
+<!-- imported from object.dtd -->
+
+<!ELEMENT model (listmaterials?, skeleton?, listanims?)>
+<!ELEMENT listmaterials (material*)>
+<!ELEMENT listanims (anim*)>
+<!ELEMENT material EMPTY>
+<!ELEMENT skeleton EMPTY>
+<!ELEMENT anim EMPTY>
+
+<!ATTLIST model path CDATA #IMPLIED>
+
+<!ATTLIST material path CDATA #REQUIRED>
+
+<!ATTLIST skeleton path CDATA #REQUIRED>
+
+<!ATTLIST anim path CDATA #REQUIRED>
