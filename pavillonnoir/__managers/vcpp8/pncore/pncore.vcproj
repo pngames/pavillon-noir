@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="FOXDLLD-1.4.lib CEGUIBase_d-vc8.lib"
+				AdditionalDependencies="FOXDLLD-1.4.lib CEGUIBase_d.lib"
 				OutputFile="../../../__binaries/win32/pncore-dbg.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
@@ -142,7 +142,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="FOXDLL-1.4.lib CEGUIBase-vc8.lib"
+				AdditionalDependencies="FOXDLL-1.4.lib CEGUIBase.lib"
 				OutputFile="../../../__binaries/win32/pncore.exe"
 				Version=""
 				LinkIncremental="1"
@@ -327,10 +327,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath="..\..\..\__src\pncore\CHANGELOG.txt"
-			>
-		</File>
 		<File
 			RelativePath="..\..\..\__binaries\config.cfg"
 			>
