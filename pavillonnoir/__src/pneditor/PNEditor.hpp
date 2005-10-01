@@ -36,8 +36,8 @@
 
 #include "pneditoricons.hpp"
 #include "pndefs.h"
-#include <fx.h>
-#include <fx3d.h>
+#include "PNGLShape.hpp"
+
 
 
 namespace PN 
