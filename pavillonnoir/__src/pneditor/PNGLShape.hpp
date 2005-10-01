@@ -80,7 +80,7 @@ namespace PN
       FXint				  		stacks;   // Latitudinal subdivision
 
 	  PNGLShape(PN3DObject* obj, PNPropertiesPanel* grid, PNEditor* ed, PNEnvType envType, std::string classStr = "PN3DObject", int id = 0, std::string label = "No label");
-	  PNGLShape(PNGLShape& g);
+
 	  virtual ~PNGLShape();
 
 	  PN3DObject*		  getObj() {return _obj;}
