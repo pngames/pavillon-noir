@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="DevIL.lib ILU.lib ILUT.lib SDL.lib SDLmain.lib OpenGLGUIRenderer_d-vc8.lib opengl32.lib glu32.lib glew32.lib CEGUIBase_d-vc8.lib"
+				AdditionalDependencies="DevIL.lib ILU.lib ILUT.lib SDL.lib SDLmain.lib OpenGLGUIRenderer_d.lib opengl32.lib glu32.lib glew32.lib CEGUIBase_d.lib"
 				OutputFile="../../../__binaries/win32/plugins/Debug/pnglrenderer-dbg.pnp"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
@@ -142,7 +142,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="DevIL.lib ILU.lib ILUT.lib SDL.lib SDLmain.lib OpenGLGUIRenderer-vc8.lib opengl32.lib glu32.lib glew32.lib CEGUIBase-vc8.lib"
+				AdditionalDependencies="DevIL.lib ILU.lib ILUT.lib SDL.lib SDLmain.lib OpenGLGUIRenderer.lib opengl32.lib glu32.lib glew32.lib CEGUIBase.lib"
 				OutputFile="../../../__binaries/win32/plugins/pnglrenderer.pnp"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
@@ -294,10 +294,6 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 		</Filter>
-		<File
-			RelativePath="..\..\..\__src\pnglrenderer\CHANGELOG.txt"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

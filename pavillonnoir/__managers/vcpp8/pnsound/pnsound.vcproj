@@ -217,10 +217,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath="..\..\..\__src\pnsound\CHANGELOG.txt"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

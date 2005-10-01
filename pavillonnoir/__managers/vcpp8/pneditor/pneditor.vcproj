@@ -269,10 +269,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath="..\..\..\__src\pneditor\CHANGELOG.txt"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>
