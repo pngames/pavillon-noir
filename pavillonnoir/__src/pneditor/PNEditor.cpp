@@ -28,6 +28,20 @@
  */
 
 
+////////////////////////////  DESCRIPTION /////////////////////////////////
+/*
+TODO decrire le fonctionnement de pneditor
+
+PNPropertiesPanel
+	list<PNConfigurableObject*> // objets 3D (PNGLShape) presents dans le panel
+	PNPropertiesGrid
+		list<PNPropertiesGridParameter*> // proprietes de l'objet
+			PNConfigurableParameter*
+		PNConfigurableObject // objet 3D courant (PNGLShape)
+*/
+//////////////////////////////////////////////////////////////////////////
+
+
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
@@ -543,6 +557,10 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 		}
 		o << "</action>" << std::endl;
 	  }
+
+	  // save modifications of the pno
+	  obj->serializeInXML(o, FALSE);
+
 	  o << "</entity>" << std::endl;
 	}
   }
@@ -902,15 +920,18 @@ int	  PNEditor::_parseEntity(void* node)
   ww = atof((const char *)xmlGetProp(current, PNXML_ROTW_ATTR));
   object->setOrient(xx, yy, zz, ww);
 
-  //Construire le PNGLShape dans genScene
+  // build PMGLShape in genScene
   PNGLShape* shape = new PNGLShape(object, objPanel, this, envType, classStr, id, label);
 
-  //ajouter les scripts
+  // go through child nodes to load actions (scripts) and models definitions (materials, animations ...)
   for (current = current->children; current != NULL; current = current->next)
   {  
 	if (current->type != XML_ELEMENT_NODE)
-	  continue; 
-	_parseActions(current, shape);
+	  continue;
+	if (!xmlStrcmp(current->name, PNXML_MODEL_MKP))
+	  object->unserializeFromXML(current);
+	if (!xmlStrcmp(current->name, PNXML_ACTION_MKP))
+	  _parseActions(current, shape);
   }
 
   switch (envType)

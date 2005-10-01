@@ -190,7 +190,7 @@ namespace PN {
 
   long	PNFXScriptListParameter::onEditScripts(FXObject* obj,FXSelector sel,void* ptr)
   {
-	pnerror(PN_LOGLVL_DEBUG, "PNFXScriptListParameter::onAdd");
+	pnerror(PN_LOGLVL_DEBUG, "PNFXScriptListParameter::onEditScripts");
 	if (_eventList->getNumItems() > 0)
 	{
 	  _dbox = new FXDialogBox(_parent,"Edit Scripts",DECOR_TITLE|DECOR_BORDER);

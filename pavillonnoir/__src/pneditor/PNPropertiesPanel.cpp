@@ -375,7 +375,7 @@ namespace PN
 	
 	if (_type == PN_PANELTYPE_3DOBJECTS)
 	{
-	  new FXLabel(vFrame, "voir commentaires dans le code :)", NULL, LAYOUT_CENTER_X);
+	  //new FXLabel(vFrame, "voir commentaires dans le code :)", NULL, LAYOUT_CENTER_X);
 
 	  new FXHorizontalSeparator(vFrame, LAYOUT_FILL_X);
 	  FXGroupBox* gBoxProperties = new FXGroupBox(vFrame, "Properties", LAYOUT_FILL_X | LAYOUT_FILL_Y | FRAME_GROOVE);
