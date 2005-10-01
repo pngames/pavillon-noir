@@ -63,6 +63,12 @@ PNGameMap::~PNGameMap()
   PNPhysicsInterface::getInstance()->destroySimulation();
 }
 
+const PNGameMap::ObjMap&
+PNGameMap::getEntityList() const
+{
+  return _entityList;
+}
+
 int	  PNGameMap::_parseStaticEntity(xmlNode* node)
 {
   for (xmlNodePtr current = node; current->next; current = current->next)
@@ -92,7 +98,7 @@ int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
   id = (char *)xmlGetProp(current, (const xmlChar *)"id");
   className = (char *)xmlGetProp(current, (const xmlChar *)"class");
   addToMap(className, id); //cree et stocke l'objet a la fois dans le script et le fw
-  PN3DObject*  object = (PN3DObject*)_entityList[id]; //recurepere l'instance du fw 
+  PN3DObject*  object = _entityList[id]; //recurepere l'instance du fw 
 
   //////////////////////////////////////////////////////////////////////////
   
@@ -120,7 +126,7 @@ int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
 	  object->setPhysicalObject(PNPhysicsInterface::getInstance()->createPhysicalObjectBox(object, isStatic));
 	}
 	// FIXME : must use another list3DObj
-	PN3DCamera::getRenderCam()->_list3DObj.push_back(object);
+	//PN3DCamera::getRenderCam()->_list3DObj.push_back(object);
   }
 
   for (current = current->children; current != NULL; current = current->next)
@@ -227,18 +233,17 @@ std::map<std::string, PN3DObject *>& PNGameMap::getEntityList()
 
 void PNGameMap::addToMap(const std::string& entityName,const std::string& id)
 {
-	PNObject* Entity = new PN3DSkeletonObject();
-	_entityList[id] = Entity;
+	PN3DSkeletonObject* entity = new PN3DSkeletonObject();
+	_entityList[id] = entity;
 }
 
 void PNGameMap::clear()
 {
-  for (std::map<std::string, PNObject *>::iterator it  = _entityList.begin(); it !=  _entityList.end(); ++it)
+  for (ObjMap::iterator it  = _entityList.begin(); it !=  _entityList.end(); ++it)
   {
     delete (it->second);
   }
   _entityList.clear();
-  PN3DCamera::getRenderCam()->_list3DObj.clear();
   PNImportManager::getInstance()->clean(); //fixeMe
   //PNPhysicsInterface::clean();
 }

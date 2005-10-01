@@ -48,11 +48,26 @@ PNGLRendererCamera::PNGLRendererCamera()
   _playerCamera = this;
 
   _id = "renderCam";
+
+  PNEventManager::getInstance()->addCallback(PN_EVENT_MU_START, EventCallback(this, &PNGLRendererCamera::_cleanFrustrum));
 }
 
 PNGLRendererCamera::~PNGLRendererCamera()
 {
+  _cleanFrustrum(PN_EVENT_MU_START, NULL, NULL);
+
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_MU_START, EventCallback(this, &PNGLRendererCamera::_cleanFrustrum));
 }
+
+//////////////////////////////////////////////////////////////////////////
+
+void
+PNGLRendererCamera::_cleanFrustrum(pnEventType type, PNObject* source, PNEventData* ed)
+{
+  _list3DObj.clear();
+}
+
+//////////////////////////////////////////////////////////////////////////
 
 void	PNGLRendererCamera::updateViewMatrix()
 {

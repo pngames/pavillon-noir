@@ -29,6 +29,10 @@
 
 #include "pndefs.h"
 #include "pnmath.h"
+#include "pnevent.h"
+
+#include "PNGameMap.hpp"
+#include "PNGameInterface.hpp"
 
 #include "PN3DCamera.hpp"
 
@@ -42,6 +46,8 @@ PN3DCamera* PN3DCamera::_playerCamera = NULL;
 PN3DCamera::PN3DCamera()
 {
   _objType = OBJTYPE_CAMERA;
+
+  PNEventManager::getInstance()->addCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PN3DCamera::_updateFrustrum));
 }
 
 PN3DCamera::PN3DCamera(PN3DObject* object)
@@ -52,18 +58,67 @@ PN3DCamera::PN3DCamera(PN3DObject* object)
 
 PN3DCamera::~PN3DCamera()
 {
-  
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PN3DCamera::_updateFrustrum));
 }
+
 //////////////////////////////////////////////////////////////////////////
 
-PN3DObjList& PN3DCamera::getListObj()
+/// Replace with proper function
+static bool
+is3DObjVisible(PN3DObject* obj)
 {
-	return _list3DObj;
+  // calc view
+  return true;
 }
 
-PN3DCamera* PN3DCamera::getRenderCam()
+void
+PN3DCamera::_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed)
 {
-	return _playerCamera;
+  PNGameMap*	gmap = PNGameInterface::getInstance()->getGameMap();
+
+  if (gmap == NULL)
+	return ;
+
+  const PNGameMap::ObjMap&	list = gmap->getEntityList();
+
+  //_list3DObj.clear();
+
+  PN3DObjList::iterator	oldIt = _list3DObj.begin();
+
+  for (PNGameMap::ObjMap::const_iterator it = list.begin(); it != list.end(); ++it)
+  {
+	if (*oldIt != it->second)
+	{
+	  if (is3DObjVisible(it->second))
+	  {
+		_list3DObj.insert(oldIt, it->second);
+		PNEventManager::getInstance()->addEvent(PN_EVENT_F_IN, it->second, NULL);
+	  }
+	}
+	else if (!is3DObjVisible(it->second))
+	{
+	  PN3DObjList::iterator	itmp = oldIt++;
+	  _list3DObj.erase(itmp);
+	  PNEventManager::getInstance()->addEvent(PN_EVENT_F_OUT, it->second, NULL);
+	}
+	else
+	  ++oldIt;
+  }
 }
+
+//////////////////////////////////////////////////////////////////////////
+
+const PN3DObjList&
+PN3DCamera::getListObj()
+{
+  return _list3DObj;
+}
+
+PN3DCamera*
+PN3DCamera::getRenderCam()
+{
+  return _playerCamera;
+}
+
 //////////////////////////////////////////////////////////////////////////
 }

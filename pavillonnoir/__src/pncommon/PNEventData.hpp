@@ -36,9 +36,12 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 /// Data passed to events callbacks
-class PNAPI PNEventData : public PNObject
+class PNAPI		PNEventData : public PNObject
 {
 public:
+  /// Indicate if data is deleted after sendEvent
+  pnbool		destructData;
+
   /// Destructor for PNEventData
   virtual ~PNEventData() {}
 };

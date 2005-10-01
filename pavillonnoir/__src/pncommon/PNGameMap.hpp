@@ -46,11 +46,14 @@ namespace PN
 class PNWayPoint;
 class PNIAGraph;
 class PN3DCamera;
+class PN3DObject;
 
 class PNAPI PNGameMap : public PNObject, public IPNXMLSerializable
 {
+public:
+  typedef std::map<std::string, PN3DObject *>	ObjMap;
 protected:
-  std::map<std::string, PNObject *> _entityList;
+  ObjMap							_entityList;
   PN3DCamera*                       _camera;
   boost::filesystem::path			*_wpFile;
 
@@ -69,7 +72,11 @@ public:
   pnint	unserializeFromXML(xmlNode* node);
   /// Load object from file
   pnint unserializeFromFile(const boost::filesystem::path& dir);
-	
+
+  //////////////////////////////////////////////////////////////////////////
+
+  const ObjMap&		getEntityList() const;
+
   //////////////////////////////////////////////////////////////////////////
   // Will be operational when pnscript will instantiate PNGameMap
   // std::map<std::string, PN3DObject *>&  getEntityList();
