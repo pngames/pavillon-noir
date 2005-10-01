@@ -70,6 +70,7 @@ FXIMPLEMENT_ABSTRACT(PNGLShape,FXGLShape,NULL,0)
 // GLU versions prior to 1.1 have GLUquadric
 #if !defined(GLU_VERSION_1_1) && !defined(GLU_VERSION_1_2) && !defined(GLU_VERSION_1_3)
 #define GLUquadricObj GLUquadric
+
 #endif
 
 // Sphere fidelity
@@ -99,24 +100,6 @@ PNGLShape::PNGLShape(PN3DObject *obj, PNPropertiesPanel* grid, PNEditor* ed, PNE
   _label = label;
   _grid = grid;
   _classStr = classStr;
-
-  FXTRACE((100,"PNGLShape::PNGLShape\n"));
-
-  setPosFromObj();	
-  setMinMax();
-  buildParams();
-}
-
-PNGLShape::PNGLShape(PNGLShape& g) : FXGLShape(g), radius(0.5f), slices(SPHERE_SLICES), stacks(SPHERE_STACKS)
-{
-  _obj = new PN3DObject(*(g.getObj()));
-  _ed = g.getEd();
-  _id = g.getId(); //FIXME
-  _envType = g.getEnvType();
-  _canDrag = TRUE;
-  _label = g.getLabel();
-  _grid = g._grid;
-  _classStr = g.getClassStr();
 
   FXTRACE((100,"PNGLShape::PNGLShape\n"));
 
