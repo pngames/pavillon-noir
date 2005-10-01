@@ -88,7 +88,7 @@ void  PNGUIGame::_commandRenderSK(const std::string&, std::istream& i)
 
   i >> b;
 
-  PN3DObject *obj = *PN3DCamera::getRenderCam()->_list3DObj.begin();
+  PN3DObject *obj = *PN3DCamera::getRenderCam()->getListObj().begin();
 
   if (obj != NULL)
   {
@@ -109,7 +109,7 @@ void  PNGUIGame::_commandRenderM(const std::string&, std::istream& i)
 
   i >> b;
 
-  PN3DObject *obj = *PN3DCamera::getRenderCam()->_list3DObj.begin();
+  PN3DObject *obj = *PN3DCamera::getRenderCam()->getListObj().begin();
 
   if (obj != NULL)
   {
@@ -126,7 +126,7 @@ void  PNGUIGame::_commandRenderM(const std::string&, std::istream& i)
 
 void  PNGUIGame::_commandSwitchMSK(const std::string& command, std::istream& i)
 {
-  PN3DObject *obj = *PN3DCamera::getRenderCam()->_list3DObj.begin();
+  PN3DObject *obj = *PN3DCamera::getRenderCam()->getListObj().begin();
 
   if (obj != NULL)
   {
@@ -153,7 +153,7 @@ void  PNGUIGame::_commandLooping(const std::string&, std::istream& i)
 
   i >> b;
 
-  PN3DObject *obj = *PN3DCamera::getRenderCam()->_list3DObj.begin();
+  PN3DObject *obj = *PN3DCamera::getRenderCam()->getListObj().begin();
 
   if (obj != NULL)
   {
@@ -173,7 +173,7 @@ void  PNGUIGame::_commandAnimSpeed(const std::string&, std::istream& i)
 
   i >> speed;
 
-  PN3DObject *obj = *PN3DCamera::getRenderCam()->_list3DObj.begin();
+  PN3DObject *obj = *PN3DCamera::getRenderCam()->getListObj().begin();
 
   if (obj != NULL)
   {
@@ -319,9 +319,7 @@ void  PNGUIGame::_commandChangeSoundVolume(const std::string&, std::istream& i)
 
 void  PNGUIGame::_commandShowWP(const std::string&, std::istream& i)
 {
-  PN3DObjList::iterator it;
-  
-  for (it = PN3DCamera::getRenderCam()->_list3DObj.begin(); it != PN3DCamera::getRenderCam()->_list3DObj.end(); it++)
+  for (PN3DObjList::const_iterator it = PN3DCamera::getRenderCam()->getListObj().begin(); it != PN3DCamera::getRenderCam()->getListObj().end(); it++)
   {
 	PN3DObject*	obj = (PN3DObject*)*it;
 
@@ -334,9 +332,7 @@ void  PNGUIGame::_commandShowWP(const std::string&, std::istream& i)
 
 void  PNGUIGame::_commandHideWP(const std::string&, std::istream& i)
 {
-  PN3DObjList::iterator it;
-
-  for (it = PN3DCamera::getRenderCam()->_list3DObj.begin(); it != PN3DCamera::getRenderCam()->_list3DObj.end(); it++)
+  for (PN3DObjList::const_iterator it = PN3DCamera::getRenderCam()->getListObj().begin(); it != PN3DCamera::getRenderCam()->getListObj().end(); it++)
   {
 	PN3DObject*	obj = (PN3DObject*)*it;
 
@@ -565,7 +561,7 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
 
   PN3DCamera* cam = PN3DCamera::getRenderCam();
 
-  PN3DObject*	obj = *cam->_list3DObj.begin();
+  PN3DObject*	obj = *cam->getListObj().begin();
 
   PNVector3f axis(1.0f, 0.0f, 0.0f);
   pnfloat phi;

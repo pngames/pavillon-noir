@@ -89,7 +89,7 @@ void  PNLuaGameMap::addToMap(const std::string& entityName, const std::string& i
 void        PNLuaGameMap::addToMap2(PNObject& entity, char* id)
 {
   puts("[LUA Teste] addToMap2");
-  this->_entityList[id] = (PNObject*) &entity;
+  this->_entityList[id] = (PN3DObject*)&entity;
 }
 
 

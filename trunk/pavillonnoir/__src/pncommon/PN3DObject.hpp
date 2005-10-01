@@ -31,6 +31,7 @@
 # define _PN3DOBJECT_HPP_
 
 #include <vector>
+#include <boost/thread/mutex.hpp>
 
 #include "pnmath.h"
 
@@ -55,13 +56,23 @@ class PNPhysicalObject;
 /// Base object for all object evolving in the scene
 class PNAPI					PN3DObject : public PNObject, public IPNAnimated, public IPNXMLSerializable
 {
+private:
+  boost::mutex				_mutex;
+public:
+  void						lock();
+  void						unlock();
+
+  ///////////////////////////////////////////////////////////////////////////
+
 protected:
   ///object identifier
-  std::string _id;
+  std::string				_id;
 public:
-  inline void setId(std::string id){_id = id;}
-  inline std::string getId(){return _id;}
+  inline void				setId(std::string id){_id = id;}
+  inline std::string		getId(){return _id;}
+
   ///////////////////////////////////////////////////////////////////////////
+
 private:
   /// Rotation axis activated
   typedef enum
