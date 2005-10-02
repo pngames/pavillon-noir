@@ -407,26 +407,27 @@ PNGLRenderer::run()
 		{
 		  PN3DObject* obj	= (*it);
 
-		  const PNPoint&  pos = obj->getCoord();
-		  const PNPoint&  center = obj->getCenter();
-		  const PNQuatf&  orient = obj->getOrient();
-
-		  static PNMatrix4f transMatrix;
-
-		  transMatrix.loadIdentity();
-		  transMatrix.setRotationQuaternion(orient);
-		  transMatrix.setTranslation(pos);
-		  transMatrix.addTranslation(center);
-		  glMultMatrixf(transMatrix.getMatrix());
-
-		  pushMatrix();
+		  LOCK(obj);
 		  {
-			glTranslatef(-center.x, -center.y, -center.z);
-			obj->render();
+			const PNPoint&  pos = obj->getCoord();
+			const PNPoint&  center = obj->getCenter();
+			const PNQuatf&  orient = obj->getOrient();
+
+			static PNMatrix4f transMatrix;
+
+			transMatrix.loadIdentity();
+			transMatrix.setRotationQuaternion(orient);
+			transMatrix.setTranslation(pos);
+			transMatrix.addTranslation(center);
+			glMultMatrixf(transMatrix.getMatrix());
+
+			pushMatrix();
+			{
+			  glTranslatef(-center.x, -center.y, -center.z);
+			  obj->render();
+			}
+			popMatrix();
 		  }
-		  popMatrix();
-//		  if (obj->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
-//			((PNCharacter*)obj)->beSmart();
 		}
 		popMatrix(); // Return to current context
 	  }

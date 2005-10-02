@@ -239,9 +239,19 @@ PNEventManager::run()
       _cond.wait(lk);
     }
 
-    pnevent& event = _events.front();
+	pnEventType type;
+	PNObject* source;
+	PNEventData* data;
 
-	sendEvent(event.type, event.source, event.data);
+	{ boost::recursive_mutex::scoped_lock  sl(_eventsMutex);
+	  pnevent& event = _events.front();
+
+	  type = event.type;
+	  source = event.source;
+	  data = event.data;
+	}
+
+	sendEvent(type, source, data);
 
     _events.pop();
   }
@@ -257,9 +267,12 @@ PNEventManager::init()
 
 void	PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* data, bool destruct/* = true*/)
 {
-  data->destructData = destruct;
+  if (data != NULL)
+	data->destructData = destruct;
 
   pnevent eventParams(type, source, data);
+
+  boost::recursive_mutex::scoped_lock  sl(_eventsMutex);
 
   _events.push(eventParams);
 
