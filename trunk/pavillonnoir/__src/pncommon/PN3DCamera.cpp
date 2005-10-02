@@ -81,13 +81,11 @@ PN3DCamera::_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed)
 
   const PNGameMap::ObjMap&	list = gmap->getEntityList();
 
-  //_list3DObj.clear();
-
-  PN3DObjList::iterator	oldIt = _list3DObj.begin();
+  PN3DObjList::iterator		oldIt = _list3DObj.begin();
 
   for (PNGameMap::ObjMap::const_iterator it = list.begin(); it != list.end(); ++it)
   {
-	if (*oldIt != it->second)
+	if (oldIt == _list3DObj.end() || *oldIt != it->second)
 	{
 	  if (is3DObjVisible(it->second))
 	  {

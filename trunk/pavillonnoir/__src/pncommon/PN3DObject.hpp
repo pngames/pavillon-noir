@@ -31,7 +31,7 @@
 # define _PN3DOBJECT_HPP_
 
 #include <vector>
-#include <boost/thread/mutex.hpp>
+#include <boost/thread/recursive_mutex.hpp>
 
 #include "pnmath.h"
 
@@ -56,13 +56,13 @@ class PNPhysicalObject;
 /// Base object for all object evolving in the scene
 class PNAPI					PN3DObject : public PNObject, public IPNAnimated, public IPNXMLSerializable
 {
-private:
-  boost::mutex				_mutex;
 public:
-  void						lock();
-  void						unlock();
+  boost::recursive_mutex	_mutex;
 
-  ///////////////////////////////////////////////////////////////////////////
+  /// lock 3dobject* (unlocked in and of the scope)
+#define LOCK(obj)			boost::recursive_mutex::scoped_lock  sl(obj->_mutex)
+#define LOCK_BEGIN(obj)		{ LOCK(obj)
+#define LOCK_END(obj)		}
 
 protected:
   ///object identifier
@@ -125,7 +125,7 @@ public:
   }							movingState;
 
   /// Return bit mask indicate in witch moving states is the 3D object
-  pnuint					getMovingState();
+  pnuint					getMovingState() const;
   /// Set bit mask indicate in witch moving states is the 3D object
   void						setMovingState(pnuint mstate);
   /// add bit mask indicate in witch moving states is the 3D object
@@ -133,7 +133,7 @@ public:
   /// sub bit mask indicate in witch moving states is the 3D object
   void						subMovingState(pnuint mstate);
   /// Get the moving speed of 3D object
-  pnfloat					getMovingSpeed();
+  pnfloat					getMovingSpeed() const;
   /// Set the moving speed of 3D object
   void						setMovingSpeed(pnfloat mspeed);
 protected:
@@ -157,7 +157,7 @@ public:
   }			  				        movingmode;
 
   /// Return displacement mode of 3D object (free, locked, ...)
-  movingmode				getMovingMode();
+  movingmode				getMovingMode() const;
   /// Set displacement mode of 3D object (free, locked, ...)
   void						setMovingMode(movingmode mmode);
 protected:
@@ -383,7 +383,7 @@ public:
   /// Set render mode (model, materials) bit mask
   void							setRenderMode(pnuint mode);
   /// Return render mode bit mask
-  pnint							getRenderMode();
+  pnint							getRenderMode() const;
 
   /// Update object informations
   virtual void					update(pnuint deltaTime);
