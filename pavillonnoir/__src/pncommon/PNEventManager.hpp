@@ -36,6 +36,7 @@
 
 #include <queue>
 #include <boost/utility.hpp>
+#include <boost/thread/recursive_mutex.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/thread/condition.hpp>
@@ -133,6 +134,7 @@ private:
   typedef std::queue<pnevent>	STACKEVENTS;
   /// Events stack
   STACKEVENTS					_events;
+  boost::recursive_mutex		_eventsMutex;
   /// Indicate if event manager running, used to stop it
   pnbool						_run;
 
