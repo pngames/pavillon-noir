@@ -204,7 +204,10 @@ PNLuaGame::PNLuaGame()
     this->L = NULL;
     this->L = lua_open();
     this->_mapStarted = false;
-     this->_mapLoaded = false;
+    this->_mapLoaded = false;
+    this->_isLoadingMap = false;
+    this->_isUnloadingMap = false;
+
     this->debug = false;
     this->debug_log = fopen(DEF_LUA_LOG_FILE, "w");
     _gameMap = NULL;
@@ -301,32 +304,79 @@ void  PNLuaGame::onSaveGame(pnEventType evt, PNObject* source, PNEventData* data
 void  PNLuaGame::onLoadGame(pnEventType evt, PNObject* source, PNEventData* data)
 {
 }
-// when recive order to load map
-void  PNLuaGame::onLoadMap(pnEventType evt, PNObject* source, PNEventData* data)
+void  PNLuaGame::onLoadMapStart(pnEventType evt, PNObject* source, PNEventData* data)
 {
     PN3DCamera* cam = PN3DCamera::getRenderCam();
     PNGameLoadMapEventData* loadMapData = (PNGameLoadMapEventData*)data;
+    this->_mapToLoad = loadMapData->mapName;
+    this->_isLoadingMap = true;
     if (_mapLoaded == false) //if yhere is no map already loaded 
     {
-        loadMap(loadMapData->mapName);
+        //boost::thread thrd(fastdelegate::FastDelegate0<void>(this, &PNLuaGame::loadMap));
+        this->loadMap();
     }
     else // if a map is already loaded, unload the map
     {
-
         PNEventManager::getInstance()->addEvent(PN_EVENT_MU_START, 0,
-        new PNGameLoadMapEventData(loadMapData->mapName));
+            new PNEventData());
     }
 }
-// start playng the map
-void  PNLuaGame::onStartMap(pnEventType evt, PNObject* source, PNEventData* data)
+void  PNLuaGame::onLoadMapEnded(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    PNEventManager::getInstance()->addEvent(PN_EVENT_MP_START, 0, new PNEventData());
+}
+
+void  PNLuaGame::onUnloadMapStart(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    this->_isUnloadingMap = true;
+
+    if (this->_mapStarted == true)
+    {
+        PNEventManager::getInstance()->addEvent(PN_EVENT_MP_END, 0, 0);
+    }
+    else
+    {
+        this->unloadMap();
+    }
+}
+void  PNLuaGame::onUnloadMapEnded(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    if (this->_isLoadingMap == true)
+    {
+     //boost::thread thrd(fastdelegate::FastDelegate0<void>(this, &PNLuaGame::loadMap));
+     this->loadMap();
+    }
+}
+void  PNLuaGame::onPlayMapStart(pnEventType evt, PNObject* source, PNEventData* data)
 {
     this->_mapStarted = true;
-   // NEventManager::getInstance()->addEvent(PN_EVENT_M_, 0, new PNGameLoadMapEventData(loadMapData->mapName));
-
+    PNEventManager::getInstance()->addEvent(PN_EVENT_MP_STARTED, 0, new PNEventData());
 }
-void  PNLuaGame::onPauseGame(pnEventType evt, PNObject* source, PNEventData* data)
+void  PNLuaGame::onPlayMapStarted(pnEventType evt, PNObject* source, PNEventData* data)
+{
+   
+}
+void  PNLuaGame::onPlayMapPause(pnEventType evt, PNObject* source, PNEventData* data)
 {
 }
+void  PNLuaGame::onPlayMapPaused(pnEventType evt, PNObject* source, PNEventData* data)
+{
+}
+void  PNLuaGame::onPlayMapEnd(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    this->_mapStarted = false;
+    PNEventManager::getInstance()->addEvent(PN_EVENT_MP_ENDED, 0, 0);
+}
+
+void  PNLuaGame::onPlayMapEnded(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    if (this->_isUnloadingMap == true)
+    {
+        //boost::thread thrd(fastdelegate::FastDelegate0<void>(this, &PNLuaGame::unloadMap));
+        this->unloadMap();
+    }
+}
+
 void  PNLuaGame::onLeaveGame(pnEventType evt, PNObject* source, PNEventData* data)
 {
 }
@@ -350,16 +400,15 @@ void  PNLuaGame::onColision(pnEventType evt, PNObject* source, PNEventData* data
 {
 }
 
-void  PNLuaGame::onLoadMapEnded(pnEventType evt, PNObject* source, PNEventData* data)
-{
-    PNEventManager::getInstance()->addEvent(PN_EVENT_M_START, 0, new PNGameLoadMapEventData());
-}
-
 void  PNLuaGame::registerCallbacks()
 {
-    PNEventManager::getInstance()->addCallback(PN_EVENT_ML_START, EventCallback(this, &PNLuaGame::onLoadMap));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_ML_START, EventCallback(this, &PNLuaGame::onLoadMapStart));
     PNEventManager::getInstance()->addCallback(PN_EVENT_ML_ENDED, EventCallback(this, &PNLuaGame::onLoadMapEnded));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_M_START,  EventCallback(this, &PNLuaGame::onStartMap));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_MP_START,  EventCallback(this, &PNLuaGame::onPlayMapStart));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_MU_START, EventCallback(this, &PNLuaGame::onUnloadMapStart));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_MU_ENDED, EventCallback(this, &PNLuaGame::onUnloadMapEnded));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_MP_END,  EventCallback(this, &PNLuaGame::onPlayMapEnd));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED,  EventCallback(this, &PNLuaGame::onPlayMapEnded));
     PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGame::onGameAction));
     // PNEventManager::getInstance()->addCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PNLuaGame::update));
 }
@@ -367,14 +416,26 @@ void  PNLuaGame::registerCallbacks()
 ///////////////////////////////////////////////////////////////////////////////
 
 //function which really load the map
-void  PNLuaGame::loadMap(std::string mapName)
+void  PNLuaGame::loadMap()
 {
-    PNEventManager::getInstance()->addEvent(PN_EVENT_ML_STARTED, 0, new PNGameLoadMapEventData(mapName));
+    PNEventManager::getInstance()->addEvent(PN_EVENT_ML_STARTED, 0, new PNGameLoadMapEventData(this->_mapToLoad));
     //TODO : capturer cet event pour debug
-    _gameMap = new PNLuaGameMap(this->L);
+    this->_gameMap = new PNLuaGameMap(this->L);
     loadLuaScript("gameMap.lua", 1);
-    _gameMap->unserializeFromFile(mapName.c_str());
-    _mapLoaded = true;
-    PNEventManager::getInstance()->addEvent(PN_EVENT_ML_ENDED, 0, new PNGameLoadMapEventData(mapName));
+    this->_gameMap->unserializeFromFile(this->_mapToLoad.c_str());
+    this->_mapLoaded = true;
+    this->_isLoadingMap = false;
+    PNEventManager::getInstance()->addEvent(PN_EVENT_ML_ENDED, 0, new PNGameLoadMapEventData(this->_mapToLoad));
+    //TODO : capturer cet event pout debug
+}
+
+void  PNLuaGame::unloadMap()
+{
+    PNEventManager::getInstance()->addEvent(PN_EVENT_MU_STARTED, 0, new PNEventData());
+    //TODO : capturer cet event pour debug
+    this->_gameMap->clear();
+    this->_mapLoaded = false;
+    this->_isUnloadingMap = false;
+    PNEventManager::getInstance()->addEvent(PN_EVENT_MU_ENDED, 0, new PNEventData());
     //TODO : capturer cet event pout debug
 }

@@ -14,14 +14,14 @@ function PN3DSkeletonObjectClass(id)
 	end
 	pnprint("PN3DSkeletonObjectClass creating 5\n")
 	
-    function  obj:luaUpdate(deltaTime)
+    function  obj:onLuaUpdate(deltaTime)
        -- self.__index:update(deltaTime)
        self:update(deltaTime)
     end
     
     ---------------------move events-----------------------
-	function obj:OnLuaActionMoveForward(state)
-		pnprint("LUA obj:OnLuaActionMoveForward()\n")	
+	function obj:onLuaActionMoveForward(state)
+		pnprint("LUA obj:onLuaActionMoveForward()\n")	
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_FORWARD)
 		else
@@ -29,8 +29,8 @@ function PN3DSkeletonObjectClass(id)
 		end 
 	end	
 
-	function obj:OnLuaActionMoveBackward(state)
-		pnprint("LUA obj:OnLuaActionMoveBackward()\n")
+	function obj:onLuaActionMoveBackward(state)
+		pnprint("LUA obj:onLuaActionMoveBackward()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_BACKWARD)
 		else
@@ -38,8 +38,8 @@ function PN3DSkeletonObjectClass(id)
 		end 
 	end
 	
-	function obj:OnLuaActionMoveLeft(state)
-		pnprint("LUA obj:OnLuaActionMoveLeft()\n")	
+	function obj:onLuaActionMoveLeft(state)
+		pnprint("LUA obj:onLuaActionMoveLeft()\n")	
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_LEFT)
 		else
@@ -47,8 +47,8 @@ function PN3DSkeletonObjectClass(id)
 		end 
 	end	
 
-	function obj:OnLuaActionMoveRight(state)
-		pnprint("LUA obj:OnLuaActionMoveRight()\n")
+	function obj:onLuaActionMoveRight(state)
+		pnprint("LUA obj:onLuaActionMoveRight()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_RIGHT)
 		else
