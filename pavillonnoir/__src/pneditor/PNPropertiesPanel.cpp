@@ -447,9 +447,12 @@ namespace PN
   long          PNPropertiesPanel::onCmdReset(FXObject* obj, FXSelector sel, void* ptr)
   {
 	  pnerror(PN_LOGLVL_DEBUG, "PNPropertiesPanel::onCmdReset(FXObject* obj, FXSelector sel, void* ptr)");
-	  PNConfigurableObject*	co = (PNConfigurableObject*)_objectsListBox->getItemData(_objectsListBox->getCurrentItem());
-	  ((EDITOR::PNGLShape*)co)->reset();
-	  this->update();
+	  if (_objectsListBox->getNumItems() != 0)
+	  {
+	    PNConfigurableObject*	co = (PNConfigurableObject*)_objectsListBox->getItemData(_objectsListBox->getCurrentItem());
+		((EDITOR::PNGLShape*)co)->reset();
+	    this->update();
+	  }
 	  return 1;
   }
 
