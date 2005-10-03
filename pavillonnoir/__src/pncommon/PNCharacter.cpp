@@ -57,6 +57,8 @@ PNCharacter::buildGraph(fs::path& file)
 void
 PNCharacter::beSmart()
 {
+  PNLOCK(this);
+
   // set hurry or not
   pnerror(PN_LOGLVL_DEBUG, "I'm C++smart !");
   if (_state == PN_IA_TRAVELLING)
@@ -81,6 +83,8 @@ PNCharacter::beSmart()
 void
 PNCharacter::moveTo(PNPoint &p)
 {
+  PNLOCK(this);
+
   setState(PN_IA_TRAVELLING);
   _pf.moveTo(p);
   _pf.moveNext(_toReach);
@@ -90,6 +94,8 @@ PNCharacter::moveTo(PNPoint &p)
 void
 PNCharacter::moveTo(PNWayPoint *wp)
 {
+  PNLOCK(this);
+
   setState(PN_IA_TRAVELLING);
   _pf.moveTo(wp);
   _pf.moveNext(_toReach);
@@ -119,6 +125,8 @@ PNCharacter::manageFight()
 void
 PNCharacter::setState(pnIAState st)
 {
+  PNLOCK(this);
+
   _pastStates.push(_state);
   _state = st;
 }
@@ -126,6 +134,8 @@ PNCharacter::setState(pnIAState st)
 void
 PNCharacter::restoreState()
 {
+  PNLOCK(this);
+
   _state = _pastStates.top();
   _pastStates.pop();
 }

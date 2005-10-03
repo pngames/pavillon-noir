@@ -162,7 +162,7 @@ PN3DObject::_parseModel(xmlNode* node)
 pnint
 PN3DObject::unserializeFromXML(xmlNode* root)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _model = NULL;
   _materials.clear();
@@ -201,7 +201,7 @@ PN3DObject::unserializeFromXML(xmlNode* root)
 pnint
 PN3DObject::serializeInXML(std::ostream& o, bool header)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   pnint err = PNEC_SUCCES;
 
@@ -294,7 +294,7 @@ PN3DObject::getUpdateTranslation() const
 void
 PN3DObject::setUpdateTranslation(const PNVector3f& translation)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _updateTranslation = translation;
 }
@@ -326,7 +326,7 @@ PN3DObject::getObjType() const
 void
 PN3DObject::setCoord(const PNPoint& coord)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _coord = coord;
 }
@@ -334,7 +334,7 @@ PN3DObject::setCoord(const PNPoint& coord)
 void
 PN3DObject::setCoord(pnfloat x, pnfloat y, pnfloat z)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _coord.x = x;
   _coord.y = y;
@@ -344,7 +344,7 @@ PN3DObject::setCoord(pnfloat x, pnfloat y, pnfloat z)
 void
 PN3DObject::setOrient(const PNQuatf& orient)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _orient = orient;
 }
@@ -352,7 +352,7 @@ PN3DObject::setOrient(const PNQuatf& orient)
 void
 PN3DObject::setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _orient.x = x;
   _orient.y = y;
@@ -363,7 +363,7 @@ PN3DObject::setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w)
 void
 PN3DObject::move(PNPoint& coord)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _coord += coord;
 }
@@ -371,7 +371,7 @@ PN3DObject::move(PNPoint& coord)
 void
 PN3DObject::moveX(pnfloat x)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _coord.x += x;
 }
@@ -379,7 +379,7 @@ PN3DObject::moveX(pnfloat x)
 void
 PN3DObject::moveY(pnfloat y)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _coord.y += y;
 }
@@ -387,7 +387,7 @@ PN3DObject::moveY(pnfloat y)
 void
 PN3DObject::moveZ(pnfloat z)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _coord.z += z;
 }
@@ -422,7 +422,7 @@ PN3DObject::rotateRollRadians(pnfloat roll)
 void
 PN3DObject::rotatePYRAxisRadians(const PNVector3f& axis, pnfloat phi)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   PNQuatf rot(_orient * axis, phi);
 
@@ -450,7 +450,7 @@ PN3DObject::rotateZRadians(pnfloat z)
 void
 PN3DObject::rotateAxisRadians(const PNVector3f& axis, pnfloat phi)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _orient = PNQuatf(axis, phi) * _orient;
 }
@@ -466,7 +466,7 @@ PN3DObject::getMovingState() const
 void
 PN3DObject::setMovingState(pnuint mstate)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _movingState = mstate;
 }
@@ -474,7 +474,7 @@ PN3DObject::setMovingState(pnuint mstate)
 void
 PN3DObject::addMovingState(pnuint mstate)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _movingState = _movingState | mstate;
 }
@@ -482,7 +482,7 @@ PN3DObject::addMovingState(pnuint mstate)
 void
 PN3DObject::subMovingState(pnuint mstate)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _movingState = _movingState ^ mstate;
 }
@@ -496,7 +496,7 @@ PN3DObject::getMovingSpeed() const
 void
 PN3DObject::setMovingSpeed(pnfloat mspeed)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _movingSpeed = mspeed;
 }
@@ -512,7 +512,7 @@ PN3DObject::getMovingMode() const
 void
 PN3DObject::setMovingMode(PN3DObject::movingmode mmode)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _movingMode = mmode;
 }
@@ -522,7 +522,7 @@ PN3DObject::setMovingMode(PN3DObject::movingmode mmode)
 pnuint
 PN3DObject::getNbVertexComputed()
 {
-  LOCK(this);
+  PNLOCK(this);
 
   return _model->getNbVertexComputed();
 }
@@ -530,7 +530,7 @@ PN3DObject::getNbVertexComputed()
 pnuint
 PN3DObject::computeVertex(pnfloat* buffer, pnuint step)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   return _model->computeVertex(buffer, step);
 }
@@ -538,7 +538,7 @@ PN3DObject::computeVertex(pnfloat* buffer, pnuint step)
 pnuint
 PN3DObject::computeNormales(pnfloat* buffer, pnuint step)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   return _model->computeNormales(buffer, step);
 }
@@ -546,7 +546,7 @@ PN3DObject::computeNormales(pnfloat* buffer, pnuint step)
 pnuint
 PN3DObject::computeTextCoord(pnfloat* buffer, pnuint step)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   return _model->computeTextCoord(buffer, step);
 }
@@ -554,7 +554,7 @@ PN3DObject::computeTextCoord(pnfloat* buffer, pnuint step)
 pnuint
 PN3DObject::computeColors(pnfloat* buffer, pnuint step)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   return _model->computeColors(buffer, step);
 }
@@ -562,7 +562,7 @@ PN3DObject::computeColors(pnfloat* buffer, pnuint step)
 pnuint
 PN3DObject::getNbFacesComputed()
 {
-  LOCK(this);
+  PNLOCK(this);
 
   return _model->getNbFacesComputed();
 }
@@ -570,7 +570,7 @@ PN3DObject::getNbFacesComputed()
 pnuint
 PN3DObject::computeFaces(PNFace* faces, pnuint step)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   return _model->computeFaces(_materials, faces, step);
 }
@@ -580,7 +580,7 @@ PN3DObject::computeFaces(PNFace* faces, pnuint step)
 void
 PN3DObject::setTarget(PN3DObject* obj, pnfloat distance)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _target = obj;
   setTargetDistance(distance);
@@ -589,7 +589,7 @@ PN3DObject::setTarget(PN3DObject* obj, pnfloat distance)
 void
 PN3DObject::setTargetDistance(pnfloat distance)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _targetDistance = distance;
 }
@@ -597,7 +597,7 @@ PN3DObject::setTargetDistance(pnfloat distance)
 void
 PN3DObject::setTargetDirection(const PNNormal3f& n)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _targetDirection = n;
 
@@ -624,7 +624,7 @@ PN3DObject::get3DModel() const
 void
 PN3DObject::set3DModel(PN3DModel* model)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _model = model;
 }
@@ -644,7 +644,7 @@ PN3DObject::getPhysicalObject() const
 bool 
 PN3DObject::setPhysicalObject(PNPhysicalObject* physical_object)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _physicalObject = physical_object;
   // FIXME : make a test on the value returned by PNPhysicsInterface
@@ -656,7 +656,7 @@ PN3DObject::setPhysicalObject(PNPhysicalObject* physical_object)
 void
 PN3DObject::setDirect(const PNVector3f &direct)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _direct = direct;
 }
@@ -664,7 +664,7 @@ PN3DObject::setDirect(const PNVector3f &direct)
 void
 PN3DObject::setDirect(pnfloat x, pnfloat y, pnfloat z)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _direct.x = x;
   _direct.y = y;
@@ -681,7 +681,7 @@ PN3DObject::setDirect(pnfloat x, pnfloat y, pnfloat z)
 void
 PN3DObject::updateTranslation(pnfloat step)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _updateTranslation.setNull();
 
@@ -728,7 +728,7 @@ PN3DObject::updateTranslation(pnfloat step)
 void
 PN3DObject::updateRotation(pnfloat step)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   pnfloat	phi = (pnfloat)DEGREE_TO_RADIAN(step/10);
 
@@ -822,7 +822,7 @@ PN3DObject::updateRotation(pnfloat step)
 void
 PN3DObject::update(pnuint deltaTime)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   pnuint  tick = PNRendererInterface::getInstance()->getTicks();
 
@@ -846,7 +846,7 @@ PN3DObject::update(pnuint deltaTime)
 void
 PN3DObject::setRenderMode(pnuint mode)
 {
-  LOCK(this);
+  PNLOCK(this);
 
   _renderMode = mode;
 }
@@ -860,7 +860,7 @@ PN3DObject::getRenderMode() const
 void
 PN3DObject::render()
 {
-  LOCK(this);
+  PNLOCK(this);
 
   if (_model != NULL && _renderMode & RENDER_MODEL)
   {
