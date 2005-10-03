@@ -123,7 +123,7 @@ PNCharacter::manageFight()
 }
 
 pnCharacType
-PNCharacter::getCharacType();
+PNCharacter::getCharacType()
 {
   return _shown;
 }
