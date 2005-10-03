@@ -119,7 +119,7 @@ private:
   void	run();
 
   /// Mutex used for block where there is no event on the stack
-  boost::mutex					_mutex;
+  boost::mutex					_waitMutex;
   /// Mutex manager to wait verified condition
   boost::condition				_cond;
 
@@ -138,11 +138,11 @@ private:
   /// Indicate if event manager running, used to stop it
   pnbool						_run;
 
-  /// Map type to convert event type name to event type indentifier
+  /// Map type to convert event type name to event type identifier
   typedef std::map<std::string, pnEventType> eventEnumMap;
   /// Map type to convert event type identifier to event type name
   typedef std::map<pnEventType, std::string> eventNameMap;
-  /// Map to convert event type name to event type indentifier
+  /// Map to convert event type name to event type identifier
   eventNameMap					_eventNames;
   /// Map to convert event type identifier to event type name
   eventEnumMap					_eventEnums;

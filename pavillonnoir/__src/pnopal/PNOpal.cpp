@@ -148,10 +148,6 @@ pnfloat PNOpal::getElapsedTime()
 
 void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 {
-  PN3DObject* current_obj = NULL;
-  /* FIXME : previously deprecated */
-  PN3DObjList::iterator it = _list3DObj.begin();
-
   //static pnuint frame = 0;
   
   pnfloat elapsedTime = getElapsedTime();
@@ -165,8 +161,8 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
   bool ret = _sim->simulate(elapsedTime);
   if (ret == false)
   	return;
-  
-  for (;it != _list3DObj.end(); it++)
+
+  for (PN3DObjList::iterator it = _list3DObj.begin(); it != _list3DObj.end(); it++)
   {
   //////////////////////////////////////////////////////////////////////////
   // Will be operational when pnscript will instantiate PNGameMap
@@ -181,22 +177,25 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
   */
 	//frame++;
 
-	current_obj	= (*it);
+	PN3DObject* current_obj = *it;
 
-	const PNPoint& coord = current_obj->getPhysicalObject()->getCoord();
-	const PNPoint& center = current_obj->get3DModel()->getCenter();
-	const PNQuatf& orient = current_obj->getPhysicalObject()->getOrient();
-
-	current_obj->setCoord(coord.x - center.x, coord.y - center.y, coord.z - center.z);
-	current_obj->setOrient(orient);
-
-	/*if (frame == 3000)
+	PNLOCK_BEGIN(current_obj);
 	{
+	  const PNPoint& coord = current_obj->getPhysicalObject()->getCoord();
+	  const PNPoint& center = current_obj->get3DModel()->getCenter();
+	  const PNQuatf& orient = current_obj->getPhysicalObject()->getOrient();
+
+	  current_obj->setCoord(coord.x - center.x, coord.y - center.y, coord.z - center.z);
+	  current_obj->setOrient(orient);
+
+	  /*if (frame == 3000)
+	  {
 	  PNConsole::writeLine("Orient PNPhysicalObject - x : %f, y : %f, z : %f, w : %f", orient.x, orient.y, orient.z, orient.w);
 	  PNConsole::writeLine("Orient PN3DObject       - x : %f, y : %f, z : %f, w : %f", current_obj->getOrient().x, current_obj->getOrient().y, current_obj->getOrient().z, current_obj->getOrient().w);
 	  frame = 0;
-	}*/
-
+	  }*/
+	}
+	PNLOCK_END(current_obj);
   }
 }
 

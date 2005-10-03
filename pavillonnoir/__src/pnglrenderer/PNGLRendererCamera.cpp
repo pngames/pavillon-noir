@@ -71,6 +71,8 @@ PNGLRendererCamera::_cleanFrustrum(pnEventType type, PNObject* source, PNEventDa
 
 void	PNGLRendererCamera::updateViewMatrix()
 {
+  PNLOCK(this);
+
   PNMatrixTR4f	mat;
 
   mat.loadIdentity();

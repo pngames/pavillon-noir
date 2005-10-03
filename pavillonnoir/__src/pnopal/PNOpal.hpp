@@ -43,13 +43,13 @@ namespace PN {
 
 typedef std::list<PN3DObject *> PN3DObjList;
 
-class					PNOpal : public PNPhysicsInterface
+class				PNOpal : public PNPhysicsInterface
 {
 private:
   opal::Simulator*	_sim;
 
   /* FIXME : previously deprecated */
-  PN3DObjList			_list3DObj;
+  PN3DObjList		_list3DObj;
 
 public:
   PNOpal();
@@ -74,7 +74,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  pnfloat				getElapsedTime();
+  pnfloat			getElapsedTime();
   void				frameStarted(pnEventType type, PNObject* source, PNEventData* data);
 };
 

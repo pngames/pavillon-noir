@@ -340,9 +340,9 @@ PNGLRenderer::run()
 {
   _isProgramLooping = true;
 
-  pnuint lastLoopDate = getTicks();
-  pnuint deltaTime;
-  pnuint currentLoopDate = getTicks();
+  pnuint		lastLoopDate = getTicks();
+  pnuint		deltaTime;
+  pnuint		currentLoopDate = getTicks();
   SDL_Event		event;
 
   PNInfoPanel*	infoPanel = new PNInfoPanel();
@@ -366,10 +366,7 @@ PNGLRenderer::run()
 	{
       PNGameInterface::getInstance()->onUpdate(deltaTime);
 
-	  //////////////////////////////////////
-	  // Tests des collisions entre la camera
-	  // et le terrain statique
-	  //////////////////////////////////////
+	  ////////////////////////////////
 
 	  _renderCam.update(deltaTime);
 
@@ -381,10 +378,6 @@ PNGLRenderer::run()
 	  // Place la camera
 
 	  _renderCam.updateViewMatrix();
-
-	  /////////////////////////////////
-	  // PNPhysicsInterface - simulate()
-	  // PNPhysicsInterface::getInstance()->frameStarted();
 
 	  /////////////////////////////////
 	  // PNGround: rend le terrain et remplit la liste des object dans la camera
@@ -405,20 +398,21 @@ PNGLRenderer::run()
 	  {
 		pushMatrix(); // Create temporary context for 3Dobject placement
 		{
-		  PN3DObject* obj	= (*it);
+		  PN3DObject* obj = *it;
 
-		  LOCK(obj);
+		  static PNMatrix4f transMatrix;
+		  transMatrix.loadIdentity();
+
+		  PNLOCK_BEGIN(obj);
 		  {
 			const PNPoint&  pos = obj->getCoord();
 			const PNPoint&  center = obj->getCenter();
 			const PNQuatf&  orient = obj->getOrient();
 
-			static PNMatrix4f transMatrix;
-
-			transMatrix.loadIdentity();
 			transMatrix.setRotationQuaternion(orient);
 			transMatrix.setTranslation(pos);
 			transMatrix.addTranslation(center);
+
 			glMultMatrixf(transMatrix.getMatrix());
 
 			pushMatrix();
@@ -428,8 +422,9 @@ PNGLRenderer::run()
 			}
 			popMatrix();
 		  }
+		  PNLOCK_END(obj);
 		}
-		popMatrix(); // Return to current context
+		popMatrix(); // Return to root context
 	  }
 
 	  //////////////////////////////////////////////////////////////////////////

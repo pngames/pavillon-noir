@@ -235,7 +235,7 @@ PNEventManager::run()
   {
     if (_events.empty())
     {
-      boost::mutex::scoped_lock lk(_mutex);
+      boost::mutex::scoped_lock lk(_waitMutex);
       _cond.wait(lk);
     }
 
