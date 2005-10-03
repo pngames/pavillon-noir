@@ -74,6 +74,8 @@ is3DObjVisible(PN3DObject* obj)
 void
 PN3DCamera::_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed)
 {
+  PNLOCK(this);
+
   PNGameMap*	gmap = PNGameInterface::getInstance()->getGameMap();
 
   if (gmap == NULL)
@@ -90,14 +92,14 @@ PN3DCamera::_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed)
 	  if (is3DObjVisible(it->second))
 	  {
 		_list3DObj.insert(oldIt, it->second);
-		PNEventManager::getInstance()->addEvent(PN_EVENT_F_IN, it->second, NULL);
+		PNEventManager::getInstance()->addEvent(PN_EVENT_F_IN, this, new PNFrustrumEventData(it->second));
 	  }
 	}
 	else if (!is3DObjVisible(it->second))
 	{
 	  PN3DObjList::iterator	itmp = oldIt++;
 	  _list3DObj.erase(itmp);
-	  PNEventManager::getInstance()->addEvent(PN_EVENT_F_OUT, it->second, NULL);
+	  PNEventManager::getInstance()->addEvent(PN_EVENT_F_OUT, this, new PNFrustrumEventData(it->second));
 	}
 	else
 	  ++oldIt;

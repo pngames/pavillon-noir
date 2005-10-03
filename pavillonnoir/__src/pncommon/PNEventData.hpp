@@ -35,6 +35,8 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
+class PN3DObject;
+
 /// Data passed to events callbacks
 class PNAPI		PNEventData : public PNObject
 {
@@ -42,8 +44,23 @@ public:
   /// Indicate if data is deleted after sendEvent
   pnbool		destructData;
 
+  PNEventData()	{destructData = true;}
+
   /// Destructor for PNEventData
   virtual ~PNEventData() {}
+};
+
+class PNAPI		PNFrustrumEventData : public PNEventData
+{
+public:
+  /// The objet that enters/exits from frustrum
+  PN3DObject*	obj;
+
+  PNFrustrumEventData() {obj = NULL;}
+  PNFrustrumEventData(PN3DObject* o) {obj = o;}
+
+  /// Destructor for PNFrustrumEventData
+  virtual ~PNFrustrumEventData() {}
 };
 
 //////////////////////////////////////////////////////////////////////////

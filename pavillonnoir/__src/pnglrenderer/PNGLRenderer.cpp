@@ -392,41 +392,44 @@ PNGLRenderer::run()
 
 	  glLightfv(GL_LIGHT0, GL_POSITION, Light1Pos);
 
-	  const PN3DObjList& objectToRend = _renderCam.getListObj();
-
-	  for (PN3DObjList::const_iterator it = objectToRend.begin(); it != objectToRend.end(); it++)
+	  PNLOCK_BEGIN(&_renderCam);
 	  {
-		pushMatrix(); // Create temporary context for 3Dobject placement
+		const PN3DObjList& objectToRend = _renderCam.getListObj();
+
+		for (PN3DObjList::const_iterator it = objectToRend.begin(); it != objectToRend.end(); it++)
 		{
-		  PN3DObject* obj = *it;
-
-		  static PNMatrix4f transMatrix;
-		  transMatrix.loadIdentity();
-
-		  PNLOCK_BEGIN(obj);
+		  pushMatrix(); // Create temporary context for 3Dobject placement
 		  {
-			const PNPoint&  pos = obj->getCoord();
-			const PNPoint&  center = obj->getCenter();
-			const PNQuatf&  orient = obj->getOrient();
+			PN3DObject* obj = *it;
 
-			transMatrix.setRotationQuaternion(orient);
-			transMatrix.setTranslation(pos);
-			transMatrix.addTranslation(center);
+			static PNMatrix4f transMatrix;
+			transMatrix.loadIdentity();
 
-			glMultMatrixf(transMatrix.getMatrix());
-
-			pushMatrix();
+			PNLOCK_BEGIN(obj);
 			{
-			  glTranslatef(-center.x, -center.y, -center.z);
-			  obj->render();
-			}
-			popMatrix();
-		  }
-		  PNLOCK_END(obj);
-		}
-		popMatrix(); // Return to root context
-	  }
+			  const PNPoint&  pos = obj->getCoord();
+			  const PNPoint&  center = obj->getCenter();
+			  const PNQuatf&  orient = obj->getOrient();
 
+			  transMatrix.setRotationQuaternion(orient);
+			  transMatrix.setTranslation(pos);
+			  transMatrix.addTranslation(center);
+
+			  glMultMatrixf(transMatrix.getMatrix());
+
+			  pushMatrix();
+			  {
+				glTranslatef(-center.x, -center.y, -center.z);
+				obj->render();
+			  }
+			  popMatrix();
+			}
+			PNLOCK_END(obj);
+		  }
+		  popMatrix(); // Return to root context
+		}
+	  }
+	  PNLOCK_END(&_renderCam);
 	  //////////////////////////////////////////////////////////////////////////
 	  
 	  PNPoint	ax(PNPoint::ZERO);
