@@ -327,10 +327,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath="..\..\..\__binaries\config.cfg"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>
