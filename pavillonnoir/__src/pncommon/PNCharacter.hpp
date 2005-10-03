@@ -46,6 +46,13 @@ typedef			enum
   PN_IA_NBSTATES
 }				pnIAState;
 
+typedef			enum
+{
+  PN_CHARAC_PIRATE,
+  PN_CHARAC_NAVY,
+  PN_CHARAC_CIVILIAN
+}				pnCharacType;
+
 class PNWayPoint;
 
 class PNAPI PNCharacter : public PN3DSkeletonObject
@@ -55,6 +62,9 @@ class PNAPI PNCharacter : public PN3DSkeletonObject
   PNPathFinding							_pf;
   std::stack<pnIAState>					_pastStates;
   PN3DObject							_toReach;
+  pnCharacType							_real;
+  pnCharacType							_shown;
+
 public:
   PNCharacter();
   virtual ~PNCharacter();
@@ -89,6 +99,11 @@ public:
   ** the character
   */
   virtual void							manageFight();
+
+  /*
+  **
+  */
+  pnCharacType							getCharacType();
 
   //////////////////////////////////////////////////////////////////////////
 private:
