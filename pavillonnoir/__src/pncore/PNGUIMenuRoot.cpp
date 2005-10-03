@@ -181,7 +181,7 @@ namespace PN
 	if (_mainSheet->isMuted() == true)
 	  return true;
 	
-	PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous reelement\nquitter le plus fabuleux jeu\nde l'histoire ?", PNGUIMsgBox::YES_NO, callbackQuit, _mainSheet);
+	PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous reelement\nquitter ?", PNGUIMsgBox::YES_NO, callbackQuit, _mainSheet);
 	//PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "sauter", PNGUIMsgBox::CONF, callbackQuit, _mainSheet);
 	return true;
   }

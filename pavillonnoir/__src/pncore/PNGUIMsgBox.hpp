@@ -23,6 +23,7 @@ namespace PN
 	  CANCEL,
 	  CONF
 	} msgboxtype;
+
 	typedef fastdelegate::FastDelegate1<const unsigned int&> Callback;
 
   protected:
@@ -37,10 +38,20 @@ namespace PN
 	float _textWidth;
 	float _textHeight;
 
+	std::string			_actionName;
+	std::string			_argsKind;
+	CEGUI::EventArgs	_ceguiArgs;
+	//CEGUI::Key			_ceguiKey;
+	
+
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
+	  std::string	PNGUIMsgBox::getActionName();
+	  std::string	PNGUIMsgBox::getArgsKind();
+	  CEGUI::EventArgs	PNGUIMsgBox::getCeguiArgs();
+
   protected:
   private:
 	void	genericCreationWindow(const std::string& title, const std::string& text, unsigned int msgtype, CEGUI::Window* parentWin, std::string convert);
@@ -52,6 +63,7 @@ namespace PN
 	bool	eventKeyConfHandler(const CEGUI::EventArgs& e);
 	bool	eventMouseClickConfHandler(const CEGUI::EventArgs& e);
 	bool	eventMouseWheelConfHandler(const CEGUI::EventArgs& e);
+	void	confNextStep();
 	int		str_to_vector(const std::string& str, const std::string& separators, std::vector<std::string>* p_result);
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
