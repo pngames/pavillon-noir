@@ -79,9 +79,12 @@ typedef enum
   PN_EVENT_MU_END,				/// end unloading map
   PN_EVENT_MU_ENDED,			/// unloading map ended
 
-  PN_EVENT_M_START,				/// start play map
-  PN_EVENT_M_END,				/// quit map
-
+  PN_EVENT_MP_START,			/// start play map
+  PN_EVENT_MP_STARTED,          /// say the map has started
+  PN_EVENT_MP_END,				/// quit map
+  PN_EVENT_MP_PAUSE,            /// pause the map
+  PN_EVENT_MP_PAUSED,           /// say the map is paused
+  PN_EVENT_MP_ENDED,            /// say the map has ended
   //////////////////////////////////////////////////////////////////////////
   // OBJECTS DISPLACEMENT
 
