@@ -270,12 +270,21 @@ std::cout << "IN eventMouseWheelConfHandler" << std::endl;
 	if (msgt == CONF)
 	{
 		CEGUI::MouseCursor::getSingleton().setConstraintArea(NULL);
-		_frameWin->destroy();
+		//_frameWin->destroy();
+		_frameWin->hide();
 		confNextStep();
 	}
 	else
 	{
 		_parentWin->setMutedState(false);
+
+		std::stringstream convert;
+		convert << (winID-1);
+
+		std::string tmp = "_msg_box_";
+		tmp += convert.str();
+		CEGUI::FrameWindow* tmpWin = (CEGUI::FrameWindow*)CEGUI::WindowManager::getSingleton().getWindow(tmp.c_str());
+		tmpWin->destroy();
 		_frameWin->destroy();
 		fonctionCallback(msgt);
 	}
