@@ -39,13 +39,13 @@ function gameMap:spwan(entity, id, position, orientation, model)
 	return entity
 end 
 
-function gameMap:onUpdate(deltaTime)
-	pnprint("=> LUA GameMap: onUpdate()")
+function gameMap:onLuaUpdate(deltaTime)
+--	pnprint("=> LUA GameMap: onUpdate()")
    --pnprint(deltaTime)
 	for id, entity in pairs(self.entities.all) do 
-		entity:luaUpdate(deltaTime)
+		entity:onLuaUpdate(deltaTime)
 	end
-	pnprint("<= LUA GameMap: onUpdate()")
+--	pnprint("<= LUA GameMap: onUpdate()")
 end
 
 function gameMap:onInit()
@@ -76,24 +76,24 @@ function gameMap:onLoadMap()
     pnprint("LUA GameMap: onLoadMap()\n")
 end
 
-function gameMap:OnLuaActionMoveForward(id, state)
-    pnprint("LUA GameMap:OnLuaActionMoveForward()\n")
-    self.entities.all[id]:OnLuaActionMoveForward(state)
+function gameMap:onLuaActionMoveForward(id, state)
+    pnprint("LUA GameMap:onLuaActionMoveForward()\n")
+    self.entities.all[id]:onLuaActionMoveForward(state)
 end	
 
-function gameMap:OnLuaActionMoveBackward(id, state)
-    pnprint("LUA GameMap:OnLuaActionMoveBackward()\n")
-    self.entities.all[id]:OnLuaActionMoveBackward(state)
+function gameMap:onLuaActionMoveBackward(id, state)
+    pnprint("LUA GameMap:onLuaActionMoveBackward()\n")
+    self.entities.all[id]:onLuaActionMoveBackward(state)
 end		
 
-function gameMap:OnLuaActionMoveLeft(id, state)
-    pnprint("LUA GameMap:OnLuaActionMoveLeft()\n")
-    self.entities.all[id]:OnLuaActionMoveLeft(state)
+function gameMap:onLuaActionMoveLeft(id, state)
+    pnprint("LUA GameMap:onLuaActionMoveLeft()\n")
+    self.entities.all[id]:onLuaActionMoveLeft(state)
 end	
 
-function gameMap:OnLuaActionMoveRight(id, state)
-    pnprint("LUA GameMap:OnLuaActionMoveRight()\n")
-    self.entities.all[id]:OnLuaActionMoveRight(state)
+function gameMap:onLuaActionMoveRight(id, state)
+    pnprint("LUA GameMap:onLuaActionMoveRight()\n")
+    self.entities.all[id]:onLuaActionMoveRight(state)
 end		
 --camera = PN3DCamera:getRenderCam()
 --camera:setMovingSpeed(1.0)

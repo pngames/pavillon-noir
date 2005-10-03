@@ -63,6 +63,9 @@ namespace PN
     std::set<std::string>     _loadedScripts;
     bool                      _mapStarted;
     bool                      _mapLoaded;
+    bool                      _isLoadingMap;
+    bool                      _isUnloadingMap;
+    std::string               _mapToLoad;
 
 
     /*/////////////////////////////////////////////////////////////////////////////
@@ -110,7 +113,7 @@ namespace PN
     //initialize the plugin
     void init(void);
     // load the map
-    void loadMap(std::string mapName);
+    void loadMap();
     //unloadthe map;
     void unloadMap();
 
@@ -123,10 +126,16 @@ namespace PN
 	void onNewGame(pnEventType evt, PNObject* source, PNEventData* data);
 	void onSaveGame(pnEventType evt, PNObject* source, PNEventData* data);
 	void onLoadGame(pnEventType evt, PNObject* source, PNEventData* data);
-	void onLoadMap(pnEventType evt, PNObject* source, PNEventData* data);
+	void onLoadMapStart(pnEventType evt, PNObject* source, PNEventData* data);
     void onLoadMapEnded(pnEventType evt, PNObject* source, PNEventData* data);
-	void onStartMap(pnEventType evt, PNObject* source, PNEventData* data);
-	void onPauseGame(pnEventType evt, PNObject* source, PNEventData* data);
+    void onUnloadMapStart(pnEventType evt, PNObject* source, PNEventData* data);
+    void onUnloadMapEnded(pnEventType evt, PNObject* source, PNEventData* data);
+    void onPlayMapEnd(pnEventType evt, PNObject* source, PNEventData* data);   
+    void onPlayMapEnded(pnEventType evt, PNObject* source, PNEventData* data);
+	void onPlayMapStart(pnEventType evt, PNObject* source, PNEventData* data);
+    void onPlayMapStarted(pnEventType evt, PNObject* source, PNEventData* data);
+	void onPlayMapPause(pnEventType evt, PNObject* source, PNEventData* data);
+    void onPlayMapPaused(pnEventType evt, PNObject* source, PNEventData* data);
 	void onLeaveGame(pnEventType evt, PNObject* source, PNEventData* data);
 	void onGameAction(pnEventType evt, PNObject* source, PNEventData* data);
 	void onColision(pnEventType evt, PNObject* source, PNEventData* data);

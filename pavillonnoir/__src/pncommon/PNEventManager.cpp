@@ -97,10 +97,18 @@ PNEventManager::PNEventManager()
   _eventEnums["PN_EVENT_MU_ENDED"] = PN_EVENT_MU_ENDED;
   _eventNames[PN_EVENT_MU_ENDED] = "PN_EVENT_MU_ENDED";
 
-  _eventEnums["PN_EVENT_M_START"] = PN_EVENT_M_START;
-  _eventNames[PN_EVENT_M_START] = "PN_EVENT_M_START";
-  _eventEnums["PN_EVENT_M_END"] = PN_EVENT_M_END;
-  _eventNames[PN_EVENT_M_END] = "PN_EVENT_M_END";
+  _eventEnums["PN_EVENT_MP_START"] = PN_EVENT_MP_START;
+  _eventNames[PN_EVENT_MP_START] = "PN_EVENT_MP_START";
+  _eventEnums["PN_EVENT_MP_END"] = PN_EVENT_MP_END;
+  _eventNames[PN_EVENT_MP_END] = "PN_EVENT_MP_END";
+  _eventEnums["PN_EVENT_MP_STARTED"] = PN_EVENT_MP_STARTED;
+  _eventNames[PN_EVENT_MP_STARTED] = "PN_EVENT_MP_STARTED";
+  _eventEnums["PN_EVENT_MP_ENDED"] = PN_EVENT_MP_ENDED;
+  _eventNames[PN_EVENT_MP_ENDED] = "PN_EVENT_MP_ENDED";
+  _eventEnums["PN_EVENT_MP_PAUSE"] = PN_EVENT_MP_PAUSE;
+  _eventNames[PN_EVENT_MP_PAUSE] = "PN_EVENT_MP_PAUSE";
+  _eventEnums["PN_EVENT_MP_PAUSED"] = PN_EVENT_MP_PAUSED;
+  _eventNames[PN_EVENT_MP_PAUSED] = "PN_EVENT_MP_PAUSED";
 
   //////////////////////////////////////////////////////////////////////////
   // OBJECTS DISPLACEMENT

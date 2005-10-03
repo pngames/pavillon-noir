@@ -3,12 +3,12 @@ function CharacterClass(id)
 	Character.className = "Character"
 	Character:setMovingSpeed(0.5)
 	Character.hurry = false
-	pnprint("create pathFinding\n")
+--	pnprint("create pathFinding\n")
 	Character.pathFinding = PNPathFinding:new_local(Character:getCoord())
-	pnprint("pathFinding created\n")
-	pnprint("create pathFinding\n")
+--	pnprint("pathFinding created\n")
+--	pnprint("create pathFinding\n")
 	Character.pathFinding:unserializeFromFile(gameMap:getWpFile())
-	pnprint("pathFinding created\n")
+--	pnprint("pathFinding created\n")
 	Character.toReach = PN3DObject:new_local()
 	Character.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2}
 	Character.state = Character.stateEnum.PN_IA_PASSIVE
@@ -22,7 +22,7 @@ function CharacterClass(id)
 				local distance2 = self:getCoord():getDistance(self.toReach:getCoord())
 					if (distance2 <= 50.0) then
 						self:restoreState()
-						self:OnLuaActionMoveForward(false)
+						self:onLuaActionMoveForward(false)
 						return
 					end
 					self:setTarget(self.toReach)
@@ -39,7 +39,7 @@ function CharacterClass(id)
 		-- setDirect and rotate
 		self:setTarget(self.toReach)
 		self:setMovingMode(self.MMODE_VIEW_ABS_LOCKED)
-		self:OnLuaActionMoveForward(true)
+		self:onLuaActionMoveForward(true)
 	end
 
 	function Character:hear()
@@ -64,28 +64,26 @@ function CharacterClass(id)
 	end
 
 	function Character:restoreState()
-		pnprint("=> Character:restoreState()\n")
+--		pnprint("=> Character:restoreState()\n")
 		self.state = self.pastStates[0]
 		table.remove(self.pastStates,0)
-		pnprint("<= Character:restoreState()\n")
+--		pnprint("<= Character:restoreState()\n")
 	end
 	
 	--temp function
-	function Character:luaUpdate(deltaTime)
-		self:beSmart()
-		self:update(deltaTime)
-		pnprint(self:getCoord().x)
-		pnprint(self:getCoord().y)
-		pnprint(self:getCoord().z)
-		pnprint("\n")
-	end 
 	
 	function Character:onLuaUpdate(deltaTime)
-		self:luaUpdate(deltaTime)
+		self:beSmart()
+		self:update(deltaTime)
 	end
 	
-	function Character:OnLuaActionMoveTo(target)
+	function Character:onLuaActionMoveTo(target)
 		--do something
+	end
+	
+	function Character:oncollision(target, direction)
+	-- Si target et direction et autre condition ok alors
+		-- lance premier script self.scripts.event.collision[0]		
 	end
 
 
