@@ -750,7 +750,7 @@ PNGLRenderer::initGUI()
 	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/VanillaSkin.scheme");
 	PNDEBUG_STEP;
 	
-	CEGUI::System::getSingleton().setTooltip("WindowsLook/Tooltip");
+	CEGUI::System::getSingleton().setTooltip("Vanilla/Tooltip");
 
 	CEGUI::System::getSingleton().setDefaultMouseCursor("Vanilla-Images", "MouseArrow");
 	//CEGUI::System::getSingleton().setDefaultMouseCursor("TaharezLook", "MouseArrow");
