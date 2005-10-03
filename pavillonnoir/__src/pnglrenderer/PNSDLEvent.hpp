@@ -58,7 +58,7 @@ namespace PN{
 	typedef std::set<SDLKey> BufferedKeysDownSet;
 	BufferedKeysDownSet mBufferedKeysDown;
 
-	double _lastTimePulse;
+	//double _lastTimePulse;
 
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
