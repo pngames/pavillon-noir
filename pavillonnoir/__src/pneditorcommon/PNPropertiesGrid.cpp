@@ -142,7 +142,7 @@ void PNPropertiesGrid::updateParent()
   if (_parent != NULL)
   {
 	pnerror(PN_LOGLVL_DEBUG, "void PNPropertiesGrid::updateParent() : _parent->update()");
-	_parent->update();
+	//_parent->update();
   }
   return;
 }
