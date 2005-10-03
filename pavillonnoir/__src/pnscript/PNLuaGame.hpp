@@ -61,7 +61,8 @@ namespace PN
     boost::filesystem::path	  _gameRootDirectory;
     PNLuaGameMap*             _gameMap;
     std::set<std::string>     _loadedScripts;
-    bool                      _gameStarted;
+    bool                      _mapStarted;
+    bool                      _mapLoaded;
 
 
     /*/////////////////////////////////////////////////////////////////////////////
@@ -105,8 +106,14 @@ namespace PN
 
     const boost::filesystem::path&  getGameRoot();
     PNGameMap*                      getGameMap();
+
+    //initialize the plugin
     void init(void);
-    
+    // load the map
+    void loadMap(std::string mapName);
+    //unloadthe map;
+    void unloadMap();
+
 
 
     //////////////////////////////////--------  callbacks ---------////////////////////////////////////
@@ -117,7 +124,8 @@ namespace PN
 	void onSaveGame(pnEventType evt, PNObject* source, PNEventData* data);
 	void onLoadGame(pnEventType evt, PNObject* source, PNEventData* data);
 	void onLoadMap(pnEventType evt, PNObject* source, PNEventData* data);
-	void onStartGame(pnEventType evt, PNObject* source, PNEventData* data);
+    void onLoadMapEnded(pnEventType evt, PNObject* source, PNEventData* data);
+	void onStartMap(pnEventType evt, PNObject* source, PNEventData* data);
 	void onPauseGame(pnEventType evt, PNObject* source, PNEventData* data);
 	void onLeaveGame(pnEventType evt, PNObject* source, PNEventData* data);
 	void onGameAction(pnEventType evt, PNObject* source, PNEventData* data);
