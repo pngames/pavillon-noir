@@ -46,6 +46,7 @@ namespace PN {
 
 	FXComposite*				_parent;
 	PNConfigurableParameter*	_param;
+//	PNConfigurableParameter*	_defaultParam;
 
 	FXListBox*					_listBox;
 	FXButton*					_buttonDelete;

@@ -120,6 +120,7 @@ namespace PN
 	  void						updateOrient();
 	  int						getNbParameters();
 	  PNConfigurableParameter*	getParameter(int idx);
+	  void						reset();
 
 	  const std::string&		getLabel() {return _label;}
 	};

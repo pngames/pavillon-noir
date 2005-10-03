@@ -187,6 +187,12 @@ namespace PN {
 	return 1;
   }
 
+  long	PNFXMaterialListParameter::onReset(FXObject* obj,FXSelector sel,void* ptr)
+  {
+	return 1;
+  }
+
+
   /*
   *	Updates MaterialListlist
   */
