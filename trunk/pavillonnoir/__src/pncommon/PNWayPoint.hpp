@@ -59,7 +59,6 @@ class PNAPI PNWayPoint : public PN3DObject
 {
   bool					_selected;
   pnint					_id;
-  pnint					_nbLinks;
   LINKLIST				_links;
   PNIAGraph*			_graph;
 

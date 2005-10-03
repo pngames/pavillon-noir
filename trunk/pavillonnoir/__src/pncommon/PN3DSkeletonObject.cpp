@@ -117,6 +117,8 @@ PN3DSkeletonObject::_parseSkeleton(xmlNode* node)
 int
 PN3DSkeletonObject::unserializeFromXML(xmlNode* root)
 {
+  PNLOCK(this);
+
   _model = NULL;
   _skeleton = NULL;
   _materials.clear();
@@ -180,6 +182,8 @@ PN3DSkeletonObject::update(pnuint deltaTime)
 
   //////////////////////////////////////////////////////////////////////////
 
+  PNLOCK(this);
+
   if (_skeleton == NULL)
 	return ;
 
@@ -214,6 +218,8 @@ PN3DSkeletonObject::update(pnuint deltaTime)
 void
 PN3DSkeletonObject::render()
 {
+  PNLOCK(this);
+
   if (_skeleton != NULL && _renderMode & RENDER_SKELETON)
 	_skeleton->render();
 

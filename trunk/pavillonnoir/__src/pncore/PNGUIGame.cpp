@@ -92,6 +92,8 @@ void  PNGUIGame::_commandRenderSK(const std::string&, std::istream& i)
 
   if (obj != NULL)
   {
+	PNLOCK(obj);
+
 	if (b)
 	  obj->setRenderMode(obj->getRenderMode() | PN3DObject::RENDER_MODEL);
 	else
@@ -113,6 +115,8 @@ void  PNGUIGame::_commandRenderM(const std::string&, std::istream& i)
 
   if (obj != NULL)
   {
+	PNLOCK(obj);
+
 	if (b)
 	  obj->setRenderMode(obj->getRenderMode() | PN3DSkeletonObject::RENDER_SKELETON);
 	else
@@ -130,6 +134,8 @@ void  PNGUIGame::_commandSwitchMSK(const std::string& command, std::istream& i)
 
   if (obj != NULL)
   {
+	PNLOCK(obj);
+
 	if (obj->getRenderMode() & PN3DObject::RENDER_MODEL)
 	{
 	  obj->setRenderMode(obj->getRenderMode() ^ PN3DObject::RENDER_MODEL);
@@ -157,6 +163,8 @@ void  PNGUIGame::_commandLooping(const std::string&, std::istream& i)
 
   if (obj != NULL)
   {
+	PNLOCK(obj);
+
 	obj->setEnableLoop(b);
 
 	PNConsole::writeLine("EnableLoop : %s", b ? "true" : "false");
@@ -177,6 +185,8 @@ void  PNGUIGame::_commandAnimSpeed(const std::string&, std::istream& i)
 
   if (obj != NULL)
   {
+	PNLOCK(obj);
+
 	obj->setAnimSpeed(speed);
 
 	PNConsole::writeLine("Speed changed : %f", speed);
@@ -197,6 +207,8 @@ void  PNGUIGame::_commandRenderCameraMovingSpeed(const std::string&, std::istrea
 
   if (camera != NULL)
   {
+	PNLOCK(camera);
+
 	camera->setMovingSpeed(speed);
 
 	PNConsole::writeLine("Render Camera speed changed : %f", speed);

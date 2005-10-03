@@ -42,26 +42,23 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
-  PNWayPoint::PNWayPoint()
-  {
-	_nbLinks = 0;
-	_model = PNWPModel::getInstance();
-	_selected = false;
-	_objType = OBJTYPE_WAYPOINT;
-  }
+PNWayPoint::PNWayPoint()
+{
+  _model = PNWPModel::getInstance();
+  _selected = false;
+  _objType = OBJTYPE_WAYPOINT;
+}
 
-  PNWayPoint::PNWayPoint(PNIAGraph* g)
-  {
-	_nbLinks = 0;
-	_model = PNWPModel::getInstance();
-	_selected = false;
-	_objType = OBJTYPE_WAYPOINT;
-	_graph = g;
-  }
+PNWayPoint::PNWayPoint(PNIAGraph* g)
+{
+  _model = PNWPModel::getInstance();
+  _selected = false;
+  _objType = OBJTYPE_WAYPOINT;
+  _graph = g;
+}
 
 PNWayPoint::PNWayPoint(pnint id, PNPoint &pos, PNIAGraph* g)
 {
-  _nbLinks = 0;
   _model = PNWPModel::getInstance();
   _id = id;
   _coord.x = pos.x;
@@ -74,7 +71,6 @@ PNWayPoint::PNWayPoint(pnint id, PNPoint &pos, PNIAGraph* g)
 
 PNWayPoint::PNWayPoint(pnint id, pnfloat x, pnfloat y, pnfloat z, PNIAGraph* g)
 {
-  _nbLinks = 0;
   _model = PNWPModel::getInstance();
   _id = id;
   _coord.x = x;
@@ -92,6 +88,8 @@ PNWayPoint::~PNWayPoint()
 pnbool
 PNWayPoint::addLink(PNWayPoint *p, pnfloat coef)
 {
+  PNLOCK(this);
+
   wayLink_t	*link = new wayLink_t;
 
   for (std::list<wayLink_t*>::iterator i = _links.begin(); i != _links.end();
@@ -104,45 +102,51 @@ PNWayPoint::addLink(PNWayPoint *p, pnfloat coef)
   link->weight = _coord.getDistance((PNPoint &)p->getCoord());
   link->coef = coef;
   _links.push_back(link);
-  _nbLinks++;
+
   return true;
 }
 
 pnbool
 PNWayPoint::addLink(wayLink_t &link)
 {
-  for (std::list<wayLink_t*>::iterator i = _links.begin(); i != _links.end();
-	i++)
+  PNLOCK(this);
+
+  for (std::list<wayLink_t*>::iterator i = _links.begin(); i != _links.end(); i++)
   {
 	if ((*i)->next->getId() == link.next->getId())
 	  return false;
   }
+  
   _links.push_back(&link);
-  _nbLinks++;
+
   return true;
 }
 
 pnbool
 PNWayPoint::deleteLink(wayLink_t &link)
 {
+  PNLOCK(this);
+
   _links.remove(&link);
-  _nbLinks++;
+
   return true;
 }
 
 pnbool
 PNWayPoint::deleteLink(PNWayPoint *p)
 {
-  for (std::list<wayLink_t*>::iterator i = _links.begin(); i != _links.end();
-	i++)
+  PNLOCK(this);
+
+  for (std::list<wayLink_t*>::iterator i = _links.begin(); i != _links.end(); i++)
   {
 	if ((*i)->next->getId() == p->getId())
 	{
 	  _links.remove(*i);
-	  _nbLinks--;
+
 	  return true;
 	}
   }
+
   return false;
 }
 
@@ -155,7 +159,7 @@ PNWayPoint::getId()
 pnint
 PNWayPoint::getNbLinks()
 {
-  return (_nbLinks);
+  return (pnint)_links.size();
 }
 
 LINKLIST&
@@ -180,14 +184,19 @@ PNWayPoint::print()
 pnint
 PNWayPoint::serializeInStream(std::ostream& o)
 {
+  PNLOCK(this);
+
   o << "<wp id=\"" << _id << "\" x=\"" << _coord.x << "\" y=\"" << _coord.y << "\" z=\""
 	<< _coord.z << "\"/>" << std::endl;
-  return 0;
+
+  return PNEC_SUCCES;
 }
 
 pnint
 PNWayPoint::unserializeFromXML(xmlTextReader* _reader)
 {
+  PNLOCK(this);
+
   xmlChar *attr;
 
   attr = xmlTextReaderGetAttribute(_reader, (const xmlChar *) PNXML_ID_ATTR);
@@ -198,12 +207,15 @@ PNWayPoint::unserializeFromXML(xmlTextReader* _reader)
   _coord.y = (pnfloat)atof((char*)attr);
   attr = xmlTextReaderGetAttribute(_reader, (const xmlChar *) PNXML_COORDZ_ATTR);
   _coord.z = (pnfloat)atof((char*)attr);
+
   return PNEC_SUCCES;
 }
 
 void
 PNWayPoint::render()
 {
+  PNLOCK(this);
+
   if (_selected)
   {
 	((PNWPModel*)_model)->setSlctColor();
@@ -212,12 +224,15 @@ PNWayPoint::render()
   }
   else
 	PN3DObject::render();
+
   renderLinks();
 }
 
 void
 PNWayPoint::renderLinks()
 {
+  PNLOCK(this);
+
   for (LINKLIST::iterator  i = _links.begin(); i != _links.end(); i++)
   {
 	PNWPModel*	m = (PNWPModel*)_model;
@@ -244,6 +259,8 @@ PNWayPoint::renderLinks()
 void
 PNWayPoint::setSelected()
 {
+  PNLOCK(this);
+
   _selected = true;
 }
 

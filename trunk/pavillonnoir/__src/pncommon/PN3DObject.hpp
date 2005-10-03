@@ -59,11 +59,6 @@ class PNAPI					PN3DObject : public PNObject, public IPNAnimated, public IPNXMLS
 public:
   boost::recursive_mutex	_mutex;
 
-  /// lock 3dobject* (unlocked in and of the scope)
-#define LOCK(obj)			boost::recursive_mutex::scoped_lock  sl(obj->_mutex)
-#define LOCK_BEGIN(obj)		{ LOCK(obj)
-#define LOCK_END(obj)		}
-
 protected:
   ///object identifier
   std::string				_id;
