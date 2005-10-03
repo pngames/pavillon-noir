@@ -64,6 +64,7 @@ namespace PN
     FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_ADD,PNPropertiesPanel::onCmdAdd),
 	FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_DELETE,PNPropertiesPanel::onCmdDelete),
 	FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_SAVE,PNPropertiesPanel::onCmdSave),
+	FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_RESET,PNPropertiesPanel::onCmdReset),
 	FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_ADDWP,PNPropertiesPanel::onAccept),
 	FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_CANCEL,PNPropertiesPanel::onCancel),
 	FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_ADDOBJECT,PNPropertiesPanel::onAddObject)
@@ -86,6 +87,7 @@ namespace PN
 	PNPropertiesPanel::PNPropertiesPanel(FXComposite* p, paneltype_t t, EDITOR::PNEditor* ed)
   {
 	FXVerticalFrame*	panel = new FXVerticalFrame(p, LAYOUT_FILL_X|LAYOUT_FILL_Y);
+	FXHorizontalFrame*	listbox = new FXHorizontalFrame(panel, LAYOUT_FILL_X);
 	FXHorizontalFrame*	command = new FXHorizontalFrame(panel, LAYOUT_FILL_X);
 	FXString			text;
 
@@ -96,10 +98,12 @@ namespace PN
 	_ed = ed;
 	_type = t;
 	_idMax = 0;
-	_objectsListBox = new FXListBox(command, this, ID_LISTBOX_SEL,LAYOUT_FILL_X | FRAME_SUNKEN | FRAME_THICK);
+	_objectsListBox = new FXListBox(listbox, this, ID_LISTBOX_SEL,LAYOUT_FILL_X | FRAME_SUNKEN | FRAME_THICK);
 	_buttonAdd = new FXButton(command, "&Add", NULL, this, ID_ADD, FRAME_SUNKEN | FRAME_THICK);
 	_buttonDelete = new FXButton(command, "Delete", NULL, this, ID_DELETE, FRAME_SUNKEN | FRAME_THICK);
 	_buttonSave = new FXButton(command, "Save", NULL, this, ID_SAVE, FRAME_SUNKEN | FRAME_THICK);
+	if (t == PN_PANELTYPE_3DOBJECTS)
+	  _buttonReset = new FXButton(command, "Reset", NULL, this, ID_RESET, FRAME_SUNKEN | FRAME_THICK);
     _groupBox = new FXGroupBox(panel, text, LAYOUT_FILL_X | LAYOUT_FILL_Y | FRAME_GROOVE);
     _grid = new PNPropertiesGrid(_groupBox, (PNEditorObject*)this);
   }
@@ -436,6 +440,19 @@ namespace PN
 
 	return 1;
   }
+
+  /*! Resets object properties
+  * Reads the associated file (pno) and resets properties (materials, skeleton & anims)
+  */
+  long          PNPropertiesPanel::onCmdReset(FXObject* obj, FXSelector sel, void* ptr)
+  {
+	  pnerror(PN_LOGLVL_DEBUG, "PNPropertiesPanel::onCmdReset(FXObject* obj, FXSelector sel, void* ptr)");
+	  PNConfigurableObject*	co = (PNConfigurableObject*)_objectsListBox->getItemData(_objectsListBox->getCurrentItem());
+	  ((EDITOR::PNGLShape*)co)->reset();
+	  this->update();
+	  return 1;
+  }
+
 
   /*! Validates new element creation.
    *  Validates new element creation, closes dialog box, gives focus back to the main window.

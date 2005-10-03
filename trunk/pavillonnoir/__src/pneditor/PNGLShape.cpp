@@ -285,6 +285,12 @@ void			PNGLShape::makeViewerNonCurrent()
   _ed->makeViewerNonCurrent();
 }
 
+void			PNGLShape::reset()
+{
+	boost::filesystem::path* f = _obj->getFile();
+	_obj->unserializeFromFile(*f);
+}
+
 };
 //////////////////////////////////////////////////////////////////////////
 };

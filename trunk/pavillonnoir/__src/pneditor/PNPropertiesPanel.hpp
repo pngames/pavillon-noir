@@ -69,6 +69,7 @@ namespace PN
 	FXButton*						  _buttonAdd;
 	FXButton*						  _buttonDelete;
 	FXButton*						  _buttonSave;
+	FXButton*						  _buttonReset;
   PNPropertiesGrid*                 _grid;
 	EDITOR::PNEditor*				  _ed;
 	
@@ -94,6 +95,7 @@ namespace PN
 	long onCmdAdd(FXObject* obj, FXSelector sel, void* ptr);
 	long onCmdDelete(FXObject* obj, FXSelector sel, void* ptr);
 	long onCmdSave(FXObject* obj, FXSelector sel, void* ptr);
+	long onCmdReset(FXObject* obj, FXSelector sel, void* ptr);
 	// dialogbox
 	long onAccept(FXObject* obj, FXSelector sel, void* ptr);
 	long onCancel(FXObject* obj, FXSelector sel, void* ptr);
@@ -129,6 +131,7 @@ namespace PN
 	  ID_ADD,
 	  ID_DELETE,
 	  ID_SAVE,
+	  ID_RESET,
 	  ID_ADDWP,
 	  ID_CANCEL,
 	  ID_ADDOBJECT,
