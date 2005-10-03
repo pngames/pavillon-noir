@@ -394,7 +394,7 @@ void	PNSDLEvent::pninjectTimePulse()
   double t = 0.001*SDL_GetTicks();
 
   // inject the time that passed since the last call 
-  CEGUI::System::getSingleton().injectTimePulse( float(t-_lastTimePulse) );
+  //CEGUI::System::getSingleton().injectTimePulse( float(t-_lastTimePulse) );
 
   // store the new time as the last time
   _lastTimePulse = t;

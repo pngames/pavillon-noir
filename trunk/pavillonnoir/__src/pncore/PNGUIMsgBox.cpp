@@ -15,6 +15,7 @@ namespace PN
 
 	if (msgtype == CONF)
 	{
+		_actionName = text;
 		std::string tmp = "Veuillez presser\nune touche du clavier\nou un bouton de la souris\npour cette action :\n";
 		tmp += text;
 		genericCreationWindow(title, tmp, msgtype, parentWin, convert.str());
@@ -99,29 +100,50 @@ namespace PN
 
   /********************************************************************************************/
 
+  std::string	PNGUIMsgBox::getActionName()
+  {
+	  return (_actionName);
+  }
+
+  std::string	PNGUIMsgBox::getArgsKind()
+  {
+	  return (_argsKind);
+  }
+
+  CEGUI::EventArgs	PNGUIMsgBox::getCeguiArgs()
+  {
+	  return (_ceguiArgs);
+  }
+
   bool	PNGUIMsgBox::eventKeyConfHandler(const CEGUI::EventArgs& e)
   {
+	  _ceguiArgs = e;
+	  _argsKind = "Key";
 	  CEGUI::KeyEventArgs* KeyEv = (CEGUI::KeyEventArgs*)&e;
-	  KeyEv->scancode;
-	  //std::cout << "IN eventKeyConfHandler" << std::endl;
+	  //KeyEv->scancode;
+	  std::cout << "IN eventKeyConfHandler" << std::endl;
 	  deleteMsgBox(CONF);
 	  return true;
   }
 
   bool	PNGUIMsgBox::eventMouseClickConfHandler(const CEGUI::EventArgs& e)
   {
+	  _ceguiArgs = e;
+	  _argsKind = "MouseClick";
 	  CEGUI::MouseEventArgs* mouseEv = (CEGUI::MouseEventArgs*)&e;
-	  mouseEv->button;
-//std::cout << "IN eventMouseClickConfHandler" << std::endl;
+	  //mouseEv->button;
+std::cout << "IN eventMouseClickConfHandler" << std::endl;
 	  deleteMsgBox(CONF);
 	  return true;
   }
 
   bool	PNGUIMsgBox::eventMouseWheelConfHandler(const CEGUI::EventArgs& e)
   {
+	  _ceguiArgs = e;
+	  _argsKind = "MouseWheel";
 	  CEGUI::MouseEventArgs* mouseEv = (CEGUI::MouseEventArgs*)&e;
-	  mouseEv->wheelChange;
-//std::cout << "IN eventMouseWheelConfHandler" << std::endl;
+	  //mouseEv->wheelChange;
+std::cout << "IN eventMouseWheelConfHandler" << std::endl;
 	  deleteMsgBox(CONF);
 	  return true;
   }
@@ -176,8 +198,8 @@ namespace PN
 	  break;
 	case CONF:
 		// TODO : a adapter a la taille du contenu
-		_boxWidth = std::max(minButtonWidth + 0.1f, _textWidth + 0.05f);
-		_boxHeight = minButtonHeight + _textHeight + 0.1f;
+		_boxWidth = std::max(2.0f * minButtonWidth + 0.1f, _textWidth + 0.05f);
+		_boxHeight = minButtonWidth + _textHeight + 0.1f;
 	  break;
 	}
 	
@@ -208,32 +230,55 @@ namespace PN
 	_msgTxt->setBackgroundEnabled(false);
 	_msgTxt->setFormatting(CEGUI::StaticText::HorzCentred, CEGUI::StaticText::VertCentred);
 	_msgTxt->setFrameEnabled(false);
-_msgTxt->setVerticalScrollbarEnabled(false);
+	_msgTxt->setVerticalScrollbarEnabled(false);
 
 	_frameWin->addChildWindow(_msgTxt);
   }
 
+  void PNGUIMsgBox::confNextStep()
+  {
+	  std::string tmp = "Voulez vous garder cette\ntouche pour cette action ?\nAction : ";
+	  tmp += _actionName;
+	  tmp += "\nTouche : ";
+	  tmp += "Souris Click Gauche";
+
+	  std::stringstream convert;
+	  convert << winID;
+	  winID++;
+
+	genericCreationWindow("Conserver?", tmp, YES_NO, _parentWin, convert.str());
+
+	  CEGUI::PushButton* btnYES = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_yes_" + convert.str()).c_str()));
+	  btnYES->setSize(CEGUI::Size(0.45f, 0.15f));
+	  btnYES->setPosition( CEGUI::Point(0.025f, 0.825f));
+	  btnYES->setText("Oui");
+	  _frameWin->addChildWindow(btnYES);
+	  btnYES->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickYes , this));
+
+	  CEGUI::PushButton* btnNO = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_no_" + convert.str()).c_str()));
+	  btnNO->setSize(CEGUI::Size(0.45f, 0.15f));
+	  btnNO->setPosition(CEGUI::Point(0.525f, 0.825f));
+	  btnNO->setText("Non");
+	  _frameWin->addChildWindow(btnNO);
+	  btnNO->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickNo, this));
+
+	  _parentWin->addChildWindow(_frameWin);
+  }
+
   void PNGUIMsgBox::deleteMsgBox(msgboxtype msgt)
   {
-	/*  if (msgt == CONF)
-	  {
-	  CEGUI::MouseCursor::getSingleton().setConstraintArea
-	  _frameWin->destroy();
-	  }
-	  else
-	  {*/
-	//CEGUI::GlobalEventSet
 	if (msgt == CONF)
 	{
-	  //CEGUI::MouseCursor::getSingleton().show();
-	  CEGUI::MouseCursor::getSingleton().setConstraintArea(NULL);
+		CEGUI::MouseCursor::getSingleton().setConstraintArea(NULL);
+		_frameWin->destroy();
+		confNextStep();
 	}
-	  //std::cout << "QUIT VALUE : " << msgt << std::endl;
-	_parentWin->setMutedState(false);
-
-	_frameWin->destroy();
-	fonctionCallback(msgt);
-	//}
+	else
+	{
+		_parentWin->setMutedState(false);
+		_frameWin->destroy();
+		fonctionCallback(msgt);
+	}
   }
 
   bool PNGUIMsgBox::onClickOk(const CEGUI::EventArgs& arg)
