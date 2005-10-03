@@ -5,6 +5,9 @@
 	<WindowSet Filename="CEGUIFalagardBase" />
 	<FalagardMapping WindowType="Vanilla/Titlebar" TargetType="Falagard/Titlebar" LookNFeel="Vanilla/Titlebar" />
 	<FalagardMapping WindowType="Vanilla/Button" TargetType="Falagard/Button" LookNFeel="Vanilla/Button" />
+
+<FalagardMapping WindowType="Vanilla/Tooltip" TargetType="Falagard/Tooltip" LookNFeel="Vanilla/Tooltip" />
+
 	<FalagardMapping WindowType="Vanilla/FrameWindow" TargetType="Falagard/FrameWindow" LookNFeel="Vanilla/FrameWindow" />
 	<FalagardMapping WindowType="Vanilla/Editbox" TargetType="Falagard/Editbox" LookNFeel="Vanilla/Editbox" />
 	<FalagardMapping WindowType="Vanilla/VerticalScrollbarThumb" TargetType="Falagard/Thumb" LookNFeel="Vanilla/VerticalScrollbarThumb" />
