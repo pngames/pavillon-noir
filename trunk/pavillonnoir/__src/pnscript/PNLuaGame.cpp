@@ -1,31 +1,31 @@
 /*
- * PNLuaGame.cpp
- * 
- * Description :
- * 
- *
- * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
- * This software has been written in EPITECH <http://www.epitech.net>
- * EPITECH is computer science school in Paris - FRANCE -
- * under the direction of flav <http://www.epita.fr/~flav>.
- * and Jerome Landrieu.
- *
- * This file is part of Pavillon Noir.
- *
- * Pavillon Noir is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * Pavillon Noir is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
- * for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * Pavillon Noir; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
- */
+* PNLuaGame.cpp
+* 
+* Description :
+* 
+*
+* Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
+* This software has been written in EPITECH <http://www.epitech.net>
+* EPITECH is computer science school in Paris - FRANCE -
+* under the direction of flav <http://www.epita.fr/~flav>.
+* and Jerome Landrieu.
+*
+* This file is part of Pavillon Noir.
+*
+* Pavillon Noir is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by the
+* Free Software Foundation; either version 2 of the License, or (at your
+* option) any later version.
+*
+* Pavillon Noir is distributed in the hope that it will be useful, but WITHOUT
+* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+* for more details.
+*
+* You should have received a copy of the GNU General Public License along with
+* Pavillon Noir; if not, write to the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+*/
 
 
 #include <boost/filesystem/operations.hpp>
@@ -138,36 +138,36 @@ const fs::path& PNLuaGame::getGameRoot()
 
 void PNLuaGame::setDebug(bool b)
 {
-	this->debug = b;
+    this->debug = b;
 
-	if (b == true)
-	{
-	  // Line hook activated - function called everytime a line is interpreted
-	  lua_sethook(this->L, (lua_Hook) luaDebugLineHook, LUA_MASKLINE, NULL);
-	}
-	else
-	{
-	  // Line hook deactivated
-	  lua_sethook(this->L, (lua_Hook) luaDebugLineHook, NULL, NULL);
-	}
+    if (b == true)
+    {
+        // Line hook activated - function called everytime a line is interpreted
+        lua_sethook(this->L, (lua_Hook) luaDebugLineHook, LUA_MASKLINE, NULL);
+    }
+    else
+    {
+        // Line hook deactivated
+        lua_sethook(this->L, (lua_Hook) luaDebugLineHook, NULL, NULL);
+    }
 }
 
 bool PNLuaGame::getLuaDebugLogging()
 {
-	return(this->debug);
+    return(this->debug);
 }
 
 void PNLuaGame::init()
 {
-	int ret;
+    int ret;
     DEBUG_PRINTER("Entering PNLuaGame::init()\n");
     fs::path currentDiectory = fs::current_path();
     std::cout << "currentDiectory : " <<  currentDiectory.native_file_string() <<  std::endl;
     int errorCode = PNEC_SUCCES;
 
-	// Description on top of the debug file
-	fprintf(getDebugLogHandle(), "########### LUA DEBUG LOG FILE ###########\n\n");
-	////////////////////////////////
+    // Description on top of the debug file
+    fprintf(getDebugLogHandle(), "########### LUA DEBUG LOG FILE ###########\n\n");
+    ////////////////////////////////
 
     ret = lua_baselibopen(this->L);
     ret = lua_iolibopen(this->L);
@@ -195,55 +195,58 @@ PNLuaGame::~PNLuaGame()
     if (this->L != 0)
         lua_close(this->L);
     this->L = NULL;
-	fclose(getDebugLogHandle());
+    fclose(getDebugLogHandle());
     delete _gameMap;
 }
 
 PNLuaGame::PNLuaGame()
 {
-  this->L = NULL;
-  this->L = lua_open();
-  this->_gameStarted = false;
-  this->debug = false;
-  this->debug_log = fopen(DEF_LUA_LOG_FILE, "w");
-  _gameMap = NULL;
+    this->L = NULL;
+    this->L = lua_open();
+    this->_mapStarted = false;
+     this->_mapLoaded = false;
+    this->debug = false;
+    this->debug_log = fopen(DEF_LUA_LOG_FILE, "w");
+    _gameMap = NULL;
 }
 
-//load a lua script file 
+/* ------------------------------ load a lua script file --------------------*/
+
+
 pnerrorcode PNLuaGame::loadLuaScript(const pnchar* file, int reload/*=0*/)
 {
-  //DEBUG_PRINTER("Entering PNLuaGame::luoadLuaScript()\n");
+    //DEBUG_PRINTER("Entering PNLuaGame::luoadLuaScript()\n");
 
-  PNLuaGame* lsb = ((PNLuaGame *) PNLuaGame::getInstance());
-  lua_State *localL = NULL;
-  //si le flag de reload est pas sette et que le fichier est deja loader dans la vm 
-  //on relance pas le script;
-  if (reload == 0 && lsb->_loadedScripts.find(file) != lsb->_loadedScripts.end())
+    PNLuaGame* lsb = ((PNLuaGame *) PNLuaGame::getInstance());
+    lua_State *localL = NULL;
+    //si le flag de reload est pas sette et que le fichier est deja loader dans la vm 
+    //on relance pas le script;
+    if (reload == 0 && lsb->_loadedScripts.find(file) != lsb->_loadedScripts.end())
+        return PNEC_SUCCES;
+    else
+        lsb->_loadedScripts.insert(file);
+    // const pnchar* gameroot = lsb->getGameRoot();
+    localL = lsb->L; 
+    if (localL == NULL) 
+    {
+        DEBUG_PRINTER("Leaving PNLuaGame::loadLuaScript()\n");
+        return PNEC_NOT_INITIALIZED;
+    }
+    fs::path filePath = lsb->getGameRoot();
+    filePath /= fs::path(file, fs::native);
+    if (!fs::exists(filePath))
+    {
+        DEBUG_PRINTER("Leaving PNLuaGame::loadLuaScript()\n");
+        return PNEC_FILE_NOT_FOUND;
+    }
+    if (fs::is_directory(filePath))
+    {
+        DEBUG_PRINTER("Leaving PNLuaGame::loadLuaScript()\n");
+        return PNEC_NOT_A_FILE;
+    }
+    lua_dofile(localL, filePath.native_file_string().c_str());
+    //  DEBUG_PRINTER("Leaving PNLuaGame::luoadLuaScript()\n"); 
     return PNEC_SUCCES;
-  else
-    lsb->_loadedScripts.insert(file);
-  // const pnchar* gameroot = lsb->getGameRoot();
-  localL = lsb->L; 
-  if (localL == NULL) 
-  {
-    DEBUG_PRINTER("Leaving PNLuaGame::loadLuaScript()\n");
-    return PNEC_NOT_INITIALIZED;
-  }
-  fs::path filePath = lsb->getGameRoot();
-  filePath /= fs::path(file, fs::native);
-  if (!fs::exists(filePath))
-  {
-    DEBUG_PRINTER("Leaving PNLuaGame::loadLuaScript()\n");
-    return PNEC_FILE_NOT_FOUND;
-  }
-  if (fs::is_directory(filePath))
-  {
-    DEBUG_PRINTER("Leaving PNLuaGame::loadLuaScript()\n");
-    return PNEC_NOT_A_FILE;
-  }
-  lua_dofile(localL, filePath.native_file_string().c_str());
-//  DEBUG_PRINTER("Leaving PNLuaGame::luoadLuaScript()\n"); 
-  return PNEC_SUCCES;
 }
 
 PNGameMap* PNLuaGame::getGameMap()
@@ -251,15 +254,28 @@ PNGameMap* PNLuaGame::getGameMap()
     return _gameMap;
 }
 
+
+
+//
 void  PNLuaGame::onUpdate(pnuint deltaTime)
 {
-  if (this->_gameStarted)
-  {
-    std::stringstream luaOrder;
-    luaOrder << "gameMap:onUpdate(" << deltaTime << ")";
-    lua_dostring(L, luaOrder.str().c_str());    
-  }
+    if (this->_mapStarted == true)
+    {
+        std::stringstream luaOrder;
+        luaOrder << "gameMap:onLuaUpdate(" << deltaTime << ")";
+        lua_dostring(L, luaOrder.str().c_str());    
+    }
 }
+
+//void  PNLuaGame::onUpdate(pnEventType evt, PNObject* source, PNEventData* data)
+//{
+//    if (this->_mapStarted)
+//    {
+//        std::stringstream luaOrder;
+//        luaOrder << "gameMap:onUpdate(" << deltaTime << ")";
+//        lua_dostring(L, luaOrder.str().c_str());    
+//    }
+//}
 void  PNLuaGame::onInit(pnEventType evt, PNObject* source, PNEventData* data)
 {
     std::string luaOrder;
@@ -285,28 +301,27 @@ void  PNLuaGame::onSaveGame(pnEventType evt, PNObject* source, PNEventData* data
 void  PNLuaGame::onLoadGame(pnEventType evt, PNObject* source, PNEventData* data)
 {
 }
+// when recive order to load map
 void  PNLuaGame::onLoadMap(pnEventType evt, PNObject* source, PNEventData* data)
 {
-	PN3DCamera* cam = PN3DCamera::getRenderCam();
+    PN3DCamera* cam = PN3DCamera::getRenderCam();
     PNGameLoadMapEventData* loadMapData = (PNGameLoadMapEventData*)data;
-    if (this->_gameStarted == false)
+    if (_mapLoaded == false) //if yhere is no map already loaded 
     {
-      _gameMap = new PNLuaGameMap(this->L);
-      loadLuaScript("gameMap.lua", 1);
+        loadMap(loadMapData->mapName);
     }
-    else
+    else // if a map is already loaded, unload the map
     {
-      _gameMap->clear();
+
+        PNEventManager::getInstance()->addEvent(PN_EVENT_MU_START, 0,
+        new PNGameLoadMapEventData(loadMapData->mapName));
     }
-    PNConsole::writeLine("PNGame::Start of loading map -> %s", loadMapData->mapName.c_str());
-    PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STARTED, 0, data);
-    _gameMap->unserializeFromFile(loadMapData->mapName.c_str());
-    PNConsole::writeLine("PNGame:: End of Loading map -> %s", loadMapData->mapName.c_str());
-    PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_ENDED, 0, data);
-    this->_gameStarted = true;
 }
-void  PNLuaGame::onStartGame(pnEventType evt, PNObject* source, PNEventData* data)
+// start playng the map
+void  PNLuaGame::onStartMap(pnEventType evt, PNObject* source, PNEventData* data)
 {
+    this->_mapStarted = true;
+   // NEventManager::getInstance()->addEvent(PN_EVENT_M_, 0, new PNGameLoadMapEventData(loadMapData->mapName));
 
 }
 void  PNLuaGame::onPauseGame(pnEventType evt, PNObject* source, PNEventData* data)
@@ -317,27 +332,49 @@ void  PNLuaGame::onLeaveGame(pnEventType evt, PNObject* source, PNEventData* dat
 }
 void  PNLuaGame::onGameAction(pnEventType evt, PNObject* source, PNEventData* data)
 {
-	std::string luaOrder;
-	
-	PNGameActionEventData* actionEvent= (PNGameActionEventData*) data;
-	luaOrder = "gameMap:OnLuaAction";
-	luaOrder += actionEvent->action;
-	luaOrder += "(";
-	luaOrder += actionEvent->targetId;
-	luaOrder += ", ";
-	luaOrder += actionEvent->state;
-	luaOrder += ")";
-	
-	lua_dostring(this->L, luaOrder.c_str());
+    std::string luaOrder;
+
+    PNGameActionEventData* actionEvent= (PNGameActionEventData*) data;
+    luaOrder = "gameMap:OnLuaAction";
+    luaOrder += actionEvent->action;
+    luaOrder += "(";
+    luaOrder += actionEvent->targetId;
+    luaOrder += ", ";
+    luaOrder += actionEvent->state;
+    luaOrder += ")";
+
+    lua_dostring(this->L, luaOrder.c_str());
 
 }
 void  PNLuaGame::onColision(pnEventType evt, PNObject* source, PNEventData* data)
 {
 }
 
+void  PNLuaGame::onLoadMapEnded(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    PNEventManager::getInstance()->addEvent(PN_EVENT_M_START, 0, new PNGameLoadMapEventData());
+}
+
 void  PNLuaGame::registerCallbacks()
 {
     PNEventManager::getInstance()->addCallback(PN_EVENT_ML_START, EventCallback(this, &PNLuaGame::onLoadMap));
-	PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGame::onLoadMap));
-   // PNEventManager::getInstance()->addCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PNLuaGame::update));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_ML_ENDED, EventCallback(this, &PNLuaGame::onLoadMapEnded));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_M_START,  EventCallback(this, &PNLuaGame::onStartMap));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGame::onGameAction));
+    // PNEventManager::getInstance()->addCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PNLuaGame::update));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+//function which really load the map
+void  PNLuaGame::loadMap(std::string mapName)
+{
+    PNEventManager::getInstance()->addEvent(PN_EVENT_ML_STARTED, 0, new PNGameLoadMapEventData(mapName));
+    //TODO : capturer cet event pour debug
+    _gameMap = new PNLuaGameMap(this->L);
+    loadLuaScript("gameMap.lua", 1);
+    _gameMap->unserializeFromFile(mapName.c_str());
+    _mapLoaded = true;
+    PNEventManager::getInstance()->addEvent(PN_EVENT_ML_ENDED, 0, new PNGameLoadMapEventData(mapName));
+    //TODO : capturer cet event pout debug
 }
