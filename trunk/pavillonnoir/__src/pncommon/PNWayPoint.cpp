@@ -141,7 +141,7 @@ PNWayPoint::deleteLink(PNWayPoint *p)
   {
 	if ((*i)->next->getId() == p->getId())
 	{
-	  _links.remove(*i);
+	  _links.erase(i);
 
 	  return true;
 	}

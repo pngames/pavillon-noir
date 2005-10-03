@@ -122,6 +122,12 @@ PNCharacter::manageFight()
 {
 }
 
+pnCharacType
+PNCharacter::getCharacType();
+{
+  return _shown;
+}
+
 void
 PNCharacter::setState(pnIAState st)
 {
