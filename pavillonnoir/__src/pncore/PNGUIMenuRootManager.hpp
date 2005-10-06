@@ -33,14 +33,17 @@
 #include <map>
 
 #include "pndefs.h"
+#include "pnevent.h"
+#include "PNGUIMenuRoot.hpp"
 
 typedef enum
 {
-  MAINMENU,
+  MENUROOT,
   LOAD,
   OPTIONS,
   CREDITS,
-  GAME
+  NEWGAME,
+  QUIT
 } menuRootStates;
 
 namespace PN{
@@ -50,13 +53,29 @@ namespace PN{
 	/                                   Properties                                /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
+	  menuRootStates _currentState;
   private:
+	  static PNGUIMenuRootManager*	_instance;
+	  PNGUIMenuRoot*				_guiMenuRoot;
+	  // PNGUILoadGame*				_guiMenuLoad;
+	  // PNGUIOptions*				_guiMenuOptions;
+	  // PNGUICredits*				_guiMenuCredits;
   
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
+	  static PNGUIMenuRootManager*	getInstance();
   private:
+	  void	launchMenuRoot(pnEventType type, PNObject* source, PNEventData* data);
+	  void	launchMenuLoad(pnEventType type, PNObject* source, PNEventData* data);
+	  void	launchMenuOptions(pnEventType type, PNObject* source, PNEventData* data);
+	  void	launchMenuCredits(pnEventType type, PNObject* source, PNEventData* data);
+	  void	launchNewGame(pnEventType type, PNObject* source, PNEventData* data);
+	  void	launchLoadGame(pnEventType type, PNObject* source, PNEventData* data);
+	  void	launchQuit(pnEventType type, PNObject* source, PNEventData* data);
+	  void	hidePrevious();
+	  void	deleteAllInstances();
 
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
