@@ -405,7 +405,7 @@ void  PNLuaGame::onGameAction(pnEventType evt, PNObject* source, PNEventData* da
     luaOrder += "(";
     luaOrder += actionEvent->targetId;
     luaOrder += ", ";
-    luaOrder += actionEvent->state;
+    luaOrder += actionEvent->state == true ? "true": "false";
     luaOrder += ")";
 
     lua_dostring(this->L, luaOrder.c_str());
