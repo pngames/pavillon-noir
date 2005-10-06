@@ -27,6 +27,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+#include <iostream>
+
 #include "pndefs.h"
 #include "pnevent.h"
 
@@ -301,7 +303,7 @@ void	PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* d
 
   if (_events.size() == 1)
   {
-	pnerror(PN_LOGLVL_INFO, "stack was empty");
+	pnerror(PN_LOGLVL_INFO, "stack was empty (%i - %s)", type, getNameByType(type));
 
     _cond.notify_all();
   }
