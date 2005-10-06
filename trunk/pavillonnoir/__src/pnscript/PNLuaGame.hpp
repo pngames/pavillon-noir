@@ -120,8 +120,10 @@ namespace PN
 
 
     //////////////////////////////////--------  callbacks ---------////////////////////////////////////
-	void onUpdate(pnuint deltaTime);
+//	void onUpdate(pnuint deltaTime);
+   	void onUpdate(pnEventType evt, PNObject* source, PNEventData* data);
 	void onInit(pnEventType evt, PNObject* source, PNEventData* data);
+    void onInitEnded(pnEventType evt, PNObject* source, PNEventData* data);
 	void onReset(pnEventType evt, PNObject* source, PNEventData* data);
 	void onNewGame(pnEventType evt, PNObject* source, PNEventData* data);
 	void onSaveGame(pnEventType evt, PNObject* source, PNEventData* data);

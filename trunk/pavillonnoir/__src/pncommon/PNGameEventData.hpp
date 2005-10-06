@@ -42,6 +42,8 @@ class PNGameUpdateEventData : public PNEventData
 {
 public:
   float deltaTime;
+  PNGameUpdateEventData(){}
+  PNGameUpdateEventData(float deltatime): deltaTime(deltatime){}
 };
 
 class PNGameLoadMapEventData : public PNEventData
