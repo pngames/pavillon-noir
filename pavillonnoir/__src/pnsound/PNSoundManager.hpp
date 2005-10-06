@@ -63,6 +63,7 @@ public:
   void					pauseSound(const std::string &name);
   void					changeSoundVolume(const std::string &name, float value);
   void					destroySound(const std::string &name);
+  void					clearSoundMap();
   
   void			 		disableSound();
   void  				enableSound();

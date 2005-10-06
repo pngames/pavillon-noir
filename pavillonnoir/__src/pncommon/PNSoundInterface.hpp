@@ -74,6 +74,7 @@ public:
   virtual void  		enableSound()=0;
   
   virtual void			showLoadedSounds()=0;
+  virtual void			clearSoundMap()=0;
 };
 
 //////////////////////////////////////////////////////////////////////////
