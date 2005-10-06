@@ -23,12 +23,17 @@ EDITEUR:
 
 * [max] mettre les proprietes des objets modifies dans l'editeur au niveau de la map (et non dans un pno). Comme ca on considerera le pno comme les proprietes par defaut. Ca permet de pouvoir prendre en comptes des modif sans creer un nouveau pno.
 
-_____________
+_________
 GUI/CORE:
 
 * [flo] mettre en place une gestion d'etat (chargement, menu, jeu, etc.)
 
 * [max] utiliser le systeme de PNConfigurable avec le lanceur fox pour pouvoir choisir les options de chaque module (definition, plein ecran...)
+
+_______
+SCRIPT:
+
+* [steph] faire remonter une erreur dans le cas de doublon d'id au chargement de la map
 
 ______________
 MAIN D'OEUVRE:
