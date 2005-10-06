@@ -33,8 +33,7 @@
 #include "pndefs.h"
 #include "pnplugins.h"
 #include "PNInterface.hpp"
-
-//class PNSound;
+#include "PNSoundEventData.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -75,6 +74,9 @@ public:
   
   virtual void			showLoadedSounds()=0;
   virtual void			clearSoundMap()=0;
+
+  /// Events
+  virtual void			onPlaySound(pnEventType evt, PNObject* source, PNEventData* data)=0;
 };
 
 //////////////////////////////////////////////////////////////////////////
