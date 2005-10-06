@@ -49,8 +49,12 @@ namespace PN {
 typedef enum
 {
   PN_EVENT_GAME_INIT = 1,		/// Initialize all entities in the game, Start from 1
+  PN_EVENT_GAME_INIT_STARTED,	/// Say the game init has started
+  PN_EVENT_GAME_INIT_ENDED,	    /// Say the game init has finished
   PN_EVENT_GAME_NEW,			/// Set game state to new
   PN_EVENT_GAME_UPDATE,			/// Update all entities status
+  PN_EVENT_GAME_UPDATE_STARTED, /// Say the game update has started
+  PN_EVENT_GAME_UPDATE_ENDED,   /// Say the game update has finished
   PN_EVENT_GAME_START,			/// start the game
   PN_EVENT_GAME_SAVE,			/// save game
   PN_EVENT_GAME_LOAD,			/// Load saved game
