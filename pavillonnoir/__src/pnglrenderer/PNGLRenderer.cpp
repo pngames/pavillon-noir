@@ -34,6 +34,7 @@
 
 #include "pndefs.h"
 #include "pnevent.h"
+#include "PNGameEventData.hpp"
 #include "pnresources.h"
 
 #include "PNVideoEventData.hpp"
@@ -364,7 +365,7 @@ PNGLRenderer::run()
 	////////////////////////////////////////////
 	if (_isProgramLooping == true)
 	{
-      PNGameInterface::getInstance()->onUpdate(deltaTime);
+       PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_UPDATE, 0, new PNGameUpdateEventData(deltaTime));
 
 	  ////////////////////////////////
 
