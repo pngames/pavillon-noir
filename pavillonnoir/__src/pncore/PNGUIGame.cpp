@@ -600,25 +600,51 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
   case CEGUI::Key::Z : //key "z" move forward
   case CEGUI::Key::W :
 	std::cout << "forward";
-	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveForward","Player","null",true));
-	//cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_FORWARD);
+	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveForward","Player","null",true));
+	cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_FORWARD);
 	break;
 
   case CEGUI::Key::S : //key "s" move backward
 	std::cout << "backward";
-	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveBackward","Player","null",true));
-	//cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_BACKWARD);
+	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveBackward","Player","null",true));
+	cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_BACKWARD);
 	break;
 
   case CEGUI::Key::A :
   case CEGUI::Key::Q : //key "q" step left
 	std::cout << "left";
-	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveLeft","Player","null",true));
-	//cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_LEFT);
+	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveLeft","Player","null",true));
+	cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_LEFT);
 	break;
 
   case CEGUI::Key::D : //key "d" step right
 	std::cout << "right";
+	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveRight","Player","null",true));
+	cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_RIGHT);
+	break;
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////player move/////////////////////
+  case CEGUI::Key::Numpad8 : //key "z" move forward
+	std::cout << "forward\n";
+	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveForward","Player","null",true));
+	//cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_FORWARD);
+	break;
+
+  case CEGUI::Key::Numpad5 : //key "s" move backward
+	std::cout << "backward\n";
+	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveBackward","Player","null",true));
+	//cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_BACKWARD);
+	break;
+
+  case CEGUI::Key::Numpad4 : //key "q" step left
+	std::cout << "left\n";
+	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveLeft","Player","null",true));
+	//cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_LEFT);
+	break;
+
+  case CEGUI::Key::Numpad6 : //key "d" step right
+	std::cout << "right\n";
 	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveRight","Player","null",true));
 	//cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_RIGHT);
 	break;
@@ -709,26 +735,51 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
   case CEGUI::Key::Z : //key "z" move forward
   case CEGUI::Key::W :
 	std::cout << "forward";
-	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveForward","Player","null",false));
-	//cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_FORWARD);
+	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveForward","Player","null",false));
+	cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_FORWARD);
 	break;
 
   case CEGUI::Key::S : //key "s" move backward
 	std::cout << "backward";
-	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveBackward","Player","null",false));
-	//cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_BACKWARD);
+	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveBackward","Player","null",false));
+	cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_BACKWARD);
 	break;
 
   case CEGUI::Key::A :
   case CEGUI::Key::Q : //key "q" step left
 	std::cout << "left";
-	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveLeft","Player","null",false));
-	//cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_LEFT);
+	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveRight","Player","null",false));
+	cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_LEFT);
 	break;
 
   case CEGUI::Key::D : //key "d" step right
 	std::cout << "right";
+	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveLeft","Player","null",false));
+	cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_RIGHT);
+	break;
+    //////////////////////////////////////////////////////////////////////////
+    // move player
+  case CEGUI::Key::Numpad8 : //  move forward
+	std::cout << "forward\n";
+	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveForward","Player","null",false));
+	//cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_FORWARD);
+	break;
+
+  case CEGUI::Key::Numpad5 : // move backward
+	std::cout << "backward\n";
+	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveBackward","Player","null",false));
+	//cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_BACKWARD);
+	break;
+
+  case CEGUI::Key::Numpad6 : // step left
+	std::cout << "left\n";
 	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveRight","Player","null",false));
+	//cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_LEFT);
+	break;
+
+  case CEGUI::Key::Numpad4 : // step right
+	std::cout << "right\n";
+	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveLeft","Player","null",false));
 	//cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_RIGHT);
 	break;
 
