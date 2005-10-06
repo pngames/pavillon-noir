@@ -39,6 +39,11 @@ PNSoundManager*  PNSoundManager::getInstance()
   return (PNSoundManager*)_instance;
 }
 
+/*! clears the sound map */
+void					PNSoundManager::clearSoundMap()
+{
+	soundMap.clear();
+}
 
 /*! Disables sound management */
 void			 		PNSoundManager::disableSound()
