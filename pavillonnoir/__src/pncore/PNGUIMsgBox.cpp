@@ -31,6 +31,13 @@ namespace PN
 		btnYES->setSize(CEGUI::Size(0.45f, 0.15f));
 		btnYES->setPosition( CEGUI::Point(0.025f, 0.825f));
 		btnYES->setText("Oui");
+
+	/*	CEGUI::RenderableImage img;
+		img.setImage(&CEGUI::ImagesetManager::getSingleton().getImageset("TaharezLook")->getImage("MouseArrow"));
+		img.setHorzFormatting(CEGUI::RenderableImage::HorzStretched);
+		img.setVertFormatting(CEGUI::RenderableImage::VertStretched);
+		btnYES->setNormalImage(&img);*/
+
 		_frameWin->addChildWindow(btnYES);
 		btnYES->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickYes , this));
 
@@ -47,7 +54,7 @@ namespace PN
 		CEGUI::PushButton* btnOK = static_cast< CEGUI::PushButton* >( CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_ok_" + convert.str()).c_str()));
 		btnOK->setSize(CEGUI::Size(0.45f, 0.15f));
 		btnOK->setPosition( CEGUI::Point(0.025f, 0.825f));
-		btnOK->setText("Ok");
+		btnOK->setText("Ok");		
 		_frameWin->addChildWindow(btnOK);
 		btnOK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickOk, this));
 
