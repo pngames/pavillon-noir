@@ -37,6 +37,8 @@
 #include "PNConsole.hpp"
 #include "PNSoundInterface.hpp"
 #include "PNSound.hpp"
+#include "PNSoundEventData.hpp"
+
 
 using namespace PN;
 
@@ -69,7 +71,11 @@ public:
   void  				enableSound();
 
   //////////////////////////////////////////////////////////////////////////
+  /// Events
+  void					registerCallbacks();
+  void					onPlaySound(pnEventType evt, PNObject* source, PNEventData* data);
 
+  //////////////////////////////////////////////////////////////////////////
 
   std::map<std::string , PNSound *> soundMap;
   pnint			getMaxId();

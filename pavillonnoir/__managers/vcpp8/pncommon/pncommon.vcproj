@@ -581,6 +581,10 @@
 			Name="sound"
 			>
 			<File
+				RelativePath="..\..\..\__src\pncommon\PNSoundEventData.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\PNSoundInterface.cpp"
 				>
 			</File>

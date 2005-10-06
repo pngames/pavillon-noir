@@ -227,6 +227,11 @@ PNEventManager::PNEventManager()
   _eventNames[PN_EVENT_VIDEO_RESTART] = "PN_EVENT_VIDEO_RESTART";
   _eventEnums["PN_EVENT_VIDEO_RESTARTED"] = PN_EVENT_VIDEO_RESTARTED;
   _eventNames[PN_EVENT_VIDEO_RESTARTED] = "PN_EVENT_VIDEO_RESTARTED";
+  
+  //////////////////////////////////////////////////////////////////////////
+  // SOUND
+  _eventEnums["PN_EVENT_SOUND_PLAY"] = PN_EVENT_SOUND_PLAY;
+  _eventNames[PN_EVENT_SOUND_PLAY] = "PN_EVENT_SOUND_PLAY";
 }
 
 PNEventManager::~PNEventManager()

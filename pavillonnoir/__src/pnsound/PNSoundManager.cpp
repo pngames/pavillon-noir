@@ -236,3 +236,13 @@ void			PNSoundManager::showLoadedSounds()
   return;
 }
 
+void			PNSoundManager::registerCallbacks()
+{
+    PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PLAY, EventCallback(this, &PNSoundManager::onPlaySound));
+}
+
+
+void			PNSoundManager::onPlaySound(pnEventType evt, PNObject* source, PNEventData* data)
+{
+	//(PNSoundEventData *)data;
+}
