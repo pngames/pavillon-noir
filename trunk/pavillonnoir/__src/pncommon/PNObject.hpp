@@ -37,9 +37,9 @@ namespace PN {
 class PNAPI PNObject
 {
   /// lock object* (unlocked in and of the scope)
-#define PNLOCK(obj)			boost::recursive_mutex::scoped_lock  sl((obj)->_mutex)
-#define PNLOCK_BEGIN(obj)	{ PNLOCK(obj)
-#define PNLOCK_END(obj)		}
+#define PNLOCK(obj)			/*boost::recursive_mutex::scoped_lock  sl((obj)->_mutex)*/
+#define PNLOCK_BEGIN(obj)	/*{ PNLOCK(obj)*/
+#define PNLOCK_END(obj)		/*}*/
 
   //////////////////////////////////////////////////////////////////////////
 

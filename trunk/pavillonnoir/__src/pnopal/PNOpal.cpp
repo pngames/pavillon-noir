@@ -162,7 +162,7 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
   if (ret == false)
   	return;
 
-  for (PN3DObjList::iterator it = _list3DObj.begin(); it != _list3DObj.end(); it++)
+  for (PN3DObjList::iterator it = _list3DObj.begin(); it != _list3DObj.end(); ++it)
   {
   //////////////////////////////////////////////////////////////////////////
   // Will be operational when pnscript will instantiate PNGameMap
@@ -197,6 +197,8 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 	}
 	PNLOCK_END(current_obj);
   }
+
+  std::cout << " [UPDATE] end physic refresh" << std::endl;
 }
 
 //////////////////////////////////////////////////////////////////////////

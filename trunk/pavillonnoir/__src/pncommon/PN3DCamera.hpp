@@ -71,7 +71,7 @@ public:
   const PN3DObjList&		getListObj();
 protected:
   PN3DObjList				_list3DObj;
-
+public:
   void						_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed);
 
   //////////////////////////////////////////////////////////////////////////
