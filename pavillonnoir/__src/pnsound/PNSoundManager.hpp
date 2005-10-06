@@ -57,7 +57,6 @@ public:
   void					setDopplerEffect(ALfloat velocity, ALfloat factor);
 
   //////////////////////////////////////////////////////////////////////////
-
   bool					loadSound(const std::string &name, const pnchar *fname, char looping);
   void					setProperties(const std::string &name, pnfloat x, pnfloat y, pnfloat z, pnfloat vx, pnfloat vy, pnfloat vz);
   void					playSound(const std::string &name);
@@ -66,7 +65,6 @@ public:
   void					changeSoundVolume(const std::string &name, float value);
   void					destroySound(const std::string &name);
   void					clearSoundMap();
-  
   void			 		disableSound();
   void  				enableSound();
 
@@ -74,7 +72,8 @@ public:
   /// Events
   void					registerCallbacks();
   void					onPlaySound(pnEventType evt, PNObject* source, PNEventData* data);
-
+  void					onCreateSound(pnEventType evt, PNObject* source, PNEventData* data);
+  void					onVolumeSound(pnEventType evt, PNObject* source, PNEventData* data);
   //////////////////////////////////////////////////////////////////////////
 
   std::map<std::string , PNSound *> soundMap;
