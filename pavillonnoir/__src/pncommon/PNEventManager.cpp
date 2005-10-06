@@ -232,6 +232,7 @@ PNEventManager::PNEventManager()
   
   //////////////////////////////////////////////////////////////////////////
   // SOUND
+
   _eventEnums["PN_EVENT_SOUND_PLAY"] = PN_EVENT_SOUND_PLAY;
   _eventNames[PN_EVENT_SOUND_PLAY] = "PN_EVENT_SOUND_PLAY";
   _eventEnums["PN_EVENT_SOUND_CREATE"] = PN_EVENT_SOUND_CREATE;
