@@ -134,7 +134,7 @@ namespace PN
 	// show loading page
 
 	// start loading
-	// FIXME -> PNGameMap cr�� par le script
+	// FIXME -> PNGameMap cree par le script
 	// FIXME -> lancer l'evenement START
 
 	FILE* file = fopen("config.cfg", "r");
