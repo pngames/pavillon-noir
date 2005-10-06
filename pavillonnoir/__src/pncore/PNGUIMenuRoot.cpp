@@ -47,6 +47,7 @@
 
 #include "PNVideoEventData.hpp"
 #include "PNGameEventData.hpp"
+#include "PNSoundEventData.hpp"
 #include "PN3DSkeletonObject.hpp"
 #include "PN3DCamera.hpp"
 #include "PN3DGround.hpp"
@@ -112,7 +113,11 @@ namespace PN
 
    bool PNGUIMenuRoot::overButton(const CEGUI::EventArgs& e)
    {
-	 PNSoundInterface::getInstance()->playSound("click");
+	 PNSoundEventData *data = new PNSoundEventData();
+	 data->name = "click";
+
+     PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, data);
+	 //PNSoundInterface::getInstance()->playSound("click");
 	 return true;
    }
 
