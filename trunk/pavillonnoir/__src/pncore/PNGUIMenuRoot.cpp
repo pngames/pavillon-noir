@@ -67,16 +67,11 @@ namespace PN
 {
   PNGUIMenuRoot::PNGUIMenuRoot()
   {
-	CEGUI::Imageset* windowsImages = CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/MenuRoot.imageset");
-
+	CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/MenuRoot.imageset");
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/MenuRoot.layout"); 
-	//	CEGUI::StaticImage* backGround = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Background");
-	//	backGround->disable();
+
 	CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Load")->disable();
 
-	//CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Credits")->disable();
-
-	//CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Options")->disable();
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 
 	PNConsole::addFonction("loadlevel", &PNGUIMenuRoot::loadLevel, "loadlevel [level]");
@@ -86,7 +81,8 @@ namespace PN
 
   PNGUIMenuRoot::~PNGUIMenuRoot()
   {
-
+	_mainSheet->destroy();
+	CEGUI::ImagesetManager::getSingleton().destroyImageset("./datafiles/imagesets/MenuRoot.imageset");
   }
 
   void PNGUIMenuRoot::setupEventHandlers()
@@ -126,7 +122,7 @@ namespace PN
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-	hideMenuRoot();
+	hide();
 
 	//////////////////////////////////////////////////////////////////////////
 	// loading
@@ -248,11 +244,12 @@ namespace PN
   \brief
   To hide the CEGUI root menu
   */
-  void	PNGUIMenuRoot::hideMenuRoot()
+  void	PNGUIMenuRoot::hide()
   {
 	CEGUI::MouseCursor::getSingleton().hide();
 	//CEGUI::Window* win= CEGUI::WindowManager::getSingleton().getWindow("MenuRoot");
 	//win->hide();
+	_mainSheet->setMutedState(true);
 	_mainSheet->hide();
   }
 
@@ -260,11 +257,12 @@ namespace PN
   \brief
   To show the CEGUI root menu
   */
-  void	PNGUIMenuRoot::showMenuRoot()
+  void	PNGUIMenuRoot::show()
   {
 	CEGUI::MouseCursor::getSingleton().show();
 	//CEGUI::Window* win= CEGUI::WindowManager::getSingleton().getWindow("MenuRoot");
 	//win->show();
+	_mainSheet->setMutedState(false);
 	_mainSheet->show();
   }
 
