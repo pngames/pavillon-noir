@@ -143,30 +143,16 @@ int	  main(int argc, char* argv[])
 
 	//////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////
-	// PNSound Interface
+	// Sound loading
+	
+	PNSoundEventData *data = new PNSoundEventData("theme", DEF::musicFilePath + "Honneur_PavillonNoir.ogg");
+	PNSoundEventData *data2 = new PNSoundEventData("click",  DEF::soundsFilePath + "menu_click.ogg");
+	PNSoundEventData *data3 = new PNSoundEventData("quit",  DEF::soundsFilePath + "redalert.ogg");
 
-	PNSoundInterface *si = PNSoundInterface::getInstance();
-
-	if (si != NULL)
-	{
-	  si->setListenerOrientation(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-	  si->setListenerPosition(0.0, 0.0, 0.0);
-
-	  std::string zicPath = DEF::musicFilePath + "Honneur_PavillonNoir.ogg";
-	  //std::string sound = DEF::soundsFilePath + "arrive.ogg";
-	  //std::string sound2 = DEF::soundsFilePath + "redalert.ogg";
-	  std::string click_menu = DEF::soundsFilePath + "menu_click.ogg";
-		
-	  //si->createNewSound("arrive", sound.c_str(), FALSE, 0.0, 0.0, 0.0);
-	  //si->createNewSound("redalert", sound2.c_str(), FALSE, 0.0, 0.0, 0.0);
-	  si->createNewSound("click", click_menu.c_str(), FALSE, 0.0, 0.0, 0.0);
-
-	 /* if (si->createNewSound("theme", zicPath.c_str(), TRUE, 0.0, 0.0, 0.0) != 0)
-	  {
-		si->changeSoundVolume("theme", 0.0);	
-		//si->playSound("theme");
-	  }*/
-	}
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_CREATE, 0, data);
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_CREATE, 0, data2);
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_CREATE, 0, data3);
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, new PNSoundEventData("theme", 0.3f));
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -196,8 +182,8 @@ int	  main(int argc, char* argv[])
 	
 	ri->run();
 
-	if (si != NULL)
-	  delete si;
+	//if (si != NULL)
+	  //delete si;
   }
   ////////////////////////////////////////
 /*

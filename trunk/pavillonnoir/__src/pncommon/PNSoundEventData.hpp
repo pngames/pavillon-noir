@@ -42,10 +42,34 @@ namespace PN
 class PNSoundEventData : public PNEventData
 {
 public:
-	std::string name;
-	float	x;
-	float	y;
-	float	z;
+	////////////////////////////////////
+
+	PNSoundEventData(std::string sound_name, std::string file_name = "", char loop=FALSE ,float x = 0, float y = 0, float z = 0, float volume = 1.0) 
+	{
+		px = x; 
+		py = z; 
+		pz = z; 
+		name = sound_name; 
+		fname= file_name;
+		looping = loop;
+		sound_volume = volume;
+	}
+
+	PNSoundEventData(std::string sound_name,  float volume)
+	{
+		name = sound_name; 
+		sound_volume = volume;
+	}
+	
+	////////////////////////////////////
+
+	std::string name;	/// Sound name
+	std::string fname;	///	Sound File name
+	char	looping;		/// Sound looping or not ( TRUE | FALSE)
+	float	px;			/// Sound pos x
+	float	py;			/// Sound pos y
+	float	pz;			/// Sound pos z
+	float	sound_volume; // Sound volume
 };
 
 

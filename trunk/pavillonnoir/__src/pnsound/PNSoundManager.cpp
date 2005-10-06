@@ -65,7 +65,8 @@ void PNSoundManager::init()
   printf("==--OpenAL init--==\n");
   alutInit(0, NULL);
   registerCallbacks();
-
+  setListenerOrientation(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+  setListenerPosition(0.0, 0.0, 0.0);
   _maxId = 0;
   return;
 }
@@ -240,12 +241,32 @@ void			PNSoundManager::showLoadedSounds()
 void			PNSoundManager::registerCallbacks()
 {
     PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PLAY, EventCallback(this, &PNSoundManager::onPlaySound));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_CREATE, EventCallback(this, &PNSoundManager::onCreateSound));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_VOLUME, EventCallback(this, &PNSoundManager::onVolumeSound));
+
 }
 
 
 void			PNSoundManager::onPlaySound(pnEventType evt, PNObject* source, PNEventData* data)
 {
-	printf("Sound Event\n");
-	playSound("click");
+	PNSoundEventData* tmp = (PNSoundEventData*) data;
+
+	this->changeSoundVolume(tmp->name, tmp->sound_volume);
+	playSound(tmp->name);
 	delete data;
+}
+
+
+void			PNSoundManager::onCreateSound(pnEventType evt, PNObject* source, PNEventData* data)
+{
+	PNSoundEventData* tmp = (PNSoundEventData*) data;
+
+	this->createNewSound(tmp->name, tmp->fname.c_str(), tmp->looping, tmp->px, tmp->py, tmp->pz);
+}
+
+void			PNSoundManager::onVolumeSound(pnEventType evt, PNObject* source, PNEventData* data)
+{
+	PNSoundEventData* tmp = (PNSoundEventData*) data;
+
+	this->changeSoundVolume(tmp->name, tmp->sound_volume);
 }
