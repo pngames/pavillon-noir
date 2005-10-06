@@ -351,7 +351,7 @@ PNGLRenderer::run()
 
   float Light1Pos[4] = {0.0f, 0.0f, 40.0f, 1.0f};
 
-  while (_isProgramLooping)													
+  while (_isProgramLooping)												
   {
     //timer
     currentLoopDate = getTicks();
@@ -393,11 +393,13 @@ PNGLRenderer::run()
 
 	  glLightfv(GL_LIGHT0, GL_POSITION, Light1Pos);
 
+	  std::cout << 3 << " [UPDATE] start render objets" << std::endl;
+
 	  PNLOCK_BEGIN(&_renderCam);
 	  {
 		const PN3DObjList& objectToRend = _renderCam.getListObj();
 
-		for (PN3DObjList::const_iterator it = objectToRend.begin(); it != objectToRend.end(); it++)
+		for (PN3DObjList::const_iterator it = objectToRend.begin(); it != objectToRend.end(); ++it)
 		{
 		  pushMatrix(); // Create temporary context for 3Dobject placement
 		  {
@@ -431,8 +433,9 @@ PNGLRenderer::run()
 		}
 	  }
 	  PNLOCK_END(&_renderCam);
+
 	  //////////////////////////////////////////////////////////////////////////
-	  
+
 	  PNPoint	ax(PNPoint::ZERO);
 	  pnfloat	color[4] = {0.0f, 0.0f, 0.0f, 1.0f};
 

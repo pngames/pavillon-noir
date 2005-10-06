@@ -125,14 +125,12 @@ int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
 	if (strcmp((const char*)xmlGetProp(current, (const xmlChar *)"envtype"), "ground")) {
 	  object->setPhysicalObject(PNPhysicsInterface::getInstance()->createPhysicalObjectBox(object, isStatic));
 	}
-	// FIXME : must use another list3DObj
-	//PN3DCamera::getRenderCam()->_list3DObj.push_back(object);
   }
 
   for (current = current->children; current != NULL; current = current->next)
   {  
 	if (current->type != XML_ELEMENT_NODE)
-	  continue; 
+	  continue;
 	/*pnerror(PN_LOGLVL_DEBUG, "PNGameMap - Entity child: %s", current->name);*/
   }
 

@@ -280,7 +280,7 @@ void  PNLuaGame::onUpdate(pnEventType evt, PNObject* source, PNEventData* data)
     {
         std::stringstream luaOrder;
         luaOrder << "gameMap:onLuaUpdate(" << deltaTime << ")";
-        lua_dostring(L, luaOrder.str().c_str());    
+        lua_dostring(L, luaOrder.str().c_str());
     }
 
     PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_UPDATE_ENDED, 0, NULL);

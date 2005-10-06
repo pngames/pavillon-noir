@@ -72,6 +72,7 @@ PN3DObject::PN3DObject()
   _movingMode = MMODE_FREE;
 
   _model = NULL;
+  _physicalObject = NULL;
 
   //_coord = PNPoint::null;
   //  _angles.set(0.0f, 0.0f, 0.0f);
