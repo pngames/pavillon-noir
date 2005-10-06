@@ -61,6 +61,8 @@ private:
   GLuint 	_ogltexture;	/// The 'real' texture.
   pnushort	_width;			/// cached width of the texture
   pnushort	_height;		/// cached height of the texture
+
+  std::string _file;
 };
 
 //////////////////////////////////////////////////////////////////////////
