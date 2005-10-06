@@ -64,6 +64,7 @@ void PNSoundManager::init()
 {
   printf("==--OpenAL init--==\n");
   alutInit(0, NULL);
+  registerCallbacks();
 
   _maxId = 0;
   return;
@@ -244,5 +245,7 @@ void			PNSoundManager::registerCallbacks()
 
 void			PNSoundManager::onPlaySound(pnEventType evt, PNObject* source, PNEventData* data)
 {
-	//(PNSoundEventData *)data;
+	printf("Sound Event\n");
+	playSound("click");
+	delete data;
 }
