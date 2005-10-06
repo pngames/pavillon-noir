@@ -400,11 +400,11 @@ void  PNLuaGame::onGameAction(pnEventType evt, PNObject* source, PNEventData* da
     std::string luaOrder;
 
     PNGameActionEventData* actionEvent= (PNGameActionEventData*) data;
-    luaOrder = "gameMap:OnLuaAction";
+    luaOrder = "gameMap:onLuaAction";
     luaOrder += actionEvent->action;
-    luaOrder += "(";
+    luaOrder += "(\"";
     luaOrder += actionEvent->targetId;
-    luaOrder += ", ";
+    luaOrder += "\", ";
     luaOrder += actionEvent->state == true ? "true": "false";
     luaOrder += ")";
 
