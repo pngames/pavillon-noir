@@ -92,6 +92,8 @@ pnint		PNGLTexture::loadFromFile(const boost::filesystem::path& file, void* ligh
   if (fs::is_directory(file))
 	return PNEC_NOT_A_FILE;
 
+  _file = file.string();
+
   std::cout << "glBindTexture(GL_TEXTURE_2D, " << _ogltexture << ")" << std::endl;
 
   glBindTexture(GL_TEXTURE_2D, _ogltexture);
