@@ -113,11 +113,8 @@ namespace PN
 
    bool PNGUIMenuRoot::overButton(const CEGUI::EventArgs& e)
    {
-	 PNSoundEventData *data = new PNSoundEventData();
-	 data->name = "click";
-
+	 PNSoundEventData *data = new PNSoundEventData("click", 1.0f);
      PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, data);
-	 //PNSoundInterface::getInstance()->playSound("click");
 	 return true;
    }
 
@@ -147,12 +144,6 @@ namespace PN
 	memset(buffer, 0, sizeof(buffer));
 	fread(buffer, 1, 1023, file);
 	fclose(file);
-
-	////Changes Background music volume (specific for the demo, please delete later)
-	//////////////////////////////////////////////////////////////////////////
-	PNSoundInterface*	si = PNSoundInterface::getInstance();
-	si->changeSoundVolume("theme", 0.0);
-	//////////////////////////////////////////////////////////////////////////
 
     PNGameLoadMapEventData* data = new PNGameLoadMapEventData();
     data->mapName =  DEF::mapsFilePath + buffer;
@@ -185,7 +176,8 @@ namespace PN
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-	
+
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, new PNSoundEventData("quit", 0.5f));
 	PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous reellement\nquitter ?", PNGUIMsgBox::YES_NO, callbackQuit, _mainSheet);
 	//PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "sauter", PNGUIMsgBox::CONF, callbackQuit, _mainSheet);
 	return true;
