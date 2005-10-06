@@ -71,12 +71,14 @@ class PNGameActionEventData : public PNEventData
 public:
 	std::string action;
 	std::string targetId;
+	std::string sourceId;
 	bool		state;
 
 	PNGameActionEventData
-		(std::string anAction, std::string aTargetId, bool theState):
+        (std::string anAction, std::string aTargetId, std::string aSourceId, bool theState):
 			action(anAction),
 			targetId(aTargetId),
+            sourceId(aSourceId),
 			state(theState) {}
 
 };
@@ -87,8 +89,8 @@ public:
   std::string AITarget;
 
   PNGameAIEventData
-        (std::string anAction, std::string atargetId, bool theState, std::string anAITarget):
-           PNGameActionEventData(anAction, atargetId, theState),
+        (std::string anAction, std::string atargetId, std::string aSourceId ,bool theState, std::string anAITarget):
+           PNGameActionEventData(anAction, atargetId, aSourceId,theState),
            AITarget(anAITarget){}
 
 };
