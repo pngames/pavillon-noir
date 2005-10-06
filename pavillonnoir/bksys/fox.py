@@ -32,7 +32,7 @@ def generate(env):
 	# Detect the FOX
 	optionfile = env['CACHEDIR']+'fox1.4.cache.py'
         opts = Options(optionfile)
-	min_ver = "1.4.10"
+	min_ver = "1.4.16"
 	lib_config = ["fox-config","fox-config-1.4"]
 
         opts.AddOptions(

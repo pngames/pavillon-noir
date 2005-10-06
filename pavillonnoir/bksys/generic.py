@@ -1,4 +1,5 @@
 ## Thomas Nagy, 2005
+## modified by Loic Guitaut, 2005
 """ Run scons -h to display the associated help, or look below """
 
 import os, re, types, sys, string, shutil, stat, glob
@@ -394,7 +395,7 @@ def generate(env):
 
 		# User-specified prefix
 		if env['ARGS'].has_key('prefix'):
-			env['PREFIX'] = os.path.abspath( env['ARGS'].get('prefix', '') )
+			env['PREFIX'] = os.path.abspath(os.path.expanduser(env['ARGS'].get('prefix', '')))
 			env.pprint('CYAN','** installation prefix for the project set to:',env['PREFIX'])
 
 		# User-specified include paths
