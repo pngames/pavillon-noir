@@ -54,7 +54,7 @@
 #ifdef DEBUG
 # define DEBUG_PRINTER printf
 #else
-# define DEBUG_PRINTER(fmt,arg)
+# define DEBUG_PRINTER //
 #endif
 
 using namespace PN;
@@ -290,7 +290,7 @@ void  PNLuaGame::onInit(pnEventType evt, PNObject* source, PNEventData* data)
     PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_INIT_STARTED, 0, NULL);
 
     std::string luaOrder;
-    luaOrder +=  "gameMap.onInit()";
+    luaOrder +=  "gameMap.onLuaInit()";
     lua_dostring(L, luaOrder.c_str());
 
     PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_INIT_ENDED, 0, NULL);
