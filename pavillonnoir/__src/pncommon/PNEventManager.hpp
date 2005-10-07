@@ -172,7 +172,7 @@ public:
 
 private:
   /// Table of callback list arranged by type
-  PNCallBackList		_callbacktList[PN_NUMBER_EVENTS];
+  PNCallBackList		_callbackList[PN_NUMBER_EVENTS];
 public:
   /// Attach new callback to events of type \c type
   void					addCallback(pnEventType type, const EventCallback& callback);

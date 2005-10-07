@@ -1,0 +1,43 @@
+
+typedef			enum
+{
+  PN_IA_PASSIVE,
+  PN_IA_TRAVELLING,
+  PN_IA_FIGHTING,
+  PN_IA_NBSTATES
+}				pnIAState;
+
+typedef			enum
+{
+  PN_CHARAC_PIRATE,
+  PN_CHARAC_NAVY,
+  PN_CHARAC_CIVILIAN
+}				pnCharacType;
+
+class PNCharacter : public PN3DSkeletonObject
+{
+ 
+public:
+  PNCharacter();
+  ~PNCharacter();
+
+  void									buildGraph(boost::filesystem::path& file);
+
+  void									beSmart();
+
+  void									moveTo(PNPoint &p);
+  void									moveTo(PNWayPoint *wp);
+
+  void									hear();
+
+  void									see();
+
+  void									startFight();
+
+  void									manageFight();
+
+  pnCharacType							getCharacType();
+
+  void									setState(pnIAState st);
+  void									restoreState();
+};

@@ -14,6 +14,7 @@ $#include "PNLuaGameMap.hpp"
 $#include "PNVector3f.hpp"
 $#include "PNWayPoint.hpp"
 $#include "PNPathFinding.hpp"
+$#include "PNCharacter.hpp"
 $using namespace PN;
 
 

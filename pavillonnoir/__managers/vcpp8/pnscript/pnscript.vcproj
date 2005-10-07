@@ -278,6 +278,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pnscript\PNCharacter.pkg"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pnscript\PNGameMap.pkg"
 				>
 			</File>
