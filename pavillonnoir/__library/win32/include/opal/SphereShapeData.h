@@ -65,6 +65,16 @@ namespace opal
 			radius = data.radius;
 		}
 
+		OPAL_DECL virtual void OPAL_CALL getLocalAABB(real aabb[6])
+		{
+			aabb[0] = -radius;
+			aabb[1] = radius;
+			aabb[2] = -radius;
+			aabb[3] = radius;
+			aabb[4] = -radius;
+			aabb[5] = radius;
+		}
+
 		/// The sphere's radius.
 		real radius;
 

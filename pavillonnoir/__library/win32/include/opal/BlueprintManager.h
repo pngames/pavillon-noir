@@ -174,8 +174,8 @@ namespace opal
 			real getAttributeReal(const TiXmlNode* nodePtr, 
 				const std::string& name)const;
 
-			/// Helper function; returns false if the attribute doesn't 
-			/// exist.
+			/// Helper function; returns an empty string if the attribute 
+			/// doesn't exist.
 			std::string getAttributeString(const TiXmlNode* nodePtr, 
 				const std::string& name)const;
 		};

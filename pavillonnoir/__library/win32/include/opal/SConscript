@@ -82,13 +82,6 @@ sources = Split("""
 	VolumeSensor.cpp
 """)
 
-# Add in XML source if desired
-if env['XML']:
-	if env['debug'] == True:
-		env.Append(LIBS = ['tinyxmld'])
-	else:
-		env.Append(LIBS = ['tinyxml'])
-
 objects = env.SharedObject(sources)
 
 # Add lib installation to 'install' alias

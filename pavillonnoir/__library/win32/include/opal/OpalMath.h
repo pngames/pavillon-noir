@@ -32,7 +32,11 @@
 
 namespace opal
 {
-	typedef float real;
+	#ifdef OPAL_USE_DOUBLE
+		typedef double real;
+	#else
+		typedef float real;
+	#endif
 
 	namespace globals
 	{
@@ -60,6 +64,36 @@ namespace opal
 	inline real abs(real value)
 	{
 		return fabs(value);
+	}
+
+	/// Returns true if the two values are equal within some tolerance, 
+	/// using a combination of absolute and relative (epsilon is scaled 
+	/// by the magnitudes of the values) tolerance, depending on whether 
+	/// both values are both less than 1.
+	/// See Christer Ericson's GDC 2005 presentation: 
+	/// http://realtimecollisiondetection.net/pubs/GDC05_Ericson_Numerical_Robustness_for_Geometric_Calculations.ppt
+	inline bool areEqual(real x, real y)
+	{
+		real maxVal = 1;
+
+		if (opal::abs(x) > maxVal)
+		{
+			maxVal = opal::abs(x);
+		}
+
+		if (opal::abs(y) > maxVal)
+		{
+			maxVal = opal::abs(y);
+		}
+
+		if (opal::abs(x - y) <= globals::OPAL_EPSILON * maxVal)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
 

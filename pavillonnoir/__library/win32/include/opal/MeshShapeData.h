@@ -33,11 +33,19 @@
 
 namespace opal
 {
-	/// A data structure describing a mesh Shape.  The data pointers 
-	/// for the vertex and face arrays must remain valid; no mesh data 
-	/// is stored anywhere within OPAL.  It is critical that the size of 
-	/// the data type used in these arrays (i.e. OPAL real) matches the 
-	/// size of the data type expected by the underlying physics engine.
+	/// A data structure describing a mesh Shape.  A mesh is represented 
+	/// as an array of vertices and an array of triangles (the triangle 
+	/// array contains indices referring to vertices in the vertex 
+	/// array).  The data pointers to these arrays must remain valid; OPAL 
+	/// simply stores pointers to the user-supplied arrays.  Additionally, 
+	/// the arrays must be destroyed by the user when finished.  It is 
+	/// critical that the size of the data type used in these arrays 
+	/// (i.e. OPAL real) matches the size of the data type expected by 
+	/// the underlying physics engine (don't mix floats with doubles).  
+	/// One limitation is that other Shapes can only collide with a mesh's 
+	/// surface.  There is no concept of "inside" or "outside" a mesh (like 
+	/// there is with the primitive Shapes); an object that is "inside" a 
+	/// closed mesh surface will not be detected as a collision.
 	class MeshShapeData : public ShapeData
 	{
 	public:
@@ -45,10 +53,15 @@ namespace opal
 		: ShapeData()
 		{
 			mType = MESH_SHAPE;
-			vertexArray[0] = NULL;
+			vertexArray = NULL;
 			numVertices = 0;
-			faceArray = NULL;
-			numFaces = 0;
+			triangleArray = NULL;
+			numTriangles = 0;
+
+			for (unsigned int i = 0; i < 6; ++i)
+			{
+				localAABB[i] = 0;
+			}
 		}
 
 		/// Copy constructor.
@@ -68,31 +81,98 @@ namespace opal
 			offset = data.offset;
 			material = data.material;
 			contactGroup = data.contactGroup;
-			vertexArray[0] = data.vertexArray[0];
+			vertexArray = data.vertexArray;
 			numVertices = data.numVertices;
-			faceArray = data.faceArray;
-			numFaces = data.numFaces;
+			triangleArray = data.triangleArray;
+			numTriangles = data.numTriangles;
+
+			for (unsigned int i = 0; i < 6; ++i)
+			{
+				localAABB[i] = data.localAABB[i];
+			}
 		}
 
-		/// Pointer to a 2-dimensional array of vertices.  For example, 
-		/// access the ith vertex like this: 
-		/// vertexArray[i][0] = 3.0; // x
-		/// vertexArray[i][1] = 2.0; // y
-		/// vertexArray[i][2] = 5.0; // z
-		real* vertexArray[3];
+		/// This recomputes the axis-aligned bounding box from the vertex 
+		/// data, so it should not be called very often.
+		OPAL_DECL virtual void OPAL_CALL getLocalAABB(real aabb[6])
+		{
+			// Compute the AABB from the vertex data.
+			if (vertexArray)
+			{
+				for (unsigned int i = 0; i < numVertices; ++i)
+				{
+					unsigned int vertexIndex = i * 3;
+
+					// Check x component.
+					if (vertexArray[vertexIndex] < localAABB[0])
+					{
+						localAABB[0] = vertexArray[vertexIndex];
+					}
+					else if (vertexArray[vertexIndex] > localAABB[1])
+					{
+						localAABB[1] = vertexArray[vertexIndex];
+					}
+
+					// Check y component.
+					if (vertexArray[vertexIndex + 1] < localAABB[2])
+					{
+						localAABB[2] = vertexArray[vertexIndex + 1];
+					}
+					else if (vertexArray[vertexIndex + 1] > localAABB[3])
+					{
+						localAABB[3] = vertexArray[vertexIndex + 1];
+					}
+
+					// Check z component.
+					if (vertexArray[vertexIndex + 2] < localAABB[4])
+					{
+						localAABB[4] = vertexArray[vertexIndex + 2];
+					}
+					else if (vertexArray[vertexIndex + 2] > localAABB[5])
+					{
+						localAABB[5] = vertexArray[vertexIndex+ 2];
+					}
+				}
+			}
+
+			for (unsigned int i = 0; i < 6; ++i)
+			{
+				aabb[i] = localAABB[i];
+			}
+		}
+
+		/// Pointer to a 1-dimensional array of vertices.  This data must 
+		/// be allocated/deallocated by the user.  The size of this array 
+		/// must be 3 * the number of vertices because each vertex uses 3 
+		/// elements in the array.  To access the ith vertex, for example, 
+		/// vertexArray[i * 3] is the x component, vertexArray[i* 3 + 1] 
+		/// is the y component, and vertexArray[i * 3 + 2] is the z 
+		/// component.
+		real* vertexArray;
 
 		/// The number of vertices in the mesh.
-		int numVertices;
+		unsigned int numVertices;
 
-		/// Pointer to an array of indices into the vertex array.  The size 
-		/// of this array = 3 * the number of faces since each face will 
-		/// need 3 different indices, one for each vertex.
-		int* faceArray;
+		/// Pointer to a 1-dimensional array of indexed triangles.  This 
+		/// data must be allocated/deallocated by the user.  The size of 
+		/// this array must be 3 * the number of triangles because each 
+		/// triangle uses 3 elements in the array.  Each element is an 
+		/// index into the vertex array.  To access the ith triangle's 
+		/// vertices, for example, triangleArray[i * 3] is the index 
+		/// for the 1st vertex, triangleArray[i* 3 + 1] is the index for 
+		/// the 2nd vertex, and triangleArray[i * 3 + 2] is the index 
+		/// for the 3rd vertex.
+		unsigned int* triangleArray;
 
-		/// The number of faces/triangles in the mesh.
-		int numFaces;
+		/// The number of triangles in the mesh.
+		unsigned int numTriangles;
 
 	protected:
+		/// The mesh's local axis-aligned bounding box.  This array stores 
+		/// data in the following order: min x, max x, min y, max y, min z, 
+		/// max z.  This will be updated automatically when the mesh is 
+		/// added to a Solid.
+		real localAABB[6];
 
 	private:
 	};

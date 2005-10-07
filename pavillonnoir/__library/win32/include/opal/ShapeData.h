@@ -62,11 +62,16 @@ namespace opal
 		{
 		}
 
-		/// Returns the Shape's type.
+		/// Returns the ShapeData's type.
 		OPAL_DECL virtual ShapeType OPAL_CALL getType()const
 		{
 			return mType;
 		}
+
+		/// Returns the axis-aligned bounding box of the ShapeData relative 
+		/// to its center.  The 'aabb' array stores data in the following 
+		/// order: min x, max x, min y, max y, min z, max z.
+		OPAL_DECL virtual void OPAL_CALL getLocalAABB(real aabb[6]) = 0;
 
 		/// The offset transform from a Solid's transform.
 		Matrix44r offset;

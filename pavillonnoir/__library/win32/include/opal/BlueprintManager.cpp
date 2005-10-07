@@ -42,9 +42,7 @@
 #include "RaycastSensorData.h"
 #include "VolumeSensorData.h"
 
-#ifdef OPAL_USE_XML
-#include <tinyxml/tinyxml.h>
-#endif
+#include "external/tinyxml/tinyxml.h"
 
 namespace opal
 {
@@ -67,8 +65,6 @@ namespace opal
 		void BlueprintManager::loadFile(Blueprint& bp, 
 			const std::string& filename)
 		{
-#ifdef OPAL_USE_XML
-
 			// Load the file.
 			TiXmlDocument file;
 			if (false == file.LoadFile(filename.c_str()))
@@ -79,14 +75,13 @@ namespace opal
 				return;
 			}
 
-			// Find the root element (i.e. the 'OpalBlueprint" element).
+			// Find the root element (i.e. the 'OpalBlueprint' element).
 			TiXmlElement* rootElement = file.RootElement();
 			if (NULL == rootElement)
 			{
 				OPAL_LOGGER("warning") << 
-					"opal::BlueprintManager::loadFile: \
-Missing root element in " << filename 
-					<< ". Ignoring file." << std::endl;
+					"opal::BlueprintManager::loadFile: Missing root element " 
+					<< "in " << filename << ". Ignoring file." << std::endl;
 				return;
 			}
 
@@ -154,7 +149,6 @@ Missing root element in " << filename
 
 			// Finalized the Blueprint.
 			bp.finalize();
-#endif
 		}
 
 		SolidData* BlueprintManager::loadSolid(const TiXmlNode* nodePtr, 
@@ -163,8 +157,6 @@ Missing root element in " << filename
 			// This data structure automatically gets initialized to 
 			// default values in its constructor.
 			SolidData* data = new SolidData();
-
-#ifdef OPAL_USE_XML
 
 			TiXmlNode* paramNodePtr = NULL;
 
@@ -316,7 +308,7 @@ Missing root element in " << filename
 					data->addShape(*shapeData);
 				}
 			}
-#endif
+
 			return data;
 		}
 
@@ -326,8 +318,6 @@ Missing root element in " << filename
 			// This data structure automatically gets initialized to 
 			// default values in its constructor.
 			JointData* data = new JointData();
-
-#ifdef OPAL_USE_XML
 
 			TiXmlNode* paramNodePtr = NULL;
 
@@ -612,7 +602,7 @@ parameter in " << filename << " will be ignored."
 						getAttributeReal(axisParamNodePtr, "value");
 				}
 			}
-#endif
+
 			return data;
 		}
 
@@ -622,8 +612,6 @@ parameter in " << filename << " will be ignored."
 			// This data structure automatically gets initialized to 
 			// default values in its constructor.
 			MotorData* data = NULL;
-
-#ifdef OPAL_USE_XML
 
 			TiXmlNode* paramNodePtr = NULL;
 
@@ -696,7 +684,7 @@ parameter in " << filename << " will be ignored."
 						<< filename << " will be ignored." << std::endl;
 				}
 			}
-#endif
+
 			return data;
 		}
 
@@ -707,8 +695,6 @@ parameter in " << filename << " will be ignored."
 			// This data structure automatically gets initialized to 
 			// default values in its constructor.
 			AttractorMotorData* data = new AttractorMotorData();
-
-#ifdef OPAL_USE_XML
 
 			TiXmlNode* paramNodePtr = NULL;
 
@@ -743,13 +729,13 @@ parameter in " << filename << " will be ignored."
 			else
 			{
 				OPAL_LOGGER("warning") << 
-					"opal::BlueprintManager::loadAttractorMotor: Missing \
-References element in " << data->name << " in " << 
+					"opal::BlueprintManager::loadAttractorMotor: Missing " 
+					<< "References element in " << data->name << " in " << 
 					filename << ".  Ignoring the Motor." << std::endl;
 				delete data;
 				return NULL;
 			}
-#endif
+
 			return data;
 		}
 
@@ -760,8 +746,6 @@ References element in " << data->name << " in " <<
 			// This data structure automatically gets initialized to 
 			// default values in its constructor.
 			GearedMotorData* data = new GearedMotorData();
-
-#ifdef OPAL_USE_XML
 
 			TiXmlNode* paramNodePtr = NULL;
 
@@ -776,10 +760,10 @@ References element in " << data->name << " in " <<
 				if (data->jointAxisNum < 0 || data->jointAxisNum > 2)
 				{
 					OPAL_LOGGER("warning") << 
-						"opal::BlueprintManager::loadGearedMotor: Invalid \
-value " << data->jointAxisNum << " for GearedMotor \
-JointAxisNum parameter in " << filename 
-						<< " will be ignored." << std::endl;
+						"opal::BlueprintManager::loadGearedMotor: Invalid " 
+						<< "value " << data->jointAxisNum << " for " 
+						<< "GearedMotor JointAxisNum parameter in " 
+						<< filename << " will be ignored." << std::endl;
 					data->jointAxisNum = 0;
 				}
 			}
@@ -821,13 +805,13 @@ JointAxisNum parameter in " << filename
 			else
 			{
 				OPAL_LOGGER("warning") << 
-					"opal::BlueprintManager::loadGearedMotor: Missing \
-References element in " << data->name << " in " << 
+					"opal::BlueprintManager::loadGearedMotor: Missing " 
+					<< "References element in " << data->name << " in " << 
 					filename << ".  Ignoring the Motor." << std::endl;
 				delete data;
 				return NULL;
 			}
-#endif
+
 			return data;
 		}
 
@@ -838,8 +822,6 @@ References element in " << data->name << " in " <<
 			// This data structure automatically gets initialized to 
 			// default values in its constructor.
 			ServoMotorData* data = new ServoMotorData();
-
-#ifdef OPAL_USE_XML
 
 			TiXmlNode* paramNodePtr = NULL;
 
@@ -854,10 +836,10 @@ References element in " << data->name << " in " <<
 				if (data->jointAxisNum < 0 || data->jointAxisNum > 2)
 				{
 					OPAL_LOGGER("warning") << 
-						"opal::BlueprintManager::loadGearedMotor: Invalid \
-value " << data->jointAxisNum << " for GearedMotor \
-						JointAxisNum parameter in " << filename 
-						<< " will be ignored." << std::endl;
+						"opal::BlueprintManager::loadGearedMotor: Invalid " 
+						<< "value " << data->jointAxisNum << " for " 
+						<< "GearedMotor JointAxisNum parameter in " 
+						<< filename << " will be ignored." << std::endl;
 					data->jointAxisNum = 0;
 				}
 			}
@@ -880,8 +862,8 @@ value " << data->jointAxisNum << " for GearedMotor \
 				else
 				{
 					OPAL_LOGGER("warning") << 
-						"opal::BlueprintManager::loadServoMotor: Invalid \
-Mode " << mode << " in " << data->name << 
+						"opal::BlueprintManager::loadServoMotor: Invalid "
+						<< "Mode " << mode << " in " << data->name << 
 						" in " << filename << " will be ignored." 
 						<< std::endl;
 				}
@@ -932,13 +914,13 @@ Mode " << mode << " in " << data->name <<
 			else
 			{
 				OPAL_LOGGER("warning") << 
-					"opal::BlueprintManager::loadServoMotor: Missing \
-References element in " << data->name << " in " << 
+					"opal::BlueprintManager::loadServoMotor: Missing "
+					<< "References element in " << data->name << " in " << 
 					filename << ".  Ignoring the Motor." << std::endl;
 				delete data;
 				return NULL;
 			}
-#endif
+
 			return data;
 		}
 
@@ -949,8 +931,6 @@ References element in " << data->name << " in " <<
 			// This data structure automatically gets initialized to 
 			// default values in its constructor.
 			SpringMotorData* data = new SpringMotorData();
-
-#ifdef OPAL_USE_XML
 
 			TiXmlNode* paramNodePtr = NULL;
 
@@ -976,9 +956,9 @@ References element in " << data->name << " in " <<
 				else
 				{
 					OPAL_LOGGER("warning") << 
-						"opal::BlueprintManager::loadSpringMotor: Invalid \
-Mode " << mode << " in " << data->name << 
-						" in " << filename << " will be ignored." 
+						"opal::BlueprintManager::loadSpringMotor: Invalid "
+						" Mode " << mode << " in " << data->name 
+						<< " in " << filename << " will be ignored." 
 						<< std::endl;
 				}
 			}
@@ -1078,13 +1058,13 @@ Mode " << mode << " in " << data->name <<
 			else
 			{
 				OPAL_LOGGER("warning") << 
-					"opal::BlueprintManager::loadSpringMotor: Missing \
-References element in " << data->name << " in " << 
+					"opal::BlueprintManager::loadSpringMotor: Missing " 
+					" References element in " << data->name << " in " << 
 					filename << ".  Ignoring the Motor." << std::endl;
 				delete data;
 				return NULL;
 			}
-#endif
+
 			return data;
 		}
 
@@ -1095,8 +1075,6 @@ References element in " << data->name << " in " <<
 			// This data structure automatically gets initialized to 
 			// default values in its constructor.
 			ThrusterMotorData* data = new ThrusterMotorData();
-
-#ifdef OPAL_USE_XML
 
 			TiXmlNode* paramNodePtr = NULL;
 
@@ -1142,9 +1120,9 @@ References element in " << data->name << " in " <<
 				else
 				{
 					OPAL_LOGGER("warning") << 
-						"opal::BlueprintManager::loadThrusterMotor: Invalid \
-Force type " << forceType << " in " << data->name << 
-						" in " << filename << " will be ignored." 
+						"opal::BlueprintManager::loadThrusterMotor: Invalid "
+						<< "Force type " << forceType << " in " << data->name 
+						<< " in " << filename << " will be ignored." 
 						<< std::endl;
 				}
 			}
@@ -1182,13 +1160,13 @@ Force type " << forceType << " in " << data->name <<
 			else
 			{
 				OPAL_LOGGER("warning") << 
-					"opal::BlueprintManager::loadSolidMotor: Missing \
-References element in " << data->name << " in " << 
+					"opal::BlueprintManager::loadSolidMotor: Missing " 
+					<< "References element in " << data->name << " in " << 
 					filename << ".  Ignoring the Motor." << std::endl;
 				delete data;
 				return NULL;
 			}
-#endif
+
 			return data;
 		}
 
@@ -1198,8 +1176,6 @@ References element in " << data->name << " in " <<
 			// This data structure automatically gets initialized to 
 			// default values in its constructor.
 			SensorData* data = NULL;
-
-#ifdef OPAL_USE_XML
 
 			TiXmlNode* paramNodePtr = NULL;
 
@@ -1291,7 +1267,7 @@ References element in " << data->name << " in " <<
 			{
 				data->solidBlueprintRefName = "";
 			}
-#endif
+
 			return data;
 		}
 
@@ -1303,9 +1279,8 @@ References element in " << data->name << " in " <<
 			// default values in its constructor.
 			AccelerationSensorData* data = new AccelerationSensorData();
 
-#ifdef OPAL_USE_XML
 			// Nothing special to load for AccelerationSensors.
-#endif
+
 			return data;
 		}
 
@@ -1316,8 +1291,6 @@ References element in " << data->name << " in " <<
 			// This data structure automatically gets initialized to 
 			// default values in its constructor.
 			InclineSensorData* data = new InclineSensorData();
-
-#ifdef OPAL_USE_XML
 
 			TiXmlNode* paramNodePtr = NULL;
 
@@ -1333,7 +1306,6 @@ References element in " << data->name << " in " <<
 				data->axis = axis;
 			}
 
-#endif
 			return data;
 		}
 
@@ -1344,8 +1316,6 @@ References element in " << data->name << " in " <<
 			// This data structure automatically gets initialized to 
 			// default values in its constructor.
 			RaycastSensorData* data = new RaycastSensorData();
-
-#ifdef OPAL_USE_XML
 
 			TiXmlNode* paramNodePtr = NULL;
 
@@ -1376,7 +1346,6 @@ References element in " << data->name << " in " <<
 					paramNodePtr, "value");
 			}
 
-#endif
 			return data;
 		}
 
@@ -1388,9 +1357,8 @@ References element in " << data->name << " in " <<
 			// default values in its constructor.
 			VolumeSensorData* data = new VolumeSensorData();
 
-#ifdef OPAL_USE_XML
 			// Nothing special to load for VolumeSensors.
-#endif
+
 			return data;
 		}
 
@@ -1400,8 +1368,6 @@ References element in " << data->name << " in " <<
 			// This data structure automatically gets initialized to 
 			// default values in its constructor.
 			ShapeData* data = NULL;
-
-#ifdef OPAL_USE_XML
 
 			std::string type = getAttributeString(nodePtr, "type");
 
@@ -1504,15 +1470,12 @@ References element in " << data->name << " in " <<
 					contactGroupNodePtr, "value");
 			}
 
-#endif
 			return data;
 		}
 
 		void BlueprintManager::loadOffset(Matrix44r& offset, 
 			const TiXmlNode* nodePtr, const std::string& filename)
 		{
-#ifdef OPAL_USE_XML
-
 			// Loop over all Transform sub-elements.
 			TiXmlNode* transformNodePtr = NULL;
 			while (transformNodePtr = const_cast<TiXmlNode*>
@@ -1578,18 +1541,16 @@ References element in " << data->name << " in " <<
 				else
 				{
 					OPAL_LOGGER("warning") << 
-						"opal::BlueprintManager::loadOffset: Invalid \
-transform type " << type << " in " << filename << std::endl;
+						"opal::BlueprintManager::loadOffset: Invalid " 
+						<< "transform type " << type << " in " << filename 
+						<< std::endl;
 				}
 			}
-#endif
 		}
 
 		real BlueprintManager::getAttributeReal(const TiXmlNode* nodePtr, 
 			const std::string& name)const
 		{
-#ifdef OPAL_USE_XML
-
 			TiXmlElement* elementPtr = 
 				const_cast<TiXmlNode*>(nodePtr)->ToElement();
 			double temp = 0;
@@ -1597,9 +1558,9 @@ transform type " << type << " in " << filename << std::endl;
 			if (NULL == elementPtr->Attribute(name.c_str(), &temp))
 			{
 				OPAL_LOGGER("warning") << 
-					"opal::BlueprintManager::getAttribute: Element " 
-					<< nodePtr->Value() << " is missing attribute " 
-					<< name << ".  Parameter will be set to 0.0." 
+					"opal::BlueprintManager::getAttributeReal: Element " 
+					<< nodePtr->Value() << " is missing attribute '" 
+					<< name << "'.  Parameter will be set to 0.0." 
 					<< std::endl;
 				return 0;
 			}
@@ -1607,26 +1568,21 @@ transform type " << type << " in " << filename << std::endl;
 			{
 				return (real)temp;
 			}
-#else
-			return 0;
-#endif
 		}
 
-		std::string BlueprintManager::getAttributeString(const TiXmlNode* 
-			nodePtr, const std::string& name)const
+		std::string BlueprintManager::getAttributeString(
+			const TiXmlNode* nodePtr, const std::string& name)const
 		{
-#ifdef OPAL_USE_XML
-
 			TiXmlElement* elementPtr = 
 				const_cast<TiXmlNode*>(nodePtr)->ToElement();
-			std::string temp = elementPtr->Attribute(name.c_str());
+			const char* temp = elementPtr->Attribute(name.c_str());
 
-			if ("" == temp)
+			if (NULL == temp)
 			{
 				OPAL_LOGGER("warning") << 
-					"opal::BlueprintManager::getAttribute: Element " 
-					<< nodePtr->Value() << " is missing attribute " 
-					<< name << ".  Parameter will be set to \"\"." 
+					"opal::BlueprintManager::getAttributeString: Element " 
+					<< nodePtr->Value() << " is missing attribute '" 
+					<< name << "'.  Parameter will be set to \"\"." 
 					<< std::endl;
 				return "";
 			}
@@ -1634,9 +1590,6 @@ transform type " << type << " in " << filename << std::endl;
 			{
 				return temp;
 			}
-#else
-			return "";
-#endif
 		}
 	}
 }

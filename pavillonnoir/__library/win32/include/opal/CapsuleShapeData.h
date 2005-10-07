@@ -68,6 +68,18 @@ namespace opal
 			length = data.length;
 		}
 
+		OPAL_DECL virtual void OPAL_CALL getLocalAABB(real aabb[6])
+		{
+			// The standard initial capsule orientation in OPAL is to 
+			// align it along the Z axis.
+			aabb[0] = -radius;
+			aabb[1] = radius;
+			aabb[2] = -radius;
+			aabb[3] = radius;
+			aabb[4] = -(real)0.5 * length - radius;
+			aabb[5] = (real)0.5 * length + radius;
+		}
+
 		/// The capsule's radius.
 		real radius;
 
