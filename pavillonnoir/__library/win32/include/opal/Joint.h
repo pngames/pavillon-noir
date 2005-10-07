@@ -62,7 +62,7 @@ namespace opal
 		virtual void OPAL_CALL init(const JointData& data);
 
 		/// Returns all data describing the Joint.
-		virtual const JointData& OPAL_CALL getData()const;
+		virtual const JointData& OPAL_CALL getData();
 
 		/// Sets the Joint's name.
 		virtual void OPAL_CALL setName(const std::string& name);
@@ -153,12 +153,12 @@ namespace opal
 		/// given axis.
 		virtual real OPAL_CALL getVelocity(int axisNum)const = 0;
 
-		/// Applies a force to this Joint's Solids.  To be used for 
-		/// translational axes.  This does nothing if the Joint is disabled.
+		/// Applies a force to this Joint's Solid(s).  To be used for 
+		/// translational axes.  This does nothing if the Joint is disabled.  
 		virtual void OPAL_CALL addForce(int axisNum, real magnitude, 
 			real duration, bool singleStep=false);
 
-		/// Applies a torque to this Joint's Solids.  To be used for 
+		/// Applies a torque to this Joint's Solid(s).  To be used for 
 		/// rotational Joints. This does nothing if the Joint is disabled.
 		virtual void OPAL_CALL addTorque(int axisNum, real magnitude, 
 			real duration, bool singleStep=false);
@@ -172,11 +172,13 @@ namespace opal
 		/// Returns a pointer to Solid1.  
 		virtual Solid* OPAL_CALL getSolid1()const;
 
-		/// Returns the specified axis.  
-		virtual const JointAxis& OPAL_CALL getAxis(int axisNum)const;
+		/// Returns the current specified axis in global coordinates.  
+		/// Passing in an invalid axis number will return invalid data.
+		virtual JointAxis OPAL_CALL getAxis(int axisNum)const = 0;
 
-		/// Returns the anchor point.  
-		virtual const Point3r& OPAL_CALL getAnchor()const;
+		/// Returns the current anchor point in global coordinates.  
+		/// Passing in an invalid axis number will return invalid data.
+		virtual Point3r OPAL_CALL getAnchor()const = 0;
 
 		/// Returns the number of axes used by this Joint.  
 		virtual int OPAL_CALL getNumAxes()const;
@@ -258,6 +260,8 @@ namespace opal
 
 		/// This is set to true when the Joint is initialized.
 		bool mInitCalled;
+
+		/// The number of axes used by the Joint.
 		int mNumAxes;
 
 		// This data stores which axes are rotational, as opposed to 

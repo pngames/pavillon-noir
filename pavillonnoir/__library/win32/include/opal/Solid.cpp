@@ -34,6 +34,7 @@ namespace opal
 		// "mData" is initialized in its own constructor.
 		setCollisionEventHandler(NULL);
 		setUserData(NULL);
+		resetAABB();
 	}
 
 	Solid::~Solid()
@@ -46,8 +47,11 @@ namespace opal
 		delete this;
 	}
 
-	const SolidData& Solid::getData()const
+	const SolidData& Solid::getData()
 	{
+		// Update parameters that don't get updated automatically.
+		mData.sleeping = isSleeping();
+
 		return mData;
 	}
 
@@ -156,6 +160,31 @@ namespace opal
 		return mData.transform.getQuaternion();
 	}
 
+	void Solid::getLocalAABB(real aabb[6])const
+	{
+		for (unsigned int i = 0; i < 6; ++i)
+		{
+			aabb[i] = mLocalAABB[i];
+		}
+	}
+
+	void Solid::getGlobalAABB(real aabb[6])const
+	{
+		Point3r minExtents(mLocalAABB[0], mLocalAABB[2], mLocalAABB[4]);
+		Point3r maxExtents(mLocalAABB[1], mLocalAABB[3], mLocalAABB[5]);
+
+		// Transform the AABB extents to global coordinates.
+		minExtents = mData.transform * minExtents;
+		maxExtents = mData.transform * maxExtents;
+
+		aabb[0] = minExtents[0];
+		aabb[1] = maxExtents[0];
+		aabb[2] = minExtents[1];
+		aabb[3] = maxExtents[1];
+		aabb[4] = minExtents[2];
+		aabb[5] = maxExtents[2];
+	}
+
 	//void Solid::addPlane(const Point3r& point, const Vec3r& normal, const Material& m)
 	//{
 	//	Point3r origin(0, 0, 0);
@@ -179,7 +208,7 @@ namespace opal
 	void Solid::addForce(const Force& f)
 	{
 		if (mData.enabled && !mData.isStatic && 
-			f.vec.lengthSquared() > globals::OPAL_EPSILON )
+			!areEqual(f.vec.lengthSquared(), 0))
 		{
 			mForceList.push_back(f);
 		}
@@ -198,35 +227,36 @@ namespace opal
 			setSleeping(false);
 		}
 
-		std::vector<Force>::iterator forceIter;
-		for (forceIter = mForceList.begin(); forceIter != mForceList.end();)
+		real invStepSize = 1 / stepSize;
+
+		for (unsigned int i = 0; i < mForceList.size();)
 		{
-			if (true == (*forceIter).singleStep)
+			if (true == mForceList[i].singleStep)
 			{
-				(*forceIter).duration = stepSize;
+				mForceList[i].duration = stepSize;
 			}
-			else if ((*forceIter).duration < stepSize)
+			else if (mForceList[i].duration < stepSize)
 			{
 				// Scale the size of the force/torque.
-				(*forceIter).vec *= ((*forceIter).duration / stepSize);
+				mForceList[i].vec *= (mForceList[i].duration * invStepSize);
 			}
 
 			// Apply the actual force/torque.
-			applyForce(*forceIter);
+			applyForce(mForceList[i]);
 
 			// The following is ok for all cases (even when duration is 
 			// < mStepSize).
-			(*forceIter).duration -= stepSize;
+			mForceList[i].duration -= stepSize;
 
-			if ((*forceIter).duration <= 0)
+			if (mForceList[i].duration <= 0)
 			{
 				// Delete this force.
-				(*forceIter) = mForceList.back();
+				mForceList[i] = mForceList.back();
 				mForceList.pop_back();
 			}
 			else
 			{
-				++forceIter;
+				++i;
 			}
 		}
 	}
@@ -241,10 +271,35 @@ namespace opal
 		return mCollisionEventHandler;
 	}
 
-	void Solid::internal_updateSleeping()
+	void Solid::addToLocalAABB(const real aabb[6])
 	{
-		mData.sleeping = isSleeping();
+		// Loop over the 3 dimensions of the AABB's extents.
+		for (unsigned int i = 0; i < 3; ++i)
+		{
+			if (aabb[i * 2] < mLocalAABB[i * 2])
+			{
+				mLocalAABB[i * 2] = aabb[i * 2];
+			}
+
+			if (aabb[i * 2 + 1] > mLocalAABB[i * 2 + 1])
+			{
+				mLocalAABB[i * 2 + 1] = aabb[i * 2 + 1];
+			}
+		}
 	}
+
+	void Solid::resetAABB()
+	{
+		for (unsigned int i = 0; i < 6; ++i)
+		{
+			mLocalAABB[i] = 0;
+		}
+	}
+
+	//void Solid::internal_updateSleeping()
+	//{
+	//	mData.sleeping = isSleeping();
+	//}
 
 	//// TODO: Quickly spinning solids should be set as fast rotating solids to 
 	//// improve simulation accuracy.

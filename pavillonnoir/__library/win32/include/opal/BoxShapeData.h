@@ -64,6 +64,16 @@ namespace opal
 			dimensions = data.dimensions;
 		}
 
+		OPAL_DECL virtual void OPAL_CALL getLocalAABB(real aabb[6])
+		{
+			aabb[0] = -(real)0.5 * dimensions[0];
+			aabb[1] = (real)0.5 * dimensions[0];
+			aabb[2] = -(real)0.5 * dimensions[1];
+			aabb[3] = (real)0.5 * dimensions[1];
+			aabb[4] = -(real)0.5 * dimensions[2];
+			aabb[5] = (real)0.5 * dimensions[2];
+		}
+
 		/// The box's dimensions.
 		Vec3r dimensions;
 

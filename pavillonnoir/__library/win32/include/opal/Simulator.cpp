@@ -149,12 +149,18 @@ namespace opal
 			{
 				Solid* solid = *solidIter;
 
-				// Get each Solid's new transform from the physics engine.
-				solid->internal_updateOPALTransform();
+				// Get each dynamic, awake Solid's new transform from the 
+				// physics engine.
+				if (!solid->isStatic() && !solid->isSleeping())
+				{
+					solid->internal_updateOPALTransform();
+				}
 
 				// Update the sleeping value from the physics engine.  This 
 				// needs to be updated to keep the Solid's SolidData valid.
-				solid->internal_updateSleeping();
+				//solid->internal_updateSleeping();
+				// Update... Now this gets updated in the Solid::getData 
+				// function.
 
 				// Update the Solid's CollisionEventHandler if applicable.
 				if (solid->getCollisionEventHandler())
@@ -644,8 +650,8 @@ the Blueprint." << std::endl;
 		else
 		{
 			unsigned long int tempMask = 0xFFFFFFFF;
-			unsigned long int notGroup0Bit = group0 ^ tempMask;
-			unsigned long int notGroup1Bit = group1 ^ tempMask;
+			unsigned long int notGroup0Bit = group0Bit ^ tempMask;
+			unsigned long int notGroup1Bit = group1Bit ^ tempMask;
 
 			// Lower the group1 bit in group0's array.
 			mContactGroupFlags[group0] &= notGroup1Bit;

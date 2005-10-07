@@ -68,22 +68,24 @@ namespace opal
 
 		/// This function performs collision detection and simulates 
 		/// everything ahead by the given dt.  Internally, it steps through 
-		/// the simulation iteratively using a fixed step size.  "Leftover" 
-		/// time will be saved until the next time this is called.  The 
-		/// function returns true if at least one time step has been taken.  
-		/// During collision detection, the following cases are ignored 
-		/// when deciding whether to collide two Solids (both for physical 
-		/// contact generation and collision event handling): 
+		/// the simulation iteratively using a fixed step size (so you can 
+		/// pass in whatever dt you want; it will be broken up into fixed 
+		/// increments automatically).  Any "leftover" time will be saved 
+		/// until the next time this is called.  The function returns true 
+		/// if at least one time step has been taken.  During collision 
+		/// detection, the following cases are ignored when deciding whether 
+		/// to collide two Solids (ignored both for physical contact 
+		/// generation and collision event handling): 
 		/// 1. Two static Solids, each without a CollisionEventHandler.
 		/// 2. Two Shapes that are part of the same Solid.
 		/// 3. Two sleeping Solids.
 		/// 4. Two Solids connected by a fixed Joint.
 		/// 5. Two Solids connected by a Joint with contacts disabled.
-		/// 6. Solid0 is static, Solid1 is sleeping, 
+		/// 6. Solid0 is static, Solid1 dynamic and is sleeping, 
 		///    static-to-sleeping contacts are ignored by the 
 		///    Simulator, and neither Solid has a 
 		///    CollisionEventHandler.
-		/// 7. Solid1 is static, Solid0 is sleeping, 
+		/// 7. Solid1 is static, Solid0 dynamic and is sleeping, 
 		///    static-to-sleeping contacts are ignored by the 
 		///    Simulator, and neither Solid has a 
 		///    CollisionEventHandler.
@@ -290,8 +292,8 @@ namespace opal
 
 		// SPACES
 
-		/// Creates and returns a pointer to a Space with its parent Space 
-		/// set to NULL.
+		/// Creates and returns a pointer to a Space which is a child of 
+		/// the Simulator's root Space.
 		virtual Space* OPAL_CALL createSpace() = 0;
 
 		/// Helper function used for ray casting.  Immediately fires a ray 

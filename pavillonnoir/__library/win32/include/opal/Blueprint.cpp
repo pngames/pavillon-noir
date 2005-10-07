@@ -89,9 +89,9 @@ namespace opal
 			if (-1 == solid0Index || -1 == solid1Index)
 			{
 				OPAL_LOGGER("warning") << 
-					"opal::Blueprint::finalize: Invalid reference \
-in Joint " << data->name << ". Removing the Joint from the Blueprint." 
-					<< std::endl;
+					"opal::Blueprint::finalize: Invalid reference "
+					<< "in Joint " << data->name << ". Removing the Joint "
+					<< "from the Blueprint." << std::endl;
 
 				delete data;
 				mJointList.at(i) = mJointList.back();

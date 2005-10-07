@@ -57,8 +57,7 @@ namespace opal
 	/// a positive angle between 0 and 180 degrees.
 	inline real angleBetweenPreNorm(const Vec3r& u, const Vec3r& v);
 
-	/// Returns true if the two vectors are roughly collinear (within some 
-	/// epsilon).
+	/// Returns true if the two vectors are roughly collinear.
 	inline bool areCollinear(const Vec3r& u, const Vec3r& v);
 
 	/// Prints the Vec3r to the given output stream.
@@ -300,7 +299,7 @@ namespace opal
 	inline bool areCollinear(const Vec3r& u, const Vec3r& v)
 	{
 		real value = 1 - dot(u, v);
-		if (opal::abs(value) < globals::OPAL_EPSILON)
+		if (areEqual(value, 0))
 		{
 			return true;
 		}
