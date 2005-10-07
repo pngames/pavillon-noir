@@ -274,7 +274,7 @@ namespace opal
 			Quaternion q;
 			real trace = (*this)(0,0) + (*this)(1,1) + (*this)(2,2) + 1.0f;
 
-			if(trace > globals::OPAL_EPSILON)
+			if(!areEqual(trace, 0))
 			{
 				real s = 0.5f / sqrt(trace);
 				q[0] = 0.25f / s;
@@ -286,8 +286,8 @@ namespace opal
 			{
 				if((*this)(0,0) > (*this)(1,1) && (*this)(0,0) > (*this)(2,2))
 				{
-					real s = 2.0f * sqrtf(1.0f + (*this)(0,0) - (*this)(1,1) - 
-						(*this)(2,2));
+					real s = 2 * sqrt(static_cast<real>(1 + (*this)(0,0) - 
+						(*this)(1,1) - (*this)(2,2)));
 					q[1] = 0.25f * s;
 					q[2] = ((*this)(0,1) + (*this)(1,0)) / s;
 					q[3] = ((*this)(0,2) + (*this)(2,0)) / s;
@@ -295,8 +295,8 @@ namespace opal
 				}
 				else if ((*this)(1,1) > (*this)(2,2))
 				{
-					real s = 2.0f * sqrtf(1.0f + (*this)(1,1) - (*this)(0,0) - 
-						(*this)(2,2));
+					real s = 2 * sqrt(static_cast<real>(1 + (*this)(1,1) - 
+						(*this)(0,0) - (*this)(2,2)));
 					q[1] = ((*this)(0,1) + (*this)(1,0)) / s;
 					q[2] = 0.25f * s;
 					q[3] = ((*this)(1,2) + (*this)(2,1)) / s;
@@ -304,8 +304,8 @@ namespace opal
 				}
 				else
 				{
-					real s = 2.0f * sqrtf(1.0f + (*this)(2,2) - (*this)(0,0) - 
-						(*this)(1,1));
+					real s = 2 * sqrt(static_cast<real>(1 + (*this)(2,2) - 
+						(*this)(0,0) - (*this)(1,1)));
 					q[1] = ((*this)(0,2) + (*this)(2,0)) / s;
 					q[2] = ((*this)(1,2) + (*this)(2,1)) / s;
 					q[3] = 0.25f * s;
@@ -516,10 +516,11 @@ namespace opal
 
 	inline bool inverse(Matrix44r & dest, const Matrix44r & src)
 	{
-		std::cerr << "opal::Matrix44r inverse is hella busted! use \
-					 fastInverse for affine transforms" << std::endl;
 		real det = src.determinant();
-		if(opal::abs(det < globals::OPAL_EPSILON)) return false;
+		if(areEqual(det, 0))
+		{
+			return false;
+		}
 		dest = ((real)1.0 / det) * src;
 		return true;
 	}
@@ -533,9 +534,11 @@ namespace opal
 		// The rotational part of the matrix is simply the transpose of the
 		// original matrix.
 		for (int x = 0; x < 3; ++x)
-		for (int y = 0; y < 3; ++y)
 		{
-			result(x,y) = src(y,x);
+			for (int y = 0; y < 3; ++y)
+			{
+				result(x,y) = src(y,x);
+			}
 		}
 
 		real l0 = Vec3r(result(0, 0), result(0, 1), 
@@ -545,9 +548,20 @@ namespace opal
 		real l2 = Vec3r(result(2, 0), result(2, 1), 
 			result(2, 2)).lengthSquared();
 
-		if(opal::abs(l0) > globals::OPAL_EPSILON) l0 = 1.0f / l0;
-		if(opal::abs(l1) > globals::OPAL_EPSILON) l1 = 1.0f / l1;
-		if(opal::abs(l2) > globals::OPAL_EPSILON) l2 = 1.0f / l2;
+		if(!areEqual(l0, 0))
+		{
+			l0 = 1.0f / l0;
+		}
+
+		if(!areEqual(l1, 0))
+		{
+			l1 = 1.0f / l1;
+		}
+
+		if(!areEqual(l2, 0))
+		{
+			l2 = 1.0f / l2;
+		}
 
 		// apply the inverse scale to the 3x3
 		// for each axis: normalize it (1/length), and then mult by inverse 
@@ -572,7 +586,8 @@ namespace opal
 		const real& tz = src(2, 3);
 
 		// invert scale.
-		const real tw = (opal::abs(src(3, 3)) > globals::OPAL_EPSILON) 
+
+		const real tw = !areEqual(src(3, 3), 0) 
 			? 1.0f / src(3, 3) : 0.0f;
 
 		// handle uniform scale in Nx4 matrices

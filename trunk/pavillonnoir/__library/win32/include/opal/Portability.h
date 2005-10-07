@@ -59,16 +59,4 @@
 //#define OPAL_EXPORT_FUNCTION(returnType) extern "C" OPAL_DECL returnType OPAL_CALL
 #define OPAL_EXPORT_FUNCTION extern "C" OPAL_DECL
 
-// In Visual Studio, this is the only way to conditionally link with 
-// external libraries.
-#if defined (OPAL_USE_XML)
-	#if defined(WIN32) || defined(_WIN32)
-		#if defined(_DEBUG)
-			#pragma comment(lib,"tinyxmld.lib")
-		#else
-			#pragma comment(lib,"tinyxml.lib")
-		#endif
-	#endif
-#endif
-
 #endif

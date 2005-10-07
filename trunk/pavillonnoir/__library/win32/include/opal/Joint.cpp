@@ -56,8 +56,16 @@ namespace opal
 		mData = data;
 	}
 
-	const JointData& Joint::getData()const
+	const JointData& Joint::getData()
 	{
+		// Update parameters that don't get updated automatically.
+		for (int i=0; i<mNumAxes; ++i)
+		{
+			mData.axis[i] = getAxis(i);
+		}
+
+		mData.anchor = getAnchor();
+
 		return mData;
 	}
 
@@ -209,9 +217,17 @@ namespace opal
 			Vec3r direction = mData.axis[axisNum].direction;
 			f.vec = magnitude * direction;
 
-			mData.solid0->addForce(f);
+			if (mData.solid0)
+			{
+				mData.solid0->addForce(f);
+			}
+
 			f.vec *= (real)-1.0;
-			mData.solid1->addForce(f);
+
+			if (mData.solid1)
+			{
+				mData.solid1->addForce(f);
+			}
 		}
 	}
 
@@ -236,9 +252,17 @@ namespace opal
 			Vec3r axis = mData.axis[axisNum].direction;
 			f.vec = magnitude * axis;
 
-			mData.solid0->addForce(f);
+			if (mData.solid0)
+			{
+				mData.solid0->addForce(f);
+			}
+
 			f.vec *= (real)-1.0;
-			mData.solid1->addForce(f);
+
+			if (mData.solid1)
+			{
+				mData.solid1->addForce(f);
+			}
 		}
 	}
 
@@ -270,12 +294,6 @@ namespace opal
 		mData.axis[axisNum] = axis;
 	}
 
-	const JointAxis& Joint::getAxis(int axisNum)const
-	{
-		assert(axisNum >= 0 && axisNum < mNumAxes);
-		return mData.axis[axisNum];
-	}
-
 	int Joint::getNumAxes()const
 	{
 		return mNumAxes;
@@ -284,11 +302,6 @@ namespace opal
 	void Joint::setAnchor(const Point3r& anchor)
 	{
 		mData.anchor = anchor;
-	}
-
-	const Point3r& Joint::getAnchor()const
-	{
-		return mData.anchor;
 	}
 
 	bool Joint::isEnabled()const

@@ -64,6 +64,7 @@ namespace opal
 		Motor::init();
 		assert(data.joint->isRotational(data.jointAxisNum));
 		mData = data;
+		setEnabled(mData.enabled);
 	}
 
 	const ServoMotorData& ServoMotor::getData()const
@@ -131,6 +132,10 @@ namespace opal
 				//{
 					real velocity = mData.desiredAngle - 
 						mData.joint->getAngle(mData.jointAxisNum);
+					if ( velocity > 180.0 )
+						velocity = -360 + velocity;
+					if ( velocity < -180.0 )
+						velocity = 360 + velocity;
 					mData.joint->internal_setDesiredVel(mData.jointAxisNum, 
 						mData.restoreSpeed * velocity);
 				//}

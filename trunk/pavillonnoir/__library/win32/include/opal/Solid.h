@@ -38,12 +38,11 @@ namespace opal
 	class Space;
 	class ShapeData;
 
-	/// Solids are the physical objects in the simulation.  Solids can be 
-	/// static or dynamic.  Static Solids are simple collision shapes; 
-	/// they are not physically simulated but can still be positioned 
-	/// manually.  Dynamic Solids have collision shapes and are also 
-	/// physically simulated.  All Solids start out enabled, but they don't 
-	/// do much until Shapes are added.
+	/// Solids are the physical objects in a simulation.  Solids can be 
+	/// static or dynamic: basically, dynamic Solids move, and static Solids 
+	/// don't move.  (Static Solids can still be positioned manually.)  All 
+	/// Solids start out enabled, but they don't do much until Shapes are 
+	/// added.
 	class Solid
 	{
 	public:
@@ -55,7 +54,7 @@ namespace opal
 		virtual void OPAL_CALL init(const SolidData& data) = 0;
 
 		/// Returns all data describing the Solid.
-		virtual const SolidData& OPAL_CALL getData()const;
+		virtual const SolidData& OPAL_CALL getData();
 
 		/// Sets the Solid's name.
 		virtual void OPAL_CALL setName(const std::string& name);
@@ -137,11 +136,21 @@ namespace opal
 		/// Returns a quaternion representing the Solid's orientation.  
 		virtual Quaternion OPAL_CALL getQuaternion()const;
 
-		/// Removes all shapes from this Solid.
+		/// Returns the axis-aligned bounding box for all of the Solid's 
+		/// shapes relative to the Solid.
+		virtual void OPAL_CALL getLocalAABB(real aabb[6])const;
+
+		/// Returns the axis-aligned bounding box for all of the Solid's 
+		/// shapes in global coordinates.
+		virtual void OPAL_CALL getGlobalAABB(real aabb[6])const;
+
+		/// Removes all shapes from this Solid.  Resets the Solid's 
+		/// axis-aligned bounding box.
 		virtual void OPAL_CALL clearShapes() = 0;
 
-		/// Adds a Shape to this Solid.
-		virtual void OPAL_CALL addShape(const ShapeData& data) = 0;
+		/// Adds a Shape to this Solid.  Updates the Solid's axis-aligned 
+		/// bounding box.
+		virtual void OPAL_CALL addShape(ShapeData& data) = 0;
 
 		/// Applies a force/torque to this Solid.  If the Solid is disabled, 
 		/// the Solid is static, or the magnitude of the force/torque is 
@@ -236,11 +245,23 @@ namespace opal
 		/// Solids.
 		virtual void applyForce(const Force& f) = 0;
 
+		/// Adds the given axis-aligned bounding box to the Solid's AABB.
+		void addToLocalAABB(const real aabb[6]);
+
+		/// Resets the Solid's axis-aligned bounding box.
+		void resetAABB();
+
 		/// An internal list of this Solid's pending Forces.  
 		std::vector<Force> mForceList;
 
 		/// Stores data describing the Solid.  
 		SolidData mData;
+
+		/// The axis-aligned bounding box of all shapes in local 
+		/// coordinates.  This array stores data in the following order: 
+		/// min x, max x, min y, max y, min z, max z.  This gets updated 
+		/// whenever a shape is added or removed.
+		real mLocalAABB[6];
 
 		/// Pointer to this Solid's collision event handler.  
 		CollisionEventHandler* mCollisionEventHandler;

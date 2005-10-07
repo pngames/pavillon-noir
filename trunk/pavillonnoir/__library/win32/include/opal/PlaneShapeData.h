@@ -72,6 +72,12 @@ namespace opal
 			}
 		}
 
+		/// Planes don't have a bounding box, so this does nothing.
+		OPAL_DECL virtual void OPAL_CALL getLocalAABB(real aabb[6])
+		{
+			// Do nothing.
+		}
+
 		/// Parameters used to define the plane equation: 
 		/// a*x + b*y + c*z = d.
 		real abcd[4];
