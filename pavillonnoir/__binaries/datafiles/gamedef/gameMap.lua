@@ -8,13 +8,16 @@ gameMap.entities.className = {}
 function gameMap:spawn2(entity, id)
 	pnprint("[LUA enter function] gameMap:spawn2\n")
 	--self.entities[id] = entity
+	if (entity.id ~= "") then 
+		gameMap.entities.all[entity.id] = entity
+	end
 	if (self.entities.className[entity.className] ~= nil) then
 		self.entities.className[entity.className][id] = entity
 	else
 		self.entities.className[entity.className] = {}
 		self.entities.className[entity.className][id] = entity
 	end
-    self:addToMap2(entity, id)
+    self:addToMap2(entity.__instance, id)
    pnprint("[LUA exit function] gameMap:spawn2\n")
 end 
 
@@ -40,14 +43,14 @@ function gameMap:spwan(entity, id, position, orientation, model)
 end 
 
 function gameMap:onLuaUpdate(deltaTime)
-	pnprint("[UPDATE] start lua update\n")
+	--pnprint("[UPDATE] start lua update\n")
 --	pnprint("=> LUA GameMap: onUpdate()")
    --pnprint(deltaTime)
 	for id, entity in pairs(self.entities.all) do 
 		entity:onLuaUpdate(deltaTime)
 	end
 --	pnprint("<= LUA GameMap: onUpdate()")
-	pnprint("[UPDATE] end lua update\n")
+--	pnprint("[UPDATE] end lua update\n")
 end
 
 function gameMap:onInit()
