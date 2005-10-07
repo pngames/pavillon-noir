@@ -158,7 +158,8 @@ namespace PN
 	//////////////////////////////////////////////////////////////////////////
 	// game
 
-	PNGUIGame*		guigame = new PNGUIGame();
+	 PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_NEWGAME, NULL, NULL);
+	//PNGUIGame*		guigame = new PNGUIGame();
 	//State::gStateMgr->changeState(GAME);
 
 	return true;
@@ -174,8 +175,10 @@ namespace PN
 	  return true;
 
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, new PNSoundEventData("quit", 0.5f));
+
 	PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous reellement\nquitter ?", PNGUIMsgBox::YES_NO, callbackQuit, _mainSheet);
 	//PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "sauter", PNGUIMsgBox::CONF, callbackQuit, _mainSheet);
+
 	return true;
   }
  
@@ -184,6 +187,7 @@ namespace PN
 	if (enu == PNGUIMsgBox::YES)
 	  PNRendererInterface::getInstance()->endRendering();
   }
+
 
   bool PNGUIMenuRoot::handleLoad(const CEGUI::EventArgs& e)
   {

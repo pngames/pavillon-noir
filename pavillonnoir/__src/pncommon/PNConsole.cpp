@@ -97,12 +97,21 @@ pnbool	PNConsole::addFonction(const std::string& command, const Callback& foncti
 
 void	PNConsole::_delFonction(const std::string& command)
 {
-  
+    MapFonction::const_iterator iter = _fonctionMap.find(command);
+
+	if (iter == _fonctionMap.end())
+	{
+	  writeLine("\"%s\" is an invalid command to erase", command.c_str());
+	}
+	else
+	{ 
+	  _fonctionMap.erase(_fonctionMap.find(command));
+	}
 }
 
 pnbool	PNConsole::delFonction(const std::string& command)
 {
-  writeLine("not yet implemented");
+ // writeLine("not yet implemented");
   
   if (_instance != NULL)
 	_instance->_delFonction(command);

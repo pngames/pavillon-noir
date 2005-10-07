@@ -55,7 +55,7 @@
 
 #include "PNConsole.hpp"
 
-#include "PNGUIMenuRoot.hpp"
+#include "PNGUIMenuRootManager.hpp"
 
 #include "PNGameInterface.hpp"
 
@@ -161,8 +161,8 @@ int	  main(int argc, char* argv[])
 	new CEGUI::System((CEGUI::Renderer*)ri->getGUIRenderer());
 	ri->initGUI();
 
-	PNGUIMenuRoot*	rootmenu = new PNGUIMenuRoot();
-	//PNGUIConsole*	guiconsole = new PNGUIConsole();
+	PNGUIMenuRootManager::getInstance();
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENUROOT, NULL, NULL);
 
 	//////////////////////////////////////////////////////////////////////////
 	///					Init of the event's manager						   ///
@@ -174,6 +174,7 @@ int	  main(int argc, char* argv[])
 	pneventmngr->init();
 
 	//////////////////////////////////////////////////////////////////////////
+	
 	
 
 	//////////////////////////////////////////////////////////////////////////

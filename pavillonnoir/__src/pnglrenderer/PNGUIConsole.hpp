@@ -33,6 +33,7 @@
 #include "myCEGUI.h"
 #include <list>
 #include <stdio.h>
+#include <boost/thread/recursive_mutex.hpp>
 //#include <fstream.h>
 
 #include "pndefs.h"
@@ -46,6 +47,8 @@ namespace PN{
 	/                                   Properties                                /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
+	boost::recursive_mutex	_mutex;
+
   private:
 	CEGUI::Window*		  	  	  		  _pnConsole;
 	typedef std::list<CEGUI::ListboxItem*> ConsoleListboxItem;
