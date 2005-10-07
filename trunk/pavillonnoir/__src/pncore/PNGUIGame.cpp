@@ -447,17 +447,14 @@ void  PNGUIGame::_setScriptingDebug(const std::string&, std::istream& i)
 PNGUIGame::PNGUIGame()
 {
  
-  //_rootWin = CEGUI::System::getSingleton().getGUISheet();
-  CEGUI::Window* rootSheet = CEGUI::System::getSingleton().getGUISheet();
   _rootWin = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNGUIGame.layout");
-  rootSheet->addChildWindow(_rootWin);
-//_rootWin->setEnabled(true);
-//_rootWin->setVisible(true);
-_rootWin->activate();
+  CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_rootWin);
+
+  _rootWin->activate();
 
   _progBarVal = 1;
 
-_myri = PNRendererInterface::getInstance();
+  _myri = PNRendererInterface::getInstance();
   _skipFirstFrame = false;
   _inputHandleModifier = 0;
 
@@ -466,27 +463,19 @@ _myri = PNRendererInterface::getInstance();
   _rootWin->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIGame::eventKeyPressedHandler, this));
   _rootWin->subscribeEvent(CEGUI::Window::EventKeyUp, CEGUI::Event::Subscriber(&PNGUIGame::eventKeyReleasedHandler, this));
   _rootWin->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseClickdHandler, this));
- // _rootWin->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseClickdHandler, this));
   _rootWin->subscribeEvent(CEGUI::Window::EventMouseWheel, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseWheel, this));
 
   //////////////////////////////////////////////////////////////////////////
-  
   PNConsole::addFonction("loadmap", &PNGUIGame::_commandLoadMap, "Load game map, parameter : string MapFileName");
-
   //////////////////////////////////////////////////////////////////////////
-
   PNConsole::addFonction("rendersk", &PNGUIGame::_commandRenderSK, "Render skeleton, 0=false or 1=true");
   PNConsole::addFonction("renderm", &PNGUIGame::_commandRenderM, "Render model, 0=false or 1=true");
   PNConsole::addFonction("looping", &PNGUIGame::_commandLooping, "Loop animation, 0=false or 1=true");
   PNConsole::addFonction("animspeed", &PNGUIGame::_commandAnimSpeed, "Set animation speed, 1.0=normal");
   PNConsole::addFonction("switchmsk", &PNGUIGame::_commandSwitchMSK, "Switch between model rendering or skeleton rendering");
-
   //////////////////////////////////////////////////////////////////////////
-  
   PNConsole::addFonction("rcspeed", &PNGUIGame::_commandRenderCameraMovingSpeed, "Set render camera moving speed, 1.0=normal");
-
   //////////////////////////////////////////////////////////////////////////
-  
   PNConsole::addFonction("newsound", &PNGUIGame::_commandNewSound, "Loads a new sound in the sound map, parameters : string SoundName | string SoundFile | bool loop [TRUE | FALSE] | float XPosition | pnfloat YPosition | pnfloat ZPosition");
   PNConsole::addFonction("playsound", &PNGUIGame::_commandPlaySound, "Plays an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\"");
   PNConsole::addFonction("stopsound", &PNGUIGame::_commandStopSound, "Stops an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\"");
@@ -494,30 +483,51 @@ _myri = PNRendererInterface::getInstance();
   PNConsole::addFonction("loadedsounds", &PNGUIGame::_commandLoadedSounds, "Shows already loaded sounds, no params");
   PNConsole::addFonction("changesoundvolume", &PNGUIGame::_commandChangeSoundVolume, "changes a specific sound volume, parameter : string SoundName, float value (between 0.0 and 1.0)");
   //////////////////////////////////////////////////////////////////////////
-  
   PNConsole::addFonction("physics", &PNGUIGame::_setPhysics, "Physical simulation, 0=false or 1=true");
   PNConsole::addFonction("addforce", &PNGUIGame::_addForce, "Add force to a physical object, addforce object_number x y z duration");
   PNConsole::addFonction("setdyn", &PNGUIGame::_setAlldynamic, "Set all physical objects dynamic, 0=false or 1=true");
-
   //////////////////////////////////////////////////////////////////////////
-
   PNConsole::addFonction("setscriptingdebug", &PNGUIGame::_setScriptingDebug, "Activates or deactivates the scripting's debug logging to file \"pnscript.log\", 0=false or 1=true");
-
   //////////////////////////////////////////////////////////////////////////
-  
   PNConsole::addFonction("showwp", &PNGUIGame::_commandShowWP, "Show WayPoints");
   PNConsole::addFonction("hidewp", &PNGUIGame::_commandHideWP, "Hide WayPoints");
   PNConsole::addFonction("moveto", &PNGUIGame::_commandMoveTo, "Move selected character to given position");
 
- // PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE_HIDE, EventCallback(this, &PNGUIGame::inputHandleModifierState));
- // PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE_SHOW, EventCallback(this, &PNGUIGame::inputHandleModifierState));
-PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE, EventCallback(this, &PNGUIGame::inputHandleModifierState));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_OFF, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
 }
 
 PNGUIGame::~PNGUIGame()
 {
+  PNConsole::delFonction("loadmap");
+  /////////////////////////////////////////////
+  PNConsole::delFonction("rendersk");
+  PNConsole::delFonction("renderm");
+  PNConsole::delFonction("looping");
+  PNConsole::delFonction("animspeed");
+  PNConsole::delFonction("switchmsk");
+  /////////////////////////////////////////////
+  PNConsole::delFonction("rcspeed");
+  /////////////////////////////////////////////
+  PNConsole::delFonction("newsound");
+  PNConsole::delFonction("playsound");
+  PNConsole::delFonction("stopsound");
+  PNConsole::delFonction("pausesound");
+  PNConsole::delFonction("loadedsounds");
+  PNConsole::delFonction("changesoundvolume");
+  /////////////////////////////////////////////
+  PNConsole::delFonction("physics");
+  PNConsole::delFonction("addforce");
+  PNConsole::delFonction("setdyn");
+  /////////////////////////////////////////////
+  PNConsole::delFonction("setscriptingdebug");
+  /////////////////////////////////////////////
+  PNConsole::delFonction("showwp");
+  PNConsole::delFonction("hidewp");
+  PNConsole::delFonction("moveto");
+
+  _rootWin->destroy();
 }
 
 /*!
@@ -875,5 +885,18 @@ default:
   }
 }
 
+
+void  PNGUIGame::show()
+{
+  _rootWin->setMutedState(false);
+  _rootWin->show();
+  _rootWin->activate();
+}
+
+void  PNGUIGame::hide()
+{
+  _rootWin->setMutedState(true);
+  _rootWin->hide();
+}
 //////////////////////////////////////////////////////////////////////////
 };

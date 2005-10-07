@@ -28,6 +28,7 @@
  */
 
 #include "PNGUIMenuRootManager.hpp"
+#include "PNGUIGame.hpp"
 
 using namespace PN;
 
@@ -41,11 +42,11 @@ namespace PN
 		//_guiLoadGame = NULL;
 		//_guiOptions = NULL;
 		//_guiCredits = NULL;
-		//PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_MENUROOT, EventCallback(this, &PNGUIMenuRootManager::launchMenuRoot));
-		//PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_LOAD_GAME, EventCallback(this, &PNGUIMenuRootManager::launchMenuLoad));
+		PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_MENUROOT, EventCallback(this, &PNGUIMenuRootManager::launchMenuRoot));
+		//PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_LOAD, EventCallback(this, &PNGUIMenuRootManager::launchMenuLoad));
 		//PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_OPTIONS, EventCallback(this, &PNGUIMenuRootManager::launchMenuOptions));
 		//PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_CREDITS, EventCallback(this, &PNGUIMenuRootManager::launchMenuCredits));
-		//PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_NEWGAME, EventCallback(this, &PNGUIMenuRootManager::launchNewGame));
+		PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_NEWGAME, EventCallback(this, &PNGUIMenuRootManager::launchNewGame));
 		//PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_LOADGAME, EventCallback(this, &PNGUIMenuRootManager::launchLoadGame));
 		//PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_QUIT, EventCallback(this, &PNGUIMenuRootManager::launchQuit));
 	}
@@ -80,6 +81,7 @@ namespace PN
 	void	PNGUIMenuRootManager::launchNewGame(pnEventType type, PNObject* source, PNEventData* data)
 	{
 		deleteAllInstances();
+		PNGUIGame*		guigame = new PNGUIGame();
 		//TODO : send event start game
 	}
 
@@ -91,9 +93,12 @@ namespace PN
 
 	void	PNGUIMenuRootManager::launchQuit(pnEventType type, PNObject* source, PNEventData* data)
 	{
+	
 		//TODO : popup QUIT, if yes send event quit
 		// if yes : deleteAllInstances();
 	}
+
+	
 
 	void	PNGUIMenuRootManager::launchMenuRoot(pnEventType type, PNObject* source, PNEventData* data)
 	{

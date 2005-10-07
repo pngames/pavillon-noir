@@ -101,6 +101,8 @@ Char* contains the sentence to write
 */
 void	PNGUIConsole::_writeLine(const pnchar* format)
 { 
+  PNLOCK(this);
+
   if (PNConsole::_consoleLogFile != NULL)
   {
 	std::string tmp = format;
@@ -124,6 +126,8 @@ Char* contains the sentence to write
 */
 void	PNGUIConsole::_writeError(pnloglevel lvl, const pnchar* format)
 { 
+  PNLOCK(this);
+
   std::string tmp;
   std::string strformat = format;
   CEGUI::ListboxTextItem* item;
@@ -184,6 +188,8 @@ void	PNGUIConsole::_writeError(pnloglevel lvl, const pnchar* format)
 
 void	PNGUIConsole::_writePerror(pnloglevel lvl, const pnchar* format)
 { 
+  
+
   _writeError(lvl, format);
 }
 
@@ -212,6 +218,8 @@ CEGUI item to add into the list box
 */
 void  PNGUIConsole::addItemToListBox(CEGUI::ListboxTextItem* item)
 {
+  PNLOCK(this);
+
   CEGUI::Listbox* lb = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNConsole/ListBox");
 
   _ConsoleListboxItem.push_back(item);
