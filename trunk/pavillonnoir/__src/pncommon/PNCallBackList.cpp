@@ -30,10 +30,8 @@
 #include "pndefs.h"
 #include "pnevent.h"
 
-#include "PNEventManager.hpp"
 #include "PNCallBackList.hpp"
 
-namespace fs = boost::filesystem;
 using namespace PN;
 
 namespace PN {
@@ -41,11 +39,18 @@ namespace PN {
 
 void	PNCallBackList::addCallback(const EventCallback& callback)
 {
+  PNLOCK(this);
+
   _callbacks.insert(callback);
 }
 
 void	PNCallBackList::deleteCallback(const EventCallback& callback)
 {
+  PNLOCK(this);
+
+  /*for (CallbackSet::iterator it = _callbacks.begin(); it != _callbacks.end(); ++it)
+	if (*it == callback)
+	  _callbacks.erase(callback);*/
   _callbacks.erase(callback);
 }
 
@@ -58,8 +63,12 @@ void  PNCallBackList::sendEvent(pnevent* event)
 
 void  PNCallBackList::sendEvent(pnEventType type, PNObject* source, PNEventData* data)
 {
-  for (CallbackSet::iterator i = _callbacks.begin(); i != _callbacks.end(); ++i)
-	(*i)(type, source, data);
+  PNLOCK(this);
+
+  CallbackSet tmp = _callbacks;
+
+  for (CallbackSet::iterator it = tmp.begin(); it != tmp.end(); ++it)
+	(*it)(type, source, data);
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -369,14 +369,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncommon\PN3DCamera.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PN3DCamera.hpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pncommon\PN3DGround.cpp"
 				>
 			</File>
@@ -592,38 +584,6 @@
 				RelativePath="..\..\..\__src\pncommon\PNSoundInterface.hpp"
 				>
 			</File>
-			<Filter
-				Name="render"
-				>
-				<File
-					RelativePath="..\..\..\__src\pncommon\pnrender.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNRendererInterface.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNRendererInterface.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNRendererObject.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNRenderMaterial.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNTexture.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNVideoEventData.hpp"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="plugin"
@@ -762,6 +722,46 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNExportManager.hpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="render"
+			>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PN3DCamera.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PN3DCamera.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\pnrender.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNRendererInterface.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNRendererInterface.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNRendererObject.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNRenderMaterial.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNTexture.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNVideoEventData.hpp"
 				>
 			</File>
 		</Filter>

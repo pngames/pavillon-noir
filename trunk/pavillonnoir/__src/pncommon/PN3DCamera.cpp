@@ -47,6 +47,12 @@ PN3DCamera::PN3DCamera()
 {
   _objType = OBJTYPE_CAMERA;
 
+  _target = NULL;
+
+  _viewFar = 20000.0f;
+  _viewNear = 0.1f;
+  _viewFov = 45.0f;
+
   PNEventManager::getInstance()->addCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PN3DCamera::_updateFrustrum));
 }
 
@@ -63,11 +69,11 @@ PN3DCamera::~PN3DCamera()
 
 //////////////////////////////////////////////////////////////////////////
 
-/// Replace with proper function
-static bool
-is3DObjVisible(PN3DObject* obj)
+pnbool
+PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 {
-  // calc view
+  
+
   return true;
 }
 
@@ -89,13 +95,13 @@ PN3DCamera::_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed)
   {
 	if (oldIt == _list3DObj.end() || *oldIt != it->second)
 	{
-	  if (is3DObjVisible(it->second))
+	  if (_is3DObjVisible(it->second))
 	  {
 		_list3DObj.insert(oldIt, it->second);
 		PNEventManager::getInstance()->addEvent(PN_EVENT_F_IN, this, new PNFrustrumEventData(it->second));
 	  }
 	}
-	else if (!is3DObjVisible(it->second))
+	else if (!_is3DObjVisible(it->second))
 	{
 	  PN3DObjList::iterator	itmp = oldIt++;
 	  _list3DObj.erase(itmp);

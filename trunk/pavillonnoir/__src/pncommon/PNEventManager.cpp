@@ -277,15 +277,19 @@ PNEventManager::run()
 	PNObject* source;
 	PNEventData* data;
 
-	{ boost::recursive_mutex::scoped_lock  sl(_eventsMutex);
+	PNLOCK_BEGIN(this);
+	{
 	  pnevent& event = _events.front();
 
 	  type = event.type;
 	  source = event.source;
 	  data = event.data;
 	}
+	PNLOCK_END(this);
 
 	sendEvent(type, source, data);
+
+	PNLOCK(this);
 
     _events.pop();
   }
@@ -306,7 +310,7 @@ void	PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* d
 
   pnevent eventParams(type, source, data);
 
-  boost::recursive_mutex::scoped_lock  sl(_eventsMutex);
+  PNLOCK(this);
 
   _events.push(eventParams);
 

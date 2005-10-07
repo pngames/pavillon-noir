@@ -31,6 +31,7 @@
 # define _PNCALLBACKLIST_HPP_
 
 #include <set>
+#include <boost/thread/recursive_mutex.hpp>
 
 #include "PNObject.hpp"
 #include "IPNSerializable.hpp"
@@ -42,24 +43,27 @@ class PNEventData;
 struct pnevent;
 
 /// Callback manager for one event type
-class PNAPI		PNCallBackList: public PNObject, public IPNSerializable
+class PNAPI					PNCallBackList: public PNObject, public IPNSerializable
 {
+public:
+  boost::recursive_mutex	_mutex;
+private:
   /// Event callbacks list type
   typedef std::set<EventCallback>	CallbackSet;
   /// Event callbacks list
-  CallbackSet	_callbacks;
+  CallbackSet				_callbacks;
 public:
-  /// Attach new callback
-  virtual void	addCallback(const EventCallback& callback);
+  /// Attach new callback. If callback allready exist inti the list, do nothing
+  virtual void				addCallback(const EventCallback& callback);
   /// Detach callback
-  virtual void	deleteCallback(const EventCallback& callback);
+  virtual void				deleteCallback(const EventCallback& callback);
 
   //////////////////////////////////////////////////////////////////////////
 
-  /// Call all  callback with these arguments
-  virtual void  sendEvent(pnevent* event);
-  /// Call all  callback with these arguments
-  virtual void  sendEvent(pnEventType type, PNObject* source, PNEventData* data);
+  /// Call all callback with these arguments
+  virtual void				sendEvent(pnevent* event);
+  /// Call all callback with these arguments
+  virtual void				sendEvent(pnEventType type, PNObject* source, PNEventData* data);
 };
 
 //////////////////////////////////////////////////////////////////////////
