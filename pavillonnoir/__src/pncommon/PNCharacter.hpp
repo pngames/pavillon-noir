@@ -106,7 +106,6 @@ public:
   pnCharacType							getCharacType();
 
   //////////////////////////////////////////////////////////////////////////
-private:
   void									setState(pnIAState st);
   void									restoreState();
 };
