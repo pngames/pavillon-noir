@@ -149,35 +149,35 @@ private:
 public:
 
   /// Run event manager in background task
-  void					init();
+  void							init();
   /// Stop event manager
-  void					stop();
+  void							stop();
 
   //////////////////////////////////////////////////////////////////////////
 
   /// Add event of type \c type on stack (non blocking)
-  void					addEvent(pnEventType type, PNObject* source, PNEventData* data, bool destruct = true);
+  void							addEvent(pnEventType type, PNObject* source, PNEventData* data, bool destruct = true);
 
   /// Send event directly (blocking)
-  void					sendEvent(pnEventType type, PNObject* source, PNEventData* data);
+  void							sendEvent(pnEventType type, PNObject* source, PNEventData* data);
 
   //////////////////////////////////////////////////////////////////////////
   
   /// Get the event name by type identifier
-  const std::string&	getNameByType(pnEventType type);
+  const std::string&			getNameByType(pnEventType type);
   /// Get the event type identifier by name
-  pnEventType			getTypeByName(const std::string& name);
+  pnEventType					getTypeByName(const std::string& name);
 
   //////////////////////////////////////////////////////////////////////////
 
 private:
   /// Table of callback list arranged by type
-  PNCallBackList		_callbackList[PN_NUMBER_EVENTS];
+  PNCallBackList				_callbackList[PN_NUMBER_EVENTS];
 public:
   /// Attach new callback to events of type \c type
-  void					addCallback(pnEventType type, const EventCallback& callback);
+  void							addCallback(pnEventType type, const EventCallback& callback);
   /// Detach callback from events of type \c type
-  void					deleteCallback(pnEventType type, const EventCallback& callback);
+  void							deleteCallback(pnEventType type, const EventCallback& callback);
 };
 
   //////////////////////////////////////////////////////////////////////////
