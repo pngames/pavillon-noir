@@ -1,10 +1,13 @@
 
 function PN3DSkeletonObjectClass(id)
+	-- make inheritance -----
 	pnprint("PN3DSkeletonObjectClass creating\n")
     local obj = {__index = PN3DSkeletonObject:new_local()}
-    tolua.inherit(obj, obj.__index)
+	obj.__instance  = obj.__index
     setmetatable(obj, obj)
-    obj.__instance  = obj.__index
+    tolua.inherit(obj, obj.__instance) -- make obj be recognize as PN3DSkeletonObject
+	obj.className = "PN3DSkeletonObjectClass"
+    -------------------------
     obj:setId(id)
     obj.id = id
     pnprint("PN3DSkeletonObjectClass creating 2\n")
