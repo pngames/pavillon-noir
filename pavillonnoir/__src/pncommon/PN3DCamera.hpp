@@ -71,8 +71,14 @@ public:
   const PN3DObjList&		getListObj();
 protected:
   PN3DObjList				_list3DObj;
-public:
-  void						_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed);
+  pnbool					_is3DObjVisible(PN3DObject* obj);
+  void					  	_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  pnfloat					_viewFar;
+  pnfloat					_viewNear;
+  pnfloat					_viewFov;
 
   //////////////////////////////////////////////////////////////////////////
 
