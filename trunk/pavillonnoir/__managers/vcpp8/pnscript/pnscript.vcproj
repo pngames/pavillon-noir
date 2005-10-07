@@ -229,6 +229,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pnscript\PNLuaVm.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pnscript\PNScriptPlugDesc.hpp"
 				>
 			</File>
