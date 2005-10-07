@@ -1,8 +1,6 @@
 function PlayerClass(id)
 	-- make inheritance -----
-	local Player = {__index = PN3DSkeletonObjectClass(id)}
-	setmetatable(Player, Player)
-	tolua.inherit(Player , Player.__insatnce) -- make Player be recognize as PN3DSkeletonObject    
+	local Player = inheritFrom(PN3DSkeletonObjectClass(id))
 	Player.className = "Player"
 	-------------------------
 	---------------setting camera behavior-----------------
