@@ -167,6 +167,7 @@ PNGLRenderer::init()
   iluInit();
   ilutInit();
   ilutRenderer(ILUT_OPENGL);
+  ilutEnable(ILUT_OPENGL_CONV);
 }
 
 void
@@ -306,12 +307,8 @@ PNGLRenderer::resizeGLWindow(GLsizei width, GLsizei height)
   if (!height)
 	height = 1;
 
-  glViewport(0, 0, width, height);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 20000.0f);
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
+  _renderCam._width = width;
+  _renderCam._height = height;
 }
 
 void
@@ -392,8 +389,6 @@ PNGLRenderer::run()
 	  //glEnable(GL_LIGHTING);
 
 	  glLightfv(GL_LIGHT0, GL_POSITION, Light1Pos);
-
-	  std::cout << 3 << " [UPDATE] start render objets" << std::endl;
 
 	  PNLOCK_BEGIN(&_renderCam);
 	  {

@@ -134,7 +134,7 @@ private:
   typedef std::queue<pnevent>	STACKEVENTS;
   /// Events stack
   STACKEVENTS					_events;
-  boost::recursive_mutex		_eventsMutex;
+  boost::recursive_mutex		_mutex;
   /// Indicate if event manager running, used to stop it
   pnbool						_run;
 
@@ -174,7 +174,7 @@ private:
   /// Table of callback list arranged by type
   PNCallBackList				_callbackList[PN_NUMBER_EVENTS];
 public:
-  /// Attach new callback to events of type \c type
+  /// Attach new callback to events of type \c type. If callback allready exist inti the list, do nothing
   void							addCallback(pnEventType type, const EventCallback& callback);
   /// Detach callback from events of type \c type
   void							deleteCallback(pnEventType type, const EventCallback& callback);

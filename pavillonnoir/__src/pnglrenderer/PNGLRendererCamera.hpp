@@ -42,11 +42,19 @@ class			PNGLRendererCamera : public PN3DCamera
 {
   friend class PNGLRenderer;
 
+  EventCallback	_cfCallback;
+  EventCallback	_ufCallback;
+
 public:
   void			updateViewMatrix();
   void			calcFrustumPlanes();
 
   bool			pointInFrustrum(pnfloat x, pnfloat y, pnfloat z);
+
+  void			resizeGLWindow(pnfloat width, pnfloat height);
+
+  void			setUpdateGLFov(pnbool updatePersp);
+
   //////////////////////////////////////////////////////////////////////////
 private:
   PNGLRendererCamera();
@@ -60,6 +68,14 @@ private:
   //////////////////////////////////////////////////////////////////////////
 
   void			_cleanFrustrum(pnEventType type, PNObject* source, PNEventData* ed);
+  void			_updateFOV(pnEventType type, PNObject* source, PNEventData* ed);
+
+  //////////////////////////////////////////////////////////////////////////
+private:
+  pnfloat		_width;
+  pnfloat		_height;
+
+  pnbool		_updateGLFov;
 };
 //////////////////////////////////////////////////////////////////////////
 };
