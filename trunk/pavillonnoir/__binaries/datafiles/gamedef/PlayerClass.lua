@@ -1,7 +1,10 @@
 function PlayerClass(id)
+	-- make inheritance -----
 	local Player = {__index = PN3DSkeletonObjectClass(id)}
-	setmetatable(Player, Player)    
+	setmetatable(Player, Player)
+	tolua.inherit(Player , Player.__insatnce) -- make Player be recognize as PN3DSkeletonObject    
 	Player.className = "Player"
+	-------------------------
 	---------------setting camera behavior-----------------
 	Player.camera = PN3DCamera:getRenderCam()
 	Player.camera:setTarget(Player)
@@ -11,9 +14,7 @@ function PlayerClass(id)
     Player.camera:setMovingMode(PN3DObject.MMODE_VIEW_ABS_LOCKED)
     
 	-------------------------------------------------------
-	
-	
-	
+		
 	Player.walkingSpeed = 0.5
 	Player.runningSpeed = 1.0
 	
@@ -21,8 +22,9 @@ function PlayerClass(id)
 	Player.actualSpeed = 0;
 	Player.actualMovingState = 0;
 	
-	
-	    ---------------------move events-----------------------
+	Player:setAnimSpeed(4.0);
+	Player:setEnableLoop(true);
+	---------------------move events-----------------------
 	function Player:onLuaActionMoveForward(state)
 		pnprint(self.id)
 		pnprint(":onLuaActionMoveForward\n")
