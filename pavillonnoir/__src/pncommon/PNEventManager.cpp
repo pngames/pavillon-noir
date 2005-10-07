@@ -27,8 +27,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#include <iostream>
-
 #include "pndefs.h"
 #include "pnevent.h"
 
@@ -232,13 +230,8 @@ PNEventManager::PNEventManager()
   
   //////////////////////////////////////////////////////////////////////////
   // SOUND
-
   _eventEnums["PN_EVENT_SOUND_PLAY"] = PN_EVENT_SOUND_PLAY;
   _eventNames[PN_EVENT_SOUND_PLAY] = "PN_EVENT_SOUND_PLAY";
-  _eventEnums["PN_EVENT_SOUND_CREATE"] = PN_EVENT_SOUND_CREATE;
-  _eventNames[PN_EVENT_SOUND_CREATE] = "PN_EVENT_SOUND_CREATE";
-  _eventEnums["PN_EVENT_SOUND_VOLUME"] = PN_EVENT_SOUND_VOLUME;
-  _eventNames[PN_EVENT_SOUND_VOLUME] = "PN_EVENT_SOUND_VOLUME";
 }
 
 PNEventManager::~PNEventManager()
@@ -308,7 +301,7 @@ void	PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* d
 
   if (_events.size() == 1)
   {
-	pnerror(PN_LOGLVL_INFO, "stack was empty (%i - %s)", type, getNameByType(type));
+	//pnerror(PN_LOGLVL_INFO, "stack was empty");
 
     _cond.notify_all();
   }
@@ -316,7 +309,7 @@ void	PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* d
 
 void	PNEventManager::sendEvent(pnEventType type, PNObject* source, PNEventData* data)
 {
-  _callbacktList[type].sendEvent(type, source, data);
+  _callbackList[type].sendEvent(type, source, data);
 }
 
 const std::string&	PNEventManager::getNameByType(pnEventType type)
@@ -333,12 +326,12 @@ pnEventType			PNEventManager::getTypeByName(const std::string& name)
 
 void	PNEventManager::addCallback(pnEventType type, const EventCallback& callback)
 {
-  _callbacktList[type].addCallback(callback);
+  _callbackList[type].addCallback(callback);
 }
 
 void	PNEventManager::deleteCallback(pnEventType type, const EventCallback& callback)
 {
-  _callbacktList[type].deleteCallback(callback);
+  _callbackList[type].deleteCallback(callback);
 }
 
 //////////////////////////////////////////////////////////////////////////
