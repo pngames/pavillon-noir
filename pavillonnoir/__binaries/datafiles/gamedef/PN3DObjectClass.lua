@@ -1,13 +1,16 @@
 
 function PN3DObjectClass(id)
-    local obj = PN3DObject:new_local()
-    -- obj.__index = obj
+    local obj = {}
+    local parent = PN3DObject:new_local()
+    tolua.inherit(obj, parent)
+    setmetatable(obj, {__index = parent})
+    obj.__instance  = parent
     obj.className = "PN3DObjectClass"
     obj:setId(id)
     obj.id = id
-    if (obj.id ~= "") then 
-		gameMap.entities.all[obj.id] = obj
-	end
+--    if (obj.id ~= "") then 
+--		gameMap.entities.all[obj.id] = obj
+--	end
     function  obj:onLuaUpdate(deltaTime)
 	  -- self.__index:update(deltaTime)
        self:update(deltaTime)

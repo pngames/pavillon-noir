@@ -1,11 +1,10 @@
 function PlayerClass(id)
-	local Player = PN3DSkeletonObjectClass(id)
-	Player.__index = Player
+	local Player = {__index = PN3DSkeletonObjectClass(id)}
+	setmetatable(Player, Player)    
 	Player.className = "Player"
 	---------------setting camera behavior-----------------
 	Player.camera = PN3DCamera:getRenderCam()
 	Player.camera:setTarget(Player)
-	--Dragon.
 	Player.camera:setTargetDirection(Player:getFrontDirection())
 	Player.camera:setTargetDistance(10)
     --Player.camera:setMovingMode(PN3DObject.MMODE_DISTANCE_ABS_LOCKED)
@@ -24,16 +23,17 @@ function PlayerClass(id)
 	
 	
 	    ---------------------move events-----------------------
-	--function Player:onLuaActionMoveForward(state)
-		--pnprint(self.id)
-		--pnprint(":onLuaActionMoveForward\n")	
-		--if (state == true) then
---			self:startAnimation(0, 0)
---		else
---			self:stopAnimation()
---		end 
---		self.__index:onLuaActionMoveForward(state)
---	end	
+	function Player:onLuaActionMoveForward(state)
+		pnprint(self.id)
+		pnprint(":onLuaActionMoveForward\n")
+		self.__index:onLuaActionMoveForward(state)	
+		if (state == true) then
+			self:startAnimation(0, 0)
+		else
+			self:stopAnimation()
+		end 
+		
+	end	
 
 	
 	-------------------------------------------------------
