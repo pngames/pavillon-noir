@@ -61,9 +61,14 @@ typedef enum
   PN_EVENT_GAME_PAUSE,			/// pause game
   PN_EVENT_GAME_ACTION,			/// lunch a game action event	
 		
+  PN_EVENT_GUI_MENUROOT,
+  PN_EVENT_GUI_LOAD,
+  PN_EVENT_GUI_OPTIONS,
+  PN_EVENT_GUI_CREDITS,
+  PN_EVENT_GUI_NEWGAME,
+  PN_EVENT_GUI_LOADGAME,
+
   PN_EVENT_CONSOLE,
-  //PN_EVENT_CONSOLE_SHOW,		/// Console visible
-  //PN_EVENT_CONSOLE_HIDE,		/// Console invisible
 
   PN_EVENT_SDL_GRAB_OFF,		/// When SDL mouse is visible
   PN_EVENT_SDL_GRAB_ON,			/// When SDL mouse is not visible
