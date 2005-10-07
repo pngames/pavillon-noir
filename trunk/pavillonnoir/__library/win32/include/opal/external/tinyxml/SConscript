@@ -1,10 +1,10 @@
 Import('env')
 
 sources = Split("""
-	ODEJoint.cpp
-	ODESimulator.cpp
-	ODESolid.cpp
-	ODESpace.cpp
+	tinystr.cpp
+	tinyxml.cpp
+	tinyxmlerror.cpp
+	tinyxmlparser.cpp
 """)
 
 objects = env.SharedObject(sources)
