@@ -18,11 +18,6 @@ PNGLRENDERER:
 	- en format de fichier special skybox
 	- dans l'editeur
 
-________
-EDITEUR:
-
-* [max] mettre les proprietes des objets modifies dans l'editeur au niveau de la map (et non dans un pno). Comme ca on considerera le pno comme les proprietes par defaut. Ca permet de pouvoir prendre en comptes des modif sans creer un nouveau pno.
-
 _________
 GUI/CORE:
 
@@ -40,7 +35,7 @@ MAIN D'OEUVRE:
 
 * passer tout le monde sur le scripting sauf:
 	- 1 CEGUI
-	- 1 EDITEUR
+	- 1 Fox/CEGUI
 	- 1 IA
 	- 1 PHYSIQUE
 	- 1 RENDU
