@@ -130,5 +130,15 @@ function CharacterClass(id)
 		end 
 	end
 
+	function Character:onFrustrumIn(target)
+		pnprint(target.id)
+		pnprint(" entered Frustrum\n")
+	end
+
+	function Character:onFrustrumOut(target)
+		pnprint(target.id)
+		pnprint(" exited Frustrum\n")
+	end
+
 	return Character	
 end

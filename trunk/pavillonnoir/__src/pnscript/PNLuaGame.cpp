@@ -49,6 +49,8 @@
 #include "pnbind.h"
 #include "PNGameEventData.hpp"
 #include "PN3DCamera.hpp"
+#include "PNWaypoint.hpp"
+#include "PNCharacter.hpp"
 
 // debug printer
 #ifdef DEBUG
@@ -415,6 +417,34 @@ void  PNLuaGame::onColision(pnEventType evt, PNObject* source, PNEventData* data
 {
 }
 
+void  PNLuaGame::onFrustrumCharIn(pnEventType evt, PNObject* source, PNEventData* data)
+{
+  PNCharacter*	target = (PNCharacter*)((PNFrustrumEventData*)data)->obj;
+  PNCharacter*	s = (PNCharacter*)((PN3DCamera*)source)->getTarget();
+  std::string	luaOrder;
+
+  luaOrder = "gameMap.entities.all[";
+  luaOrder += s->getId().c_str();
+  luaOrder += "]:onFrustrumIn(gameMap.entities.all[";
+  luaOrder += target->getId().c_str();
+  luaOrder += "])";
+  lua_dostring(this->L, luaOrder.c_str());
+}
+
+void  PNLuaGame::onFrustrumCharOut(pnEventType evt, PNObject* source, PNEventData* data)
+{
+  PNCharacter*	target = (PNCharacter*)((PNFrustrumEventData*)data)->obj;
+  PNCharacter*	s = (PNCharacter*)((PN3DCamera*)source)->getTarget();
+  std::string	luaOrder;
+
+  luaOrder = "gameMap.entities.all[";
+  luaOrder += s->getId().c_str();
+  luaOrder += "]:onFrustrumOut(gameMap.entities.all[";
+  luaOrder += target->getId().c_str();
+  luaOrder += "])";
+  lua_dostring(this->L, luaOrder.c_str());
+}
+
 void  PNLuaGame::registerCallbacks()
 {
     PNEventManager::getInstance()->addCallback(PN_EVENT_ML_START, EventCallback(this, &PNLuaGame::onLoadMapStart));
@@ -428,8 +458,8 @@ void  PNLuaGame::registerCallbacks()
     PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_UPDATE, EventCallback(this, &PNLuaGame::onUpdate));
     PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT, EventCallback(this, &PNLuaGame::onInit));
     PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT_ENDED, EventCallback(this, &PNLuaGame::onInitEnded));
-
-
+    PNEventManager::getInstance()->addCallback(PN_EVENT_FCH_IN, EventCallback(this, &PNLuaGame::onFrustrumCharIn));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_FCH_OUT, EventCallback(this, &PNLuaGame::onFrustrumCharOut));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
