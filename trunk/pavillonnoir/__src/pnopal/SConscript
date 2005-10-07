@@ -15,6 +15,4 @@ obj.libpaths = [env.Dir('#./build/pncommon/').abspath]
 obj.libs = ['pncommon'+env['suffix']]
 obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath,env['OPAL_FLAGS']])
 obj.linkflags = ' '.join(['-lpncommon'+env['suffix'],env['OPAL_LDFLAGS']])
-if env['DEBUG'] == 1:
-	obj.linkflags = ' '.join([obj.linkflags,env['EFENCE_LDFLAGS']])
 obj.execute()
