@@ -26,3 +26,89 @@
 * Pavillon Noir; if not, write to the Free Software Foundation, Inc.,
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
+
+#include "PNGUIGameManager.hpp"
+#include "PNGUIMsgBox.hpp"
+#include "pnrender.h"
+
+using namespace PN;
+
+namespace PN
+{
+  PNGUIGameManager*				PNGUIGameManager::_instance = NULL;
+
+  PNGUIGameManager::PNGUIGameManager()
+  {
+	_currentState = NONE;
+	_guiGame = NULL;
+
+	PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_GAME_START, EventCallback(this, &PNGUIGameManager::launchInGame));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGameManager::quitGame));
+	
+  }
+
+  PNGUIGameManager::~PNGUIGameManager()
+  {
+	deleteAllInstances();
+	if (_instance != NULL)
+	  delete _instance;
+  }
+
+  PNGUIGameManager*	PNGUIGameManager::getInstance()
+  {
+	if (_instance == NULL)
+	  _instance = new PNGUIGameManager();
+
+	return _instance;
+  }
+
+  void PNGUIGameManager::deleteAllInstances()
+  {
+	if (_guiGame != NULL)
+	{
+	  delete (_guiGame);
+	  _guiGame = NULL;
+	}
+  }
+
+  void  PNGUIGameManager::launchInGame(pnEventType type, PNObject* source, PNEventData* data)
+  {
+	if (_guiGame == NULL)
+	  _guiGame = new PNGUIGame();
+
+
+	_guiGame->show();
+	_currentState = INGAME;
+  }
+
+  void  PNGUIGameManager::quitGame(pnEventType type, PNObject* source, PNEventData* data)
+  {
+	if (_currentState == NONE)
+	  return;
+
+	PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous quitter\nla partie en cours ?", PNGUIMsgBox::YES_NO, PNGUIMsgBox::MsgBoxCallback(this, &PNGUIGameManager::callbackQuit), _guiGame->getWindow());
+  }
+
+  void PNGUIGameManager::callbackQuit(const unsigned int& enu)
+  {
+	if (enu == PNGUIMsgBox::YES)
+	{
+	  deleteAllInstances();
+	  _currentState = NONE;
+	  // PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_ENDED, 0, NULL);
+	  //PNEventManager::getInstance()->addEvent(PN_EVENT_GUI_MENUROOT, NULL, NULL);
+	   PNRendererInterface::getInstance()->endRendering();
+	}
+  }
+
+  void PNGUIGameManager::hidePrevious()
+  {
+	switch (_currentState) 
+	{
+	case INGAME:
+	  _guiGame->hide();
+		break;
+	}
+  }
+
+}

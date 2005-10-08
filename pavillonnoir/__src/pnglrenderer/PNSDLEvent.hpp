@@ -43,7 +43,7 @@
 #include "PNInfoPanel.hpp"
 
 namespace PN{
-  class PNSDLEvent : public PNObject
+  class PNSDLEvent
   {
  
 	/*/////////////////////////////////////////////////////////////////////////////
