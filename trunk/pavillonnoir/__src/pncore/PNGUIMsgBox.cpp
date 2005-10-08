@@ -1,17 +1,35 @@
 #include "PNGUIMsgBox.hpp"
+#include "PNConsole.hpp"
 #include <iostream>
 using namespace PN;
 
 namespace PN
 {
   static int winID = 0;
-  PNGUIMsgBox::PNGUIMsgBox(const std::string& title, const std::string& text, unsigned int msgtype, const Callback& fonction, CEGUI::Window* parentWin)
+  static bool cursor = false;
+
+  PNGUIMsgBox::PNGUIMsgBox(const std::string& title, const std::string& text, unsigned int msgtype, const MsgBoxCallback& fonction, CEGUI::Window* parentWin)
   {
-	//	static int winID = 0;
+	
+	std::stringstream convert_tmp;
+	convert_tmp << (winID-1);
+	std::string str_tmp = "_msg_box_";
+	str_tmp += convert_tmp.str();
+
+	if (CEGUI::WindowManager::getSingleton().isWindowPresent(str_tmp.c_str()) == true)
+	{
+	  PNConsole::writeLine("A msgbox is already here !");
+	  return;
+	}
+	
 	std::stringstream convert;
 	convert << winID;
 	winID++;
 	fonctionCallback = fonction;
+
+	cursor = CEGUI::MouseCursor::getSingleton().isVisible();
+	if (cursor == false) 
+	  CEGUI::MouseCursor::getSingleton().show();
 
 	if (msgtype == CONF)
 	{
@@ -74,7 +92,6 @@ namespace PN
 		btnOK->setText("Ok");
 		_frameWin->addChildWindow(btnOK);
 		btnOK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickOk, this));
-
 	  }
 	  break;
 	case CONF:
@@ -96,7 +113,6 @@ namespace PN
 		break;
 	}
 
-	
 	_parentWin->addChildWindow(_frameWin);
 	_parentWin->setMutedState(true);
   }
@@ -293,6 +309,8 @@ std::cout << "IN eventMouseWheelConfHandler" << std::endl;
 		CEGUI::FrameWindow* tmpWin = (CEGUI::FrameWindow*)CEGUI::WindowManager::getSingleton().getWindow(tmp.c_str());
 		tmpWin->destroy();
 		_frameWin->destroy();
+		if (cursor == false)
+		  CEGUI::MouseCursor::getSingleton().hide();
 		fonctionCallback(msgt);
 	}
   }

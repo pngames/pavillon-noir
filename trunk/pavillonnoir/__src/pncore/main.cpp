@@ -56,6 +56,7 @@
 #include "PNConsole.hpp"
 
 #include "PNGUIMenuRootManager.hpp"
+#include "PNGUIGameManager.hpp"
 
 #include "PNGameInterface.hpp"
 
@@ -163,6 +164,7 @@ int	  main(int argc, char* argv[])
 
 	PNGUIMenuRootManager::getInstance();
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENUROOT, NULL, NULL);
+	PNGUIGameManager::getInstance();
 
 	//////////////////////////////////////////////////////////////////////////
 	///					Init of the event's manager						   ///

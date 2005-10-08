@@ -67,7 +67,8 @@ namespace PN
 {
   PNGUIMenuRoot::PNGUIMenuRoot()
   {
-	CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/MenuRoot.imageset");
+	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("MenuRootImage") == false)
+	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/MenuRoot.imageset");
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/MenuRoot.layout"); 
 
 	CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Load")->disable();
@@ -81,8 +82,9 @@ namespace PN
 
   PNGUIMenuRoot::~PNGUIMenuRoot()
   {
+	PNConsole::delFonction("loadlevel");
 	_mainSheet->destroy();
-	CEGUI::ImagesetManager::getSingleton().destroyImageset("./datafiles/imagesets/MenuRoot.imageset");
+	
   }
 
   void PNGUIMenuRoot::setupEventHandlers()
@@ -268,6 +270,11 @@ namespace PN
 	//win->show();
 	_mainSheet->setMutedState(false);
 	_mainSheet->show();
+  }
+
+  CEGUI::Window*  PNGUIMenuRoot::getWindow()
+  {
+	return (_mainSheet);
   }
 
 };

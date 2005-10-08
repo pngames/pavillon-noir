@@ -45,12 +45,14 @@ namespace PN{
   public:
   private:
 	CEGUI::Window* _mainSheet;
+	CEGUI::Imageset* _imageSet;
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
 	void  hide();
 	void  show();
+	CEGUI::Window*	getWindow();
   private:
 	 bool overButton(const CEGUI::EventArgs& e);
 	bool  handleNew(const CEGUI::EventArgs& e);

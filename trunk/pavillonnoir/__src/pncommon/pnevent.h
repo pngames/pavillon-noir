@@ -68,10 +68,13 @@ typedef enum
   PN_EVENT_GUI_NEWGAME,
   PN_EVENT_GUI_LOADGAME,
 
+  PN_EVENT_GUI_GAME_START,
+
   PN_EVENT_CONSOLE,
 
   PN_EVENT_SDL_GRAB_OFF,		/// When SDL mouse is visible
   PN_EVENT_SDL_GRAB_ON,			/// When SDL mouse is not visible
+  PN_EVENT_SDL_ESC,
 
   PN_EVENT_INFO_PANEL,
 
