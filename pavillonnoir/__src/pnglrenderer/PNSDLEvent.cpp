@@ -212,7 +212,7 @@ PNSDLEvent::PNSDLEvent()
   SDL_WM_GrabInput(SDL_GRAB_ON);
   SDL_ShowCursor(SDL_DISABLE);
 
-  PNEventManager::getInstance()->sendEvent(PN_EVENT_SDL_GRAB_ON, this, NULL);
+  PNEventManager::getInstance()->addEvent(PN_EVENT_SDL_GRAB_ON, NULL, NULL);
 }
 
 PNSDLEvent::~PNSDLEvent()
@@ -276,12 +276,12 @@ void	PNSDLEvent::handleKeyMouse(SDL_MouseButtonEvent* event, bool state)
 	  SDL_ShowCursor(SDL_ShowCursor(SDL_QUERY) == SDL_ENABLE ? SDL_DISABLE : SDL_ENABLE);
 	  if (SDL_WM_GrabInput(SDL_GRAB_QUERY) == SDL_GRAB_ON)
 	  {
-		PNEventManager::getInstance()->sendEvent(PN_EVENT_SDL_GRAB_OFF, this, NULL);
+		PNEventManager::getInstance()->addEvent(PN_EVENT_SDL_GRAB_OFF, NULL, NULL);
 		SDL_WM_GrabInput(SDL_GRAB_OFF);
 	  }
 	  else
 	  {
-		PNEventManager::getInstance()->sendEvent(PN_EVENT_SDL_GRAB_ON, this, NULL);
+		PNEventManager::getInstance()->addEvent(PN_EVENT_SDL_GRAB_ON, NULL, NULL);
 		SDL_WM_GrabInput(SDL_GRAB_ON);
 	  }
 	  CEGUI::System::getSingleton().injectMouseButtonUp(CEGUI::RightButton);
@@ -349,15 +349,16 @@ void	PNSDLEvent::handleKeyPress(SDL_keysym*	keysym, bool state)
 	switch (keysym->sym)  
 	{
 	case SDLK_ESCAPE:
-	  PNRendererInterface::getInstance()->endRendering();
+	  PNEventManager::getInstance()->addEvent(PN_EVENT_SDL_ESC, NULL, NULL);
+	  //PNRendererInterface::getInstance()->endRendering();
 	  break ;
 	case SDLK_F1:
 	 // std::cout << "sdl F1" << std::endl;
-	  PNEventManager::getInstance()->sendEvent(PN_EVENT_CONSOLE, this, NULL);
+	  PNEventManager::getInstance()->addEvent(PN_EVENT_CONSOLE, NULL, NULL);
 	  break ;
 	case SDLK_F11:
 	  // std::cout << "sdl F1" << std::endl;
-	  PNEventManager::getInstance()->sendEvent(PN_EVENT_INFO_PANEL, this, NULL);
+	  PNEventManager::getInstance()->addEvent(PN_EVENT_INFO_PANEL, NULL, NULL);
 	  break ;
 	default:
 	  break ;

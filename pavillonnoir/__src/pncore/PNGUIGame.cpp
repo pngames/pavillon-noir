@@ -527,6 +527,10 @@ PNGUIGame::~PNGUIGame()
   PNConsole::delFonction("hidewp");
   PNConsole::delFonction("moveto");
 
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_CONSOLE, EventCallback(this, &PNGUIGame::inputHandleModifierState));
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_GRAB_OFF, EventCallback(this, &PNGUIGame::inputHandleModifierState));
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
+
   _rootWin->destroy();
 }
 
@@ -897,6 +901,11 @@ void  PNGUIGame::hide()
 {
   _rootWin->setMutedState(true);
   _rootWin->hide();
+}
+
+CEGUI::Window*  PNGUIGame::getWindow()
+{
+  return (_rootWin);
 }
 //////////////////////////////////////////////////////////////////////////
 };

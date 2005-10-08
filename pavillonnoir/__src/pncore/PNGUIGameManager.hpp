@@ -26,3 +26,60 @@
 * Pavillon Noir; if not, write to the Free Software Foundation, Inc.,
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
+
+#ifndef _PNGUIGAMEMANAGER_HPP_
+# define _PNGUIGAMEMANAGER_HPP_
+
+#include "pndefs.h"
+#include "pnevent.h"
+
+#include "PNGUIGame.hpp"
+
+namespace PN{
+
+  class PNGUIGameManager
+  {
+	typedef enum
+	{
+	  INGAME,
+	  PAUSE,
+	  INVENTORY,
+	  DISCUTION,
+	  NONE
+	} gameStates;
+
+	/*/////////////////////////////////////////////////////////////////////////////
+	/                                   Properties                                /
+	/////////////////////////////////////////////////////////////////////////////*/
+  public:
+	gameStates					_currentState;
+  protected:
+  private:
+	PNGUIGame*					_guiGame;
+	static PNGUIGameManager*	_instance;
+	/*/////////////////////////////////////////////////////////////////////////////
+	/                                    Methods                                  /
+	/////////////////////////////////////////////////////////////////////////////*/
+  public:
+	static PNGUIGameManager*			getInstance();
+  protected:
+  private:
+	void						deleteAllInstances();
+	void						launchInGame(pnEventType type, PNObject* source, PNEventData* data);
+	void						quitGame(pnEventType type, PNObject* source, PNEventData* data);
+	void						hidePrevious();
+	void					callbackQuit(const unsigned int& enu);
+
+	/*/////////////////////////////////////////////////////////////////////////////
+	/                           Constructors / Destructor                         /
+	/////////////////////////////////////////////////////////////////////////////*/
+  public:
+	PNGUIGameManager();
+  protected:
+  private:
+	~PNGUIGameManager();
+  };
+}
+
+
+#endif /*_PNGUIGAMEMANAGER_HPP_*/

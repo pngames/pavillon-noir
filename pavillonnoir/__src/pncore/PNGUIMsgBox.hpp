@@ -24,11 +24,11 @@ namespace PN
 	  CONF
 	} msgboxtype;
 
-	typedef fastdelegate::FastDelegate1<const unsigned int&> Callback;
+	typedef fastdelegate::FastDelegate1<const unsigned int&> MsgBoxCallback;
 
   protected:
   private:
-	Callback			fonctionCallback;
+	MsgBoxCallback			fonctionCallback;
 	CEGUI::FrameWindow*	_frameWin;
 	CEGUI::StaticText*	_msgTxt;
 	CEGUI::Window*		_parentWin;
@@ -41,6 +41,7 @@ namespace PN
 	std::string			_actionName;
 	std::string			_argsKind;
 	CEGUI::EventArgs	_ceguiArgs;
+	bool	_cursorVisibility;
 	//CEGUI::Key			_ceguiKey;
 	
 
@@ -69,7 +70,7 @@ namespace PN
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
-	PNGUIMsgBox(const std::string& title, const std::string& text, unsigned int msgtype, const Callback& fonction, CEGUI::Window* parentWin = NULL);
+	PNGUIMsgBox(const std::string& title, const std::string& text, unsigned int msgtype, const MsgBoxCallback& fonction, CEGUI::Window* parentWin = NULL);
 	//PNGUIMsgBox(const std::string& text, unsigned int msgtype, const Callback& fonction, const std::string& actionName, CEGUI::Window* parentWin = NULL);
 	~PNGUIMsgBox();
   };
