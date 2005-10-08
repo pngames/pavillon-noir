@@ -1,6 +1,5 @@
 function inheritFrom(parent)
 	local child = {__index = parent}
-	child
 	setmetatable(child, child)
 	tolua.inherit(child , parent.__instance) -- make child be recognized as parent c_instance
 	return child
