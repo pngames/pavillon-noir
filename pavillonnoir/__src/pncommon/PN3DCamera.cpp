@@ -27,6 +27,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+#include <iostream>
+
 #include "pndefs.h"
 #include "pnmath.h"
 #include "pnevent.h"
@@ -38,6 +40,7 @@
 
 namespace fs = boost::filesystem;
 using namespace PN;
+using namespace std;
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -52,8 +55,10 @@ PN3DCamera::PN3DCamera()
   _viewFar = 20000.0f;
   _viewNear = 0.1f;
   _viewFov = 45.0f;
+  _viewRadFov = (pnfloat)DEGREE_TO_RADIAN(_viewFov);
 
-  PNEventManager::getInstance()->addCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PN3DCamera::_updateFrustrum));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_MP_STARTED, EventCallback(this, &PN3DCamera::_onMPStarted));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PN3DCamera::_onMPEnded));
 }
 
 PN3DCamera::PN3DCamera(PN3DObject* object)
@@ -64,17 +69,71 @@ PN3DCamera::PN3DCamera(PN3DObject* object)
 
 PN3DCamera::~PN3DCamera()
 {
-  PNEventManager::getInstance()->deleteCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PN3DCamera::_updateFrustrum));
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_MP_STARTED, EventCallback(this, &PN3DCamera::_onMPStarted));
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PN3DCamera::_onMPEnded));
 }
 
 //////////////////////////////////////////////////////////////////////////
 
+void
+PN3DCamera::_onMPStarted(pnEventType type, PNObject* source, PNEventData* ed)
+{
+  PNEventManager::getInstance()->addCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PN3DCamera::_updateFrustrum));
+}
+
+void
+PN3DCamera::_onMPEnded(pnEventType type, PNObject* source, PNEventData* ed)
+{
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PN3DCamera::_updateFrustrum));
+}
+
 pnbool
 PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 {
-  
+  PNLOCK(obj);
 
-  return true;
+  PNVector3f	targetVector = obj->getCoord();
+  targetVector -= _coord;
+
+  PNVector3f	frontDirection = _orient * _frontDirection.getVector();
+
+  cout << "#####################################" << endl;
+
+  cout << "frontDirection=" << frontDirection << endl;
+  cout << "targetVector=" << targetVector << endl;
+
+  //////////////////////////////////////////////////////////////////////////
+
+  pnfloat	normy1 = sqrtf(SQNBR(frontDirection.x) + SQNBR(frontDirection.z));
+  pnfloat	normy2 = sqrtf(SQNBR(targetVector.x) + SQNBR(targetVector.z));
+
+  pndouble	py = ((frontDirection.x / normy1) * (targetVector.x / normy2)) + ((frontDirection.z / normy1) * (targetVector.z / normy2));
+
+  // The test is for handle precision problems
+  pndouble	yangle = ABS(py) >= 1.0 ? 0.0 : acos(py);
+
+  cout << "((" << frontDirection.x << " / " << normy1 << ") * (" << targetVector.x << " / " << normy2 << ")) + ((" << frontDirection.z << " / " << normy1 << ") * (" << targetVector.z << " / " << normy2 << "))" << endl;
+  cout << "ps=" << py << " --> " << "yangle=" << RADIAN_TO_DEGREE(yangle) << endl;
+
+  //////////////////////////////////////////////////////////////////////////
+
+  pnfloat	normx1 = sqrtf(SQNBR(frontDirection.y) + SQNBR(frontDirection.z));
+  pnfloat	normx2 = sqrtf(SQNBR(targetVector.y) + SQNBR(targetVector.z));
+
+  pndouble	px = ((frontDirection.y / normx1) * (targetVector.y / normx2)) + ((frontDirection.z / normx1) * (targetVector.z / normx2));
+
+  // The test is for handle precision problems
+  pndouble	xangle = ABS(px) >= 1.0 ? 0.0 : acos(px);
+
+  cout << "((" << frontDirection.y << " / " << normx1 << ") * (" << targetVector.y << " / " << normx2 << ")) + ((" << frontDirection.z << " / " << normx1 << ") * (" << targetVector.z << " / " << normx2 << "))" << endl;
+  cout << "((" << (frontDirection.y / normx1) << ") * (" << (targetVector.y / normx2) << ")) + ((" << (frontDirection.z / normx1) << ") * (" << (targetVector.z / normx2) << "))" << endl;
+  cout << "((" << ((frontDirection.y / normx1) * (targetVector.y / normx2)) << ")) + ((" << ((frontDirection.z / normx1) * (targetVector.z / normx2)) << "))" << endl;
+  cout << "((" << (((frontDirection.y / normx1) * (targetVector.y / normx2)) + ((frontDirection.z / normx1) * (targetVector.z / normx2))) << "))" << endl;
+  cout << "px=" << px << " --> " << "yangle=" << RADIAN_TO_DEGREE(xangle) << endl;
+
+  //////////////////////////////////////////////////////////////////////////
+
+  return (ABS(yangle) < (_viewRadFov / 2)) && ((ABS(xangle) < (_viewRadFov / 2)));
 }
 
 void
