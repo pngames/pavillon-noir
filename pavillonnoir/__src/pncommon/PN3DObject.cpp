@@ -758,7 +758,8 @@ PN3DObject::updateRotation(pnfloat step)
 	double	ps = (_targetDirection.getX() * targetVector.x / norm) + (_targetDirection.getZ() * targetVector.z / norm);
 	double	pcy = (_targetDirection.getX() * targetVector.z / norm) - (_targetDirection.getZ() * targetVector.x / norm);
 
-	pnfloat yangle = acosf((float)ps);
+	// The test is for handle precision problems
+	pnfloat yangle = ABS(ps) >= 1.0 ? 0.0 : acosf((float)ps);
 	yangle = pcy > 0 ? -yangle : yangle;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -771,7 +772,8 @@ PN3DObject::updateRotation(pnfloat step)
 	PNVector3f	pc;
 	pc.crossProduct(_targetDirection.getVector(), targetVector);
 
-	pnfloat xangle = acosf((float)ABS(ps));
+	// The test is for handle precision problems
+	pnfloat xangle = ABS(ps) >= 1.0 ? 0.0 : acosf((float)ABS(ps));
 	if (pc.scalarProduct(_rightTargetDirection.getVector()) < 0)
 	  xangle = -xangle;
 

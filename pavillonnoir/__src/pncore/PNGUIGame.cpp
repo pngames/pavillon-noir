@@ -84,6 +84,9 @@ void  PNGUIGame::_commandLoadMap(const std::string&, std::istream& i)
 
 void  PNGUIGame::_commandRenderSK(const std::string&, std::istream& i)
 {
+  if (PN3DCamera::getRenderCam()->getListObj().size() == 0)
+	return ;
+
   bool	b;
 
   i >> b;
@@ -107,6 +110,9 @@ void  PNGUIGame::_commandRenderSK(const std::string&, std::istream& i)
 
 void  PNGUIGame::_commandRenderM(const std::string&, std::istream& i)
 {
+  if (PN3DCamera::getRenderCam()->getListObj().size() == 0)
+	return ;
+
   bool	b;
 
   i >> b;
@@ -130,6 +136,9 @@ void  PNGUIGame::_commandRenderM(const std::string&, std::istream& i)
 
 void  PNGUIGame::_commandSwitchMSK(const std::string& command, std::istream& i)
 {
+  if (PN3DCamera::getRenderCam()->getListObj().size() == 0)
+	return ;
+
   PN3DObject *obj = *PN3DCamera::getRenderCam()->getListObj().begin();
 
   if (obj != NULL)
@@ -155,6 +164,9 @@ void  PNGUIGame::_commandSwitchMSK(const std::string& command, std::istream& i)
 
 void  PNGUIGame::_commandLooping(const std::string&, std::istream& i)
 {
+  if (PN3DCamera::getRenderCam()->getListObj().size() == 0)
+	return ;
+
   bool	b;
 
   i >> b;
@@ -177,6 +189,9 @@ void  PNGUIGame::_commandLooping(const std::string&, std::istream& i)
 
 void  PNGUIGame::_commandAnimSpeed(const std::string&, std::istream& i)
 {
+  if (PN3DCamera::getRenderCam()->getListObj().size() == 0)
+	return ;
+
   double speed;
 
   i >> speed;
@@ -331,9 +346,9 @@ void  PNGUIGame::_commandChangeSoundVolume(const std::string&, std::istream& i)
 
 void  PNGUIGame::_commandShowWP(const std::string&, std::istream& i)
 {
-  for (PN3DObjList::const_iterator it = PN3DCamera::getRenderCam()->getListObj().begin(); it != PN3DCamera::getRenderCam()->getListObj().end(); it++)
+  for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
   {
-	PN3DObject*	obj = (PN3DObject*)*it;
+	PN3DObject*	obj = it->second;
 
 	if (obj != NULL && obj->getObjType() == PN3DObject::OBJTYPE_WAYPOINT)
 	{
@@ -344,9 +359,9 @@ void  PNGUIGame::_commandShowWP(const std::string&, std::istream& i)
 
 void  PNGUIGame::_commandHideWP(const std::string&, std::istream& i)
 {
-  for (PN3DObjList::const_iterator it = PN3DCamera::getRenderCam()->getListObj().begin(); it != PN3DCamera::getRenderCam()->getListObj().end(); it++)
+  for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
   {
-	PN3DObject*	obj = (PN3DObject*)*it;
+	PN3DObject*	obj = it->second;
 
 	if (obj != NULL && obj->getObjType() == PN3DObject::OBJTYPE_WAYPOINT)
 	{
@@ -585,9 +600,9 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
   // Update keydown map
   mBufferedKeysDown.insert(static_cast<CEGUI::Key::Scan>(me->scancode));
 
-  PN3DCamera* cam = PN3DCamera::getRenderCam();
+  PN3DCamera*	cam = PN3DCamera::getRenderCam();
 
-  PN3DObject*	obj = *cam->getListObj().begin();
+  PN3DObject*	obj = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin()->second;
 
   PNVector3f axis(1.0f, 0.0f, 0.0f);
   pnfloat phi;
