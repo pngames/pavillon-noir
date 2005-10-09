@@ -49,7 +49,7 @@
 #include "pnbind.h"
 #include "PNGameEventData.hpp"
 #include "PN3DCamera.hpp"
-#include "PNWaypoint.hpp"
+#include "PNWayPoint.hpp"
 #include "PNCharacter.hpp"
 
 // debug printer
