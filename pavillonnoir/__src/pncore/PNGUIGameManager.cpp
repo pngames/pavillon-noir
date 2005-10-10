@@ -86,6 +86,7 @@ namespace PN
 	if (_currentState == NONE)
 	  return;
 
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_PAUSE, NULL, NULL);
 	PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous quitter\nla partie en cours ?", PNGUIMsgBox::YES_NO, PNGUIMsgBox::MsgBoxCallback(this, &PNGUIGameManager::callbackQuit), _guiGame->getWindow());
   }
 
@@ -95,8 +96,8 @@ namespace PN
 	{
 	  deleteAllInstances();
 	  _currentState = NONE;
-	  // PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_ENDED, 0, NULL);
-	  //PNEventManager::getInstance()->addEvent(PN_EVENT_GUI_MENUROOT, NULL, NULL);
+	 // PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_QUIT, NULL, NULL);
+	 // PNEventManager::getInstance()->addEvent(PN_EVENT_GUI_MENUROOT, NULL, NULL);
 	   PNRendererInterface::getInstance()->endRendering();
 	}
   }
