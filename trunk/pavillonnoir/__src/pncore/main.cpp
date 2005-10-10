@@ -78,25 +78,11 @@ int	  main(int argc, char* argv[])
   PNQuatf		quaty;
   quaty.fromDegrees(0.0f, 90.0f, 0.0f);
 
-  PNMatrixTR4f	mat;
-  mat.loadIdentity();
-  mat.setRotationQuaternion(quaty);
-
-  std::cout << quaty * PNVector3f::NEGATIVE_UNIT_Z  << std::endl;
-  std::cout << mat * PNVector3f::NEGATIVE_UNIT_Z  << std::endl;
+  std::cout << quaty  << std::endl;
 
   //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
   
-  /*FXQuatf	fxq;
-  fxq.setRollPitchYaw(45.0f, 90.0f, 45.0f);
-
-  quaty.setGetPitchYaw(x,y,z);
-
-  cout << fxq.x << " " << fxq.y << " " << fxq.z << " " << fxq.w << endl;*/
- 
-  //////////////////////////////////////////////////////////////////////////
-
   /*char c;
   std::cout << "Appuyez sur une touche pour continuer" << std::endl;
   fread(&c, 1, 1, stdin);
