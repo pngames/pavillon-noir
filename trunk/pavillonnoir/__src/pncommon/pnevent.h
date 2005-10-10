@@ -176,6 +176,8 @@ typedef enum
   // SOUND
 
   PN_EVENT_SOUND_PLAY,			/// play a sound
+  PN_EVENT_SOUND_STOP,			/// stop a sound
+  PN_EVENT_SOUND_PAUSE,			/// pause volume
   PN_EVENT_SOUND_CREATE,		/// create a sound
   PN_EVENT_SOUND_VOLUME,		/// sound volume
 
