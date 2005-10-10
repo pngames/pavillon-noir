@@ -29,6 +29,7 @@
 
 #include "PNSound.hpp"
 #include "PNSoundManager.hpp"
+#include "PNConsole.hpp"
 
 /*! Gets an instance of the sound manager */
 PNSoundManager*  PNSoundManager::getInstance()
@@ -249,13 +250,23 @@ void			PNSoundManager::showLoadedSounds()
 
 void			PNSoundManager::registerCallbacks()
 {
-    //PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PLAY, EventCallback(this, &PNSoundManager::onPlaySound));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PLAY, EventCallback(this, &PNSoundManager::onPlaySound));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_CREATE, EventCallback(this, &PNSoundManager::onCreateSound));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_VOLUME, EventCallback(this, &PNSoundManager::onVolumeSound));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_STOP, EventCallback(this, &PNSoundManager::onStopSound));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PAUSE, EventCallback(this, &PNSoundManager::onPauseSound));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_ENABLE, EventCallback(this, &PNSoundManager::onEnableSound));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_DISABLE, EventCallback(this, &PNSoundManager::onDisableSound));
+	/////////////////////////////////////////////////////////////////////////
+	/// GUI functions
+	/////////////////////////////////////////////////////////////////////////
+	PNConsole::addFonction("newsound", &_commandNewSound, "Loads a new sound in the sound map, parameters : string SoundName | string SoundFile | bool loop [TRUE | FALSE] | float XPosition | pnfloat YPosition | pnfloat ZPosition | volume (between 0.0 and 1.0)");
+	PNConsole::addFonction("playsound", &_commandPlaySound, "Plays an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\" | volume (between 0.0 and 1.0)");
+	PNConsole::addFonction("stopsound", &_commandStopSound, "Stops an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\"");
+	PNConsole::addFonction("pausesound", &_commandPauseSound, "Pauses an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\"");
+	PNConsole::addFonction("loadedsounds", &_commandLoadedSounds, "Shows already loaded sounds, no params");
+	PNConsole::addFonction("changesoundvolume", &_commandChangeSoundVolume, "changes a specific sound volume, parameter : string SoundName, float value (between 0.0 and 1.0)");
+	PNConsole::addFonction("enablesound", &_commandEnableSound, "Enable sound, 1 | 0");
 }
 
 
@@ -265,7 +276,6 @@ void			PNSoundManager::onPlaySound(pnEventType evt, PNObject* source, PNEventDat
 
 	this->changeSoundVolume(tmp->name, tmp->sound_volume);
 	playSound(tmp->name);
-	delete data;
 }
 
 

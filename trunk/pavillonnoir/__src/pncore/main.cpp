@@ -129,19 +129,6 @@ int	  main(int argc, char* argv[])
 	PNRendererInterface* ri = PNRendererInterface::getInstance();
 
 	//////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
-	// Sound loading
-	
-	PNSoundEventData *data = new PNSoundEventData("theme", DEF::musicFilePath + "Honneur_PavillonNoir.ogg");
-	PNSoundEventData *data2 = new PNSoundEventData("click",  DEF::soundsFilePath + "menu_click.ogg");
-	PNSoundEventData *data3 = new PNSoundEventData("quit",  DEF::soundsFilePath + "redalert.ogg");
-
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_CREATE, 0, data);
-    PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_CREATE, 0, data2);
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_CREATE, 0, data3);
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, new PNSoundEventData("theme", 0.3f));
-
-	//////////////////////////////////////////////////////////////////////////
 
 	ri->initRender(800, 600, 32, "Pavillon Noir", false);
 
@@ -160,10 +147,6 @@ int	  main(int argc, char* argv[])
 	
 	pneventmngr = PNEventManager::getInstance();
 	pneventmngr->init();
-
-	//////////////////////////////////////////////////////////////////////////
-	
-	
 
 	//////////////////////////////////////////////////////////////////////////
 	////                Starts rendering                                  ////
