@@ -2,7 +2,33 @@
 <!DOCTYPE entities SYSTEM "entities.dtd">
 <listentities>
 <entity id="0" label="Dalle" mdref="plane_10000x10000.pno" envtype="ground" objtype="object" class="PN3DObject" x="0" y="0" z="0" xx="0" yy="0" zz="0" ww="1">
+<model path="plane_10000x10000.pnm">
+  <listmaterials>
+    <material path="plane_10000x10000.pnt" />
+  </listmaterials>
+</model>
 </entity>
-<entity id="1" label="Hero" mdref="bonhomme.pno" envtype="dynamic" objtype="character" class="Character" x="-4900" y="0" z="-4910" xx="0" yy="0" zz="0" ww="1">
+<entity id="1" label="Hero" mdref="bonhomme.pno" envtype="dynamic" objtype="character" class="PNCharacter" x="-1860.95" y="0" z="-2166.66" xx="0" yy="0" zz="0" ww="1">
+<model path="bonhomme.pnm">
+  <listmaterials>
+    <material path="bonhomme10_Materiau.pnt" />
+  </listmaterials>
+  <skeleton path="bonhomme.pns" />
+  <listanims>
+    <anim path="bonhomme.pna" />
+  </listanims>
+</model>
+</entity>
+<entity id="2" label="sert-a-rien1" mdref="bonhomme_editor.pno" envtype="dynamic" objtype="character" class="PNCharacter" x="-4900" y="0" z="-4900" xx="0" yy="0" zz="0" ww="1">
+<model path="bonhomme.pnm">
+  <listmaterials>
+    <material path="groundLevel1_01 - Default.pnt" />
+    <material path="groundLevel3_Material #37.pnt" />
+  </listmaterials>
+  <skeleton path="bonhomme.pns" />
+  <listanims>
+    <anim path="animation test.pna" />
+  </listanims>
+</model>
 </entity>
 </listentities>

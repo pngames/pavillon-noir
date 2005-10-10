@@ -90,7 +90,7 @@ PN3DCamera::_onMPEnded(pnEventType type, PNObject* source, PNEventData* ed)
 pnbool
 PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 {
-  return true;
+  //return true;
 
   PNLOCK(obj);
 
@@ -99,12 +99,12 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 
   PNVector3f	frontDirection = _orient * _frontDirection.getVector();
 
-  cout << "#####################################" << endl;
+//  cout << "#####################################" << endl;
 
-  cout << "_viewY=" << RADIAN_TO_DEGREE(_viewYRadFov) << " || " << "_viewX=" << RADIAN_TO_DEGREE(_viewXRadFov) << endl;
+//  cout << "_viewY=" << RADIAN_TO_DEGREE(_viewYRadFov) << " || " << "_viewX=" << RADIAN_TO_DEGREE(_viewXRadFov) << endl;
 
-  cout << "frontDirection=" << frontDirection << endl;
-  cout << "targetVector=" << targetVector << endl;
+//  cout << "frontDirection=" << frontDirection << endl;
+//  cout << "targetVector=" << targetVector << endl;
 
   //////////////////////////////////////////////////////////////////////////
   
@@ -128,7 +128,7 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   // The test is for handle precision problems
   pndouble	yangle = ABS(py) >= 1.0 ? 0.0 : acos(py);
 
-  cout << "ps=" << py << " --> " << "yangle=" << RADIAN_TO_DEGREE(yangle) << endl;
+//  cout << "ps=" << py << " --> " << "yangle=" << RADIAN_TO_DEGREE(yangle) << endl;
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -140,7 +140,7 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   // The test is for handle precision problems
   pndouble	xangle = ABS(px) >= 1.0 ? 0.0 : acos(px);
 
-  cout << "px=" << px << " --> " << "yangle=" << RADIAN_TO_DEGREE(xangle) << endl;
+//  cout << "px=" << px << " --> " << "yangle=" << RADIAN_TO_DEGREE(xangle) << endl;
 
   //////////////////////////////////////////////////////////////////////////
 

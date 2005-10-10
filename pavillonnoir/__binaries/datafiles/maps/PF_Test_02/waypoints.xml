@@ -2,34 +2,17 @@
 <!DOCTYPE graph SYSTEM "waypoints.dtd">
 <graph>
 <listwp>
-<wp id="1" x="1600.42" y="0" z="3700.98"/>
-<wp id="2" x="-4900" y="0" z="0"/>
-<wp id="3" x="-4800" y="0" z="-4800"/>
-<wp id="4" x="4900" y="0" z="0"/>
-<wp id="5" x="4900" y="0" z="4900"/>
-<wp id="6" x="-165.88" y="0.809814" z="-3700"/>
-<wp id="7" x="4500" y="0" z="-4500"/>
-<wp id="8" x="0" y="0" z="0"/>
+<wp id="9" x="0" y="0" z="0"/>
+<wp id="10" x="-2000" y="0" z="-1200"/>
+<wp id="11" x="0" y="0" z="-3000"/>
+<wp id="12" x="-4500" y="0" z="-3500"/>
 </listwp>
 <listlnk>
-<lnk from="1" to="2" coef="1"/>
-<lnk from="1" to="4" coef="1"/>
-<lnk from="1" to="6" coef="1"/>
-<lnk from="1" to="8" coef="1"/>
-<lnk from="2" to="1" coef="1"/>
-<lnk from="2" to="3" coef="1"/>
-<lnk from="3" to="2" coef="1"/>
-<lnk from="3" to="6" coef="1"/>
-<lnk from="3" to="8" coef="1"/>
-<lnk from="4" to="1" coef="1"/>
-<lnk from="5" to="8" coef="1"/>
-<lnk from="5" to="7" coef="1"/>
-<lnk from="6" to="1" coef="1"/>
-<lnk from="6" to="3" coef="1"/>
-<lnk from="6" to="7" coef="1"/>
-<lnk from="7" to="6" coef="1"/>
-<lnk from="7" to="5" coef="1"/>
-<lnk from="8" to="3" coef="1"/>
-<lnk from="8" to="1" coef="1"/>
+<lnk from="9" to="10" coef="1"/>
+<lnk from="9" to="11" coef="1"/>
+<lnk from="10" to="9" coef="1"/>
+<lnk from="11" to="9" coef="1"/>
+<lnk from="11" to="12" coef="1"/>
+<lnk from="12" to="11" coef="1"/>
 </listlnk>
 </graph>
