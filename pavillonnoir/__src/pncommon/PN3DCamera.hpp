@@ -71,7 +71,9 @@ public:
   const PN3DObjList&		getListObj();
 protected:
   PN3DObjList				_list3DObj;
+
   pnbool					_is3DObjVisible(PN3DObject* obj);
+
   void					  	_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed);
 
   void						_onMPStarted(pnEventType type, PNObject* source, PNEventData* ed);

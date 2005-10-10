@@ -203,7 +203,7 @@ void		PNQuatf::slerp(const PNQuatf& q1, PNQuatf& q2, pnfloat interp)
   }
 }
 
-PNQuatf			PNQuatf::getInvert()
+PNQuatf			PNQuatf::getInvert() const
 {
   register pnfloat n = x * x + y * y + z * z + w * w;
 

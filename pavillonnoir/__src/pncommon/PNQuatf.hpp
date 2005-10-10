@@ -60,7 +60,7 @@ public:
   ~PNQuatf();
 
   void					invert();
-  PNQuatf				getInvert();
+  PNQuatf				getInvert() const;
 
   void					set(pnfloat r1, pnfloat r2, pnfloat r3, pnfloat r4);
   void					set(const pnfloat* quat);
