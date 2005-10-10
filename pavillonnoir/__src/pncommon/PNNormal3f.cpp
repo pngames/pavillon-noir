@@ -200,9 +200,9 @@ PNNormal3f::radianRangePi(PNNormal3f & n)
   if (ps > 1 - PN_EPSILON)
     return (0);
   if (ps < -1 + PN_EPSILON)
-    return (PI);
+    return (pnfloat)PI;
 
-  return (acos(ps));
+  return (acosf(ps));
 }
 
 /**
@@ -224,13 +224,13 @@ PNNormal3f::radianRange2Pi(PNNormal3f & cosinusReferentiel, PNNormal3f & sinusRe
     return (0);
 
   if (isColinear(sinusReferentiel))
-    return (PI/2);
+    return (pnfloat)(PI/2);
 
   ps_cs = scalarProduct(cosinusReferentiel);
   ps_sn = scalarProduct(sinusReferentiel);
 
   if (ps_sn >= 0)
-    return (acos(ps_cs));
+    return (acosf(ps_cs));
 
   if (ps_cs >= 0 && ps_sn < 0)
     return (pnfloat)(2 * PI - acos(ps_cs));
@@ -249,7 +249,7 @@ PNNormal3f::radianRange2Pi(PNNormal3f & cosinusReferentiel, PNNormal3f & sinusRe
 pnfloat
 PNNormal3f::degreeRangePi(PNNormal3f & n)
 {
-  return (pnfloat)(radianRangePi(n) * 180 / PI);
+  return (pnfloat)RADIAN_TO_DEGREE(radianRangePi(n));
 }
 
 /**
@@ -264,7 +264,7 @@ PNNormal3f::degreeRangePi(PNNormal3f & n)
 pnfloat
 PNNormal3f::degreeRange2Pi(PNNormal3f & cosinusReferentiel, PNNormal3f & sinusReferentiel)
 {
-  return (pnfloat)(radianRange2Pi(cosinusReferentiel, sinusReferentiel) * 180 / PI);
+  return (pnfloat)RADIAN_TO_DEGREE(radianRange2Pi(cosinusReferentiel, sinusReferentiel));
 }
 
 /**
