@@ -307,8 +307,7 @@ PNGLRenderer::resizeGLWindow(GLsizei width, GLsizei height)
   if (!height)
 	height = 1;
 
-  _renderCam._width = width;
-  _renderCam._height = height;
+  _renderCam.resizeGLWindow(width, height);
 }
 
 void

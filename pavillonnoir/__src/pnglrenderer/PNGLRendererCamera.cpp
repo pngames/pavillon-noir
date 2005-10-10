@@ -81,6 +81,19 @@ PNGLRendererCamera::resizeGLWindow(pnfloat width, pnfloat height)
   _width = width;
   _height = height;
 
+  pnfloat ratio = _width / _height;
+
+  if (ratio < 1.0)
+  {
+	_viewYRadFov = DEGREE_TO_RADIAN(_viewFov);
+	_viewXRadFov = DEGREE_TO_RADIAN(_viewFov * ratio);
+  }
+  else
+  {
+	_viewYRadFov = DEGREE_TO_RADIAN(_viewFov * ratio);
+	_viewXRadFov = DEGREE_TO_RADIAN(_viewFov);
+  }
+
   setUpdateGLFov(true);
 }
 

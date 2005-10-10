@@ -55,7 +55,7 @@ PN3DCamera::PN3DCamera()
   _viewFar = 20000.0f;
   _viewNear = 0.1f;
   _viewFov = 45.0f;
-  _viewRadFov = (pnfloat)DEGREE_TO_RADIAN(_viewFov);
+  _viewXRadFov = _viewYRadFov = (pnfloat)DEGREE_TO_RADIAN(_viewFov);
 
   PNEventManager::getInstance()->addCallback(PN_EVENT_MP_STARTED, EventCallback(this, &PN3DCamera::_onMPStarted));
   PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PN3DCamera::_onMPEnded));
@@ -101,6 +101,8 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 
   cout << "#####################################" << endl;
 
+  cout << "_viewY=" << RADIAN_TO_DEGREE(_viewYRadFov) << " || " << "_viewX=" << RADIAN_TO_DEGREE(_viewXRadFov) << endl;
+
   cout << "frontDirection=" << frontDirection << endl;
   cout << "targetVector=" << targetVector << endl;
 
@@ -114,7 +116,6 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   // The test is for handle precision problems
   pndouble	yangle = ABS(py) >= 1.0 ? 0.0 : acos(py);
 
-  cout << "((" << frontDirection.x << " / " << normy1 << ") * (" << targetVector.x << " / " << normy2 << ")) + ((" << frontDirection.z << " / " << normy1 << ") * (" << targetVector.z << " / " << normy2 << "))" << endl;
   cout << "ps=" << py << " --> " << "yangle=" << RADIAN_TO_DEGREE(yangle) << endl;
 
   //////////////////////////////////////////////////////////////////////////
@@ -127,15 +128,11 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   // The test is for handle precision problems
   pndouble	xangle = ABS(px) >= 1.0 ? 0.0 : acos(px);
 
-  cout << "((" << frontDirection.y << " / " << normx1 << ") * (" << targetVector.y << " / " << normx2 << ")) + ((" << frontDirection.z << " / " << normx1 << ") * (" << targetVector.z << " / " << normx2 << "))" << endl;
-  cout << "((" << (frontDirection.y / normx1) << ") * (" << (targetVector.y / normx2) << ")) + ((" << (frontDirection.z / normx1) << ") * (" << (targetVector.z / normx2) << "))" << endl;
-  cout << "((" << ((frontDirection.y / normx1) * (targetVector.y / normx2)) << ")) + ((" << ((frontDirection.z / normx1) * (targetVector.z / normx2)) << "))" << endl;
-  cout << "((" << (((frontDirection.y / normx1) * (targetVector.y / normx2)) + ((frontDirection.z / normx1) * (targetVector.z / normx2))) << "))" << endl;
   cout << "px=" << px << " --> " << "yangle=" << RADIAN_TO_DEGREE(xangle) << endl;
 
   //////////////////////////////////////////////////////////////////////////
 
-  return (ABS(yangle) < (_viewRadFov / 2)) && ((ABS(xangle) < (_viewRadFov / 2)));
+  return (ABS(yangle) < (_viewYRadFov / 2)) && (ABS(xangle) < (_viewXRadFov / 2));
 }
 
 void
