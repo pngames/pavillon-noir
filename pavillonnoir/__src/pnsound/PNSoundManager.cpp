@@ -233,7 +233,7 @@ void			PNSoundManager::showLoadedSounds()
   PNConsole::writeLine("Loaded sounds are :");
   for (it = soundMap.begin(); it != soundMap.end(); it++)
   {
-	PNConsole::writeLine("+ Identifier \"%s\" for file \"%s\"", it->first.c_str(), it->second->current_file.c_str());
+	PNConsole::writeLine("+ Identifier \"%s\" for file \"%s\" | volume => %f", it->first.c_str(), it->second->current_file.c_str(), it->second->_volume);
   }
   return;
 }
@@ -243,6 +243,8 @@ void			PNSoundManager::registerCallbacks()
     PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PLAY, EventCallback(this, &PNSoundManager::onPlaySound));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_CREATE, EventCallback(this, &PNSoundManager::onCreateSound));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_VOLUME, EventCallback(this, &PNSoundManager::onVolumeSound));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_STOP, EventCallback(this, &PNSoundManager::onStopSound));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PAUSE, EventCallback(this, &PNSoundManager::onPauseSound));
 
 }
 
@@ -270,3 +272,17 @@ void			PNSoundManager::onVolumeSound(pnEventType evt, PNObject* source, PNEventD
 
 	this->changeSoundVolume(tmp->name, tmp->sound_volume);
 }
+
+ void			PNSoundManager::onStopSound(pnEventType evt, PNObject* source, PNEventData* data)
+ {
+	PNSoundEventData* tmp = (PNSoundEventData*) data;
+
+	this->stopSound(tmp->name);
+ }
+  
+ void			PNSoundManager::onPauseSound(pnEventType evt, PNObject* source, PNEventData* data)
+ {
+	PNSoundEventData* tmp = (PNSoundEventData*) data;
+
+	this->pauseSound(tmp->name);
+ }

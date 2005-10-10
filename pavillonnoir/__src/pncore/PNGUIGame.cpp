@@ -236,14 +236,17 @@ void  PNGUIGame::_commandRenderCameraMovingSpeed(const std::string&, std::istrea
 
 void  PNGUIGame::_commandNewSound(const std::string&, std::istream& i)
 {
+  PNSoundEventData *data;
   std::string name;
   std::string file;
   std::string loop;
   std::string tmp;
+
   char		loop_flag;
   float		x = 0.0;
   float		y = 0.0;
   float		z = 0.0;
+  float		volume = 1.0f;
 
   i >> name;
   i >> file;
@@ -251,6 +254,9 @@ void  PNGUIGame::_commandNewSound(const std::string&, std::istream& i)
   i >> x;
   i >> y;
   i >> z;
+  i >> volume;
+
+  
 
   //PNConsole::writeLine("Command => newsound : name = %s | file = %s | loop = %s | X = %f | Y = %f | Z = %f\n", name.c_str(), file.c_str(), loop.c_str(), x, y, z);
 
@@ -263,26 +269,32 @@ void  PNGUIGame::_commandNewSound(const std::string&, std::istream& i)
 	PNConsole::writeLine("Error : wrong arguments to function newsound");
   else
   {
-	PNSoundInterface *si = PNSoundInterface::getInstance();
-	pnint toto = si->getMaxId();
-	toto;
-	std::string soundPath =  DEF::musicFilePath + file.c_str();
-
-	if (si->createNewSound(name, soundPath.c_str(), loop_flag, x, y, z) != 0)
-	  si->playSound(name);
+	data = new PNSoundEventData(name, DEF::soundsFilePath + file.c_str(), loop_flag, x, y, z, volume);
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_CREATE, 0, data);
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, data);
+	
+	//PNSoundInterface *si = PNSoundInterface::getInstance();
+	//std::string soundPath =  DEF::musicFilePath + file.c_str();
+	//if (si->createNewSound(name, soundPath.c_str(), loop_flag, x, y, z) != 0)
+	  //si->playSound(name);
   }
 }
 
 void  PNGUIGame::_commandPlaySound(const std::string&, std::istream& i)
 {
-  PNSoundInterface *si = PNSoundInterface::getInstance();
+  //PNSoundInterface *si = PNSoundInterface::getInstance();
   std::string name;
-
+  PNSoundEventData *data;
+  float volume = 1.0f;
+	
   i >> name;
+  i >> volume;
   if (name != "")
   {
 	PNConsole::writeLine("Command => playsound : name = %s", name.c_str());
-	si->playSound(name);
+	data = new PNSoundEventData(name, volume);
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, data);
+	//si->playSound(name);
   }
   else
 	PNConsole::writeLine("Error : wrong arguments to function playsound");
@@ -290,14 +302,17 @@ void  PNGUIGame::_commandPlaySound(const std::string&, std::istream& i)
 
 void  PNGUIGame::_commandStopSound(const std::string&, std::istream& i)
 {
-  PNSoundInterface *si = PNSoundInterface::getInstance();
+  //PNSoundInterface *si = PNSoundInterface::getInstance();
   std::string name;
+  PNSoundEventData *data;
 
   i >> name;
   if (name != "")
   {
 	PNConsole::writeLine("Command => stopsound : name = %s", name.c_str());
-	si->stopSound(name);
+	data = new PNSoundEventData(name, 1.0f);
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_STOP, 0, data);
+	//si->stopSound(name);
   }
   else
 	PNConsole::writeLine("Error : wrong arguments to function stopsound");
@@ -305,14 +320,17 @@ void  PNGUIGame::_commandStopSound(const std::string&, std::istream& i)
 
 void  PNGUIGame::_commandPauseSound(const std::string&, std::istream& i)
 {
-  PNSoundInterface *si = PNSoundInterface::getInstance();
-  std::string name;
+  //PNSoundInterface *si = PNSoundInterface::getInstance();
+  PNSoundEventData *data;
+std::string name;
 
   i >> name;
   if (name != "")
   {
 	PNConsole::writeLine("Command => Pausesound : name = %s", name.c_str());
-	si->pauseSound(name);
+	data = new PNSoundEventData(name, 1.0f);
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PAUSE, 0, data);
+	//si->pauseSound(name);
   }
   else
 	PNConsole::writeLine("Error : wrong arguments to function stopsound");
@@ -329,16 +347,19 @@ void  PNGUIGame::_commandLoadedSounds(const std::string&, std::istream& i)
 
 void  PNGUIGame::_commandChangeSoundVolume(const std::string&, std::istream& i)
 {
-  PNSoundInterface *si = PNSoundInterface::getInstance();
+  //PNSoundInterface *si = PNSoundInterface::getInstance();
+  PNSoundEventData *data;
   std::string name;
-  float value;
+  float volume;
 
   i >> name;
-  i >> value;
-  if (name != "" && value <= 1.0)
+  i >> volume;
+  if (name != "" && volume <= 1.0)
   {
-	PNConsole::writeLine("Command => changesoundvolume : name = %s, value = %f", name.c_str(), value);
-	si->changeSoundVolume(name, value);
+	PNConsole::writeLine("Command => changesoundvolume : name = %s, volume = %f", name.c_str(), volume);
+	data = new PNSoundEventData(name, volume);
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_VOLUME, 0, data);
+	//si->changeSoundVolume(name, volume);
   }
   else
 	PNConsole::writeLine("Error : wrong arguments to function stopsound");
@@ -491,8 +512,8 @@ PNGUIGame::PNGUIGame()
   //////////////////////////////////////////////////////////////////////////
   PNConsole::addFonction("rcspeed", &PNGUIGame::_commandRenderCameraMovingSpeed, "Set render camera moving speed, 1.0=normal");
   //////////////////////////////////////////////////////////////////////////
-  PNConsole::addFonction("newsound", &PNGUIGame::_commandNewSound, "Loads a new sound in the sound map, parameters : string SoundName | string SoundFile | bool loop [TRUE | FALSE] | float XPosition | pnfloat YPosition | pnfloat ZPosition");
-  PNConsole::addFonction("playsound", &PNGUIGame::_commandPlaySound, "Plays an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\"");
+  PNConsole::addFonction("newsound", &PNGUIGame::_commandNewSound, "Loads a new sound in the sound map, parameters : string SoundName | string SoundFile | bool loop [TRUE | FALSE] | float XPosition | pnfloat YPosition | pnfloat ZPosition | volume (between 0.0 and 1.0)");
+  PNConsole::addFonction("playsound", &PNGUIGame::_commandPlaySound, "Plays an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\" | volume (between 0.0 and 1.0)");
   PNConsole::addFonction("stopsound", &PNGUIGame::_commandStopSound, "Stops an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\"");
   PNConsole::addFonction("pausesound", &PNGUIGame::_commandPauseSound, "Pauses an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\"");
   PNConsole::addFonction("loadedsounds", &PNGUIGame::_commandLoadedSounds, "Shows already loaded sounds, no params");

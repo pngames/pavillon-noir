@@ -44,7 +44,7 @@ class PNSoundEventData : public PNEventData
 public:
 	////////////////////////////////////
 
-	PNSoundEventData(std::string sound_name, std::string file_name = "", char loop=FALSE ,float x = 0, float y = 0, float z = 0, float volume = 1.0) 
+	PNSoundEventData(std::string sound_name, std::string file_name = "", char loop=false ,float x = 0, float y = 0, float z = 0, float volume = 1.0) 
 	{
 		px = x; 
 		py = z; 
