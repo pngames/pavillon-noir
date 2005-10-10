@@ -13,8 +13,8 @@ loadLuaScript("ForestGumpClass.lua")
    pnprint("ForestGumpClass.lua loaded\n")
 loadLuaScript("PlayerClass.lua")
    pnprint("PlayerClass.lua loaded\n")
-loadLuaScript("CharacterClass.lua")
-   pnprint("CharacterClass.lua loaded\n")
+loadLuaScript("PNCharacterClass.lua")
+   pnprint("PNCharacterClass.lua loaded\n")
 pnprint("[LUA] Init file loaded")
 
 

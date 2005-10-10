@@ -33,11 +33,13 @@
 #include <stack>
 #include "PNPathFinding.hpp"
 #include "PN3DSkeletonObject.hpp"
+#include "PN3DCamera.hpp"
 
 namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
-  
+
+
 typedef			enum
 {
   PN_IA_PASSIVE,
@@ -62,6 +64,7 @@ class PNAPI PNCharacter : public PN3DSkeletonObject
   PNPathFinding							_pf;
   std::stack<pnIAState>					_pastStates;
   PN3DObject							_toReach;
+  PN3DCamera							_view;
   pnCharacType							_real;
   pnCharacType							_shown;
 
