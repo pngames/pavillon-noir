@@ -739,6 +739,16 @@ PN3DObject::updateTranslation(pnfloat step)
 	_updateTranslation += targetVector;
   }
 
+  //////////////////////////////////////////////////////////////////////////
+  // targetPosition
+
+  if (_movingMode == MMODE_POSITION_ABS_LOCKED || _movingMode == MMODE_POSITION_ABS_LOCKED)
+  {
+	_updateTranslation = _target->getCoord();
+	_updateTranslation += _targetPosition;
+	_updateTranslation -= getCoord();
+  }
+
   return;
 }
 
