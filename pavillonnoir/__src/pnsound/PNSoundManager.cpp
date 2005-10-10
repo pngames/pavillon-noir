@@ -69,9 +69,12 @@ void PNSoundManager::init()
   //if (alutInit(0, NULL) == AL_TRUE)
   //{
   alutInit(0, NULL);
-  registerCallbacks();
-  setListenerOrientation(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-  setListenerPosition(0.0, 0.0, 0.0);
+  if (alGetError() == AL_NO_ERROR)
+  {
+	registerCallbacks();
+	setListenerOrientation(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+	setListenerPosition(0.0, 0.0, 0.0);
+  }
   //}
   _maxId = 0;
   return;
