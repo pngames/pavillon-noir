@@ -1,27 +1,36 @@
-function CharacterClass(id)
-	pnprint("CharacterClass creating\n")
-    local Character = PNCharacter:new_local()
-    Character.className = "Character"
-    Character:setId(id)
-    Character.id = id
-    pnprint("CharacterClass creating 2\n")
-	if (Character.id ~= "") then 
-		gameMap.entities.all[Character.id] = Character
-	end
-	Character:setMovingSpeed(0.5)
-	Character.hurry = false
+function PNCharacterClass(id)
+	pnprint("PNCharacterClass creating\n")
+	-- make inheritance -----
+	pnprint("PN3DSkeletonObjectClass creating\n")
+    local PNCharacter = {__index = PN3DSkeletonObject:new_local()}
+	PNCharacter.__instance  = PNCharacter.__index
+    setmetatable(PNCharacter, PNCharacter)
+    tolua.inherit(PNCharacter, PNCharacter.__instance) -- make obj be recognize as PN3DSkeletonObject
+	PNCharacter.className = "PNCharacterClass"
+    -------------------------
+    PNCharacter:setId(id)
+    PNCharacter.id = id
+    pnprint("PNCharacterClass creating 2\n")
+--	if (PNCharacter.id ~= "") then 
+--		gameMap.entities.all[PNCharacter.id] = PNCharacter
+--	end
+	PNCharacter:setMovingSpeed(0.5)
+	PNCharacter.hurry = false
 --	pnprint("create pathFinding\n")
-	Character.pathFinding = PNPathFinding:new_local(Character:getCoord())
+	PNCharacter.pathFinding = PNPathFinding:new_local(PNCharacter:getCoord())
 --	pnprint("pathFinding created\n")
 --	pnprint("create pathFinding\n")
-	Character.pathFinding:unserializeFromFile(gameMap:getWpFile())
+	PNCharacter.pathFinding:unserializeFromFile(gameMap:getWpFile())
 --	pnprint("pathFinding created\n")
-	Character.toReach = PN3DObject:new_local()
-	Character.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2}
-	Character.state = Character.stateEnum.PN_IA_PASSIVE
-	Character.pastStates = {}
+	PNCharacter.toReach = PN3DObject:new_local()
+	PNCharacter.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2}
+	PNCharacter.state = PNCharacter.stateEnum.PN_IA_PASSIVE
+	PNCharacter.pastStates = {}
 	
-	function Character:beSmart()
+	function PNCharacter:onLuaInit()
+	end
+	
+	function PNCharacter:beSmart()
 		if (self.state == self.stateEnum.PN_IA_TRAVELLING) then --ca pete ici, la 
 			local distance = self:getCoord():getDistance(self.toReach:getCoord())
 			if (distance <= 50.0) then
@@ -39,7 +48,7 @@ function CharacterClass(id)
 		
 	end
 
-	function Character:moveTo(p)
+	function PNCharacter:moveTo(p)
 		self.state = self.stateEnum.PN_IA_TRAVELLING
 		self.pathFinding:moveTo(p)
 		self.pathFinding:moveNext(self.toReach)
@@ -49,53 +58,53 @@ function CharacterClass(id)
 		self:onLuaActionMoveForward(true)
 	end
 
-	function Character:hear()
+	function PNCharacter:hear()
 		--do something
 	end
 
-	function Character:see()
+	function PNCharacter:see()
 		--do something
 	end
 
-	function Character:startFight()
+	function PNCharacter:startFight()
 		--do something
 	end
 	
-	function Character:manageFight()
+	function PNCharacter:manageFight()
 		--do something
 	end
 
-	function Character:setState(st)
+	function PNCharacter:setState(st)
 		table.insert(self.pastStates, 0, self.state)
 		self.state = st
 	end
 
-	function Character:restoreState()
---		pnprint("=> Character:restoreState()\n")
+	function PNCharacter:restoreState()
+--		pnprint("=> PNCharacter:restoreState()\n")
 		self.state = self.pastStates[0]
 		table.remove(self.pastStates,0)
---		pnprint("<= Character:restoreState()\n")
+--		pnprint("<= PNCharacter:restoreState()\n")
 	end
 	
 	--temp function
 	
-	function Character:onLuaUpdate(deltaTime)
+	function PNCharacter:onLuaUpdate(deltaTime)
 		self:beSmart()
 		self:update(deltaTime)
 	end
 	
-	function Character:onLuaActionMoveTo(target)
+	function PNCharacter:onLuaActionMoveTo(target)
 		--do something
 	end
 	
-	function Character:oncollision(target, direction)
+	function PNCharacter:oncollision(target, direction)
 	-- Si target et direction et autre condition ok alors
 		-- lance premier script self.scripts.event.collision[0]		
 	end
 
     ---------------------move events-----------------------
-	function Character:onLuaActionMoveForward(state)
-		pnprint("LUA Character:onLuaActionMoveForward()\n")	
+	function PNCharacter:onLuaActionMoveForward(state)
+		pnprint("LUA PNCharacter:onLuaActionMoveForward()\n")	
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_FORWARD)
 		else
@@ -103,8 +112,8 @@ function CharacterClass(id)
 		end 
 	end	
 
-	function Character:onLuaActionMoveBackward(state)
-		pnprint("LUA Character:onLuaActionMoveBackward()\n")
+	function PNCharacter:onLuaActionMoveBackward(state)
+		pnprint("LUA PNCharacter:onLuaActionMoveBackward()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_BACKWARD)
 		else
@@ -112,8 +121,8 @@ function CharacterClass(id)
 		end 
 	end
 	
-	function Character:onLuaActionMoveLeft(state)
-		pnprint("LUA Character:onLuaActionMoveLeft()\n")	
+	function PNCharacter:onLuaActionMoveLeft(state)
+		pnprint("LUA PNCharacter:onLuaActionMoveLeft()\n")	
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_LEFT)
 		else
@@ -121,8 +130,8 @@ function CharacterClass(id)
 		end 
 	end	
 
-	function Character:onLuaActionMoveRight(state)
-		pnprint("LUA Character:onLuaActionMoveRight()\n")
+	function PNCharacter:onLuaActionMoveRight(state)
+		pnprint("LUA PNCharacter:onLuaActionMoveRight()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_RIGHT)
 		else
@@ -130,15 +139,15 @@ function CharacterClass(id)
 		end 
 	end
 
-	function Character:onFrustrumIn(target)
+	function PNCharacter:onFrustrumIn(target)
 		pnprint(target.id)
 		pnprint(" entered Frustrum\n")
 	end
 
-	function Character:onFrustrumOut(target)
+	function PNCharacter:onFrustrumOut(target)
 		pnprint(target.id)
 		pnprint(" exited Frustrum\n")
 	end
 
-	return Character	
+	return PNCharacter	
 end
