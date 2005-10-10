@@ -57,6 +57,7 @@ public:
   void					setDopplerEffect(ALfloat velocity, ALfloat factor);
 
   //////////////////////////////////////////////////////////////////////////
+private:
   bool					loadSound(const std::string &name, const pnchar *fname, char looping);
   void					setProperties(const std::string &name, pnfloat x, pnfloat y, pnfloat z, pnfloat vx, pnfloat vy, pnfloat vz);
   void					playSound(const std::string &name);
@@ -82,6 +83,7 @@ public:
   pnint			getMaxId();
   void			setMaxid(pnint id);
   pnint			createNewSound(const std::string &name, const char* file, char looping, pnfloat x, pnfloat y, pnfloat z);
+public:
   void			showLoadedSounds();
 };
 
