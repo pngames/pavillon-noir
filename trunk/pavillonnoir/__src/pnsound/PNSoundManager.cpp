@@ -286,3 +286,4 @@ void			PNSoundManager::onVolumeSound(pnEventType evt, PNObject* source, PNEventD
 
 	this->pauseSound(tmp->name);
  }
+ 
