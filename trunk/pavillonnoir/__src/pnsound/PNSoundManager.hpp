@@ -77,6 +77,8 @@ private:
   void					onVolumeSound(pnEventType evt, PNObject* source, PNEventData* data);
   void					onStopSound(pnEventType evt, PNObject* source, PNEventData* data);
   void					onPauseSound(pnEventType evt, PNObject* source, PNEventData* data);
+  void			        onEnableSound(pnEventType evt, PNObject* source, PNEventData* data);
+  void			        onDisableSound(pnEventType evt, PNObject* source, PNEventData* data);
   //////////////////////////////////////////////////////////////////////////
 
   std::map<std::string , PNSound *> soundMap;
