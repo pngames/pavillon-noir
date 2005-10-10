@@ -32,30 +32,23 @@
 using namespace PN;
 
 namespace PN {
-PNGUIEscMenu*				PNGUIEscMenu::_instance = NULL;
-
   PNGUIEscMenu::PNGUIEscMenu()
   {
-	CEGUI::Window* rootSheet = CEGUI::System::getSingleton().getGUISheet();
-	CEGUI::Window* win = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/ESCMenu.layout");
-	 rootSheet->addChildWindow(win);
-	 win->setVisible(false);
-
+	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/ESCMenu.layout");
+	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
+	CEGUI::MouseCursor::getSingleton().show();
 	setupEventHandlers();
   }
 
   PNGUIEscMenu::~PNGUIEscMenu()
   {
-	if (_instance != NULL)
-	  delete _instance;
+	_mainSheet->destroy();
+	CEGUI::MouseCursor::getSingleton().hide();
   }
  
-  PNGUIEscMenu*	PNGUIEscMenu::getInstance()
+  CEGUI::Window* PNGUIEscMenu::getWindow()
   {
-	if (_instance == NULL)
-	  _instance = new PNGUIEscMenu();
-
-	return _instance;
+	return (_mainSheet);
   }
 
   void PNGUIEscMenu::setupEventHandlers()
@@ -70,60 +63,62 @@ PNGUIEscMenu*				PNGUIEscMenu::_instance = NULL;
 	wmgr.getWindow((CEGUI::utf8*)"PNESCMenu/quitGame")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIEscMenu::handleQuit, this));
   }
 
-  void PNGUIEscMenu::showEscMenu()
+  void PNGUIEscMenu::show()
   {
-	CEGUI::Window* win= CEGUI::WindowManager::getSingleton().getWindow("PNESCMenu");
-	win->setVisible(true);
+	_mainSheet->setVisible(true);
 	//win->setEnabled(true);
-	win->activate();
+	_mainSheet->activate();
+	_mainSheet->setAlwaysOnTop(true);
+	CEGUI::MouseCursor::getSingleton().show();
   }
 
-  void PNGUIEscMenu::hideEscMenu()
+  void PNGUIEscMenu::hide()
   {
-	CEGUI::Window* win= CEGUI::WindowManager::getSingleton().getWindow("PNESCMenu");
-	win->setVisible(false);
+	_mainSheet->setVisible(false);
+	_mainSheet->setAlwaysOnTop(false);
+	CEGUI::MouseCursor::getSingleton().hide();
 	//win->setEnabled(false);
   }
 
   bool PNGUIEscMenu::handleResume(const CEGUI::EventArgs& e)
   {
-	hideEscMenu();
+	hide();
 	return true;
   }
 
   bool PNGUIEscMenu::handleLoadGame(const CEGUI::EventArgs& e)
   {
-	hideEscMenu();
+	hide();
 	return true;
   }
 
   bool PNGUIEscMenu::handleSaveGame(const CEGUI::EventArgs& e)
   {
-	hideEscMenu();
+	hide();
 	return true;
   }
 
   bool PNGUIEscMenu::handleOptions(const CEGUI::EventArgs& e)
   {
-	hideEscMenu();
+	hide();
 	return true;
   }
 
   bool PNGUIEscMenu::handleMainMenu(const CEGUI::EventArgs& e)
   {
-	hideEscMenu();
+	hide();
 	return true;
   }
 
   bool PNGUIEscMenu::handleNewGame(const CEGUI::EventArgs& e)
   {
-	hideEscMenu();
+	hide();
 	return true;
   }
 
   bool PNGUIEscMenu::handleQuit(const CEGUI::EventArgs& e)
   {
-	PNRendererInterface::getInstance()->endRendering();
+	hide();
 	return true;
   }
 };

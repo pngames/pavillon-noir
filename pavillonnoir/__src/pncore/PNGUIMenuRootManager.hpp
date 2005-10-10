@@ -37,6 +37,7 @@
 #include "pnrender.h"
 
 #include "PNGUIMenuRoot.hpp"
+#include "PNGUIMenuLoad.hpp"
 #include "PNGUIMsgBox.hpp"
 
 
@@ -63,7 +64,7 @@ namespace PN{
   private:
 	static PNGUIMenuRootManager*	_instance;
 	PNGUIMenuRoot*					_guiMenuRoot;
-	// PNGUILoadGame*				_guiMenuLoad;
+	PNGUIMenuLoad*					_guiMenuLoad;
 	// PNGUIOptions*				_guiMenuOptions;
 	// PNGUICredits*				_guiMenuCredits;
 
