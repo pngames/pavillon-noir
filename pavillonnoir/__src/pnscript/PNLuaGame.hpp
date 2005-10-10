@@ -141,8 +141,8 @@ namespace PN
 	void onLeaveGame(pnEventType evt, PNObject* source, PNEventData* data);
 	void onGameAction(pnEventType evt, PNObject* source, PNEventData* data);
 	void onColision(pnEventType evt, PNObject* source, PNEventData* data);
-	void onFrustrumCharIn(pnEventType evt, PNObject* source, PNEventData* data);
-	void onFrustrumCharOut(pnEventType evt, PNObject* source, PNEventData* data);
+	void onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* data);
+	void onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* data);
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

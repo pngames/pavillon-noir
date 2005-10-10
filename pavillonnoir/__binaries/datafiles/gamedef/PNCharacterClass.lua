@@ -1,8 +1,8 @@
 function PNCharacterClass(id)
 	pnprint("PNCharacterClass creating\n")
 	-- make inheritance -----
-	pnprint("PN3DSkeletonObjectClass creating\n")
-    local PNCharacter = {__index = PN3DSkeletonObject:new_local()}
+	pnprint("PNCharaterClass creating\n")
+    local PNCharacter = {__index = PNCharacter:new_local()}
 	PNCharacter.__instance  = PNCharacter.__index
     setmetatable(PNCharacter, PNCharacter)
     tolua.inherit(PNCharacter, PNCharacter.__instance) -- make obj be recognize as PN3DSkeletonObject
@@ -11,9 +11,7 @@ function PNCharacterClass(id)
     PNCharacter:setId(id)
     PNCharacter.id = id
     pnprint("PNCharacterClass creating 2\n")
---	if (PNCharacter.id ~= "") then 
---		gameMap.entities.all[PNCharacter.id] = PNCharacter
---	end
+
 	PNCharacter:setMovingSpeed(0.5)
 	PNCharacter.hurry = false
 --	pnprint("create pathFinding\n")
@@ -69,7 +67,7 @@ function PNCharacterClass(id)
 	function PNCharacter:startFight()
 		--do something
 	end
-	
+
 	function PNCharacter:manageFight()
 		--do something
 	end
@@ -140,13 +138,13 @@ function PNCharacterClass(id)
 	end
 
 	function PNCharacter:onFrustrumIn(target)
-		pnprint(target.id)
+		pnprint(target:getId())
 		pnprint(" entered Frustrum\n")
 	end
 
 	function PNCharacter:onFrustrumOut(target)
-		pnprint(target.id)
-		pnprint(" exited Frustrum\n")
+		pnprint(target:getId())
+		pnprint("exited Frustrum\n")
 	end
 
 	return PNCharacter	
