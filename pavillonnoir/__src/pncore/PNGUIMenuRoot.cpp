@@ -77,7 +77,22 @@ namespace PN
 
 	PNConsole::addFonction("loadlevel", &PNGUIMenuRoot::loadLevel, "loadlevel [level]");
 
-	setupEventHandlers();	
+	setupEventHandlers();
+
+	//////////////////////////////////////////////////////////////////////////
+	// Sound loading for menu
+	
+	PNSoundEventData *data = new PNSoundEventData("theme", DEF::musicFilePath + "Honneur_PavillonNoir.ogg");
+	PNSoundEventData *data2 = new PNSoundEventData("click",  DEF::soundsFilePath + "menu_click.ogg");
+	PNSoundEventData *data3 = new PNSoundEventData("quit",  DEF::soundsFilePath + "redalert.ogg");
+
+	PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_DISABLE, 0, 0);
+    PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_CREATE, 0, data2);
+	PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_CREATE, 0, data3);
+	//PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_CREATE, 0, data);
+	//PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_PLAY, 0, new PNSoundEventData("theme", 0.3f));
+
+	//////////////////////////////////////////////////////////////////////////
   }
 
   PNGUIMenuRoot::~PNGUIMenuRoot()
@@ -112,7 +127,7 @@ namespace PN
    bool PNGUIMenuRoot::overButton(const CEGUI::EventArgs& e)
    {
 	 PNSoundEventData *data = new PNSoundEventData("click", 1.0f);
-     PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, data);
+     PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_PLAY, 0, data);
 	 return true;
    }
 
@@ -176,7 +191,7 @@ namespace PN
 	if (_mainSheet->isMuted() == true)
 	  return true;
 
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, new PNSoundEventData("quit", 0.5f));
+	PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_PLAY, 0, new PNSoundEventData("quit", 0.5f));
 
 	PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous reellement\nquitter ?", PNGUIMsgBox::YES_NO, callbackQuit, _mainSheet);
 	//PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "sauter", PNGUIMsgBox::CONF, callbackQuit, _mainSheet);
