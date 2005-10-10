@@ -36,35 +36,24 @@
 #include "pnrender.h"
 
 namespace PN{
-  class PNGUIEscMenu : public PNObject
+  class PNGUIEscMenu
   {
 	/*/////////////////////////////////////////////////////////////////////////////
    /                                   Properties                                /
    /////////////////////////////////////////////////////////////////////////////*/
   public:
-	typedef				enum
-	{
-	  HIDE_RESUME		= 0x000001,
-	  HIDE_NEW_GAME		= 0x000001 << 1,
-	  HIDE_LOAD_GAME	= 0x000001 << 2,
-	  HIDE_SAVE_GAME	= 0x000001 << 3,
-	  HIDE_OPTIONS		= 0x000001 << 4,
-	  HIDE_MAIN_MENU	= 0x000001 << 5,
-	  HIDE_QUIT_GAME	= 0x000001 << 6,
-	}					itemHideEscMenu;
-	
   private:
-	static PNGUIEscMenu* _instance;
+	CEGUI::Window* _mainSheet;
 
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
-	static PNGUIEscMenu*	getInstance();
-	void setupEventHandlers();
-	void showEscMenu();
-	void hideEscMenu();
+	void show();
+	void hide();
+	CEGUI::Window* getWindow();
   private:
+	void setupEventHandlers();
 	bool handleResume(const CEGUI::EventArgs& e);
 	bool handleLoadGame(const CEGUI::EventArgs& e);
 	bool handleSaveGame(const CEGUI::EventArgs& e);
@@ -78,8 +67,9 @@ namespace PN{
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
 	PNGUIEscMenu();
-  private:
 	~PNGUIEscMenu();
+  private:
+	
   };
 }
 

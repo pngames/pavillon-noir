@@ -393,6 +393,8 @@ PNGUIGame::PNGUIGame()
   PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_OFF, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
+
+  CEGUI::MouseCursor::getSingleton().hide();
 }
 
 PNGUIGame::~PNGUIGame()
@@ -792,6 +794,7 @@ void  PNGUIGame::show()
   _rootWin->setMutedState(false);
   _rootWin->show();
   _rootWin->activate();
+  CEGUI::MouseCursor::getSingleton().hide();
 }
 
 void  PNGUIGame::hide()

@@ -41,9 +41,10 @@ namespace PN
   {
 	_currentState = NONE;
 	_guiGame = NULL;
+	_guiMenuEsc = NULL;
 
 	PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_GAME_START, EventCallback(this, &PNGUIGameManager::launchInGame));
-	PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGameManager::quitGame));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGameManager::escMenu));
 	
   }
 
@@ -69,10 +70,16 @@ namespace PN
 	  delete (_guiGame);
 	  _guiGame = NULL;
 	}
+	if (_guiMenuEsc != NULL) 
+	{
+	  delete (_guiMenuEsc);
+	  _guiMenuEsc = NULL;
+	}
   }
 
   void  PNGUIGameManager::launchInGame(pnEventType type, PNObject* source, PNEventData* data)
   {
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_START, 0, data);
 	if (_guiGame == NULL)
 	  _guiGame = new PNGUIGame();
 
@@ -81,12 +88,23 @@ namespace PN
 	_currentState = INGAME;
   }
 
-  void  PNGUIGameManager::quitGame(pnEventType type, PNObject* source, PNEventData* data)
+  void  PNGUIGameManager::escMenu(pnEventType type, PNObject* source, PNEventData* data)
   {
 	if (_currentState == NONE)
 	  return;
 
+	
+
+	/*if (_guiMenuEsc == NULL)
+	  _guiMenuEsc = new PNGUIEscMenu();
+
+	hidePrevious();
+	
+	_guiMenuEsc->show();
+	_currentState = PAUSE;
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_PAUSE, NULL, NULL);
+	*/
+	
 	PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous quitter\nla partie en cours ?", PNGUIMsgBox::YES_NO, PNGUIMsgBox::MsgBoxCallback(this, &PNGUIGameManager::callbackQuit), _guiGame->getWindow());
   }
 
@@ -96,7 +114,7 @@ namespace PN
 	{
 	  deleteAllInstances();
 	  _currentState = NONE;
-	 // PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_QUIT, NULL, NULL);
+	  //PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_QUIT, NULL, NULL);
 	 // PNEventManager::getInstance()->addEvent(PN_EVENT_GUI_MENUROOT, NULL, NULL);
 	   PNRendererInterface::getInstance()->endRendering();
 	}
@@ -108,7 +126,10 @@ namespace PN
 	{
 	case INGAME:
 	  _guiGame->hide();
-		break;
+	break;
+	case PAUSE:
+	  _guiMenuEsc->hide();
+	break;
 	}
   }
 

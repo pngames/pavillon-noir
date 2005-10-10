@@ -40,7 +40,6 @@
 
 #include "PNGUIMenuRoot.hpp"
 #include "PNGUIGame.hpp"
-#include "PNGUIEscMenu.hpp"
 #include "PNGUIMsgBox.hpp"
 
 //////////////////////////////////////////////////////////////////////////
@@ -71,13 +70,12 @@ namespace PN
 	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/MenuRoot.imageset");
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/MenuRoot.layout"); 
 
-	CEGUI::WindowManager::getSingleton().getWindow("MenuRoot/Load")->disable();
-
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 
 	PNConsole::addFonction("loadlevel", &PNGUIMenuRoot::loadLevel, "loadlevel [level]");
 
-	setupEventHandlers();
+	setupEventHandlers();	
+	CEGUI::MouseCursor::getSingleton().show();
 
 	//////////////////////////////////////////////////////////////////////////
 	// Sound loading for menu
@@ -99,6 +97,7 @@ namespace PN
   {
 	PNConsole::delFonction("loadlevel");
 	_mainSheet->destroy();
+	CEGUI::MouseCursor::getSingleton().hide();
 	
   }
 
@@ -160,7 +159,7 @@ namespace PN
 
     PNGameLoadMapEventData* data = new PNGameLoadMapEventData();
     data->mapName =  DEF::mapsFilePath + buffer;
-    PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_START, 0, data);
+   // PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_START, 0, data);
     //
     //PNGameMap*  map = new PNGameMap();
 
@@ -175,7 +174,7 @@ namespace PN
 	//////////////////////////////////////////////////////////////////////////
 	// game
 
-	 PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_NEWGAME, NULL, NULL);
+	 PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_NEW_GAME, NULL, data);
 	//PNGUIGame*		guigame = new PNGUIGame();
 	//State::gStateMgr->changeState(GAME);
 
@@ -210,6 +209,8 @@ namespace PN
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
+
+	 PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_LOAD, NULL, NULL);
 
 	//Transition to the load state
 	//State::gStateMgr->changeState(LOAD);
@@ -251,13 +252,9 @@ namespace PN
 	if (_mainSheet->isMuted() == true)
 	  return true;
 
-	//PNGUIEscMenu* toto =  new PNGUIEscMenu();
-	//toto->showEscMenu();
-	//PNGUIEscMenu::getInstance()->showEscMenu();
-	//hideMenuRoot();
 	//CEGUI::System::getSingleton().getGUISheet()->addChildWindow(CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/myschemas/demolayout.xml"));
-	//Transition to the Credits state
-	//State::gStateMgr->changeState(OPTIONS);
+	
+
 	return true;
   }
 
@@ -272,6 +269,7 @@ namespace PN
 	//win->hide();
 	_mainSheet->setMutedState(true);
 	_mainSheet->hide();
+
   }
 
   /*!
