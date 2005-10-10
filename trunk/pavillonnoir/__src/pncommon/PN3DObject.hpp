@@ -146,12 +146,14 @@ public:
   typedef enum
   {
 	MMODE_FREE,				        /// 3D object move freely
-    MMODE_DISTANCE_LOCKED,		    /// 3D object alway try to be in front of _target
-    MMODE_DISTANCE_ABS_LOCKED,	    /// 3D object alway in front of _target
-	MMODE_VIEW_LOCKED,		        /// 3D object alway try to be in front of _target
-	MMODE_VIEW_ABS_LOCKED,	        /// 3D object alway in front of _target
-    MMODE_VIEW_DISTANCE_LOCKED,		/// 3D object alway try to be in front of _target
-    MMODE_VIEW_DISTANCE_ABS_LOCKED, /// 3D object alway in front of _target
+	MMODE_POSITION_LOCKED,			/// 3D object alway try to be in same relative position from target
+	MMODE_POSITION_ABS_LOCKED,		/// 3D object alway in same relative position from target
+    MMODE_DISTANCE_LOCKED,		    /// 3D object alway try to be at _targetDistance distance from the target
+    MMODE_DISTANCE_ABS_LOCKED,	    /// 3D object alway at _targetDistance distance from the target
+	MMODE_VIEW_LOCKED,		        /// 3D object alway try to be in _targetDirection alignment of _target
+	MMODE_VIEW_ABS_LOCKED,	        /// 3D object alway in _targetDirection alignment of _target
+    MMODE_VIEW_DISTANCE_LOCKED,		/// MMODE_DISTANCE_LOCKED + MMODE_VIEW_LOCKED
+    MMODE_VIEW_DISTANCE_ABS_LOCKED, /// MMODE_DISTANCE_ABS_LOCKED + MMODE_VIEW_ABS_LOCKED
 	NB_MMODE				        /// number of moving modes in 3DObject
   }			  				        movingmode;
 
@@ -162,6 +164,13 @@ public:
 protected:
   /// Displacement mode of 3D object (free, locked, ...)
   movingmode				_movingMode;
+protected:
+  /// Other 3DObject targeted used for locked displacement and other things like that
+  PN3DObject*				_target;
+  PNPoint					_targetPosition;
+  pnfloat					_targetDistance;
+  PNNormal3f				_targetDirection;
+  PNNormal3f				_rightTargetDirection;
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -218,12 +227,6 @@ protected:
 public:
   /// List of materials associated with 3d object
   typedef std::vector<PN3DMaterial*>	VectorMaterial;
-protected:
-  /// Other 3DObject targeted used for locked displacement and other things like that
-  PN3DObject*				_target;
-  pnfloat					_targetDistance;
-  PNNormal3f				_targetDirection;
-  PNNormal3f				_rightTargetDirection;
 protected:
   /// Represent object in graphic world
   PN3DModel*				_model;
