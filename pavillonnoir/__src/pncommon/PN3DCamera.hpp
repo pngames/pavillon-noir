@@ -82,7 +82,8 @@ protected:
   pnfloat					_viewFar;
   pnfloat					_viewNear;
   pnfloat					_viewFov;
-  pnfloat					_viewRadFov;
+  pnfloat					_viewYRadFov;
+  pnfloat					_viewXRadFov;
 
   //////////////////////////////////////////////////////////////////////////
 
