@@ -415,38 +415,53 @@ void  PNLuaGame::onGameAction(pnEventType evt, PNObject* source, PNEventData* da
     //lua_dostring(this->L, luaOrder.c_str());
     this->_LVM.execString(luaOrder);
 }
+
 void  PNLuaGame::onColision(pnEventType evt, PNObject* source, PNEventData* data)
 {
 }
 
-void  PNLuaGame::onFrustrumCharIn(pnEventType evt, PNObject* source, PNEventData* data)
+void  PNLuaGame::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* data)
 {
-  PNCharacter*	target = (PNCharacter*)((PNFrustrumEventData*)data)->obj;
-  PNCharacter*	s = (PNCharacter*)((PN3DCamera*)source)->getTarget();
-  std::string	luaOrder;
+  PN3DObject*	  o1 = ((PNFrustrumEventData*)data)->obj;
+  PN3DObject*	  o2 = ((PN3DCamera*)source)->getTarget();
+  std::string	  luaOrder;
 
-  luaOrder = "gameMap.entities.all[";
-  luaOrder += s->getId().c_str();
-  luaOrder += "]:onFrustrumIn(gameMap.entities.all[";
-  luaOrder += target->getId().c_str();
-  luaOrder += "])";
-  //lua_dostring(this->L, luaOrder.c_str());
-  this->_LVM.execString(luaOrder);
+  pnerror(PN_LOGLVL_DEBUG, "frustrum in");
+  if (o1->getObjType() == PN3DObject::OBJTYPE_CHARACTER && o2 != NULL &&
+	  o2->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
+  {
+	PNCharacter*  s = (PNCharacter*)o2;
+	PNCharacter*  target = (PNCharacter*)o1;
+
+	luaOrder = "gameMap.entities.all[";
+	luaOrder += s->getId().c_str();
+	luaOrder += "]:onFrustrumIn(gameMap.entities.all[";
+	luaOrder += target->getId().c_str();
+	luaOrder += "])";
+    _LVM.execString(luaOrder);
+  }
 }
 
-void  PNLuaGame::onFrustrumCharOut(pnEventType evt, PNObject* source, PNEventData* data)
+void  PNLuaGame::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* data)
 {
-  PNCharacter*	target = (PNCharacter*)((PNFrustrumEventData*)data)->obj;
-  PNCharacter*	s = (PNCharacter*)((PN3DCamera*)source)->getTarget();
-  std::string	luaOrder;
+  PN3DObject*	  o1 = ((PNFrustrumEventData*)data)->obj;
+  PN3DObject*	  o2 = ((PN3DCamera*)source)->getTarget();
+  std::string	  luaOrder;
 
-  luaOrder = "gameMap.entities.all[";
-  luaOrder += s->getId().c_str();
-  luaOrder += "]:onFrustrumOut(gameMap.entities.all[";
-  luaOrder += target->getId().c_str();
-  luaOrder += "])";
-  //lua_dostring(this->L, luaOrder.c_str());
-  this->_LVM.execString(luaOrder);
+  pnerror(PN_LOGLVL_DEBUG, "frustrum out");
+  if (o1->getObjType() == PN3DObject::OBJTYPE_CHARACTER && o2 != NULL &&
+	  o2->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
+  {
+	PNCharacter*  s = (PNCharacter*)o2;
+	PNCharacter*  target = (PNCharacter*)o1;
+
+	luaOrder = "gameMap.entities.all[";
+    luaOrder += s->getId().c_str();
+	luaOrder += "]:onFrustrumOut(gameMap.entities.all[";
+    luaOrder += target->getId().c_str();
+	luaOrder += "])";
+    _LVM.execString(luaOrder);
+  }
 }
 
 void  PNLuaGame::registerCallbacks()
@@ -462,8 +477,9 @@ void  PNLuaGame::registerCallbacks()
     PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_UPDATE, EventCallback(this, &PNLuaGame::onUpdate));
     PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT, EventCallback(this, &PNLuaGame::onInit));
     PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT_ENDED, EventCallback(this, &PNLuaGame::onInitEnded));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_FCH_IN, EventCallback(this, &PNLuaGame::onFrustrumCharIn));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_FCH_OUT, EventCallback(this, &PNLuaGame::onFrustrumCharOut));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_F_IN, EventCallback(this, &PNLuaGame::onFrustrumIn));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_F_OUT, EventCallback(this, &PNLuaGame::onFrustrumOut));
+	pnerror(PN_LOGLVL_DEBUG, "callbacks registered");
 }
 
 ///////////////////////////////////////////////////////////////////////////////
