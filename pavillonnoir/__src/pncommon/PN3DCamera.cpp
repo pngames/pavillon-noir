@@ -90,7 +90,7 @@ PN3DCamera::_onMPEnded(pnEventType type, PNObject* source, PNEventData* ed)
 pnbool
 PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 {
-  return true;
+  //return true;
 
   PNLOCK(obj);
 
@@ -106,6 +106,18 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   cout << "frontDirection=" << frontDirection << endl;
   cout << "targetVector=" << targetVector << endl;
 
+  //////////////////////////////////////////////////////////////////////////
+  
+  /*PNPoint coord = _coord - obj->getCoord();
+  //coord = obj->getOrient().getInvert() * coord;
+
+  //frontDirection = obj->getOrient().getInvert() * frontDirection;
+  targetVector = PNPoint::ZERO - coord;
+
+  cout << "frontDirection=" << frontDirection << endl;
+  cout << "targetVector=" << targetVector << endl;*/
+
+  //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
 
   pnfloat	normy1 = sqrtf(SQNBR(frontDirection.x) + SQNBR(frontDirection.z));
@@ -132,7 +144,7 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 
   //////////////////////////////////////////////////////////////////////////
 
-  return (ABS(yangle) < (_viewYRadFov / 2)) && (ABS(xangle) < (_viewXRadFov / 2));
+  return (ABS(yangle) < (_viewYRadFov / 2))/* && (ABS(xangle) < (_viewXRadFov / 2))*/;
 }
 
 void
