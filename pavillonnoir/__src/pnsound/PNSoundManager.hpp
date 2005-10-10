@@ -34,6 +34,7 @@
 #include <AL/al.h>
 #include <AL/alut.h>
 #include "pndefs.h"
+#include "pnresources.h"
 #include "PNConsole.hpp"
 #include "PNSoundInterface.hpp"
 #include "PNSound.hpp"
@@ -80,7 +81,17 @@ private:
   void			        onEnableSound(pnEventType evt, PNObject* source, PNEventData* data);
   void			        onDisableSound(pnEventType evt, PNObject* source, PNEventData* data);
   //////////////////////////////////////////////////////////////////////////
+  /// GUI commands
+public:
+  static void  _commandNewSound(const std::string&, std::istream& i);
+  static void  _commandPlaySound(const std::string&, std::istream& i);
+  static void  _commandPauseSound(const std::string&, std::istream& i);
+  static void  _commandStopSound(const std::string&, std::istream& i);
+  static void  _commandEnableSound(const std::string&, std::istream& i);
+  static void  _commandLoadedSounds(const std::string&, std::istream& i);
+  static void  _commandChangeSoundVolume(const std::string&, std::istream& i);
 
+private:
   std::map<std::string , PNSound *> soundMap;
   pnint			getMaxId();
   void			setMaxid(pnint id);
