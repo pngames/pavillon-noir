@@ -79,9 +79,10 @@ pnerrorcode PNLuaGame::run(void)
         DEBUG_PRINTER("Leaving PNLuaGame::run() -> PNEC_NOT_A_FILE\n");
         return PNEC_NOT_A_FILE;
     }
-    std::string tempFilePathVar =  initScriptFile.native_file_string();
-    const pnchar * tempFilePathVar2 = tempFilePathVar.c_str();
-    lua_dofile(this->L, tempFilePathVar2);
+    //std::string tempFilePathVar =  initScriptFile.native_file_string();
+    //const pnchar * tempFilePathVar2 = tempFilePathVar.c_str();
+    //lua_dofile(this->L, tempFilePathVar2);
+    this->_LVM.execFile(initScriptFile);
     DEBUG_PRINTER("Leaving PNLuaGame::run() -> PNEC_SUCCES\n");
     int i = 1;
     i++;
@@ -145,12 +146,12 @@ void PNLuaGame::setDebug(bool b)
     if (b == true)
     {
         // Line hook activated - function called everytime a line is interpreted
-        lua_sethook(this->L, (lua_Hook) luaDebugLineHook, LUA_MASKLINE, NULL);
+      //  lua_sethook(this->L, (lua_Hook) luaDebugLineHook, LUA_MASKLINE, NULL);
     }
     else
     {
         // Line hook deactivated
-        lua_sethook(this->L, (lua_Hook) luaDebugLineHook, NULL, NULL);
+     //   lua_sethook(this->L, (lua_Hook) luaDebugLineHook, NULL, NULL);
     }
 }
 
@@ -168,15 +169,15 @@ void PNLuaGame::init()
     int errorCode = PNEC_SUCCES;
 
     // Description on top of the debug file
-    fprintf(getDebugLogHandle(), "########### LUA DEBUG LOG FILE ###########\n\n");
+ //   fprintf(getDebugLogHandle(), "########### LUA DEBUG LOG FILE ###########\n\n");
     ////////////////////////////////
 
-    ret = lua_baselibopen(this->L);
-    ret = lua_iolibopen(this->L);
-    ret = lua_strlibopen(this->L); 
-    ret = lua_tablibopen(this->L);
-    ret = lua_mathlibopen(this->L);
-    ret = tolua_pnbind_open (this->L);
+    ret = this->_LVM.registerLuaLibrary(&lua_baselibopen);
+    ret = this->_LVM.registerLuaLibrary(&lua_iolibopen);
+    ret = this->_LVM.registerLuaLibrary(&lua_strlibopen); 
+    ret = this->_LVM.registerLuaLibrary(&lua_tablibopen);
+    ret = this->_LVM.registerLuaLibrary(&lua_mathlibopen);
+    ret = this->_LVM.registerLuaLibrary(&tolua_pnbind_open);
     this->_modsDirectory = currentDiectory / fs::path(DEF::gamedefFilePath);
     errorCode =  this->setGameRoot(".");
 #ifdef _DEBUG
@@ -194,24 +195,24 @@ void PNLuaGame::init()
 
 PNLuaGame::~PNLuaGame()
 {
-    if (this->L != 0)
-        lua_close(this->L);
-    this->L = NULL;
-    fclose(getDebugLogHandle());
+//    if (this->L != 0)
+//        lua_close(this->L);
+//    this->L = NULL;
+//    fclose(getDebugLogHandle());
     delete _gameMap;
 }
 
 PNLuaGame::PNLuaGame()
 {
-    this->L = NULL;
-    this->L = lua_open();
+ //   this->L = NULL;
+//    this->L = lua_open();
     this->_mapStarted = false;
     this->_mapLoaded = false;
     this->_isLoadingMap = false;
     this->_isUnloadingMap = false;
 
-    this->debug = false;
-    this->debug_log = fopen(DEF_LUA_LOG_FILE, "w");
+    //this->debug = false;
+    this->_LVM.setDebugLogPath(DEF_LUA_LOG_FILE);
     _gameMap = NULL;
 }
 
@@ -222,22 +223,22 @@ pnerrorcode PNLuaGame::loadLuaScript(const pnchar* file, int reload/*=0*/)
 {
     //DEBUG_PRINTER("Entering PNLuaGame::luoadLuaScript()\n");
 
-    PNLuaGame* lsb = ((PNLuaGame *) PNLuaGame::getInstance());
-    lua_State *localL = NULL;
+    //PNLuaGame* lsb = ((PNLuaGame *) PNLuaGame::getInstance());
+    //lua_State *localL = NULL;
     //si le flag de reload est pas sette et que le fichier est deja loader dans la vm 
     //on relance pas le script;
-    if (reload == 0 && lsb->_loadedScripts.find(file) != lsb->_loadedScripts.end())
+    if (reload == 0 && this->_loadedScripts.find(file) != this->_loadedScripts.end())
         return PNEC_SUCCES;
     else
-        lsb->_loadedScripts.insert(file);
+        this->_loadedScripts.insert(file);
     // const pnchar* gameroot = lsb->getGameRoot();
-    localL = lsb->L; 
-    if (localL == NULL) 
-    {
-        DEBUG_PRINTER("Leaving PNLuaGame::loadLuaScript()\n");
-        return PNEC_NOT_INITIALIZED;
-    }
-    fs::path filePath = lsb->getGameRoot();
+//    localL = lsb->L; 
+ //   if (localL == NULL) 
+ //   {
+ //       DEBUG_PRINTER("Leaving PNLuaGame::loadLuaScript()\n");
+ //       return PNEC_NOT_INITIALIZED;
+ //   }
+    fs::path filePath = this->getGameRoot();
     filePath /= fs::path(file, fs::native);
     if (!fs::exists(filePath))
     {
@@ -249,7 +250,8 @@ pnerrorcode PNLuaGame::loadLuaScript(const pnchar* file, int reload/*=0*/)
         DEBUG_PRINTER("Leaving PNLuaGame::loadLuaScript()\n");
         return PNEC_NOT_A_FILE;
     }
-    lua_dofile(localL, filePath.native_file_string().c_str());
+    //lua_dofile(localL, filePath.native_file_string().c_str());
+    this->_LVM.execFile(filePath);
     //  DEBUG_PRINTER("Leaving PNLuaGame::luoadLuaScript()\n"); 
     return PNEC_SUCCES;
 }
@@ -282,7 +284,7 @@ void  PNLuaGame::onUpdate(pnEventType evt, PNObject* source, PNEventData* data)
     {
         std::stringstream luaOrder;
         luaOrder << "gameMap:onLuaUpdate(" << deltaTime << ")";
-        lua_dostring(L, luaOrder.str().c_str());
+        this->_LVM.execString(luaOrder.str());
     }
 
     PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_UPDATE_ENDED, 0, NULL);
@@ -293,7 +295,7 @@ void  PNLuaGame::onInit(pnEventType evt, PNObject* source, PNEventData* data)
 
     std::string luaOrder;
     luaOrder +=  "gameMap.onLuaInit()";
-    lua_dostring(L, luaOrder.c_str());
+    this->_LVM.execString(luaOrder);
 
     PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_INIT_ENDED, 0, NULL);
 }
@@ -307,7 +309,7 @@ void  PNLuaGame::onReset(pnEventType evt, PNObject* source, PNEventData* data)
 {
     std::string luaOrder;
     luaOrder +=  "gameMap.onReset()";
-    lua_dostring(L, luaOrder.c_str());
+    this->_LVM.execString(luaOrder);
 }
 
 
@@ -410,8 +412,8 @@ void  PNLuaGame::onGameAction(pnEventType evt, PNObject* source, PNEventData* da
     luaOrder += actionEvent->state == true ? "true": "false";
     luaOrder += ")";
 
-    lua_dostring(this->L, luaOrder.c_str());
-
+    //lua_dostring(this->L, luaOrder.c_str());
+    this->_LVM.execString(luaOrder);
 }
 void  PNLuaGame::onColision(pnEventType evt, PNObject* source, PNEventData* data)
 {
@@ -419,46 +421,32 @@ void  PNLuaGame::onColision(pnEventType evt, PNObject* source, PNEventData* data
 
 void  PNLuaGame::onFrustrumCharIn(pnEventType evt, PNObject* source, PNEventData* data)
 {
-  PN3DObject*	  o1 = ((PNFrustrumEventData*)data)->obj;
-  PN3DObject*	  o2 = ((PN3DCamera*)source)->getTarget();
-  std::string	  luaOrder;
+  PNCharacter*	target = (PNCharacter*)((PNFrustrumEventData*)data)->obj;
+  PNCharacter*	s = (PNCharacter*)((PN3DCamera*)source)->getTarget();
+  std::string	luaOrder;
 
-  pnerror(PN_LOGLVL_DEBUG, "frustrum in");
-  if (o1->getObjType() == PN3DObject::OBJTYPE_CHARACTER &&
-	  o2->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
-  {
-	PNCharacter*  s = (PNCharacter*)o2;
-	PNCharacter*  target = (PNCharacter*)o1;
-
-	luaOrder = "gameMap.entities.all[";
-	luaOrder += s->getId().c_str();
-	luaOrder += "]:onFrustrumIn(gameMap.entities.all[";
-	luaOrder += target->getId().c_str();
-	luaOrder += "])";
-    lua_dostring(this->L, luaOrder.c_str());
-  }
+  luaOrder = "gameMap.entities.all[";
+  luaOrder += s->getId().c_str();
+  luaOrder += "]:onFrustrumIn(gameMap.entities.all[";
+  luaOrder += target->getId().c_str();
+  luaOrder += "])";
+  //lua_dostring(this->L, luaOrder.c_str());
+  this->_LVM.execString(luaOrder);
 }
 
 void  PNLuaGame::onFrustrumCharOut(pnEventType evt, PNObject* source, PNEventData* data)
 {
-  PN3DObject*	  o1 = ((PNFrustrumEventData*)data)->obj;
-  PN3DObject*	  o2 = ((PN3DCamera*)source)->getTarget();
-  std::string	  luaOrder;
+  PNCharacter*	target = (PNCharacter*)((PNFrustrumEventData*)data)->obj;
+  PNCharacter*	s = (PNCharacter*)((PN3DCamera*)source)->getTarget();
+  std::string	luaOrder;
 
-  pnerror(PN_LOGLVL_DEBUG, "frustrum out");
-  if (o1->getObjType() == PN3DObject::OBJTYPE_CHARACTER &&
-	  o2->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
-  {
-	PNCharacter*  s = (PNCharacter*)o2;
-	PNCharacter*  target = (PNCharacter*)o1;
-
-	luaOrder = "gameMap.entities.all[";
-    luaOrder += s->getId().c_str();
-	luaOrder += "]:onFrustrumOut(gameMap.entities.all[";
-    luaOrder += target->getId().c_str();
-	luaOrder += "])";
-    lua_dostring(this->L, luaOrder.c_str());
-  }
+  luaOrder = "gameMap.entities.all[";
+  luaOrder += s->getId().c_str();
+  luaOrder += "]:onFrustrumOut(gameMap.entities.all[";
+  luaOrder += target->getId().c_str();
+  luaOrder += "])";
+  //lua_dostring(this->L, luaOrder.c_str());
+  this->_LVM.execString(luaOrder);
 }
 
 void  PNLuaGame::registerCallbacks()
@@ -474,9 +462,8 @@ void  PNLuaGame::registerCallbacks()
     PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_UPDATE, EventCallback(this, &PNLuaGame::onUpdate));
     PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT, EventCallback(this, &PNLuaGame::onInit));
     PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT_ENDED, EventCallback(this, &PNLuaGame::onInitEnded));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_F_IN, EventCallback(this, &PNLuaGame::onFrustrumCharIn));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_F_OUT, EventCallback(this, &PNLuaGame::onFrustrumCharOut));
-	pnerror(PN_LOGLVL_DEBUG, "callbacks registered");
+    PNEventManager::getInstance()->addCallback(PN_EVENT_FCH_IN, EventCallback(this, &PNLuaGame::onFrustrumCharIn));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_FCH_OUT, EventCallback(this, &PNLuaGame::onFrustrumCharOut));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -486,7 +473,7 @@ void  PNLuaGame::loadMap()
 {
     PNEventManager::getInstance()->addEvent(PN_EVENT_ML_STARTED, 0, new PNGameLoadMapEventData(this->_mapToLoad));
     //TODO : capturer cet event pour debug
-    this->_gameMap = new PNLuaGameMap(this->L);
+    this->_gameMap = new PNLuaGameMap(this->_LVM);
     loadLuaScript("gameMap.lua", 1);
     this->_gameMap->unserializeFromFile(this->_mapToLoad.c_str());
     this->_mapLoaded = true;

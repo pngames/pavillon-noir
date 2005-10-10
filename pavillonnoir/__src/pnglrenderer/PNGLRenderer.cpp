@@ -361,7 +361,7 @@ PNGLRenderer::run()
 	////////////////////////////////////////////
 	if (_isProgramLooping == true)
 	{
-       PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_UPDATE, 0, new PNGameUpdateEventData(deltaTime));
+       PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_UPDATE, 0, new PNGameUpdateEventData(deltaTime));
 
 	  ////////////////////////////////
 
