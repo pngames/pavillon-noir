@@ -48,6 +48,7 @@ void					PNSoundManager::clearSoundMap()
 /*! Disables sound management */
 void			 		PNSoundManager::disableSound()
 {
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_SOUND_PLAY, EventCallback(this, &PNSoundManager::onPlaySound));
   return;
 }
 
@@ -55,6 +56,7 @@ void			 		PNSoundManager::disableSound()
 /*! Enables sound management */
 void  					PNSoundManager::enableSound()
 {
+  PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PLAY, EventCallback(this, &PNSoundManager::onPlaySound));
   return;
 }
 
@@ -63,10 +65,14 @@ void  					PNSoundManager::enableSound()
 void PNSoundManager::init()
 {
   printf("==--OpenAL init--==\n");
+  // Return value of alutInit is not yep implemented (it will be soon with next OpenAL implementations)
+  //if (alutInit(0, NULL) == AL_TRUE)
+  //{
   alutInit(0, NULL);
   registerCallbacks();
   setListenerOrientation(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
   setListenerPosition(0.0, 0.0, 0.0);
+  //}
   _maxId = 0;
   return;
 }
@@ -240,12 +246,13 @@ void			PNSoundManager::showLoadedSounds()
 
 void			PNSoundManager::registerCallbacks()
 {
-    PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PLAY, EventCallback(this, &PNSoundManager::onPlaySound));
+    //PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PLAY, EventCallback(this, &PNSoundManager::onPlaySound));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_CREATE, EventCallback(this, &PNSoundManager::onCreateSound));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_VOLUME, EventCallback(this, &PNSoundManager::onVolumeSound));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_STOP, EventCallback(this, &PNSoundManager::onStopSound));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PAUSE, EventCallback(this, &PNSoundManager::onPauseSound));
-
+	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_ENABLE, EventCallback(this, &PNSoundManager::onEnableSound));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_DISABLE, EventCallback(this, &PNSoundManager::onDisableSound));
 }
 
 
@@ -286,4 +293,15 @@ void			PNSoundManager::onVolumeSound(pnEventType evt, PNObject* source, PNEventD
 
 	this->pauseSound(tmp->name);
  }
- 
+
+void			PNSoundManager::onEnableSound(pnEventType evt, PNObject* source, PNEventData* data)
+{
+	this->enableSound();
+}
+
+void			PNSoundManager::onDisableSound(pnEventType evt, PNObject* source, PNEventData* data)
+{
+	this->disableSound();
+}
+
+

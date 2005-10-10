@@ -180,6 +180,8 @@ typedef enum
   PN_EVENT_SOUND_PAUSE,			/// pause volume
   PN_EVENT_SOUND_CREATE,		/// create a sound
   PN_EVENT_SOUND_VOLUME,		/// sound volume
+  PN_EVENT_SOUND_ENABLE,		/// Enable sound
+  PN_EVENT_SOUND_DISABLE,		/// Disable sound
 
   //////////////////////////////////////////////////////////////////////////
 

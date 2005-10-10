@@ -336,6 +336,22 @@ std::string name;
 	PNConsole::writeLine("Error : wrong arguments to function stopsound");
 }
 
+void  PNGUIGame::_commandEnableSound(const std::string&, std::istream& i)
+{
+  int	value;
+
+  i >> value;
+  if (value == 0)
+  {
+	PNConsole::writeLine("Sound disabled");
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_DISABLE, 0, 0);
+  }
+  else
+  {
+	  PNConsole::writeLine("Sound enabled");
+	  PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_ENABLE, 0, 0);
+  }
+}
 
 void  PNGUIGame::_commandLoadedSounds(const std::string&, std::istream& i)
 {
@@ -518,6 +534,7 @@ PNGUIGame::PNGUIGame()
   PNConsole::addFonction("pausesound", &PNGUIGame::_commandPauseSound, "Pauses an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\"");
   PNConsole::addFonction("loadedsounds", &PNGUIGame::_commandLoadedSounds, "Shows already loaded sounds, no params");
   PNConsole::addFonction("changesoundvolume", &PNGUIGame::_commandChangeSoundVolume, "changes a specific sound volume, parameter : string SoundName, float value (between 0.0 and 1.0)");
+  PNConsole::addFonction("enablesound", &PNGUIGame::_commandEnableSound, "Enable sound, 1 | 0");
   //////////////////////////////////////////////////////////////////////////
   PNConsole::addFonction("physics", &PNGUIGame::_setPhysics, "Physical simulation, 0=false or 1=true");
   PNConsole::addFonction("addforce", &PNGUIGame::_addForce, "Add force to a physical object, addforce object_number x y z duration");
