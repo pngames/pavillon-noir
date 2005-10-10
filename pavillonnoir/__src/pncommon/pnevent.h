@@ -60,7 +60,10 @@ typedef enum
   PN_EVENT_GAME_LOAD,			/// Load saved game
   PN_EVENT_GAME_PAUSE,			/// pause game
   PN_EVENT_GAME_ACTION,			/// lunch a game action event	
-		
+  PN_EVENT_GAME_QUIT,			/// quit game
+  PN_EVENT_GAME_QUIT_STARTED,
+  PN_EVENT_GAME_QUIT_ENDED,				
+
   PN_EVENT_GUI_MENUROOT,
   PN_EVENT_GUI_LOAD,
   PN_EVENT_GUI_OPTIONS,
