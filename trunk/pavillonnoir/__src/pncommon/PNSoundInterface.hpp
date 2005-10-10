@@ -81,6 +81,8 @@ public:
   virtual void			onPauseSound(pnEventType evt, PNObject* source, PNEventData* data)=0;
   virtual void			onCreateSound(pnEventType evt, PNObject* source, PNEventData* data)=0;
   virtual void			onVolumeSound(pnEventType evt, PNObject* source, PNEventData* data)=0;
+  virtual void			onEnableSound(pnEventType evt, PNObject* source, PNEventData* data)=0;
+  virtual void			onDisableSound(pnEventType evt, PNObject* source, PNEventData* data)=0;
 };
 
 //////////////////////////////////////////////////////////////////////////

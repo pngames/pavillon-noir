@@ -98,6 +98,7 @@ namespace PN{
 	static void  _commandPlaySound(const std::string&, std::istream& i);
 	static void  _commandPauseSound(const std::string&, std::istream& i);
 	static void  _commandStopSound(const std::string&, std::istream& i);
+	static void  _commandEnableSound(const std::string&, std::istream& i);
 	static void  _commandLoadedSounds(const std::string&, std::istream& i);
 	static void  _commandChangeSoundVolume(const std::string&, std::istream& i);
 	static void  _commandShowWP(const std::string&, std::istream& i);
