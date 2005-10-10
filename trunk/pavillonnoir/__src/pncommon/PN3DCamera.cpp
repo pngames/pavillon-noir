@@ -107,15 +107,35 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 //  cout << "targetVector=" << targetVector << endl;
 
   //////////////////////////////////////////////////////////////////////////
+  // NEER-FAR
+
   
-  /*PNPoint coord = _coord - obj->getCoord();
+
+  //////////////////////////////////////////////////////////////////////////
+  // FOV
+
+  frontDirection.setNorm(1.0f);
+  targetVector.setNorm(1.0f);
+
+  pndouble	sp = frontDirection.scalarProduct(targetVector);
+
+  cout << "sp=" << sp << endl;
+
+  return sp > cosf(max(_viewYRadFov, _viewXRadFov)/2);
+
+  //////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////
+  // TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST 
+  
+  PNPoint coord = _coord - obj->getCoord();
   //coord = obj->getOrient().getInvert() * coord;
 
   //frontDirection = obj->getOrient().getInvert() * frontDirection;
   targetVector = PNPoint::ZERO - coord;
 
   cout << "frontDirection=" << frontDirection << endl;
-  cout << "targetVector=" << targetVector << endl;*/
+  cout << "targetVector=" << targetVector << endl;
 
   //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
