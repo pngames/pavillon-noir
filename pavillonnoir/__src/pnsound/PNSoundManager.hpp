@@ -74,6 +74,8 @@ public:
   void					onPlaySound(pnEventType evt, PNObject* source, PNEventData* data);
   void					onCreateSound(pnEventType evt, PNObject* source, PNEventData* data);
   void					onVolumeSound(pnEventType evt, PNObject* source, PNEventData* data);
+  void					onStopSound(pnEventType evt, PNObject* source, PNEventData* data);
+  void					onPauseSound(pnEventType evt, PNObject* source, PNEventData* data);
   //////////////////////////////////////////////////////////////////////////
 
   std::map<std::string , PNSound *> soundMap;

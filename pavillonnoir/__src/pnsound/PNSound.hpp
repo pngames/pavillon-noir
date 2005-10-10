@@ -62,6 +62,7 @@ public:
 	int	 getId() {return _id;};
 
 	std::string		current_file;
+	float			_volume;
 
 private:
 	int				_id;

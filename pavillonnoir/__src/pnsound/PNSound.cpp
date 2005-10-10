@@ -50,6 +50,7 @@
 PNSound::PNSound(int new_ID)
 {
   _id = new_ID;
+  _volume = 1.0f;
   current_file = "DEFAULT";
 }
 
@@ -159,6 +160,7 @@ void PNSound::pauseSound()
 /*! Changes sound volume */
 void PNSound::changeSoundVolume(float value)
 {
+  _volume = value;
   alSourcef(_alSource, AL_GAIN, value);
   return;
 }
