@@ -31,38 +31,33 @@
 #ifndef _PNLUAVM_HPP
 #define _PNLUAVM_HPP
 
-#include "pndefs.h"
-#include "pnerror.h"
-#include <boost/filesystem/path.hpp>
-extern "C"
-{
-#include <lua.h>
-#include <lualib.h>
-}
+#include <boost/thread/recursive_mutex.hpp>
+#include "PNObject.hpp"
 
+typedef int (*lua_library_register)(lua_State *lvm);
 
 namespace PN
 {
-    class PNLuaVm
+    class PNObject;
+    class PNLuaVm: public PNObject
     {
     protected:
         lua_State*				  _luaVm;
         FILE*					  _debug_log;  
         bool					  _debug;
-        boost::filesystem::path	  _ObjScriptFilesDirectory;
-        boost::filesystem::path	  _MapScriptFilesDirectory;
+    public:
+        boost::recursive_mutex	_mutex;
     //----------------------------CONSTRUCTORS/DESTRUCTOR----------------------
     public:
         PNLuaVm();
         ~PNLuaVm();
     //-------------------------------------------------------------------------
     public:
-    //-------------------------------SETTERS---------------------------------
-        void    setObjScriptDir(boost::filesystem::path path);
-        void    setMapScriptDir(boost::filesystem::path path);
-    //-------------------------------------------------------------------------
-        pnerror doFile(boost::filesystem::path path) ;
-
+    //-------------------------------MANIPULATION METHODS---------------------------------
+        pnerrorcode    execFile(const boost::filesystem::path &path);
+        pnerrorcode    execString(const std::string &orders);
+        pnerrorcode    registerLuaLibrary(lua_library_register);
+        void       setDebugLogPath(boost::filesystem::path path);
     };
 }
 #endif

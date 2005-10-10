@@ -30,6 +30,8 @@
 #ifndef _PN_LUA_GAME_MAP_HPP
 #define _PN_LUA_GAME_MAP_HPP
 
+
+#include "PNLuaVm.hpp" 
 #include "PNGameMap.hpp"
 
 //typedef struct s_scripts_infos
@@ -45,10 +47,10 @@ namespace PN
     class PNLuaGameMap : public PNGameMap
     {
     protected:
-        lua_State*		_lvm;
+        PNLuaVm&		_LVM;
 		/*scriptInfosMap	_entitiesActions;*/
     public:
-        PNLuaGameMap(lua_State *lvm);
+        PNLuaGameMap(PNLuaVm &lvm);
         ~PNLuaGameMap(void);
         void addToMap(const std::string& entityName,const std::string& id);
         void addToMap2(PNObject& entity, char* id);

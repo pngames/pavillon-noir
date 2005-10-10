@@ -53,6 +53,10 @@ function PN3DObjectClass(id)
 			self:subMovingState(PN3DObject.STATE_T_RIGHT)
 		end 
 	end
+	
+	function obj:onLuaInit()
+	end
+	
 	-------------------------------------------------------
     return obj
 end

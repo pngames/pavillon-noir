@@ -38,6 +38,7 @@ extern "C"
 }
 #include "pnevent.h"
 #include "PNGameInterface.hpp"
+#include "PNLuaVm.hpp"
 #include "PNLuaGameMap.hpp"
 #include <set>
 // Default lua debug log file
@@ -54,8 +55,7 @@ namespace PN
   public:
 
   private:
-    lua_State*				  L;
-    FILE*					  debug_log;  
+    PNLuaVm				      _LVM;
 	bool					  debug;
 	boost::filesystem::path	  _modsDirectory;
     boost::filesystem::path	  _gameRootDirectory;
@@ -77,9 +77,9 @@ namespace PN
 
   public:
 
-    lua_State* getLuaState(){ return this->L;}
+    //lua_State* getLuaState(){ return this->L;}
 	//Returns file handle to debug log file
-	FILE* getDebugLogHandle(){ return this->debug_log;}
+//	FILE* getDebugLogHandle(){ return this->debug_log;}
 	//Sets debug logging (true or false)
 	void  setDebug(bool b);
 	bool  getLuaDebugLogging();
@@ -102,7 +102,7 @@ namespace PN
     const pnchar*					getId(void);
 
     //load a lua script file
-    static pnerrorcode				loadLuaScript(const pnchar* file, int reload=0);
+    pnerrorcode				loadLuaScript(const pnchar* file, int reload=0);
 
     //defini le repertoir principal ou se trouve le script
     pnerrorcode						setGameRoot(const pnchar *name);

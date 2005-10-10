@@ -27,6 +27,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+#include <boost/filesystem/path.hpp>
+
 extern "C"
 {
     #include <lua.h>
@@ -43,9 +45,9 @@ extern "C"
 using namespace PN; 
 
 
-PNLuaGameMap::PNLuaGameMap(lua_State *lvm)
+PNLuaGameMap::PNLuaGameMap(PNLuaVm &lvm): _LVM(lvm)
 {
-    this->_lvm = lvm;
+    //this->_LVM = lvm;
     return;
 }
 
@@ -81,7 +83,7 @@ void  PNLuaGameMap::addToMap(const std::string& entityName, const std::string& i
 		luaOrder +=  "entity = " + entityName + "Class(\"" + id + "\")\n gameMap:spawn2(entity, \"" + id + "\")\n";
   }
   pnerror(PN_LOGLVL_DEBUG, "%s -> Lua", luaOrder.c_str());
-  int err  = lua_dostring(_lvm, luaOrder.c_str());
+  int err  = this->_LVM.execString(luaOrder);
   return;
 }
 
@@ -97,7 +99,7 @@ void        PNLuaGameMap::clear()
 {
     std::string luaOrder;
     luaOrder += "gameMap:clear()";
-    lua_dostring(_lvm, luaOrder.c_str());
+    int err = this->_LVM.execString(luaOrder);
     PNGameMap::clear();
     return;
 }
