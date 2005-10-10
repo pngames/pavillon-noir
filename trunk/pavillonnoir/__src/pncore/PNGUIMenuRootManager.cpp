@@ -39,14 +39,14 @@ namespace PN
   {
 	_currentState = NONE;
 	_guiMenuRoot = NULL;
-	//_guiLoadGame = NULL;
+	_guiMenuLoad = NULL;
 	//_guiOptions = NULL;
 	//_guiCredits = NULL;
-	PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_MENUROOT, EventCallback(this, &PNGUIMenuRootManager::launchMenuRoot));
-	//PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_LOAD, EventCallback(this, &PNGUIMenuRootManager::launchMenuLoad));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_MENU_ROOT, EventCallback(this, &PNGUIMenuRootManager::launchMenuRoot));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_MENU_LOAD, EventCallback(this, &PNGUIMenuRootManager::launchMenuLoad));
 	//PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_OPTIONS, EventCallback(this, &PNGUIMenuRootManager::launchMenuOptions));
 	//PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_CREDITS, EventCallback(this, &PNGUIMenuRootManager::launchMenuCredits));
-	PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_NEWGAME, EventCallback(this, &PNGUIMenuRootManager::launchNewGame));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_NEW_GAME, EventCallback(this, &PNGUIMenuRootManager::launchNewGame));
 	//PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_LOADGAME, EventCallback(this, &PNGUIMenuRootManager::launchLoadGame));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIMenuRootManager::launchQuit));
   }
@@ -73,9 +73,12 @@ namespace PN
 	  delete (_guiMenuRoot);
 	  _guiMenuRoot = NULL;
 	}
-	/*if (_guiMenuLoad != NULL)
-	delete _guiMenuLoad;
-	if (_guiMenuOptions != NULL)
+	if (_guiMenuLoad != NULL)
+	{
+	  delete _guiMenuLoad;
+	  _guiMenuLoad = NULL;
+	}
+/*	if (_guiMenuOptions != NULL)
 	delete _guiMenuOptions;
 	if (_guiMenuCredits != NULL)
 	delete _guiMenuCredits;*/
@@ -86,9 +89,9 @@ namespace PN
 	if (_currentState == NONE)
 	  return;
 
+	hidePrevious();
 	deleteAllInstances();
-	PNEventManager::getInstance()->addEvent(PN_EVENT_GUI_GAME_START, NULL, NULL);
-	//PNGUIGame*		guigame = new PNGUIGame();
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_GAME_START, NULL, data);
 	_currentState = NONE;
 	//TODO : send event start game
   }
@@ -107,8 +110,8 @@ namespace PN
   {
 	if (_currentState == NONE)
 	  return;
-
-	PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous reellement\nquitter ?", PNGUIMsgBox::YES_NO, PNGUIMsgBox::MsgBoxCallback(this, &PNGUIMenuRootManager::callbackQuit), _guiMenuRoot->getWindow());
+	if (_currentState == MENUROOT)
+	  PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous reellement\nquitter ?", PNGUIMsgBox::YES_NO, PNGUIMsgBox::MsgBoxCallback(this, &PNGUIMenuRootManager::callbackQuit), _guiMenuRoot->getWindow());
 	//TODO : popup QUIT, if yes send event quit
 	// if yes : deleteAllInstances();
   }
@@ -136,12 +139,20 @@ namespace PN
   {
 	if (_currentState == NONE)
 	  return;
-	/*if (_guiMenuLoad == NULL)
-	_guiMenuLoad = new PNGUIMenuLoad();
-	hidePrevious();
-	_guiMenuLoad->show();
-	*/
-	_currentState = LOAD;
+	if (_currentState == LOAD) 
+	{
+	  hidePrevious();
+	  _currentState = NONE;
+	  PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_ROOT, NULL, NULL);
+	}
+	else
+	{
+	  if (_guiMenuLoad == NULL)
+		_guiMenuLoad = new PNGUIMenuLoad();
+	  hidePrevious();
+	  _guiMenuLoad->show();
+	  _currentState = LOAD;
+	}
   }
 
   void	PNGUIMenuRootManager::launchMenuOptions(pnEventType type, PNObject* source, PNEventData* data)
@@ -176,7 +187,7 @@ namespace PN
 	  _guiMenuRoot->hide();
 	  break;
 	case LOAD:
-	  //_guiMenuLoad->hide();
+	  _guiMenuLoad->hide();
 	  break;
 	case OPTIONS:
 	  //_guiMenuOptions->hide();

@@ -215,6 +215,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncore\PNGUIMenuLoad.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncore\PNGUIMenuRoot.cpp"
 				>
 			</File>
@@ -258,6 +262,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncore\PNGUIGameManager.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncore\PNGUIMenuLoad.hpp"
 				>
 			</File>
 			<File

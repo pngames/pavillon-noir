@@ -1,8 +1,8 @@
 /*
-* PNGUIGameManager.hpp
+* PNGUIMenuLoad.hpp
 * 
 * Description :
-* PNGUIGameManager declaration
+* PNGUIMenuLoad definition
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,61 +27,53 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#ifndef _PNGUIGAMEMANAGER_HPP_
-# define _PNGUIGAMEMANAGER_HPP_
+#ifndef _PNGUIMENULOAD_HPP_
+# define _PNGUIMENULOAD_HPP_
+
+#include "myCEGUI.h"
 
 #include "pndefs.h"
-#include "pnevent.h"
-
-#include "PNGUIGame.hpp"
-#include "PNGUIEscMenu.hpp"
+#include "pnplugins.h"
+#include "pnrender.h"
 
 namespace PN{
 
-  class PNGUIGameManager
+  class PNGUIMenuLoad
   {
-	typedef enum
-	{
-	  INGAME,
-	  PAUSE,
-	  INVENTORY,
-	  DISCUTION,
-	  NONE
-	} gameStates;
-
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                   Properties                                /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
-	gameStates					_currentState;
   protected:
   private:
-	PNGUIGame*					_guiGame;
-	PNGUIEscMenu*				_guiMenuEsc;
-	static PNGUIGameManager*	_instance;
+	CEGUI::Window* _mainSheet;
+	CEGUI::Listbox* _cbBox;
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
-	static PNGUIGameManager*			getInstance();
+	void show();
+	void hide();
+	CEGUI::Window* getWindow();
   protected:
   private:
-	void						deleteAllInstances();
-	void						launchInGame(pnEventType type, PNObject* source, PNEventData* data);
-	void						escMenu(pnEventType type, PNObject* source, PNEventData* data);
-	void						hidePrevious();
-	void						callbackQuit(const unsigned int& enu);
+	void setupEventHandlers();
+	void updateList();
+	bool handleOk(const CEGUI::EventArgs& e);
+	bool handleBack(const CEGUI::EventArgs& e);
 
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
-	PNGUIGameManager();
+	PNGUIMenuLoad();
+	~PNGUIMenuLoad();
   protected:
   private:
-	~PNGUIGameManager();
+	
   };
+
 }
 
 
-#endif /*_PNGUIGAMEMANAGER_HPP_*/
+#endif /*_PNGUIMENULOAD_HPP_*/

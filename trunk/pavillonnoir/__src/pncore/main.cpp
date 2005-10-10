@@ -136,7 +136,7 @@ int	  main(int argc, char* argv[])
 	ri->initGUI();
 
 	PNGUIMenuRootManager::getInstance();
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENUROOT, NULL, NULL);
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_ROOT, NULL, NULL);
 	PNGUIGameManager::getInstance();
 
 	//////////////////////////////////////////////////////////////////////////
