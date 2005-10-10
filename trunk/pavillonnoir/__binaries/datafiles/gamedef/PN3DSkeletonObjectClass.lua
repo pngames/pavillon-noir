@@ -67,6 +67,9 @@ function PN3DSkeletonObjectClass(id)
 			self:subMovingState(PN3DObject.STATE_T_RIGHT)
 		end 
 	end
+	
+	function obj:onLuaInit()
+	end
 	-------------------------------------------------------
 	pnprint("exit PN3DSkeletonObjectClass\n")
     return obj
