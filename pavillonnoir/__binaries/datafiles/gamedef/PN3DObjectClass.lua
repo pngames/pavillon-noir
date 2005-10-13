@@ -53,7 +53,25 @@ function PN3DObjectClass(id)
 			self:subMovingState(PN3DObject.STATE_T_RIGHT)
 		end 
 	end
+
+	function obj:onLuaActionRotateYawRight(state)
+		pnprint("LUA obj:onLuaActionMoveRight()\n")
+		if (state == true) then
+			self:addMovingState(PN3DObject.STATE_R_RIGHT)
+		else
+			self:subMovingState(PN3DObject.STATE_R_RIGHT)
+		end 
+	end
 	
+	function obj:onLuaActionRotateYawLeft(state)
+		pnprint("LUA obj:onLuaActionMoveRight()\n")
+		if (state == true) then
+			self:addMovingState(PN3DObject.STATE_R_LEFT)
+		else
+			self:subMovingState(PN3DObject.STATE_R_LEFT)
+		end 
+	end
+
 	function obj:onLuaInit()
 	end
 	
