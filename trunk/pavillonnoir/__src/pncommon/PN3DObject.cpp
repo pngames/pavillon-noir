@@ -734,23 +734,23 @@ PN3DObject::updateTranslation(pnfloat step)
   //////////////////////////////////////////////////////////////////////////
   // NORMAL
 
-  if (_movingState == 0)
-	return;
+  if (_movingState != 0)
+  {
+	if (_movingState & STATE_T_RIGHT)
+	  _updateTranslation += getRightDirection().getVector();
+	if (_movingState & STATE_T_LEFT)
+	  _updateTranslation -= getRightDirection().getVector();
+	if (_movingState & STATE_T_TOP)
+	  _updateTranslation += getTopDirection().getVector();
+	if (_movingState & STATE_T_BACK)
+	  _updateTranslation -= getTopDirection().getVector();
+	if (_movingState & STATE_T_FORWARD)
+	  _updateTranslation += getFrontDirection().getVector();
+	if (_movingState & STATE_T_BACKWARD)
+	  _updateTranslation -= getFrontDirection().getVector();
 
-  if (_movingState & STATE_T_RIGHT)
-	_updateTranslation += getRightDirection().getVector();
-  if (_movingState & STATE_T_LEFT)
-	_updateTranslation -= getRightDirection().getVector();
-  if (_movingState & STATE_T_TOP)
-	_updateTranslation += getTopDirection().getVector();
-  if (_movingState & STATE_T_BACK)
-	_updateTranslation -= getTopDirection().getVector();
-  if (_movingState & STATE_T_FORWARD)
-	_updateTranslation += getFrontDirection().getVector();
-  if (_movingState & STATE_T_BACKWARD)
-	_updateTranslation -= getFrontDirection().getVector();
-
-  _updateTranslation *= step;
+	_updateTranslation *= step;
+  }
 
   //std::cout << _translation << " --> ";
 
