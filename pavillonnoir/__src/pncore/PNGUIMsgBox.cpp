@@ -46,7 +46,7 @@ namespace PN
 	case YES_NO:
 	  {
 		CEGUI::PushButton* btnYES = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_yes_" + convert.str()).c_str()));
-		btnYES->setSize(CEGUI::Size(0.45f, 0.15f));
+		btnYES->setSize(CEGUI::Size(0.45f, 0.18f));
 		btnYES->setPosition( CEGUI::Point(0.025f, 0.825f));
 		btnYES->setText("Oui");
 
@@ -60,7 +60,7 @@ namespace PN
 		btnYES->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickYes , this));
 
 		CEGUI::PushButton* btnNO = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_no_" + convert.str()).c_str()));
-		btnNO->setSize(CEGUI::Size(0.45f, 0.15f));
+		btnNO->setSize(CEGUI::Size(0.45f, 0.18f));
 		btnNO->setPosition(CEGUI::Point(0.525f, 0.825f));
 		btnNO->setText("Non");
 		_frameWin->addChildWindow(btnNO);
@@ -70,14 +70,14 @@ namespace PN
 	case OK_CANCEL:
 	  {
 		CEGUI::PushButton* btnOK = static_cast< CEGUI::PushButton* >( CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_ok_" + convert.str()).c_str()));
-		btnOK->setSize(CEGUI::Size(0.45f, 0.15f));
+		btnOK->setSize(CEGUI::Size(0.45f, 0.18f));
 		btnOK->setPosition( CEGUI::Point(0.025f, 0.825f));
 		btnOK->setText("Ok");		
 		_frameWin->addChildWindow(btnOK);
 		btnOK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickOk, this));
 
 		CEGUI::PushButton* btnCANCEL = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ( "_msg_box_btn_cancel_" + convert.str() ).c_str() ) );
-		btnCANCEL->setSize(CEGUI::Size(0.45f, 0.15f));
+		btnCANCEL->setSize(CEGUI::Size(0.45f, 0.18f));
 		btnCANCEL->setPosition(CEGUI::Point(0.525f, 0.825f));
 		btnCANCEL->setText("Annuler");
 		_frameWin->addChildWindow(btnCANCEL);
@@ -87,7 +87,7 @@ namespace PN
 	case OK:
 	  {
 		CEGUI::PushButton* btnOK = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_ok_" + convert.str()).c_str()));
-		btnOK->setSize(CEGUI::Size(0.5f, 0.15f));
+		btnOK->setSize(CEGUI::Size(0.5f, 0.18f));
 		btnOK->setPosition(CEGUI::Point(0.25f, 0.75f));
 		btnOK->setText("Ok");
 		_frameWin->addChildWindow(btnOK);
