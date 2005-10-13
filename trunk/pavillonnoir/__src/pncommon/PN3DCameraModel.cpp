@@ -1,8 +1,8 @@
 /*
- * PNWPModel.cpp
+ * PN3DCameraModel.cpp
  * 
  * Description :
- * PNWPModel definition
+ * PN3DCameraModel definition
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -29,7 +29,7 @@
 
 #include "pndefs.h"
 
-#include "PNWPModel.hpp"
+#include "PN3DCameraModel.hpp"
 #include "pnrender.h"
 #include "PNRendererInterface.hpp"
 
@@ -37,73 +37,48 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
-PNWPModel* PNWPModel::_instance = NULL;
+PN3DCameraModel* PN3DCameraModel::_instance = NULL;
 
-PNWPModel::PNWPModel(void)
+PN3DCameraModel::PN3DCameraModel(void)
 {
-  _dflcolor[0] = 1.0f;
-  _dflcolor[1] = 0.0f;
-  _dflcolor[2] = 0.0f;
-  _dflcolor[3] = 1.0f;
-  _selectcolor[0] = 0.0f;
-  _selectcolor[1] = 0.0f;
-  _selectcolor[2] = 1.0f;
-  _selectcolor[3] = 1.0f;
-  _color = _dflcolor;
+  _color[0] = 1.0f;
+  _color[1] = 0.0f;
+  _color[2] = 0.0f;
+  _color[3] = 1.0f;
+
   _min.x = -15.0f;
   _min.y = -15.0f;
   _min.z = -15.0f;
   _max.x = 15.0f;
   _max.y = 15.0f;
   _max.z = 15.0f;
+
   _center.set(0.0f, 0.0f, 0.0f);
 }
 
-PNWPModel::~PNWPModel(void)
-{
+PN3DCameraModel::~PN3DCameraModel(void)
+{ }
 
-}
-
-PNWPModel*
-PNWPModel::getInstance()
+PN3DCameraModel*
+PN3DCameraModel::getInstance()
 {
   if (_instance == NULL)
-	_instance = new PNWPModel;
+	_instance = new PN3DCameraModel;
 
   return _instance;
 }
 
 void
-PNWPModel::render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk)
+PN3DCameraModel::render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk)
 {
   render(sk);
 }
 
 void
-PNWPModel::render(PN3DSkeleton* sk)
+PN3DCameraModel::render(PN3DSkeleton* sk)
 {
   PNRendererInterface* pnri = PNRendererInterface::getInstance();
   pnri->renderSphere(15.0f, 20, 20, _color);
-}
-
-void
-PNWPModel::renderLink(const PNPoint &p1, const PNPoint &p2, const pnfloat* color,
-					  pnuint direction, pnuint thickness)
-{
-  PNRendererInterface* pnri = PNRendererInterface::getInstance();
-  pnri->renderLink(p1, p2, color, direction, thickness);
-}
-
-void
-PNWPModel::setSlctColor()
-{
-  _color = _selectcolor;
-}
-
-void
-PNWPModel::setDflColor()
-{
-  _color = _dflcolor;
 }
 
 //////////////////////////////////////////////////////////////////////////

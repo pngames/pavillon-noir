@@ -47,7 +47,7 @@ public:
   /// Sub Objects to render
   typedef enum
   {
-	RENDER_SKELETON			= RENDER_MATERIALS << 1,
+	RENDER_SKELETON			= RENDER_PHYSICAL << 1,
   }							rendermode;
 
 protected:

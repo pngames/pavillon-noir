@@ -737,6 +737,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncommon\PN3DCameraModel.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PN3DCameraModel.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\pnrender.h"
 				>
 			</File>

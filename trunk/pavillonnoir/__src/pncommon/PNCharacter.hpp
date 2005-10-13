@@ -69,6 +69,12 @@ class PNAPI PNCharacter : public PN3DSkeletonObject
   pnCharacType							_shown;
 
 public:
+  /// Sub Objects to render
+  typedef enum
+  {
+	RENDER_CAMERA			= RENDER_PHYSICAL << 1,
+  }							rendermode;
+public:
   PNCharacter();
   virtual ~PNCharacter();
 
@@ -81,6 +87,9 @@ protected:
 public:
   /// Update skeleton object informations
   virtual void							update(pnuint deltatTime);
+
+  /// Render object using PNRendererInterface
+  virtual void							render();
 
   //////////////////////////////////////////////////////////////////////////
 
