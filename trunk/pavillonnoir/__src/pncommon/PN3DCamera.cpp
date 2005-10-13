@@ -51,8 +51,6 @@ PN3DCamera::PN3DCamera()
 {
   _objType = OBJTYPE_CAMERA;
 
-  _target = NULL;
-
   _viewFar = 20000.0f;
   _viewNear = 0.1f;
   _viewFov = 45.0f;
@@ -65,7 +63,7 @@ PN3DCamera::PN3DCamera()
 PN3DCamera::PN3DCamera(PN3DObject* object)
 {
   _objType = OBJTYPE_CAMERA;
-  _target = object;
+  _positionTarget = _viewTarget = object;
 }
 
 PN3DCamera::~PN3DCamera()
@@ -102,7 +100,7 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 
   //////////////////////////////////////////////////////////////////////////
 
-  pnfloat angle = DEGREE_TO_RADIAN(30);
+  pnfloat angle = (pnfloat)DEGREE_TO_RADIAN(30);
   _viewMaxCosFov = cosf(angle/*max(_viewYRadFov, _viewXRadFov)*//2);
 
   PNVector3f	frontDirection = _orient * _frontDirection.getVector();

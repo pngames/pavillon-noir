@@ -401,7 +401,7 @@ void  PNLuaGame::onColision(pnEventType evt, PNObject* source, PNEventData* data
 void  PNLuaGame::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* data)
 {
   PN3DObject*	  o1 = ((PNFrustrumEventData*)data)->obj;
-  PN3DObject*	  o2 = ((PN3DCamera*)source)->getTarget();
+  PN3DObject*	  o2 = ((PN3DCamera*)source)->getPositionTarget();
   std::string	  luaOrder;
 
   pnerror(PN_LOGLVL_DEBUG, "frustrum in");
@@ -423,7 +423,7 @@ void  PNLuaGame::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* da
 void  PNLuaGame::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* data)
 {
   PN3DObject*	  o1 = ((PNFrustrumEventData*)data)->obj;
-  PN3DObject*	  o2 = ((PN3DCamera*)source)->getTarget();
+  PN3DObject*	  o2 = ((PN3DCamera*)source)->getPositionTarget();
   std::string	  luaOrder;
 
   pnerror(PN_LOGLVL_DEBUG, "frustrum out");
