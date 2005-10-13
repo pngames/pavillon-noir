@@ -87,8 +87,8 @@ namespace PN
 	PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_DISABLE, 0, 0);
     PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_CREATE, 0, data2);
 	PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_CREATE, 0, data3);
-	//PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_CREATE, 0, data);
-	//PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_PLAY, 0, new PNSoundEventData("theme", 0.3f));
+	//PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_CREATE, 0, data);
+	//PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, new PNSoundEventData("theme", 0.3f));
 
 	//////////////////////////////////////////////////////////////////////////
   }
