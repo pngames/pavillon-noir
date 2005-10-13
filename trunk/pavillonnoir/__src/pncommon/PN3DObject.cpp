@@ -624,6 +624,14 @@ PN3DObject::setTargetDirection(const PNNormal3f& n)
   //_rightTargetDirection.crossProduct(PNVector3f::UNIT_Y, _targetDirection);
 }
 
+void
+PN3DObject::setTargetPosition(pnfloat x, pnfloat y, pnfloat z)
+{
+  _targetPosition.x = x;
+  _targetPosition.y = x;
+  _targetPosition.z = x;
+}
+
 PN3DObject*
 PN3DObject::getTarget() const
 {
