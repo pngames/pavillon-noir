@@ -360,8 +360,10 @@ public:
   void							setTarget(PN3DObject* obj, pnfloat distance = -1.0f);
   /// Set Distance to the target
   void							setTargetDistance(pnfloat distance);
-  /// Set direction in witch 3D object look the target
+  /// Set direction in witch 3D object look to the target
   void							setTargetDirection(const PNNormal3f& vec);
+  /// Set Position depending on the target
+  void							setTargetPosition(pnfloat x, pnfloat y, pnfloat z);
   /// Retrieve 3d object target
   PN3DObject					*getTarget() const;
 

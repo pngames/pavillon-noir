@@ -43,6 +43,7 @@ PNCharacter::PNCharacter() : _pf(_coord)
   _hurry = false;
   _objType = OBJTYPE_CHARACTER;
   _view.setTarget(this);
+  _view.setMovingMode(MMODE_POSITION_ABS_LOCKED);
 }
 
 PNCharacter::~PNCharacter()
