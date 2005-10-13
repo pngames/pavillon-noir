@@ -349,6 +349,7 @@ void  PNLuaGame::onPlayMapPause(pnEventType evt, PNObject* source, PNEventData* 
 void  PNLuaGame::onPlayMapPaused(pnEventType evt, PNObject* source, PNEventData* data)
 {
 }
+
 void  PNLuaGame::onPlayMapEnd(pnEventType evt, PNObject* source, PNEventData* data)
 {
     this->_mapStarted = false;
