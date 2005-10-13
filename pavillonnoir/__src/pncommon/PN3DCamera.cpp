@@ -35,6 +35,7 @@
 
 #include "PNGameMap.hpp"
 #include "PNGameInterface.hpp"
+#include "PN3DModel.hpp"
 
 #include "PN3DCamera.hpp"
 
@@ -94,12 +95,62 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 
   PNLOCK(obj);
 
-  PNVector3f	targetVector = obj->getCoord();
-  targetVector -= _coord;
+  //////////////////////////////////////////////////////////////////////////
+
+  if (obj->get3DModel() == NULL || obj->getRenderMode() == 0)
+	return false;
+
+  //////////////////////////////////////////////////////////////////////////
+
+  _viewMaxCosFov = cosf(max(_viewYRadFov, _viewXRadFov)/2);
 
   PNVector3f	frontDirection = _orient * _frontDirection.getVector();
+  PNVector3f	rightDirection = _orient * _rightDirection.getVector();
+  PNVector3f	topDirection = _orient * _topDirection.getVector();
 
-//  cout << "#####################################" << endl;
+  frontDirection.setNorm(1.0f);
+  rightDirection.setNorm(1.0f);
+  topDirection.setNorm(1.0f);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  PNPoint coord = _coord - obj->getCoord();
+  coord = obj->getOrient().getInvert() * coord;
+  frontDirection = obj->getOrient().getInvert() * frontDirection;
+
+  PNVector3f	targetVector = PNPoint::ZERO - coord;
+
+  const PNPoint&  minCoords = obj->get3DModel()->getMin();
+  const PNPoint&  maxCoords = obj->get3DModel()->getMax();
+
+  PNVector3f	targetVector1(minCoords);
+  targetVector1 += targetVector;
+  PNVector3f	targetVector2(minCoords.x, minCoords.y, maxCoords.z);
+  targetVector2 += targetVector;
+  PNVector3f	targetVector3(minCoords.x, maxCoords.y, minCoords.z);
+  targetVector3 += targetVector;
+  PNVector3f	targetVector4(maxCoords.x, minCoords.y, minCoords.z);
+  targetVector4 += targetVector;
+  PNVector3f	targetVector5(maxCoords.x, maxCoords.y, minCoords.z);
+  targetVector5 += targetVector;
+  PNVector3f	targetVector6(maxCoords.x, minCoords.y, maxCoords.z);
+  targetVector6 += targetVector;
+  PNVector3f	targetVector7(minCoords.x, maxCoords.y, maxCoords.z);
+  targetVector7 += targetVector;
+  PNVector3f	targetVector8(maxCoords);
+  targetVector8 += targetVector;
+
+  cout << "#####################################" << endl;
+
+  /*cout << "targetVector=" << targetVector << " sp=" << sp1 << endl;
+  cout << "targetVector1=" << targetVector1 << " sp=" << sp1 << endl;
+  cout << "targetVector1=" << targetVector2 << " sp=" << sp1 << endl;
+  cout << "targetVector1=" << targetVector3 << " sp=" << sp1 << endl;
+  cout << "targetVector1=" << targetVector4 << " sp=" << sp1 << endl;
+  cout << "targetVector1=" << targetVector5 << " sp=" << sp1 << endl;
+  cout << "targetVector1=" << targetVector6 << " sp=" << sp1 << endl;
+  cout << "targetVector1=" << targetVector7 << " sp=" << sp1 << endl;
+  cout << "targetVector1=" << targetVector8 << " sp=" << sp1 << endl;*/
 
 //  cout << "_viewY=" << RADIAN_TO_DEGREE(_viewYRadFov) << " || " << "_viewX=" << RADIAN_TO_DEGREE(_viewXRadFov) << endl;
 
@@ -114,21 +165,59 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   //////////////////////////////////////////////////////////////////////////
   // FOV
 
-  frontDirection.setNorm(1.0f);
+  targetVector1.setNorm(1.0f);
+  pndouble	sp1 = frontDirection.scalarProduct(targetVector1);
+  targetVector2.setNorm(1.0f);
+  pndouble	sp2 = frontDirection.scalarProduct(targetVector2);
+  targetVector3.setNorm(1.0f);
+  pndouble	sp3 = frontDirection.scalarProduct(targetVector3);
+  targetVector4.setNorm(1.0f);
+  pndouble	sp4 = frontDirection.scalarProduct(targetVector4);
+  targetVector5.setNorm(1.0f);
+  pndouble	sp5 = frontDirection.scalarProduct(targetVector5);
+  targetVector6.setNorm(1.0f);
+  pndouble	sp6 = frontDirection.scalarProduct(targetVector6);
+  targetVector7.setNorm(1.0f);
+  pndouble	sp7 = frontDirection.scalarProduct(targetVector7);
+  targetVector8.setNorm(1.0f);
+  pndouble	sp8 = frontDirection.scalarProduct(targetVector8);
+
   targetVector.setNorm(1.0f);
 
-  pndouble	sp = frontDirection.scalarProduct(targetVector);
+  pndouble	spf = frontDirection.scalarProduct(targetVector);
+  pndouble	spr = rightDirection.scalarProduct(targetVector);
+  pndouble	spt = topDirection.scalarProduct(targetVector);
 
-  cout << "sp=" << sp << endl;
+  cout << "spf=" << spf << " spr=" << spr << " spt=" << spt << endl;
 
-  return sp > cosf(max(_viewYRadFov, _viewXRadFov)/2);
+  pnfloat angle = DEGREE_TO_RADIAN(30);
+
+  if (sp1 > _viewMaxCosFov)
+	return true;
+  if (sp2 > _viewMaxCosFov)
+	return true;
+  if (sp3 > _viewMaxCosFov)
+	return true;
+  if (sp4 > _viewMaxCosFov)
+	return true;
+  if (sp5 > _viewMaxCosFov)
+	return true;
+  if (sp6 > _viewMaxCosFov)
+	return true;
+  if (sp7 > _viewMaxCosFov)
+	return true;
+  if (sp8 > _viewMaxCosFov)
+	return true;
+
+  return false;
+  return spf > _viewMaxCosFov;
 
   //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
   // TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST 
   
-  PNPoint coord = _coord - obj->getCoord();
+  coord = _coord - obj->getCoord();
   //coord = obj->getOrient().getInvert() * coord;
 
   //frontDirection = obj->getOrient().getInvert() * frontDirection;
