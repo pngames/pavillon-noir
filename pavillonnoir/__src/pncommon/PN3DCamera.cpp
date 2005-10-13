@@ -91,7 +91,7 @@ PN3DCamera::_onMPEnded(pnEventType type, PNObject* source, PNEventData* ed)
 pnbool
 PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 {
-  return true;
+  //return true;
 
   PNLOCK(obj);
 
@@ -102,7 +102,8 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 
   //////////////////////////////////////////////////////////////////////////
 
-  _viewMaxCosFov = cosf(max(_viewYRadFov, _viewXRadFov)/2);
+  pnfloat angle = DEGREE_TO_RADIAN(30);
+  _viewMaxCosFov = cosf(angle/*max(_viewYRadFov, _viewXRadFov)*//2);
 
   PNVector3f	frontDirection = _orient * _frontDirection.getVector();
   PNVector3f	rightDirection = _orient * _rightDirection.getVector();
@@ -190,8 +191,6 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 
   cout << "spf=" << spf << " spr=" << spr << " spt=" << spt << endl;
 
-  pnfloat angle = DEGREE_TO_RADIAN(30);
-
   if (sp1 > _viewMaxCosFov)
 	return true;
   if (sp2 > _viewMaxCosFov)
@@ -208,9 +207,20 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 	return true;
   if (sp8 > _viewMaxCosFov)
 	return true;
+  if (spf > _viewMaxCosFov)
+	return true;
+
+  //////////////////////////////////////////////////////////////////////////
+  // BIGGER THAN NEER-FAR
+
+  PNVector3f  sizeVector(minCoords, maxCoords);
+  if (sizeVector.getNorm() >= _viewFar - _viewNear)
+	return true;
+
+  //////////////////////////////////////////////////////////////////////////
+  // BIGGER THAN FOV
 
   return false;
-  return spf > _viewMaxCosFov;
 
   //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
