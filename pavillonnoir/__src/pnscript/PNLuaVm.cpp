@@ -52,12 +52,12 @@ PNLuaVm::PNLuaVm()
     this->_luaVm = lua_open();
     this->_debug = false;
     this->_debug_log = NULL;//fopen(debugLogPath.native_file_string().c_str(), "w+");
+	//setDebug(true);
 }
 
 PNLuaVm::~PNLuaVm()
 {
-    lua_close(this->_luaVm);
-    fclose(this->_debug_log);
+	lua_close(this->_luaVm);
 }
 //-------------------------------------------------------------------------
 
@@ -117,4 +117,34 @@ void       PNLuaVm::setDebugLogPath(boost::filesystem::path path)
 {
     PNLOCK(this);
     this->_debug_log = fopen(path.native_file_string().c_str(), "w+");
+}
+
+void	PNLuaVm::luaDebugLineHook(lua_State *S, lua_Debug *ar)
+{
+	static FILE* _lua_debug_file = fopen("./pnScript.log", "w+");
+
+	lua_getinfo(S, "Snl", ar);
+	fprintf(_lua_debug_file, "##Line: File \"%s\" -- function \"%s\" -- line : \"%d\"\n", ar->source, ar->name, ar->currentline);
+}
+
+
+void PNLuaVm::setDebug(bool b)
+{
+	this->_debug = b;
+
+	if (b == true)
+	{
+		// Line hook activated - function called every time a line is interpreted
+	   lua_sethook(this->_luaVm, (lua_Hook) luaDebugLineHook, LUA_MASKLINE, NULL);
+	}
+	else
+	{
+		// Line hook deactivated
+	   lua_sethook(this->_luaVm, (lua_Hook) luaDebugLineHook, NULL, NULL);
+	}
+}
+
+bool	PNLuaVm::getLuaDebugLogging()
+{
+	return(this->_debug);
 }

@@ -80,9 +80,6 @@ public:
   //return the gameMap
   virtual PNGameMap* getGameMap()=0;
 
-  //Setting of debug logs
-  virtual void setDebug(bool b)=0;
-
   //Event CallBack
   virtual void onUpdate(pnuint deltaTime){};
   virtual void onInit(pnEventType evt, PNObject* source, PNEventData* data){};
