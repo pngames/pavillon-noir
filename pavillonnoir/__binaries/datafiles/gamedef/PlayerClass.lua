@@ -6,9 +6,10 @@ function PlayerClass(id)
 	---------------setting camera behavior-----------------
 	Player.camera = PN3DCamera:getRenderCam()
 	Player.camera:setTarget(Player)
-   Player.camera:setTargetPosition(0, 300 , 300)
+   Player.camera:setTargetPosition(0, 600 , 600)
 	--Player.camera:setTargetDistance(300)
    Player.camera:setMovingMode(PN3DObject.MMODE_POSITION_ABS_LOCKED)
+   --Player.camera:addMovingMode(PN3DObject.MMODE_VIEW_ABS_LOCKED)
    --Player.camera:setMovingMode(PN3DObject.MMODE_VIEW_ABS_LOCKED)
     
 	-------------------------------------------------------
