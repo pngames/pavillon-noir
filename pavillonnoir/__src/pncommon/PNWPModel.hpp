@@ -31,42 +31,37 @@
 # define _PNWPMODEL_HPP_
 
 #include <string>
-#include <boost/filesystem/path.hpp>
 
 #include "PN3DModel.hpp"
 #include "pnmath.h"
+
 #include "PNPoint.hpp"
 
 namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
-class PN3DMaterial;
-class PN3DSkeleton;
-class PNPoint;
-class PNFace;
-
 class PNAPI PNWPModel : public PN3DModel
 {
 private:
   static PNWPModel*		  _instance;
+
   pnpoint4f				  _selectcolor;
   pnpoint4f				  _dflcolor;
   pnfloat*				  _color;
+
   PNPoint				  _min;
   PNPoint				  _max;
   PNPoint				  _center;
-  boost::filesystem::path _mypath;
 
   PNWPModel(void);
   ~PNWPModel(void);
 
 public:
   static PNWPModel*	getInstance();
-  boost::filesystem::path*	getFile();
 
-  void				render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk=NULL);
-  void				render(PN3DSkeleton* sk=NULL);
+  void				render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk = NULL);
+  void				render(PN3DSkeleton* sk = NULL);
   void				renderLink(const PNPoint &p1, const PNPoint &p2, const pnfloat* color,
 								pnuint direction = 0, pnuint thickness = 1);
 

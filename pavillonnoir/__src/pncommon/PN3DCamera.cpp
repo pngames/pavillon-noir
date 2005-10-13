@@ -36,6 +36,7 @@
 #include "PNGameMap.hpp"
 #include "PNGameInterface.hpp"
 #include "PN3DModel.hpp"
+#include "PN3DCameraModel.hpp"
 
 #include "PN3DCamera.hpp"
 
@@ -55,6 +56,10 @@ PN3DCamera::PN3DCamera()
   _viewNear = 0.1f;
   _viewFov = 45.0f;
   _viewXRadFov = _viewYRadFov = (pnfloat)DEGREE_TO_RADIAN(_viewFov);
+
+  _renderMode = RENDER_MODEL;
+
+  _model = PN3DCameraModel::getInstance();
 
   PNEventManager::getInstance()->addCallback(PN_EVENT_MP_STARTED, EventCallback(this, &PN3DCamera::_onMPStarted));
   PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PN3DCamera::_onMPEnded));
