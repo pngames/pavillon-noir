@@ -51,7 +51,7 @@ class PN3DObject;
 class PNAPI PNGameMap : public PNObject, public IPNXMLSerializable
 {
 public:
-  typedef std::map<std::string, PN3DObject *>	ObjMap;
+    typedef std::map<std::string, PN3DObject *>	ObjMap;
 protected:
   ObjMap							_entityList;
   PN3DCamera*                       _camera;

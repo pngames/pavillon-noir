@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // LuaSandBoxUtil
 void loadLuaScript(const char* file);
-void loadLuaScript(const char* file, int reload);
+void loadLuaScript(const char* file, bool reload);
 int pnprint(const char* format, int where=0);
 PNLuaGameMap* getGameMap();
 void  newGame();

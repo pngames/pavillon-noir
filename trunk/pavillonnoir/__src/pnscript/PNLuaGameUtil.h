@@ -33,7 +33,7 @@
 #include "PNLuaGameMap.hpp"
 
 namespace PN{
-  void loadLuaScript(const pnchar* file, int reload = 0);
+  void loadLuaScript(const pnchar* file, bool reload = 0);
 
   pnint pnprint(const pnchar* format, int where = 0);
   void  newGame();
