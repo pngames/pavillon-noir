@@ -17,16 +17,11 @@ function PN3DSkeletonObjectClass(id)
 	pnprint("PN3DSkeletonObjectClass creating 5\n")
 	
     function  obj:onLuaUpdate(deltaTime)
-       -- self.__index:update(deltaTime)
-       --pnprint(self.id)		
-       --pnprint("onLuaUpdate\n")
        self:update(deltaTime)
     end
     
     ---------------------move events-----------------------
-	function obj:onLuaActionMoveForward(state)
-		--pnprint(self.id)
-		--pnprint(":onLuaActionMoveForward\n")	
+	function obj:onLuaActionMoveForward(state)	
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_FORWARD)
 		else

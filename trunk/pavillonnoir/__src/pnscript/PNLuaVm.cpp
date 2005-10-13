@@ -76,8 +76,17 @@ pnerrorcode    PNLuaVm::execFile(const boost::filesystem::path &path)
     case LUA_ERRMEM:
         myret = PNEC_ERROR;
         break;
+    case LUA_ERRRUN:
+        myret = PNEC_ERROR;
+        break;
+    case LUA_ERRFILE:
+        myret = PNEC_ERROR;
+        break;
     case 0:
         myret = PNEC_SUCCES;
+        break;
+    default:
+        myret = PNEC_ERROR;
     }
     return myret;
 }
@@ -94,6 +103,9 @@ pnerrorcode    PNLuaVm::execString(const std::string &orders)
         myret = PNEC_FAILED_TO_PARSE;
         break;
     case LUA_ERRMEM:
+        myret = PNEC_ERROR;
+        break;
+    case LUA_ERRRUN:
         myret = PNEC_ERROR;
         break;
     case 0:

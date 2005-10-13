@@ -364,7 +364,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
   
   /// Set 3d object target and 3D object distance
-  void							setTarget(PN3DObject* obj, pnfloat distance = -1.0f);
+  void							setTarget(PN3DObject* obj);
   /// Set Distance to the target
   void							setTargetDistance(pnfloat distance);
   /// Set direction in witch 3D object look to the target

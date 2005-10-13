@@ -6,10 +6,10 @@ function PlayerClass(id)
 	---------------setting camera behavior-----------------
 	Player.camera = PN3DCamera:getRenderCam()
 	Player.camera:setTarget(Player)
-	Player.camera:setTargetDirection(Player:getFrontDirection())
-	Player.camera:setTargetDistance(10)
-    --Player.camera:setMovingMode(PN3DObject.MMODE_DISTANCE_ABS_LOCKED)
-    Player.camera:setMovingMode(PN3DObject.MMODE_VIEW_ABS_LOCKED)
+   Player.camera:setTargetPosition(0, 300 , 300)
+	--Player.camera:setTargetDistance(300)
+   Player.camera:setMovingMode(PN3DObject.MMODE_POSITION_ABS_LOCKED)
+   --Player.camera:setMovingMode(PN3DObject.MMODE_VIEW_ABS_LOCKED)
     
 	-------------------------------------------------------
 		
@@ -33,7 +33,8 @@ function PlayerClass(id)
 			self:stopAnimation()
 		end 
 		
-	end	
+	end
+	
 	function Player:onLuaActionMoveBackward(state)
 		pnprint(self.id)
 		pnprint(":onLuaActionMoveBackward\n")
@@ -45,6 +46,11 @@ function PlayerClass(id)
 		end 
 	end
 
+	function Player:onLuaUpdate(deltaTime)
+		pnprint(self.id)
+		pnprint(":onLuaActionMoveBackward\n")
+		self.__index:onLuaUpdate(deltaTime)
+	end
 	
 	-------------------------------------------------------
 	return Player
