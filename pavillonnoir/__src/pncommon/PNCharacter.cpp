@@ -172,6 +172,13 @@ PNCharacter::update(pnuint deltatTime)
   _view.update(deltatTime);
 }
 
+/// Render object using PNRendererInterface
+void
+PNCharacter::render()
+{
+  if (_renderMode & RENDER_CAMERA)
+	_view.render();
+}
 
 //////////////////////////////////////////////////////////////////////////
 };
