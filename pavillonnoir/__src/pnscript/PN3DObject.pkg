@@ -27,7 +27,7 @@ public:
   }							movingState;
 
   /// Return bit mask indicate in witch mouving states is the 3D object
-  unsigned int					getMovingState();
+  unsigned int				getMovingState();
   /// Set bit mask indicate in witch mouving states is the 3D object
   void						setMovingState(unsigned int mstate);
   /// add bit mask indicate in witch moving states is the 3D object
@@ -42,24 +42,29 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
 public:
+  /// Displacment and view mode
   typedef enum
   {
-	MMODE_FREE,				        /// 3D object move freely
-	MMODE_POSITION_LOCKED,			/// 3D object alway try to be in same relative position from target
-	MMODE_POSITION_ABS_LOCKED,		/// 3D object alway in same relative position from target
-    MMODE_DISTANCE_LOCKED,		    /// 3D object alway try to be at _targetDistance distance from the target
-    MMODE_DISTANCE_ABS_LOCKED,	    /// 3D object alway at _targetDistance distance from the target
-	MMODE_VIEW_LOCKED,		        /// 3D object alway try to be in _targetDirection alignment of _target
-	MMODE_VIEW_ABS_LOCKED,	        /// 3D object alway in _targetDirection alignment of _target
-    MMODE_VIEW_DISTANCE_LOCKED,		/// MMODE_DISTANCE_LOCKED + MMODE_VIEW_LOCKED
-    MMODE_VIEW_DISTANCE_ABS_LOCKED, /// MMODE_DISTANCE_ABS_LOCKED + MMODE_VIEW_ABS_LOCKED
-	NB_MMODE				        /// number of moving modes in 3DObject
+	MMODE_FREE						= 0x000000,	  		/// 3D object move freely
+	MMODE_POSITION_LOCKED			= 0x000001 << 0,	/// 3D object alway try to be in same relative position from target
+	MMODE_POSITION_ABS_LOCKED		= 0x000001 << 1,	/// 3D object alway in same relative position from target
+    MMODE_DISTANCE_LOCKED			= 0x000001 << 2,	/// 3D object alway try to be at _targetDistance distance from the target
+    MMODE_DISTANCE_ABS_LOCKED		= 0x000001 << 3,	/// 3D object alway at _targetDistance distance from the target
+	MMODE_VIEW_LOCKED				= 0x000001 << 4,	/// 3D object alway try to be in _targetDirection alignment of _target
+	MMODE_VIEW_ABS_LOCKED			= 0x000001 << 5,	/// 3D object alway in _targetDirection alignment of _target
+
+    MMODE_VIEW_DISTANCE_LOCKED		= MMODE_DISTANCE_LOCKED | MMODE_VIEW_LOCKED,			/// MMODE_DISTANCE_LOCKED + MMODE_VIEW_LOCKED
+    MMODE_VIEW_DISTANCE_ABS_LOCKED	= MMODE_VIEW_ABS_LOCKED | MMODE_DISTANCE_ABS_LOCKED,	/// MMODE_DISTANCE_ABS_LOCKED + MMODE_VIEW_ABS_LOCKED
   }			  				        movingmode;
 
   /// Return displacement mode of 3D object (free, locked, ...)
-  movingmode				getMovingMode();
+  unsigned int						getMovingMode() const;
   /// Set displacement mode of 3D object (free, locked, ...)
-  void						setMovingMode(movingmode mmode);
+  void								setMovingMode(unsigned int mmode);
+  /// Add bit mask indicate in witch moving mode is the 3D object
+  void								addMovingMode(unsigned int mmode);
+  /// Sub bit mask indicate in witch moving mode is the 3D object
+  void								subMovingMode(unsigned int mmode);
 
   //////////////////////////////////////////////////////////////////////////
 

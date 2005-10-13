@@ -55,15 +55,6 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
 public:
-  /// Displacement and view mode
-  typedef enum
-  {
-	MMODE_SUBJECTIV			= PN3DObject::NB_MMODE,	/// Camera view integrated in the target
-	NB_MMODE										/// number of moving modes in 3DObject
-  }							pnmovingmode;
-
-  //////////////////////////////////////////////////////////////////////////
-
   /// Return unique rendering camera
   static PN3DCamera*		getRenderCam();
 

@@ -145,40 +145,59 @@ public:
   /// Displacment and view mode
   typedef enum
   {
-	MMODE_FREE,				        /// 3D object move freely
-	MMODE_POSITION_LOCKED,			/// 3D object alway try to be in same relative position from target
-	MMODE_POSITION_ABS_LOCKED,		/// 3D object alway in same relative position from target
-    MMODE_DISTANCE_LOCKED,		    /// 3D object alway try to be at _targetDistance distance from the target
-    MMODE_DISTANCE_ABS_LOCKED,	    /// 3D object alway at _targetDistance distance from the target
-	MMODE_VIEW_LOCKED,		        /// 3D object alway try to be in _targetDirection alignment of _target
-	MMODE_VIEW_ABS_LOCKED,	        /// 3D object alway in _targetDirection alignment of _target
-    MMODE_VIEW_DISTANCE_LOCKED,		/// MMODE_DISTANCE_LOCKED + MMODE_VIEW_LOCKED
-    MMODE_VIEW_DISTANCE_ABS_LOCKED, /// MMODE_DISTANCE_ABS_LOCKED + MMODE_VIEW_ABS_LOCKED
-	NB_MMODE				        /// number of moving modes in 3DObject
+	MMODE_FREE						= 0x000000,	  		/// 3D object move freely
+	MMODE_POSITION_LOCKED			= 0x000001 << 0,	/// 3D object alway try to be in same relative position from target
+	MMODE_POSITION_ABS_LOCKED		= 0x000001 << 1,	/// 3D object alway in same relative position from target
+    MMODE_DISTANCE_LOCKED			= 0x000001 << 2,	/// 3D object alway try to be at _targetDistance distance from the target
+    MMODE_DISTANCE_ABS_LOCKED		= 0x000001 << 3,	/// 3D object alway at _targetDistance distance from the target
+	MMODE_VIEW_LOCKED				= 0x000001 << 4,	/// 3D object alway try to be in _targetDirection alignment of _target
+	MMODE_VIEW_ABS_LOCKED			= 0x000001 << 5,	/// 3D object alway in _targetDirection alignment of _target
+
+    MMODE_VIEW_DISTANCE_LOCKED		= MMODE_DISTANCE_LOCKED | MMODE_VIEW_LOCKED,			/// MMODE_DISTANCE_LOCKED + MMODE_VIEW_LOCKED
+    MMODE_VIEW_DISTANCE_ABS_LOCKED	= MMODE_VIEW_ABS_LOCKED | MMODE_DISTANCE_ABS_LOCKED,	/// MMODE_DISTANCE_ABS_LOCKED + MMODE_VIEW_ABS_LOCKED
   }			  				        movingmode;
 
   /// Return displacement mode of 3D object (free, locked, ...)
-  movingmode				getMovingMode() const;
+  pnuint							getMovingMode() const;
   /// Set displacement mode of 3D object (free, locked, ...)
-  void						setMovingMode(movingmode mmode);
+  void								setMovingMode(pnuint mmode);
+  /// Add bit mask indicate in witch moving mode is the 3D object
+  void								addMovingMode(pnuint mmode);
+  /// Sub bit mask indicate in witch moving mode is the 3D object
+  void								subMovingMode(pnuint mmode);
 protected:
   /// Displacement mode of 3D object (free, locked, ...)
-  movingmode				_movingMode;
+  pnuint							_movingMode;
 protected:
   /// Other 3DObject targeted used for locked displacement and other things like that
 
   /// Object to look
-  PN3DObject*				_viewTarget;
+  PN3DObject*						_viewTarget;
   /// Object to follow
-  PN3DObject*				_positionTarget;
+  PN3DObject*						_positionTarget;
 
   /// _positionTarget relative position
-  PNPoint					_targetPosition;
+  PNPoint							_targetPosition;
   /// _positionTarget relative distance
-  pnfloat					_targetDistance;
-  PNNormal3f				_targetDirection;
-  PNNormal3f				_rightTargetDirection;
+  pnfloat							_targetDistance;
+  PNNormal3f						_targetDirection;
+  PNNormal3f						_rightTargetDirection;
 
+  //////////////////////////////////////////////////////////////////////////
+
+public:
+  /// Set 3d object target and 3D object distance
+  void								setTarget(PN3DObject* obj);
+  /// Set Distance to the target
+  void								setTargetDistance(pnfloat distance);
+  /// Set direction in witch 3D object look to the target
+  void								setTargetDirection(const PNNormal3f& vec);
+  /// Set Position depending on the target
+  void								setTargetPosition(pnfloat x, pnfloat y, pnfloat z);
+  /// Retrieve 3d object view target
+  PN3DObject*						getPositionTarget() const;
+  /// Retrieve 3d object position target
+  PN3DObject*						getViewTarget() const;
   //////////////////////////////////////////////////////////////////////////
 
 public:
@@ -360,21 +379,6 @@ public:
 
   /// Fill buffer from step with faces owned by 3d object
   virtual pnuint				computeFaces(PNFace* faces, pnuint step = 0);
-
-  //////////////////////////////////////////////////////////////////////////
-  
-  /// Set 3d object target and 3D object distance
-  void							setTarget(PN3DObject* obj);
-  /// Set Distance to the target
-  void							setTargetDistance(pnfloat distance);
-  /// Set direction in witch 3D object look to the target
-  void							setTargetDirection(const PNNormal3f& vec);
-  /// Set Position depending on the target
-  void							setTargetPosition(pnfloat x, pnfloat y, pnfloat z);
-  /// Retrieve 3d object view target
-  PN3DObject					*getPositionTarget() const;
-  /// Retrieve 3d object position target
-  PN3DObject					*getViewTarget() const;
 
   //////////////////////////////////////////////////////////////////////////
 
