@@ -111,7 +111,7 @@ void PNSoundManager::setListenerOrientation(float fx, float fy, float fz, float 
 }
 
 
-/*! Sets the doppler effect */
+/*! Sets the Doppler effect */
 void PNSoundManager::setDopplerEffect(ALfloat velocity, ALfloat factor)
 {
   alDopplerFactor(factor);
@@ -120,14 +120,14 @@ void PNSoundManager::setDopplerEffect(ALfloat velocity, ALfloat factor)
 }
 
 
-/*! Gets the bigest Id in the map */
+/*! Gets the biggest Id in the map */
 pnint	PNSoundManager::getMaxId()
 {
   return _maxId;
 }
 
 
-/*! Sets the bigest Id in the map */
+/*! Sets the biggest Id in the map */
 void	PNSoundManager::setMaxid(pnint id)
 {
   _maxId = id;
@@ -176,7 +176,7 @@ bool			PNSoundManager::loadSound(const std::string &name, const pnchar *fname, c
 }
 
 
-/*! Sets the ptroprieties for sound \"name\" in the map */
+/*! Sets the proprieties for sound \"name\" in the map */
 void			PNSoundManager::setProperties(const std::string &name, pnfloat x, pnfloat y, pnfloat z, pnfloat vx, pnfloat vy, pnfloat vz)
 {
   if (soundMap.find(name) != soundMap.end())
@@ -234,7 +234,7 @@ void			PNSoundManager::destroySound(const std::string &name)
 }
 
 
-/*! Shows actualy loaded sounds in the console */
+/*! Shows actually loaded sounds in the console */
 void			PNSoundManager::showLoadedSounds()
 {
   std::map<std::string , PNSound *>::iterator it;
@@ -246,6 +246,32 @@ void			PNSoundManager::showLoadedSounds()
 	PNConsole::writeLine("+ Identifier \"%s\" for file \"%s\" | volume => %f", it->first.c_str(), it->second->current_file.c_str(), it->second->_volume);
   }
   return;
+}
+
+void					PNSoundManager::pauseAllSounds()
+{
+	std::map<std::string , PNSound *>::iterator it;
+
+	it = soundMap.begin();
+	PNConsole::writeLine("Loaded sounds are :");
+	for (it = soundMap.begin(); it != soundMap.end(); it++)
+	{
+		it->second->pauseSound();		
+	}
+	return;
+}
+
+void					PNSoundManager::playAllSounds()
+{
+	std::map<std::string , PNSound *>::iterator it;
+
+	it = soundMap.begin();
+	PNConsole::writeLine("Loaded sounds are :");
+	for (it = soundMap.begin(); it != soundMap.end(); it++)
+	{
+		it->second->playSound();
+	}
+	return;
 }
 
 void			PNSoundManager::registerCallbacks()
@@ -274,7 +300,10 @@ void			PNSoundManager::onPlaySound(pnEventType evt, PNObject* source, PNEventDat
 {
 	PNSoundEventData* tmp = (PNSoundEventData*) data;
 
-	this->changeSoundVolume(tmp->name, tmp->sound_volume);
+	if (tmp->name == "all")
+		playAllSounds();
+	else
+		this->changeSoundVolume(tmp->name, tmp->sound_volume);
 	playSound(tmp->name);
 }
 
@@ -304,7 +333,10 @@ void			PNSoundManager::onVolumeSound(pnEventType evt, PNObject* source, PNEventD
  {
 	PNSoundEventData* tmp = (PNSoundEventData*) data;
 
-	this->pauseSound(tmp->name);
+	if (tmp->name == "all")
+		pauseAllSounds();
+	else
+		this->pauseSound(tmp->name);
  }
 
 void			PNSoundManager::onEnableSound(pnEventType evt, PNObject* source, PNEventData* data)
