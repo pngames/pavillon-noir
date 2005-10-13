@@ -6,7 +6,7 @@ function PN3DObjectClass(id)
 	obj.__instance  = obj.__index
     setmetatable(obj, obj)
     tolua.inherit(obj, obj.__instance) -- make obj be recognize as PN3DSkeletonObject
-	obj.className = "PN3DObjectClass"
+	obj.className = "PN3DObject"
     -------------------------
     obj:setId(id)
     obj.id = id

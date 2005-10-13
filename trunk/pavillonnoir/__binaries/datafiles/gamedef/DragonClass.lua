@@ -6,7 +6,7 @@ function DragonClass(id)
     pnprint("Dragon creating\n")
     local Dragon = PN3DSkeletonObjectClass(id) 
     -- Dragon.__index = Dragon
-    Dragon.className = "DragonClass"
+    Dragon.className = "Dragon"
     Dragon.target = PN3DObjectClass("")
     Dragon.target:setCoord(0.0, 0.0, 0.0)
     Dragon:setTarget(Dragon.target)

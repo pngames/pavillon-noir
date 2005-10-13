@@ -6,7 +6,7 @@ function PNCharacterClass(id)
 	PNCharacter.__instance  = PNCharacter.__index
     setmetatable(PNCharacter, PNCharacter)
     tolua.inherit(PNCharacter, PNCharacter.__instance) -- make obj be recognize as PN3DSkeletonObject
-	PNCharacter.className = "PNCharacterClass"
+	PNCharacter.className = "PNCharacter"
     -------------------------
     PNCharacter:setId(id)
     PNCharacter.id = id
