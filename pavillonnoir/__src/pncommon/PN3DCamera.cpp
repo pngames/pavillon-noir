@@ -113,7 +113,7 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 
   //////////////////////////////////////////////////////////////////////////
 
-  PNPoint coord = _coord - obj->getCoord();
+  PNPoint coord = getCoord() - obj->getCoord();
   coord = obj->getOrient().getInvert() * coord;
   frontDirection = obj->getOrient().getInvert() * frontDirection;
 

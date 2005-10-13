@@ -283,6 +283,9 @@ PN3DObject::getTopDirection() const
 const PNPoint&
 PN3DObject::getCoord() const
 {
+  if (_movingMode & MMODE_POSITION_ABS_LOCKED)
+	return _target->getCoord() + _coord;
+
   return _coord;
 }
 
@@ -630,8 +633,8 @@ void
 PN3DObject::setTargetPosition(pnfloat x, pnfloat y, pnfloat z)
 {
   _targetPosition.x = x;
-  _targetPosition.y = x;
-  _targetPosition.z = x;
+  _targetPosition.y = y;
+  _targetPosition.z = z;
 }
 
 
