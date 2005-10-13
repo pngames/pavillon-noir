@@ -86,6 +86,7 @@ protected:
   pnfloat					_viewFov;
   pnfloat					_viewYRadFov;
   pnfloat					_viewXRadFov;
+  pnfloat					_viewMaxCosFov;
 
   //////////////////////////////////////////////////////////////////////////
 
