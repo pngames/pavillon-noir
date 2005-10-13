@@ -495,7 +495,7 @@ PN3DObject::addMovingState(pnuint mstate)
 {
   PNLOCK(this);
 
-  _movingState = _movingState | mstate;
+  _movingState |= mstate;
 }
 
 void
@@ -503,7 +503,7 @@ PN3DObject::subMovingState(pnuint mstate)
 {
   PNLOCK(this);
 
-  _movingState = _movingState ^ mstate;
+  _movingState &= ~mstate;
 }
 
 pnfloat
@@ -522,18 +522,32 @@ PN3DObject::setMovingSpeed(pnfloat mspeed)
 
 //////////////////////////////////////////////////////////////////////////
 
-PN3DObject::movingmode
+pnuint
 PN3DObject::getMovingMode() const
 {
   return _movingMode;
 }
 
 void
-PN3DObject::setMovingMode(PN3DObject::movingmode mmode)
+PN3DObject::setMovingMode(pnuint mmode)
 {
   PNLOCK(this);
 
   _movingMode = mmode;
+}
+
+/// Add bit mask indicate in witch moving mode is the 3D object
+void
+PN3DObject::addMovingMode(pnuint mmode)
+{
+  _movingMode |= mmode;
+}
+
+/// Sub bit mask indicate in witch moving mode is the 3D object
+void
+PN3DObject::subMovingMode(pnuint mmode)
+{
+  _movingMode &= ~mmode;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -723,7 +737,7 @@ PN3DObject::updateTranslation(pnfloat step)
   //////////////////////////////////////////////////////////////////////////
   // targetPosition
 
-  if (_movingMode == MMODE_POSITION_ABS_LOCKED || _movingMode == MMODE_POSITION_ABS_LOCKED)
+  if (_movingMode & (MMODE_POSITION_ABS_LOCKED | MMODE_POSITION_ABS_LOCKED))
   {
 	_updateTranslation = _positionTarget->getCoord();
 	_updateTranslation += _targetPosition;
@@ -761,7 +775,7 @@ PN3DObject::updateTranslation(pnfloat step)
   // targetDistance
 
   if (_targetDistance > 0.0f &&
-	  (_movingMode == MMODE_DISTANCE_ABS_LOCKED || _movingMode == MMODE_DISTANCE_LOCKED))
+	  (_movingMode & (MMODE_DISTANCE_ABS_LOCKED | MMODE_DISTANCE_LOCKED)))
   {
 	PNVector3f	targetVector = _positionTarget->getCoord();
 	targetVector -= _coord;
@@ -782,7 +796,7 @@ PN3DObject::updateRotation(pnfloat step)
 
   pnfloat	phi = (pnfloat)DEGREE_TO_RADIAN(step/10);
 
-  if (_movingMode == MMODE_VIEW_ABS_LOCKED || _movingMode == MMODE_VIEW_LOCKED)
+  if (_movingMode & (MMODE_VIEW_ABS_LOCKED | MMODE_VIEW_LOCKED))
   {
 	PNVector3f	targetVector = _viewTarget->getCoord();
 	targetVector -= _coord;
@@ -815,7 +829,7 @@ PN3DObject::updateRotation(pnfloat step)
 
 	return ;
   }
-  else if (_movingMode == MMODE_VIEW_LOCKED)
+  else if (_movingMode & MMODE_VIEW_LOCKED)
   {
 	/*PNVector3f	targetVector = _target->getCoord();
 	targetVector -= _coord;
