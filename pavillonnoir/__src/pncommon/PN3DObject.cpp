@@ -84,7 +84,9 @@ PN3DObject::PN3DObject()
   _rightDirection.setArray(PNVector3f::UNIT_X);
   _topDirection.setArray(PNVector3f::UNIT_Y);
 
-  _target = NULL;
+  _viewTarget = NULL;
+  _positionTarget = NULL;
+
   _targetDistance = -1.0f;
   setTargetDirection(_frontDirection);
 
@@ -599,7 +601,7 @@ PN3DObject::setTarget(PN3DObject* obj, pnfloat distance)
 {
   PNLOCK(this);
 
-  _target = obj;
+  _positionTarget = _viewTarget = obj;
   setTargetDistance(distance);
 }
 
@@ -632,10 +634,19 @@ PN3DObject::setTargetPosition(pnfloat x, pnfloat y, pnfloat z)
   _targetPosition.z = x;
 }
 
+
+/// Retrieve 3d object view target
 PN3DObject*
-PN3DObject::getTarget() const
+PN3DObject::getPositionTarget() const
 {
-  return _target;
+  return _positionTarget;
+}
+
+/// Retrieve 3d object position target
+PN3DObject*
+PN3DObject::getViewTarget() const
+{
+  return _viewTarget;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -738,7 +749,7 @@ PN3DObject::updateTranslation(pnfloat step)
   if (_targetDistance > 0.0f &&
 	  (_movingMode == MMODE_DISTANCE_ABS_LOCKED || _movingMode == MMODE_DISTANCE_LOCKED))
   {
-	PNVector3f	targetVector = _target->getCoord();
+	PNVector3f	targetVector = _positionTarget->getCoord();
 	targetVector -= _coord;
 
 	pnfloat norm = targetVector.getNorm();
@@ -752,7 +763,7 @@ PN3DObject::updateTranslation(pnfloat step)
 
   if (_movingMode == MMODE_POSITION_ABS_LOCKED || _movingMode == MMODE_POSITION_ABS_LOCKED)
   {
-	_updateTranslation = _target->getCoord();
+	_updateTranslation = _positionTarget->getCoord();
 	_updateTranslation += _targetPosition;
 	_updateTranslation -= getCoord();
   }
@@ -769,7 +780,7 @@ PN3DObject::updateRotation(pnfloat step)
 
   if (_movingMode == MMODE_VIEW_ABS_LOCKED || _movingMode == MMODE_VIEW_LOCKED)
   {
-	PNVector3f	targetVector = _target->getCoord();
+	PNVector3f	targetVector = _viewTarget->getCoord();
 	targetVector -= _coord;
 
 	pnfloat	norm = sqrtf(SQNBR(targetVector.x) + SQNBR(targetVector.z));
@@ -777,7 +788,7 @@ PN3DObject::updateRotation(pnfloat step)
 	double	pcy = (_targetDirection.getX() * targetVector.z / norm) - (_targetDirection.getZ() * targetVector.x / norm);
 
 	// The test is for handle precision problems
-	pnfloat yangle = ABS(ps) >= 1.0 ? 0.0 : acosf((float)ps);
+	pnfloat yangle = ABS(ps) >= 1.0f ? 0.0f : acosf((float)ps);
 	yangle = pcy > 0 ? -yangle : yangle;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -791,7 +802,7 @@ PN3DObject::updateRotation(pnfloat step)
 	pc.crossProduct(_targetDirection.getVector(), targetVector);
 
 	// The test is for handle precision problems
-	pnfloat xangle = ABS(ps) >= 1.0 ? 0.0 : acosf((float)ABS(ps));
+	pnfloat xangle = ABS(ps) >= 1.0f ? 0.0f : acosf((float)ABS(ps));
 	if (pc.scalarProduct(_rightTargetDirection.getVector()) < 0)
 	  xangle = -xangle;
 
