@@ -1,5 +1,5 @@
 pnprint("DragonClass creating\n")
---loadLuaScript("PN3DSkeletonObjectClass.lua");
+loadLuaScript("PN3DSkeletonObjectClass.lua");
 --pnprint("DragonClass 2\n")
 
 function DragonClass(id)
