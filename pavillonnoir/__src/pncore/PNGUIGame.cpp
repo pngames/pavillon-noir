@@ -331,7 +331,7 @@ void  PNGUIGame::_addForce(const std::string&, std::istream& i)
 
 void  PNGUIGame::_setScriptingDebug(const std::string&, std::istream& i)
 {
-  bool	b;
+ /* bool	b;
   i >> b;
 
   if (b == true)
@@ -343,7 +343,7 @@ void  PNGUIGame::_setScriptingDebug(const std::string&, std::istream& i)
   {
 	PNConsole::writeLine("Lua debug logging desactivated");
 	PNGameInterface::getInstance()->setDebug(false);
-  }
+  }*/
 }
 
 //////////////////////////////////////////////////////////////////////////

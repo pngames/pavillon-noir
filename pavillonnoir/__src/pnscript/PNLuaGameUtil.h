@@ -44,12 +44,9 @@ namespace PN{
   void  onUpdate(float deltaTime);
   void  onInit();
   void  onReset();
-  void	activateDebug(bool b);
+  //void	activateDebug(bool b);
   void	sendGameActionEvent(std::string id, std::string action, ...);
   PNLuaGameMap* getGameMap();
-
-  /* Debug Hooks */
-  void	luaDebugLineHook(lua_State *S, lua_Debug *ar);
 }
 
 #endif

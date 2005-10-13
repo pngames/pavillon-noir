@@ -43,21 +43,32 @@ namespace PN
     {
     protected:
         lua_State*				  _luaVm;
-        FILE*					  _debug_log;  
+        FILE*					  _debug_log;
         bool					  _debug;
     public:
-        boost::recursive_mutex	_mutex;
+        boost::recursive_mutex	  _mutex;
+
     //----------------------------CONSTRUCTORS/DESTRUCTOR----------------------
     public:
         PNLuaVm();
         ~PNLuaVm();
     //-------------------------------------------------------------------------
     public:
+	//----------------------------DEBUG RELATED METHODS------------------------
+		//Returns file handle to debug log file
+		//FILE*	getDebugLogHandle(){ return this->_debug_log;}
+		//Sets debug logging (true or false)
+		void	setDebug(bool b);
+		bool	getLuaDebugLogging();
+		/* Debug Hooks */
+		static void	luaDebugLineHook(lua_State *S, lua_Debug *ar);
+		
     //-------------------------------MANIPULATION METHODS---------------------------------
         pnerrorcode    execFile(const boost::filesystem::path &path);
         pnerrorcode    execString(const std::string &orders);
         pnerrorcode    registerLuaLibrary(lua_library_register);
-        void       setDebugLogPath(boost::filesystem::path path);
+        void		   setDebugLogPath(boost::filesystem::path path);
     };
 }
 #endif
+

@@ -139,26 +139,6 @@ const fs::path& PNLuaGame::getGameRoot()
     return (this->_gameRootDirectory);
 }
 
-void PNLuaGame::setDebug(bool b)
-{
-    this->debug = b;
-
-    if (b == true)
-    {
-        // Line hook activated - function called everytime a line is interpreted
-      //  lua_sethook(this->L, (lua_Hook) luaDebugLineHook, LUA_MASKLINE, NULL);
-    }
-    else
-    {
-        // Line hook deactivated
-     //   lua_sethook(this->L, (lua_Hook) luaDebugLineHook, NULL, NULL);
-    }
-}
-
-bool PNLuaGame::getLuaDebugLogging()
-{
-    return(this->debug);
-}
 
 void PNLuaGame::init()
 {
@@ -168,8 +148,6 @@ void PNLuaGame::init()
     std::cout << "currentDiectory : " <<  currentDiectory.native_file_string() <<  std::endl;
     int errorCode = PNEC_SUCCES;
 
-    // Description on top of the debug file
- //   fprintf(getDebugLogHandle(), "########### LUA DEBUG LOG FILE ###########\n\n");
     ////////////////////////////////
 
     ret = this->_LVM.registerLuaLibrary(&lua_baselibopen);

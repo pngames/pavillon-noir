@@ -34,6 +34,16 @@ function PlayerClass(id)
 		end 
 		
 	end	
+	function Player:onLuaActionMoveBackward(state)
+		pnprint(self.id)
+		pnprint(":onLuaActionMoveBackward\n")
+		self.__index:onLuaActionMoveBackward(state)	
+		if (state == true) then
+			self:startAnimation(0, 0)
+		else
+			self:stopAnimation()
+		end 
+	end
 
 	
 	-------------------------------------------------------
