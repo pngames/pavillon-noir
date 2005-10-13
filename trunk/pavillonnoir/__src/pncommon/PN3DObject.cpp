@@ -721,6 +721,19 @@ PN3DObject::updateTranslation(pnfloat step)
 
   _updateTranslation.setNull();
 
+  //////////////////////////////////////////////////////////////////////////
+  // targetPosition
+
+  if (_movingMode == MMODE_POSITION_ABS_LOCKED || _movingMode == MMODE_POSITION_ABS_LOCKED)
+  {
+	_updateTranslation = _positionTarget->getCoord();
+	_updateTranslation += _targetPosition;
+	_updateTranslation -= getCoord();
+  }
+
+  //////////////////////////////////////////////////////////////////////////
+  // NORMAL
+
   if (_movingState == 0)
 	return;
 
@@ -756,16 +769,6 @@ PN3DObject::updateTranslation(pnfloat step)
 	targetVector.setNorm(norm - _targetDistance);
 
 	_updateTranslation += targetVector;
-  }
-
-  //////////////////////////////////////////////////////////////////////////
-  // targetPosition
-
-  if (_movingMode == MMODE_POSITION_ABS_LOCKED || _movingMode == MMODE_POSITION_ABS_LOCKED)
-  {
-	_updateTranslation = _positionTarget->getCoord();
-	_updateTranslation += _targetPosition;
-	_updateTranslation -= getCoord();
   }
 
   return;

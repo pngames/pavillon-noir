@@ -166,11 +166,15 @@ protected:
   movingmode				_movingMode;
 protected:
   /// Other 3DObject targeted used for locked displacement and other things like that
-  //PN3DObject*				_target;
+
+  /// Object to look
   PN3DObject*				_viewTarget;
+  /// Object to follow
   PN3DObject*				_positionTarget;
 
+  /// _positionTarget relative position
   PNPoint					_targetPosition;
+  /// _positionTarget relative distance
   pnfloat					_targetDistance;
   PNNormal3f				_targetDirection;
   PNNormal3f				_rightTargetDirection;
