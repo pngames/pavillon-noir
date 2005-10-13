@@ -84,8 +84,6 @@ pnerrorcode PNLuaGame::run(void)
     //lua_dofile(this->L, tempFilePathVar2);
     this->_LVM.execFile(initScriptFile);
     DEBUG_PRINTER("Leaving PNLuaGame::run() -> PNEC_SUCCES\n");
-    int i = 1;
-    i++;
     return PNEC_SUCCES;
 
 }
@@ -166,24 +164,23 @@ void PNLuaGame::init()
     }
 #endif
     registerCallbacks();
-    run();
     DEBUG_PRINTER("Leaving PNLuaGame::init()\n");
     return;
 }
 
 PNLuaGame::~PNLuaGame()
 {
-//    if (this->L != 0)
-//        lua_close(this->L);
-//    this->L = NULL;
-//    fclose(getDebugLogHandle());
+    //    if (this->L != 0)
+    //        lua_close(this->L);
+    //    this->L = NULL;
+    //    fclose(getDebugLogHandle());
     delete _gameMap;
 }
 
 PNLuaGame::PNLuaGame()
 {
- //   this->L = NULL;
-//    this->L = lua_open();
+    //   this->L = NULL;
+    //    this->L = lua_open();
     this->_mapStarted = false;
     this->_mapLoaded = false;
     this->_isLoadingMap = false;
@@ -197,7 +194,7 @@ PNLuaGame::PNLuaGame()
 /* ------------------------------ load a lua script file --------------------*/
 
 
-pnerrorcode PNLuaGame::loadLuaScript(const pnchar* file, int reload/*=0*/)
+pnerrorcode PNLuaGame::loadLuaScript(const pnchar* file, bool reload/*=0*/)
 {
     //DEBUG_PRINTER("Entering PNLuaGame::luoadLuaScript()\n");
 
@@ -205,17 +202,10 @@ pnerrorcode PNLuaGame::loadLuaScript(const pnchar* file, int reload/*=0*/)
     //lua_State *localL = NULL;
     //si le flag de reload est pas sette et que le fichier est deja loader dans la vm 
     //on relance pas le script;
-    if (reload == 0 && this->_loadedScripts.find(file) != this->_loadedScripts.end())
+    if (reload == false && (this->_loadedScripts.find(file) != this->_loadedScripts.end()))
         return PNEC_SUCCES;
-    else
-        this->_loadedScripts.insert(file);
-    // const pnchar* gameroot = lsb->getGameRoot();
-//    localL = lsb->L; 
- //   if (localL == NULL) 
- //   {
- //       DEBUG_PRINTER("Leaving PNLuaGame::loadLuaScript()\n");
- //       return PNEC_NOT_INITIALIZED;
- //   }
+    else 
+        this->_loadedScripts.insert(file); // it could be only one instance of an item in a set
     fs::path filePath = this->getGameRoot();
     filePath /= fs::path(file, fs::native);
     if (!fs::exists(filePath))
@@ -329,7 +319,7 @@ void  PNLuaGame::onUnloadMapStart(pnEventType evt, PNObject* source, PNEventData
 
     if (this->_mapStarted == true)
     {
-        PNEventManager::getInstance()->addEvent(PN_EVENT_MP_END, 0, 0);
+        PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_END, 0, 0);
     }
     else
     {
@@ -340,8 +330,8 @@ void  PNLuaGame::onUnloadMapEnded(pnEventType evt, PNObject* source, PNEventData
 {
     if (this->_isLoadingMap == true)
     {
-     //boost::thread thrd(fastdelegate::FastDelegate0<void>(this, &PNLuaGame::loadMap));
-     this->loadMap();
+        //boost::thread thrd(fastdelegate::FastDelegate0<void>(this, &PNLuaGame::loadMap));
+        this->loadMap();
     }
 }
 void  PNLuaGame::onPlayMapStart(pnEventType evt, PNObject* source, PNEventData* data)
@@ -351,7 +341,7 @@ void  PNLuaGame::onPlayMapStart(pnEventType evt, PNObject* source, PNEventData* 
 }
 void  PNLuaGame::onPlayMapStarted(pnEventType evt, PNObject* source, PNEventData* data)
 {
-   
+
 }
 void  PNLuaGame::onPlayMapPause(pnEventType evt, PNObject* source, PNEventData* data)
 {
@@ -362,7 +352,7 @@ void  PNLuaGame::onPlayMapPaused(pnEventType evt, PNObject* source, PNEventData*
 void  PNLuaGame::onPlayMapEnd(pnEventType evt, PNObject* source, PNEventData* data)
 {
     this->_mapStarted = false;
-    PNEventManager::getInstance()->addEvent(PN_EVENT_MP_ENDED, 0, 0);
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_ENDED, 0, 0);
 }
 
 void  PNLuaGame::onPlayMapEnded(pnEventType evt, PNObject* source, PNEventData* data)
@@ -404,20 +394,20 @@ void  PNLuaGame::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* da
   PN3DObject*	  o2 = ((PN3DCamera*)source)->getPositionTarget();
   std::string	  luaOrder;
 
-  pnerror(PN_LOGLVL_DEBUG, "frustrum in");
-  if (o1->getObjType() == PN3DObject::OBJTYPE_CHARACTER && o2 != NULL &&
-	  o2->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
-  {
-	PNCharacter*  s = (PNCharacter*)o2;
-	PNCharacter*  target = (PNCharacter*)o1;
+    pnerror(PN_LOGLVL_DEBUG, "frustrum in");
+    if (o1->getObjType() == PN3DObject::OBJTYPE_CHARACTER && o2 != NULL &&
+        o2->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
+    {
+        PNCharacter*  s = (PNCharacter*)o2;
+        PNCharacter*  target = (PNCharacter*)o1;
 
-	luaOrder = "gameMap.entities.all[";
-	luaOrder += s->getId().c_str();
-	luaOrder += "]:onFrustrumIn(gameMap.entities.all[";
-	luaOrder += target->getId().c_str();
-	luaOrder += "])";
-    _LVM.execString(luaOrder);
-  }
+        luaOrder = "gameMap.entities.all[";
+        luaOrder += s->getId().c_str();
+        luaOrder += "]:onFrustrumIn(gameMap.entities.all[";
+        luaOrder += target->getId().c_str();
+        luaOrder += "])";
+        _LVM.execString(luaOrder);
+    }
 }
 
 void  PNLuaGame::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* data)
@@ -426,20 +416,20 @@ void  PNLuaGame::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* d
   PN3DObject*	  o2 = ((PN3DCamera*)source)->getPositionTarget();
   std::string	  luaOrder;
 
-  pnerror(PN_LOGLVL_DEBUG, "frustrum out");
-  if (o1->getObjType() == PN3DObject::OBJTYPE_CHARACTER && o2 != NULL &&
-	  o2->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
-  {
-	PNCharacter*  s = (PNCharacter*)o2;
-	PNCharacter*  target = (PNCharacter*)o1;
+    pnerror(PN_LOGLVL_DEBUG, "frustrum out");
+    if (o1->getObjType() == PN3DObject::OBJTYPE_CHARACTER && o2 != NULL &&
+        o2->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
+    {
+        PNCharacter*  s = (PNCharacter*)o2;
+        PNCharacter*  target = (PNCharacter*)o1;
 
-	luaOrder = "gameMap.entities.all[";
-    luaOrder += s->getId().c_str();
-	luaOrder += "]:onFrustrumOut(gameMap.entities.all[";
-    luaOrder += target->getId().c_str();
-	luaOrder += "])";
-    _LVM.execString(luaOrder);
-  }
+        luaOrder = "gameMap.entities.all[";
+        luaOrder += s->getId().c_str();
+        luaOrder += "]:onFrustrumOut(gameMap.entities.all[";
+        luaOrder += target->getId().c_str();
+        luaOrder += "])";
+        _LVM.execString(luaOrder);
+    }
 }
 
 void  PNLuaGame::registerCallbacks()
@@ -457,7 +447,7 @@ void  PNLuaGame::registerCallbacks()
     PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT_ENDED, EventCallback(this, &PNLuaGame::onInitEnded));
     PNEventManager::getInstance()->addCallback(PN_EVENT_F_IN, EventCallback(this, &PNLuaGame::onFrustrumIn));
     PNEventManager::getInstance()->addCallback(PN_EVENT_F_OUT, EventCallback(this, &PNLuaGame::onFrustrumOut));
-	pnerror(PN_LOGLVL_DEBUG, "callbacks registered");
+    pnerror(PN_LOGLVL_DEBUG, "callbacks registered");
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -465,15 +455,28 @@ void  PNLuaGame::registerCallbacks()
 //function which really load the map
 void  PNLuaGame::loadMap()
 {
+    pnint error;
     PNEventManager::getInstance()->addEvent(PN_EVENT_ML_STARTED, 0, new PNGameLoadMapEventData(this->_mapToLoad));
     //TODO : capturer cet event pour debug
+    if (this->_gameMap)
+    {
+        delete this->_gameMap;
+        this->_gameMap = NULL;
+    }
     this->_gameMap = new PNLuaGameMap(this->_LVM);
-    loadLuaScript("gameMap.lua", 1);
-    this->_gameMap->unserializeFromFile(this->_mapToLoad.c_str());
-    this->_mapLoaded = true;
+    this->run();
+    this->loadLuaScript("gameMap.lua", true);
+    error = this->_gameMap->unserializeFromFile(this->_mapToLoad.c_str());
     this->_isLoadingMap = false;
+    if (error != PNEC_SUCCES)
+    {
+        PNEventManager::getInstance()->sendEvent(PN_EVENT_MU_START, 0, NULL);
+        return;
+    }
+    this->_mapLoaded = true;
     PNEventManager::getInstance()->addEvent(PN_EVENT_ML_ENDED, 0, new PNGameLoadMapEventData(this->_mapToLoad));
     //TODO : capturer cet event pout debug
+    return;
 }
 
 void  PNLuaGame::unloadMap()
@@ -482,7 +485,12 @@ void  PNLuaGame::unloadMap()
     //TODO : capturer cet event pour debug
     this->_gameMap->clear();
     this->_mapLoaded = false;
-    this->_isUnloadingMap = false;
+    this->_isUnloadingMap = false;    
+    if (this->_gameMap)
+    {
+        delete this->_gameMap;
+        this->_gameMap = NULL;
+    }
     PNEventManager::getInstance()->addEvent(PN_EVENT_MU_ENDED, 0, new PNEventData());
     //TODO : capturer cet event pout debug
 }

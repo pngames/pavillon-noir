@@ -30,12 +30,13 @@ end
 function gameMap:clear()
 	pnprint("[LUA enter function] gameMap:clear\n")
     pnprint("\n")
-	for id, entity in pairs(self.entities.all) do 
-      pnprint(id)
-      pnprint("\n")
-      self.entities.all[id] = nil
-      pnprint("\n")
-	end
+--	for id, entity in pairs(self.entities.all) do 
+--      pnprint(id)
+--      pnprint("\n")
+--      self.entities.all[id] = nil
+--      pnprint("\n")
+--	end
+	self.entities = nil
     self.entities = {}
    pnprint("[LUA exit function] gameMap:clear\n")
 end 

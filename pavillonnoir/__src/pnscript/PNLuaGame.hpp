@@ -102,7 +102,7 @@ namespace PN
     const pnchar*					getId(void);
 
     //load a lua script file
-    pnerrorcode						loadLuaScript(const pnchar* file, int reload=0);
+    pnerrorcode				loadLuaScript(const pnchar* file, bool reload=false);
 
     //defini le repertoire principal ou se trouve le script
     pnerrorcode						setGameRoot(const pnchar *name);

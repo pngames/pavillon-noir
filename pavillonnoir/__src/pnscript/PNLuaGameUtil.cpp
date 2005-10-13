@@ -36,7 +36,7 @@
 
 namespace PN{
 	//load a lua script file
-	void loadLuaScript(const pnchar* file, int reload/*=0*/)
+	void loadLuaScript(const pnchar* file, bool reload/*=0*/)
 	{
         ((PNLuaGame*)PNLuaGame::getInstance())->loadLuaScript(file, reload);
 	}
