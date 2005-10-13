@@ -166,7 +166,10 @@ protected:
   movingmode				_movingMode;
 protected:
   /// Other 3DObject targeted used for locked displacement and other things like that
-  PN3DObject*				_target;
+  //PN3DObject*				_target;
+  PN3DObject*				_viewTarget;
+  PN3DObject*				_positionTarget;
+
   PNPoint					_targetPosition;
   pnfloat					_targetDistance;
   PNNormal3f				_targetDirection;
@@ -364,8 +367,10 @@ public:
   void							setTargetDirection(const PNNormal3f& vec);
   /// Set Position depending on the target
   void							setTargetPosition(pnfloat x, pnfloat y, pnfloat z);
-  /// Retrieve 3d object target
-  PN3DObject					*getTarget() const;
+  /// Retrieve 3d object view target
+  PN3DObject					*getPositionTarget() const;
+  /// Retrieve 3d object position target
+  PN3DObject					*getViewTarget() const;
 
   //////////////////////////////////////////////////////////////////////////
 

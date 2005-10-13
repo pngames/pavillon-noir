@@ -224,8 +224,10 @@ public:
   void							setTargetDirection(const PNNormal3f& vec);
   /// Set Distance to the target
   void							setTargetDistance(float distance);
-  /// Retrieve 3d object target
-  PN3DObject					*getTarget() const;
+  /// Retrieve 3d object view target
+  PN3DObject					*getPositionTarget() const;
+  /// Retrieve 3d object position target
+  PN3DObject					*getViewTarget() const;
 
   //////////////////////////////////////////////////////////////////////////
 
