@@ -72,6 +72,13 @@ namespace PN{
 	void						hidePrevious();
 	void						callbackQuit(const unsigned int& enu);
 
+	void						onMPStarted(pnEventType type, PNObject* source, PNEventData* data);
+	void						onMPEnded(pnEventType type, PNObject* source, PNEventData* data);
+	void						onMLStarted(pnEventType type, PNObject* source, PNEventData* data);
+	void						onMLEnded(pnEventType type, PNObject* source, PNEventData* data);
+	void						onMUStarted(pnEventType type, PNObject* source, PNEventData* data);
+	void						onMUEnded(pnEventType type, PNObject* source, PNEventData* data);
+
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
