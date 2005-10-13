@@ -283,9 +283,6 @@ PN3DObject::getTopDirection() const
 const PNPoint&
 PN3DObject::getCoord() const
 {
-  if (_movingMode & MMODE_POSITION_ABS_LOCKED)
-	return _target->getCoord() + _coord;
-
   return _coord;
 }
 
