@@ -45,14 +45,16 @@ public:
   typedef enum
   {
 	MMODE_FREE,				        /// 3D object move freely
-    MMODE_DISTANCE_LOCKED,		    /// 3D object alway try to be in front of _target
-    MMODE_DISTANCE_ABS_LOCKED,	    /// 3D object alway in front of _target
-	MMODE_VIEW_LOCKED,		        /// 3D object alway try to be in front of _target
-	MMODE_VIEW_ABS_LOCKED,	        /// 3D object alway in front of _target
-    MMODE_VIEW_DISTANCE_LOCKED,		/// 3D object alway try to be in front of _target
-    MMODE_VIEW_DISTANCE_ABS_LOCKED, /// 3D object alway in front of _target
+	MMODE_POSITION_LOCKED,			/// 3D object alway try to be in same relative position from target
+	MMODE_POSITION_ABS_LOCKED,		/// 3D object alway in same relative position from target
+    MMODE_DISTANCE_LOCKED,		    /// 3D object alway try to be at _targetDistance distance from the target
+    MMODE_DISTANCE_ABS_LOCKED,	    /// 3D object alway at _targetDistance distance from the target
+	MMODE_VIEW_LOCKED,		        /// 3D object alway try to be in _targetDirection alignment of _target
+	MMODE_VIEW_ABS_LOCKED,	        /// 3D object alway in _targetDirection alignment of _target
+    MMODE_VIEW_DISTANCE_LOCKED,		/// MMODE_DISTANCE_LOCKED + MMODE_VIEW_LOCKED
+    MMODE_VIEW_DISTANCE_ABS_LOCKED, /// MMODE_DISTANCE_ABS_LOCKED + MMODE_VIEW_ABS_LOCKED
 	NB_MMODE				        /// number of moving modes in 3DObject
-  }			  				movingmode;
+  }			  				        movingmode;
 
   /// Return displacement mode of 3D object (free, locked, ...)
   movingmode				getMovingMode();
@@ -224,6 +226,8 @@ public:
   void							setTargetDirection(const PNNormal3f& vec);
   /// Set Distance to the target
   void							setTargetDistance(float distance);
+  /// Set Position depending on the target
+  void							setTargetPosition(float x, float y, float z);
   /// Retrieve 3d object view target
   PN3DObject					*getPositionTarget() const;
   /// Retrieve 3d object position target
