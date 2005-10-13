@@ -42,8 +42,10 @@ PNCharacter::PNCharacter() : _pf(_coord)
   _state = PN_IA_PASSIVE;
   _hurry = false;
   _objType = OBJTYPE_CHARACTER;
-  _view.setTarget(this);
+
   _view.setMovingMode(MMODE_POSITION_ABS_LOCKED);
+  _view.setTarget(this);
+  _view.setTargetPosition(0.0f, 100.0f, 0.0f);
 }
 
 PNCharacter::~PNCharacter()
