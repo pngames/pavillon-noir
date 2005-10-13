@@ -7,6 +7,7 @@
 	<FalagardMapping WindowType="Vanilla/Button" TargetType="Falagard/Button" LookNFeel="Vanilla/Button" />
 
 <FalagardMapping WindowType="Vanilla/Tooltip" TargetType="Falagard/Tooltip" LookNFeel="Vanilla/Tooltip" />
+<FalagardMapping WindowType="Vanilla/ProgressBar" TargetType="Falagard/ProgressBar" LookNFeel="Vanilla/ProgressBar" />
 
 	<FalagardMapping WindowType="Vanilla/FrameWindow" TargetType="Falagard/FrameWindow" LookNFeel="Vanilla/FrameWindow" />
 	<FalagardMapping WindowType="Vanilla/Editbox" TargetType="Falagard/Editbox" LookNFeel="Vanilla/Editbox" />
@@ -22,7 +23,7 @@
 	<FalagardMapping WindowType="Vanilla/ComboDropList" TargetType="Falagard/ComboDropList" LookNFeel="Vanilla/ComboDropList" />
 	<FalagardMapping WindowType="Vanilla/ComboboxButton" TargetType="Falagard/Button" LookNFeel="Vanilla/ComboboxButton" />
 	<FalagardMapping WindowType="Vanilla/Combobox" TargetType="Falagard/Combobox" LookNFeel="Vanilla/Combobox" />
-	<FalagardMapping WindowType="Vanilla/ProgressBar" TargetType="Falagard/ProgressBar" LookNFeel="Vanilla/ProgressBar" />
+	
 	<FalagardMapping WindowType="Vanilla/ScrollablePane" TargetType="Falagard/ScrollablePane" LookNFeel="Vanilla/ScrollablePane" />
 	<FalagardMapping WindowType="Vanilla/Checkbox" TargetType="Falagard/Checkbox" LookNFeel="Vanilla/Checkbox" />
 	<FalagardMapping WindowType="Vanilla/RadioButton" TargetType="Falagard/RadioButton" LookNFeel="Vanilla/RadioButton" />

@@ -34,6 +34,7 @@
 #include "PNGUIMenuLoad.hpp"
 #include "PNGameEventData.hpp"
 #include "PNConsole.hpp"
+#include "PNGUIMsgBox.hpp"
 #include "pnresources.h"
 
 namespace fs = boost::filesystem;
@@ -41,10 +42,13 @@ using namespace PN;
 
 namespace PN
 {
+  static float val = 0.0f;
+
   PNGUIMenuLoad::PNGUIMenuLoad()
   {
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/PNMenuLoad.layout"); 
 	_cbBox = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"MenuLoad/Listbox");
+	
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 	CEGUI::MouseCursor::getSingleton().show();
 	setupEventHandlers();
@@ -63,6 +67,7 @@ namespace PN
 	CEGUI::WindowManager& wmgr = CEGUI::WindowManager::getSingleton();
 	wmgr.getWindow((CEGUI::utf8*)"MenuLoad/ButtonOk")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMenuLoad::handleOk, this));
 	wmgr.getWindow((CEGUI::utf8*)"MenuLoad/ButtonBack")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMenuLoad::handleBack, this));
+	
   }
 
   void  PNGUIMenuLoad::updateList()
@@ -106,7 +111,14 @@ namespace PN
 	  data->mapName += _cbBox->getFirstSelectedItem()->getText().c_str();
 	  PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_NEW_GAME, 0, data);
 	}
+	else
+	  new PNGUIMsgBox("Erreur","Vous devez selectionner\nune sauvegarde.",PNGUIMsgBox::OK, PNGUIMsgBox::MsgBoxCallback(this, &PNGUIMenuLoad::callbackMsgBox),_mainSheet);
 	return true;
+  }
+
+  void PNGUIMenuLoad::callbackMsgBox(const unsigned int& enu)
+  {
+
   }
 
   bool PNGUIMenuLoad::handleBack(const CEGUI::EventArgs& e)

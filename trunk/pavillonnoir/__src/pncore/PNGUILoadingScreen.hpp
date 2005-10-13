@@ -1,8 +1,8 @@
 /*
-* PNGUIMenuLoad.hpp
+* PNGUILoadingScreen.hpp
 * 
 * Description :
-* PNGUIMenuLoad definition
+* PNGUILoadingScreen declaration
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,18 +27,16 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#ifndef _PNGUIMENULOAD_HPP_
-# define _PNGUIMENULOAD_HPP_
-
-#include "myCEGUI.h"
+#ifndef _PNGUILOADINGSCREEN_HPP_
+#define _PNGUILOADINGSCREEN_HPP_
 
 #include "pndefs.h"
-#include "pnplugins.h"
-#include "pnrender.h"
+#include "pnevent.h"
+#include "myCEGUI.h"
 
 namespace PN{
 
-  class PNGUIMenuLoad
+  class PNGUILoadingScreen
   {
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                   Properties                                /
@@ -46,36 +44,25 @@ namespace PN{
   public:
   protected:
   private:
-	CEGUI::Window* _mainSheet;
-	CEGUI::Listbox* _cbBox;
-	CEGUI::ProgressBar* _progBar;
+	CEGUI::Window*		_mainSheet;
+	CEGUI::StaticImage*	_backGround;
+	CEGUI::ProgressBar*	_progBar;
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
-	void show();
-	void hide();
-	CEGUI::Window* getWindow();
-	void callbackMsgBox(const unsigned int& enu);
+	void refreshScreen();
   protected:
   private:
-	void setupEventHandlers();
-	void updateList();
-	bool handleOk(const CEGUI::EventArgs& e);
-	bool handleBack(const CEGUI::EventArgs& e);
-
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
-	PNGUIMenuLoad();
-	~PNGUIMenuLoad();
+	PNGUILoadingScreen();
+	~PNGUILoadingScreen();
   protected:
   private:
-	
   };
-
 }
 
-
-#endif /*_PNGUIMENULOAD_HPP_*/
+#endif /*_PNGUILOADINGSCREEN_HPP_*/
