@@ -647,7 +647,6 @@ PN3DObject::setTargetPosition(pnfloat x, pnfloat y, pnfloat z)
   _targetPosition.z = z;
 }
 
-
 /// Retrieve 3d object view target
 PN3DObject*
 PN3DObject::getPositionTarget() const
@@ -740,7 +739,7 @@ PN3DObject::updateTranslation(pnfloat step)
   if (_movingMode & (MMODE_POSITION_ABS_LOCKED | MMODE_POSITION_ABS_LOCKED))
   {
 	_updateTranslation = _positionTarget->getCoord();
-	_updateTranslation += _targetPosition;
+	_updateTranslation += _positionTarget->getOrient() * _targetPosition;
 	_updateTranslation -= getCoord();
 
     return ;
