@@ -112,8 +112,8 @@ namespace PN{
 		//return( sum ? (sum / count) : 0 );
 	}
 
-	void	luaDebugLineHook(lua_State *S, lua_Debug *ar)
-	{
+//	void	luaDebugLineHook(lua_State *S, lua_Debug *ar)
+	//{
 	  //printf("\n----\nEntered Lua Line Hook\n");
 	  //char* buf = (char*) malloc(512 * sizeof(char));
 	//  PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
@@ -123,12 +123,12 @@ namespace PN{
 	//  fprintf(vm->getDebugLogHandle(), "##Line: File \"%s\" -- function \"%s\" -- line : \"%d\"\n", ar->source, ar->name, ar->currentline);
 	  //fwrite(buf, strlen(buf), sizeof(char), vm->getDebugLogHandle());
 	  //free(buf);
-	}
+//	}
 
-	void	activateDebug(bool b)
-	{
+	//void	activateDebug(bool b)
+	//{
 	//  PNLuaGame::getInstance()->setDebug(b);
-	}
+	//}
 
 
 

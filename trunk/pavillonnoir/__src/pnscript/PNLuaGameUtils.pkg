@@ -9,6 +9,6 @@ void  continueGame();
 void  loadGame(std::string saveName);
 void  saveGame(std::string saveName);
 void  loadMap(std::string mapName);
-void  activateDebug(bool b);
+//void  activateDebug(bool b);
 
 ///////////////////////////////////////////////////////////////////////////////
