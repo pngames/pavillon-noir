@@ -151,4 +151,27 @@ PNCharacter::restoreState()
 }
 
 //////////////////////////////////////////////////////////////////////////
+
+pnint
+PNCharacter::_serializeContent(std::ostream& o)
+{
+  pnint	err = PN3DSkeletonObject::_serializeContent(o);
+
+  if (err == PNEC_SUCCES)
+	_view.update(0);
+
+  return err;
+}
+
+/// Update skeleton object informations
+void
+PNCharacter::update(pnuint deltatTime)
+{
+  PN3DSkeletonObject::update(deltatTime);
+
+  _view.update(deltatTime);
+}
+
+
+//////////////////////////////////////////////////////////////////////////
 };

@@ -72,23 +72,35 @@ public:
   PNCharacter();
   virtual ~PNCharacter();
 
-  /* Use given class to find path */
+  //////////////////////////////////////////////////////////////////////////
+
+protected:
+  /// Write in model node content to out stream
+  virtual pnint							_serializeContent(std::ostream& o);
+
+public:
+  /// Update skeleton object informations
+  virtual void							update(pnuint deltatTime);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  /// Use given class to find path
   void									buildGraph(boost::filesystem::path& file);
 
-  /* IA main loop function */
+  /// IA main loop function
   void									beSmart();
 
   /*
-  ** functions to be accessed by callbacks to make character move via
-  ** the PNPathFinding class. Set _state to TRAVELLING
+  * functions to be accessed by callbacks to make character move via
+  * the PNPathFinding class. Set _state to TRAVELLING
   */
   void									moveTo(PNPoint &p);
   void									moveTo(PNWayPoint *wp);
 
-  /* react to a sound event */
+  /// react to a sound event
   void									hear();
 
-  /* react to a sight event */
+  /// react to a sight event
   void									see();
 
   /*

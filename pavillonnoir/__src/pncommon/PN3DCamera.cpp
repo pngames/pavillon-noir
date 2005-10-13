@@ -101,7 +101,7 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   //////////////////////////////////////////////////////////////////////////
 
   pnfloat angle = (pnfloat)DEGREE_TO_RADIAN(30);
-  _viewMaxCosFov = cosf(angle/*max(_viewYRadFov, _viewXRadFov)*//2);
+  _viewMaxCosFov = cosf(max(_viewYRadFov, _viewXRadFov)/2);
 
   PNVector3f	frontDirection = _orient * _frontDirection.getVector();
   PNVector3f	rightDirection = _orient * _rightDirection.getVector();
@@ -113,7 +113,7 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 
   //////////////////////////////////////////////////////////////////////////
 
-  PNPoint coord = getCoord() - obj->getCoord();
+  PNPoint coord = _coord - obj->getCoord();
   coord = obj->getOrient().getInvert() * coord;
   frontDirection = obj->getOrient().getInvert() * frontDirection;
 
@@ -219,49 +219,6 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   // BIGGER THAN FOV
 
   return false;
-
-  //////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////
-  // TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST 
-  
-  coord = _coord - obj->getCoord();
-  //coord = obj->getOrient().getInvert() * coord;
-
-  //frontDirection = obj->getOrient().getInvert() * frontDirection;
-  targetVector = PNPoint::ZERO - coord;
-
-  cout << "frontDirection=" << frontDirection << endl;
-  cout << "targetVector=" << targetVector << endl;
-
-  //////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////
-
-  pnfloat	normy1 = sqrtf(SQNBR(frontDirection.x) + SQNBR(frontDirection.z));
-  pnfloat	normy2 = sqrtf(SQNBR(targetVector.x) + SQNBR(targetVector.z));
-
-  pndouble	py = ((frontDirection.x / normy1) * (targetVector.x / normy2)) + ((frontDirection.z / normy1) * (targetVector.z / normy2));
-
-  // The test is for handle precision problems
-  pndouble	yangle = ABS(py) >= 1.0 ? 0.0 : acos(py);
-
-//  cout << "ps=" << py << " --> " << "yangle=" << RADIAN_TO_DEGREE(yangle) << endl;
-
-  //////////////////////////////////////////////////////////////////////////
-
-  pnfloat	normx1 = sqrtf(SQNBR(frontDirection.y) + SQNBR(frontDirection.z));
-  pnfloat	normx2 = sqrtf(SQNBR(targetVector.y) + SQNBR(targetVector.z));
-
-  pndouble	px = ((frontDirection.y / normx1) * (targetVector.y / normx2)) + ((frontDirection.z / normx1) * (targetVector.z / normx2));
-
-  // The test is for handle precision problems
-  pndouble	xangle = ABS(px) >= 1.0 ? 0.0 : acos(px);
-
-//  cout << "px=" << px << " --> " << "yangle=" << RADIAN_TO_DEGREE(xangle) << endl;
-
-  //////////////////////////////////////////////////////////////////////////
-
-  return (ABS(yangle) < (_viewYRadFov / 2))/* && (ABS(xangle) < (_viewXRadFov / 2))*/;
 }
 
 void
