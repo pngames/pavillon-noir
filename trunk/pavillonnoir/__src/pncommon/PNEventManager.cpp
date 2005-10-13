@@ -143,6 +143,11 @@ PNEventManager::PNEventManager()
   _eventEnums["PN_EVENT_MP_PAUSED"] = PN_EVENT_MP_PAUSED;
   _eventNames[PN_EVENT_MP_PAUSED] = "PN_EVENT_MP_PAUSED";
 
+  _eventEnums["PN_EVENT_MP_UNPAUSE"] = PN_EVENT_MP_UNPAUSE;
+  _eventNames[PN_EVENT_MP_UNPAUSE] = "PN_EVENT_MP_UNPAUSE";
+  _eventEnums["PN_EVENT_MP_UNPAUSED"] = PN_EVENT_MP_UNPAUSED;
+  _eventNames[PN_EVENT_MP_UNPAUSED] = "PN_EVENT_MP_UNPAUSED";
+
   //////////////////////////////////////////////////////////////////////////
   // OBJECTS DISPLACEMENT
 
