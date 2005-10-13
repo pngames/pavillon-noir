@@ -597,12 +597,11 @@ PN3DObject::computeFaces(PNFace* faces, pnuint step)
 //////////////////////////////////////////////////////////////////////////
 
 void
-PN3DObject::setTarget(PN3DObject* obj, pnfloat distance)
+PN3DObject::setTarget(PN3DObject* obj)
 {
   PNLOCK(this);
 
   _positionTarget = _viewTarget = obj;
-  setTargetDistance(distance);
 }
 
 void
@@ -729,6 +728,8 @@ PN3DObject::updateTranslation(pnfloat step)
 	_updateTranslation = _positionTarget->getCoord();
 	_updateTranslation += _targetPosition;
 	_updateTranslation -= getCoord();
+
+    return ;
   }
 
   //////////////////////////////////////////////////////////////////////////
