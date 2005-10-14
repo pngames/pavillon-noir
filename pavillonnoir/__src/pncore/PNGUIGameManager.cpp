@@ -116,20 +116,23 @@ namespace PN
   {
 	if (_currentState == NONE)
 	  return;
+	//if (_currentState == PAUSE)
+	//{
+	//  
+	//}
+	//else
+	//{
+	//  if (_guiMenuEsc == NULL)
+	//	_guiMenuEsc = new PNGUIEscMenu();
 
-	
+	//  hidePrevious();
+	//  _guiMenuEsc->startGUI();
 
-	/*if (_guiMenuEsc == NULL)
-	  _guiMenuEsc = new PNGUIEscMenu();
-
-	hidePrevious();
-	
-	_guiMenuEsc->show();
-	_currentState = PAUSE;
-	*/
+	//  _currentState = PAUSE;
+	//}
 	
 	PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous quitter\nla partie en cours ?", PNGUIMsgBox::YES_NO, PNGUIMsgBox::MsgBoxCallback(this, &PNGUIGameManager::callbackQuit), _guiGame->getWindow());
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_PAUSE, NULL, NULL);
+	//PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_PAUSE, NULL, NULL);
   }
 
   void PNGUIGameManager::callbackQuit(const unsigned int& enu)
@@ -138,7 +141,7 @@ namespace PN
 	{
 	  //deleteAllInstances();
 	  //_currentState = NONE;
-	  PNEventManager::getInstance()->sendEvent(PN_EVENT_MU_START, NULL, NULL);
+	  PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_END, NULL, NULL);
 	 // PNEventManager::getInstance()->addEvent(PN_EVENT_GUI_MENUROOT, NULL, NULL);
 	   //PNRendererInterface::getInstance()->endRendering();
 	}
@@ -177,7 +180,7 @@ namespace PN
 
   void	PNGUIGameManager::onMPEnded(pnEventType type, PNObject* source, PNEventData* data)
   {
-
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_MU_START, 0, NULL);
   }
 
   void	PNGUIGameManager::onMUStarted(pnEventType type, PNObject* source, PNEventData* data)
