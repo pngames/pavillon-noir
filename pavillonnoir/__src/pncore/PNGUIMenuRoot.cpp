@@ -184,6 +184,7 @@ namespace PN
 	// game
 
 	 PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_NEW_GAME, NULL, data);
+	 delete (data);
 	//PNGUIGame*		guigame = new PNGUIGame();
 	//State::gStateMgr->changeState(GAME);
 

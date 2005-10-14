@@ -48,12 +48,9 @@ namespace PN
   {
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/PNMenuLoad.layout"); 
 	_cbBox = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"MenuLoad/Listbox");
-	
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
-	CEGUI::MouseCursor::getSingleton().show();
 	setupEventHandlers();
-	updateList();
-
+	hide();
   }
 
   PNGUIMenuLoad::~PNGUIMenuLoad()
@@ -121,6 +118,7 @@ namespace PN
 	  data->mapName =  DEF::mapsFilePath;
 	  data->mapName += _cbBox->getFirstSelectedItem()->getText().c_str();
 	  PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_NEW_GAME, 0, data);
+	  delete (data);
 	}
 	else
 	  new PNGUIMsgBox("Erreur","Vous devez selectionner\nune sauvegarde.",PNGUIMsgBox::OK, PNGUIMsgBox::MsgBoxCallback(this, &PNGUIMenuLoad::callbackMsgBox),_mainSheet);
