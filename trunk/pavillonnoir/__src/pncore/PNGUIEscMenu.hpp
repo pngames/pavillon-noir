@@ -52,6 +52,8 @@ namespace PN{
 	void show();
 	void hide();
 	CEGUI::Window* getWindow();
+	void startGUI();
+	void resetGUI();
   private:
 	void setupEventHandlers();
 	bool handleResume(const CEGUI::EventArgs& e);

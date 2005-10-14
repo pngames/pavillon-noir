@@ -145,7 +145,8 @@ namespace PN
 	 // PNEventManager::getInstance()->addEvent(PN_EVENT_GUI_MENUROOT, NULL, NULL);
 	   //PNRendererInterface::getInstance()->endRendering();
 	}
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_UNPAUSE, NULL, NULL);
+	//else
+	 //PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_UNPAUSE, NULL, NULL);
   }
 
   void PNGUIGameManager::hidePrevious()
@@ -191,7 +192,9 @@ namespace PN
   void	PNGUIGameManager::onMUEnded(pnEventType type, PNObject* source, PNEventData* data)
   {
 	resetAllInstances();
+
 	_currentState = NONE;
+
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_ROOT, NULL, NULL);
   }
 
