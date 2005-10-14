@@ -83,6 +83,7 @@ namespace PN{
 	void	launchQuit(pnEventType type, PNObject* source, PNEventData* data);
 	void	hidePrevious();
 	void	deleteAllInstances();
+	void	resetAllInstances();
 	void	callbackQuit(const unsigned int& enu);
 
 	/*/////////////////////////////////////////////////////////////////////////////

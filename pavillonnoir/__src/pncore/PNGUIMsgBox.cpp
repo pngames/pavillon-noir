@@ -31,15 +31,18 @@ namespace PN
 	if (cursor == false) 
 	  CEGUI::MouseCursor::getSingleton().show();
 
+	std::string tmp;
+
 	if (msgtype == CONF)
 	{
 		_actionName = text;
-		std::string tmp = "Veuillez presser\nune touche du clavier\nou un bouton de la souris\npour cette action :\n";
+		tmp = "Veuillez presser\nune touche du clavier\nou un bouton de la souris\npour cette action :\n";
 		tmp += text;
-		genericCreationWindow(title, tmp, msgtype, parentWin, convert.str());
 	}
 	else
-		genericCreationWindow(title, text, msgtype, parentWin, convert.str());
+		tmp = text;	
+
+		genericCreationWindow(title, tmp, msgtype, parentWin, convert.str());
 
 	switch (msgtype)
 	{
@@ -47,7 +50,7 @@ namespace PN
 	  {
 		CEGUI::PushButton* btnYES = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_yes_" + convert.str()).c_str()));
 		btnYES->setSize(CEGUI::Size(0.45f, 0.18f));
-		btnYES->setPosition( CEGUI::Point(0.025f, 0.825f));
+		btnYES->setPosition( CEGUI::Point(0.025f, 0.79f));
 		btnYES->setText("Oui");
 
 	/*	CEGUI::RenderableImage img;
@@ -61,7 +64,7 @@ namespace PN
 
 		CEGUI::PushButton* btnNO = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_no_" + convert.str()).c_str()));
 		btnNO->setSize(CEGUI::Size(0.45f, 0.18f));
-		btnNO->setPosition(CEGUI::Point(0.525f, 0.825f));
+		btnNO->setPosition(CEGUI::Point(0.525f, 0.79f));
 		btnNO->setText("Non");
 		_frameWin->addChildWindow(btnNO);
 		btnNO->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickNo, this));
@@ -71,14 +74,14 @@ namespace PN
 	  {
 		CEGUI::PushButton* btnOK = static_cast< CEGUI::PushButton* >( CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_ok_" + convert.str()).c_str()));
 		btnOK->setSize(CEGUI::Size(0.45f, 0.18f));
-		btnOK->setPosition( CEGUI::Point(0.025f, 0.825f));
+		btnOK->setPosition( CEGUI::Point(0.025f, 0.79f));
 		btnOK->setText("Ok");		
 		_frameWin->addChildWindow(btnOK);
 		btnOK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickOk, this));
 
 		CEGUI::PushButton* btnCANCEL = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ( "_msg_box_btn_cancel_" + convert.str() ).c_str() ) );
 		btnCANCEL->setSize(CEGUI::Size(0.45f, 0.18f));
-		btnCANCEL->setPosition(CEGUI::Point(0.525f, 0.825f));
+		btnCANCEL->setPosition(CEGUI::Point(0.525f, 0.79f));
 		btnCANCEL->setText("Annuler");
 		_frameWin->addChildWindow(btnCANCEL);
 		btnCANCEL->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickCancel ,this));
@@ -88,7 +91,7 @@ namespace PN
 	  {
 		CEGUI::PushButton* btnOK = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_ok_" + convert.str()).c_str()));
 		btnOK->setSize(CEGUI::Size(0.5f, 0.18f));
-		btnOK->setPosition(CEGUI::Point(0.25f, 0.75f));
+		btnOK->setPosition(CEGUI::Point(0.25f, 0.79f));
 		btnOK->setText("Ok");
 		_frameWin->addChildWindow(btnOK);
 		btnOK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickOk, this));

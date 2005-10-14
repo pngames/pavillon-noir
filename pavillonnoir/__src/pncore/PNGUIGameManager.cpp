@@ -55,6 +55,10 @@ namespace PN
 	PNEventManager::getInstance()->addCallback(PN_EVENT_MU_STARTED, EventCallback(this, &PNGUIGameManager::onMUStarted));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_MU_ENDED, EventCallback(this, &PNGUIGameManager::onMUEnded));
 
+	PNEventManager::getInstance()->addCallback(PN_EVENT_MP_PAUSED, EventCallback(this, &PNGUIGameManager::onMPPaused));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_MP_UNPAUSED, EventCallback(this, &PNGUIGameManager::onMPUnpauseded));
+
+
   }
 
   PNGUIGameManager::~PNGUIGameManager()
@@ -86,15 +90,26 @@ namespace PN
 	}
   }
 
+  void PNGUIGameManager::resetAllInstances()
+  {
+	if (_guiGame != NULL)
+	{
+	  _guiGame->resetGUI();
+	}
+	if (_guiMenuEsc != NULL) 
+	{
+	// _guiMenuEsc->resetGUI();
+	}
+  }
+
   void  PNGUIGameManager::launchInGame(pnEventType type, PNObject* source, PNEventData* data)
   {
 	if (_guiGame == NULL)
 	  _guiGame = new PNGUIGame();
+	_guiGame->startGUI();
 
 	_currentState = INGAME;
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_START, 0, data);
-	
-	
   }
 
   void  PNGUIGameManager::escMenu(pnEventType type, PNObject* source, PNEventData* data)
@@ -111,11 +126,10 @@ namespace PN
 	
 	_guiMenuEsc->show();
 	_currentState = PAUSE;
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_PAUSE, NULL, NULL);
 	*/
 	
 	PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous quitter\nla partie en cours ?", PNGUIMsgBox::YES_NO, PNGUIMsgBox::MsgBoxCallback(this, &PNGUIGameManager::callbackQuit), _guiGame->getWindow());
-	//PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_PAUSE, NULL, NULL);
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_PAUSE, NULL, NULL);
   }
 
   void PNGUIGameManager::callbackQuit(const unsigned int& enu)
@@ -128,7 +142,7 @@ namespace PN
 	 // PNEventManager::getInstance()->addEvent(PN_EVENT_GUI_MENUROOT, NULL, NULL);
 	   //PNRendererInterface::getInstance()->endRendering();
 	}
-	//PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_UNPAUSE, NULL, NULL);
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_UNPAUSE, NULL, NULL);
   }
 
   void PNGUIGameManager::hidePrevious()
@@ -152,7 +166,7 @@ namespace PN
 
   void	PNGUIGameManager::onMLEnded(pnEventType type, PNObject* source, PNEventData* data)
   {
-	
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_START, 0, NULL);
   }
 
   void	PNGUIGameManager::onMPStarted(pnEventType type, PNObject* source, PNEventData* data)
@@ -173,8 +187,18 @@ namespace PN
 
   void	PNGUIGameManager::onMUEnded(pnEventType type, PNObject* source, PNEventData* data)
   {
-	deleteAllInstances();
+	resetAllInstances();
 	_currentState = NONE;
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_ROOT, NULL, NULL);
+  }
+
+  void	PNGUIGameManager::onMPPaused(pnEventType type, PNObject* source, PNEventData* data)
+  {
+
+  }
+
+  void	PNGUIGameManager::onMPUnpauseded(pnEventType type, PNObject* source, PNEventData* data)
+  {
+
   }
 }

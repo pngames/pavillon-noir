@@ -67,6 +67,7 @@ namespace PN{
   protected:
   private:
 	void						deleteAllInstances();
+	void						resetAllInstances();
 	void						launchInGame(pnEventType type, PNObject* source, PNEventData* data);
 	void						escMenu(pnEventType type, PNObject* source, PNEventData* data);
 	void						hidePrevious();
@@ -78,6 +79,11 @@ namespace PN{
 	void						onMLEnded(pnEventType type, PNObject* source, PNEventData* data);
 	void						onMUStarted(pnEventType type, PNObject* source, PNEventData* data);
 	void						onMUEnded(pnEventType type, PNObject* source, PNEventData* data);
+
+	void						onMPPaused(pnEventType type, PNObject* source, PNEventData* data);
+	void						onMPUnpauseded(pnEventType type, PNObject* source, PNEventData* data);
+
+
 
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
