@@ -105,8 +105,8 @@ namespace PN
 	if (_currentState == NONE)
 	  return;
 
-	hidePrevious();
 	resetAllInstances();
+
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_GAME_START, NULL, data);
 	_currentState = NONE;
 	//TODO : send event start game
@@ -117,7 +117,7 @@ namespace PN
 	if (_currentState == NONE)
 	  return;
 
-	deleteAllInstances();
+	//deleteAllInstances();
 	_currentState = NONE;
 	//TODO : send event load game
   }
@@ -148,6 +148,7 @@ namespace PN
 	  _guiMenuRoot = new PNGUIMenuRoot();
 
 	_guiMenuRoot->startGUI();
+
 	_currentState = MENUROOT;
   }
 
@@ -165,7 +166,9 @@ namespace PN
 	{
 	  if (_guiMenuLoad == NULL)
 		_guiMenuLoad = new PNGUIMenuLoad();
+
 	  hidePrevious();
+
 	  _guiMenuLoad->startGUI();
 	  _currentState = LOAD;
 	}

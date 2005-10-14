@@ -36,16 +36,26 @@ namespace PN {
   {
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/ESCMenu.layout");
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
-	CEGUI::MouseCursor::getSingleton().show();
+	
 	setupEventHandlers();
+	hide();
   }
 
   PNGUIEscMenu::~PNGUIEscMenu()
   {
 	_mainSheet->destroy();
-	CEGUI::MouseCursor::getSingleton().hide();
   }
- 
+
+  void PNGUIEscMenu::startGUI()
+  {
+	show();
+  }
+
+  void PNGUIEscMenu::resetGUI()
+  {
+	hide();
+  }
+  
   CEGUI::Window* PNGUIEscMenu::getWindow()
   {
 	return (_mainSheet);
@@ -65,60 +75,75 @@ namespace PN {
 
   void PNGUIEscMenu::show()
   {
-	_mainSheet->setVisible(true);
+	_mainSheet->show();
 	//win->setEnabled(true);
 	_mainSheet->activate();
 	_mainSheet->setAlwaysOnTop(true);
+	_mainSheet->setMutedState(false);
 	CEGUI::MouseCursor::getSingleton().show();
   }
 
   void PNGUIEscMenu::hide()
   {
-	_mainSheet->setVisible(false);
+	_mainSheet->hide();
 	_mainSheet->setAlwaysOnTop(false);
-	CEGUI::MouseCursor::getSingleton().hide();
-	//win->setEnabled(false);
+	_mainSheet->setMutedState(true);
   }
 
   bool PNGUIEscMenu::handleResume(const CEGUI::EventArgs& e)
   {
-	hide();
+	if (_mainSheet->isMuted() == true)
+	  return true;
+	//hide();
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_LOAD, NULL, NULL);
 	return true;
   }
 
   bool PNGUIEscMenu::handleLoadGame(const CEGUI::EventArgs& e)
   {
-	hide();
+	if (_mainSheet->isMuted() == true)
+	  return true;
+	//hide();
 	return true;
   }
 
   bool PNGUIEscMenu::handleSaveGame(const CEGUI::EventArgs& e)
   {
-	hide();
+	if (_mainSheet->isMuted() == true)
+	  return true;
+	//hide();
 	return true;
   }
 
   bool PNGUIEscMenu::handleOptions(const CEGUI::EventArgs& e)
   {
-	hide();
+	if (_mainSheet->isMuted() == true)
+	  return true;
+	//hide();
 	return true;
   }
 
   bool PNGUIEscMenu::handleMainMenu(const CEGUI::EventArgs& e)
   {
-	hide();
+	if (_mainSheet->isMuted() == true)
+	  return true;
+	//hide();
 	return true;
   }
 
   bool PNGUIEscMenu::handleNewGame(const CEGUI::EventArgs& e)
   {
-	hide();
+	if (_mainSheet->isMuted() == true)
+	  return true;
+	//hide();
 	return true;
   }
 
   bool PNGUIEscMenu::handleQuit(const CEGUI::EventArgs& e)
   {
-	hide();
+	if (_mainSheet->isMuted() == true)
+	  return true;
+	//hide();
 	return true;
   }
 };
