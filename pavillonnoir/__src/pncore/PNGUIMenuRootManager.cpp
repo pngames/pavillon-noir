@@ -84,13 +84,29 @@ namespace PN
 	delete _guiMenuCredits;*/
   }
 
+  void	PNGUIMenuRootManager::resetAllInstances()
+  {
+	if (_guiMenuRoot != NULL)
+	{
+	  _guiMenuRoot->resetGUI();
+	}
+	if (_guiMenuLoad != NULL)
+	{
+	   _guiMenuLoad->resetGUI();
+	}
+	/*	if (_guiMenuOptions != NULL)
+	 _guiMenuOptions->resetGUI();
+	if (_guiMenuCredits != NULL)
+	 _guiMenuCredits->resetGUI();*/
+  }
+
   void	PNGUIMenuRootManager::launchNewGame(pnEventType type, PNObject* source, PNEventData* data)
   {
 	if (_currentState == NONE)
 	  return;
 
 	hidePrevious();
-	deleteAllInstances();
+	resetAllInstances();
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_GAME_START, NULL, data);
 	_currentState = NONE;
 	//TODO : send event start game
@@ -131,7 +147,7 @@ namespace PN
 	if (_guiMenuRoot == NULL)
 	  _guiMenuRoot = new PNGUIMenuRoot();
 
-	_guiMenuRoot->show();
+	_guiMenuRoot->startGUI();
 	_currentState = MENUROOT;
   }
 
@@ -150,7 +166,7 @@ namespace PN
 	  if (_guiMenuLoad == NULL)
 		_guiMenuLoad = new PNGUIMenuLoad();
 	  hidePrevious();
-	  _guiMenuLoad->show();
+	  _guiMenuLoad->startGUI();
 	  _currentState = LOAD;
 	}
   }
@@ -184,10 +200,10 @@ namespace PN
 	switch (_currentState)
 	{
 	case MENUROOT:
-	  _guiMenuRoot->hide();
+	  _guiMenuRoot->resetGUI();
 	  break;
 	case LOAD:
-	  _guiMenuLoad->hide();
+	  _guiMenuLoad->resetGUI();
 	  break;
 	case OPTIONS:
 	  //_guiMenuOptions->hide();

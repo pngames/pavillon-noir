@@ -53,6 +53,8 @@ namespace PN{
 	void  hide();
 	void  show();
 	CEGUI::Window*	getWindow();
+	void  resetGUI();
+	void  startGUI();
   private:
 	 bool overButton(const CEGUI::EventArgs& e);
 	bool  handleNew(const CEGUI::EventArgs& e);

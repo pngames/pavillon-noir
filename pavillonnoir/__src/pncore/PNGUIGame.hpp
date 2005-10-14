@@ -67,6 +67,8 @@ namespace PN{
 	void  show();
 	void  hide();
 	CEGUI::Window*  getWindow();
+	void  resetGUI();
+	void  startGUI();
   private:
 	bool eventMouseMoveHandler(const CEGUI::EventArgs& e);
 	bool eventKeyPressedHandler(const CEGUI::EventArgs& e);

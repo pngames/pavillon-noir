@@ -59,7 +59,16 @@ namespace PN
   PNGUIMenuLoad::~PNGUIMenuLoad()
   {
 	_mainSheet->destroy();
-	CEGUI::MouseCursor::getSingleton().hide();
+  }
+
+  void PNGUIMenuLoad::startGUI()
+  {
+	show();
+  }
+
+  void PNGUIMenuLoad::resetGUI()
+  {
+	hide();
   }
 
   void PNGUIMenuLoad::setupEventHandlers()
@@ -104,6 +113,8 @@ namespace PN
 
   bool PNGUIMenuLoad::handleOk(const CEGUI::EventArgs& e)
   {
+	if (_mainSheet->isMuted() == true)
+	  return true;
 	if (_cbBox->getFirstSelectedItem() != NULL)
 	{
 	  PNGameLoadMapEventData* data = new PNGameLoadMapEventData();
@@ -123,6 +134,8 @@ namespace PN
 
   bool PNGUIMenuLoad::handleBack(const CEGUI::EventArgs& e)
   {	
+	if (_mainSheet->isMuted() == true)
+	  return true;
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_LOAD, NULL, NULL);
 	return true;
   }
@@ -131,6 +144,7 @@ namespace PN
   {
 	_mainSheet->show();
 	_mainSheet->setMutedState(false);
+	_mainSheet->activate();
 	CEGUI::MouseCursor::getSingleton().show();
 	updateList();
   }
@@ -139,7 +153,6 @@ namespace PN
   {
 	_mainSheet->hide();
 	_mainSheet->setMutedState(true);
-	CEGUI::MouseCursor::getSingleton().hide();
   }
 
   CEGUI::Window* PNGUIMenuLoad::getWindow()
