@@ -72,10 +72,8 @@ namespace PN
 
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 
-	PNConsole::addFonction("loadlevel", &PNGUIMenuRoot::loadLevel, "loadlevel [level]");
-
 	setupEventHandlers();	
-	CEGUI::MouseCursor::getSingleton().show();
+	
 
 	//////////////////////////////////////////////////////////////////////////
 	// Sound loading for menu
@@ -97,8 +95,19 @@ namespace PN
   {
 	PNConsole::delFonction("loadlevel");
 	_mainSheet->destroy();
-	CEGUI::MouseCursor::getSingleton().hide();
 	
+  }
+
+  void  PNGUIMenuRoot::startGUI()
+  {
+	  PNConsole::addFonction("loadlevel", &PNGUIMenuRoot::loadLevel, "loadlevel [level]");
+	  show();
+  }
+
+  void	PNGUIMenuRoot::resetGUI()
+  {
+	PNConsole::delFonction("loadlevel");
+	hide();
   }
 
   void PNGUIMenuRoot::setupEventHandlers()
@@ -264,12 +273,8 @@ namespace PN
   */
   void	PNGUIMenuRoot::hide()
   {
-	CEGUI::MouseCursor::getSingleton().hide();
-	//CEGUI::Window* win= CEGUI::WindowManager::getSingleton().getWindow("MenuRoot");
-	//win->hide();
 	_mainSheet->setMutedState(true);
 	_mainSheet->hide();
-
   }
 
   /*!
@@ -279,10 +284,9 @@ namespace PN
   void	PNGUIMenuRoot::show()
   {
 	CEGUI::MouseCursor::getSingleton().show();
-	//CEGUI::Window* win= CEGUI::WindowManager::getSingleton().getWindow("MenuRoot");
-	//win->show();
 	_mainSheet->setMutedState(false);
 	_mainSheet->show();
+	_mainSheet->activate();
   }
 
   CEGUI::Window*  PNGUIMenuRoot::getWindow()

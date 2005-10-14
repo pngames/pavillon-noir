@@ -57,6 +57,8 @@ namespace PN{
 	void hide();
 	CEGUI::Window* getWindow();
 	void callbackMsgBox(const unsigned int& enu);
+	void resetGUI();
+	void startGUI();
   protected:
   private:
 	void setupEventHandlers();

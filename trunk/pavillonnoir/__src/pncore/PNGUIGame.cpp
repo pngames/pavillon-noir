@@ -369,6 +369,18 @@ PNGUIGame::PNGUIGame()
   _rootWin->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseClickdHandler, this));
   _rootWin->subscribeEvent(CEGUI::Window::EventMouseWheel, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseWheel, this));
 
+  
+ // CEGUI::MouseCursor::getSingleton().hide();
+}
+
+PNGUIGame::~PNGUIGame()
+{
+  resetGUI();
+  _rootWin->destroy();
+}
+
+void PNGUIGame::startGUI()
+{
   //////////////////////////////////////////////////////////////////////////
   PNConsole::addFonction("loadmap", &PNGUIGame::_commandLoadMap, "Load game map, parameter : string MapFileName");
   //////////////////////////////////////////////////////////////////////////
@@ -394,10 +406,10 @@ PNGUIGame::PNGUIGame()
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_OFF, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
 
-  CEGUI::MouseCursor::getSingleton().hide();
+  show();
 }
 
-PNGUIGame::~PNGUIGame()
+void PNGUIGame::resetGUI()
 {
   PNConsole::delFonction("loadmap");
   /////////////////////////////////////////////
@@ -430,7 +442,7 @@ PNGUIGame::~PNGUIGame()
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_GRAB_OFF, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
 
-  _rootWin->destroy();
+  hide();
 }
 
 /*!
