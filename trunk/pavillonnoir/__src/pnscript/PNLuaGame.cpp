@@ -402,11 +402,11 @@ void  PNLuaGame::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* da
         PNCharacter*  s = (PNCharacter*)o2;
         PNCharacter*  target = (PNCharacter*)o1;
 
-        luaOrder = "gameMap.entities.all[";
+        luaOrder = "gameMap.entities.all[\"";
         luaOrder += s->getId().c_str();
-        luaOrder += "]:onFrustrumIn(gameMap.entities.all[";
+        luaOrder += "\"]:onFrustrumIn(gameMap.entities.all[\"";
         luaOrder += target->getId().c_str();
-        luaOrder += "])";
+        luaOrder += "\"])";
         _LVM.execString(luaOrder);
     }
 }
@@ -424,11 +424,11 @@ void  PNLuaGame::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* d
         PNCharacter*  s = (PNCharacter*)o2;
         PNCharacter*  target = (PNCharacter*)o1;
 
-        luaOrder = "gameMap.entities.all[";
+        luaOrder = "gameMap.entities.all[\"";
         luaOrder += s->getId().c_str();
-        luaOrder += "]:onFrustrumOut(gameMap.entities.all[";
+        luaOrder += "\"]:onFrustrumOut(gameMap.entities.all[\"";
         luaOrder += target->getId().c_str();
-        luaOrder += "])";
+        luaOrder += "\"])";
         _LVM.execString(luaOrder);
     }
 }

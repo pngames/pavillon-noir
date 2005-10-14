@@ -14,6 +14,9 @@ function PNCharacterClass(id)
 
 	PNCharacter:setMovingSpeed(0.5)
 	PNCharacter.hurry = false
+	PNCharacter.characTypeEnum = {PN_CHARAC_PIRATE = 0, PN_CHARAC_NAVY = 1, PN_CHARAC_CIVILIAN = 2}
+	PNCharacter.realCharacType = PNCharacter.characTypeEnum.PN_CHARAC_CIVILIAN
+	PNCharacter.shownCharacType = PNCharacter.characTypeEnum.PN_CHARAC_CIVILIAN
 --	pnprint("create pathFinding\n")
 	PNCharacter.pathFinding = PNPathFinding:new_local(PNCharacter:getCoord())
 --	pnprint("pathFinding created\n")
@@ -24,6 +27,7 @@ function PNCharacterClass(id)
 	PNCharacter.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2}
 	PNCharacter.state = PNCharacter.stateEnum.PN_IA_PASSIVE
 	PNCharacter.pastStates = {}
+	local PNCharacter.ennemies = {}
 	
 	function PNCharacter:onLuaInit()
 	end
@@ -72,6 +76,10 @@ function PNCharacterClass(id)
 		--do something
 	end
 
+	function PNCharacter:getCharacType()
+		return self.shownCharacType
+	end
+
 	function PNCharacter:setState(st)
 		table.insert(self.pastStates, 0, self.state)
 		self.state = st
@@ -83,18 +91,18 @@ function PNCharacterClass(id)
 		table.remove(self.pastStates,0)
 --		pnprint("<= PNCharacter:restoreState()\n")
 	end
-	
+
 	--temp function
-	
+
 	function PNCharacter:onLuaUpdate(deltaTime)
 		self:beSmart()
 		self:update(deltaTime)
 	end
-	
+
 	function PNCharacter:onLuaActionMoveTo(target)
 		--do something
 	end
-	
+
 	function PNCharacter:oncollision(target, direction)
 	-- Si target et direction et autre condition ok alors
 		-- lance premier script self.scripts.event.collision[0]		
@@ -118,7 +126,7 @@ function PNCharacterClass(id)
 			self:subMovingState(PN3DObject.STATE_T_BACKWARD)
 		end 
 	end
-	
+
 	function PNCharacter:onLuaActionMoveLeft(state)
 		pnprint("LUA PNCharacter:onLuaActionMoveLeft()\n")	
 		if (state == true) then
@@ -138,14 +146,21 @@ function PNCharacterClass(id)
 	end
 
 	function PNCharacter:onFrustrumIn(target)
-		pnprint(target:getId())
-		pnprint(" entered Frustrum\n")
+		if (target:getId() ~= self.id) then
+			self.ennemies[target:getId()] = 1;
+			if ((target:getCharacType() ~= self.realCharacType()) and (target:getCharacType() ~= PNCharacter.characTypeEnum.PN_CHARAC_CIVILIAN)) then
+				self:setTarget(target)
+				self:setState(PN_IA_FIGHTING)
+			end
+		end
 	end
 
 	function PNCharacter:onFrustrumOut(target)
-		pnprint(target:getId())
-		pnprint("exited Frustrum\n")
+		if (target:getId() ~= self.id) then
+			if (self.ennemies[target:getId()] != NULL)
+				self.ennemies[target:getId()] = NULL;
+		end
 	end
 
-	return PNCharacter	
+	return PNCharacter
 end

@@ -64,7 +64,7 @@ class PNAPI PNCharacter : public PN3DSkeletonObject
   PNPathFinding							_pf;
   std::stack<pnIAState>					_pastStates;
   PN3DObject							_toReach;
-  PN3DCamera							_view;
+  PN3DCamera							*_view;
   pnCharacType							_real;
   pnCharacType							_shown;
 
