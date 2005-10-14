@@ -43,13 +43,15 @@ PNCharacter::PNCharacter() : _pf(_coord)
   _hurry = false;
   _objType = OBJTYPE_CHARACTER;
 
-  _view.setMovingMode(MMODE_POSITION_ABS_LOCKED);
-  _view.setTarget(this);
-  _view.setTargetPosition(0.0f, 100.0f, 0.0f);
+  _view = new PN3DCamera();
+  _view->setMovingMode(MMODE_POSITION_ABS_LOCKED);
+  _view->setTarget(this);
+  _view->setTargetPosition(0.0f, 100.0f, 0.0f);
 }
 
 PNCharacter::~PNCharacter()
 {
+  delete _view;
 }
 
 void
@@ -158,7 +160,10 @@ PNCharacter::_serializeContent(std::ostream& o)
   pnint	err = PN3DSkeletonObject::_serializeContent(o);
 
   if (err == PNEC_SUCCES)
-	_view.update(0);
+  {  
+	_view->setOrient(getOrient());
+	_view->update(0);
+  }
 
   return err;
 }
@@ -169,15 +174,18 @@ PNCharacter::update(pnuint deltatTime)
 {
   PN3DSkeletonObject::update(deltatTime);
 
-  _view.update(deltatTime);
+  _view->setOrient(getOrient());
+  _view->update(deltatTime);
 }
 
 /// Render object using PNRendererInterface
 void
 PNCharacter::render()
 {
+  PN3DSkeletonObject::render();
+  
   if (_renderMode & RENDER_CAMERA)
-	_view.render();
+	_view->render();
 }
 
 //////////////////////////////////////////////////////////////////////////

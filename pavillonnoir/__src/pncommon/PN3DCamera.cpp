@@ -94,7 +94,7 @@ PN3DCamera::_onMPEnded(pnEventType type, PNObject* source, PNEventData* ed)
 pnbool
 PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 {
-  return true;
+  //return true;
 
   PNLOCK(obj);
 
@@ -144,7 +144,7 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   PNVector3f	targetVector8(maxCoords);
   targetVector8 += targetVector;
 
-  cout << "#####################################" << endl;
+  //cout << "#####################################" << endl;
 
   /*cout << "targetVector=" << targetVector << " sp=" << sp1 << endl;
   cout << "targetVector1=" << targetVector1 << " sp=" << sp1 << endl;
@@ -192,7 +192,7 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   pndouble	spr = rightDirection.scalarProduct(targetVector);
   pndouble	spt = topDirection.scalarProduct(targetVector);
 
-  cout << "spf=" << spf << " spr=" << spr << " spt=" << spt << endl;
+  //cout << "spf=" << spf << " spr=" << spr << " spt=" << spt << endl;
 
   if (sp1 > _viewMaxCosFov)
 	return true;
