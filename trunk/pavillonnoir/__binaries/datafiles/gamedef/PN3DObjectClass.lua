@@ -11,15 +11,15 @@ function PN3DObjectClass(id)
     obj:setId(id)
     obj.id = id
 
-    function  obj:onLuaUpdate(deltaTime)
+    function  obj:onUpdate(deltaTime)
 	  -- self.__index:update(deltaTime)
        self:update(deltaTime)
     end
 
 
     	---------------------move events-----------------------
-	function obj:onLuaActionMoveForward(state)
-		pnprint("LUA obj:onLuaActionMoveForward()\n")	
+	function obj:onActionMoveForward(state)
+		pnprint("LUA obj:onActionMoveForward()\n")	
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_FORWARD)
 		else
@@ -27,8 +27,8 @@ function PN3DObjectClass(id)
 		end 
 	end	
 
-	function obj:onLuaActionMoveBackward(state)
-		pnprint("LUA obj:onLuaActionMoveBackward()\n")
+	function obj:onActionMoveBackward(state)
+		pnprint("LUA obj:onActionMoveBackward()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_BACKWARD)
 		else
@@ -36,8 +36,8 @@ function PN3DObjectClass(id)
 		end 
 	end
 	
-	function obj:onLuaActionMoveLeft(state)
-		pnprint("LUA obj:onLuaActionMoveLeft()\n")	
+	function obj:onActionMoveLeft(state)
+		pnprint("LUA obj:onActionMoveLeft()\n")	
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_LEFT)
 		else
@@ -45,8 +45,8 @@ function PN3DObjectClass(id)
 		end 
 	end	
 
-	function obj:onLuaActionMoveRight(state)
-		pnprint("LUA obj:onLuaActionMoveRight()\n")
+	function obj:onActionMoveRight(state)
+		pnprint("LUA obj:onActionMoveRight()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_RIGHT)
 		else
@@ -54,8 +54,8 @@ function PN3DObjectClass(id)
 		end 
 	end
 
-	function obj:onLuaActionRotateYawRight(state)
-		pnprint("LUA obj:onLuaActionMoveRight()\n")
+	function obj:onActionRotateYawRight(state)
+		pnprint("LUA obj:onActionMoveRight()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_R_RIGHT)
 		else
@@ -63,8 +63,8 @@ function PN3DObjectClass(id)
 		end 
 	end
 	
-	function obj:onLuaActionRotateYawLeft(state)
-		pnprint("LUA obj:onLuaActionMoveRight()\n")
+	function obj:onActionRotateYawLeft(state)
+		pnprint("LUA obj:onActionMoveRight()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_R_LEFT)
 		else
@@ -72,9 +72,11 @@ function PN3DObjectClass(id)
 		end 
 	end
 
-	function obj:onLuaInit()
+	function obj:onInit()
 	end
 	
+	function obj:onDestroy()
+	end
 	-------------------------------------------------------
     return obj
 end

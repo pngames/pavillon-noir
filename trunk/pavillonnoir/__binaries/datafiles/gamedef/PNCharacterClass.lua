@@ -29,7 +29,7 @@ function PNCharacterClass(id)
 	PNCharacter.pastStates = {}
 	local PNCharacter.ennemies = {}
 	
-	function PNCharacter:onLuaInit()
+	function PNCharacter:onInit()
 	end
 	
 	function PNCharacter:beSmart()
@@ -40,7 +40,7 @@ function PNCharacterClass(id)
 				local distance2 = self:getCoord():getDistance(self.toReach:getCoord())
 					if (distance2 <= 50.0) then
 						self:restoreState()
-						self:onLuaActionMoveForward(false)
+						self:onActionMoveForward(false)
 						return
 					end
 					self:setTarget(self.toReach)
@@ -57,7 +57,7 @@ function PNCharacterClass(id)
 		-- setDirect and rotate
 		self:setTarget(self.toReach)
 		self:setMovingMode(self.MMODE_VIEW_ABS_LOCKED)
-		self:onLuaActionMoveForward(true)
+		self:onActionMoveForward(true)
 	end
 
 	function PNCharacter:hear()
@@ -94,12 +94,12 @@ function PNCharacterClass(id)
 
 	--temp function
 
-	function PNCharacter:onLuaUpdate(deltaTime)
+	function PNCharacter:onUpdate(deltaTime)
 		self:beSmart()
 		self:update(deltaTime)
 	end
 
-	function PNCharacter:onLuaActionMoveTo(target)
+	function PNCharacter:onActionMoveTo(target)
 		--do something
 	end
 
@@ -109,8 +109,8 @@ function PNCharacterClass(id)
 	end
 
     ---------------------move events-----------------------
-	function PNCharacter:onLuaActionMoveForward(state)
-		pnprint("LUA PNCharacter:onLuaActionMoveForward()\n")	
+	function PNCharacter:onActionMoveForward(state)
+		pnprint("LUA PNCharacter:onActionMoveForward()\n")	
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_FORWARD)
 		else
@@ -118,8 +118,8 @@ function PNCharacterClass(id)
 		end 
 	end	
 
-	function PNCharacter:onLuaActionMoveBackward(state)
-		pnprint("LUA PNCharacter:onLuaActionMoveBackward()\n")
+	function PNCharacter:onActionMoveBackward(state)
+		pnprint("LUA PNCharacter:onActionMoveBackward()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_BACKWARD)
 		else
@@ -127,8 +127,8 @@ function PNCharacterClass(id)
 		end 
 	end
 
-	function PNCharacter:onLuaActionMoveLeft(state)
-		pnprint("LUA PNCharacter:onLuaActionMoveLeft()\n")	
+	function PNCharacter:onActionMoveLeft(state)
+		pnprint("LUA PNCharacter:onActionMoveLeft()\n")	
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_LEFT)
 		else
@@ -136,8 +136,8 @@ function PNCharacterClass(id)
 		end 
 	end	
 
-	function PNCharacter:onLuaActionMoveRight(state)
-		pnprint("LUA PNCharacter:onLuaActionMoveRight()\n")
+	function PNCharacter:onActionMoveRight(state)
+		pnprint("LUA PNCharacter:onActionMoveRight()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_RIGHT)
 		else
@@ -162,5 +162,15 @@ function PNCharacterClass(id)
 		end
 	end
 
+  	function PNCharacter:onInit
+		if (target:getId() ~= self.id) then
+			if (self.ennemies[target:getId()] != NULL)
+				self.ennemies[target:getId()] = NULL;
+		end
+	end
+	
+	function PNCharacter:onDestroy()
+	end
+	
 	return PNCharacter
 end

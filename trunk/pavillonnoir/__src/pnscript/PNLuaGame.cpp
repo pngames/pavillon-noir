@@ -237,7 +237,7 @@ PNGameMap* PNLuaGame::getGameMap()
 //    if (this->_mapStarted == true)
 //    {
 //        std::stringstream luaOrder;
-//        luaOrder << "gameMap:onLuaUpdate(" << deltaTime << ")";
+//        luaOrder << "gameMap:onUpdate(" << deltaTime << ")";
 //        lua_dostring(L, luaOrder.str().c_str());    
 //    }
 //}
@@ -251,7 +251,7 @@ void  PNLuaGame::onUpdate(pnEventType evt, PNObject* source, PNEventData* data)
     if (this->_mapStarted == true)
     {
         std::stringstream luaOrder;
-        luaOrder << "gameMap:onLuaUpdate(" << deltaTime << ")";
+        luaOrder << "gameMap:onUpdate(" << deltaTime << ")";
         this->_LVM.execString(luaOrder.str());
     }
 
@@ -262,7 +262,7 @@ void  PNLuaGame::onInit(pnEventType evt, PNObject* source, PNEventData* data)
     PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_INIT_STARTED, 0, NULL);
 
     std::string luaOrder;
-    luaOrder +=  "gameMap.onLuaInit()";
+    luaOrder +=  "gameMap.onInit()";
     this->_LVM.execString(luaOrder);
 
     PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_INIT_ENDED, 0, NULL);
@@ -337,7 +337,7 @@ void  PNLuaGame::onUnloadMapEnded(pnEventType evt, PNObject* source, PNEventData
 void  PNLuaGame::onPlayMapStart(pnEventType evt, PNObject* source, PNEventData* data)
 {
     this->_mapStarted = true;
-    PNEventManager::getInstance()->addEvent(PN_EVENT_MP_STARTED, 0, new PNEventData());
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_STARTED, 0, new PNEventData());
 }
 void  PNLuaGame::onPlayMapStarted(pnEventType evt, PNObject* source, PNEventData* data)
 {
@@ -373,7 +373,7 @@ void  PNLuaGame::onGameAction(pnEventType evt, PNObject* source, PNEventData* da
     std::string luaOrder;
 
     PNGameActionEventData* actionEvent= (PNGameActionEventData*) data;
-    luaOrder = "gameMap:onLuaAction";
+    luaOrder = "gameMap:onAction";
     luaOrder += actionEvent->action;
     luaOrder += "(\"";
     luaOrder += actionEvent->targetId;
@@ -436,16 +436,16 @@ void  PNLuaGame::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* d
 void  PNLuaGame::registerCallbacks()
 {
     PNEventManager::getInstance()->addCallback(PN_EVENT_ML_START, EventCallback(this, &PNLuaGame::onLoadMapStart));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_ML_ENDED, EventCallback(this, &PNLuaGame::onLoadMapEnded));
+    //PNEventManager::getInstance()->addCallback(PN_EVENT_ML_ENDED, EventCallback(this, &PNLuaGame::onLoadMapEnded));
     PNEventManager::getInstance()->addCallback(PN_EVENT_MP_START,  EventCallback(this, &PNLuaGame::onPlayMapStart));
     PNEventManager::getInstance()->addCallback(PN_EVENT_MU_START, EventCallback(this, &PNLuaGame::onUnloadMapStart));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_MU_ENDED, EventCallback(this, &PNLuaGame::onUnloadMapEnded));
+    //PNEventManager::getInstance()->addCallback(PN_EVENT_MU_ENDED, EventCallback(this, &PNLuaGame::onUnloadMapEnded));
     PNEventManager::getInstance()->addCallback(PN_EVENT_MP_END,  EventCallback(this, &PNLuaGame::onPlayMapEnd));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED,  EventCallback(this, &PNLuaGame::onPlayMapEnded));
+    //PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED,  EventCallback(this, &PNLuaGame::onPlayMapEnded));
     PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGame::onGameAction));
     PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_UPDATE, EventCallback(this, &PNLuaGame::onUpdate));
     PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT, EventCallback(this, &PNLuaGame::onInit));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT_ENDED, EventCallback(this, &PNLuaGame::onInitEnded));
+    //PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT_ENDED, EventCallback(this, &PNLuaGame::onInitEnded));
     PNEventManager::getInstance()->addCallback(PN_EVENT_F_IN, EventCallback(this, &PNLuaGame::onFrustrumIn));
     PNEventManager::getInstance()->addCallback(PN_EVENT_F_OUT, EventCallback(this, &PNLuaGame::onFrustrumOut));
     pnerror(PN_LOGLVL_DEBUG, "callbacks registered");
@@ -457,7 +457,7 @@ void  PNLuaGame::registerCallbacks()
 void  PNLuaGame::loadMap()
 {
     pnint error;
-    PNEventManager::getInstance()->addEvent(PN_EVENT_ML_STARTED, 0, new PNGameLoadMapEventData(this->_mapToLoad));
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STARTED, 0, new PNGameLoadMapEventData(this->_mapToLoad));
     //TODO : capturer cet event pour debug
     if (this->_gameMap)
     {
@@ -475,14 +475,14 @@ void  PNLuaGame::loadMap()
         return;
     }
     this->_mapLoaded = true;
-    PNEventManager::getInstance()->addEvent(PN_EVENT_ML_ENDED, 0, new PNGameLoadMapEventData(this->_mapToLoad));
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_ENDED, 0, new PNGameLoadMapEventData(this->_mapToLoad));
     //TODO : capturer cet event pout debug
     return;
 }
 
 void  PNLuaGame::unloadMap()
 {
-    PNEventManager::getInstance()->addEvent(PN_EVENT_MU_STARTED, 0, new PNEventData());
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_MU_STARTED, 0, new PNEventData());
     //TODO : capturer cet event pour debug
     this->_gameMap->clear();
     this->_mapLoaded = false;
@@ -492,6 +492,6 @@ void  PNLuaGame::unloadMap()
         delete this->_gameMap;
         this->_gameMap = NULL;
     }
-    PNEventManager::getInstance()->addEvent(PN_EVENT_MU_ENDED, 0, new PNEventData());
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_MU_ENDED, 0, new PNEventData());
     //TODO : capturer cet event pout debug
 }
