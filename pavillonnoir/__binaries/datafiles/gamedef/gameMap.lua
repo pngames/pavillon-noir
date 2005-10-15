@@ -30,14 +30,14 @@ end
 function gameMap:clear()
 	pnprint("[LUA enter function] gameMap:clear\n")
     pnprint("\n")
---	for id, entity in pairs(self.entities.all) do 
---      pnprint(id)
---      pnprint("\n")
---      self.entities.all[id] = nil
---      pnprint("\n")
---	end
+	for id, entity in pairs(self.entities.all) do 
+      pnprint(id)
+      pnprint("\n")
+      self.entities.all[id]:onDestroy()
+      pnprint("\n")
+	end
 	self.entities = nil
-    self.entities = {}
+	collectgarbage()
    pnprint("[LUA exit function] gameMap:clear\n")
 end 
 
@@ -49,12 +49,12 @@ function gameMap:spwan(entity, id, position, orientation, model)
 	return entity
 end 
 
-function gameMap:onLuaUpdate(deltaTime)
+function gameMap:onUpdate(deltaTime)
 	--pnprint("[UPDATE] start lua update\n")
 --	pnprint("=> LUA GameMap: onUpdate()")
    --pnprint(deltaTime)
 	for id, entity in pairs(self.entities.all) do 
-		entity:onLuaUpdate(deltaTime)
+		entity:onUpdate(deltaTime)
 	end
 --	pnprint("<= LUA GameMap: onUpdate()")
 --	pnprint("[UPDATE] end lua update\n")
@@ -62,6 +62,12 @@ end
 
 function gameMap:onInit()
 	pnprint("LUA GameMap: onInit()\n")
+	for id, entity in pairs(self.entities.all) do 
+      pnprint(id)
+      pnprint("\n")
+      self.entities.all[id]:onInit()
+      pnprint("\n")
+	end
 end
 
 function gameMap:onReset()
@@ -88,24 +94,24 @@ function gameMap:onLoadMap()
     pnprint("LUA GameMap: onLoadMap()\n")
 end
 
-function gameMap:onLuaActionMoveForward(id, state)
-    pnprint("LUA GameMap:onLuaActionMoveForward()\n")
-    self.entities.all[id]:onLuaActionMoveForward(state)
+function gameMap:onActionMoveForward(id, state)
+    pnprint("LUA GameMap:onActionMoveForward()\n")
+    self.entities.all[id]:onActionMoveForward(state)
 end	
 
-function gameMap:onLuaActionMoveBackward(id, state)
-    pnprint("LUA GameMap:onLuaActionMoveBackward()\n")
-    self.entities.all[id]:onLuaActionMoveBackward(state)
+function gameMap:onActionMoveBackward(id, state)
+    pnprint("LUA GameMap:onActionMoveBackward()\n")
+    self.entities.all[id]:onActionMoveBackward(state)
 end		
 
-function gameMap:onLuaActionMoveLeft(id, state)
-    pnprint("LUA GameMap:onLuaActionMoveLeft()\n")
-    self.entities.all[id]:onLuaActionMoveLeft(state)
+function gameMap:onActionMoveLeft(id, state)
+    pnprint("LUA GameMap:onActionMoveLeft()\n")
+    self.entities.all[id]:onActionMoveLeft(state)
 end	
 
-function gameMap:onLuaActionMoveRight(id, state)
-    pnprint("LUA GameMap:onLuaActionMoveRight()\n")
-    self.entities.all[id]:onLuaActionMoveRight(state)
+function gameMap:onActionMoveRight(id, state)
+    pnprint("LUA GameMap:onActionMoveRight()\n")
+    self.entities.all[id]:onActionMoveRight(state)
 end		
 --camera = PN3DCamera:getRenderCam()
 --camera:setMovingSpeed(1.0)
