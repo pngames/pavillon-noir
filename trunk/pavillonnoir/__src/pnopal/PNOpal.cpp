@@ -59,6 +59,7 @@ PNOpal::PNOpal()
 
 PNOpal::~PNOpal()
 {
+  _sim->destroy();
 }
 
 /** PNOpal plugin initialization method
@@ -68,6 +69,7 @@ void  PNOpal::init()
 {
   pnerror(PN_LOGLVL_DEBUG, "%s", "PNOpal (PNPhysicsInterface implementation) initialization");
   PNEventManager::getInstance()->addCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PNOpal::frameStarted));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PNOpal::mapEnded));
   
   setPause(true);
 }
@@ -97,6 +99,7 @@ void PNOpal::createSimulation()
   _sim->setStepSize((opal::real)STEPSIZE);
 
   _gameMap = PNGameInterface::getInstance()->getGameMap();
+  _break = false;
 }
 
 /** Destroy the physical simulation (opal::Simulator)
@@ -104,7 +107,9 @@ void PNOpal::createSimulation()
 
 void PNOpal::destroySimulation()
 {
-  _sim->destroy();
+  _sim->destroyAllSolids();
+  // _sim->destroy();
+  // unexpected read/write error !
 }
 
 /** Return a pointer to the OPAL simulation (opal::Simulator*)
@@ -115,21 +120,33 @@ void* PNOpal::getSimulation()
   return _sim;
 }
 
-/** Return the elapsed time (in seconds) since the last frame
+/** invoked by PN_EVENT_MP_ENDED (level destruction)
+*/
+
+void PNOpal::mapEnded(pnEventType type, PNObject* source, PNEventData* data)
+{
+  _lastTicks = NULL;
+  _break = true; // make the running loops stop
+  this->destroySimulation();
+}
+
+/** Returns the elapsed time (in seconds) since the last frame
 */
 
 pnfloat PNOpal::getElapsedTime()
 {
-  static pnfloat lastTicks = 0;
   pnfloat currentTicks;
   pnfloat elapsedTicks;
   
+  if (!_lastTicks)
+	_lastTicks = (pnfloat)PNRendererInterface::getInstance()->getTicks();
+
   currentTicks = (pnfloat)PNRendererInterface::getInstance()->getTicks();
-  if (currentTicks < lastTicks)
+  if (currentTicks < _lastTicks)
   	elapsedTicks = 0;
   else
-	elapsedTicks = (currentTicks - lastTicks) / 100; // FIXME UGLY FIXED VALUE
-  lastTicks = currentTicks;
+	elapsedTicks = (currentTicks - _lastTicks) / 100; // FIXME UGLY FIXED VALUE
+  _lastTicks = currentTicks;
 
   return elapsedTicks;
 }
@@ -144,6 +161,8 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 
   if (_sim == NULL)
 	return;
+  if (_break == true)
+	return;
   if (_paused == true)
 	return;
 
@@ -153,6 +172,8 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
   
   for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
   {
+	if (_break == true)
+	  return;
 	PN3DObject*	current_obj = it->second;
 	PNLOCK_BEGIN(current_obj);
 	{
@@ -203,6 +224,8 @@ void PNOpal::setAllPhysicalObjectsStatic(bool state)
 
   for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
   {
+	if (_break == true)
+	  return;
 	currentObject = it->second;
 	currentObject->getPhysicalObject()->setStatic(state);
   }
@@ -218,22 +241,6 @@ void PNOpal::destroyPhysicalObject(PNPhysicalObject* physicalObject)
   PNOpalObject* opalObject = (PNOpalObject*)physicalObject;
 
   _sim->destroySolid(opalObject->getOpalSolid());
-}
-
-/** Destroy all the physical objects in the simulation
-*/
-
-void PNOpal::destroyAllPhysicalObjects()
-{
-  PN3DObject* currentObject = NULL;
-  PNOpalObject* currentOpalObject = NULL;
-  
-  for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
-  {
-	currentObject = it->second;
-	currentOpalObject = (PNOpalObject*)currentObject->getPhysicalObject();
-	_sim->destroySolid(currentOpalObject->getOpalSolid());
-  }
 }
 
 }
