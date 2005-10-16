@@ -47,9 +47,10 @@ void OPAL_CALL PNOpalCommonEventHandler::handleCollisionEvent(const opal::Collis
   //static float depth = 0;
   //PNPoint collisionPoint;
   //collisionPoint.set(e.pos[0], e.pos[1], e.pos[2]);
+
+  pnerror(PN_LOGLVL_INFO, "%s", "COLLISION");
   
   //PNEventManager::getInstance()->addEvent(PN_EVENT_COLLISION, &collisionPoint, NULL);
-
   //if (e.depth > SOUND_SENSITIVITY)
 	//PNSoundInterface::getInstance()->PlaySound("ding");
 }

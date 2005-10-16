@@ -104,11 +104,7 @@ const PNPoint&	PNOpalObject::getCoord()
 const PNQuatf&	PNOpalObject::getOrient()
 {
   opal::Quaternion quat = _solid->getQuaternion();
-  //quat.normalize();
-  // FIXME FIXME FIXME
-  /*_orient.x = quat[1] * -1;
-  _orient.y = quat[2] * -1;
-  _orient.z = quat[3] * -1;*/
+
   _orient.x = quat[1];
   _orient.y = quat[2];
   _orient.z = quat[3];
@@ -168,34 +164,11 @@ void			PNOpalObject::setOrient(const PNQuatf& orient)
 {
   PNMatrixTR4f	  pntransform;
 
-  // FIXME : se servir de la matrice pour la position ET l'orientation
-  // une seule fonction pour Orient et Coord
-  
   pntransform.loadIdentity();
   pntransform.setTranslation(_solid->getPosition().getData());
   pntransform.setRotationQuaternion(orient);
 
-  //pnfloat tab[3] = {0.0f, 90.0f, 0.0f};
-  //pntransform.setRotationDegrees(tab);
-
-  //PNQuatf	quat;
-  //quat.fromAxisDegrees(PNVector3f::UNIT_Y, 90.0f);
-  
-  //std::cout << pntransform;
   opal::Matrix44r transform(pntransform.getMatrix());
-
-  /*opal::Matrix44r transform;
-  opal::Point3r	  pos;
-  pos = _solid->getPosition();
-  transform.setPosition(pos[0], pos[1], pos[2]);
-  transform.setRotation(90.0, 0.0, 1.0, 0.0);*/
-
-  /*std::cout << "{" << std::endl <<
-	transform[0] << "\t" << transform[1] << "\t" << transform[2] << "\t" << transform[3] << std::endl <<
-	transform[4] << "\t" << transform[5] << "\t" << transform[6] << "\t" << transform[7] << std::endl <<
-	transform[8] << "\t" << transform[9] << "\t" << transform[10] << "\t" << transform[11] << std::endl <<
-	transform[12] << "\t" << transform[13] << "\t" << transform[14] << "\t" << transform[15] << std::endl <<
-	"}" << std::endl;*/
   this->_solid->setTransform(transform);
 }
 
@@ -209,6 +182,8 @@ void			PNOpalObject::setOrient(const PNQuatf& orient)
 
 void			PNOpalObject::setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w)
 {
+  // FIXME
+
   //opal::Matrix44r transform;
   //transform.rotate((opal::real)w, (opal::real)x, (opal::real)y, (opal::real)z);
   //this->_solid->setTransform(transform);

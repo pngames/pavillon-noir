@@ -37,6 +37,7 @@
 #include "pnevent.h"
 
 #include "PNPhysicsInterface.hpp"
+#include "PNGameMap.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -47,9 +48,7 @@ class				PNOpal : public PNPhysicsInterface
 {
 private:
   opal::Simulator*	_sim;
-
-  /* FIXME : previously deprecated */
-  PN3DObjList		_list3DObj;
+  PNGameMap* _gameMap;
 
 public:
   PNOpal();
