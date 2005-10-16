@@ -48,7 +48,9 @@ class				PNOpal : public PNPhysicsInterface
 {
 private:
   opal::Simulator*	_sim;
-  PNGameMap* _gameMap;
+  PNGameMap*		_gameMap;
+  bool				_break;
+  pnfloat			_lastTicks;
 
 public:
   PNOpal();
@@ -68,12 +70,12 @@ public:
 
   PNPhysicalObject*	createPhysicalObjectBox(PN3DObject* object, bool isStatic);
   void				destroyPhysicalObject(PNPhysicalObject* physicalObject);
-  void				destroyAllPhysicalObjects();
   void				setAllPhysicalObjectsStatic(bool state);
 
   //////////////////////////////////////////////////////////////////////////
 
   pnfloat			getElapsedTime();
+  void				mapEnded(pnEventType type, PNObject* source, PNEventData* data);
   void				frameStarted(pnEventType type, PNObject* source, PNEventData* data);
 };
 
