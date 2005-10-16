@@ -33,7 +33,9 @@
 #include "pnevent.h"
 
 #include "PNRendererInterface.hpp"
+#include "PNGameInterface.hpp"
 #include "PNConsole.hpp"
+#include "PNGameMap.hpp"
 
 #include "PNOpal.hpp"
 #include "PNOpalObject.hpp"
@@ -82,18 +84,6 @@ void  PNOpal::setPause(bool state)
 
 void PNOpal::addForceToObj(pnuint nb, pnfloat x, pnfloat y, pnfloat z, pnfloat duration)
 {
-  /*PN3DObject* currentObject = NULL;
-  pnuint i = 0;
-  PN3DObjList::iterator it = _list3DObj.begin();
-  */
-  //for (;it != _list3DObj.end() && i != nb; it++, i++);
-  /*
-  currentObject = (*it);
-  currentObject->setCoord(currentObject->getCoord().x + x, currentObject->getCoord().y + y, currentObject->getCoord().z + z);
-  PNOpalObject* opalObject = (PNOpalObject*)currentObject->getPhysicalObject();
-  opalObject->getOpalSolid()->setPosition(currentObject->getCoord().x + x, currentObject->getCoord().y + y, currentObject->getCoord().z + z);
-  */
-  //opalObject->addForce(x, y, z, duration);
 }
 
 /** Create the physical simulation (opal::Simulator)
@@ -105,6 +95,8 @@ void PNOpal::createSimulation()
   pnerror(PN_LOGLVL_DEBUG, "%s", "PNOpal::_sim created");
   _sim->setGravity(opal::Vec3r(0, (opal::real)GRAVITY, 0));
   _sim->setStepSize((opal::real)STEPSIZE);
+
+  _gameMap = PNGameInterface::getInstance()->getGameMap();
 }
 
 /** Destroy the physical simulation (opal::Simulator)
@@ -136,7 +128,7 @@ pnfloat PNOpal::getElapsedTime()
   if (currentTicks < lastTicks)
   	elapsedTicks = 0;
   else
-	elapsedTicks = (currentTicks - lastTicks) / 100;
+	elapsedTicks = (currentTicks - lastTicks) / 100; // FIXME UGLY FIXED VALUE
   lastTicks = currentTicks;
 
   return elapsedTicks;
@@ -148,37 +140,20 @@ pnfloat PNOpal::getElapsedTime()
 
 void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 {
-  //static pnuint frame = 0;
-  
   pnfloat elapsedTime = getElapsedTime();
 
   if (_sim == NULL)
 	return;
-  
   if (_paused == true)
 	return;
 
   bool ret = _sim->simulate(elapsedTime);
   if (ret == false)
   	return;
-
-  for (PN3DObjList::iterator it = _list3DObj.begin(); it != _list3DObj.end(); ++it)
+  
+  for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
   {
-  //////////////////////////////////////////////////////////////////////////
-  // Will be operational when pnscript will instantiate PNGameMap
-
-  /*
-  PNGameMap* game_map = PNGameInterface::getInstance()->getGameMap();
-  map<std::string, PN3DObject *>& my_list = game_map->getEntityList();
-  map<std::string, PN3DObject *>::iterator it = my_list.begin();
-
-  for (;it != my_list.end(); it++)
-  {
-  */
-	//frame++;
-
-	PN3DObject* current_obj = *it;
-
+	PN3DObject*	current_obj = it->second;
 	PNLOCK_BEGIN(current_obj);
 	{
 	  const PNPoint& coord = current_obj->getPhysicalObject()->getCoord();
@@ -187,18 +162,9 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 
 	  current_obj->setCoord(coord.x - center.x, coord.y - center.y, coord.z - center.z);
 	  current_obj->setOrient(orient);
-
-	  /*if (frame == 3000)
-	  {
-	  PNConsole::writeLine("Orient PNPhysicalObject - x : %f, y : %f, z : %f, w : %f", orient.x, orient.y, orient.z, orient.w);
-	  PNConsole::writeLine("Orient PN3DObject       - x : %f, y : %f, z : %f, w : %f", current_obj->getOrient().x, current_obj->getOrient().y, current_obj->getOrient().z, current_obj->getOrient().w);
-	  frame = 0;
-	  }*/
 	}
 	PNLOCK_END(current_obj);
   }
-
-  std::cout << " [UPDATE] end physic refresh" << std::endl;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -214,9 +180,6 @@ PNPhysicalObject* PNOpal::createPhysicalObjectBox(PN3DObject* object, bool isSta
 {
   PNPhysicalObject* physicalObject = new PNOpalObject(_sim);
 
-  /* FIXME : previously deprecated */
-  _list3DObj.push_back(object);
-  
   physicalObject->setStatic(isStatic);
   physicalObject->setShape(object->get3DModel()->getMin(), object->get3DModel()->getMax(), PN_PHYS_ROCKLIGHT);
 
@@ -237,12 +200,10 @@ PNPhysicalObject* PNOpal::createPhysicalObjectBox(PN3DObject* object, bool isSta
 void PNOpal::setAllPhysicalObjectsStatic(bool state)
 {
   PN3DObject* currentObject = NULL;
-  /* FIXME : previously deprecated */
-  PN3DObjList::iterator it = _list3DObj.begin();
 
-  for (;it != _list3DObj.end(); it++)
+  for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
   {
-	currentObject = (*it);
+	currentObject = it->second;
 	currentObject->getPhysicalObject()->setStatic(state);
   }
 }
@@ -266,12 +227,10 @@ void PNOpal::destroyAllPhysicalObjects()
 {
   PN3DObject* currentObject = NULL;
   PNOpalObject* currentOpalObject = NULL;
-  /* FIXME : previously deprecated */
-  PN3DObjList::iterator it = _list3DObj.begin();
-
-  for (;it != _list3DObj.end(); it++)
+  
+  for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
   {
-	currentObject = (*it);
+	currentObject = it->second;
 	currentOpalObject = (PNOpalObject*)currentObject->getPhysicalObject();
 	_sim->destroySolid(currentOpalObject->getOpalSolid());
   }
