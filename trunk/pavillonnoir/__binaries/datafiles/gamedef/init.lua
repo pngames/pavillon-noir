@@ -1,5 +1,8 @@
 pnprint("[LUA] load Init file\n")
 
+loadLuaScript("renderCam.lua", true)
+   pnprint("renderCam.lua loaded\n")
+
 loadLuaScript("PN3DObjectClass.lua", true)
    pnprint("PN3DObjectClass.lua loaded\n")
 
@@ -12,6 +15,8 @@ loadLuaScript("PlayerClass.lua", true)
 loadLuaScript("PNCharacterClass.lua", true)
    pnprint("PNCharacterClass.lua loaded\n")
 
+
+   
 pnprint("[LUA] Init file loaded")
 
 

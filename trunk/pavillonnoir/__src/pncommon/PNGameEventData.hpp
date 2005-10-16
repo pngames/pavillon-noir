@@ -33,6 +33,7 @@
 #include "pndefs.h"
 #include "pnevent.h"
 #include "PNEventData.hpp"
+#include "PNPoint.hpp"
 
 namespace PN
 {
@@ -66,6 +67,7 @@ public:
   std::string gameName;
 };
 
+
 class PNGameActionEventData : public PNEventData
 {
 public:
@@ -80,7 +82,14 @@ public:
 			targetId(aTargetId),
             sourceId(aSourceId),
 			state(theState) {}
+};
 
+class PNGameMouseMoveEventData : public PNEventData
+{
+public:
+	PNPoint coords;
+
+	PNGameMouseMoveEventData(PNPoint someCoords): coords(someCoords) {}
 };
 
 class PNGameAIEventData : public PNGameActionEventData

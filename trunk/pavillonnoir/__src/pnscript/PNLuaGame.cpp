@@ -373,16 +373,14 @@ void  PNLuaGame::onGameAction(pnEventType evt, PNObject* source, PNEventData* da
     std::string luaOrder;
 
     PNGameActionEventData* actionEvent= (PNGameActionEventData*) data;
-    luaOrder = "gameMap:onAction";
-    luaOrder += actionEvent->action;
-    luaOrder += "(\"";
-    luaOrder += actionEvent->targetId;
-    luaOrder += "\", ";
-    luaOrder += actionEvent->state == true ? "true": "false";
-    luaOrder += ")";
-
-    //lua_dostring(this->L, luaOrder.c_str());
-    this->_LVM.execString(luaOrder);
+    luaOrder += "gameMap:onAction";
+	luaOrder += actionEvent->action;
+	luaOrder += "(\"" ;
+	luaOrder += actionEvent->targetId;
+	luaOrder += "\", ";
+	luaOrder += (actionEvent->state == true ? "true": "false");
+	luaOrder += ")";
+	this->_LVM.execString(luaOrder.c_str());
 }
 
 void  PNLuaGame::onColision(pnEventType evt, PNObject* source, PNEventData* data)
@@ -433,6 +431,15 @@ void  PNLuaGame::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* d
     }
 }
 
+
+void  PNLuaGame::onMouseMove(pnEventType evt, PNObject* source, PNEventData* data)
+{
+	PNGameMouseMoveEventData* mouseData = (PNGameMouseMoveEventData*) data;
+
+	std::stringstream luaOrder;
+	luaOrder << "gameMap:onMouseMove(" << mouseData->coords.x << " ," << mouseData->coords.y << ")" << std::endl;
+    this->_LVM.execString(luaOrder.str().c_str());
+}
 void  PNLuaGame::registerCallbacks()
 {
     PNEventManager::getInstance()->addCallback(PN_EVENT_ML_START, EventCallback(this, &PNLuaGame::onLoadMapStart));
@@ -448,6 +455,7 @@ void  PNLuaGame::registerCallbacks()
     //PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT_ENDED, EventCallback(this, &PNLuaGame::onInitEnded));
     PNEventManager::getInstance()->addCallback(PN_EVENT_F_IN, EventCallback(this, &PNLuaGame::onFrustrumIn));
     PNEventManager::getInstance()->addCallback(PN_EVENT_F_OUT, EventCallback(this, &PNLuaGame::onFrustrumOut));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_MOUSE_MOVE, EventCallback(this, &PNLuaGame::onMouseMove));
     pnerror(PN_LOGLVL_DEBUG, "callbacks registered");
 }
 

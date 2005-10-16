@@ -35,9 +35,21 @@ public:
   /// sub bit mask indicate in witch moving states is the 3D object
   void						subMovingState(unsigned int mstate);
   /// Get the moving speed of 3D object
-  float					getMovingSpeed();
+  float						getMovingSpeed();
   /// Set the moving speed of 3D object
   void						setMovingSpeed(float mspeed);
+  /// Get the ratating Yaw speed of 3D object
+  float						getRotatingYawSpeed() const;
+  /// Set the ratating Yaw speed of 3D object
+  void						setRotatingYawSpeed(float speed);
+  /// Get the ratating Pitch speed of 3D object
+  float						getRotatingPitchSpeed() const;
+  /// Set the ratating Pitch speed of 3D object
+  void						setRotatingPitchSpeed(float speed);
+  /// Get the ratating Roll speed of 3D object
+  float						getRotatingRollSpeed() const;
+  /// Set the ratating Roll of 3D object
+  void						setRotatingRollSpeed(float speed);
 
   //////////////////////////////////////////////////////////////////////////
 
