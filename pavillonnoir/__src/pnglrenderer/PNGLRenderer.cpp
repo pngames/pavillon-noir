@@ -365,7 +365,7 @@ PNGLRenderer::run()
 
 	  ////////////////////////////////
 
-	  _renderCam.update(deltaTime);
+	  //_renderCam.update(deltaTime);
 
 	  ////////////////////////////////
 	  // Initialise le buffer de rendu

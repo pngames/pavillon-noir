@@ -135,6 +135,18 @@ public:
   pnfloat					getMovingSpeed() const;
   /// Set the moving speed of 3D object
   void						setMovingSpeed(pnfloat mspeed);
+  /// Get the ratating Yaw speed of 3D object
+  pnfloat					getRotatingYawSpeed() const;
+  /// Set the ratating Yaw speed of 3D object
+  void						setRotatingYawSpeed(pnfloat speed);
+  /// Get the ratating Pitch speed of 3D object
+  pnfloat					getRotatingPitchSpeed() const;
+  /// Set the ratating Pitch speed of 3D object
+  void						setRotatingPitchSpeed(pnfloat speed);
+  /// Get the ratating Roll speed of 3D object
+  pnfloat					getRotatingRollSpeed() const;
+  /// Set the ratating Roll of 3D object
+  void						setRotatingRollSpeed(pnfloat speed);
 protected:
   /// Bit mask indicate in witch moving states is the 3D object
   pnuint					_movingState;
@@ -242,6 +254,9 @@ protected:
 
   /// Translation and rotation speed
   pnfloat					_movingSpeed;
+  pnfloat					_rotatingYawSpeed;
+  pnfloat					_rotatingPitchSpeed;
+  pnfloat					_rotatingRollSpeed;
 protected:
   /// Parse XML Model node
   pnint						_parseModel(xmlNode* node);

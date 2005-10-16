@@ -63,6 +63,42 @@ function PN3DSkeletonObjectClass(id)
 		end 
 	end
 	
+	function obj:onActionRotateRight(state)
+		pnprint("LUA obj:onActionRotateRight(()\n")
+		if (state == true) then
+			self:addMovingState(PN3DObject.STATE_R_RIGHT)
+		else
+			self:subMovingState(PN3DObject.STATE_R_RIGHT)
+		end 
+	end
+	
+	function obj:onActionRotateLeft(state)
+		pnprint("LUA obj:onActionRotateLeft()\n")
+		if (state == true) then
+			self:addMovingState(PN3DObject.STATE_R_LEFT)
+		else
+			self:subMovingState(PN3DObject.STATE_R_LEFT)
+		end 
+	end
+	
+	function obj:onActionRotateUp(state)
+		pnprint("LUA obj:onActionRotateUp()\n")
+		if (state == true) then
+			self:addMovingState(PN3DObject.STATE_R_TOP)
+		else
+			self:subMovingState(PN3DObject.STATE_R_TOP)
+		end 
+	end
+	
+	function obj:onActionRotateDown(state)
+		pnprint("LUA obj:onActionRotateDown()\n")
+		if (state == true) then
+			self:addMovingState(PN3DObject.STATE_R_BACK)
+		else
+			self:subMovingState(PN3DObject.STATE_R_BACK)
+		end 
+	end
+	
 	function obj:onInit()
 	end
 	
@@ -71,4 +107,5 @@ function PN3DSkeletonObjectClass(id)
 	-------------------------------------------------------
 	pnprint("exit PN3DSkeletonObjectClass\n")
     return obj
+    
 end

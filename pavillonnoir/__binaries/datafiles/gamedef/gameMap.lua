@@ -56,6 +56,7 @@ function gameMap:onUpdate(deltaTime)
 	for id, entity in pairs(self.entities.all) do 
 		entity:onUpdate(deltaTime)
 	end
+	renderCam:onUpdate(deltaTime)
 --	pnprint("<= LUA GameMap: onUpdate()")
 --	pnprint("[UPDATE] end lua update\n")
 end
@@ -112,6 +113,13 @@ end
 function gameMap:onActionMoveRight(id, state)
     pnprint("LUA GameMap:onActionMoveRight()\n")
     self.entities.all[id]:onActionMoveRight(state)
-end		
+end
+
+function gameMap:onMouseMove(xdelta, ydelta)
+   -- pnprint("gameMap:onMouseMove()\n")  
+    renderCam:onMouseLook(xdelta, ydelta) 
+end
+
+	
 --camera = PN3DCamera:getRenderCam()
 --camera:setMovingSpeed(1.0)
