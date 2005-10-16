@@ -27,7 +27,7 @@ function PNCharacterClass(id)
 	PNCharacter.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2}
 	PNCharacter.state = PNCharacter.stateEnum.PN_IA_PASSIVE
 	PNCharacter.pastStates = {}
-	local PNCharacter.ennemies = {}
+	PNCharacter.ennemies = {}
 	
 	function PNCharacter:onInit()
 	end
@@ -147,7 +147,7 @@ function PNCharacterClass(id)
 
 	function PNCharacter:onFrustrumIn(target)
 		if (target:getId() ~= self.id) then
-			self.ennemies[target:getId()] = 1;
+			self.ennemies[target:getId()] = 1
 			if ((target:getCharacType() ~= self.realCharacType()) and (target:getCharacType() ~= PNCharacter.characTypeEnum.PN_CHARAC_CIVILIAN)) then
 				self:setTarget(target)
 				self:setState(PN_IA_FIGHTING)
@@ -157,15 +157,17 @@ function PNCharacterClass(id)
 
 	function PNCharacter:onFrustrumOut(target)
 		if (target:getId() ~= self.id) then
-			if (self.ennemies[target:getId()] != NULL)
-				self.ennemies[target:getId()] = NULL;
+			if (self.ennemies[target:getId()] ~= NULL) then
+				self.ennemies[target:getId()] = NULL
+			end
 		end
 	end
 
-  	function PNCharacter:onInit
+  	function PNCharacter:onInit()
 		if (target:getId() ~= self.id) then
-			if (self.ennemies[target:getId()] != NULL)
-				self.ennemies[target:getId()] = NULL;
+			if (self.ennemies[target:getId()] ~= NULL) then
+				self.ennemies[target:getId()] = NULL
+			end
 		end
 	end
 	

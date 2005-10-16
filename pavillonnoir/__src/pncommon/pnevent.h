@@ -81,6 +81,8 @@ typedef enum
   PN_EVENT_SDL_GRAB_ON,			/// When SDL mouse is not visible
   PN_EVENT_SDL_ESC,
 
+  PN_EVENT_MOUSE_MOVE,
+
   PN_EVENT_INFO_PANEL,
 
   //////////////////////////////////////////////////////////////////////////

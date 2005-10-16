@@ -143,6 +143,7 @@ namespace PN
 	void onColision(pnEventType evt, PNObject* source, PNEventData* data);
 	void onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* data);
 	void onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* data);
+	void onMouseMove(pnEventType evt, PNObject* source, PNEventData* data);
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
