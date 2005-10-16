@@ -76,7 +76,6 @@ public:
   virtual PNPhysicalObject*	createPhysicalObjectBox(PN3DObject* object, bool isStatic)=0;
   virtual void				destroyPhysicalObject(PNPhysicalObject* physicalObject)=0;
   virtual void		  		setAllPhysicalObjectsStatic(bool state)=0;
-  virtual void				destroyAllPhysicalObjects()=0;
 };
 
 //////////////////////////////////////////////////////////////////////////
