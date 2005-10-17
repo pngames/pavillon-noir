@@ -65,6 +65,7 @@ namespace PN
 		CEGUI::PushButton* btnNO = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_no_" + convert.str()).c_str()));
 		btnNO->setSize(CEGUI::Size(0.45f, 0.18f));
 		btnNO->setPosition(CEGUI::Point(0.525f, 0.79f));
+
 		btnNO->setText("Non");
 		_frameWin->addChildWindow(btnNO);
 		btnNO->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIMsgBox::onClickNo, this));
@@ -90,7 +91,7 @@ namespace PN
 	case OK:
 	  {
 		CEGUI::PushButton* btnOK = static_cast<CEGUI::PushButton*>(CEGUI::WindowManager::getSingleton().createWindow("Vanilla/Button", ("_msg_box_btn_ok_" + convert.str()).c_str()));
-		btnOK->setSize(CEGUI::Size(0.5f, 0.18f));
+		btnOK->setSize(CEGUI::Size(0.45f, 0.18f));
 		btnOK->setPosition(CEGUI::Point(0.25f, 0.79f));
 		btnOK->setText("Ok");
 		_frameWin->addChildWindow(btnOK);
@@ -176,7 +177,8 @@ std::cout << "IN eventMouseWheelConfHandler" << std::endl;
 
   void PNGUIMsgBox::genericCreationWindow(const std::string& title, const std::string& text, unsigned int msgtype, CEGUI::Window* parentWin, std::string convert)
   {
-	CEGUI::Font* defaultFont = CEGUI::System::getSingleton().getDefaultFont();
+	_defaultFont = CEGUI::System::getSingleton().getDefaultFont();
+	
 	std::string tmp;
 
 
@@ -192,12 +194,12 @@ std::cout << "IN eventMouseWheelConfHandler" << std::endl;
 	for (unsigned int cnt = 0; cnt < lines.size(); cnt++)
 	{
 	  tmp = lines[cnt];
-	  float lineExtend = defaultFont->getTextExtent(tmp.c_str());
+	  float lineExtend = _defaultFont->getTextExtent(tmp.c_str());
 	  if (_textWidth < lineExtend)
 		_textWidth = lineExtend;
 	}   
 
-	_textHeight = defaultFont->getLineSpacing() * float(lines.size());
+	_textHeight = _defaultFont->getLineSpacing() * float(lines.size());
 
 	float width, height;
 
@@ -208,8 +210,10 @@ std::cout << "IN eventMouseWheelConfHandler" << std::endl;
 
 	_boxWidth = 0;
 	_boxHeight = 0;
-	float minButtonWidth = 0.1f;
+
+	float minButtonWidth  = 0.1f;
 	float minButtonHeight = 0.05f;
+	
 
 	switch (msgtype)
 	{
@@ -246,17 +250,19 @@ std::cout << "IN eventMouseWheelConfHandler" << std::endl;
 	_frameWin->setPosition(CEGUI::Point(0.5f - _boxWidth * 0.5f, 0.5f - _boxHeight * 0.5f));
 	_frameWin->setSize(CEGUI::Size(_boxWidth, _boxHeight));
 	_frameWin->setSizingEnabled(false);
+	
 
 	tmp = "_msg_box_text_";
 	tmp += convert.c_str();
 	_msgTxt = static_cast<CEGUI::StaticText*>(CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"Vanilla/StaticText", tmp.c_str()));
 	_msgTxt->setText(text.c_str());
 	_msgTxt->setPosition(CEGUI::Point(0.05f, 0.05f));
-	_msgTxt->setSize(CEGUI::Size(0.9f, 0.9f));
+	_msgTxt->setSize(CEGUI::Size(0.95f, 0.7f));
 	_msgTxt->setBackgroundEnabled(false);
 	_msgTxt->setFormatting(CEGUI::StaticText::HorzCentred, CEGUI::StaticText::VertCentred);
 	_msgTxt->setFrameEnabled(false);
 	_msgTxt->setVerticalScrollbarEnabled(false);
+	
 
 	_frameWin->addChildWindow(_msgTxt);
   }
