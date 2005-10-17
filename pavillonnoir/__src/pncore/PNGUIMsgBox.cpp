@@ -246,6 +246,7 @@ std::cout << "IN eventMouseWheelConfHandler" << std::endl;
 	  _frameWin->setText(title.c_str());
 	
 	_frameWin->setAlwaysOnTop(true);
+	_frameWin->activate();
 	_frameWin->setCloseButtonEnabled(false);
 	_frameWin->setPosition(CEGUI::Point(0.5f - _boxWidth * 0.5f, 0.5f - _boxHeight * 0.5f));
 	_frameWin->setSize(CEGUI::Size(_boxWidth, _boxHeight));

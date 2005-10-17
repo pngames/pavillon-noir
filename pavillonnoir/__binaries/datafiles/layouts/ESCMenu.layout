@@ -1,15 +1,10 @@
 <?xml version="1.0" ?>
 <GUILayout>
 	<Window Type="DefaultWindow" Name="PNESCMenu">
-		<Property Name="Alpha" Value="0.200000" />
-		<Window Type="Vanilla/StaticText" Name="PNESCMenu/back">
-			<Property Name="AbsoluteRect" Value="l:0.000000 t:0.000000 r:1020.000000 b:782.000000" />
-			<Property Name="RelativeRect" Value="l:0.000000 t:0.000000 r:1.000000 b:1.000000" />
-			<Property Name="UnifiedAreaRect" Value="{{0.000000,0.000000},{0.000000,0.000000},{1.000000,0.000000},{1.000000,0.000000}}" />
-			</Window>
 		<Window Type="Vanilla/FrameWindow" Name="PNESCMenu/FrameWindow">
 			<Property Name="AbsoluteRect" Value="l:255.000000 t:196.000000 r:765.000000 b:509.000000" />
-			<Property Name="AlwaysOnTop" Value="True" />
+			<!--<Property Name="AlwaysOnTop" Value="True" />
+			<Property Name="Disabled" Value="true"/>	-->
 			<Property Name="CloseButtonEnabled" Value="False" />
 			<Property Name="DragMovingEnabled" Value="False" />
 			<Property Name="InheritsAlpha" Value="False" />
