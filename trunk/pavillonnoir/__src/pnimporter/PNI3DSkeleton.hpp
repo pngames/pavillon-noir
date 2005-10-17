@@ -31,6 +31,8 @@
 # define _PNI3DSKELETON_HPP_
 
 #include <vector>
+#include <map>
+#include <string>
 
 #include "PN3DSkeleton.hpp"
 
@@ -46,8 +48,10 @@ class PNRendererObject;
 class								PNI3DSkeleton : public PN3DSkeleton
 {
 private:
-  typedef std::vector<PNIBone>		BoneList;
+  typedef std::vector<PNIBone>				BoneList;
+  typedef std::map<std::string, PNIBone*>	BoneMap;
   BoneList							_bones;
+  BoneMap							_bonesMap;
 
   pnsHeader_t						_header;
   
@@ -65,6 +69,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
   const PNMatrixTR4f&				getMatrix(pnuint id) const;
+  const pnfloat*					getBoneCoords(const std::string& name) const;
 
   //////////////////////////////////////////////////////////////////////////
   

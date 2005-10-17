@@ -63,6 +63,12 @@ PNIBone::getId()
   return _id;
 }
 
+const std::string&
+PNIBone::getName()
+{
+  return _name;
+}
+
 PNIBone*
 PNIBone::getParent()
 {

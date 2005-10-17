@@ -60,6 +60,9 @@ public:
   
   /// Get transformation to apply to vertices
   virtual const PNMatrixTR4f&	getMatrix(pnuint id) const=0;
+
+  /// Get coordinates of \c name bone
+  virtual const pnfloat*		getBoneCoords(const std::string& name) const=0;
 };
 
 //////////////////////////////////////////////////////////////////////////
