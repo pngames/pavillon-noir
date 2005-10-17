@@ -148,28 +148,30 @@ namespace PN
 	if (_guiMenuRoot == NULL)
 	  _guiMenuRoot = new PNGUIMenuRoot();
 
-	_guiMenuRoot->startGUI();
-
-	_currentState = MENUROOT;
+	if (_currentState == NONE) 
+	{
+	  _guiMenuRoot->startGUI();
+	  _currentState = MENUROOT;
+	}
   }
 
   void	PNGUIMenuRootManager::launchMenuLoad(pnEventType type, PNObject* source, PNEventData* data)
   {
 	if (_currentState == NONE)
 	  return;
+	if (_guiMenuLoad == NULL)
+	  _guiMenuLoad = PNGUIMenuLoad::getInstance();
+
 	if (_currentState == LOAD) 
 	{
 	  hidePrevious();
-	  _currentState = NONE;
-	  PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_ROOT, NULL, NULL);
+	  _currentState = MENUROOT;
+	  _guiMenuRoot->startGUI();
 	}
-	else
+	else if (_currentState == MENUROOT)
 	{
-	  if (_guiMenuLoad == NULL)
-		_guiMenuLoad = PNGUIMenuLoad::getInstance();
-
+	
 	  hidePrevious();
-
 	  _guiMenuLoad->startGUI();
 	  _currentState = LOAD;
 	}

@@ -62,6 +62,7 @@ namespace PN{
 	PNGUIEscMenu*				_guiMenuEsc;
 	PNGUIMenuLoad*				_guiMenuLoad;
 	static PNGUIGameManager*	_instance;
+	PNEventData*				_tmpLoadData;
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
@@ -75,9 +76,11 @@ namespace PN{
 	void						launchMenuLoad(pnEventType type, PNObject* source, PNEventData* data);
 	void						launchQuit(pnEventType type, PNObject* source, PNEventData* data);
 	void						escMenu(pnEventType type, PNObject* source, PNEventData* data);
+	void						launchMenuRoot(pnEventType type, PNObject* source, PNEventData* data);
 	void						hidePrevious();
 	void						callbackQuit(const unsigned int& enu);
 	void						callbackMenu(const unsigned int& enu);
+	void						escManager(pnEventType type, PNObject* source, PNEventData* data);
 	void						onMPStarted(pnEventType type, PNObject* source, PNEventData* data);
 	void						onMPEnded(pnEventType type, PNObject* source, PNEventData* data);
 	void						onMLStarted(pnEventType type, PNObject* source, PNEventData* data);
