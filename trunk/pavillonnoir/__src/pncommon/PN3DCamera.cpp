@@ -94,8 +94,6 @@ PN3DCamera::_onMPEnded(pnEventType type, PNObject* source, PNEventData* ed)
 pnbool
 PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 {
-  //return true;
-
   PNLOCK(obj);
 
   //////////////////////////////////////////////////////////////////////////
@@ -105,7 +103,6 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 
   //////////////////////////////////////////////////////////////////////////
 
-  pnfloat angle = (pnfloat)DEGREE_TO_RADIAN(30);
   _viewMaxCosFov = cosf(max(_viewYRadFov, _viewXRadFov)/2);
 
   PNVector3f	frontDirection = _orient * _frontDirection.getVector();
@@ -144,86 +141,141 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   PNVector3f	targetVector8(maxCoords);
   targetVector8 += targetVector;
 
-  //cout << "#####################################" << endl;
-
-  /*cout << "targetVector=" << targetVector << " sp=" << sp1 << endl;
-  cout << "targetVector1=" << targetVector1 << " sp=" << sp1 << endl;
-  cout << "targetVector1=" << targetVector2 << " sp=" << sp1 << endl;
-  cout << "targetVector1=" << targetVector3 << " sp=" << sp1 << endl;
-  cout << "targetVector1=" << targetVector4 << " sp=" << sp1 << endl;
-  cout << "targetVector1=" << targetVector5 << " sp=" << sp1 << endl;
-  cout << "targetVector1=" << targetVector6 << " sp=" << sp1 << endl;
-  cout << "targetVector1=" << targetVector7 << " sp=" << sp1 << endl;
-  cout << "targetVector1=" << targetVector8 << " sp=" << sp1 << endl;*/
-
-//  cout << "_viewY=" << RADIAN_TO_DEGREE(_viewYRadFov) << " || " << "_viewX=" << RADIAN_TO_DEGREE(_viewXRadFov) << endl;
-
-//  cout << "frontDirection=" << frontDirection << endl;
-//  cout << "targetVector=" << targetVector << endl;
-
   //////////////////////////////////////////////////////////////////////////
-  // NEER-FAR
 
-  
+  pnfloat norm1 = targetVector1.getNorm();
+  pnfloat norm2 = targetVector2.getNorm();
+  pnfloat norm3 = targetVector3.getNorm();
+  pnfloat norm4 = targetVector4.getNorm();
+  pnfloat norm5 = targetVector5.getNorm();
+  pnfloat norm6 = targetVector6.getNorm();
+  pnfloat norm7 = targetVector7.getNorm();
+  pnfloat norm8 = targetVector8.getNorm();
+
+  pnbool	inNearFar = true;
+  pnbool	inFov = true;
 
   //////////////////////////////////////////////////////////////////////////
   // FOV
 
-  targetVector1.setNorm(1.0f);
+  targetVector1 /= norm1;
   pndouble	sp1 = frontDirection.scalarProduct(targetVector1);
-  targetVector2.setNorm(1.0f);
+  targetVector2 /= norm2;
   pndouble	sp2 = frontDirection.scalarProduct(targetVector2);
-  targetVector3.setNorm(1.0f);
+  targetVector3 /= norm3;
   pndouble	sp3 = frontDirection.scalarProduct(targetVector3);
-  targetVector4.setNorm(1.0f);
+  targetVector4 /= norm4;
   pndouble	sp4 = frontDirection.scalarProduct(targetVector4);
-  targetVector5.setNorm(1.0f);
+  targetVector5 /= norm5;
   pndouble	sp5 = frontDirection.scalarProduct(targetVector5);
-  targetVector6.setNorm(1.0f);
+  targetVector6 /= norm6;
   pndouble	sp6 = frontDirection.scalarProduct(targetVector6);
-  targetVector7.setNorm(1.0f);
+  targetVector7 /= norm7;
   pndouble	sp7 = frontDirection.scalarProduct(targetVector7);
-  targetVector8.setNorm(1.0f);
+  targetVector8 /= norm8;
   pndouble	sp8 = frontDirection.scalarProduct(targetVector8);
 
-  targetVector.setNorm(1.0f);
+  inFov = 
+	sp1 > _viewMaxCosFov ||
+	sp2 > _viewMaxCosFov ||
+	sp3 > _viewMaxCosFov ||
+	sp4 > _viewMaxCosFov ||
+	sp5 > _viewMaxCosFov ||
+	sp6 > _viewMaxCosFov ||
+	sp7 > _viewMaxCosFov ||
+	sp8 > _viewMaxCosFov;
 
-  pndouble	spf = frontDirection.scalarProduct(targetVector);
-  pndouble	spr = rightDirection.scalarProduct(targetVector);
-  pndouble	spt = topDirection.scalarProduct(targetVector);
+  //////////////////////////////////////////////////////////////////////////
+  // NEER-FAR
 
-  //cout << "spf=" << spf << " spr=" << spr << " spt=" << spt << endl;
+  inNearFar = 
+	(sp1 > 0.0 && norm1 >= _viewNear && norm1 <= _viewFar) ||
+	(sp2 > 0.0 && norm2 >= _viewNear && norm2 <= _viewFar) ||
+	(sp3 > 0.0 && norm3 >= _viewNear && norm3 <= _viewFar) ||
+	(sp4 > 0.0 && norm4 >= _viewNear && norm4 <= _viewFar) ||
+	(sp5 > 0.0 && norm5 >= _viewNear && norm5 <= _viewFar) ||
+	(sp6 > 0.0 && norm6 >= _viewNear && norm6 <= _viewFar) ||
+	(sp7 > 0.0 && norm7 >= _viewNear && norm7 <= _viewFar) ||
+	(sp8 > 0.0 && norm8 >= _viewNear && norm8 <= _viewFar);
 
-  if (sp1 > _viewMaxCosFov)
-	return true;
-  if (sp2 > _viewMaxCosFov)
-	return true;
-  if (sp3 > _viewMaxCosFov)
-	return true;
-  if (sp4 > _viewMaxCosFov)
-	return true;
-  if (sp5 > _viewMaxCosFov)
-	return true;
-  if (sp6 > _viewMaxCosFov)
-	return true;
-  if (sp7 > _viewMaxCosFov)
-	return true;
-  if (sp8 > _viewMaxCosFov)
-	return true;
-  if (spf > _viewMaxCosFov)
+  //////////////////////////////////////////////////////////////////////////
+
+  if (inNearFar && inFov)
 	return true;
 
   //////////////////////////////////////////////////////////////////////////
   // BIGGER THAN NEER-FAR
 
-  PNVector3f  sizeVector(minCoords, maxCoords);
-  if (sizeVector.getNorm() >= _viewFar - _viewNear)
-	return true;
+  if (inNearFar == false)
+  {
+	pnbool bigger = sp1 > 0.0 && norm1 > _viewFar;
+
+	bigger = 
+	  (sp2 > 0.0 && norm2 > _viewFar != bigger) ||
+	  (sp3 > 0.0 && norm3 > _viewFar != bigger) ||
+	  (sp4 > 0.0 && norm4 > _viewFar != bigger) ||
+	  (sp5 > 0.0 && norm5 > _viewFar != bigger) ||
+	  (sp6 > 0.0 && norm6 > _viewFar != bigger) ||
+	  (sp7 > 0.0 && norm7 > _viewFar != bigger) ||
+	  (sp8 > 0.0 && norm8 > _viewFar != bigger);
+
+	if (bigger)
+	{
+	  if (inFov)
+		return true;
+	  else
+		inNearFar = true;
+	}
+	else
+	  return false;
+  }
 
   //////////////////////////////////////////////////////////////////////////
   // BIGGER THAN FOV
 
-  return false;
+  pndouble	spr1 = rightDirection.scalarProduct(targetVector1);
+  pndouble	spr2 = rightDirection.scalarProduct(targetVector2);
+  pndouble	spr3 = rightDirection.scalarProduct(targetVector3);
+  pndouble	spr4 = rightDirection.scalarProduct(targetVector4);
+  pndouble	spr5 = rightDirection.scalarProduct(targetVector5);
+  pndouble	spr6 = rightDirection.scalarProduct(targetVector6);
+  pndouble	spr7 = rightDirection.scalarProduct(targetVector7);
+  pndouble	spr8 = rightDirection.scalarProduct(targetVector8);
+
+  pnbool	rightFov = spr1 >= 0.0;
+
+  rightFov = 
+	(spr2 >= 0.0 != rightFov) ||
+	(spr3 >= 0.0 != rightFov) ||
+	(spr4 >= 0.0 != rightFov) ||
+	(spr5 >= 0.0 != rightFov) ||
+	(spr6 >= 0.0 != rightFov) ||
+	(spr7 >= 0.0 != rightFov) ||
+	(spr8 >= 0.0 != rightFov);
+
+  pndouble	spt1 = topDirection.scalarProduct(targetVector1);
+  pndouble	spt2 = topDirection.scalarProduct(targetVector2);
+  pndouble	spt3 = topDirection.scalarProduct(targetVector3);
+  pndouble	spt4 = topDirection.scalarProduct(targetVector4);
+  pndouble	spt5 = topDirection.scalarProduct(targetVector5);
+  pndouble	spt6 = topDirection.scalarProduct(targetVector6);
+  pndouble	spt7 = topDirection.scalarProduct(targetVector7);
+  pndouble	spt8 = topDirection.scalarProduct(targetVector8);
+
+  pnbool	topFov = spt1 >= 0.0;
+
+  topFov = 
+	(spt2 >= 0.0 != topFov) ||
+	(spt3 >= 0.0 != topFov) ||
+	(spt4 >= 0.0 != topFov) ||
+	(spt5 >= 0.0 != topFov) ||
+	(spt6 >= 0.0 != topFov) ||
+	(spt7 >= 0.0 != topFov) ||
+	(spt8 >= 0.0 != topFov);
+
+  inFov = rightFov && topFov;
+
+  return (inFov && inNearFar);
 }
 
 void
