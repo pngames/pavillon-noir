@@ -6,12 +6,12 @@ function PlayerClass(id)
 	---------------setting camera behavior-----------------
 	Player.camera = renderCam
 	Player.camera:setTarget(Player)
-    Player.camera:setTargetPosition(0, 600 , 600)
+    Player.camera:setTargetPosition(0, 600 , 1000)
     Player.camera:setMovingMode(PN3DObject.MMODE_POSITION_ABS_LOCKED)
 	-----------------------------------------------------------
 	--------------- Rotation parameter ------------------------
-	Player.yawSpeed = 0.0
-	Player.pitchSpeed = 0.0
+	Player.yawSpeed = 1.0
+	Player.pitchSpeed = 1.0
 	Player.defaulRotateSpeed = 1.0
 	----------------------------------------------------------
 	--------------- Translations parameter -------------------	
@@ -82,19 +82,11 @@ function PlayerClass(id)
 	function Player:onMouseLook(xdelta, ydelta)
 		pnprint(self.id)
 		pnprint(":onActionMouseLook\n")
-		self.yawSpeed = self.yawSpeed * xdelta
-		self.pitchSpeed = self.pitchSpeed * ydelta
-		self.__index:onActionRotateUp(true);
-		self.__index:onActionRotateRight(true);
 	end
 	
 	
 ----------------------------------------------------------		
 	function Player:onUpdate(deltaTime)
-		self:setRotatingYawSpeed(self.yawSpeed)
-	    self:setRotatingPitchSpeed(self.pitchSpeed)
-		self.yawSpeed = 0.0
-		self.pitchSpeed = 0.0
 		self.__index:onUpdate(deltaTime)
 	end
 ----------------------------------------------------------
