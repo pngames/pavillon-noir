@@ -60,6 +60,18 @@ PNI3DSkeleton::getMatrix(pnuint id) const
   return _bones[id].getFinal();
 }
 
+
+const pnfloat*
+PNI3DSkeleton::getBoneCoords(const std::string& name) const
+{
+  BoneMap::const_iterator it = _bonesMap.find(name);
+
+  if (it == _bonesMap.end())
+	return NULL;
+
+  return it->second->getCourse().getMatrix() + 12;
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 void
@@ -114,7 +126,9 @@ PNI3DSkeleton::unserializeFromStream(std::istream& istm)
   int i = 0;
   for (BoneList::iterator it = _bones.begin(); it != _bones.end(); ++it, ++i)
   {
-	memcpy (_vertBuffer[it->getId()], it->getCourse().getMatrix() + 12, sizeof(pnpoint3f));
+	_bonesMap[it->getName()] = &(*it);
+
+	memcpy(_vertBuffer[it->getId()], it->getCourse().getMatrix() + 12, sizeof(pnpoint3f));
 
 	_idBuffer[i][0] = it->getId();
 	if (it->getParent() != NULL)
