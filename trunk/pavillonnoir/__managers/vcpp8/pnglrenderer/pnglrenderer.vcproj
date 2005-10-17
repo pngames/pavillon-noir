@@ -214,6 +214,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pnglrenderer\PNGLSceneGraph.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pnglrenderer\PNGLTexture.cpp"
 				>
 			</File>
@@ -265,6 +269,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pnglrenderer\PNGLRenderUpdateEventData.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pnglrenderer\PNGLSceneGraph.hpp"
 				>
 			</File>
 			<File

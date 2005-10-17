@@ -70,10 +70,6 @@ public:
   virtual void				run()=0;
   virtual void				endRendering()=0;
 
-  virtual void				rotate(pnfloat x, pnfloat y, pnfloat z, pnfloat angle)=0;
-  virtual void				translate(pnfloat x, pnfloat y, pnfloat z)=0;
-  virtual void				scale(pnfloat x,pnfloat y, pnfloat z)=0;
-
   //////////////////////////////////////////////////////////////////////////
   
   virtual pnuint			getTicks()=0;

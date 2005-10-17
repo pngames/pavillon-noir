@@ -41,6 +41,7 @@ namespace PN
 class			PNGLRendererCamera : public PN3DCamera
 {
   friend class PNGLRenderer;
+  friend class PNGLSceneGraph;
 
   EventCallback	_cfCallback;
   EventCallback	_ufCallback;
@@ -52,6 +53,8 @@ public:
   bool			pointInFrustrum(pnfloat x, pnfloat y, pnfloat z);
 
   void			resizeGLWindow(pnfloat width, pnfloat height);
+  pnfloat		getWidth();
+  pnfloat		getHeight();
 
   void			setUpdateGLFov(pnbool updatePersp);
 
