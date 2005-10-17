@@ -67,6 +67,7 @@ public:
   PNIBone(pnsBone_t& bone, PNIBone* parent);
 
   pnuint				getId();
+  const std::string&	getName();
   PNIBone*				getParent();
 
   const PNMatrixTR4f&	getCourse() const;
