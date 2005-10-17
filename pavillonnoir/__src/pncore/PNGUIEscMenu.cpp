@@ -66,8 +66,6 @@ namespace PN {
 	CEGUI::WindowManager& wmgr = CEGUI::WindowManager::getSingleton();
 	wmgr.getWindow((CEGUI::utf8*)"PNESCMenu/resume")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIEscMenu::handleResume, this));
 	wmgr.getWindow((CEGUI::utf8*)"PNESCMenu/loadGame")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIEscMenu::handleLoadGame, this));
-	wmgr.getWindow((CEGUI::utf8*)"PNESCMenu/saveGame")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIEscMenu::handleSaveGame, this));
-	wmgr.getWindow((CEGUI::utf8*)"PNESCMenu/options")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIEscMenu::handleOptions, this));
 	wmgr.getWindow((CEGUI::utf8*)"PNESCMenu/mainMenu")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIEscMenu::handleMainMenu, this));
 	wmgr.getWindow((CEGUI::utf8*)"PNESCMenu/newGame")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIEscMenu::handleNewGame, this));
 	wmgr.getWindow((CEGUI::utf8*)"PNESCMenu/quitGame")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIEscMenu::handleQuit, this));
@@ -94,8 +92,7 @@ namespace PN {
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-	//hide();
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_LOAD, NULL, NULL);
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_PAUSE, NULL, NULL);
 	return true;
   }
 
@@ -103,6 +100,7 @@ namespace PN {
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_LOAD, NULL, NULL);
 	//hide();
 	return true;
   }
