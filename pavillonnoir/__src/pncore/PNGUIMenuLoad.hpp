@@ -46,6 +46,7 @@ namespace PN{
   public:
   protected:
   private:
+	static PNGUIMenuLoad* _instance;
 	CEGUI::Window* _mainSheet;
 	CEGUI::Listbox* _cbBox;
 	CEGUI::ProgressBar* _progBar;
@@ -53,6 +54,7 @@ namespace PN{
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
+	static PNGUIMenuLoad*	getInstance();
 	void show();
 	void hide();
 	CEGUI::Window* getWindow();

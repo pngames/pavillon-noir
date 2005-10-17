@@ -9,37 +9,36 @@
 			<Property Name="FrameEnabled" Value="false"/>
 			<Property Name="Disabled" Value="true"/>				
 		</Window>
+
 		<Window Type="Vanilla/Button" Name="MenuRoot/New">
-			<!--<Property Name="AbsoluteRect" Value="l:597.000000 t:304.000000 r:716.000000 b:328.000000" />-->
-			<Property Name="RelativeRect" Value="l:0.750000 t:0.510000 r:0.900000 b:0.550000" />
-			<Property Name="Text" Value="New Game" />
-			<Property Name="UnifiedAreaRect" Value="{{0.750000,0.000000},{0.510000,0.000000},{0.900000,0.000000},{0.550000,0.000000}}" />
-			<Property Name="Tooltip" Value="Nouvelle Partie"/>			
+			<Property Name="AbsoluteRect" Value="l:561.000000 t:391.000000 r:867.000000 b:430.000000" />
+			<Property Name="RelativeRect" Value="l:0.550000 t:0.500000 r:0.850000 b:0.550000" />
+			<Property Name="Text" Value="Nouvelle partie" />
+			<Property Name="UnifiedAreaRect" Value="{{0.550000,0.000000},{0.500000,0.000000},{0.850000,0.000000},{0.550000,0.000000}}" />
 			</Window>
 		<Window Type="Vanilla/Button" Name="MenuRoot/Load">
-			<!--<Property Name="AbsoluteRect" Value="l:597.000000 t:358.000000 r:716.000000 b:382.000000" />-->
-			<Property Name="RelativeRect" Value="l:0.750000 t:0.600000 r:0.900000 b:0.640000" />
-			<Property Name="Text" Value="Load Game" />
-			<Property Name="UnifiedAreaRect" Value="{{0.750000,0.000000},{0.600000,0.000000},{0.900000,0.000000},{0.640000,0.000000}}" />
+			<Property Name="AbsoluteRect" Value="l:561.000000 t:469.000000 r:867.000000 b:508.000000" />
+			<Property Name="RelativeRect" Value="l:0.550000 t:0.600000 r:0.850000 b:0.650000" />
+			<Property Name="Text" Value="Charger une partie" />
+			<Property Name="UnifiedAreaRect" Value="{{0.550000,0.000000},{0.600000,0.000000},{0.850000,0.000000},{0.650000,0.000000}}" />
 			</Window>
 		<Window Type="Vanilla/Button" Name="MenuRoot/Credits">
-			<!--<Property Name="AbsoluteRect" Value="l:597.000000 t:417.000000 r:716.000000 b:441.000000" />-->
-			<Property Name="RelativeRect" Value="l:0.750000 t:0.700000 r:0.900000 b:0.740000" />
+			<Property Name="AbsoluteRect" Value="l:561.000000 t:547.000000 r:867.000000 b:586.000000" />
+			<Property Name="RelativeRect" Value="l:0.550000 t:0.700000 r:0.850000 b:0.750000" />
 			<Property Name="Text" Value="Scene 1" />
-			<Property Name="UnifiedAreaRect" Value="{{0.750000,0.000000},{0.700000,0.000000},{0.900000,0.000000},{0.740000,0.000000}}" />
+			<Property Name="UnifiedAreaRect" Value="{{0.550000,0.000000},{0.700000,0.000000},{0.850000,0.000000},{0.750000,0.000000}}" />
 			</Window>
 		<Window Type="Vanilla/Button" Name="MenuRoot/Options">
-			<!--<Property Name="AbsoluteRect" Value="l:597.000000 t:477.000000 r:716.000000 b:501.000000" />-->
-			<Property Name="RelativeRect" Value="l:0.750000 t:0.800000 r:0.900000 b:0.840000" />
+			<Property Name="AbsoluteRect" Value="l:562.000000 t:626.000000 r:868.000000 b:665.000000" />
+			<Property Name="RelativeRect" Value="l:0.550980 t:0.800000 r:0.850980 b:0.850000" />
 			<Property Name="Text" Value="Options" />
-			<Property Name="UnifiedAreaRect" Value="{{0.750000,0.000000},{0.800000,0.000000},{0.900000,0.000000},{0.840000,0.000000}}" />
+			<Property Name="UnifiedAreaRect" Value="{{0.550980,0.000000},{0.800000,0.000000},{0.850980,0.000000},{0.850000,0.000000}}" />
 			</Window>
 		<Window Type="Vanilla/Button" Name="MenuRoot/Exit">
-			<!--<Property Name="AbsoluteRect" Value="l:597.000000 t:536.000000 r:716.000000 b:560.000000" />-->
-			<Property Name="RelativeRect" Value="l:0.750000 t:0.900000 r:0.900000 b:0.940000" />
-			<Property Name="Text" Value="Exit" />
-			<Property Name="UnifiedAreaRect" Value="{{0.750000,0.000000},{0.900000,0.000000},{0.900000,0.000000},{0.940000,0.000000}}" />
-			<Property Name="Tooltip" Value="Quitter"/>			
+			<Property Name="AbsoluteRect" Value="l:561.000000 t:704.000000 r:867.000000 b:743.000000" />
+			<Property Name="RelativeRect" Value="l:0.550000 t:0.900000 r:0.850000 b:0.950000" />
+			<Property Name="Text" Value="Quitter" />
+			<Property Name="UnifiedAreaRect" Value="{{0.550000,0.000000},{0.900000,0.000000},{0.850000,0.000000},{0.950000,0.000000}}" />
 			</Window>
 		</Window>
 </GUILayout>

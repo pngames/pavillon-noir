@@ -35,6 +35,7 @@
 
 #include "PNGUIGame.hpp"
 #include "PNGUIEscMenu.hpp"
+#include "PNGUIMenuLoad.hpp"
 
 namespace PN{
 
@@ -44,6 +45,7 @@ namespace PN{
 	{
 	  INGAME,
 	  PAUSE,
+	  PAUSE_LOAD,
 	  INVENTORY,
 	  DISCUTION,
 	  NONE
@@ -58,6 +60,7 @@ namespace PN{
   private:
 	PNGUIGame*					_guiGame;
 	PNGUIEscMenu*				_guiMenuEsc;
+	PNGUIMenuLoad*				_guiMenuLoad;
 	static PNGUIGameManager*	_instance;
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
@@ -69,10 +72,12 @@ namespace PN{
 	void						deleteAllInstances();
 	void						resetAllInstances();
 	void						launchInGame(pnEventType type, PNObject* source, PNEventData* data);
+	void						launchMenuLoad(pnEventType type, PNObject* source, PNEventData* data);
+	void						launchQuit(pnEventType type, PNObject* source, PNEventData* data);
 	void						escMenu(pnEventType type, PNObject* source, PNEventData* data);
 	void						hidePrevious();
 	void						callbackQuit(const unsigned int& enu);
-
+	void						callbackMenu(const unsigned int& enu);
 	void						onMPStarted(pnEventType type, PNObject* source, PNEventData* data);
 	void						onMPEnded(pnEventType type, PNObject* source, PNEventData* data);
 	void						onMLStarted(pnEventType type, PNObject* source, PNEventData* data);
