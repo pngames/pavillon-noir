@@ -103,6 +103,7 @@ void
 PNGLRendererCamera::_cleanFrustrum(pnEventType type, PNObject* source, PNEventData* ed)
 {
   _list3DObj.clear();
+  setTarget(NULL);
 }
 
 void
