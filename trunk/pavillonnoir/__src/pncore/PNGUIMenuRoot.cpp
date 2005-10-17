@@ -202,7 +202,7 @@ namespace PN
 
 	PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_PLAY, 0, new PNSoundEventData("quit", 0.5f));
 
-		PNEventManager::getInstance()->sendEvent(PN_EVENT_SDL_ESC, 0, NULL);
+		PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_QUIT, 0, NULL);
 	//PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous reellement\nquitter ?", PNGUIMsgBox::YES_NO, callbackQuit, _mainSheet);
 	//PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "sauter", PNGUIMsgBox::CONF, callbackQuit, _mainSheet);
 

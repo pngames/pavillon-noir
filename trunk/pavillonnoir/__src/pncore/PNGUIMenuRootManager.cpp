@@ -49,6 +49,7 @@ namespace PN
 	PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_NEW_GAME, EventCallback(this, &PNGUIMenuRootManager::launchNewGame));
 	//PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_LOADGAME, EventCallback(this, &PNGUIMenuRootManager::launchLoadGame));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIMenuRootManager::launchQuit));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_GUI_QUIT, EventCallback(this, &PNGUIMenuRootManager::launchQuit));
   }
 
   PNGUIMenuRootManager::~PNGUIMenuRootManager()
@@ -73,11 +74,11 @@ namespace PN
 	  delete (_guiMenuRoot);
 	  _guiMenuRoot = NULL;
 	}
-	if (_guiMenuLoad != NULL)
+	/*if (_guiMenuLoad != NULL)
 	{
 	  delete _guiMenuLoad;
 	  _guiMenuLoad = NULL;
-	}
+	}*/
 /*	if (_guiMenuOptions != NULL)
 	delete _guiMenuOptions;
 	if (_guiMenuCredits != NULL)
@@ -165,7 +166,7 @@ namespace PN
 	else
 	{
 	  if (_guiMenuLoad == NULL)
-		_guiMenuLoad = new PNGUIMenuLoad();
+		_guiMenuLoad = PNGUIMenuLoad::getInstance();
 
 	  hidePrevious();
 

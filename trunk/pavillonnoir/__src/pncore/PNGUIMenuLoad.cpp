@@ -43,7 +43,9 @@ using namespace PN;
 namespace PN
 {
   static float val = 0.0f;
-
+  
+  PNGUIMenuLoad*				PNGUIMenuLoad::_instance = NULL;
+  
   PNGUIMenuLoad::PNGUIMenuLoad()
   {
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/PNMenuLoad.layout"); 
@@ -56,6 +58,14 @@ namespace PN
   PNGUIMenuLoad::~PNGUIMenuLoad()
   {
 	_mainSheet->destroy();
+  }
+
+  PNGUIMenuLoad*	PNGUIMenuLoad::getInstance()
+  {
+	if (_instance == NULL)
+	  _instance = new PNGUIMenuLoad();
+	
+	return _instance;
   }
 
   void PNGUIMenuLoad::startGUI()
