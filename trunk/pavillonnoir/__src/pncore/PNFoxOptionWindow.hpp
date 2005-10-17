@@ -27,22 +27,48 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+
+/************************************************************************
+ _______________________________________________________________________
+| ______  ___ Graphics ________________________________________________ |
+||      |                                                               |
+|| Graph|  Resolution                      FXLISTBOX	                |
+||      |  Fullscreen                      FXCHECKBOX                   |
+||______|                                                               |
+||      |                                                               |
+|| Sound|                                                               |
+||      |                                                               |
+||______|                                                               |
+||      |                                                               |
+|| Input|                                                               |
+||      |                                                               |
+||______|                                                               |
+|_______________________________________________________________________|
+
+************************************************************************/
+
 #ifndef _PNFOXOPTIONWINDOW_HPP_
 # define _PNFOXOPTIONWINDOW_HPP_
 
 #include <fx.h>
 
 #include "PNFoxMainWindow.hpp"
+#include "PNFoxOptionsObject.hpp"
+
+namespace PN
+{
 
 class	PNFoxOptionWindow : public FXDialogBox 
 {
 	FXDECLARE(PNFoxOptionWindow)
 
+private:
+	PNFoxOptionsObject*		_graphicObj;
+	PNFoxOptionsObject*		_audioObj;
+	PNFoxOptionsObject*		_inputObj;
+
 protected:
 	FXHorizontalFrame*		buttons;
-	FXCheckButton*			checkButton;
-	FXRadioButton*			radioButton;
-	FXDataTarget			radiotarget;
 
 private:
 	PNFoxOptionWindow(){}
@@ -50,6 +76,10 @@ private:
 public:
 	PNFoxOptionWindow(FXWindow* owner);
 	virtual					~PNFoxOptionWindow();
+
+	virtual void	create();
+};
+
 };
 
 #endif /* _PNFOXOPTIONWINDOW_HPP_ */

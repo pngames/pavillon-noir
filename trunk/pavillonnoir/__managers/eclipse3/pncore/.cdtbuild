@@ -13,7 +13,6 @@
 <listOptionValue builtIn="false" value="../../../../__src/pneditorcommon/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
 <listOptionValue builtIn="false" value="/usr/include/CEGUI/"/>
-<listOptionValue builtIn="false" value="/usr/local/include/CEGUI/"/>
 </option>
 <option id="gnu.cpp.compiler.option.warnings.allwarn.751451296" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
 <option id="gnu.cpp.compiler.option.other.other.1227422543" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 `fox-config --cflags` `xml2-config --cflags` -pthread" valueType="string"/>
@@ -49,7 +48,6 @@
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1267470840" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release">
 <option id="gnu.cpp.compiler.option.include.paths.969162029" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
-<listOptionValue builtIn="false" value="/usr/local/include/CEGUI/"/>
 <listOptionValue builtIn="false" value="/usr/include/CEGUI/"/>
 <listOptionValue builtIn="false" value="../../../../__src/pneditorcommon/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
