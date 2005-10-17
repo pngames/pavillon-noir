@@ -754,11 +754,15 @@ PNGLRenderer::initGUI()
 	//CEGUI::System::getSingleton().setDefaultMouseCursor("TaharezLook", "MouseArrow");
 
 	CEGUI::FontManager::getSingleton().createFont("./datafiles/fonts/verase-12.font");
+	CEGUI::FontManager::getSingleton().createFont("./datafiles/fonts/verase-10.font");
 	CEGUI::FontManager::getSingleton().createFont("./datafiles/fonts/verase-8.font");
 	CEGUI::FontManager::getSingleton().createFont("./datafiles/fonts/verasebd-12.font");
 	CEGUI::FontManager::getSingleton().createFont("./datafiles/fonts/verasebd-8.font");
 
 	CEGUI::Window*	rootSheet =  CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"DefaultWindow", (CEGUI::utf8*)"rootSheet");
+	rootSheet->setMetricsMode(CEGUI::Absolute);
+	rootSheet->setPosition(CEGUI::Point(0, 0));
+	rootSheet->setSize(CEGUI::Size(_widht, _height));
 	CEGUI::System::getSingleton().setGUISheet(rootSheet);
 	rootSheet->activate();
 

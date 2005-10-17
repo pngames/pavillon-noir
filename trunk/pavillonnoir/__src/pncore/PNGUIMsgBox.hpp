@@ -33,6 +33,7 @@ namespace PN
 	CEGUI::StaticText*	_msgTxt;
 	CEGUI::Window*		_parentWin;
 	CEGUI::Window*		_backWin;
+	CEGUI::Font*		_defaultFont;
 	float _boxWidth;
 	float _boxHeight;
 	float _textWidth;
