@@ -55,6 +55,8 @@ protected:
   int						_parseAnimations(xmlNode* node);
   /// Parse XML Skeleton node
   int						_parseSkeleton(xmlNode* node);
+  /// Parse XML PNO internal node
+  virtual pnint				_unserializeNode(xmlNode* node);
 
   /// Write in model node content to out stream
   virtual pnint				_serializeContent(std::ostream& o);

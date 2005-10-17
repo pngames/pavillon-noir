@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE model SYSTEM "object-1.0.dtd">
-<model path="plane_10000x10000.pnm">
+<object>
+  <model path="plane_10000x10000.pnm"/>
   <listmaterials>
     <material path="plane_10000x10000.pnt" />
   </listmaterials>
-</model>
+</object>

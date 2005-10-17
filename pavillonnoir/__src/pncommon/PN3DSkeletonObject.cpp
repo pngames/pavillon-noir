@@ -114,40 +114,32 @@ PN3DSkeletonObject::_parseSkeleton(xmlNode* node)
   return PNEC_SUCCES;
 }
 
+pnint
+PN3DSkeletonObject::_unserializeNode(xmlNode* node)
+{
+  if (PNO_XMLNODE_LISTMATERIALS == (const char*)node->name)
+	_parseMaterials(node);
+  else if (PNO_XMLNODE_LISTANIMS == (const char*)node->name)
+	_parseAnimations(node);
+  else if (PNO_XMLNODE_SKELETON == (const char*)node->name)
+	_parseSkeleton(node);
+  else
+	PN3DObject::_unserializeNode(node);
+
+  return PNEC_SUCCES;
+}
+
 int
 PN3DSkeletonObject::unserializeFromXML(xmlNode* root)
 {
   PNLOCK(this);
 
-  _model = NULL;
   _skeleton = NULL;
-  _materials.clear();
   _animations.clear();
 
   //////////////////////////////////////////////////////////////////////////
-  
-  pnint	error = PNEC_SUCCES;
 
-  //////////////////////////////////////////////////////////////////////////
-  // MODEL
-
-  if ((error = _parseModel(root)) != PNEC_SUCCES)
-	return error;
-
-  //////////////////////////////////////////////////////////////////////////
-  // others
-
-  for (root = root->children ; root != NULL; root = root->next)
-  {
-	if (PNO_XMLNODE_LISTMATERIALS == (const char*)root->name)
-	  _parseMaterials(root);
-	else if (PNO_XMLNODE_LISTANIMS == (const char*)root->name)
-	  _parseAnimations(root);
-	else if (PNO_XMLNODE_SKELETON == (const char*)root->name)
-	  _parseSkeleton(root);
-  }
-
-  return PNEC_SUCCES;
+  return PN3DObject::unserializeFromXML(root);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -158,7 +150,7 @@ PN3DSkeletonObject::_serializeContent(std::ostream& o)
   PN3DObject::_serializeContent(o);
 
   if (_skeleton != NULL && _skeleton->getFile() != NULL)
-	o << "  " << "<" << PNO_XMLNODE_SKELETON << " " << PNO_XMLPROP_PATH << "=\"" << _skeleton->getFile()->leaf() << "\" />" << endl;
+	o << "  " << "<" << PNO_XMLNODE_SKELETON << " " << PNO_XMLPROP_PATH << "=\"" << _skeleton->getFile()->string() << "\" />" << endl;
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -166,7 +158,7 @@ PN3DSkeletonObject::_serializeContent(std::ostream& o)
 
   for (VECTORANIMATION::iterator it = _animations.begin(); it != _animations.end(); ++it)
 	if (*it != NULL && ((PN3DAnimation*)*it)->getFile() != NULL)
-	  o << "    " << "<" << PNO_XMLNODE_ANIM << " " << PNO_XMLPROP_PATH << "=\"" << ((PN3DAnimation*)*it)->getFile()->leaf() << "\" />" << endl;
+	  o << "    " << "<" << PNO_XMLNODE_ANIM << " " << PNO_XMLPROP_PATH << "=\"" << ((PN3DAnimation*)*it)->getFile()->string() << "\" />" << endl;
 
   o << "  " << "</" << PNO_XMLNODE_LISTANIMS << ">" << endl;
 

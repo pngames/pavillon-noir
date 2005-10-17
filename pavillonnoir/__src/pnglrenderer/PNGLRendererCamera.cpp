@@ -97,6 +97,18 @@ PNGLRendererCamera::resizeGLWindow(pnfloat width, pnfloat height)
   setUpdateGLFov(true);
 }
 
+pnfloat
+PNGLRendererCamera::getWidth()
+{
+  return _width;
+}
+
+pnfloat
+PNGLRendererCamera::getHeight()
+{
+  return _height;
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 void

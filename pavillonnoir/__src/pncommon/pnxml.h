@@ -35,6 +35,7 @@
 #define PNXML_ENTITY_MKP			(const xmlChar *)"entity"
 #define PNXML_ACTION_MKP			(const xmlChar *)"action"
 #define PNXML_SCRIPT_MKP			(const xmlChar *)"script"
+#define PNXML_OBJECT_MKP			(const xmlChar *)"object"
 #define PNXML_MODEL_MKP				(const xmlChar *)"model"
 #define PNXML_SKELETON_MKP			(const xmlChar *)"skeleton"
 #define PNXML_LISTMATERIALS_MKP		(const xmlChar *)"listmaterials"
