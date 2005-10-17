@@ -305,7 +305,7 @@ void  PNLuaGame::onLoadMapStart(pnEventType evt, PNObject* source, PNEventData* 
     else // if a map is already loaded, unload the map
     {
         PNEventManager::getInstance()->addEvent(PN_EVENT_MU_START, 0,
-            new PNEventData());
+            NULL);
     }
 }
 void  PNLuaGame::onLoadMapEnded(pnEventType evt, PNObject* source, PNEventData* data)

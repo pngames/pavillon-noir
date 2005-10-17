@@ -16,7 +16,11 @@
     renderCam.RollSpeed = 0.0
     renderCam.lastYdelta = 0.0
     renderCam.lastXdelta = 0.0
-
+    renderCam.smoothLevel = 5
+    renderCam.lastXMouseValues = {}
+    table.insert(renderCam.lastXMouseValues, 0,0)
+    renderCam.lastYMouseValues = {}
+    table.insert(renderCam.lastYMouseValues, 0,0)
 ------------------------------ MOVE -----------------------
 	function renderCam:onActionMoveForward(state)
 		pnprint("LUA renderCam:onActionMoveForward()\n")	
@@ -91,19 +95,41 @@
 	end
 	
 	function renderCam:onMouseLook(xdelta, ydelta)
-		--pnprint("renderCam:onActionMouseLook\n")
-		--pnprint(" " .. xdelta .. "\n")
-		--pnprint(" " .. ydelta .. "\n")
-		local yd = (ydelta+self.lastYdelta)/2
-		local xd = (xdelta+self.lastXdelta)/2
+		pnprint("renderCam:onActionMouseLook\n")
+		local obj = self:getPositionTarget()		
+		local yd -- = (ydelta+self.lastYdelta)/2
+		local xd -- = (xdelta+self.lastXdelta)/2 
+		----------------- smooth---------------------------------
+		local size = table.getn(self.lastXMouseValues)
+		if (size == self.smoothLevel) then
+			table.remove(self.lastXMouseValues)
+			table.remove(self.lastYMouseValues)
+		end
+		table.insert(self.lastXMouseValues, 0 ,xdelta)
+		table.insert(self.lastYMouseValues, 0 ,ydelta)
+		size = table.getn(self.lastXMouseValues)
+		xd = 0
+		yd = 0
+		for id = 0, size-1  do
+			pnprint("id:" .. id .. " value:" .. self.lastXMouseValues[id] .."\n" )
+			xd = xd + self.lastXMouseValues[id] 
+			yd = yd + self.lastYMouseValues[id]  
+		end
+		xd = xd /size
+		yd = yd /size
+		pnprint("\nsize: " .. size .. "\nxd: " .. xd .. "\nyd: " .. yd .. "\nxdelta: " .. xdelta .. "\nydelta: " .. ydelta .. "\n")
+		----------------------------------------------------------
 		self:rotatePitchRadians(math.rad(yd))
-		self:rotateYawRadians(math.rad(xd))
-		self.lastYdelta = yd
-		self.lastXdelta = xd
+		if ((obj ~= nil) and (obj:getId() == "Player")) then
+			obj:rotateYawRadians(math.rad(xd))
+		end
+	    self:rotateYawRadians(math.rad(xd))
+		--self.lastYdelta = yd
+		--self.lastXdelta = xd
 	end
 	
 	function renderCam:onUpdate(deltaTime)
-		self:update(deltaTime)
+		--self:update(deltaTime)
 	end
 ------------------------------------------------------------
 	function renderCam:onInit()
