@@ -83,6 +83,9 @@ function PNCharacterClass(id)
 	function PNCharacter:setState(st)
 		table.insert(self.pastStates, 0, self.state)
 		self.state = st
+		if (self.pastStates[0] == self.stateEnum.PN_IA_TRAVELLING) then
+			self:onActionMoveForward(false)
+		end
 	end
 
 	function PNCharacter:restoreState()
@@ -148,7 +151,7 @@ function PNCharacterClass(id)
 	function PNCharacter:onFrustrumIn(target)
 		if (target:getId() ~= self.id) then
 			self.ennemies[target:getId()] = 1
-			if ((target:getCharacType() ~= self.realCharacType()) and (target:getCharacType() ~= PNCharacter.characTypeEnum.PN_CHARAC_CIVILIAN)) then
+			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= PNCharacter.characTypeEnum.PN_CHARAC_CIVILIAN)) then
 				self:setTarget(target)
 				self:setState(PN_IA_FIGHTING)
 			end
@@ -164,15 +167,10 @@ function PNCharacterClass(id)
 	end
 
   	function PNCharacter:onInit()
-		if (target:getId() ~= self.id) then
-			if (self.ennemies[target:getId()] ~= NULL) then
-				self.ennemies[target:getId()] = NULL
-			end
-		end
 	end
-	
+
 	function PNCharacter:onDestroy()
 	end
-	
+
 	return PNCharacter
 end
