@@ -27,7 +27,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+
+#include <list>
+#include <string>
+
 #include "PNFoxOptionWindow.hpp"
+#include "PNFoxOptionsObject.hpp"
+#include "pnproperties.h"
+#include "PNConfigurableParameter.hpp"
+#include "PNFXStringListParameter.hpp"
+#include "PNPropertiesGrid.hpp"
+
+namespace PN
+{
 
 FXIMPLEMENT(PNFoxOptionWindow,FXDialogBox,NULL,0)
 
@@ -36,63 +48,102 @@ FXIMPLEMENT(PNFoxOptionWindow,FXDialogBox,NULL,0)
 */
 PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options",DECOR_TITLE|DECOR_BORDER|DECOR_RESIZE,0,0,500,300, 0,0,0,0, 4,4)
 {
-	FXVerticalFrame *vertical = new FXVerticalFrame(this,LAYOUT_SIDE_TOP|LAYOUT_FILL_X|LAYOUT_FILL_Y);
-	FXHorizontalFrame *horizontal = new FXHorizontalFrame(vertical,LAYOUT_FILL_X|LAYOUT_FILL_Y);
-	FXVerticalFrame *buttons = new FXVerticalFrame(horizontal,LAYOUT_LEFT|LAYOUT_FILL_Y|FRAME_SUNKEN|PACK_UNIFORM_WIDTH|PACK_UNIFORM_HEIGHT,0,0,0,0, 0,0,0,0, 0,0);
-	FXSwitcher *switcher = new FXSwitcher(horizontal,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0);
+	// General layout, buttons on the left, options on the right
+	FXVerticalFrame* vertical = new FXVerticalFrame(this,LAYOUT_SIDE_TOP|LAYOUT_FILL_X|LAYOUT_FILL_Y);
+	FXHorizontalFrame* horizontal = new FXHorizontalFrame(vertical,LAYOUT_FILL_X|LAYOUT_FILL_Y);
+	FXVerticalFrame* buttons = new FXVerticalFrame(horizontal,LAYOUT_LEFT|LAYOUT_FILL_Y|FRAME_SUNKEN|PACK_UNIFORM_WIDTH|PACK_UNIFORM_HEIGHT,0,0,0,0, 0,0,0,0, 0,0);
+	FXSwitcher* switcher = new FXSwitcher(horizontal,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0);
+
+	// dirty but the app crashes i we don't do that, eat some documentation!
+	owner->create();
+	this->create();
+	vertical->create();
+	horizontal->create();
+	switcher->create();
 
 
-	// Graphic tab
-	FXVerticalFrame* graphic = new FXVerticalFrame(switcher,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0, 0,0);
-	new FXLabel(graphic,"Graphic settings",NULL,LAYOUT_LEFT);
-	new FXHorizontalSeparator(graphic,SEPARATOR_LINE|LAYOUT_FILL_X);
-
-	FXMatrix *graphicMatrix=new FXMatrix(graphic,3,MATRIX_BY_COLUMNS|PACK_UNIFORM_HEIGHT|LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,10,0, 6, 6);
-
-	new FXLabel(graphicMatrix,"Full screen :",NULL,JUSTIFY_LEFT|LAYOUT_CENTER_Y|LAYOUT_FILL_X);
-	checkButton = new FXCheckButton(graphicMatrix,NULL,NULL,0,LAYOUT_LEFT|LAYOUT_CENTER_Y|LAYOUT_FILL_COLUMN,0,0,0,0, 0,0,0,0);
-	new FXFrame(graphicMatrix,0);
-
-	//FXGroupBox *gp=new FXGroupBox(group3,"Group Box",LAYOUT_SIDE_TOP|FRAME_GROOVE|LAYOUT_FILL_X, 0,0,0,0);
-
-	//	new FXRadioButton(gp,"Radio &1",&radiotarget,FXDataTarget::ID_OPTION+1,ICON_BEFORE_TEXT|LAYOUT_SIDE_TOP);
-
-
-	new FXLabel(graphicMatrix,"Resolution :",NULL,JUSTIFY_LEFT|LAYOUT_CENTER_Y|LAYOUT_FILL_X);
-	new FXLabel(graphicMatrix,"640 x 480",NULL,JUSTIFY_LEFT|LAYOUT_CENTER_Y|LAYOUT_FILL_X);
-	new FXRadioButton(graphicMatrix,NULL,NULL,0,LAYOUT_LEFT|LAYOUT_CENTER_Y|LAYOUT_FILL_COLUMN,0,0,0,0, 0,0,0,0);
-	new FXFrame(graphicMatrix,0);
-
-	new FXLabel(graphicMatrix,"800 x 600",NULL,JUSTIFY_LEFT|LAYOUT_CENTER_Y|LAYOUT_FILL_X);
-	new FXRadioButton(graphicMatrix,NULL,NULL,0,LAYOUT_LEFT|LAYOUT_CENTER_Y|LAYOUT_FILL_COLUMN,0,0,0,0, 0,0,0,0);
-	new FXFrame(graphicMatrix,1);
-
-	new FXLabel(graphicMatrix,"1024 x 768",NULL,JUSTIFY_LEFT|LAYOUT_CENTER_Y|LAYOUT_FILL_X);
-	new FXRadioButton(graphicMatrix,NULL,NULL,0,LAYOUT_LEFT|LAYOUT_CENTER_Y|LAYOUT_FILL_COLUMN,0,0,0,0, 0,0,0,0);
-	new FXFrame(graphicMatrix,1);
-
-
+	// ** Graphic Tab ** //
+	_graphicObj  = new PNFoxOptionsObject("Graphic settings");
+	FXVerticalFrame* graphicFrame = new FXVerticalFrame(switcher,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0, 0,0);
+	graphicFrame->create();
+	new FXLabel(graphicFrame,_graphicObj->getLabel().c_str(),NULL,LAYOUT_LEFT);
+	new FXHorizontalSeparator(graphicFrame,SEPARATOR_LINE|LAYOUT_FILL_X);
 	new FXButton(buttons,"GRAPHIC",NULL,switcher,FXSwitcher::ID_OPEN_FIRST,FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y);
 
+	//// First Parameter : resolutions list
+	stringList resolutionsList;
+	resolutionsList.push_back("800x600");
+	resolutionsList.push_back("1024x768");
+	resolutionsList.push_back("1152x864");
+	_graphicObj->addParam(new PNConfigurableParameter(_graphicObj, PN_PARAMTYPE_STRINGLIST, &resolutionsList, "Resolution", "Choose your resolution if you dare!", TRUE));
+//	PNFXStringListParameter* strlistGraphic = (PNFXStringListParameter*)_graphicObj->getParameter(_graphicObj->getNbParameters()-1);
+//	strlistGraphic->setNumVisibleItems(0);
+//	strlistGraphic->setLabelsNumChars(0);
 
-	// Sound tab
-	FXVerticalFrame* sound=new FXVerticalFrame(switcher,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0, 0,0);
-	new FXLabel(sound,"Sound settings",NULL,LAYOUT_LEFT);
-	new FXHorizontalSeparator(sound,SEPARATOR_LINE|LAYOUT_FILL_X);
+	//// Second Parameter : fullscreen
+	// TODO : hey! change my type to PN_PARAMTYPE_CHECKBOX, thx (needs a PNFXCheckbox class)
+	stringList fullscreenYesNo;
+	fullscreenYesNo.push_back("yes");
+	fullscreenYesNo.push_back("no");
+	_graphicObj->addParam(new PNConfigurableParameter(_graphicObj, PN_PARAMTYPE_STRINGLIST, &fullscreenYesNo, "Fullscreen", "Do you want to play fullscreen ?", TRUE));
+	
+	// Use a grid to display our parameters
+	PNPropertiesGrid* graphicGrid = new PNPropertiesGrid(graphicFrame, NULL);
+	graphicGrid->setObject(_graphicObj);
 
-	//FXVerticalFrame *sub3=new FXVerticalFrame(sound,LAYOUT_FILL_Y|LAYOUT_FILL_X,0,0,0,0, 0,0,10,0, 0,0);
 
-	new FXButton(buttons,"SOUND",NULL,switcher,FXSwitcher::ID_OPEN_SECOND,FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y);
+	// ** Audio Tab ** //
+	_audioObj  = new PNFoxOptionsObject("Audio settings");
+	FXVerticalFrame* audioFrame=new FXVerticalFrame(switcher,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0, 0,0);
+	new FXLabel(audioFrame,_audioObj->getLabel().c_str(),NULL,LAYOUT_LEFT);
+	new FXHorizontalSeparator(audioFrame,SEPARATOR_LINE|LAYOUT_FILL_X);
+	new FXButton(buttons,"AUDIO",NULL,switcher,FXSwitcher::ID_OPEN_SECOND,FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y);
+
+	//// First Parameter : music volume
+	// TODO : hey! change my type to PN_PARAMTYPE_DIAL_something..., thx (needs a something class)
+	stringList volumeGraduation;
+	volumeGraduation.push_back("Mute");
+	volumeGraduation.push_back("10");
+	volumeGraduation.push_back("20");
+	volumeGraduation.push_back("30");
+	volumeGraduation.push_back("40");
+	volumeGraduation.push_back("50");
+	volumeGraduation.push_back("60");
+	volumeGraduation.push_back("70");
+	volumeGraduation.push_back("80");
+	volumeGraduation.push_back("90");
+	volumeGraduation.push_back("100");
+	_audioObj->addParam(new PNConfigurableParameter(_graphicObj, PN_PARAMTYPE_STRINGLIST, &volumeGraduation, "Music volume", "Don't mute me!", TRUE));
+
+	//// Second Parameter : game volume
+	// TODO : hey! change my type to PN_PARAMTYPE_DIAL_something..., thx (needs a something class)
+	_audioObj->addParam(new PNConfigurableParameter(_graphicObj, PN_PARAMTYPE_STRINGLIST, &volumeGraduation, "Game volume", "Don't mute me!", TRUE));
+
+	// Use a grid to display our parameters
+	PNPropertiesGrid* audioGrid = new PNPropertiesGrid(graphicFrame, NULL);
+	audioGrid->setObject(_audioObj);
 
 
-
-	// Input tab
-	FXVerticalFrame* input=new FXVerticalFrame(switcher,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0, 0,0);
-	new FXLabel(input,"Input settings",NULL,LAYOUT_LEFT);
-	new FXHorizontalSeparator(input,SEPARATOR_LINE|LAYOUT_FILL_X);
-	//FXVerticalFrame *sub4=new FXVerticalFrame(input,LAYOUT_FILL_Y|LAYOUT_FILL_X,0,0,0,0, 0,0,10,0, 0,0);
-
+	// ** Input Tab ** //
+	_inputObj  = new PNFoxOptionsObject("Input Settings");
+	FXVerticalFrame* inputFrame=new FXVerticalFrame(switcher,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0, 0,0);
+	new FXLabel(inputFrame,_inputObj->getLabel().c_str(),NULL,LAYOUT_LEFT);
+	new FXHorizontalSeparator(inputFrame,SEPARATOR_LINE|LAYOUT_FILL_X);
 	new FXButton(buttons,"INPUT",NULL,switcher,FXSwitcher::ID_OPEN_THIRD,FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y);
+
+	stringList inputConfList;
+	inputConfList.push_back("Default");
+	inputConfList.push_back("Emacs");
+	inputConfList.push_back("Killer Profile");
+	_inputObj->addParam(new PNConfigurableParameter(_inputObj, PN_PARAMTYPE_STRINGLIST, &inputConfList, "Key binding profile", "Try it!", TRUE));
+	
+	// peut-etre pas tres utilisable
+	// type=table
+	//_graphicObj->addParam(new PNConfigurableParameter(_inputObj, PN_PARAMTYPE_STRING , void*elem, "Input Configuration", "Key bindings", TRUE));
+
+	// Use a grid to display our parameters
+	PNPropertiesGrid* inputGrid = new PNPropertiesGrid(graphicFrame, NULL);
+	inputGrid->setObject(_inputObj);
 
 
 	// Bottom part
@@ -109,3 +160,10 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 PNFoxOptionWindow::~PNFoxOptionWindow()
 {	
 }
+
+void  PNFoxOptionWindow::create()
+{
+	FXDialogBox::create();
+}
+
+};

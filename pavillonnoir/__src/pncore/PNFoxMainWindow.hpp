@@ -34,6 +34,9 @@
 
 #include "PNFoxOptionWindow.hpp"
 
+namespace PN
+{
+
 class	PNFoxMainWindow : public FXMainWindow 
 {
 	FXDECLARE(PNFoxMainWindow)
@@ -61,6 +64,8 @@ public:
 	PNFoxMainWindow(FXApp *app, bool *returnState);
 	virtual void create();
 	virtual ~PNFoxMainWindow();
+};
+
 };
 
 #endif /* _PNFOXMAINWINDOW_HPP_ */

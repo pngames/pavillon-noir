@@ -34,6 +34,7 @@
 #include <fx.h>
 #include <map>
 
+#include "pneditorcommon.h"
 #include "PNConfigurableParameter.hpp"
 
 namespace PN {

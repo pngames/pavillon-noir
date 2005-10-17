@@ -42,6 +42,7 @@
 #include "PNFXAnimListParameter.hpp"
 #include "PNFXMaterialListParameter.hpp"
 #include "PNFXScriptListParameter.hpp"
+#include "PNFXStringListParameter.hpp"
 
 namespace PN
 {
@@ -118,6 +119,9 @@ void  PNPropertiesGrid::setObject(PNConfigurableObject* object)
 	  break;
 	case PN_PARAMTYPE_SCRIPTLIST:
 	  _params.push_back((PNPropertiesGridParameter*)(new PNFXScriptListParameter(this, current_param)));
+	  break;
+	case PN_PARAMTYPE_STRINGLIST:
+		_params.push_back((PNPropertiesGridParameter*)(new PNFXStringListParameter(this, current_param)));
 	  break;
 	default:
 	break;
