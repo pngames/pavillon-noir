@@ -75,7 +75,7 @@ namespace PN {
   {
 	_mainSheet->show();
 	//win->setEnabled(true);
-	_mainSheet->activate();
+	
 	_mainSheet->setAlwaysOnTop(true);
 	_mainSheet->setMutedState(false);
 	CEGUI::MouseCursor::getSingleton().show();
@@ -125,7 +125,7 @@ namespace PN {
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-	//hide();
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_QUIT_MENU_ROOT, NULL, NULL);
 	return true;
   }
 
@@ -141,7 +141,8 @@ namespace PN {
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-	//hide();
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_QUIT, NULL, NULL);
+	
 	return true;
   }
 };
