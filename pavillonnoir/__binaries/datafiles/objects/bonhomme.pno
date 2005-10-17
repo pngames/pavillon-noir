@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE model SYSTEM "object-1.0.dtd">
-<model path="bonhomme.pnm">
+<object>
+  <model path="bonhomme.pnm" />
   <listmaterials>
     <material path="bonhomme10_Materiau.pnt" />
   </listmaterials>
@@ -8,4 +9,4 @@
   <listanims>
     <anim path="bonhomme.pna" />
   </listanims>
-</model>
+</object>

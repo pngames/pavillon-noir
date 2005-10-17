@@ -39,6 +39,7 @@
 
 #include "PNRendererInterface.hpp"
 #include "PNGLRendererCamera.hpp"
+#include "PNGLSceneGraph.hpp"
 
 namespace CEGUI
 {
@@ -71,12 +72,9 @@ private:
 
   //////////////////////////////////////////////////////////////////////////
 
-  PNGLRendererCamera		_renderCam;
+  PNGLSceneGraph			_scene;
 
   pnbool					_isProgramLooping;
-
-  pnuint					_widht;
-  pnuint					_height;
   
   pnuint                    _lastRenderTime;
 public:
@@ -96,10 +94,6 @@ public:
 
   void						run();
   void						endRendering();
-
-  void						rotate(pnfloat x,pnfloat y, pnfloat z, pnfloat angle);
-  void						translate(pnfloat x, pnfloat y, pnfloat z);
-  void						scale(pnfloat x, pnfloat y, pnfloat z);
   
   //////////////////////////////////////////////////////////////////////////
   
@@ -137,12 +131,6 @@ public:
   void						setSDLFlags(int *flags, bool fullscreen);
 
   void						initGL(GLsizei width, GLsizei height);
-  void						resizeGLWindow(GLsizei width, GLsizei height);
-
-  void						initFrame();
-
-  void						pushMatrix();
-  void						popMatrix();
 
   //////////////////////////////////////////////////////////////////////////
   

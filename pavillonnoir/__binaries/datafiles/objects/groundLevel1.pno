@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE model SYSTEM "object-1.0.dtd">
-<model path="groundLevel1.pnm">
+<object>
+  <model path="groundLevel1.pnm" />
   <listmaterials>
     <material path="groundLevel1_01 - Default.pnt" />
   </listmaterials>
-</model>
+</object>

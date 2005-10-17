@@ -1,31 +1,31 @@
 /*
-* PN3DObject.cpp
-* 
-* Description :
-* PN3DObject definition
-*
-* Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
-* This software has been written in EPITECH <http://www.epitech.net>
-* EPITECH is computer science school in Paris - FRANCE -
-* under the direction of flav <http://www.epita.fr/~flav>.
-* and Jerome Landrieu.
-*
-* This file is part of Pavillon Noir.
-*
-* Pavillon Noir is free software; you can redistribute it and/or modify it
-* under the terms of the GNU General Public License as published by the
-* Free Software Foundation; either version 2 of the License, or (at your
-* option) any later version.
-*
-* Pavillon Noir is distributed in the hope that it will be useful, but WITHOUT
-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-* for more details.
-*
-* You should have received a copy of the GNU General Public License along with
-* Pavillon Noir; if not, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
-*/
+ * PN3DObject.cpp
+ *
+ * Description :
+ * PN3DObject definition
+ *
+ * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
+ * This software has been written in EPITECH <http://www.epitech.net>
+ * EPITECH is computer science school in Paris - FRANCE -
+ * under the direction of flav <http://www.epita.fr/~flav>.
+ * and Jerome Landrieu.
+ *
+ * This file is part of Pavillon Noir.
+ *
+ * Pavillon Noir is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * Pavillon Noir is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Pavillon Noir; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+ */
 
 #include <boost/filesystem/operations.hpp>
 #include <libxml/xmlreader.h>
@@ -179,6 +179,17 @@ PN3DObject::_parseModel(xmlNode* node)
 }
 
 pnint
+PN3DObject::_unserializeNode(xmlNode* node)
+{
+  if (PNO_XMLNODE_LISTMATERIALS == (const char*)node->name)
+	_parseMaterials(node);
+  else if (PNO_XMLNODE_MODEL == (const char*)node->name)
+	_parseModel(node);
+
+  return PNEC_SUCCES;
+}
+
+pnint
 PN3DObject::unserializeFromXML(xmlNode* root)
 {
   PNLOCK(this);
@@ -188,21 +199,20 @@ PN3DObject::unserializeFromXML(xmlNode* root)
 
   //////////////////////////////////////////////////////////////////////////
 
-  pnint	error = PNEC_SUCCES;
+  //pnint	error = PNEC_SUCCES;
 
-  //////////////////////////////////////////////////////////////////////////
+  /*//////////////////////////////////////////////////////////////////////////
   // MODEL
 
   if ((error = _parseModel(root)) != PNEC_SUCCES)
-	return error;
+	return error;*/
 
   //////////////////////////////////////////////////////////////////////////
   // others
 
   for (root = root->children ; root != NULL; root = root->next)
   {
-	if (PNO_XMLNODE_LISTMATERIALS == (const char*)root->name)
-	  _parseMaterials(root);
+	_unserializeNode(root);
   }
 
   return PNEC_SUCCES;
@@ -227,7 +237,7 @@ PN3DObject::serializeInXML(std::ostream& o, bool header)
   if (header)
 	o << PNO_XML_HEADER;
 
-  o << "<" << PNO_XMLNODE_ROOT << " " << PNO_XMLPROP_PATH << "=\"" << (_model == NULL ? "none" :_model->getFile()->leaf()) << "\">" << endl;
+  o << "<" << PNO_XMLNODE_ROOT << ">" << endl;
 
   if ((err = _serializeContent(o)) != PNEC_SUCCES)
 	return err;
@@ -247,11 +257,16 @@ PN3DObject::serializeInXML(std::ostream& o, bool header)
 pnint
 PN3DObject::_serializeContent(std::ostream& o)
 {
+  if (_model != NULL && _model->getFile() != NULL)
+	o << "  " << "<" << PNO_XMLNODE_MODEL << " " << PNO_XMLPROP_PATH << "=\"" << (_model == NULL ? "none" :_model->getFile()->string()) << "\" />" << endl;
+
+  //////////////////////////////////////////////////////////////////////////
+
   o << "  " << "<" << PNO_XMLNODE_LISTMATERIALS << ">" << endl;
 
   for (VectorMaterial::iterator it = _materials.begin(); it != _materials.end(); ++it)
 	if (*it != NULL && ((PN3DMaterial*)*it)->getFile() != NULL)
-	  o << "    " << "<" << PNO_XMLNODE_MATERIAL << " " << PNO_XMLPROP_PATH << "=\"" << ((PN3DMaterial*)*it)->getFile()->leaf() << "\" />" << endl;
+	  o << "    " << "<" << PNO_XMLNODE_MATERIAL << " " << PNO_XMLPROP_PATH << "=\"" << ((PN3DMaterial*)*it)->getFile()->string() << "\" />" << endl;
 
   o << "  " << "</" << PNO_XMLNODE_LISTMATERIALS << ">" << endl;
 
@@ -936,11 +951,11 @@ PN3DObject::update(pnuint deltaTime)
   //pnfloat  step = deltaTime * _movingSpeed;
   _animTimeCurrent = tick;
 
-  updateTranslation(deltaTime);
+  updateTranslation((pnfloat)deltaTime);
 
   _coord += _updateTranslation;
 
-  updateRotation(deltaTime);
+  updateRotation((pnfloat)deltaTime);
 }
 
 //////////////////////////////////////////////////////////////////////////

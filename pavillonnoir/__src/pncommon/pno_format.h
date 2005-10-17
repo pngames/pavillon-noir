@@ -32,13 +32,14 @@
 
 #include <string>
 
-#define PNO_EXT							  "pno"
+#define PNO_EXT											"pno"
 
 static const std::string	PNO_XML_HEADER				=
 "<?xml version=\"1.0\"?>\n"
-"<!DOCTYPE model SYSTEM \"object-1.0.dtd\">\n";
+"<!DOCTYPE object SYSTEM \"object-1.0.dtd\">\n";
 
-static const std::string	PNO_XMLNODE_ROOT			= "model";
+static const std::string	PNO_XMLNODE_ROOT			= "object";
+static const std::string	PNO_XMLNODE_MODEL			= "model";
 static const std::string	PNO_XMLNODE_LISTMATERIALS	= "listmaterials";
 static const std::string	PNO_XMLNODE_MATERIAL		= "material";
 static const std::string	PNO_XMLNODE_SKELETON		= "skeleton";

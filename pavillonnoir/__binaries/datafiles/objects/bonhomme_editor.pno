@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE model SYSTEM "object-1.0.dtd">
-<model path="bonhomme.pnm">
+<object>
+  <model path="bonhomme.pnm" />
   <listmaterials>
     <material path="groundLevel1_01 - Default.pnt" />
     <material path="groundLevel3_Material #37.pnt" />
@@ -9,4 +10,4 @@
   <listanims>
     <anim path="animation test.pna" />
   </listanims>
-</model>
+</object>
