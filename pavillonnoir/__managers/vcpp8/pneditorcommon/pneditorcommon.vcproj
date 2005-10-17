@@ -227,6 +227,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pneditorcommon\PNFXStringListParameter.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pneditorcommon\PNFXStringParameter.cpp"
 				>
 			</File>
@@ -290,6 +294,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pneditorcommon\PNFXScriptListParameter.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pneditorcommon\PNFXStringListParameter.hpp"
 				>
 			</File>
 			<File

@@ -30,8 +30,6 @@
 #ifndef _PNPROPERTIESGRIDPARAMETER_HPP_
 # define _PNPROPERTIESGRIDPARAMETER_HPP_
 
-#include <string>
-
 namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
