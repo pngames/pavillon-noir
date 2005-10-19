@@ -1,6 +1,14 @@
 <?xml version="1.0" ?>
 <GUILayout>
 	<Window Type="DefaultWindow" Name="PNMenuLoad">
+    <Window Type="Vanilla/StaticImage" Name="PNMenuLoad/Background">
+      <Property Name="RelativeRect" Value="l:0.000000 t:0.000000 r:1.000000 b:1.000000" />
+      <Property Name="UnifiedAreaRect" Value="{{0.000000,0.000000},{0.000000,0.000000},{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="Image" Value="set:Vanilla-Images image:GenericBrush" />
+      <Property Name="ImageColours" Value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+      <Property Name="FrameEnabled" Value="false"/>
+      <Property Name="Disabled" Value="true"/>
+    </Window>
 		<Window Type="Vanilla/Listbox" Name="MenuLoad/Listbox">
 			<Property Name="AbsoluteRect" Value="l:308.000000 t:170.000000 r:731.000000 b:533.000000" />
 			<Property Name="RelativeRect" Value="l:0.301765 t:0.217391 r:0.716470 b:0.682097" />
