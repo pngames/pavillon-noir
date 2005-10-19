@@ -47,17 +47,16 @@ PNGUIConsole::PNGUIConsole()
   _historyCount = 1;
   ite = _ConsoleHistory.begin();
 
-  CEGUI::Window* rootSheet = CEGUI::System::getSingleton().getGUISheet();
-  CEGUI::Window* win = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNConsole.layout");
-  rootSheet->addChildWindow(win);
-  win->hide();
+  _pnConsole = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNConsole.layout");
+  CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnConsole);
+  _pnConsole->hide();
   _consoleVisibility = false;
 
-  CEGUI::Editbox* _editBox =  (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().getWindow("PNConsole/EditBox");
+  _editBox =  (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().getWindow("PNConsole/EditBox");
+  
+  _listBox = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNConsole/ListBox");
 
   _editBox->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIConsole::textChangedHandler, this));
- // _editBox->subscribeEvent(CEGUI::Editbox::EventTextAccepted, CEGUI::Event::Subscriber(&PNGUIConsole::textAccepteddHandler,this));
-  //rootSheet->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIConsole::eventKeyPressedHandler, this));
 
   //////////////////////////////////////////////////////////////////////////
   addFonction("setalpha", changeAlpha, "change alpha to the console");
@@ -182,14 +181,10 @@ void	PNGUIConsole::_writeError(pnloglevel lvl, const pnchar* format)
 	tmp = PNConsole::getTime() + tmp;
 	fwrite( tmp.c_str(), sizeof( char ), tmp.length(), PNConsole::_consoleLogFile);
   }
-  //CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(format); 
-  //addItemToListBox(item);
 }
 
 void	PNGUIConsole::_writePerror(pnloglevel lvl, const pnchar* format)
 { 
-  
-
   _writeError(lvl, format);
 }
 
@@ -220,18 +215,17 @@ void  PNGUIConsole::addItemToListBox(CEGUI::ListboxTextItem* item)
 {
   PNLOCK(this);
 
-  CEGUI::Listbox* lb = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNConsole/ListBox");
-
+  
   _ConsoleListboxItem.push_back(item);
   if (_ConsoleListboxItem.size() > _listboxItemSize)
   {
 	ConsoleListboxItem::iterator iter = _ConsoleListboxItem.begin();
-	lb->removeItem((CEGUI::ListboxItem*)*iter);
+	_listBox->removeItem((CEGUI::ListboxItem*)*iter);
 	_ConsoleListboxItem.pop_front();
   }
 
-  lb->addItem(item);
-  lb->ensureItemIsVisible(item);
+  _listBox->addItem(item);
+  _listBox->ensureItemIsVisible(item);
   ite = _ConsoleHistory.begin();
 }
 
@@ -244,8 +238,8 @@ bool  PNGUIConsole::textAccepteddHandler(/*const CEGUI::EventArgs& e*/)
 {
   CEGUI::String line;
 
-  CEGUI::Editbox* eb = (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNConsole/EditBox");
-  line = eb->getText();
+ 
+  line = _editBox->getText();
 
   if (line.empty() == false)
   {
@@ -272,7 +266,7 @@ bool  PNGUIConsole::textAccepteddHandler(/*const CEGUI::EventArgs& e*/)
 	_ConsoleHistory.push_back(line.c_str());
 
 	ite = _ConsoleHistory.end();
-	eb->setText("");
+	_editBox->setText("");
   }
   return true;
 }
@@ -284,26 +278,19 @@ Called when a key is pressed in the input box, only check the up and down keys f
 bool  PNGUIConsole::textChangedHandler(const CEGUI::EventArgs& e)
 {
   CEGUI::KeyEventArgs* me = (CEGUI::KeyEventArgs*)&e;
-  CEGUI::Editbox* eb = (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNConsole/EditBox");
+
   std::string tmp;
 
-  /* if (me->scancode == CEGUI::Key::F1)
-  {
-  if (_consoleVisibility == false)
-  PNEventManager::getInstance()->sendEvent(PN_EVENT_CONSOLE_SHOW, this, NULL);
-  else if (_consoleVisibility == true)
-  PNEventManager::getInstance()->sendEvent(PN_EVENT_CONSOLE_HIDE, this, NULL);
-  }*/ 
   if (me->scancode == CEGUI::Key::ArrowUp)
   {
 	if (ite != _ConsoleHistory.begin())
 	{ 
 	  if (ite == _ConsoleHistory.end())
-		_currentHistoryLine = eb->getText().c_str();
+		_currentHistoryLine = _editBox->getText().c_str();
 	  ite--;
 	  tmp = *ite;
-	  eb->setText(tmp.c_str());
-	  eb->setCaratIndex((CEGUI::uint)tmp.length());
+	  _editBox->setText(tmp.c_str());
+	  _editBox->setCaratIndex((CEGUI::uint)tmp.length());
 	}
   }
   if (me->scancode == CEGUI::Key::ArrowDown)
@@ -315,13 +302,13 @@ bool  PNGUIConsole::textChangedHandler(const CEGUI::EventArgs& e)
 		tmp = _currentHistoryLine;
 	  else
 		tmp = *ite;
-	  eb->setText(tmp.c_str());
-	  eb->setCaratIndex((CEGUI::uint)tmp.length());
+	  _editBox->setText(tmp.c_str());
+	  _editBox->setCaratIndex((CEGUI::uint)tmp.length());
 	}
   }
   if (me->scancode == CEGUI::Key::Tab)
   {
-	std::string cmd = eb->getText().c_str();
+	std::string cmd = _editBox->getText().c_str();
 	std::string text;
 	std::vector<std::string> candidates;
 	unsigned int matchcnt = PNConsole::getFonctionCompletion(cmd, candidates);
@@ -366,15 +353,15 @@ bool  PNGUIConsole::textChangedHandler(const CEGUI::EventArgs& e)
 
 	  std::string cmdc = *candidates.begin();
 	  cmdc = cmdc.substr(0, cnt-1);
-	  eb->setText(cmdc.c_str());
-	  eb->setCaratIndex(cmdc.length());
+	  _editBox->setText(cmdc.c_str());
+	  _editBox->setCaratIndex(cmdc.length());
 	}
 
 	if (matchcnt == 1)
 	{
 	  text = *p_beg;
-	  eb->setText(text.c_str());
-	  eb->setCaratIndex(text.length());
+	  _editBox->setText(text.c_str());
+	  _editBox->setCaratIndex(text.length());
 	}
   }
 
@@ -394,29 +381,22 @@ void  PNGUIConsole::consoleVisibility(pnEventType type, PNObject* source, PNEven
 {
   static bool cursor = false;
 
-  CEGUI::Window*  pnConsole = CEGUI::WindowManager::getSingleton().getWindow("PNConsole");
-  CEGUI::Editbox* eb = (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNConsole/EditBox");
-
-  // std::cout << "consoleVisibility = " << _consoleVisibility << std::endl;
-  //if (pnConsole->isVisible() == false)
-  // if (type == PN_EVENT_CONSOLE_SHOW)
   if (_consoleVisibility == false)
   {
-	pnConsole->show();
-	eb->activate();
+	_pnConsole->show();
+	_editBox->activate();
 
 	cursor = CEGUI::MouseCursor::getSingleton().isVisible();
 	if (cursor == false) 
 	  CEGUI::MouseCursor::getSingleton().show();
 	_consoleVisibility = true;
   }
-  //else if (type == PN_EVENT_CONSOLE_HIDE)//if (pnConsole->isVisible())
   else if (_consoleVisibility == true)
   {
 	if (cursor == false) 
 	  CEGUI::MouseCursor::getSingleton().hide();
-	eb->deactivate();
-	pnConsole->hide();
+	_editBox->deactivate();
+	_pnConsole->hide();
 	_consoleVisibility = false;
   }  
 }
@@ -429,17 +409,13 @@ void  PNGUIConsole::changeAlpha(const std::string& command, std::istream& parame
 {
   bool tmp;  
   parameters >> tmp;
+  CEGUI::Window*  pnConsole = CEGUI::WindowManager::getSingleton().getWindow("PNConsole");
 
   if (tmp == 1)
-  {
-	CEGUI::Window*  pnConsole = CEGUI::WindowManager::getSingleton().getWindow("PNConsole");
 	pnConsole->setAlpha(1.0f);
-  }
+ 
   if (tmp == 0)
-  {
-	CEGUI::Window*  pnConsole = CEGUI::WindowManager::getSingleton().getWindow("PNConsole");
-	pnConsole->setAlpha(0.5f);
-  }
+	pnConsole->setAlpha(0.85f);
 }
 
 /*!
