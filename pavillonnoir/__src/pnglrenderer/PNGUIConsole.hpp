@@ -51,6 +51,8 @@ namespace PN{
 
   private:
 	CEGUI::Window*		  	  	  		  _pnConsole;
+	CEGUI::Editbox*						  _editBox;
+	CEGUI::Listbox*						  _listBox;
 	typedef std::list<CEGUI::ListboxItem*> ConsoleListboxItem;
 	ConsoleListboxItem					  _ConsoleListboxItem;
 	typedef std::list<std::string>		  ConsoleHistory;
