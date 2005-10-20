@@ -37,11 +37,15 @@
 #include "PNGUIMsgBox.hpp"
 #include "pnresources.h"
 
+
 namespace fs = boost::filesystem;
 using namespace PN;
 
+#define RGBA(R,G,B,A) (B+(G<<8)+(R<<16)+(A<<24))
+
 namespace PN
 {
+
   static float val = 0.0f;
   
   PNGUIMenuLoad*				PNGUIMenuLoad::_instance = NULL;
@@ -111,6 +115,8 @@ namespace PN
 			++dir_count;
 			CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(dir_itr->leaf().c_str());
 			item->setSelectionBrushImage((CEGUI::utf8*)"Vanilla-Images", (CEGUI::utf8*)"GenericBrush");
+			item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
+			
 			_cbBox->addItem(item);
 		  }
 		}

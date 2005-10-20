@@ -266,9 +266,9 @@ namespace PN
 
 	//CEGUI::System::getSingleton().getGUISheet()->addChildWindow(CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/myschemas/demolayout.xml"));
 	
-  PNGUIChatWindow* tmp = new PNGUIChatWindow();
-  tmp->startGUI();
-  resetGUI();
+	PNGUIChatWindow::getInstance()->startGUI();
+  
+ 
 	return true;
   }
 
