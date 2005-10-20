@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<GUILayout>
+	<Window Type="DefaultWindow" Name="PNChatWindow">
+		<Window Type="Vanilla/Listbox" Name="PNChatWindow/Listbox">
+			<Property Name="AbsoluteRect" Value="l:10.000000 t:586.000000 r:1010.000000 b:742.000000" />
+			<Property Name="RelativeRect" Value="l:0.010000 t:0.750000 r:0.990000 b:0.950000" />
+			<Property Name="UnifiedAreaRect" Value="{{0.010000,0.000000},{0.750000,0.000000},{0.990000,0.000000},{0.950000,0.000000}}" />
+			</Window>
+		<Window Type="Vanilla/Button" Name="PNChatWindow/ButtonValid">
+			<Property Name="AbsoluteRect" Value="l:10.000000 t:743.000000 r:214.000000 b:776.000000" />
+			<Property Name="RelativeRect" Value="l:0.010000 t:0.950000 r:0.210000 b:0.992000" />
+			<Property Name="Text" Value="Valider" />
+			<Property Name="UnifiedAreaRect" Value="{{0.010000,0.000000},{0.950000,0.000000},{0.210000,0.000000},{0.992000,0.000000}}" />
+			<Property Name="Tooltip" Value="Selectionnez une reponse." />
+			</Window>
+		<Window Type="Vanilla/StaticText" Name="PNChatWindow/Text">
+			<Property Name="AbsoluteRect" Value="l:10.000000 t:547.000000 r:1010.000000 b:583.000000" />
+			<Property Name="RelativeRect" Value="l:0.010000 t:0.700000 r:0.990000 b:0.746000" />
+			<Property Name="Text" Value="" />
+			<Property Name="UnifiedAreaRect" Value="{{0.010000,0.000000},{0.700000,0.000000},{0.990000,0.000000},{0.746000,0.000000}}" />
+			</Window>
+		</Window>
+</GUILayout>

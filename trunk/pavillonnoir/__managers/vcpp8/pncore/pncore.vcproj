@@ -207,6 +207,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncore\PNGUIChatWindow.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncore\PNGUIEscMenu.cpp"
 				>
 			</File>
@@ -262,6 +266,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncore\PNFoxOptionWindow.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncore\PNGUIChatWindow.hpp"
 				>
 			</File>
 			<File

@@ -56,6 +56,7 @@
 
 ////Changes music volume (specific for the demo, please delete later)
 #include "PNSoundInterface.hpp"
+#include "PNGUIChatWindow.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -265,7 +266,9 @@ namespace PN
 
 	//CEGUI::System::getSingleton().getGUISheet()->addChildWindow(CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/myschemas/demolayout.xml"));
 	
-
+  PNGUIChatWindow* tmp = new PNGUIChatWindow();
+  tmp->startGUI();
+  resetGUI();
 	return true;
   }
 
