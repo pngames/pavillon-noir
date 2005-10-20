@@ -75,3 +75,4 @@ namespace PN
 }
 
 #endif /*_PNGUICHATWINDOW_HPP_*/
+

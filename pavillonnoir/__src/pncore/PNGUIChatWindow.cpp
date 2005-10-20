@@ -96,6 +96,9 @@ namespace PN
 
   void  PNGUIChatWindow::updateItems(std::string question, std::vector<std::string> responses)
   {
+	_textQuestion->setText(question.c_str());
+  
   }
 
 }
+
