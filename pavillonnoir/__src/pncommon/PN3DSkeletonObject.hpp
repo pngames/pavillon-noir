@@ -82,8 +82,13 @@ public:
   /// Render object using PNRendererInterface
   virtual void				render();
 
+  //////////////////////////////////////////////////////////////////////////
+
   /// Retrieve animation list of skeleton object
   VECTORANIMATION&			getAnimations();
+
+  /// Retrieve skeleton of skeleton object
+  PN3DSkeleton*				getSkeleton();
 
   //////////////////////////////////////////////////////////////////////////
   

@@ -109,6 +109,7 @@ public:
   /// Translation and rotation states
   typedef enum
   {
+	STATE_NONE,									/// Do nothing
 	STATE_T_RIGHT			= 0x000001,			/// Translate to the right
 	STATE_T_LEFT			= 0x000001 << 1,	/// Translate to the left
 	STATE_T_TOP				= 0x000001 << 2,	/// Translate to the top
@@ -158,12 +159,16 @@ public:
   typedef enum
   {
 	MMODE_FREE						= 0x000000,	  		/// 3D object move freely
+
 	MMODE_POSITION_LOCKED			= 0x000001 << 0,	/// 3D object alway try to be in same relative position from target
 	MMODE_POSITION_ABS_LOCKED		= 0x000001 << 1,	/// 3D object alway in same relative position from target
     MMODE_DISTANCE_LOCKED			= 0x000001 << 2,	/// 3D object alway try to be at _targetDistance distance from the target
     MMODE_DISTANCE_ABS_LOCKED		= 0x000001 << 3,	/// 3D object alway at _targetDistance distance from the target
-	MMODE_VIEW_LOCKED				= 0x000001 << 4,	/// 3D object alway try to be in _targetDirection alignment of _target
-	MMODE_VIEW_ABS_LOCKED			= 0x000001 << 5,	/// 3D object alway in _targetDirection alignment of _target
+
+	MMODE_ORIENTATION_LOCKED		= 0x000001 << 4,	/// 3D object alway try to be in _targetOrientation orientation
+	MMODE_ORIENTATION_ABS_LOCKED	= 0x000001 << 5,	/// 3D object alway in _targetOrientation orientation
+	MMODE_VIEW_LOCKED				= 0x000001 << 6,	/// 3D object alway try to be in _targetDirection alignment of _target
+	MMODE_VIEW_ABS_LOCKED			= 0x000001 << 7,	/// 3D object alway in _targetDirection alignment of _target
 
     MMODE_VIEW_DISTANCE_LOCKED		= MMODE_DISTANCE_LOCKED | MMODE_VIEW_LOCKED,			/// MMODE_DISTANCE_LOCKED + MMODE_VIEW_LOCKED
     MMODE_VIEW_DISTANCE_ABS_LOCKED	= MMODE_VIEW_ABS_LOCKED | MMODE_DISTANCE_ABS_LOCKED,	/// MMODE_DISTANCE_ABS_LOCKED + MMODE_VIEW_ABS_LOCKED
@@ -183,16 +188,24 @@ protected:
 protected:
   /// Other 3DObject targeted used for locked displacement and other things like that
 
-  /// Object to look
-  PN3DObject*						_viewTarget;
   /// Object to follow
   PN3DObject*						_positionTarget;
+  /// Object bone to follow
+  std::string						_positionBoneTarget;
+  /// Object to look
+  PN3DObject*						_viewTarget;
+  /// Object bone to look
+  std::string						_viewBoneTarget;
 
   /// _positionTarget relative position
   PNPoint							_targetPosition;
   /// _positionTarget relative distance
   pnfloat							_targetDistance;
+  /// _viewTarget relative orientation
+  PNQuatf							_targetOrientation;
+  /// _viewTarget front direction
   PNNormal3f						_targetDirection;
+  /// _viewTarget right direction
   PNNormal3f						_rightTargetDirection;
 
   //////////////////////////////////////////////////////////////////////////
@@ -200,84 +213,109 @@ protected:
 public:
   /// Set 3d object target and 3D object distance
   void								setTarget(PN3DObject* obj);
-  /// Set Distance to the target
-  void								setTargetDistance(pnfloat distance);
-  /// Set direction in witch 3D object look to the target
-  void								setTargetDirection(const PNNormal3f& vec);
+  
+  /// Retrieve 3d object position target
+  PN3DObject*						getPositionTarget() const;
+  /// Retrieve 3d object position target bone
+  const std::string&				getPositionBoneTarget();
+  /// Retrieve 3d object position coordinate
+  PNPoint							getPositionTargetCoord() const;
+  /// Retrieve 3d object position orientation
+  PNQuatf							getPositionTargetOrient() const;
+
+  /// Change 3d object position target
+  void								setPositionTarget(PN3DObject* ptarget);
+  /// Change 3d object position target bone
+  void								setPositionBoneTarget(const std::string& pbtarget);
+
+  /// Retrieve 3d object view target
+  PN3DObject*						getViewTarget() const;
+  /// Retrieve 3d object view target bone
+  const std::string&				getViewBoneTarget();
+  /// Retrieve 3d object position coordinate
+  virtual PNPoint					getViewTargetCoord() const;
+  /// Retrieve 3d object position orientation
+  virtual PNQuatf					getViewTargetOrient() const;
+
+  /// Change 3d object view target
+  void								setViewTarget(PN3DObject* vtarget);
+  /// Change 3d object view target bone
+  void								setViewBoneTarget(const std::string& vbtarget);
+
   /// Set Position depending on the target
   void								setTargetPosition(pnfloat x, pnfloat y, pnfloat z);
-  /// Retrieve 3d object view target
-  PN3DObject*						getPositionTarget() const;
-  /// Retrieve 3d object position target
-  PN3DObject*						getViewTarget() const;
+  /// Set Distance to the target
+  void								setTargetDistance(pnfloat distance);
+  /// Set Direction in witch 3D object look to the target
+  void								setTargetDirection(const PNNormal3f& vec);
+  /// Set Orientation depending on the target
+  void								setTargetOrientation(const PNQuatf& quat);
   //////////////////////////////////////////////////////////////////////////
 
 public:
   /// Type of the 3d object
   typedef enum
   {
-	OBJTYPE_3DOBJ,			/// Simple 3D object
-	OBJTYPE_3DSKELETONOBJ,	/// 3D object with skeleton and skeleton animations
-	OBJTYPE_WAYPOINT,		/// Way point used for IA graphs
-	OBJTYPE_GROUND,			/// Ground partitioned for optimization and static
-	OBJTYPE_CAMERA,			/// A camera
-	OBJTYPE_CHARACTER,		/// Game character
+	OBJTYPE_3DOBJ,				/// Simple 3D object
+	OBJTYPE_3DSKELETONOBJ,		/// 3D object with skeleton and skeleton animations
+	OBJTYPE_WAYPOINT,			/// Way point used for IA graphs
+	OBJTYPE_GROUND,				/// Ground partitioned for optimization and static
+	OBJTYPE_CAMERA,				/// A camera
+	OBJTYPE_CHARACTER,			/// Game character
 	NB_OBJTYPE 
-  }							objType;
+  }								objType;
 
 protected:
   /// Type of the 3d object
-  objType					_objType;
+  objType						_objType;
 
   //////////////////////////////////////////////////////////////////////////
 
 public:
   /// Indicate witch direction is 3D object front
-  PNNormal3f				_frontDirection;
+  PNNormal3f					_frontDirection;
   /// Indicate witch direction is 3D object right
-  PNNormal3f				_rightDirection;
+  PNNormal3f					_rightDirection;
   /// Indicate witch direction is 3D object top
-  PNNormal3f				_topDirection;
+  PNNormal3f					_topDirection;
 
   /// Return 3d object front direction
-  const PNNormal3f&			getFrontDirection() const;
+  const PNNormal3f&				getFrontDirection() const;
   /// Return 3d object right direction
-  const PNNormal3f&			getRightDirection() const;
+  const PNNormal3f&				getRightDirection() const;
   /// Return 3d object top direction
-  const PNNormal3f&			getTopDirection() const;
+  const PNNormal3f&				getTopDirection() const;
 
   //////////////////////////////////////////////////////////////////////////
  
 protected:
   /// Sub Objects to render
-  pnuint					_renderMode;
+  pnuint						_renderMode;
 
   /// Translation and rotation speed
-  pnfloat					_movingSpeed;
-  pnfloat					_rotatingYawSpeed;
-  pnfloat					_rotatingPitchSpeed;
-  pnfloat					_rotatingRollSpeed;
+  pnfloat						_movingSpeed;
+  pnfloat						_rotatingYawSpeed;
+  pnfloat						_rotatingPitchSpeed;
+  pnfloat						_rotatingRollSpeed;
 public:
   /// List of materials associated with 3d object
   typedef std::vector<PN3DMaterial*>	VectorMaterial;
 protected:
   /// Represent object in graphic world
-  PN3DModel*				_model;
+  PN3DModel*					_model;
   /// Materials list associated with this object
-  VectorMaterial			_materials;
+  VectorMaterial				_materials;
 
   /// Represent object in physic world
-  PNPhysicalObject*			_physicalObject;
+  PNPhysicalObject*				_physicalObject;
 
   /// Object position in 3D world
-  PNPoint					_coord;
+  PNPoint						_coord;
   /// Define object orientation
-  PNQuatf					_orient;
-  
-  PNVector3f				_direct;
+  PNQuatf						_orient;
 
   /// Current update translation of 3d object
-  PNVector3f				_updateTranslation;
+  PNVector3f					_updateTranslation;
 
 public:
   /// Default constructor for PN3DObject.
@@ -347,13 +385,6 @@ public:
   virtual void					setOrient(const PNQuatf& orient);
   /// Set 3D object orientation in quaternion
   virtual void					setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w);
-
-  /// Get moving direction of 3d object
-  virtual const PNVector3f&		getDirect() const;
-  /// Set moving direction of 3d object
-  virtual void					setDirect(const PNVector3f& direct);
-  /// Set moving direction of 3d object
-  virtual void					setDirect(pnfloat x, pnfloat y, pnfloat z);
 
   /// Rotate around right normale (x)
   virtual void					rotatePitchRadians(pnfloat pitch);

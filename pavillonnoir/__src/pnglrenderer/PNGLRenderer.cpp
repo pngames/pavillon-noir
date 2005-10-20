@@ -334,8 +334,6 @@ PNGLRenderer::run()
 	  //////////////////////////////////
 	  // CEGUI
 
-	  // Execute Viewing transformations
-	  //	  gluLookAt(0.0, 0.0, 0/*viewPointZ*/, 0.0, 0.0, 0/*refPointZ*/, 0.0, 1.0, 0.0);
 	  glEnable(GL_LIGHTING);
 
 	  //DRAW fps/tri info panel
@@ -345,8 +343,6 @@ PNGLRenderer::run()
 	  CEGUI::System::getSingleton().renderGUI();
 
 	  //////////////////////////////////////////////////////////////////////////
-
-	  PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_ENDING, this, NULL);
 
 	  glFlush(); // force lexecution des commande opengl avant le rendu
 	  SDL_GL_SwapBuffers(); // inverser le buffer decriture et le buffer de rendu
@@ -629,4 +625,3 @@ PNGLRenderer::initGUI()
 
 
 };
-

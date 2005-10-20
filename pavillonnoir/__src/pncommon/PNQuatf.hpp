@@ -79,10 +79,13 @@ public:
   
   void					slerp(const PNQuatf& q1, PNQuatf& q2, pnfloat interp);
 
+  PNPoint				multiply(const pnfloat *point) const;
+  PNPoint	  			multiply(const PNPoint& point) const;
+
   //////////////////////////////////////////////////////////////////////////
 
-  friend PNAPI PNPoint	operator*(const PNQuatf& p, const PNPoint& vec);
-  friend PNAPI PNQuatf	operator*(const PNQuatf& p, const PNQuatf& quat);
+  PNPoint				operator*(const PNPoint& vec) const;
+  PNQuatf				operator*(const PNQuatf& quat) const;
 
   //////////////////////////////////////////////////////////////////////////
   
