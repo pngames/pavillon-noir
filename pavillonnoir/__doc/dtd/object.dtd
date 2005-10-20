@@ -1,9 +1,10 @@
 <!--
      http://www.pavillon-noir.org/
-     XML DTD for object.xml
+     XML DTD for object.pno
 -->
 
-<!ELEMENT model (listmaterials?, skeleton?, listanims?)>
+<!ELEMENT object (model?, listmaterials?, skeleton?, listanims?)>
+<!ELEMENT model EMPTY>
 <!ELEMENT listmaterials (material*)>
 <!ELEMENT listanims (anim*)>
 <!ELEMENT material EMPTY>
