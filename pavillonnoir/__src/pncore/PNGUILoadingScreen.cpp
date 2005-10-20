@@ -54,5 +54,12 @@ namespace PN{
   {
   }
 
+ /* void	PNGUILoadingScreen::startGUI()
+  {
+  }
+
+  void	PNGUILoadingScreen::resetGUI()
+  {
+  }*/
 
 }
