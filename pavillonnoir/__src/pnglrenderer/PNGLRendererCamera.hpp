@@ -48,13 +48,10 @@ class			PNGLRendererCamera : public PN3DCamera
 
 public:
   void			updateViewMatrix();
-  void			calcFrustumPlanes();
-
-  bool			pointInFrustrum(pnfloat x, pnfloat y, pnfloat z);
 
   void			resizeGLWindow(pnfloat width, pnfloat height);
-  pnfloat		getWidth();
-  pnfloat		getHeight();
+  pnfloat		getWidth() const;
+  pnfloat		getHeight() const;
 
   void			setUpdateGLFov(pnbool updatePersp);
 
@@ -71,7 +68,7 @@ private:
   //////////////////////////////////////////////////////////////////////////
 
   void			_cleanFrustrum(pnEventType type, PNObject* source, PNEventData* ed);
-  void			_updateFOV(pnEventType type, PNObject* source, PNEventData* ed);
+  void			_updateGLFOV(pnEventType type, PNObject* source, PNEventData* ed);
 
   //////////////////////////////////////////////////////////////////////////
 private:

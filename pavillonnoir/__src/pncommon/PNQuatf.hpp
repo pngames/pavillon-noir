@@ -59,6 +59,8 @@ public:
   PNQuatf(const PNVector3f& axis, pnfloat phi);
   ~PNQuatf();
 
+  void					loadIdentity();
+
   void					invert();
   PNQuatf				getInvert() const;
 
