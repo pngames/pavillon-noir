@@ -45,6 +45,7 @@ namespace PN
   public:
   protected:
   private:
+	static PNGUIChatWindow* _instance;
 	CEGUI::Window* _mainSheet;
 	CEGUI::Listbox*	_listBox;
 	CEGUI::StaticText* _textQuestion;
@@ -52,6 +53,7 @@ namespace PN
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
+	static PNGUIChatWindow*	getInstance();
 	void  startGUI();
 	void  resetGUI();
 	CEGUI::Window*  getWindow();
@@ -61,7 +63,7 @@ namespace PN
 	void  show();
 	bool  handleListBox(const CEGUI::EventArgs& e);
 	bool  handleValid(const CEGUI::EventArgs& e);
-	void  updateItems(std::string question, std::vector<std::string> responses);
+	void  updateItems(const std::string question, std::vector<std::string> responses);
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/

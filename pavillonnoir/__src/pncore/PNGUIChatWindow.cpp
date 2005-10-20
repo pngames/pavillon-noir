@@ -28,11 +28,16 @@
 */
 
 #include "PNGUIChatWindow.hpp"
+#include "PNConsole.hpp"
 
 using namespace PN;
 
+#define RGBA(R,G,B,A) (B+(G<<8)+(R<<16)+(A<<24))
+
 namespace PN
 {
+   PNGUIChatWindow*				PNGUIChatWindow::_instance = NULL;
+
   PNGUIChatWindow::PNGUIChatWindow()
   {
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/PNChatWindow.layout"); 
@@ -40,7 +45,7 @@ namespace PN
 	_textQuestion = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Text");
 
 	//_listBox->subscribeEvent(CEGUI::Listbox::EventSelectionChanged, CEGUI::Event::Subscriber(&PNGUIChatWindow::handleListBox, this));
-	 CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/ButtonValid")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIChatWindow::handleValid, this));
+	CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/ButtonValid")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIChatWindow::handleValid, this));
 
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 	hide();
@@ -51,9 +56,26 @@ namespace PN
 	_mainSheet->destroy();
   }
 
+  PNGUIChatWindow*  PNGUIChatWindow::getInstance()
+  {
+	if (_instance == NULL)
+	  _instance = new PNGUIChatWindow(); 
+
+	return _instance;
+  }
+
   void	PNGUIChatWindow::startGUI()
   {
 	show();
+	std::vector<std::string> responses;
+	responses.push_back("l'amour");
+	responses.push_back("le jeu");
+	responses.push_back("la bouffe");
+	responses.push_back("le saiske");
+	responses.push_back("la picole");
+	responses.push_back("la drogue");
+	
+	updateItems("Qu'est ce qui vous rend heureux dans la vie ?", responses);
   }
 
   void	PNGUIChatWindow::resetGUI()
@@ -89,15 +111,31 @@ namespace PN
   {
 	if (_listBox->getFirstSelectedItem() != NULL)
 	{
-
+	  resetGUI();
+	  PNConsole::writeLine("Vous avez choisi : %s",_listBox->getFirstSelectedItem()->getText().c_str());
 	}
 	return true;
   }
 
-  void  PNGUIChatWindow::updateItems(std::string question, std::vector<std::string> responses)
+  void  PNGUIChatWindow::updateItems(const std::string question, std::vector<std::string> responses)
   {
+
 	_textQuestion->setText(question.c_str());
-  
+	
+	_listBox->resetList();
+
+	std::vector<std::string>::iterator p_beg = responses.begin();
+	std::vector<std::string>::iterator p_end = responses.end();
+	for (;p_beg != p_end; p_beg++)
+	{
+	  std::string tmp = *p_beg;
+	  CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(tmp.c_str());
+	  item->setSelectionBrushImage((CEGUI::utf8*)"Vanilla-Images", (CEGUI::utf8*)"GenericBrush");
+	  item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
+	  _listBox->addItem(item);
+	}
+
+	
   }
 
 }
