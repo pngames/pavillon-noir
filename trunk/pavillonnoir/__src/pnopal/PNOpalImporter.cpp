@@ -1,8 +1,8 @@
 /*
- * PNImportInterface.hpp
+ * PNOpalImporter.cpp
  * 
  * Description :
- * PNImportInterface declaration
+ * PNOpalImporter definition
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,44 +27,66 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#ifndef _PNIMPORTINTERFACE_HPP_
-# define _PNIMPORTINTERFACE_HPP_
+//#include <fstream>
+//#include <boost/filesystem/operations.hpp>
 
-#include "PNInterface.hpp"
+#include <opal/opal.h>
+
+#include "pndefs.h"
+#include "pnplugins.h"
+
+#include "PNIException.hpp"
+#include "PNOpalImporter.hpp"
+
+#include "PNPhysicsInterface.hpp"
+#include "PNOpalObject.hpp"
+
+namespace fs = boost::filesystem;
+using namespace PN;
+using namespace std;
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-typedef enum
+PNOpalImporter::PNOpalImporter()
 {
-  PN_IMPORT_DEFAULT,
-  PN_IMPORT_3DMODEL,
-  PN_IMPORT_MATERIAL,
-  PN_IMPORT_3DSKELETON,
-  PN_IMPORT_3DANIMATION,
-  PN_IMPORT_PHYSIC,
-  PN_IMPORT_NB_TYPES
-}		importtype;
 
-class PNAPI				PNImportInterface : public PNInterface
+}
+
+PNOpalImporter::~PNOpalImporter()
 {
-public:
-  virtual void			init();
-  
-  plugintypes			getType();
 
-  //////////////////////////////////////////////////////////////////////////
+}
 
-  virtual pnbool  		isManaged(const boost::filesystem::path& file)=0;
-  virtual PNObject*  	doImport(const boost::filesystem::path& file)=0;
-  virtual importtype	getImportType()=0;
+//////////////////////////////////////////////////////////////////////////
 
-  //////////////////////////////////////////////////////////////////////////
+pnbool  		PNOpalImporter::isManaged(const fs::path& path)
+{
+  return true;
+}
 
-  virtual ~PNImportInterface();
-};
+PNObject*	PNOpalImporter::doImport(const fs::path& path)
+{
+  pnerror(PN_LOGLVL_INFO, "Import %s", path.string().c_str());
+
+  PNPhysicalObject* physicalObject = new PNOpalObject((opal::Simulator*)PNPhysicsInterface::getInstance()->getSimulation());
+
+  pnuint error = physicalObject->unserializeFromFile(path);
+
+  if (error != PNEC_SUCCES)
+  {
+	pnerror(PN_LOGLVL_ERROR, "%s : %s", path.string().c_str(), pnGetErrorString(error));
+	delete physicalObject;
+	physicalObject = NULL;
+  }
+
+  return physicalObject;
+}
+
+importtype	PNOpalImporter::getImportType()
+{
+  return PN_IMPORT_PHYSIC;
+}
 
 //////////////////////////////////////////////////////////////////////////
 };
-
-#endif  /*_PNIMPORTINTERFACE_HPP_*/
