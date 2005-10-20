@@ -5,16 +5,16 @@
 
 <!ELEMENT object (model?, listmaterials?, skeleton?, listanims?)>
 <!ELEMENT model EMPTY>
-<!ELEMENT listmaterials (material*)>
-<!ELEMENT listanims (anim*)>
-<!ELEMENT material EMPTY>
 <!ELEMENT skeleton EMPTY>
-<!ELEMENT anim EMPTY>
+<!ELEMENT listmaterials (material*)>
+	<!ELEMENT material EMPTY>
+<!ELEMENT listanims (anim*)>
+	<!ELEMENT anim EMPTY>
 
 <!ATTLIST model path CDATA #IMPLIED>
 
-<!ATTLIST material path CDATA #REQUIRED>
+<!ATTLIST material path CDATA #IMPLIED>
 
-<!ATTLIST skeleton path CDATA #REQUIRED>
+<!ATTLIST skeleton path CDATA #IMPLIED>
 
-<!ATTLIST anim path CDATA #REQUIRED>
+<!ATTLIST anim path CDATA #IMPLIED>

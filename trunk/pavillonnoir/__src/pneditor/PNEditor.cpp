@@ -494,7 +494,7 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
   // 3DObjects
   std::ofstream	o((const char *)objpath.string().c_str());
   o << "<?xml version=\"1.0\"?>" << std::endl;
-  o << "<!DOCTYPE entities SYSTEM \"entities.dtd\">" << std::endl;
+  o << "<!DOCTYPE listentities SYSTEM \"../entities.dtd\">" << std::endl;
   o << "<listentities>" << std::endl;
 
   genScene->clear();
@@ -516,9 +516,9 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 	  PN3DObject	*obj = shape->getObj();
 	  PNPoint		p = obj->getCoord();
 	  PNQuatf		q = obj->getOrient();
-	  std::string	str = obj->getFile()->string().substr(PN::DEF::objectFilePath.size(),
-		obj->getFile()->string().size()
-		- PN::DEF::objectFilePath.size());
+	  int _DEF_SIZE = PN::DEF::objectFilePath.size();
+	  int _FILENAME_SIZE = obj->getFile()->string().size();
+	  std::string	str = obj->getFile()->string().substr(_DEF_SIZE, _FILENAME_SIZE - _DEF_SIZE);
 
 	  obj->serialize();
 
@@ -878,7 +878,7 @@ int	  PNEditor::_parseEntity(void* node)
   PNEnvType	  envType;
   pnfloat	  x, y, z, xx, yy, zz, ww;
 
-  pnerror(PN_LOGLVL_DEBUG, "PNEditor - New entity : name %s, id %s, mdref %s", 
+  pnerror(PN_LOGLVL_DEBUG, "PNEditor - New entity : name=%s, id=%s, mdref=%s", 
 	current->name, xmlGetProp(current, PNXML_ID_ATTR), mdref.c_str());
 
   PN3DObject  *object = NULL;
@@ -901,13 +901,22 @@ int	  PNEditor::_parseEntity(void* node)
   if (object == NULL)
 	return PNEC_FAILED_TO_PARSE;
 
-  fs::path  file(DEF::objectFilePath + mdref, fs::native);
-  pnint obj_error = object->unserializeFromFile(file);
-  if (obj_error != PNEC_SUCCES)
+
+  if (!current->last->prev)
   {
-	pnerror(PN_LOGLVL_ERROR, "%s%s : %s", DEF::objectFilePath.c_str(), mdref.c_str(), pnGetErrorString(obj_error));
-	return obj_error;
+    fs::path  file(DEF::objectFilePath + mdref, fs::native);
+    pnint obj_error = object->unserializeFromFile(file);
+    if (obj_error != PNEC_SUCCES)
+    {
+	  pnerror(PN_LOGLVL_ERROR, "%s%s : %s", DEF::objectFilePath.c_str(), mdref.c_str(), pnGetErrorString(obj_error));
+	  return obj_error;
+    }
   }
+  else
+  {
+	object->unserializeFromXML(current->last->prev);
+  } 
+
 
   x = atof((const char *)xmlGetProp(current, PNXML_COORDX_ATTR));
   y = atof((const char *)xmlGetProp(current, PNXML_COORDY_ATTR));
@@ -930,6 +939,8 @@ int	  PNEditor::_parseEntity(void* node)
 	  continue;
 	if (!xmlStrcmp(current->name, PNXML_MODEL_MKP))
 	  object->unserializeFromXML(current);
+	if (!xmlStrcmp(current->name, PNXML_OBJECT_MKP))
+		pnerror(PN_LOGLVL_DEBUG, "PNEditor - current children is : %s", current->name);
 	if (!xmlStrcmp(current->name, PNXML_ACTION_MKP))
 	  _parseActions(current, shape);
   }

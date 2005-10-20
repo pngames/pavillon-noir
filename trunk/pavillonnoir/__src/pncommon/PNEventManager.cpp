@@ -353,7 +353,6 @@ void	PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* d
   if (_events.size() == 1)
   {
 	//pnerror(PN_LOGLVL_INFO, "stack was empty");
-
     _cond.notify_all();
   }
 }
