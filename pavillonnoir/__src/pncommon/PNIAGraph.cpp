@@ -282,7 +282,7 @@ PNIAGraph::serializeInStream(std::ostream& o)
   WPLIST::iterator	i;
 
   o << "<?xml version=\"1.0\"?>" << std::endl;
-  o << "<!DOCTYPE graph SYSTEM \"waypoints.dtd\">" << std::endl;
+  o << "<!DOCTYPE graph SYSTEM \"../waypoints.dtd\">" << std::endl;
   o << "<graph>" << std::endl;
   o << "<listwp>" << std::endl;
   for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)

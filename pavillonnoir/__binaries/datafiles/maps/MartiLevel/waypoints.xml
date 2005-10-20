@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE graph SYSTEM "waypoints.dtd">
+<!DOCTYPE graph SYSTEM "../waypoints.dtd">
 <graph>
 <listwp>
 <wp id="8" x="37.6147" y="201.37" z="-89.9059"/>
