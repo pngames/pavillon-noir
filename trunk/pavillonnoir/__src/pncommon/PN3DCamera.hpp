@@ -65,7 +65,7 @@ protected:
 
   pnbool					_is3DObjVisible(PN3DObject* obj);
 
-  void					  	_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed);
+  void			  		  	_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed);
 
   void						_onMPStarted(pnEventType type, PNObject* source, PNEventData* ed);
   void						_onMPEnded(pnEventType type, PNObject* source, PNEventData* ed);
