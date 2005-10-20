@@ -1,8 +1,8 @@
 /*
-* PNGUIMsgBox.hpp
+* PNGUIChatWindow.hpp
 * 
 * Description :
-* PNGUIMsgBox declaration
+* PNGUIChatWindow declaration
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,83 +27,51 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#ifndef _PN_GUIMSGBOX_HPP_
-#define _PN_GUIMSGBOX_HPP_
+#ifndef _PNGUICHATWINDOW_HPP_
+#define _PNGUICHATWINDOW_HPP_
+
+#include <vector>
 
 #include "myCEGUI.h"
 #include "pndefs.h"
-#include <fastdelegate/FastDelegate.h>
 
 namespace PN
 {
-  class PNGUIMsgBox
+  class PNGUIChatWindow
   {
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                   Properties                                /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
-	typedef enum
-	{
-	  YES_NO,
-	  OK_CANCEL,
-	  OK,
-	  NO,
-	  YES,
-	  CANCEL,
-	  CONF
-	} msgboxtype;
-
-	typedef fastdelegate::FastDelegate1<const unsigned int&> MsgBoxCallback;
-
   protected:
   private:
-	MsgBoxCallback			fonctionCallback;
-	CEGUI::FrameWindow*	_frameWin;
-	CEGUI::StaticText*	_msgTxt;
-	CEGUI::Window*		_parentWin;
-	CEGUI::Window*		_backWin;
-	CEGUI::Font*		_defaultFont;
-	float _boxWidth;
-	float _boxHeight;
-	float _textWidth;
-	float _textHeight;
-
-	std::string			_actionName;
-	std::string			_argsKind;
-	CEGUI::EventArgs	_ceguiArgs;
-	bool	_cursorVisibility;
-	//CEGUI::Key			_ceguiKey;
-	
-
+	CEGUI::Window* _mainSheet;
+	CEGUI::Listbox*	_listBox;
+	CEGUI::StaticText* _textQuestion;
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
-	  std::string	PNGUIMsgBox::getActionName();
-	  std::string	PNGUIMsgBox::getArgsKind();
-	  CEGUI::EventArgs	PNGUIMsgBox::getCeguiArgs();
-
+	void  startGUI();
+	void  resetGUI();
+	CEGUI::Window*  getWindow();
   protected:
   private:
-	void	genericCreationWindow(const std::string& title, const std::string& text, unsigned int msgtype, CEGUI::Window* parentWin, std::string convert);
-	bool	onClickOk(const CEGUI::EventArgs& arg);
-	bool	onClickCancel(const CEGUI::EventArgs& arg);
-	bool	onClickYes(const CEGUI::EventArgs& arg);
-	bool	onClickNo(const CEGUI::EventArgs& arg);
-	void	deleteMsgBox(msgboxtype msgt);
-	bool	eventKeyConfHandler(const CEGUI::EventArgs& e);
-	bool	eventMouseClickConfHandler(const CEGUI::EventArgs& e);
-	bool	eventMouseWheelConfHandler(const CEGUI::EventArgs& e);
-	void	confNextStep();
-	int		str_to_vector(const std::string& str, const std::string& separators, std::vector<std::string>* p_result);
+	void  hide();
+	void  show();
+	bool  handleListBox(const CEGUI::EventArgs& e);
+	bool  handleValid(const CEGUI::EventArgs& e);
+	void  updateItems(std::string question, std::vector<std::string> responses);
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
-	PNGUIMsgBox(const std::string& title, const std::string& text, unsigned int msgtype, const MsgBoxCallback& fonction, CEGUI::Window* parentWin = NULL);
-	//PNGUIMsgBox(const std::string& text, unsigned int msgtype, const Callback& fonction, const std::string& actionName, CEGUI::Window* parentWin = NULL);
-	~PNGUIMsgBox();
+	PNGUIChatWindow();
+	~PNGUIChatWindow();
+  protected:
+  private:
+
   };
 }
 
-#endif /*_PN_GUIMSGBOX_HPP_*/
+#endif /*_PNGUICHATWINDOW_HPP_*/
