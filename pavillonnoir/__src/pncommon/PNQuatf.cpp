@@ -42,6 +42,16 @@ using namespace PN;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
   
+void		PNQuatf::loadIdentity()
+{
+  x = 0.0f;
+  y = 0.0f;
+  z = 0.0f;
+  w = 1.0f;
+}
+
+/////////////////////////////////////////////////////////////////////////
+
 void		PNQuatf::fromDegrees(const pnfloat* angles)
 {
   fromRadians((pnfloat)DEGREE_TO_RADIAN(angles[0]), (pnfloat)DEGREE_TO_RADIAN(angles[1]), (pnfloat)DEGREE_TO_RADIAN(angles[2]));

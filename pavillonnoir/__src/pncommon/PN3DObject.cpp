@@ -67,7 +67,7 @@ PN3DObject::PN3DObject()
   _model = NULL;
   _physicalObject = NULL;
 
-  _orient.set(0.0f, 0.0f, 0.0f, 1.0f);
+  _orient.loadIdentity();
   _updateTranslation.setNull();
 
   _frontDirection.setArray(PNVector3f::NEGATIVE_UNIT_Z);
@@ -80,8 +80,10 @@ PN3DObject::PN3DObject()
   setMovingMode(MMODE_FREE);
   setTarget(NULL);
 
+  setTargetPosition(0.0f, 0.0f, 0.0f);
   setTargetDistance(-1.0f);
   setTargetDirection(_frontDirection);
+  _targetOrientation.loadIdentity();
 
   _movingSpeed = 1.0f;
   _rotatingYawSpeed = 1.0f;
@@ -579,6 +581,8 @@ PN3DObject::setMovingMode(pnuint mmode)
 void
 PN3DObject::addMovingMode(pnuint mmode)
 {
+  PNLOCK(this);
+
   _movingMode |= mmode;
 }
 
@@ -586,6 +590,8 @@ PN3DObject::addMovingMode(pnuint mmode)
 void
 PN3DObject::subMovingMode(pnuint mmode)
 {
+  PNLOCK(this);
+
   _movingMode &= ~mmode;
 }
 
@@ -691,7 +697,7 @@ PN3DObject::getPositionTargetCoord() const
   if (bcoord == NULL)
 	return _positionTarget->getCoord();
 
-  return skobj->getCoord() + skobj->getOrient().multiply();
+  return skobj->getCoord() + skobj->getOrient().multiply(bcoord);
 }
 
 /// Retrieve 3d object position orientation
@@ -883,6 +889,7 @@ void
 PN3DObject::updateTranslation(pnfloat deltaTime)
 {
   PNLOCK(this);
+
   pnfloat step = deltaTime * _movingSpeed;
 
   _updateTranslation.setNull();
@@ -951,7 +958,11 @@ PN3DObject::updateRotation(pnfloat deltaTime)
   pnfloat	yphi = (pnfloat)DEGREE_TO_RADIAN((_rotatingYawSpeed));
   pnfloat	zphi = (pnfloat)DEGREE_TO_RADIAN((_rotatingRollSpeed));
 
-  if (_movingMode & (MMODE_VIEW_ABS_LOCKED | MMODE_VIEW_LOCKED))
+  if (_movingMode & (MMODE_ORIENTATION_ABS_LOCKED | MMODE_ORIENTATION_LOCKED))
+  {
+	_orient = getViewTargetOrient() * _targetOrientation;
+  }
+  else if (_movingMode & (MMODE_VIEW_ABS_LOCKED | MMODE_VIEW_LOCKED))
   {
 	PNVector3f	targetVector = getViewTargetCoord();
 	targetVector -= _coord;
@@ -981,8 +992,6 @@ PN3DObject::updateRotation(pnfloat deltaTime)
 
 	_orient.fromAxisRadians(_rightTargetDirection.getVector(), xangle);
 	_orient = PNQuatf(PNVector3f::UNIT_Y, yangle) * _orient;
-
-	return ;
   }
   else if (_movingMode & MMODE_VIEW_LOCKED)
   {
@@ -1007,33 +1016,31 @@ PN3DObject::updateRotation(pnfloat deltaTime)
 
 	_orient.fromAxisRadians(PNVector3f::UNIT_X, xangle);
 	_orient = PNQuatf(PNVector3f::UNIT_Y, yangle) * _orient;*/
-
-	return ;
   }
+  else
+  {
+	PNVector3f  axis(PNVector3f::ZERO);
 
-  PNVector3f  axis(PNVector3f::ZERO);
+	if (_movingState & STATE_R_TOP)
+	  axis.x += xphi;
+	if (_movingState & STATE_R_BACK)
+	  axis.x -= xphi;
+	if (_movingState & STATE_R_RIGHT)
+	  axis.y -= yphi;
+	if (_movingState & STATE_R_LEFT)
+	  axis.y += yphi;
+	if (_movingState & STATE_R_FORWARD)
+	  axis.z += zphi;
+	if (_movingState & STATE_R_BACKWARD)
+	  axis.z -= zphi;
 
-  if (_movingState & STATE_R_TOP)
-	axis.x += xphi;
-  if (_movingState & STATE_R_BACK)
-	axis.x -= xphi;
-  if (_movingState & STATE_R_RIGHT)
-	axis.y -= yphi;
-  if (_movingState & STATE_R_LEFT)
-	axis.y += yphi;
-  if (_movingState & STATE_R_FORWARD)
-	axis.z += zphi;
-  if (_movingState & STATE_R_BACKWARD)
-	axis.z -= zphi;
-
-  if (axis.x != 0)
-	rotatePitchRadians(axis.x);
-  if (axis.y != 0)
-	rotateYawRadians(axis.y);
-  if (axis.z != 0)
-	rotateRollRadians(axis.z);
-
-  return ;
+	if (axis.x != 0)
+	  rotatePitchRadians(axis.x);
+	if (axis.y != 0)
+	  rotateYawRadians(axis.y);
+	if (axis.z != 0)
+	  rotateRollRadians(axis.z);
+  }
 }
 
 /**
