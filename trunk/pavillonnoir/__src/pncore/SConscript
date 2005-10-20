@@ -13,6 +13,10 @@ PNGUIMenuRootManager.cpp
 PNGUIMsgBox.cpp
 PNLoadPlugins.cpp
 main.cpp
+PNFoxOptionsObject.cpp
+PNGUIMenuLoad.cpp
+PNGUILoadingScreen.cpp
+PNGUIChatWindow.cpp
 """.split()
 obj.target = 'pncore' + env['suffix']
 obj.instdir = env['install_prefix'] + env['install_path'] + '/linux'
@@ -20,6 +24,6 @@ obj.libpaths = [env.Dir('#./build/pncommon/').abspath, env.Dir('#./build/pnedito
 obj.libs = ['pncommon'+env['suffix'], 'pneditorcommon'+env['suffix']]
 obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath,'-I'+env.Dir('#./__src/pneditorcommon/').abspath,env['FOX_FLAGS'],env['CEGUI_FLAGS'],env['XML_FLAGS'],env['Boost_FLAGS']])
 obj.linkflags = ' '.join([env['FOX_LDFLAGS'],env['CEGUI_LDFLAGS'],env['XML_LDFLAGS'],env['Boost_LDFLAGS'],'-lpncommon'+env['suffix'],'-lpneditorcommon'+env['suffix']])
-if env['DEBUG'] == 1:
-	obj.libs.append(env['EFENCE_LDFLAGS'])
+#if env['DEBUG'] == 1:
+#	obj.libs.append(env['EFENCE_LDFLAGS'])
 obj.execute()

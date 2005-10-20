@@ -6,6 +6,7 @@ obj = env.genobj('shlib', env)
 obj.src = """PNSound.cpp
 PNSoundManager.cpp
 pndlmain.cpp
+PNConsoleSoundCommands.cpp
 """.split()
 obj.target = 'pnsound' + env['suffix'] + '.pnp'
 obj.instdir = env['install_prefix'] + env['install_path'] + '/linux/plugins' + env['debug_path']
