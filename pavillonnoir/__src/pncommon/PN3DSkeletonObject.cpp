@@ -230,5 +230,11 @@ PN3DSkeletonObject::getAnimations()
   return _animations;
 }
 
+PN3DSkeleton*
+PN3DSkeletonObject::getSkeleton()
+{
+  return _skeleton;
+}
+
 //////////////////////////////////////////////////////////////////////////
 };

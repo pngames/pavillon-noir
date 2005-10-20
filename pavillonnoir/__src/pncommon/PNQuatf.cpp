@@ -212,20 +212,64 @@ PNQuatf			PNQuatf::getInvert() const
 
 //////////////////////////////////////////////////////////////////////////
 
-PNAPI PNPoint	operator*(const PNQuatf& quat, const PNPoint& vec)
+PNPoint			PNQuatf::multiply(const pnfloat *point) const
 {
-  register pnfloat tx = 2.0f * quat.x;
-  register pnfloat ty = 2.0f * quat.y;
-  register pnfloat tz = 2.0f * quat.z;
-  register pnfloat twx = tx * quat.w;
-  register pnfloat twy = ty * quat.w;
-  register pnfloat twz = tz * quat.w;
-  register pnfloat txx = tx * quat.x;
-  register pnfloat txy = ty * quat.x;
-  register pnfloat txz = tz * quat.x;
-  register pnfloat tyy = ty * quat.y;
-  register pnfloat tyz = tz * quat.y;
-  register pnfloat tzz = tz * quat.z;
+  register pnfloat tx = 2.0f * x;
+  register pnfloat ty = 2.0f * y;
+  register pnfloat tz = 2.0f * z;
+  register pnfloat twx = tx * w;
+  register pnfloat twy = ty * w;
+  register pnfloat twz = tz * w;
+  register pnfloat txx = tx * x;
+  register pnfloat txy = ty * x;
+  register pnfloat txz = tz * x;
+  register pnfloat tyy = ty * y;
+  register pnfloat tyz = tz * y;
+  register pnfloat tzz = tz * z;
+
+  return PNPoint(
+	point[0] * (1.0f - tyy - tzz) + point[1] * (txy - twz) + point[2] * (txz + twy),
+	point[0] * (txy + twz) + point[1] * (1.0f - txx - tzz) + point[2] * (tyz - twx),
+	point[0] * (txz - twy) + point[1] * (tyz + twx) + point[2] * (1.0f - txx - tyy));
+}
+
+PNPoint			PNQuatf::multiply(const PNPoint& point) const
+{
+  register pnfloat tx = 2.0f * x;
+  register pnfloat ty = 2.0f * y;
+  register pnfloat tz = 2.0f * z;
+  register pnfloat twx = tx * w;
+  register pnfloat twy = ty * w;
+  register pnfloat twz = tz * w;
+  register pnfloat txx = tx * x;
+  register pnfloat txy = ty * x;
+  register pnfloat txz = tz * x;
+  register pnfloat tyy = ty * y;
+  register pnfloat tyz = tz * y;
+  register pnfloat tzz = tz * z;
+
+  return PNPoint(
+	point.x * (1.0f - tyy - tzz) + point.y * (txy - twz) + point.z * (txz + twy),
+	point.x * (txy + twz) + point.y * (1.0f - txx - tzz) + point.z * (tyz - twx),
+	point.x * (txz - twy) + point.y * (tyz + twx) + point.z * (1.0f - txx - tyy));
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+PNPoint			PNQuatf::operator*(const PNPoint& vec) const
+{
+  register pnfloat tx = 2.0f * x;
+  register pnfloat ty = 2.0f * y;
+  register pnfloat tz = 2.0f * z;
+  register pnfloat twx = tx * w;
+  register pnfloat twy = ty * w;
+  register pnfloat twz = tz * w;
+  register pnfloat txx = tx * x;
+  register pnfloat txy = ty * x;
+  register pnfloat txz = tz * x;
+  register pnfloat tyy = ty * y;
+  register pnfloat tyz = tz * y;
+  register pnfloat tzz = tz * z;
 
   return PNPoint(
 	vec.x * (1.0f - tyy - tzz) + vec.y * (txy - twz) + vec.z * (txz + twy),
@@ -233,13 +277,13 @@ PNAPI PNPoint	operator*(const PNQuatf& quat, const PNPoint& vec)
 	vec.x * (txz - twy) + vec.y * (tyz + twx) + vec.z * (1.0f - txx - tyy));
 }
 
-PNAPI PNQuatf	operator*(const PNQuatf& p, const PNQuatf& quat)
+PNQuatf			PNQuatf::operator*(const PNQuatf& quat) const
 {
   PNQuatf	qr(
-	p.w * quat.x + p.x * quat.w + p.y * quat.z - p.z * quat.y,
-	p.w * quat.y + p.y * quat.w + p.z * quat.x - p.x * quat.z,
-	p.w * quat.z + p.z * quat.w + p.x * quat.y - p.y * quat.x,
-	p.w * quat.w - p.x * quat.x - p.y * quat.y - p.z * quat.z);
+	w * quat.x + x * quat.w + y * quat.z - z * quat.y,
+	w * quat.y + y * quat.w + z * quat.x - x * quat.z,
+	w * quat.z + z * quat.w + x * quat.y - y * quat.x,
+	w * quat.w - x * quat.x - y * quat.y - z * quat.z);
 
   return qr;
 }

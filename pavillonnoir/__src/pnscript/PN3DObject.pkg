@@ -1,4 +1,4 @@
-class 				PN3DObject : public PNObject
+class 						PN3DObject : public PNObject
 {
 public:
   typedef enum
@@ -54,29 +54,76 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
 public:
-  /// Displacment and view mode
+  /// Displacement and view mode
   typedef enum
   {
 	MMODE_FREE						= 0x000000,	  		/// 3D object move freely
+
 	MMODE_POSITION_LOCKED			= 0x000001 << 0,	/// 3D object alway try to be in same relative position from target
 	MMODE_POSITION_ABS_LOCKED		= 0x000001 << 1,	/// 3D object alway in same relative position from target
     MMODE_DISTANCE_LOCKED			= 0x000001 << 2,	/// 3D object alway try to be at _targetDistance distance from the target
     MMODE_DISTANCE_ABS_LOCKED		= 0x000001 << 3,	/// 3D object alway at _targetDistance distance from the target
-	MMODE_VIEW_LOCKED				= 0x000001 << 4,	/// 3D object alway try to be in _targetDirection alignment of _target
-	MMODE_VIEW_ABS_LOCKED			= 0x000001 << 5,	/// 3D object alway in _targetDirection alignment of _target
+
+	MMODE_ORIENTATION_LOCKED		= 0x000001 << 4,	/// 3D object alway try to be in _targetOrientation orientation
+	MMODE_ORIENTATION_ABS_LOCKED	= 0x000001 << 5,	/// 3D object alway in _targetOrientation orientation
+	MMODE_VIEW_LOCKED				= 0x000001 << 6,	/// 3D object alway try to be in _targetDirection alignment of _target
+	MMODE_VIEW_ABS_LOCKED			= 0x000001 << 7,	/// 3D object alway in _targetDirection alignment of _target
 
     MMODE_VIEW_DISTANCE_LOCKED		= MMODE_DISTANCE_LOCKED | MMODE_VIEW_LOCKED,			/// MMODE_DISTANCE_LOCKED + MMODE_VIEW_LOCKED
     MMODE_VIEW_DISTANCE_ABS_LOCKED	= MMODE_VIEW_ABS_LOCKED | MMODE_DISTANCE_ABS_LOCKED,	/// MMODE_DISTANCE_ABS_LOCKED + MMODE_VIEW_ABS_LOCKED
   }			  				        movingmode;
 
   /// Return displacement mode of 3D object (free, locked, ...)
-  unsigned int						getMovingMode() const;
+  unsigned int				getMovingMode() const;
   /// Set displacement mode of 3D object (free, locked, ...)
-  void								setMovingMode(unsigned int mmode);
+  void						setMovingMode(unsigned int mmode);
   /// Add bit mask indicate in witch moving mode is the 3D object
-  void								addMovingMode(unsigned int mmode);
+  void						addMovingMode(unsigned int mmode);
   /// Sub bit mask indicate in witch moving mode is the 3D object
-  void								subMovingMode(unsigned int mmode);
+  void						subMovingMode(unsigned int mmode);
+
+  //////////////////////////////////////////////////////////////////////////
+
+public:
+  /// Set 3d object target and 3D object distance
+  void						setTarget(PN3DObject* obj);
+  
+  /// Retrieve 3d object position target
+  PN3DObject*				getPositionTarget() const;
+  /// Retrieve 3d object position target bone
+  const std::string&		getPositionBoneTarget();
+  /// Retrieve 3d object position coordinate
+  PNPoint					getPositionTargetCoord() const;
+  /// Retrieve 3d object position orientation
+  PNQuatf					getPositionTargetOrient() const;
+
+  /// Change 3d object position target
+  void						setPositionTarget(PN3DObject* ptarget);
+  /// Change 3d object position target bone
+  void						setPositionBoneTarget(const std::string& pbtarget);
+
+  /// Retrieve 3d object view target
+  PN3DObject*				getViewTarget() const;
+  /// Retrieve 3d object view target bone
+  const std::string&		getViewBoneTarget();
+  /// Retrieve 3d object position coordinate
+  virtual PNPoint			getViewTargetCoord() const;
+  /// Retrieve 3d object position orientation
+  virtual PNQuatf			getViewTargetOrient() const;
+
+  /// Change 3d object view target
+  void						setViewTarget(PN3DObject* vtarget);
+  /// Change 3d object view target bone
+  void						setViewBoneTarget(const std::string& vbtarget);
+
+  /// Set Position depending on the target
+  void						setTargetPosition(float x, float y, float z);
+  /// Set Distance to the target
+  void						setTargetDistance(float distance);
+  /// Set Direction in witch 3D object look to the target
+  void						setTargetDirection(const PNNormal3f& vec);
+  /// Set Orientation depending on the target
+  void						setTargetOrientation(const PNQuatf& quat);
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -127,163 +174,144 @@ public:
   // PNObject
 
   /// Load 3DObject from xml file
-   int					unserializeFromFile(const boost::filesystem::path& file);
+   int						unserializeFromFile(const boost::filesystem::path& file);
   /// Load 3DObject from xml file
-   int					unserialize();
+   int						unserialize();
 
   /// Save 3DObject into xml file
-   int					serializeInStream(std::ostream& o);
+   int						serializeInStream(std::ostream& o);
   /// Save 3DObject into xml file
-   int					serialize();
+   int						serialize();
 
   //////////////////////////////////////////////////////////////////////////
   
 public:
   /// Return 3D object coordinate in 3D scene
-   const PNPoint&		getCoord() const;
+   const PNPoint&			getCoord() const;
   /// Return 3D object x coordinate in 3D scene
-   float				getX() const;
+   float					getX() const;
   /// Return 3D object y coordinate in 3D scene
-   float				getY() const;
+   float					getY() const;
   /// Return 3D object z coordinate in 3D scene
-   float				getZ() const;
+   float					getZ() const;
 
   /// Set 3D object coordinate in 3D scene
-   void					setCoord(const PNPoint& coord);
+   void						setCoord(const PNPoint& coord);
   /// Set 3D object coordinate in 3D scene
-   void					setCoord(float x, float y, float z);
+   void						setCoord(float x, float y, float z);
 
   /// Return 3D object center coordinate relive to his coordinate
-   const PNPoint&		getCenter() const;
+   const PNPoint&			getCenter() const;
 
-   void					move(PNPoint& coord);
-   void					moveX(float x);
-   void					moveY(float y);
-   void					moveZ(float z);
+   void						move(PNPoint& coord);
+   void						moveX(float x);
+   void						moveY(float y);
+   void						moveZ(float z);
 
-   const PNVector3f &	getUpdateTranslation () const;
-   void					setUpdateTranslation(const PNVector3f& translation);
+   const PNVector3f &		getUpdateTranslation () const;
+   void						setUpdateTranslation(const PNVector3f& translation);
 
   //////////////////////////////////////////////////////////////////////////
 
   /// Return 3D object orientation in quaternion
-   const PNQuatf&		getOrient() const;
+   const PNQuatf&			getOrient() const;
   /// Set 3D object orientation in quaternion
-   void					setOrient(const PNQuatf& orient);
+   void						setOrient(const PNQuatf& orient);
   /// Set 3D object orientation in quaternion
-   void					setOrient(float x, float y, float z, float w);
-
-   const PNVector3f&		getDirect() const;
-   void					setDirect(PNVector3f& direct);
-   void					setDirect(float x, float y, float z);
+   void						setOrient(float x, float y, float z, float w);
 
   /// Rotate around right normale
-   void					rotatePitchRadians(float pitch);
+   void						rotatePitchRadians(float pitch);
   /// Rotate around top normale
-   void					rotateYawRadians(float yaw);
+   void						rotateYawRadians(float yaw);
   /// Rotate around front normale
-   void					rotateRollRadians(float roll);
+   void						rotateRollRadians(float roll);
    /// Rotate relative to actual rotation
-   void					rotatePYRAxisRadians(const PNVector3f& axis, float phi);
+   void						rotatePYRAxisRadians(const PNVector3f& axis, float phi);
 
   /// Rotate around X axis
-   void					rotateXRadians(float x);
+   void						rotateXRadians(float x);
   /// Rotate around Y axis
-   void					rotateYRadians(float y);
+   void						rotateYRadians(float y);
   /// Rotate around Z axis
-   void					rotateZRadians(float z);
+   void						rotateZRadians(float z);
   /// Rotate around "axis" axis
-   void					rotateAxisRadians(const PNVector3f& axis, float phi);
+   void						rotateAxisRadians(const PNVector3f& axis, float phi);
 
   //////////////////////////////////////////////////////////////////////////
 
   /// Return 3D object type
-   objType				getObjType() const;
+   objType					getObjType() const;
 
   //////////////////////////////////////////////////////////////////////////
   
   /// Set animation to play and the time used to make the transition between last animation and this
    unsigned int				startAnimation(int animation, unsigned int transTime);
   /// Stop current animation and reset position
-   void					stopAnimation();
+   void						stopAnimation();
 
   /// Pause current animation
-   void					pause();
+   void						pause();
 
   /// Set speed for current animation, ex: 2.0f = 2 times normal speed
-   void					setAnimSpeed(double speed);
+   void						setAnimSpeed(double speed);
   /// Set the automatic looping of animation enable or disable
-   void					setEnableLoop(bool enabled);
+   void						setEnableLoop(bool enabled);
 
   //////////////////////////////////////////////////////////////////////////
   
   /// Retrieve number of vertex owned by 3d object
-  // unsigned int				getNbVertexComputed();
+  // unsigned int			getNbVertexComputed();
 
   /// Fill buffer from step with vertices owned by 3d object
-  // unsigned int				computeVertex(float* buffer, unsigned int step = 0);
+  // unsigned int			computeVertex(float* buffer, unsigned int step = 0);
   /// Fill buffer from step with normales owned by 3d object
-  // unsigned int				computeNormales(float* buffer, unsigned int step = 0);
+  // unsigned int			computeNormales(float* buffer, unsigned int step = 0);
   /// Fill buffer from step with textures coordinates owned by 3d object
-  // unsigned int				computeTextCoord(float* buffer, unsigned int step = 0);
+  // unsigned int			computeTextCoord(float* buffer, unsigned int step = 0);
   /// Fill buffer from step with colors owned by 3d object
-  // unsigned int				computeColors(float* buffer, unsigned int step = 0);
+  // unsigned int			computeColors(float* buffer, unsigned int step = 0);
 
   /// Retrieve number of face owned by 3d object
-  // unsigned int				getNbFacesComputed();
+  // unsigned int			getNbFacesComputed();
 
   /// Fill buffer from step with faces owned by 3d object
-  // unsigned int				computeFaces(PNFace* faces, unsigned int step = 0);
-
-  //////////////////////////////////////////////////////////////////////////
-  
-  /// Set 3d object target
-  void							setTarget(PN3DObject* obj);
-  /// Set direction in witch 3D object look the target
-  void							setTargetDirection(const PNNormal3f& vec);
-  /// Set Distance to the target
-  void							setTargetDistance(float distance);
-  /// Set Position depending on the target
-  void							setTargetPosition(float x, float y, float z);
-  /// Retrieve 3d object view target
-  PN3DObject					*getPositionTarget() const;
-  /// Retrieve 3d object position target
-  PN3DObject					*getViewTarget() const;
+  // unsigned int			computeFaces(PNFace* faces, unsigned int step = 0);
 
   //////////////////////////////////////////////////////////////////////////
 
   /// Retrieve model of 3d object
-  //PN3DModel*					get3DModel() const;
+  //PN3DModel*				get3DModel() const;
   /// Set the model of 3d object
-  //void							set3DModel(PN3DModel* model);
+  //void					set3DModel(PN3DModel* model);
 
   /// Retrieve materials list of 3d object
-  //const VectorMaterial&			getMaterials() const;
+  //const VectorMaterial&	getMaterials() const;
 
   /// Retrieve physical object of 3d object
-  //PNPhysicalObject*				getPhysicalObject() const;
+  //PNPhysicalObject*		getPhysicalObject() const;
   /// Set the physical object of 3d object
-  //bool							setPhysicalObject(PNPhysicalObject* physicalObject);
+  //bool					setPhysicalObject(PNPhysicalObject* physicalObject);
 
   //////////////////////////////////////////////////////////////////////////
 
   /// Set render mode (model, materials) bit mask
-  void							setRenderMode(unsigned int mode);
+  void						setRenderMode(unsigned int mode);
   /// Return render mode bit mask
-  int							getRenderMode();
+  int						getRenderMode();
 
   /// Update object informations
-   void					update(unsigned int deltaTime);
+   void						update(unsigned int deltaTime);
   /// Update object position
-   void					updateTranslation(float step);
+   void						updateTranslation(float step);
   /// Update object orienation
-   void					updateRotation(float step);
+   void						updateRotation(float step);
 
   /// Render object using PNRendererInterface
-   void					render();
+   void						render();
    
-   void setId(std::string id);
-   std::string getId();
+   void						setId(std::string id);
+   std::string				getId();
 };
 
 

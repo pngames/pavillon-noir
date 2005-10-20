@@ -35,6 +35,7 @@
 
 namespace PN
 {
+//////////////////////////////////////////////////////////////////////////
 
 class PNAPI							IPNSerializable
 {
@@ -62,12 +63,13 @@ public:
   /// Save object to stream
   virtual pnint						serializeInStream(std::ostream& o);
   /// Save object
-  virtual pnint						serialize();	
+  virtual pnint						serialize();
 protected:
-  ///fichier representant l'objet
+  /// File that represent object
   boost::filesystem::path			_file;
 };
 
+//////////////////////////////////////////////////////////////////////////
 }
 
 #endif /*!_IPNSERIALIZATION_HPP_*/

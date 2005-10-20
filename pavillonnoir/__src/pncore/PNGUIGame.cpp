@@ -516,38 +516,38 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
 	// TRANSLATION
   case CEGUI::Key::R : //key "r" move top
 	std::cout << "top";
-	cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_TOP);
+	cam->addMovingState(PN3DObject::STATE_T_TOP);
 	break;
 
   case CEGUI::Key::F : //key "f" move top
 	std::cout << "back";
-	cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_BACK);
+	cam->addMovingState(PN3DObject::STATE_T_BACK);
 	break;
 
   case CEGUI::Key::Z : //key "z" move forward
   case CEGUI::Key::W :
 	std::cout << "forward";
 	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveForward","Player","null",true));
-	cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_FORWARD);
+	cam->addMovingState(PN3DObject::STATE_T_FORWARD);
 	break;
 
   case CEGUI::Key::S : //key "s" move backward
 	std::cout << "backward";
 	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveBackward","Player","null",true));
-	cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_BACKWARD);
+	cam->addMovingState(PN3DObject::STATE_T_BACKWARD);
 	break;
 
   case CEGUI::Key::A :
   case CEGUI::Key::Q : //key "q" step left
 	std::cout << "left";
 	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveLeft","Player","null",true));
-	cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_LEFT);
+	cam->addMovingState(PN3DObject::STATE_T_LEFT);
 	break;
 
   case CEGUI::Key::D : //key "d" step right
 	std::cout << "right";
 	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveRight","Player","null",true));
-	cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_T_RIGHT);
+	cam->addMovingState(PN3DObject::STATE_T_RIGHT);
 	break;
 
 ///////////////////////////////////////////////////////////////////////
@@ -580,19 +580,19 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
 	// ROTATION
   case CEGUI::Key::ArrowLeft :
 	std::cout << "ArrowLeft";
-	cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_R_LEFT);
+	cam->addMovingState(PN3DObject::STATE_R_LEFT);
 	break;
   case CEGUI::Key::ArrowRight :
 	std::cout << "ArrowRight";
-	cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_R_RIGHT);
+	cam->addMovingState(PN3DObject::STATE_R_RIGHT);
 	break;
   case CEGUI::Key::ArrowUp :
 	std::cout << "ArrowUp";
-	cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_R_TOP);
+	cam->addMovingState(PN3DObject::STATE_R_TOP);
 	break;
   case CEGUI::Key::ArrowDown :
 	std::cout << "ArrowDown";
-	cam->setMovingState(cam->getMovingState() | PN3DObject::STATE_R_BACK);
+	cam->addMovingState(PN3DObject::STATE_R_BACK);
 	break;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -651,38 +651,38 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
 	// TRANSLATION
   case CEGUI::Key::R : //key "r" move top
 	std::cout << "top";
-	cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_TOP);
+	cam->subMovingState(PN3DObject::STATE_T_TOP);
 	break;
 
   case CEGUI::Key::F : //key "f" move top
 	std::cout << "back";
-	cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_BACK);
+	cam->subMovingState(PN3DObject::STATE_T_BACK);
 	break;
 
   case CEGUI::Key::Z : //key "z" move forward
   case CEGUI::Key::W :
 	std::cout << "forward";
 	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveForward","Player","null",false));
-	cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_FORWARD);
+	cam->subMovingState(PN3DObject::STATE_T_FORWARD);
 	break;
 
   case CEGUI::Key::S : //key "s" move backward
 	std::cout << "backward";
 	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveBackward","Player","null",false));
-	cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_BACKWARD);
+	cam->subMovingState(PN3DObject::STATE_T_BACKWARD);
 	break;
 
   case CEGUI::Key::A :
   case CEGUI::Key::Q : //key "q" step left
 	std::cout << "left";
 	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveRight","Player","null",false));
-	cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_LEFT);
+	cam->subMovingState(PN3DObject::STATE_T_LEFT);
 	break;
 
   case CEGUI::Key::D : //key "d" step right
 	std::cout << "right";
 	//PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("MoveLeft","Player","null",false));
-	cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_RIGHT);
+	cam->subMovingState(PN3DObject::STATE_T_RIGHT);
 	break;
     //////////////////////////////////////////////////////////////////////////
     // move player
@@ -714,19 +714,19 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
 	// ROTATION
   case CEGUI::Key::ArrowLeft :
 	std::cout << "ArrowLeft";
-	cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_R_LEFT);
+	cam->subMovingState(PN3DObject::STATE_R_LEFT);
 	break;
   case CEGUI::Key::ArrowRight :
 	std::cout << "ArrowRight";
-	cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_R_RIGHT);
+	cam->subMovingState(PN3DObject::STATE_R_RIGHT);
 	break;
   case CEGUI::Key::ArrowUp :
 	std::cout << "ArrowUp";
-	cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_R_TOP);
+	cam->subMovingState(PN3DObject::STATE_R_TOP);
 	break;
   case CEGUI::Key::ArrowDown :
 	std::cout << "ArrowDown";
-	cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_R_BACK);
+	cam->subMovingState(PN3DObject::STATE_R_BACK);
 	break;
 
 	//////////////////////////////////////////////////////////////////////////
