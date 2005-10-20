@@ -1,10 +1,10 @@
 <!--
 	http://www.pavillon-noir.org/
-	XML DTD for 3D models and associated scripts (entities.xml)
+	XML DTD for 3D models and scripts (entities.xml)
 -->
 
 <!ELEMENT listentities (entity*)>
-<!ELEMENT entity (action*, model?)>
+<!ELEMENT entity (action*, object?)>
 <!ELEMENT action (script+)>
 <!ELEMENT script EMPTY>
 
@@ -29,17 +29,18 @@
 
 <!-- imported from object.dtd -->
 
-<!ELEMENT model (listmaterials?, skeleton?, listanims?)>
-<!ELEMENT listmaterials (material*)>
-<!ELEMENT listanims (anim*)>
-<!ELEMENT material EMPTY>
+<!ELEMENT object (model?, listmaterials?, skeleton?, listanims?)>
+<!ELEMENT model EMPTY>
 <!ELEMENT skeleton EMPTY>
-<!ELEMENT anim EMPTY>
+<!ELEMENT listmaterials (material*)>
+	<!ELEMENT material EMPTY>
+<!ELEMENT listanims (anim*)>
+	<!ELEMENT anim EMPTY>
 
 <!ATTLIST model path CDATA #IMPLIED>
 
-<!ATTLIST material path CDATA #REQUIRED>
+<!ATTLIST material path CDATA #IMPLIED>
 
-<!ATTLIST skeleton path CDATA #REQUIRED>
+<!ATTLIST skeleton path CDATA #IMPLIED>
 
-<!ATTLIST anim path CDATA #REQUIRED>
+<!ATTLIST anim path CDATA #IMPLIED>

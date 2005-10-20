@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE model SYSTEM "model.dtd">
+<object>
 <model path="human.pnm">
   <listmaterials>
     <material path="text_human_1.pnt" />
@@ -13,3 +14,4 @@
     <anim path="anim_human_3.pna" />
   </listanims>
 </model>
+</object>
