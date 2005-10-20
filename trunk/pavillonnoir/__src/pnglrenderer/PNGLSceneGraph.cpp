@@ -125,9 +125,9 @@ PNGLSceneGraph::render(pnuint deltaTime)
 
   PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_UPDATE, 0, new PNGameUpdateEventData((pnfloat)deltaTime));
 
-  ////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////
 
-  //_renderCam.update(deltaTime);
+  _renderCam.update(deltaTime);
 
   ////////////////////////////////
   // Initialise le buffer de rendu
@@ -215,6 +215,10 @@ PNGLSceneGraph::render(pnuint deltaTime)
   ax.z = 0.0f;
   color[2] = 0.0f;
 #endif
+
+  //////////////////////////////////////////////////////////////////////////
+
+  PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_ENDING, this, NULL);
 
   return PNEC_SUCCES;
 }

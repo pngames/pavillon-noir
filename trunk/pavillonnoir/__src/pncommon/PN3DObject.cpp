@@ -40,6 +40,8 @@
 #include "PN3DModel.hpp"
 #include "PN3DMaterial.hpp"
 #include "PN3DObject.hpp"
+#include "PN3DSkeletonObject.hpp"
+#include "PN3DSkeleton.hpp"
 
 #include "pno_format.h"
 
@@ -59,36 +61,28 @@ namespace PN {
 PN3DObject::PN3DObject()
 {
   _id = "";
-  _animId = -1;
-  _running = false;
-  _paused = false;
-  _looping = false;
 
   _rotActivation = RACTIVATE_ALL;
-
-  _renderMode = RENDER_MODEL | RENDER_MATERIALS;
-  _movingState = 0;
-  _movingMode = MMODE_FREE;
 
   _model = NULL;
   _physicalObject = NULL;
 
   _orient.set(0.0f, 0.0f, 0.0f, 1.0f);
-  _direct.set(0.0f, 0.0f, 0.0f);
-  _updateTranslation.set(0.0f, 0.0f, 0.0f);
+  _updateTranslation.setNull();
 
   _frontDirection.setArray(PNVector3f::NEGATIVE_UNIT_Z);
   _rightDirection.setArray(PNVector3f::UNIT_X);
   _topDirection.setArray(PNVector3f::UNIT_Y);
 
-  _viewTarget = NULL;
-  _positionTarget = NULL;
+  _renderMode = RENDER_MODEL | RENDER_MATERIALS;
+  _movingState = STATE_NONE;
 
-  _targetDistance = -1.0f;
+  setMovingMode(MMODE_FREE);
+  setTarget(NULL);
+
+  setTargetDistance(-1.0f);
   setTargetDirection(_frontDirection);
 
-  _animTransTime = 0;
-  _animSpeed = 1.0f;
   _movingSpeed = 1.0f;
   _rotatingYawSpeed = 1.0f;
   _rotatingPitchSpeed = 1.0f;
@@ -311,12 +305,6 @@ const PNQuatf&
 PN3DObject::getOrient() const
 {
   return _orient;
-}
-
-const PNVector3f&
-PN3DObject::getDirect() const
-{
-  return _direct;
 }
 
 const PNVector3f &
@@ -666,12 +654,154 @@ PN3DObject::setTarget(PN3DObject* obj)
 {
   PNLOCK(this);
 
-  _positionTarget = _viewTarget = obj;
+  setPositionTarget(obj);
+  setViewTarget(obj);
 
   if (obj == NULL)
 	setMovingMode(MMODE_FREE);
 }
 
+/// Retrieve 3d object position target
+PN3DObject*
+PN3DObject::getPositionTarget() const
+{
+  return _positionTarget;
+}
+
+/// Retrieve 3d object position target bone
+const std::string&
+PN3DObject::getPositionBoneTarget()
+{
+  return _positionBoneTarget;
+}
+
+/// Retrieve 3d object position coordinate
+PNPoint
+PN3DObject::getPositionTargetCoord() const
+{
+  PNPoint coord  = _positionTarget->getCoord();
+
+  if (_positionBoneTarget.empty())
+	return coord;
+
+  PN3DSkeletonObject* skobj = (PN3DSkeletonObject*)_positionTarget;
+
+  const pnfloat*	  bcoord = skobj->getSkeleton()->getBoneCoords(_positionBoneTarget);
+
+  if (bcoord == NULL)
+	return _positionTarget->getCoord();
+
+  return skobj->getCoord() + skobj->getOrient().multiply();
+}
+
+/// Retrieve 3d object position orientation
+PNQuatf
+PN3DObject::getPositionTargetOrient() const
+{
+  //if (_positionBoneTarget.empty())
+	return _positionTarget->getOrient();
+
+  //PN3DSkeletonObject* skobj = (PN3DSkeletonObject*)_positionTarget;
+
+  // FIXME : return bone orientation
+}
+
+/// Change 3d object position target
+void
+PN3DObject::setPositionTarget(PN3DObject* ptarget)
+{
+  PNLOCK(this);
+
+  _positionTarget = ptarget;
+
+  if (_positionTarget == NULL || _positionTarget->getObjType() != PN3DObject::OBJTYPE_3DSKELETONOBJ)
+	_positionBoneTarget.clear();
+}
+
+/// Change 3d object position target bone
+void
+PN3DObject::setPositionBoneTarget(const std::string& pbtarget)
+{
+  PNLOCK(this);
+
+  if (_positionTarget->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ)
+	_positionBoneTarget = pbtarget;
+  else
+	_positionBoneTarget.clear();
+}
+
+/// Retrieve 3d object view target
+PN3DObject*
+PN3DObject::getViewTarget() const
+{
+  return _viewTarget;
+}
+
+/// Retrieve 3d object view target bone
+const std::string&
+PN3DObject::getViewBoneTarget()
+{
+  return _viewBoneTarget;
+}
+
+/// Retrieve 3d object position coordinate
+PNPoint
+PN3DObject::getViewTargetCoord() const
+{
+  if (_viewBoneTarget.empty())
+	return _viewTarget->getCoord();
+
+  PN3DSkeletonObject* skobj = (PN3DSkeletonObject*)_viewTarget;
+
+  return skobj->getCoord() + skobj->getOrient().multiply(skobj->getSkeleton()->getBoneCoords(_viewBoneTarget));
+}
+
+/// Retrieve 3d object position orientation
+PNQuatf
+PN3DObject::getViewTargetOrient() const
+{
+  //if (_viewBoneTarget.empty())
+	return _viewTarget->getOrient();
+
+  // FIXME : return bone orientation
+}
+
+/// Change 3d object view target
+void
+PN3DObject::setViewTarget(PN3DObject* vtarget)
+{
+  PNLOCK(this);
+
+  _viewTarget = vtarget;
+
+  if (_viewTarget == NULL || _viewTarget->getObjType() != PN3DObject::OBJTYPE_3DSKELETONOBJ)
+	_positionBoneTarget.clear();
+}
+
+/// Change 3d object view target bone
+void
+PN3DObject::setViewBoneTarget(const std::string& vbtarget)
+{
+  PNLOCK(this);
+
+  if (_viewTarget->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ)
+	_viewBoneTarget = vbtarget;
+  else
+	_viewBoneTarget.clear();
+}
+
+/// Set Position depending on the target
+void
+PN3DObject::setTargetPosition(pnfloat x, pnfloat y, pnfloat z)
+{
+  PNLOCK(this);
+
+  _targetPosition.x = x;
+  _targetPosition.y = y;
+  _targetPosition.z = z;
+}
+
+/// Set Distance to the target
 void
 PN3DObject::setTargetDistance(pnfloat distance)
 {
@@ -680,6 +810,7 @@ PN3DObject::setTargetDistance(pnfloat distance)
   _targetDistance = distance;
 }
 
+/// Set Direction in witch 3D object look to the target
 void
 PN3DObject::setTargetDirection(const PNNormal3f& n)
 {
@@ -693,26 +824,13 @@ PN3DObject::setTargetDirection(const PNNormal3f& n)
   //_rightTargetDirection.crossProduct(PNVector3f::UNIT_Y, _targetDirection);
 }
 
+/// Set Orientation depending on the target
 void
-PN3DObject::setTargetPosition(pnfloat x, pnfloat y, pnfloat z)
+PN3DObject::setTargetOrientation(const PNQuatf& quat)
 {
-  _targetPosition.x = x;
-  _targetPosition.y = y;
-  _targetPosition.z = z;
-}
+  PNLOCK(this);
 
-/// Retrieve 3d object view target
-PN3DObject*
-PN3DObject::getPositionTarget() const
-{
-  return _positionTarget;
-}
-
-/// Retrieve 3d object position target
-PN3DObject*
-PN3DObject::getViewTarget() const
-{
-  return _viewTarget;
+  _targetOrientation = quat;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -753,25 +871,6 @@ PN3DObject::setPhysicalObject(PNPhysicalObject* physical_object)
   return true;
 }
 
-//////////////////////////////////////////////////////////////////////////
-
-void
-PN3DObject::setDirect(const PNVector3f &direct)
-{
-  PNLOCK(this);
-
-  _direct = direct;
-}
-
-void
-PN3DObject::setDirect(pnfloat x, pnfloat y, pnfloat z)
-{
-  PNLOCK(this);
-
-  _direct.x = x;
-  _direct.y = y;
-  _direct.x = x;
-}
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -793,8 +892,8 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
 
   if (_movingMode & (MMODE_POSITION_ABS_LOCKED | MMODE_POSITION_ABS_LOCKED))
   {
-	_updateTranslation = _positionTarget->getCoord();
-	_updateTranslation += _positionTarget->getOrient() * _targetPosition;
+	_updateTranslation = getPositionTargetCoord();
+	_updateTranslation += getPositionTargetOrient() * _targetPosition;
 	_updateTranslation -= getCoord();
 
 	return ;
@@ -854,7 +953,7 @@ PN3DObject::updateRotation(pnfloat deltaTime)
 
   if (_movingMode & (MMODE_VIEW_ABS_LOCKED | MMODE_VIEW_LOCKED))
   {
-	PNVector3f	targetVector = _viewTarget->getCoord();
+	PNVector3f	targetVector = getViewTargetCoord();
 	targetVector -= _coord;
 
 	pnfloat	norm = sqrtf(SQNBR(targetVector.x) + SQNBR(targetVector.z));

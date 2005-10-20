@@ -39,6 +39,14 @@ namespace PN
 
 IPNAnimated::IPNAnimated()
 {
+  _animId = -1;
+  _running = false;
+  _paused = false;
+  _looping = false;
+
+  _animTransTime = 0;
+  _animSpeed = 1.0f;
+
   _startedEventType = -1;
   _stopedEventType = -1;
 }
