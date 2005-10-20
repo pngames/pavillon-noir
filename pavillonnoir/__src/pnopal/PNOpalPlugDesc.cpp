@@ -36,27 +36,38 @@ namespace PN {
 
 PNInterface*	PNOpalPlugDesc::getInterface(pnuint id)
 {
-  if (_interface == NULL)
+  switch (id)
   {
-	_interface = new PNOpal();
-  } 
-  return ((PNInterface*)_interface);
+  case 0:
+	  if (_physicsInterface == NULL)
+		  _physicsInterface = new PNOpal();
+	  return (PNInterface*)_physicsInterface;
+  case 1:
+	  if (_importerInterface == NULL)
+		  _importerInterface = new PNOpalImporter();
+	  return (PNInterface*)_importerInterface;
+  }
+
+  return NULL;
 }
 
 pnuint			PNOpalPlugDesc::getNbInterface()
 {
-  return 1;
+  return 2;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-PNOpalPlugDesc::PNOpalPlugDesc()
+PNOpalPlugDesc::PNOpalPlugDesc() : _physicsInterface(NULL), _importerInterface(NULL)
 {
-  this->_interface = NULL;
 }
 
 PNOpalPlugDesc::~PNOpalPlugDesc()
 {
+  if (_physicsInterface != NULL)
+	delete _physicsInterface;
+  if (_importerInterface != NULL)
+	delete _importerInterface;
 }
 
 }

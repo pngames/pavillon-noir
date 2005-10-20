@@ -1,8 +1,8 @@
 /*
- * PNImportInterface.hpp
+ * PNOpalImporter.hpp
  * 
  * Description :
- * PNImportInterface declaration
+ * PNOpalImporter declaration
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,44 +27,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#ifndef _PNIMPORTINTERFACE_HPP_
-# define _PNIMPORTINTERFACE_HPP_
+#ifndef _PNOpalImporter_HPP_
+# define _PNOpalImporter_HPP_
 
-#include "PNInterface.hpp"
+#include "PNIImporter.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-typedef enum
-{
-  PN_IMPORT_DEFAULT,
-  PN_IMPORT_3DMODEL,
-  PN_IMPORT_MATERIAL,
-  PN_IMPORT_3DSKELETON,
-  PN_IMPORT_3DANIMATION,
-  PN_IMPORT_PHYSIC,
-  PN_IMPORT_NB_TYPES
-}		importtype;
-
-class PNAPI				PNImportInterface : public PNInterface
+class			PNOpalImporter : public PNImportInterface
 {
 public:
-  virtual void			init();
-  
-  plugintypes			getType();
+  PNOpalImporter();
+  ~PNOpalImporter();
 
   //////////////////////////////////////////////////////////////////////////
+  // PNIImporter
 
-  virtual pnbool  		isManaged(const boost::filesystem::path& file)=0;
-  virtual PNObject*  	doImport(const boost::filesystem::path& file)=0;
-  virtual importtype	getImportType()=0;
+  bool  		isManaged(const boost::filesystem::path& file);
+  PNObject*		doImport(const boost::filesystem::path& file);
+  importtype	getImportType();
 
-  //////////////////////////////////////////////////////////////////////////
-
-  virtual ~PNImportInterface();
 };
 
 //////////////////////////////////////////////////////////////////////////
-};
+}
 
-#endif  /*_PNIMPORTINTERFACE_HPP_*/
+#endif /*_PNOpalImporter_HPP_*/

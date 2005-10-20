@@ -30,6 +30,8 @@
 #ifndef _PNPHYSICALOBJECT_HPP_
 # define _PNPHYSICALOBJECT_HPP_
 
+#include <libxml/xmlreader.h>
+
 #include "pndefs.h"
 #include "pnmath.h"
 
@@ -78,6 +80,12 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
   virtual void			addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration)=0;
+
+  //////////////////////////////////////////////////////////////////////////
+
+  /// Parse XML root node
+  virtual pnint				unserializeFromXML(xmlNode* node)=0;
+
 };
 
 //////////////////////////////////////////////////////////////////////////

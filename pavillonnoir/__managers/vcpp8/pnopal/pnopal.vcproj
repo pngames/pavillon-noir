@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/"
+				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/;&quot;E:\dev\gna\pavillon-noir\pavillonnoir\__src\pnimporter&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PNOPAL_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -199,6 +199,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pnopal\PNOpalImporter.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pnopal\PNOpalObject.cpp"
 				>
 			</File>
@@ -218,6 +222,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pnopal\PNOpalEvents.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pnopal\PNOpalImporter.hpp"
 				>
 			</File>
 			<File

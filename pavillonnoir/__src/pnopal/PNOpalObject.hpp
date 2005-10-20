@@ -30,6 +30,7 @@
 #ifndef _PNOPALOBJECT_HPP_
 # define _PNOPALOBJECT_HPP_
 
+#include <libxml/xmlreader.h>
 #include <opal/opal.h>
 
 #include "pndefs.h"
@@ -76,6 +77,10 @@ namespace PN {
 	//////////////////////////////////////////////////////////////////////////
 	
 	void				addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration);
+
+	//////////////////////////////////////////////////////////////////////////
+
+	pnint				unserializeFromXML(xmlNode* node);
   };
 }
 
