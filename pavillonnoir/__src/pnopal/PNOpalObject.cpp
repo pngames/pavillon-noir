@@ -27,6 +27,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+#include <libxml/xmlreader.h>
+
 #include "pndefs.h"
 #include "pnplugins.h"
 
@@ -258,6 +260,25 @@ void		PNOpalObject::addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration)
   f.duration = duration;
   //PNConsole::writeLine("Adding force - x : %f, y : %f, z : %f, duration : %f", x, y, z, duration);
   _solid->addForce(f);*/
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+pnint		PNOpalObject::unserializeFromXML(xmlNode* node)
+{
+  /*
+  opal::Simulator* sim = opal::createSimulator();
+  opal::Blueprint sailboatBP;
+
+  // Load the Blueprint from a file.
+  opal::loadFile(sailboatBP, “sailboat.xml”);
+  
+  // Instantiate the Blueprint.
+  opal::BlueprintInstance instance;
+  sim->instantiateBlueprint(instance, sailboatBP);
+  */
+
+  return NULL;
 }
 
 }

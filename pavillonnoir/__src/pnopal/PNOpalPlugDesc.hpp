@@ -33,6 +33,8 @@
 #include "PNOpal.hpp"
 #include "PNPlugDesc.hpp"
 
+#include "PNOpalImporter.hpp"
+
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
@@ -41,7 +43,8 @@ class PNOpal;
 class PNOpalPlugDesc : public PNPlugDesc
 {
 protected:
-  PNOpal* _interface;
+  PNOpal*			_physicsInterface;
+  PNOpalImporter*	_importerInterface; 
 
 public:
   PNInterface*	getInterface(pnuint id);
