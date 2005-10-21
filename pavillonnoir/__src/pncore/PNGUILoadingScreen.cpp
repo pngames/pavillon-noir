@@ -31,35 +31,83 @@
 
 using namespace PN;
 
+#define RGBA(R,G,B,A) (B+(G<<8)+(R<<16)+(A<<24))
+
 namespace PN{
 
   PNGUILoadingScreen::PNGUILoadingScreen()
   {
+	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("LoadingScreenImage") == false)
+	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/LoadingBackground.imageset");
+
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNLoadingScreen.layout");
 	_backGround = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/Background");
 	_progBar = (CEGUI::ProgressBar*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/ProgressBar");
-	CEGUI::MouseCursor::getSingleton().hide();
+	_listBox = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/ListBox");
+	_listBox->setShowVertScrollbar(false);
 
+	_mainSheet->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&PNGUILoadingScreen::handleClickTest, this));
 
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
+	hide();
   }
 
   PNGUILoadingScreen::~PNGUILoadingScreen()
   {
-	CEGUI::MouseCursor::getSingleton().show();
 	_mainSheet->destroy();
   }
 
-  void PNGUILoadingScreen::refreshScreen()
+  void PNGUILoadingScreen::refreshScreen(float val, std::string update)
+  {
+	_progBar->setProgress(val);
+	CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(update.c_str());
+	item->setSelectionBrushImage((CEGUI::utf8*)"Vanilla-Images", (CEGUI::utf8*)"GenericBrush");
+	item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
+
+	_listBox->addItem(item);
+	_listBox->setShowVertScrollbar(false);
+  }
+
+  void  PNGUILoadingScreen::setRandomBackground()
   {
   }
 
- /* void	PNGUILoadingScreen::startGUI()
+ bool PNGUILoadingScreen::handleClickTest(const CEGUI::EventArgs& e)
+ {
+   static float tmp = 0.0f;
+	static int count = 0;
+   std::string str = "ca a clique ";
+   if (tmp > 1.0f)
+	 tmp = 0.0f;
+
+   	tmp += 0.1f;
+
+	refreshScreen(tmp, str );
+	
+
+  return true;
+ }
+
+  void	PNGUILoadingScreen::startGUI()
   {
+	CEGUI::MouseCursor::getSingleton().hide();
+	setRandomBackground();
+	show();
   }
 
   void	PNGUILoadingScreen::resetGUI()
   {
-  }*/
+	hide();
+  }
+
+  void	PNGUILoadingScreen::show()
+  {
+	_mainSheet->show();
+  }
+
+  void	PNGUILoadingScreen::hide()
+  {
+	_mainSheet->hide();
+  }
 
 }
