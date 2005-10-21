@@ -86,7 +86,7 @@ IPNSerializable::unserializeFromFile(const boost::filesystem::path& file)
 
   setFile(file);
 
-  ifstream	i(file.string().c_str(), ifstream::binary);
+  ifstream	i(_file.string().c_str(), ifstream::binary);
 
   return unserializeFromStream(i);
 }
