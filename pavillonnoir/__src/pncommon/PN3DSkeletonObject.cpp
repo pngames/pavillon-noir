@@ -150,7 +150,7 @@ PN3DSkeletonObject::_serializeContent(std::ostream& o)
   PN3DObject::_serializeContent(o);
 
   if (_skeleton != NULL && _skeleton->getFile() != NULL)
-	o << "  " << "<" << PNO_XMLNODE_SKELETON << " " << PNO_XMLPROP_PATH << "=\"" << _skeleton->getFile()->string() << "\" />" << endl;
+	o << "  " << "<" << PNO_XMLNODE_SKELETON << " " << PNO_XMLPROP_PATH << "=\"" << DEF::convertPath(DEF::skeletonFilePath, _skeleton->getFile()->string()) << "\" />" << endl;
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -158,7 +158,7 @@ PN3DSkeletonObject::_serializeContent(std::ostream& o)
 
   for (VECTORANIMATION::iterator it = _animations.begin(); it != _animations.end(); ++it)
 	if (*it != NULL && ((PN3DAnimation*)*it)->getFile() != NULL)
-	  o << "    " << "<" << PNO_XMLNODE_ANIM << " " << PNO_XMLPROP_PATH << "=\"" << ((PN3DAnimation*)*it)->getFile()->string() << "\" />" << endl;
+	  o << "    " << "<" << PNO_XMLNODE_ANIM << " " << PNO_XMLPROP_PATH << "=\"" << DEF::convertPath(DEF::animationFilePath, ((PN3DAnimation*)*it)->getFile()->string()) << "\" />" << endl;
 
   o << "  " << "</" << PNO_XMLNODE_LISTANIMS << ">" << endl;
 
