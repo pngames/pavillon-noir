@@ -89,6 +89,8 @@ public:
   PNPoint				operator*(const PNPoint& vec) const;
   PNQuatf				operator*(const PNQuatf& quat) const;
 
+  PNQuatf&				operator*=(const PNQuatf& quat);
+
   //////////////////////////////////////////////////////////////////////////
   
   PNQuatf&				operator=(const pnfloat* q);

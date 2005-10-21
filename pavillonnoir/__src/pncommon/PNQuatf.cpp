@@ -289,13 +289,23 @@ PNPoint			PNQuatf::operator*(const PNPoint& vec) const
 
 PNQuatf			PNQuatf::operator*(const PNQuatf& quat) const
 {
-  PNQuatf	qr(
+  PNQuatf	qr(*this);
+
+  qr *= quat;
+
+  return qr;
+}
+
+PNQuatf&		PNQuatf::operator*=(const PNQuatf& quat)
+{
+  set(
 	w * quat.x + x * quat.w + y * quat.z - z * quat.y,
 	w * quat.y + y * quat.w + z * quat.x - x * quat.z,
 	w * quat.z + z * quat.w + x * quat.y - y * quat.x,
-	w * quat.w - x * quat.x - y * quat.y - z * quat.z);
+	w * quat.w - x * quat.x - y * quat.y - z * quat.z
+	);
 
-  return qr;
+  return *this;
 }
 
 //////////////////////////////////////////////////////////////////////////
