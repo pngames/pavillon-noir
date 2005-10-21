@@ -330,10 +330,10 @@ void			PNMatrix4f::setRotationRadians(const pnfloat* rot)
 std::ostream&	operator<<(std::ostream& o, const PNMatrix4f& mat)
 {
   o << "{" << std::endl <<
-	mat._matrix[0] << "\t" << mat._matrix[1] << "\t" << mat._matrix[2] << "\t" << mat._matrix[3] << std::endl <<
-	mat._matrix[4] << "\t" << mat._matrix[5] << "\t" << mat._matrix[6] << "\t" << mat._matrix[7] << std::endl <<
-	mat._matrix[8] << "\t" << mat._matrix[9] << "\t" << mat._matrix[10] << "\t" << mat._matrix[11] << std::endl <<
-	mat._matrix[12] << "\t" << mat._matrix[13] << "\t" << mat._matrix[14] << "\t" << mat._matrix[15] << std::endl <<
+	mat[0] << "\t" << mat[1] << "\t" << mat[2] << "\t" << mat[3] << std::endl <<
+	mat[4] << "\t" << mat[5] << "\t" << mat[6] << "\t" << mat[7] << std::endl <<
+	mat[8] << "\t" << mat[9] << "\t" << mat[10] << "\t" << mat[11] << std::endl <<
+	mat[12] << "\t" << mat[13] << "\t" << mat[14] << "\t" << mat[15] << std::endl <<
 	"}" << std::endl;
 
   return o;

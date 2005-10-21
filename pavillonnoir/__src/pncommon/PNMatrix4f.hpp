@@ -85,7 +85,9 @@ public:
   void			setRotationDegrees(const pnfloat* rot);
   void			setRotationRadians(const pnfloat* rot);
 
+  pnfloat		operator[](pnint index) const {return (_matrix[index]);}
   pnfloat&		operator[](pnint index) {return (_matrix[index]);}
+
   const pnfloat	*getMatrix() const {return (_matrix);}
 };
 

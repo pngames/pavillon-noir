@@ -32,9 +32,11 @@
 #include "pndefs.h"
 #include "pnmath.h"
 
-#include "PNQuatf.hpp"
 #include "PNPoint.hpp"
 #include "PNVector3f.hpp"
+#include "PNMatrix4f.hpp"
+
+#include "PNQuatf.hpp"
 
 namespace fs = boost::filesystem;
 using namespace PN;
@@ -48,6 +50,48 @@ void		PNQuatf::loadIdentity()
   y = 0.0f;
   z = 0.0f;
   w = 1.0f;
+}
+
+/////////////////////////////////////////////////////////////////////////
+
+void		PNQuatf::set(const PNMatrix4f& mat)
+{
+  register pnfloat trace = mat[0] + mat[5] + mat[10];
+  register pnfloat scale;
+
+  if (trace > 0.0f)
+  {
+	scale = sqrtf(1.0f + trace);
+	w = 0.5f * scale;
+	scale = 0.5f / scale;
+	x = (mat[6] - mat[9]) * scale;
+	y = (mat[8] - mat[2]) * scale;
+	z = (mat[1] - mat[4]) * scale;
+  }
+  else if (mat[0] > mat[5] && mat[0] > mat[10])
+  {
+	scale = 2.0f * sqrtf(1.0f + mat[0] - mat[5] - mat[10]);
+	x = 0.25f * scale;
+	y = (mat[1] + mat[4]) / scale;
+	z = (mat[2] + mat[8]) / scale;
+	w = (mat[6] - mat[9]) / scale;
+  }
+  else if (mat[5] > mat[10])
+  {
+	scale = 2.0f * sqrtf(1.0f + mat[5] - mat[0] - mat[10]);
+	y = 0.25f * scale;
+	x = (mat[1] + mat[4]) / scale;
+	z = (mat[6] + mat[9]) / scale;
+	w = (mat[2] - mat[8]) / scale;
+  }
+  else
+  {
+	scale = 2.0f * sqrtf(1.0f + mat[10] - mat[0] - mat[5]);
+	z = 0.25f * scale;
+	x = (mat[2] + mat[8]) / scale;
+	y = (mat[6] + mat[9]) / scale;
+	w = (mat[1] - mat[4]) / scale;
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////
