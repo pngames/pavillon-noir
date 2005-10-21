@@ -36,19 +36,29 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
   namespace DEF
   {
-	static const std::string dataFilePath = "datafiles/";
-	static const std::string modelFilePath = dataFilePath + "models/";
-	static const std::string materialFilePath = dataFilePath + "materials/";
-	static const std::string skeletonFilePath = dataFilePath + "skeletons/";
-	static const std::string animationFilePath = dataFilePath + "animations/";
-	static const std::string objectFilePath = dataFilePath + "objects/";
-	static const std::string gamedefFilePath = dataFilePath + "gamedef/";
-	static const std::string texturesFilePath = dataFilePath + "textures/";
-	static const std::string mapsFilePath = dataFilePath + "maps/";
-	static const std::string musicFilePath = dataFilePath + "music/";
-	static const std::string soundsFilePath = dataFilePath + "sounds/";
-	static const std::string videosFilePath = dataFilePath + "videos/";
-	static const std::string defaultObjFilePath = objectFilePath + "3ddynobject.pno";
+	static const std::string	dataFilePath = "datafiles/";
+	static const std::string	modelFilePath = dataFilePath + "models/";
+	static const std::string	materialFilePath = dataFilePath + "materials/";
+	static const std::string	skeletonFilePath = dataFilePath + "skeletons/";
+	static const std::string	animationFilePath = dataFilePath + "animations/";
+	static const std::string	objectFilePath = dataFilePath + "objects/";
+	static const std::string	gamedefFilePath = dataFilePath + "gamedef/";
+	static const std::string	texturesFilePath = dataFilePath + "textures/";
+	static const std::string	mapsFilePath = dataFilePath + "maps/";
+	static const std::string	musicFilePath = dataFilePath + "music/";
+	static const std::string	soundsFilePath = dataFilePath + "sounds/";
+	static const std::string	videosFilePath = dataFilePath + "videos/";
+	static const std::string	defaultObjFilePath = objectFilePath + "3ddynobject.pno";
+
+	inline std::string			convertPath(const std::string& type, const std::string& path)
+	{
+	  std::string::size_type	  index = path.find_last_of(type);
+
+	  if (index == std::string::npos)
+		return path;
+
+	  return path.c_str() + index + 1;
+	}
   }
 //////////////////////////////////////////////////////////////////////////
 }

@@ -254,7 +254,7 @@ pnint
 PN3DObject::_serializeContent(std::ostream& o)
 {
   if (_model != NULL && _model->getFile() != NULL)
-	o << "  " << "<" << PNO_XMLNODE_MODEL << " " << PNO_XMLPROP_PATH << "=\"" << (_model == NULL ? "none" :_model->getFile()->string()) << "\" />" << endl;
+	o << "  " << "<" << PNO_XMLNODE_MODEL << " " << PNO_XMLPROP_PATH << "=\"" << (_model == NULL ? "none" : DEF::convertPath(DEF::modelFilePath, _model->getFile()->string())) << "\" />" << endl;
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -262,7 +262,7 @@ PN3DObject::_serializeContent(std::ostream& o)
 
   for (VectorMaterial::iterator it = _materials.begin(); it != _materials.end(); ++it)
 	if (*it != NULL && ((PN3DMaterial*)*it)->getFile() != NULL)
-	  o << "    " << "<" << PNO_XMLNODE_MATERIAL << " " << PNO_XMLPROP_PATH << "=\"" << ((PN3DMaterial*)*it)->getFile()->string() << "\" />" << endl;
+	  o << "    " << "<" << PNO_XMLNODE_MATERIAL << " " << PNO_XMLPROP_PATH << "=\"" << DEF::convertPath(DEF::materialFilePath, ((PN3DMaterial*)*it)->getFile()->string()) << "\" />" << endl;
 
   o << "  " << "</" << PNO_XMLNODE_LISTMATERIALS << ">" << endl;
 
