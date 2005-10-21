@@ -71,7 +71,7 @@ IPNSerializable::setFile(const boost::filesystem::path& file)
  *
  * @param file	File to load
  *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succed
+ * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succeed
  *
  * @see			pnGetErrorString
  */
