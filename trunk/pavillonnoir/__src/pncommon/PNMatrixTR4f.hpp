@@ -73,8 +73,8 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   
-  friend PNAPI PNPoint		operator*(const PNMatrixTR4f& mat, const PNPoint& vec);
-  friend PNAPI PNVector3f	operator*(const PNMatrixTR4f& mat, const PNVector3f& vec);
+  PNPoint		operator*(const PNPoint& vec) const;
+  PNVector3f	operator*(const PNVector3f& vec) const;
 };
 
 //////////////////////////////////////////////////////////////////////////
