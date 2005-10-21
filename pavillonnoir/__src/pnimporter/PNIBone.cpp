@@ -89,6 +89,14 @@ PNIBone::getFinal() const
 
 //////////////////////////////////////////////////////////////////////////
 
+const PNQuatf&
+PNIBone::getOrientation()
+{
+  return _totalLastRot;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 void
 PNIBone::update(pnuint time, PN3DAnimation* anim)
 {
@@ -106,6 +114,7 @@ PNIBone::update(pnuint time, PN3DAnimation* anim)
 	_mCourse = transform;
   else
   {
+	_totalLastRot *= _parent->_totalLastRot;
 	_mCourse = _parent->_mCourse;
 	_mCourse.postMultiply(transform);
   }
