@@ -7,7 +7,7 @@ function PlayerClass(id)
 	Player.camera = renderCam
 	Player.camera:setTarget(Player)
     Player.camera:setTargetPosition(0, 600 , 1000)
-    Player.camera:setMovingMode(PN3DObject.MMODE_POSITION_ABS_LOCKED)
+    Player.camera:setTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 	-----------------------------------------------------------
 	--------------- Rotation parameter ------------------------
 	Player.yawSpeed = 1.0
@@ -92,7 +92,7 @@ function PlayerClass(id)
 ----------------------------------------------------------
 	function Player:onDestroy()
 		nothing = 0
-		self.camera:setMovingMode(PN3DObject.MMODE_FREE)
+		self.camera:setTargetMode(PN3DObject.TMODE_FREE)
 		self.camera:setTarget(tolua.cast(nothing, "PN3DObject"))
 	end
 	-------------------------------------------------------

@@ -77,7 +77,7 @@ PN3DObject::PN3DObject()
   _renderMode = RENDER_MODEL | RENDER_MATERIALS;
   _movingState = STATE_NONE;
 
-  setMovingMode(MMODE_FREE);
+  setTargetMode(TMODE_FREE);
   setTarget(NULL);
 
   setTargetPosition(0.0f, 0.0f, 0.0f);
@@ -564,35 +564,35 @@ PN3DObject::getRotatingRollSpeed() const
 //////////////////////////////////////////////////////////////////////////
 
 pnuint
-PN3DObject::getMovingMode() const
+PN3DObject::getTargetMode() const
 {
-  return _movingMode;
+  return _targetMode;
 }
 
 void
-PN3DObject::setMovingMode(pnuint mmode)
+PN3DObject::setTargetMode(pnuint tmode)
 {
   PNLOCK(this);
 
-  _movingMode = mmode;
+  _targetMode = tmode;
 }
 
 /// Add bit mask indicate in witch moving mode is the 3D object
 void
-PN3DObject::addMovingMode(pnuint mmode)
+PN3DObject::addTargetMode(pnuint tmode)
 {
   PNLOCK(this);
 
-  _movingMode |= mmode;
+  _targetMode |= tmode;
 }
 
 /// Sub bit mask indicate in witch moving mode is the 3D object
 void
-PN3DObject::subMovingMode(pnuint mmode)
+PN3DObject::subTargetMode(pnuint tmode)
 {
   PNLOCK(this);
 
-  _movingMode &= ~mmode;
+  _targetMode &= ~tmode;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -664,7 +664,7 @@ PN3DObject::setTarget(PN3DObject* obj)
   setViewTarget(obj);
 
   if (obj == NULL)
-	setMovingMode(MMODE_FREE);
+	setTargetMode(TMODE_FREE);
 }
 
 /// Retrieve 3d object position target
@@ -920,7 +920,7 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
   //////////////////////////////////////////////////////////////////////////
   // targetPosition
 
-  if (_movingMode & (MMODE_POSITION_ABS_LOCKED | MMODE_POSITION_ABS_LOCKED))
+  if (_targetMode & (TMODE_POSITION_ABS_LOCKED | TMODE_POSITION_ABS_LOCKED))
   {
 	_updateTranslation = getPositionTargetCoord();
 	_updateTranslation += getPositionTargetOrient() * _targetPosition;
@@ -958,7 +958,7 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
   // targetDistance
 
   if (_targetDistance > 0.0f &&
-	(_movingMode & (MMODE_DISTANCE_ABS_LOCKED | MMODE_DISTANCE_LOCKED)))
+	(_targetMode & (TMODE_DISTANCE_ABS_LOCKED | TMODE_DISTANCE_LOCKED)))
   {
 	PNVector3f	targetVector = _positionTarget->getCoord();
 	targetVector -= _coord;
@@ -981,11 +981,11 @@ PN3DObject::updateRotation(pnfloat deltaTime)
   pnfloat	yphi = (pnfloat)DEGREE_TO_RADIAN((_rotatingYawSpeed));
   pnfloat	zphi = (pnfloat)DEGREE_TO_RADIAN((_rotatingRollSpeed));
 
-  if (_movingMode & (MMODE_ORIENTATION_ABS_LOCKED | MMODE_ORIENTATION_LOCKED))
+  if (_targetMode & (TMODE_ORIENTATION_ABS_LOCKED | TMODE_ORIENTATION_LOCKED))
   {
 	_orient = getViewTargetOrient() * _targetOrientation;
   }
-  else if (_movingMode & (MMODE_VIEW_ABS_LOCKED | MMODE_VIEW_LOCKED))
+  else if (_targetMode & (TMODE_VIEW_ABS_LOCKED | TMODE_VIEW_LOCKED))
   {
 	PNVector3f	targetVector = getViewTargetCoord();
 	targetVector -= _coord;
@@ -1016,7 +1016,7 @@ PN3DObject::updateRotation(pnfloat deltaTime)
 	_orient.fromAxisRadians(_rightTargetDirection.getVector(), xangle);
 	_orient = PNQuatf(PNVector3f::UNIT_Y, yangle) * _orient;
   }
-  else if (_movingMode & MMODE_VIEW_LOCKED)
+  else if (_targetMode & TMODE_VIEW_LOCKED)
   {
 	/*PNVector3f	targetVector = _target->getCoord();
 	targetVector -= _coord;
