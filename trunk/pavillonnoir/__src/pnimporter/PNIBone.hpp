@@ -53,15 +53,15 @@ class					PNIBone : public PNObject
 
   PNIBone*				_parent;
 
-  /** Transformation matrix relativ to parent bone */
+  /// Transformation matrix relative to parent bone
   PNMatrixTR4f			_mRelativ;
 
-  /** Course matrix */
+  /// Course matrix
   PNMatrixTR4f			_mCourse;
-  /** Initial inverted course matrix  */
+  /// Initial inverted course matrix
   PNMatrixTR4f			_mICourse;
 
-  /** Traformation matrix to apply (Course * ICourse) */
+  /// Transformation matrix to apply (Course * ICourse)
   PNMatrixTR4f			_mFinal;
 public:
   PNIBone(pnsBone_t& bone, PNIBone* parent);
@@ -76,6 +76,10 @@ public:
 private:
   PNQuatf				_lastRot;
   PNPoint				_lastPos;
+
+  PNQuatf				_totalLastRot;
+public:
+  const PNQuatf&		getOrientation();
 public:
   void					update(pnuint time, PN3DAnimation* anim);
   void					update(pndouble rtime, PN3DAnimation* anim);

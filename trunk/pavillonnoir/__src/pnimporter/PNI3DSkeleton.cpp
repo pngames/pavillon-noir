@@ -72,6 +72,18 @@ PNI3DSkeleton::getBoneCoords(const std::string& name) const
   return it->second->getCourse().getMatrix() + 12;
 }
 
+/// Get orientation of \c name bone
+const PNQuatf*
+PNI3DSkeleton::getBoneOrientation(const std::string& name) const
+{
+  BoneMap::const_iterator it = _bonesMap.find(name);
+
+  if (it == _bonesMap.end())
+	return NULL;
+
+  return &it->second->getOrientation();
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 void

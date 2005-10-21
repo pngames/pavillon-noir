@@ -38,6 +38,7 @@ namespace PN {
 
 class PNMatrixTR4f;
 class PN3DAnimation;
+class PNQuatf;
 
 /// Skeleton
 class /*PNAPI*/					PN3DSkeleton : public PNObject, public IPNSerializable
@@ -63,6 +64,8 @@ public:
 
   /// Get coordinates of \c name bone
   virtual const pnfloat*		getBoneCoords(const std::string& name) const=0;
+  /// Get orientation of \c name bone
+  virtual const PNQuatf*		getBoneOrientation(const std::string& name) const=0;
 };
 
 //////////////////////////////////////////////////////////////////////////

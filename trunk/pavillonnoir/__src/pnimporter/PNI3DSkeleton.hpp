@@ -68,8 +68,13 @@ public:
   // PN3DSkeleton
   //////////////////////////////////////////////////////////////////////////
 
+  /// Get transformation to apply to vertices
   const PNMatrixTR4f&				getMatrix(pnuint id) const;
+
+  /// Get coordinates of \c name bone
   const pnfloat*					getBoneCoords(const std::string& name) const;
+  /// Get orientation of \c name bone
+  const PNQuatf*					getBoneOrientation(const std::string& name) const;
 
   //////////////////////////////////////////////////////////////////////////
   

@@ -695,21 +695,28 @@ PN3DObject::getPositionTargetCoord() const
   const pnfloat*	  bcoord = skobj->getSkeleton()->getBoneCoords(_positionBoneTarget);
 
   if (bcoord == NULL)
-	return _positionTarget->getCoord();
+	return coord;
 
-  return skobj->getCoord() + skobj->getOrient().multiply(bcoord);
+  return coord + skobj->getOrient().multiply(bcoord);
 }
 
 /// Retrieve 3d object position orientation
 PNQuatf
 PN3DObject::getPositionTargetOrient() const
 {
-  //if (_positionBoneTarget.empty())
-	return _positionTarget->getOrient();
+  PNQuatf orient = _positionTarget->getOrient();
 
-  //PN3DSkeletonObject* skobj = (PN3DSkeletonObject*)_positionTarget;
+  if (_positionBoneTarget.empty())
+	return orient;
 
-  // FIXME : return bone orientation
+  PN3DSkeletonObject* skobj = (PN3DSkeletonObject*)_positionTarget;
+
+  const PNQuatf*	  borient = skobj->getSkeleton()->getBoneOrientation(_positionBoneTarget);
+
+  if (borient == NULL)
+	return orient;
+
+  return orient * *borient;
 }
 
 /// Change 3d object position target
@@ -754,22 +761,38 @@ PN3DObject::getViewBoneTarget()
 PNPoint
 PN3DObject::getViewTargetCoord() const
 {
+  PNPoint coord  = _viewTarget->getCoord();
+
   if (_viewBoneTarget.empty())
-	return _viewTarget->getCoord();
+	return coord;
 
   PN3DSkeletonObject* skobj = (PN3DSkeletonObject*)_viewTarget;
 
-  return skobj->getCoord() + skobj->getOrient().multiply(skobj->getSkeleton()->getBoneCoords(_viewBoneTarget));
+  const pnfloat*	  bcoord = skobj->getSkeleton()->getBoneCoords(_viewBoneTarget);
+
+  if (bcoord == NULL)
+	return coord;
+
+  return coord + skobj->getOrient().multiply(bcoord);
 }
 
 /// Retrieve 3d object position orientation
 PNQuatf
 PN3DObject::getViewTargetOrient() const
 {
-  //if (_viewBoneTarget.empty())
-	return _viewTarget->getOrient();
+  PNQuatf orient = _viewTarget->getOrient();
 
-  // FIXME : return bone orientation
+  if (_viewBoneTarget.empty())
+	return orient;
+
+  PN3DSkeletonObject* skobj = (PN3DSkeletonObject*)_viewTarget;
+
+  const PNQuatf*	  borient = skobj->getSkeleton()->getBoneOrientation(_viewBoneTarget);
+
+  if (borient == NULL)
+	return orient;
+
+  return orient * *borient;
 }
 
 /// Change 3d object view target
