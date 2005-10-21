@@ -149,12 +149,12 @@ void PNLuaVm::setDebug(bool b)
 	if (b == true)
 	{
 		// Line hook activated - function called every time a line is interpreted
-	   lua_sethook(this->_luaVm, (lua_Hook) luaDebugLineHook, LUA_MASKLINE, NULL);
+	   lua_sethook(this->_luaVm, (lua_Hook) luaDebugLineHook, LUA_MASKLINE, 0);
 	}
 	else
 	{
 		// Line hook deactivated
-	   lua_sethook(this->_luaVm, (lua_Hook) luaDebugLineHook, NULL, NULL);
+	   lua_sethook(this->_luaVm, (lua_Hook) luaDebugLineHook, 0, 0);
 	}
 }
 

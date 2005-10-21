@@ -271,15 +271,14 @@ pnint		PNOpalObject::unserializeFromXML(xmlNode* node)
   opal::Blueprint sailboatBP;
 
   // Load the Blueprint from a file.
-  opal::loadFile(sailboatBP, “sailboat.xml”);
+  opal::loadFile(sailboatBP, ï¿½sailboat.xmlï¿½);
   
   // Instantiate the Blueprint.
   opal::BlueprintInstance instance;
   sim->instantiateBlueprint(instance, sailboatBP);
   */
 
-  return NULL;
+  return PNEC_SUCCES;
 }
 
 }
-

@@ -103,7 +103,7 @@ namespace PN {
 	for (std::list<std::string>::iterator it = l->begin(); it != l->end(); it++)
 	{
 		std::string s = (*it);
-		if (_labelsNumChars != NULL && _labelsNumChars != 0 && s.size() > _labelsNumChars)
+		if (_labelsNumChars != 0 && _labelsNumChars != 0 && s.size() > _labelsNumChars)
 		{	
 			int before = (_labelsNumChars-5)/5*2;
 			int after = _labelsNumChars-5-before;
@@ -111,7 +111,7 @@ namespace PN {
 		}
 		_listBox->appendItem(s.c_str(), NULL, NULL);
 	}
-	if (_numVisibleItems != NULL && _numVisibleItems != 0) 
+	if (_numVisibleItems != 0 && _numVisibleItems != 0) 
 	{
 		_listBox->setNumVisible(_listBox->getNumItems() < _numVisibleItems ? _listBox->getNumItems() : _numVisibleItems);
 	}

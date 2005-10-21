@@ -125,7 +125,7 @@ void* PNOpal::getSimulation()
 
 void PNOpal::mapEnded(pnEventType type, PNObject* source, PNEventData* data)
 {
-  _lastTicks = NULL;
+  _lastTicks = 0;
   _break = true; // make the running loops stop
   this->destroySimulation();
 }
