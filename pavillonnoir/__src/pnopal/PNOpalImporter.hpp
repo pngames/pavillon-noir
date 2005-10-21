@@ -30,7 +30,7 @@
 #ifndef _PNOpalImporter_HPP_
 # define _PNOpalImporter_HPP_
 
-#include "PNIImporter.hpp"
+#include "PNImportInterface.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////

@@ -35,7 +35,6 @@
 #include "pndefs.h"
 #include "pnplugins.h"
 
-#include "PNIException.hpp"
 #include "PNOpalImporter.hpp"
 
 #include "PNPhysicsInterface.hpp"

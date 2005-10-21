@@ -178,21 +178,21 @@ pnfloat			*PNMatrixTR4f::transform3(pnfloat* vec) const
 
 //////////////////////////////////////////////////////////////////////////
 
-PNPoint	operator*(const PNMatrixTR4f& mat, const PNPoint& vec)
+PNPoint			PNMatrixTR4f::operator*(const PNPoint& vec) const
 {
   return PNPoint(
-	vec.x * mat._matrix[0] + vec.y * mat._matrix[4] + vec.z * mat._matrix[8] + mat._matrix[12],
-	vec.x * mat._matrix[1] + vec.y * mat._matrix[5] + vec.z * mat._matrix[9] + mat._matrix[13],
-	vec.x * mat._matrix[2] + vec.y * mat._matrix[6] + vec.z * mat._matrix[10] + mat._matrix[14]
+	vec.x * _matrix[0] + vec.y * _matrix[4] + vec.z * _matrix[8] + _matrix[12],
+	vec.x * _matrix[1] + vec.y * _matrix[5] + vec.z * _matrix[9] + _matrix[13],
+	vec.x * _matrix[2] + vec.y * _matrix[6] + vec.z * _matrix[10] + _matrix[14]
 	);
 }
 
-PNVector3f	operator*(const PNMatrixTR4f& mat, const PNVector3f& vec)
+PNVector3f		PNMatrixTR4f::operator*(const PNVector3f& vec) const
 {
   return PNVector3f(
-	vec.x * mat._matrix[0] + vec.y * mat._matrix[4] + vec.z * mat._matrix[8],
-	vec.x * mat._matrix[1] + vec.y * mat._matrix[5] + vec.z * mat._matrix[9],
-	vec.x * mat._matrix[2] + vec.y * mat._matrix[6] + vec.z * mat._matrix[10]
+	vec.x * _matrix[0] + vec.y * _matrix[4] + vec.z * _matrix[8],
+	vec.x * _matrix[1] + vec.y * _matrix[5] + vec.z * _matrix[9],
+	vec.x * _matrix[2] + vec.y * _matrix[6] + vec.z * _matrix[10]
 	);
 }
 
