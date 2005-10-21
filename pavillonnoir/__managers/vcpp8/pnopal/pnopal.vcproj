@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../__src/pnimporter;../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/;&quot;E:\dev\gna\pavillon-noir\pavillonnoir\__src\pnimporter&quot;"
+				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PNOPAL_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
