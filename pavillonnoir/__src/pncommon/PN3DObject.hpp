@@ -54,43 +54,43 @@ class PNFace;
 class PNPhysicalObject;
 
 /// Base object for all object evolving in the scene
-class PNAPI					PN3DObject : public PNObject, public IPNAnimated, public IPNXMLSerializable
+class PNAPI							PN3DObject : public PNObject, public IPNAnimated, public IPNXMLSerializable
 {
 public:
-  boost::recursive_mutex	_mutex;
+  boost::recursive_mutex			_mutex;
 
 protected:
   ///object identifier
-  std::string				_id;
+  std::string						_id;
 public:
-  inline void				setId(std::string id){_id = id;}
-  inline std::string		getId(){return _id;}
+  inline void						setId(std::string id){_id = id;}
+  inline std::string				getId(){return _id;}
 
   ///////////////////////////////////////////////////////////////////////////
 
-  void*						lock();
-  void						unlock(void *m);
+  void*								lock();
+  void								unlock(void *m);
 
   ///////////////////////////////////////////////////////////////////////////
 private:
   /// Rotation axis activated
   typedef enum
   {
-	RACTIVATE_NONE			= 0x000000,			/// Activate none
-	RACTIVATE_PITCH			= 0x000001,			/// Activate x axis rotations
-	RACTIVATE_YAW			= 0x000001 << 1,	/// Activate y axis rotations
-	RACTIVATE_ROLL			= 0x000001 << 2,	/// Activate z axis rotations
-	RACTIVATE_ALL			= RACTIVATE_PITCH | RACTIVATE_YAW | RACTIVATE_ROLL,	/// Activate all axis rotations
-  }							rotActivation;
+	RACTIVATE_NONE					= 0x000000,			/// Activate none
+	RACTIVATE_PITCH					= 0x000001,			/// Activate x axis rotations
+	RACTIVATE_YAW					= 0x000001 << 1,	/// Activate y axis rotations
+	RACTIVATE_ROLL					= 0x000001 << 2,	/// Activate z axis rotations
+	RACTIVATE_ALL					= RACTIVATE_PITCH | RACTIVATE_YAW | RACTIVATE_ROLL,	/// Activate all axis rotations
+  }									rotActivation;
 
   /// Return bit mask indicate in witch axis do the 3D object rotate
-  pnuint					getRotActivation();
+  pnuint							getRotActivation();
   /// Set bit mask indicate in witch axis do the 3D object rotate
-  void						getRotActivation(pnuint mstate);
+  void								getRotActivation(pnuint mstate);
 
 protected:
   /// Bit mask indicate in witch axis do the 3D object rotate
-  pnuint					_rotActivation;
+  pnuint							_rotActivation;
   
   //////////////////////////////////////////////////////////////////////////
 
@@ -98,10 +98,10 @@ public:
   /// Sub Objects to render
   typedef enum
   {
-	RENDER_MODEL			= 0x000001,			/// Render 3D object model
-	RENDER_MATERIALS		= 0x000001 << 1,	/// Render 3D object materials (need RENDER_MODEL)
-	RENDER_PHYSICAL			= 0x000001 << 2		/// Render 3D physical object
-  }							rendermode;
+	RENDER_MODEL					= 0x000001,			/// Render 3D object model
+	RENDER_MATERIALS				= 0x000001 << 1,	/// Render 3D object materials (need RENDER_MODEL)
+	RENDER_PHYSICAL					= 0x000001 << 2		/// Render 3D physical object
+  }									rendermode;
 
   //////////////////////////////////////////////////////////////////////////
   
@@ -110,47 +110,47 @@ public:
   typedef enum
   {
 	STATE_NONE,									/// Do nothing
-	STATE_T_RIGHT			= 0x000001,			/// Translate to the right
-	STATE_T_LEFT			= 0x000001 << 1,	/// Translate to the left
-	STATE_T_TOP				= 0x000001 << 2,	/// Translate to the top
-	STATE_T_BACK			= 0x000001 << 3,	/// Translate to the back
-	STATE_T_FORWARD			= 0x000001 << 4,	/// Translate to the forward
-	STATE_T_BACKWARD		= 0x000001 << 5,	/// Translate to the backward
-	STATE_R_RIGHT			= 0x000001 << 6,	/// Rotate to the right
-	STATE_R_LEFT			= 0x000001 << 7,	/// Rotate to the left
-	STATE_R_TOP				= 0x000001 << 8,	/// Rotate to the top
-	STATE_R_BACK			= 0x000001 << 9,	/// Rotate to the back
-	STATE_R_FORWARD			= 0x000001 << 10,	/// Rotate to the forward
-	STATE_R_BACKWARD		= 0x000001 << 11,	/// Rotate to the backward
-  }							movingState;
+	STATE_T_RIGHT					= 0x000001,			/// Translate to the right
+	STATE_T_LEFT					= 0x000001 << 1,	/// Translate to the left
+	STATE_T_TOP						= 0x000001 << 2,	/// Translate to the top
+	STATE_T_BACK					= 0x000001 << 3,	/// Translate to the back
+	STATE_T_FORWARD					= 0x000001 << 4,	/// Translate to the forward
+	STATE_T_BACKWARD				= 0x000001 << 5,	/// Translate to the backward
+	STATE_R_RIGHT					= 0x000001 << 6,	/// Rotate to the right
+	STATE_R_LEFT					= 0x000001 << 7,	/// Rotate to the left
+	STATE_R_TOP						= 0x000001 << 8,	/// Rotate to the top
+	STATE_R_BACK					= 0x000001 << 9,	/// Rotate to the back
+	STATE_R_FORWARD					= 0x000001 << 10,	/// Rotate to the forward
+	STATE_R_BACKWARD				= 0x000001 << 11,	/// Rotate to the backward
+  }									movingState;
 
   /// Return bit mask indicate in witch moving states is the 3D object
-  pnuint					getMovingState() const;
+  pnuint							getMovingState() const;
   /// Set bit mask indicate in witch moving states is the 3D object
-  void						setMovingState(pnuint mstate);
+  void								setMovingState(pnuint mstate);
   /// add bit mask indicate in witch moving states is the 3D object
-  void						addMovingState(pnuint mstate);
+  void								addMovingState(pnuint mstate);
   /// sub bit mask indicate in witch moving states is the 3D object
-  void						subMovingState(pnuint mstate);
+  void								subMovingState(pnuint mstate);
   /// Get the moving speed of 3D object
-  pnfloat					getMovingSpeed() const;
+  pnfloat							getMovingSpeed() const;
   /// Set the moving speed of 3D object
-  void						setMovingSpeed(pnfloat mspeed);
+  void								setMovingSpeed(pnfloat mspeed);
   /// Get the rotating Yaw speed of 3D object
-  pnfloat					getRotatingYawSpeed() const;
+  pnfloat							getRotatingYawSpeed() const;
   /// Set the rotating Yaw speed of 3D object
-  void						setRotatingYawSpeed(pnfloat speed);
+  void								setRotatingYawSpeed(pnfloat speed);
   /// Get the rotating Pitch speed of 3D object
-  pnfloat					getRotatingPitchSpeed() const;
+  pnfloat							getRotatingPitchSpeed() const;
   /// Set the rotating Pitch speed of 3D object
-  void						setRotatingPitchSpeed(pnfloat speed);
+  void								setRotatingPitchSpeed(pnfloat speed);
   /// Get the rotating Roll speed of 3D object
-  pnfloat					getRotatingRollSpeed() const;
+  pnfloat							getRotatingRollSpeed() const;
   /// Set the rotating Roll of 3D object
-  void						setRotatingRollSpeed(pnfloat speed);
+  void								setRotatingRollSpeed(pnfloat speed);
 protected:
   /// Bit mask indicate in witch moving states is the 3D object
-  pnuint					_movingState;
+  pnuint							_movingState;
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -158,33 +158,33 @@ public:
   /// Displacement and view mode
   typedef enum
   {
-	MMODE_FREE						= 0x000000,	  		/// 3D object move freely
+	TMODE_FREE						= 0x000000,	  		/// 3D object move freely
 
-	MMODE_POSITION_LOCKED			= 0x000001 << 0,	/// 3D object alway try to be in same relative position from target
-	MMODE_POSITION_ABS_LOCKED		= 0x000001 << 1,	/// 3D object alway in same relative position from target
-    MMODE_DISTANCE_LOCKED			= 0x000001 << 2,	/// 3D object alway try to be at _targetDistance distance from the target
-    MMODE_DISTANCE_ABS_LOCKED		= 0x000001 << 3,	/// 3D object alway at _targetDistance distance from the target
+	TMODE_POSITION_LOCKED			= 0x000001 << 0,	/// 3D object alway try to be in same relative position from target
+	TMODE_POSITION_ABS_LOCKED		= 0x000001 << 1,	/// 3D object alway in same relative position from target
+    TMODE_DISTANCE_LOCKED			= 0x000001 << 2,	/// 3D object alway try to be at _targetDistance distance from the target
+    TMODE_DISTANCE_ABS_LOCKED		= 0x000001 << 3,	/// 3D object alway at _targetDistance distance from the target
 
-	MMODE_ORIENTATION_LOCKED		= 0x000001 << 4,	/// 3D object alway try to be in _targetOrientation orientation
-	MMODE_ORIENTATION_ABS_LOCKED	= 0x000001 << 5,	/// 3D object alway in _targetOrientation orientation
-	MMODE_VIEW_LOCKED				= 0x000001 << 6,	/// 3D object alway try to be in _targetDirection alignment of _target
-	MMODE_VIEW_ABS_LOCKED			= 0x000001 << 7,	/// 3D object alway in _targetDirection alignment of _target
+	TMODE_ORIENTATION_LOCKED		= 0x000001 << 4,	/// 3D object alway try to be in _targetOrientation orientation
+	TMODE_ORIENTATION_ABS_LOCKED	= 0x000001 << 5,	/// 3D object alway in _targetOrientation orientation
+	TMODE_VIEW_LOCKED				= 0x000001 << 6,	/// 3D object alway try to be in _targetDirection alignment of _target
+	TMODE_VIEW_ABS_LOCKED			= 0x000001 << 7,	/// 3D object alway in _targetDirection alignment of _target
 
-    MMODE_VIEW_DISTANCE_LOCKED		= MMODE_DISTANCE_LOCKED | MMODE_VIEW_LOCKED,			/// MMODE_DISTANCE_LOCKED + MMODE_VIEW_LOCKED
-    MMODE_VIEW_DISTANCE_ABS_LOCKED	= MMODE_VIEW_ABS_LOCKED | MMODE_DISTANCE_ABS_LOCKED,	/// MMODE_DISTANCE_ABS_LOCKED + MMODE_VIEW_ABS_LOCKED
-  }			  				        movingmode;
+    TMODE_VIEW_DISTANCE_LOCKED		= TMODE_DISTANCE_LOCKED | TMODE_VIEW_LOCKED,			/// TMODE_DISTANCE_LOCKED + TMODE_VIEW_LOCKED
+    TMODE_VIEW_DISTANCE_ABS_LOCKED	= TMODE_VIEW_ABS_LOCKED | TMODE_DISTANCE_ABS_LOCKED,	/// TMODE_DISTANCE_ABS_LOCKED + TMODE_VIEW_ABS_LOCKED
+  }		  							targetmode;
 
   /// Return displacement mode of 3D object (free, locked, ...)
-  pnuint							getMovingMode() const;
+  pnuint							getTargetMode() const;
   /// Set displacement mode of 3D object (free, locked, ...)
-  void								setMovingMode(pnuint mmode);
+  void								setTargetMode(pnuint tmode);
   /// Add bit mask indicate in witch moving mode is the 3D object
-  void								addMovingMode(pnuint mmode);
+  void								addTargetMode(pnuint tmode);
   /// Sub bit mask indicate in witch moving mode is the 3D object
-  void								subMovingMode(pnuint mmode);
+  void								subTargetMode(pnuint tmode);
 protected:
   /// Displacement mode of 3D object (free, locked, ...)
-  pnuint							_movingMode;
+  pnuint							_targetMode;
 protected:
   /// Other 3DObject targeted used for locked displacement and other things like that
 
