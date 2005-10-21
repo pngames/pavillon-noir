@@ -100,6 +100,7 @@ PNGLShape::PNGLShape(PN3DObject *obj, PNPropertiesPanel* grid, PNEditor* ed, PNE
   _label = label;
   _grid = grid;
   _classStr = classStr;
+  _modified = FALSE;
 
   FXTRACE((100,"PNGLShape::PNGLShape\n"));
 

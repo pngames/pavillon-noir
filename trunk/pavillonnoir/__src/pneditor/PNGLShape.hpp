@@ -72,6 +72,7 @@ namespace PN
 	  std::string		  		_classStr;
 	  scriptMap			  		_scripts;
 	  PNPropertiesPanel*  		_grid;
+	  bool						_modified;
 	protected:
 	  PNGLShape();
     public:
@@ -89,11 +90,14 @@ namespace PN
 	  PNEnvType			  getEnvType() {return _envType;}
 	  scriptMap&		  getScripts() {return _scripts;}
 	  std::string&		  getClassStr() {return _classStr;}
+	  bool				  modified() {return _modified;}
 	  void				  setDragable() {_canDrag = TRUE;}
 	  void				  setUndragable() {_canDrag = FALSE;}
 	  void				  setPosNull();
 	  void				  setPosFromObj();
 	  void				  setMinMax();
+	  void				  setModified() {_modified = TRUE;}
+	  void				  setUnmodified() {_modified = FALSE;}
 	  void				  buildParams();
 
 	  FXbool			  drag(FXGLViewer* viewer,FXint fx,FXint fy,FXint tx,FXint ty);

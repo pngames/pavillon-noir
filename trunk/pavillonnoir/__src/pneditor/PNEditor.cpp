@@ -494,8 +494,9 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
   // 3DObjects
   std::ofstream	o((const char *)objpath.string().c_str());
   o << "<?xml version=\"1.0\"?>" << std::endl;
-  o << "<!DOCTYPE listentities SYSTEM \"../entities.dtd\">" << std::endl;
-  o << "<listentities>" << std::endl;
+  o << "<!DOCTYPE " << PNXML_LISTENTITIES_MKP << " SYSTEM \"../" << PNXML_ENTITIES_DTD 
+	  << "\">" << std::endl;
+  o << "<" << PNXML_LISTENTITIES_MKP << ">" << std::endl;
 
   genScene->clear();
   genScene->append(groundGroup);
@@ -520,51 +521,62 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 	  int _FILENAME_SIZE = obj->getFile()->string().size();
 	  std::string	str = obj->getFile()->string().substr(_DEF_SIZE, _FILENAME_SIZE - _DEF_SIZE);
 
-	  obj->serialize();
+	  //obj->serialize();
 
-	  o << "<entity id=\"" << shape->getId() << "\" label=\"" << shape->getLabel() << "\" mdref=\""
-		<< str << "\" envtype=\"";
+	  // <!-- entity markup open
+	  o << "<" << PNXML_ENTITY_MKP << " " << PNXML_ID_ATTR << "=\"" << shape->getId()
+		  << "\" " << PNXML_ID_ATTR << "=\"" << shape->getLabel() << "\" "
+		  << PNXML_MODELREFERENCE_ATTR << "=\"" << str << "\" " << PNXML_ENVTYPE_ATTR
+		  << "=\"";
 	  if (shape->getEnvType() == PN_GROUND)
-		o << "ground";
+		o << PNXML_GROUND_VAL;
 	  else if (shape->getEnvType() == PN_STATIC)
-		o << "static";
+		o << PNXML_STATIC_VAL;
 	  else if (shape->getEnvType() == PN_DYNAMIC)
-		o << "dynamic";
+		o << PNXML_DYNAMIC_VAL;
 
-	  o << "\" objtype=\"";
+	  o << "\" "<< PNXML_OBJTYPE_ATTR << "=\"";
 	  if (obj->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ)
-		o << "dynamic";
+		o << PNXML_DYNAMIC_VAL;
 	  else if (obj->getObjType() == PN3DObject::OBJTYPE_3DOBJ)
-		o << "object";
+		  o << PNXML_OBJECT_VAL;
 	  else if (obj->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
-		o << "character";
+		o << PNXML_CHARACTER_VAL;
 
-	  o << "\" class=\"" << shape->getClassStr() << "\" x=\"" << p.x << "\" y=\"" << p.y << "\" z=\""
-		<< p.z << "\" xx=\"" << q.x << "\" yy=\"" << q.y << "\" zz=\"" << q.z << "\" ww=\"" << q.w << "\">"
-		<< std::endl;
+	  o << "\" "<< PNXML_CLASS_ATTR <<"=\"" << shape->getClassStr() << "\" "
+		  << PNXML_COORDX_ATTR << "=\"" << p.x << "\" " << PNXML_COORDY_ATTR
+		  << "=\"" << p.y << "\" " << PNXML_COORDZ_ATTR << "=\"" << p.z
+		  << "\" " << PNXML_ROTX_ATTR << "=\"" << q.x << "\" " << PNXML_ROTY_ATTR
+		  << "=\"" << q.y << "\" " << PNXML_ROTZ_ATTR << "=\"" << q.z << "\" "
+		  << PNXML_ROTY_ATTR << "=\"" << q.w << "\">" << std::endl;
+	  // entity markup open -->
 
-	  //actions
+	  // actions
 	  scriptMap&	  scripts = shape->getScripts();
 	  for (scriptMap::iterator i = scripts.begin(); i != scripts.end(); i++)
 	  {
-		o << "<action ref=\"" << PNEventManager::getInstance()->getNameByType(i->first) << "\">" << std::endl;
+		o << "<" << PNXML_ACTION_MKP << " " << PNXML_REFERENCE_ATTR << "=\""
+			<< PNEventManager::getInstance()->getNameByType(i->first) << "\">"
+			<< std::endl;
 
 		for (scriptList::iterator j = i->second->begin(); j != i->second->end(); j++)
 		{
 		  str = (*j)->string().substr(PN::DEF::gamedefFilePath.size(),
 			(*j)->string().size() - PN::DEF::gamedefFilePath.size());
-		  o << "<script ref=\"" << str.c_str() << "\"/>" << std::endl;
+		  o << "<" << PNXML_SCRIPT_MKP << " " << PNXML_REFERENCE_ATTR << "=\""
+			  << str.c_str() << "\"/>" << std::endl;
 		}
-		o << "</action>" << std::endl;
+		o << "</" << PNXML_ACTION_MKP << ">" << std::endl;
 	  }
 
-	  // save modifications of the pno
-	  obj->serializeInXML(o, FALSE);
+	  // save modifications of the pno if necessary
+	  if (shape->modified())
+		obj->serializeInXML(o, FALSE);
 
-	  o << "</entity>" << std::endl;
+	  o << "</" << PNXML_ENTITY_MKP << ">" << std::endl;
 	}
   }
-  o << "</listentities>" << std::endl;
+  o << "</" << PNXML_LISTENTITIES_MKP << ">" << std::endl; // 
 
   // Waypoints
   pnerror(PN_LOGLVL_DEBUG, "Saving waypoints in %s", wppath.string().c_str());
@@ -901,7 +913,7 @@ int	  PNEditor::_parseEntity(void* node)
   if (object == NULL)
 	return PNEC_FAILED_TO_PARSE;
 
-
+  bool fromFile = TRUE;
   if (!current->last->prev)
   {
     fs::path  file(DEF::objectFilePath + mdref, fs::native);
@@ -914,7 +926,15 @@ int	  PNEditor::_parseEntity(void* node)
   }
   else
   {
-	object->unserializeFromXML(current->last->prev);
+	pnint obj_error = object->unserializeFromXML(current->last->prev);
+    if (obj_error != PNEC_SUCCES)
+    {
+	  pnerror(PN_LOGLVL_ERROR, "%s%s : %s", DEF::objectFilePath.c_str(), mdref.c_str(), pnGetErrorString(obj_error));
+	  return obj_error;
+    }
+	fs::path  file(DEF::objectFilePath + mdref, fs::native);
+	object->setFile(file);
+	fromFile = FALSE;
   } 
 
 
@@ -931,6 +951,8 @@ int	  PNEditor::_parseEntity(void* node)
 
   // build PMGLShape in genScene
   PNGLShape* shape = new PNGLShape(object, objPanel, this, envType, classStr, id, label);
+  if (fromFile == FALSE)
+	  shape->setModified();
 
   // go through child nodes to load actions (scripts) and models definitions (materials, animations ...)
   for (current = current->children; current != NULL; current = current->next)
