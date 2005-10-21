@@ -27,8 +27,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#ifndef _PNQUATF_H_
-# define _PNQUATF_H_
+#ifndef _PNQUATF_HPP_
+# define _PNQUATF_HPP_
 
 #include <string.h>
 #include <iostream>
@@ -39,6 +39,7 @@ namespace PN {
 
 class PNPoint;
 class PNVector3f;
+class PNMatrix4f;
 
 class PNAPI				PNQuatf : public PNObject
 {
@@ -66,6 +67,8 @@ public:
 
   void					set(pnfloat r1, pnfloat r2, pnfloat r3, pnfloat r4);
   void					set(const pnfloat* quat);
+  void					set(const PNMatrix4f& mat);
+
   void					fromDegrees(const pnfloat* angles);
   void					fromDegrees(pnfloat x, pnfloat y, pnfloat z);
   void					fromRadians(const pnfloat* angles);
