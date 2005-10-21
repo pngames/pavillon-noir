@@ -52,12 +52,12 @@ namespace PN {
 
 	inline std::string			convertPath(const std::string& type, const std::string& path)
 	{
-	  std::string::size_type	  index = path.find_last_of(type);
+	  std::string::size_type	  index = path.rfind(type);
 
 	  if (index == std::string::npos)
 		return path;
 
-	  return path.c_str() + index + 1;
+	  return path.c_str() + index + type.size();
 	}
   }
 //////////////////////////////////////////////////////////////////////////
