@@ -601,7 +601,7 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
   case CEGUI::Key::RightControl :
 	std::cout << "Control";
 	cam->setTarget(obj);
-	cam->setMovingMode(PN3DObject::MMODE_VIEW_ABS_LOCKED);
+	cam->setTargetMode(PN3DObject::TMODE_VIEW_ABS_LOCKED);
 	break;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -735,7 +735,7 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
   case CEGUI::Key::RightControl :
 	std::cout << "Control";
 	cam->setTarget(NULL);
-	cam->setMovingMode(PN3DObject::MMODE_FREE);
+	cam->setTargetMode(PN3DObject::TMODE_FREE);
 	break;
 
   default:

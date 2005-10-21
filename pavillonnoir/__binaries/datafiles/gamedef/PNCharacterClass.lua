@@ -44,7 +44,7 @@ function PNCharacterClass(id)
 						return
 					end
 					self:setTarget(self.toReach)
-					self:setMovingMode(self.MMODE_VIEW_ABS_LOCKED)
+					self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
 			end
 		end
 		
@@ -56,7 +56,7 @@ function PNCharacterClass(id)
 		self.pathFinding:moveNext(self.toReach)
 		-- setDirect and rotate
 		self:setTarget(self.toReach)
-		self:setMovingMode(self.MMODE_VIEW_ABS_LOCKED)
+		self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
 		self:onActionMoveForward(true)
 	end
 

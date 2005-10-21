@@ -44,7 +44,7 @@ PNCharacter::PNCharacter() : _pf(_coord)
   _objType = OBJTYPE_CHARACTER;
 
   _view = new PN3DCamera();
-  _view->setMovingMode(MMODE_POSITION_ABS_LOCKED);
+  _view->setTargetMode(TMODE_POSITION_ABS_LOCKED);
   _view->setTarget(this);
   _view->setTargetPosition(0.0f, 100.0f, 0.0f);
 }
