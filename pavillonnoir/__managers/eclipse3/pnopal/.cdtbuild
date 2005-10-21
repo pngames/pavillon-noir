@@ -9,6 +9,7 @@
 <tool id="cdt.managedbuild.tool.gnu.c.compiler.so.debug.296972104" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.so.debug"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.so.debug.1557507653" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.so.debug">
 <option id="gnu.cpp.compiler.option.include.paths.376389098" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+<listOptionValue builtIn="false" value="/usr/include/libxml2/"/>
 <listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
 </option>

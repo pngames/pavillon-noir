@@ -34,7 +34,7 @@
 <listOptionValue builtIn="false" value="boost_thread"/>
 <listOptionValue builtIn="false" value="boost_filesystem"/>
 </option>
-<option id="gnu.cpp.link.option.flags.1831673588" superClass="gnu.cpp.link.option.flags" value="`fox-config --libs` `xml2-config --libs` `xine-config --libs`" valueType="string"/>
+<option id="gnu.cpp.link.option.flags.1831673588" superClass="gnu.cpp.link.option.flags" value="`fox-config --libs` `xml2-config --libs`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.exe.debug.1537256490" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug">
 <option id="gnu.both.asm.option.include.paths.915684678" superClass="gnu.both.asm.option.include.paths"/>

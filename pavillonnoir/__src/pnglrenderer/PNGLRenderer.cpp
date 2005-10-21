@@ -567,7 +567,7 @@ void*
 PNGLRenderer::getGUIRenderer()
 {
   if (_guirenderer == NULL)
-	_guirenderer = new CEGUI::OpenGLRenderer(0, _scene.getRenderCamera().getWidth(), _scene.getRenderCamera().getHeight());
+	_guirenderer = new CEGUI::OpenGLRenderer(0, (int)_scene.getRenderCamera().getWidth(), (int)_scene.getRenderCamera().getHeight());
 
   return (_guirenderer);
 }

@@ -9,7 +9,6 @@
 <tool id="cdt.managedbuild.tool.gnu.c.compiler.so.debug.1183873080" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.so.debug"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.so.debug.1370121564" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.so.debug">
 <option id="gnu.cpp.compiler.option.include.paths.659858927" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-<listOptionValue builtIn="false" value="/usr/include/libxml2/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
 </option>
 <option id="gnu.cpp.compiler.option.other.other.2009894802" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `xml2-config --cflags`" valueType="string"/>
@@ -25,7 +24,6 @@
 <option id="gnu.cpp.link.option.libs.950603517" superClass="gnu.cpp.link.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="boost_thread"/>
 <listOptionValue builtIn="false" value="boost_filesystem"/>
-<listOptionValue builtIn="false" value="xml2"/>
 <listOptionValue builtIn="false" value="dl"/>
 <listOptionValue builtIn="false" value="m"/>
 </option>
@@ -41,7 +39,6 @@
 <tool id="cdt.managedbuild.tool.gnu.c.compiler.so.release.793564780" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.so.release"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.so.release.1965693689" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.so.release">
 <option id="gnu.cpp.compiler.option.include.paths.1236496142" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-<listOptionValue builtIn="false" value="/usr/include/libxml2/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
 </option>
 <option id="gnu.cpp.compiler.option.other.other.1214055524" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `xml2-config --cflags`" valueType="string"/>
@@ -52,7 +49,6 @@
 <listOptionValue builtIn="false" value="boost_thread"/>
 <listOptionValue builtIn="false" value="m"/>
 <listOptionValue builtIn="false" value="dl"/>
-<listOptionValue builtIn="false" value="xml2"/>
 <listOptionValue builtIn="false" value="boost_filesystem"/>
 </option>
 <option id="gnu.cpp.link.option.flags.322452740" superClass="gnu.cpp.link.option.flags" value="`xml2-config --libs`" valueType="string"/>
