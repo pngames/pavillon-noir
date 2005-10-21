@@ -80,4 +80,9 @@
 #define PNXML_TRUE_VAL				(const xmlChar *)"true"
 #define PNXML_FALSE_VAL				(const xmlChar *)"false"
 
+// DTD Files
+#define PNXML_ENTITIES_DTD			(const xmlChar *)"../entities.dtd"
+#define PNXML_WAYPOINTS_DTD			(const xmlChar *)"../waypoints.dtd"
+#define PNXML_SOUNDS_DTD			(const xmlChar *)"../sounds.dtd"
+
 #endif /* !_PNXML_H_ */
