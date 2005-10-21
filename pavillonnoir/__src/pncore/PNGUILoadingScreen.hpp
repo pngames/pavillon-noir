@@ -47,13 +47,20 @@ namespace PN{
 	CEGUI::Window*		_mainSheet;
 	CEGUI::StaticImage*	_backGround;
 	CEGUI::ProgressBar*	_progBar;
+	CEGUI::Listbox*		_listBox;
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
-	void refreshScreen();
+	void refreshScreen(float val, std::string update);
+	void  startGUI();
+	void  resetGUI();
+	void  show();
+	void  hide();
   protected:
   private:
+	 bool handleClickTest(const CEGUI::EventArgs& e);
+	void  setRandomBackground();
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
