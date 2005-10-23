@@ -11,20 +11,18 @@
 <option id="gnu.cpp.compiler.option.include.paths.2134092438" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="../../../../__src/pncommon"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
-<listOptionValue builtIn="false" value="/usr/include/lua50"/>
 </option>
 <option id="gnu.cpp.compiler.option.preprocessor.def.1275297449" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 <listOptionValue builtIn="false" value="_DEBUG"/>
 </option>
-<option id="gnu.cpp.compiler.option.other.other.1098355954" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread" valueType="string"/>
+<option id="gnu.cpp.compiler.option.other.other.1098355954" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `lua-config50 --include`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.linker.so.debug.873860953" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.debug"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.debug.2034109341" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.debug">
 <option id="gnu.cpp.link.option.libs.714289502" superClass="gnu.cpp.link.option.libs" valueType="libs">
-<listOptionValue builtIn="false" value="lua50"/>
-<listOptionValue builtIn="false" value="lualib50"/>
 <listOptionValue builtIn="false" value="tolua++"/>
 </option>
+<option id="gnu.cpp.link.option.flags.696644375" superClass="gnu.cpp.link.option.flags" value="`lua-config50 --libs`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.debug.697374576" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.debug"/>
 <macros/>
@@ -37,17 +35,15 @@
 <option id="gnu.cpp.compiler.option.include.paths.1479907553" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="../../../../__src/pncommon"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
-<listOptionValue builtIn="false" value="/usr/include/lua50"/>
 </option>
-<option id="gnu.cpp.compiler.option.other.other.1922355029" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread" valueType="string"/>
+<option id="gnu.cpp.compiler.option.other.other.1922355029" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `lua-config50 --include`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.linker.so.release.914743750" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.release"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.release.202905293" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.release">
 <option id="gnu.cpp.link.option.libs.968832659" superClass="gnu.cpp.link.option.libs" valueType="libs">
-<listOptionValue builtIn="false" value="lua50"/>
-<listOptionValue builtIn="false" value="lualib50"/>
 <listOptionValue builtIn="false" value="tolua++"/>
 </option>
+<option id="gnu.cpp.link.option.flags.1111151382" superClass="gnu.cpp.link.option.flags" value="`lua-config50 --libs`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.release.1576415581" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.release"/>
 <macros/>

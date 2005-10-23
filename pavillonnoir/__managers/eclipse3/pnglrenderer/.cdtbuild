@@ -10,17 +10,17 @@
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.so.debug.822750599" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.so.debug">
 <option id="gnu.cpp.compiler.option.include.paths.115291307" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
-<listOptionValue builtIn="false" value="/usr/include/IL/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
+<listOptionValue builtIn="false" value="/usr/include/IL/"/>
 </option>
-<option id="gnu.cpp.compiler.option.other.other.2125937996" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0  `sdl-config --cflags` -pthread `pkg-config --cflags CEGUI-OPENGL`" valueType="string"/>
+<option id="gnu.cpp.compiler.option.other.other.2125937996" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `sdl-config --cflags` `pkg-config --cflags CEGUI-OPENGL xrender`" valueType="string"/>
 <option id="gnu.cpp.compiler.option.preprocessor.def.1736318928" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 <listOptionValue builtIn="false" value="_DEBUG"/>
 </option>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.linker.so.debug.1458853928" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.debug"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.debug.948562987" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.debug">
-<option id="gnu.cpp.link.option.flags.1422996441" superClass="gnu.cpp.link.option.flags" value="`sdl-config --libs` `pkg-config --libs CEGUI-OPENGL`" valueType="string"/>
+<option id="gnu.cpp.link.option.flags.1422996441" superClass="gnu.cpp.link.option.flags" value="`sdl-config --libs` `pkg-config --libs CEGUI-OPENGL xrender`" valueType="string"/>
 <option id="gnu.cpp.link.option.libs.1073899205" superClass="gnu.cpp.link.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="IL"/>
 <listOptionValue builtIn="false" value="ILU"/>
@@ -39,19 +39,18 @@
 <option id="gnu.cpp.compiler.option.include.paths.659251471" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
-<listOptionValue builtIn="false" value="/usr/include/CEGUI/"/>
+<listOptionValue builtIn="false" value="/usr/include/IL/"/>
 </option>
-<option id="gnu.cpp.compiler.option.other.other.349970504" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 `sdl-config --cflags` `xine-config --cflags` -pthread" valueType="string"/>
+<option id="gnu.cpp.compiler.option.other.other.349970504" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `sdl-config --cflags` `pkg-config --libs CEGUI-OPENGL xrender`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.linker.so.release.1217650354" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.release"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.release.364211888" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.release">
 <option id="gnu.cpp.link.option.libs.1050810125" superClass="gnu.cpp.link.option.libs" valueType="libs">
-<listOptionValue builtIn="false" value="CEGUIBase"/>
 <listOptionValue builtIn="false" value="IL"/>
 <listOptionValue builtIn="false" value="ILU"/>
 <listOptionValue builtIn="false" value="ILUT"/>
 </option>
-<option id="gnu.cpp.link.option.flags.1215564413" superClass="gnu.cpp.link.option.flags" value="`sdl-config --libs` `xine-config --libs`" valueType="string"/>
+<option id="gnu.cpp.link.option.flags.1215564413" superClass="gnu.cpp.link.option.flags" value="`sdl-config --libs` `pkg-config --libs CEGUI-OPENGL xrender`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.release.1864779758" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.release"/>
 <macros/>

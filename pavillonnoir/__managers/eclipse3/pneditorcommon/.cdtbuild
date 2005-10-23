@@ -12,7 +12,7 @@
 <listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
 </option>
-<option id="gnu.cpp.compiler.option.other.other.1431189891" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `fox-config-1.4 --cflags`" valueType="string"/>
+<option id="gnu.cpp.compiler.option.other.other.1431189891" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `fox-config --cflags`" valueType="string"/>
 <option id="gnu.cpp.compiler.option.preprocessor.def.1144361113" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 <listOptionValue builtIn="false" value="_DEBUG"/>
 </option>
@@ -34,7 +34,7 @@
 <listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
 </option>
-<option id="gnu.cpp.compiler.option.other.other.1962472356" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `fox-config-1.4 --cflags`" valueType="string"/>
+<option id="gnu.cpp.compiler.option.other.other.1962472356" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `fox-config --cflags`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.linker.so.release.2002332879" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.release"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.release.518192622" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.release"/>

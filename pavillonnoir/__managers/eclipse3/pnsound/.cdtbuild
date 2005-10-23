@@ -20,13 +20,9 @@
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.linker.so.debug.74825674" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.debug"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.debug.342081097" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.debug">
-<option id="gnu.cpp.link.option.libs.1095239204" superClass="gnu.cpp.link.option.libs" valueType="libs">
-<listOptionValue builtIn="false" value="openal"/>
-<listOptionValue builtIn="false" value="vorbis"/>
-<listOptionValue builtIn="false" value="vorbisfile"/>
-<listOptionValue builtIn="false" value="ogg"/>
-</option>
+<option id="gnu.cpp.link.option.libs.1095239204" superClass="gnu.cpp.link.option.libs" valueType="libs"/>
 <option id="gnu.cpp.link.option.paths.1480316017" superClass="gnu.cpp.link.option.paths"/>
+<option id="gnu.cpp.link.option.flags.139603572" superClass="gnu.cpp.link.option.flags" value="`openal-config --libs` `pkg-config --libs ogg vorbisfile`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.debug.2073397371" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.debug"/>
 <macros/>
@@ -39,14 +35,14 @@
 <option id="gnu.cpp.compiler.option.include.paths.798588359" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
+<listOptionValue builtIn="false" value="/usr/include/AL"/>
 </option>
 <option id="gnu.cpp.compiler.option.other.other.1310435904" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.linker.so.release.1508895695" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.release"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.release.744946731" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.release">
-<option id="gnu.cpp.link.option.libs.1659903645" superClass="gnu.cpp.link.option.libs" valueType="libs">
-<listOptionValue builtIn="false" value="openal"/>
-</option>
+<option id="gnu.cpp.link.option.libs.1659903645" superClass="gnu.cpp.link.option.libs" valueType="libs"/>
+<option id="gnu.cpp.link.option.flags.888330716" superClass="gnu.cpp.link.option.flags" value="`openal-config --libs` `pkg-config --libs ogg vorbisfile`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.release.1532010862" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.release"/>
 <macros/>

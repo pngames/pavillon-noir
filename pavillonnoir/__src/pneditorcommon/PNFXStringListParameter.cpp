@@ -103,7 +103,7 @@ namespace PN {
 	for (std::list<std::string>::iterator it = l->begin(); it != l->end(); it++)
 	{
 		std::string s = (*it);
-		if (_labelsNumChars != 0 && _labelsNumChars != 0 && s.size() > _labelsNumChars)
+		if (_labelsNumChars != 0 && _labelsNumChars != 0 && s.size() > (pnuint)_labelsNumChars)
 		{	
 			int before = (_labelsNumChars-5)/5*2;
 			int after = _labelsNumChars-5-before;

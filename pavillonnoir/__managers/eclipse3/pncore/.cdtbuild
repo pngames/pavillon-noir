@@ -12,10 +12,9 @@
 <listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
 <listOptionValue builtIn="false" value="../../../../__src/pneditorcommon/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
-<listOptionValue builtIn="false" value="/usr/include/CEGUI/"/>
 </option>
 <option id="gnu.cpp.compiler.option.warnings.allwarn.751451296" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
-<option id="gnu.cpp.compiler.option.other.other.1227422543" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 `fox-config --cflags` `xml2-config --cflags` -pthread" valueType="string"/>
+<option id="gnu.cpp.compiler.option.other.other.1227422543" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `fox-config --cflags` `xml2-config --cflags` `pkg-config --cflags CEGUI`" valueType="string"/>
 <option id="gnu.cpp.compiler.option.preprocessor.def.983818065" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 <listOptionValue builtIn="false" value="_DEBUG"/>
 </option>
@@ -28,13 +27,11 @@
 </option>
 <option id="gnu.cpp.link.option.libs.578073546" superClass="gnu.cpp.link.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="pncommon-dbg"/>
-<listOptionValue builtIn="false" value="efence"/>
 <listOptionValue builtIn="false" value="pneditorcommon-dbg"/>
-<listOptionValue builtIn="false" value="CEGUIBase"/>
 <listOptionValue builtIn="false" value="boost_thread"/>
 <listOptionValue builtIn="false" value="boost_filesystem"/>
 </option>
-<option id="gnu.cpp.link.option.flags.1831673588" superClass="gnu.cpp.link.option.flags" value="`fox-config --libs` `xml2-config --libs`" valueType="string"/>
+<option id="gnu.cpp.link.option.flags.1831673588" superClass="gnu.cpp.link.option.flags" value="`fox-config --libs` `xml2-config --libs` `pkg-config --libs CEGUI`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.exe.debug.1537256490" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug">
 <option id="gnu.both.asm.option.include.paths.915684678" superClass="gnu.both.asm.option.include.paths"/>
@@ -48,27 +45,25 @@
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1267470840" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release">
 <option id="gnu.cpp.compiler.option.include.paths.969162029" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
-<listOptionValue builtIn="false" value="/usr/include/CEGUI/"/>
 <listOptionValue builtIn="false" value="../../../../__src/pneditorcommon/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
 </option>
 <option id="gnu.cpp.compiler.option.preprocessor.def.2016347140" superClass="gnu.cpp.compiler.option.preprocessor.def"/>
-<option id="gnu.cpp.compiler.option.other.other.1462513422" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 `fox-config --cflags` `xml2-config --cflags` -pthread" valueType="string"/>
+<option id="gnu.cpp.compiler.option.other.other.1462513422" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `fox-config --cflags` `xml2-config --cflags` `pkg-config --cflags CEGUI`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.linker.exe.release.500377245" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.990910901" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
 <option id="gnu.cpp.link.option.libs.9783303" superClass="gnu.cpp.link.option.libs" valueType="libs">
-<listOptionValue builtIn="false" value="boost_filesystem"/>
 <listOptionValue builtIn="false" value="pncommon"/>
-<listOptionValue builtIn="false" value="boost_thread"/>
-<listOptionValue builtIn="false" value="CEGUIBase"/>
 <listOptionValue builtIn="false" value="pneditorcommon"/>
+<listOptionValue builtIn="false" value="boost_filesystem"/>
+<listOptionValue builtIn="false" value="boost_thread"/>
 </option>
 <option id="gnu.cpp.link.option.paths.1093224746" superClass="gnu.cpp.link.option.paths" valueType="stringList">
 <listOptionValue builtIn="false" value="../../pncommon/Release"/>
 <listOptionValue builtIn="false" value="../../pneditorcommon/Release"/>
 </option>
-<option id="gnu.cpp.link.option.flags.1609805445" superClass="gnu.cpp.link.option.flags" value="`fox-config --libs` `xml2-config --libs`" valueType="string"/>
+<option id="gnu.cpp.link.option.flags.1609805445" superClass="gnu.cpp.link.option.flags" value="`fox-config --libs` `xml2-config --libs` `pkg-config --libs CEGUI`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.exe.release.1931479239" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.release"/>
 <macros/>
