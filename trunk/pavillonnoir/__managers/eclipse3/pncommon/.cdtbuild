@@ -47,9 +47,9 @@
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.release.961229038" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.release">
 <option id="gnu.cpp.link.option.libs.641638008" superClass="gnu.cpp.link.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="boost_thread"/>
-<listOptionValue builtIn="false" value="m"/>
-<listOptionValue builtIn="false" value="dl"/>
 <listOptionValue builtIn="false" value="boost_filesystem"/>
+<listOptionValue builtIn="false" value="dl"/>
+<listOptionValue builtIn="false" value="m"/>
 </option>
 <option id="gnu.cpp.link.option.flags.322452740" superClass="gnu.cpp.link.option.flags" value="`xml2-config --libs`" valueType="string"/>
 </tool>
