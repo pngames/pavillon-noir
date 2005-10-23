@@ -313,7 +313,7 @@ PNGLRenderer::run()
   PNInfoPanel*	infoPanel = new PNInfoPanel();
   PNSDLEvent*	sdlEvent = new PNSDLEvent();
 
-  float Light1Pos[4] = {0.0f, 0.0f, 40.0f, 1.0f};
+  //float Light1Pos[4] = {0.0f, 0.0f, 40.0f, 1.0f};
 
   while (_isProgramLooping)												
   {
@@ -579,17 +579,12 @@ Init CEGUI stuff.
 void
 PNGLRenderer::initGUI()
 {
-  PNDEBUG_STEP;
   try
   {
 	CEGUI::Logger::getSingleton().setLoggingLevel(CEGUI::Insane);
-	PNDEBUG_STEP;
 	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/TaharezLook.scheme");
-	PNDEBUG_STEP;
 	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/WindowsLook.scheme");
-	PNDEBUG_STEP;
 	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/VanillaSkin.scheme");
-	PNDEBUG_STEP;
 	
 	CEGUI::System::getSingleton().setTooltip("Vanilla/Tooltip");
 

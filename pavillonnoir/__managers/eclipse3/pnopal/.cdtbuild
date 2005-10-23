@@ -9,11 +9,10 @@
 <tool id="cdt.managedbuild.tool.gnu.c.compiler.so.debug.296972104" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.so.debug"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.so.debug.1557507653" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.so.debug">
 <option id="gnu.cpp.compiler.option.include.paths.376389098" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-<listOptionValue builtIn="false" value="/usr/include/libxml2/"/>
 <listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
 </option>
-<option id="gnu.cpp.compiler.option.other.other.142203163" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread" valueType="string"/>
+<option id="gnu.cpp.compiler.option.other.other.142203163" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `xml2-config --cflags`" valueType="string"/>
 <option id="gnu.cpp.compiler.option.preprocessor.def.1860277642" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 <listOptionValue builtIn="false" value="_DEBUG"/>
 </option>
@@ -24,6 +23,7 @@
 <option id="gnu.cpp.link.option.libs.1883575244" superClass="gnu.cpp.link.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="opal-ode"/>
 </option>
+<option id="gnu.cpp.link.option.flags.1318636085" superClass="gnu.cpp.link.option.flags" value="`xml2-config --libs`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.debug.1307772224" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.debug"/>
 <macros/>
@@ -37,13 +37,14 @@
 <listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
 <listOptionValue builtIn="false" value="../../../../__library/common/"/>
 </option>
-<option id="gnu.cpp.compiler.option.other.other.1227810303" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread" valueType="string"/>
+<option id="gnu.cpp.compiler.option.other.other.1227810303" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `xml2-config --cflags`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.linker.so.release.941826338" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.release"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.release.135907211" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.release">
 <option id="gnu.cpp.link.option.libs.539189673" superClass="gnu.cpp.link.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="opal-ode"/>
 </option>
+<option id="gnu.cpp.link.option.flags.508520255" superClass="gnu.cpp.link.option.flags" value="`xml2-config --libs`" valueType="string"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.release.935249178" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.release"/>
 <macros/>
