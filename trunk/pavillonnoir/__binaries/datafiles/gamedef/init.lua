@@ -25,10 +25,10 @@ loadLuaScript("PNCharacterClass.lua", true)
    pnprint("PNCharacterClass.lua loaded\n")
 
 loadLuaScript("PNPlayerClass.lua", true)
-   pnprint("PNCharacterClass.lua loaded\n")
+   pnprint("PNPlayerClass.lua loaded\n")
 
-loadLuaScript("PNAIPlayerClass.lua", true)
-   pnprint("PNAICharacterClass.lua loaded\n")   
+loadLuaScript("PNIACharacterClass.lua", true)
+   pnprint("PNIACharacterClass.lua loaded\n")   
       
 pnprint("[LUA] Init file loaded")
 

@@ -4,6 +4,10 @@ COMBAT_STATE={NEUTRAL=0,
 			 DEFENCE=2,
 			 DODGE=3
 			 }
+CHARACTER_TYPE={CIVILAN=0,
+				NAVY=1,
+				PIRATE=2
+				}
 
 function PNCharacterClass(id)
 	----------inheritance-----------------
@@ -41,21 +45,25 @@ function PNCharacterClass(id)
 							 l_leg=0
 							}
 	--------------------------------------
-	PNCharacter.heal_state = 0
-	PNCharacter.selected_arm = PNCharacter.items.weapons.h2h	
+	PNCharacter.health_state = 0
+	PNCharacter.selected_arm = PNCharacter.items.weapons.h2h
 	PNCharacter.combat_state = COMBAT_STATE.NEUTRAL
+	PNCharacter.realCharacType = CHARACTER_TYPE.CIVILIAN
+	PNCharacter.shownCharacType = CHARACTER_TYPE.CIVILIAN
 	--------------------------------------
 	PNCharacter.load_capacity = 10;
 	--------------------------------------
 	PNCharacter.seen_entities = {}
 	--------------------------------------
-
-	PNCharacter.view = PN3DCameraClass(PNCharacter.id .. "cam", self, false)
-
+	PNCharacter.view = PN3DCameraClass(PNCharacter.id .. "cam", PNCharacter, false)
+	PNCharacter.view:addTargetMode(PNCharacter.TMODE_ORIENTATION_ABS_LOCKED)
+	PNCharacter.view:addTargetMode(PNCharacter.TMODE_POSITION_ABS_LOCKED)
+	PNCharacter.view:setTarget(PNCharacter);
+	PNCharacter.view:setTargetPosition(0.0, 100.0, 0.0);
 -------------------------------------------------------------------------------	
 	function PNCharacter:onFrustrumIn(target)
 		if (target:getId() ~= self.id) then
-          PNCharacter.seen_entities[target.id] = gameMap.entities.all[targetId]  
+          PNCharacter.seen_entities[target.id] = gameMap.entities.all[targetId]
 		end
 	end
 -------------------------------------------------------------------------------
@@ -66,9 +74,17 @@ function PNCharacterClass(id)
 	end
 -------------------------------------------------------------------------------
     function PNCharacter:onAttack(sourceId, targetId)
-        
+
     end
 --------------------------------------------------------------------------------
+	function PNCharacter:onUpdate(deltaTime)
+		self.view:update(deltaTime)
+		self.__index:update(deltaTime)
+	end
+
+	function PNCharacter:getCharacType()
+		return self.shownCharactType
+	end
 
 	return PNCharacter
 end

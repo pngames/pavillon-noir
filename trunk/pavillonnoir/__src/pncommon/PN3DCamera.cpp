@@ -69,6 +69,9 @@ PN3DCamera::PN3DCamera(PN3DObject* object)
 {
   _objType = OBJTYPE_CAMERA;
   _positionTarget = _viewTarget = object;
+
+  PNEventManager::getInstance()->addCallback(PN_EVENT_MP_STARTED, EventCallback(this, &PN3DCamera::_onMPStarted));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PN3DCamera::_onMPEnded));
 }
 
 PN3DCamera::~PN3DCamera()

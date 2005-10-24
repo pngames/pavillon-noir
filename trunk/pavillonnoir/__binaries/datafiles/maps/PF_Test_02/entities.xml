@@ -8,7 +8,7 @@
   </listmaterials>
 </model>
 </entity>
-<entity id="1" label="Hero" mdref="bonhomme.pno" envtype="dynamic" objtype="character" class="PNCharacter" x="-1860.95" y="0" z="-2166.66" xx="0" yy="0" zz="0" ww="1">
+<entity id="1" label="Hero" mdref="bonhomme.pno" envtype="dynamic" objtype="character" class="PNIACharacter" x="-1860.95" y="0" z="-2166.66" xx="0" yy="0" zz="0" ww="1">
 <model path="bonhomme.pnm">
   <listmaterials>
     <material path="bonhomme10_Materiau.pnt" />
@@ -19,7 +19,7 @@
   </listanims>
 </model>
 </entity>
-<entity id="2" label="sert-a-rien1" mdref="bonhomme_editor.pno" envtype="dynamic" objtype="character" class="PNCharacter" x="-4900" y="0" z="-4900" xx="0" yy="0" zz="0" ww="1">
+<entity id="2" label="sert-a-rien1" mdref="bonhomme_editor.pno" envtype="dynamic" objtype="character" class="PNIACharacter" x="-4900" y="0" z="-4900" xx="0" yy="0" zz="0" ww="1">
 <model path="bonhomme.pnm">
   <listmaterials>
     <material path="groundLevel1_01 - Default.pnt" />
