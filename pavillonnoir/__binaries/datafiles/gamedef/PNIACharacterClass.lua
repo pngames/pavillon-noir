@@ -118,7 +118,7 @@ function PNIACharacterClass(id)
 		if (target:getId() ~= self.id) then
 			if (self.ennemies[target:getId()] ~= NULL) then
 				self.ennemies[target:getId()] = NULL
-				pnprint(target:getId() .. " exits frustrum of " self.id .. "\n")
+				--pnprint(target:getId() .. " exits frustrum of " self.id .. "\n")
 			end
 		end
 	end
