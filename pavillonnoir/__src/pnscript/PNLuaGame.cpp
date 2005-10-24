@@ -373,11 +373,13 @@ void  PNLuaGame::onGameAction(pnEventType evt, PNObject* source, PNEventData* da
     std::string luaOrder;
 
     PNGameActionEventData* actionEvent= (PNGameActionEventData*) data;
-    luaOrder += "gameMap:onAction";
+    luaOrder += "gameMap:on";
 	luaOrder += actionEvent->action;
 	luaOrder += "(\"" ;
-	luaOrder += actionEvent->targetId;
-	luaOrder += "\", ";
+	luaOrder += actionEvent->sourceId;
+    luaOrder += "\", \"";
+    luaOrder += actionEvent->targetId;
+    luaOrder += "\", ";
 	luaOrder += (actionEvent->state == true ? "true": "false");
 	luaOrder += ")";
 	this->_LVM.execString(luaOrder.c_str());
@@ -394,17 +396,16 @@ void  PNLuaGame::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* da
   std::string	  luaOrder;
 
     pnerror(PN_LOGLVL_DEBUG, "frustrum in");
-    if (o1->getObjType() == PN3DObject::OBJTYPE_CHARACTER && o2 != NULL &&
-        o2->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
+    if ( o2 != NULL && o2->getObjType())
     {
         PNCharacter*  s = (PNCharacter*)o2;
-        PNCharacter*  target = (PNCharacter*)o1;
+        PNCharacter*  target = (PN3DObject*)o1;
 
-        luaOrder = "gameMap.entities.all[\"";
+        luaOrder = "gameMap:onFrustrumIn(\"";
         luaOrder += s->getId().c_str();
-        luaOrder += "\"]:onFrustrumIn(gameMap.entities.all[\"";
+        luaOrder += "\",\"";
         luaOrder += target->getId().c_str();
-        luaOrder += "\"])";
+        luaOrder += "\")";
         _LVM.execString(luaOrder);
     }
 }
@@ -422,11 +423,11 @@ void  PNLuaGame::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* d
         PNCharacter*  s = (PNCharacter*)o2;
         PNCharacter*  target = (PNCharacter*)o1;
 
-        luaOrder = "gameMap.entities.all[\"";
+        luaOrder = "gameMap:onFrustrumOut(\"";
         luaOrder += s->getId().c_str();
-        luaOrder += "\"]:onFrustrumOut(gameMap.entities.all[\"";
+        luaOrder += "\",\"";
         luaOrder += target->getId().c_str();
-        luaOrder += "\"])";
+        luaOrder += "\")";
         _LVM.execString(luaOrder);
     }
 }
@@ -456,6 +457,7 @@ void  PNLuaGame::registerCallbacks()
     PNEventManager::getInstance()->addCallback(PN_EVENT_F_IN, EventCallback(this, &PNLuaGame::onFrustrumIn));
     PNEventManager::getInstance()->addCallback(PN_EVENT_F_OUT, EventCallback(this, &PNLuaGame::onFrustrumOut));
     PNEventManager::getInstance()->addCallback(PN_EVENT_MOUSE_MOVE, EventCallback(this, &PNLuaGame::onMouseMove));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGame::onGameAction));
     pnerror(PN_LOGLVL_DEBUG, "callbacks registered");
 }
 
@@ -502,4 +504,10 @@ void  PNLuaGame::unloadMap()
     }
     PNEventManager::getInstance()->sendEvent(PN_EVENT_MU_ENDED, 0, new PNEventData());
     //TODO : capturer cet event pout debug
+}
+
+void	PNLuaGame::sendGameActionEvent(std::string eventName, PN::PNGameActionEventData *eventData)
+{
+  eventData->action = eventName; 
+  PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, 0, eventData);
 }

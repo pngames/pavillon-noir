@@ -40,6 +40,7 @@ extern "C"
 #include "PNGameInterface.hpp"
 #include "PNLuaVm.hpp"
 #include "PNLuaGameMap.hpp"
+#include "PNGameEventData.hpp"
 #include <set>
 // Default lua debug log file
 #define DEF_LUA_LOG_FILE "pnScript.log"
@@ -116,7 +117,7 @@ namespace PN
     void loadMap();
     //unloadthe map;
     void unloadMap();
-
+   
 
 
     //////////////////////////////////--------  callbacks ---------////////////////////////////////////
@@ -145,10 +146,7 @@ namespace PN
 	void onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* data);
 	void onMouseMove(pnEventType evt, PNObject* source, PNEventData* data);
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
+    void sendGameActionEvent(std::string eventName, PNGameActionEventData *eventData);
     /*/////////////////////////////////////////////////////////////////////////////
     /                           Constructors / Destructor                         /
     /////////////////////////////////////////////////////////////////////////////*/
