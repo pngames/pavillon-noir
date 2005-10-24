@@ -53,7 +53,6 @@ namespace PN {
 
 PN3DSkeletonObject::PN3DSkeletonObject() : _skeleton(NULL)
 {
-  puts("###### PN3DSkeletonObject::PN3DSkeletonObject()");
   _objType = OBJTYPE_3DSKELETONOBJ;
 }
 

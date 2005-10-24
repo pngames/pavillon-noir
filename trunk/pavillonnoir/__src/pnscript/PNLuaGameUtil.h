@@ -31,7 +31,7 @@
 # define _PNLUASANDBOXUTIL_H
 #include "stdio.h"
 #include "PNLuaGameMap.hpp"
-
+#include "PNGameEventData.hpp"
 namespace PN{
   void loadLuaScript(const pnchar* file, bool reload = 0);
 
@@ -45,7 +45,7 @@ namespace PN{
   void  onInit();
   void  onReset();
   //void	activateDebug(bool b);
-  void	sendGameActionEvent(std::string id, std::string action, ...);
+  void	sendGameActionEvent(std::string eventName, PNGameActionEventData *eventData);
   PNLuaGameMap* getGameMap();
 }
 
