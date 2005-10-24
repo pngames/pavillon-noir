@@ -112,7 +112,6 @@ end
 
 function gameMap:onFrustrumIn(sourceId, targetId)
     self.entities.all[sourceId]:onFrustrumIn(self.entities.all[targetId])
-    
 end 
 
 function gameMap:onFrustrumOut(sourceId, targetId)
