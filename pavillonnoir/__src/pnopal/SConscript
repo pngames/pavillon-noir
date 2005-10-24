@@ -8,6 +8,7 @@ PNOpalEvents.cpp
 PNOpalObject.cpp
 PNOpalPlugDesc.cpp
 pndlmain.cpp
+PNOpalImporter.cpp
 """.split()
 obj.target = 'pnopal' + env['suffix'] + '.pnp'
 obj.instdir = env['install_prefix'] + env['install_path'] + '/linux/plugins' + env['debug_path']
