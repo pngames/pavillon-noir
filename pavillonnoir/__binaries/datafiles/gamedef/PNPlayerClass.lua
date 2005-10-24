@@ -5,9 +5,9 @@ function PNPlayerClass(id)
 	---------------setting camera behavior-----------------
 	PNRenderCam:setPositionTarget(PNPlayer)
 	PNRenderCam:setViewTarget(PNPlayer)
-   PNRenderCam:setTargetPosition(0, 600 , 1000)
+   PNRenderCam:setTargetPosition(0, 300 , 1000)
    PNRenderCam:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
-   --PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_ABS_LOCKED)
+   PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_ABS_LOCKED)
    --PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_ABS_LOCKED)
 	-----------------------------------------------------------
 	--------------- Rotation parameter ------------------------
