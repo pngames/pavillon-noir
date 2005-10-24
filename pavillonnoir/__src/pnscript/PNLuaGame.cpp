@@ -397,7 +397,7 @@ void  PNLuaGame::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* da
   std::string	  luaOrder;
 
     pnerror(PN_LOGLVL_DEBUG, "frustrum in");
-    if ( o2 != NULL && o2->getObjType())
+    if (o2 != NULL)
     {
         PNCharacter*  s = (PNCharacter*)o2;
         PN3DObject*  target = (PN3DObject*)o1;
@@ -418,8 +418,7 @@ void  PNLuaGame::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* d
   std::string	  luaOrder;
 
     pnerror(PN_LOGLVL_DEBUG, "frustrum out");
-    if (o1->getObjType() == PN3DObject::OBJTYPE_CHARACTER && o2 != NULL &&
-        o2->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
+    if (o2 != NULL)
     {
         PNCharacter*  s = (PNCharacter*)o2;
         PNCharacter*  target = (PNCharacter*)o1;
