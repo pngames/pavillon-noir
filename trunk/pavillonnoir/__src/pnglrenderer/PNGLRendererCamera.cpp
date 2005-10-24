@@ -40,7 +40,7 @@ namespace PN {
 
 PNGLRendererCamera::PNGLRendererCamera() : _cfCallback(this, &PNGLRendererCamera::_cleanFrustrum), _ufCallback(this, &PNGLRendererCamera::_updateGLFOV)
 {
-  _coord.set(0.0f, 100.0f, -150.0f);
+  _coord.set(0.0f, 0.0f, -150.0f);
 
   //setTargetDirection(_rightDirection);
   //_targetDirection = _rightDirection.getVector();
