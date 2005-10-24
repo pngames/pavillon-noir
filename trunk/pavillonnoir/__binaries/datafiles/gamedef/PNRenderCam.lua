@@ -1,8 +1,9 @@
 	--pnprint("PNRenderCam creating\n")
 	
 	-- make inheritance -----
-    PNRenderCam  = PN3DCameraClass("PNRender", nil, true)
-    -------------------------
+    PNRenderCam  = PN3DCameraClass("PNRenderCam", nil, true)
+    --PNRenderCam  = PN3DCamera:getRenderCam()
+-------------------------
     -------------------------
     PNRenderCam:setId("PNRenderCam")
     PNRenderCam.id = "PNRenderCam"
@@ -91,7 +92,10 @@
 	end
 	
 	function PNRenderCam:onMouseLook(xdelta, ydelta)
-		pnprint("PNRenderCam:MouseLook\n")
+		
+      if (isInstanceOf(self, "PN3DCamera") == true and self.isRenderCam == false) then 
+         pnprint("PNRenderCam:MouseLook\n")
+      end
 		local obj = self:getPositionTarget()		
 		yd = 0.0
 		xd = 0.0
@@ -116,8 +120,10 @@
 		----------------------------
 		self:rotatePitchRadians(math.rad(yd))
 		if ((obj ~= nil) and (obj:getId() == "Player")) then
+         pnprint("player rotate\n")
 			obj:rotateYawRadians(math.rad(xd))
 		end
+       pnprint("PNRenderCamera: rotate\n")
 	    self:rotateYawRadians(math.rad(xd))
 		--self.lastYdelta = yd
 		--self.lastXdelta = xd
