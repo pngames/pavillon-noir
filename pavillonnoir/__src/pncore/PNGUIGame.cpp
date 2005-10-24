@@ -474,10 +474,9 @@ bool PNGUIGame::eventMouseMoveHandler(const CEGUI::EventArgs& e)
   //rot.fromAxisDegrees(PNVector3f::UNIT_Y, 90.0f);
 
   //cam->setOrient(rot);
-
+  PNGameMouseMoveEventData mouseData(PNPoint(-me->moveDelta.d_x, -me->moveDelta.d_y, 0.0));
   //////////////////////////////////////////////////////////////////////////
-  PNEventManager::getInstance()->sendEvent(PN_EVENT_MOUSE_MOVE, NULL,
-	  new PNGameMouseMoveEventData(PNPoint(-me->moveDelta.d_x, -me->moveDelta.d_y, 0.0)) );
+  PNEventManager::getInstance()->sendEvent(PN_EVENT_MOUSE_MOVE, NULL, &mouseData);
   //cam->rotatePitchRadians((pnfloat)DEGREE_TO_RADIAN(-me->moveDelta.d_y));
   //cam->rotateYawRadians((pnfloat)DEGREE_TO_RADIAN(-me->moveDelta.d_x));
 
