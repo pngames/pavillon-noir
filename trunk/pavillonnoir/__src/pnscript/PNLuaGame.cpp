@@ -399,7 +399,7 @@ void  PNLuaGame::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* da
     if ( o2 != NULL && o2->getObjType())
     {
         PNCharacter*  s = (PNCharacter*)o2;
-        PNCharacter*  target = (PN3DObject*)o1;
+        PN3DObject*  target = (PN3DObject*)o1;
 
         luaOrder = "gameMap:onFrustrumIn(\"";
         luaOrder += s->getId().c_str();
