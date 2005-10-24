@@ -111,12 +111,14 @@ function gameMap:onMouseMove(xdelta, ydelta)
 end
 
 function gameMap:onFrustrumIn(sourceId, targetId)
-    self.entities.all[sourceId]:onFrustrumIn(target)
+    self.entities.all[sourceId]:onFrustrumIn(self.entities.all[targetId])
+    
 end 
 
 function gameMap:onFrustrumOut(sourceId, targetId)
-    self.entities.all[sourceId]:onFrustrumIn(targetId)
+    self.entities.all[sourceId]:onFrustrumIn(self.entities.all[targetId])
 end 
+
 
 	
 --camera = PN3DCamera:getRenderCam()
