@@ -118,7 +118,7 @@
 		if ((obj ~= nil) and (obj:getId() == "Player")) then
 			obj:rotateYawRadians(math.rad(xd))
 		end
-	    //self:rotateYawRadians(math.rad(xd))
+	    self:rotateYawRadians(math.rad(xd))
 		--self.lastYdelta = yd
 		--self.lastXdelta = xd
 	end
