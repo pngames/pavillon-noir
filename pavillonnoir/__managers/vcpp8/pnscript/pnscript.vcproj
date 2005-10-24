@@ -350,6 +350,10 @@
 			Name="LuaGameDef"
 			>
 			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\Character.lua"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__binaries\datafiles\gamedef\DragonClass.lua"
 				>
 			</File>
@@ -359,10 +363,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__binaries\datafiles\gamedef\init.lua"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PlayerClass.lua"
 				>
 			</File>
 			<File
@@ -378,7 +378,27 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\renderCam.lua"
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNItemClass.lua"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNModifier.lua"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNPlayerClass.lua"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNRenderCam.lua"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNWeaponClass.lua"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\utilities.lua"
 				>
 			</File>
 		</Filter>

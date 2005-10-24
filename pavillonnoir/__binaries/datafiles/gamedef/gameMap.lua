@@ -1,9 +1,3 @@
-function inheritFrom(parent)
-	local child = {__index = parent}
-	setmetatable(child, child)
-	tolua.inherit(child , parent.__instance) -- make child be recognized as parent c_instance
-	return child
-end
 	
 gameMap = getGameMap()
 tolua:takeownership(gameMap)
@@ -43,7 +37,6 @@ end
 
 function gameMap:spwan(entity, id, position, orientation, model)
 	entity:setCoord(position)
-	-- entity.setOrient(orientation)
 	entity:unserializeFromFile(model)
 	self:spawn2(entity, id)
 	return entity
@@ -54,7 +47,7 @@ function gameMap:onUpdate(deltaTime)
 	for id, entity in pairs(self.entities.all) do 
 		entity:onUpdate(deltaTime)
 	end
-	renderCam:onUpdate(deltaTime)
+	PNRenderCam:onUpdate(deltaTime)
 --	pnprint("<= LUA GameMap: onUpdate()")
 end
 
@@ -92,30 +85,38 @@ function gameMap:onLoadMap()
     pnprint("LUA GameMap: onLoadMap()\n")
 end
 
-function gameMap:onActionMoveForward(id, state)
-    pnprint("LUA GameMap:onActionMoveForward()\n")
-    self.entities.all[id]:onActionMoveForward(state)
+function gameMap:onMoveForward(srcId, targId, state)
+    pnprint("LUA GameMap:onMoveForward()\n")
+    self.entities.all[targId]:onMoveForward(state)
 end	
 
-function gameMap:onActionMoveBackward(id, state)
-    pnprint("LUA GameMap:onActionMoveBackward()\n")
-    self.entities.all[id]:onActionMoveBackward(state)
+function gameMap:onMoveBackward(srcId, targId, state)
+    pnprint("LUA GameMap:onMoveBackward()\n")
+    self.entities.all[targId]:onMoveBackward(state)
 end		
 
-function gameMap:onActionMoveLeft(id, state)
-    pnprint("LUA GameMap:onActionMoveLeft()\n")
-    self.entities.all[id]:onActionMoveLeft(state)
+function gameMap:onMoveLeft(srcId, targId, state)
+    pnprint("LUA GameMap:onMoveLeft()\n")
+    self.entities.all[targId]:onMoveLeft(state)
 end	
 
-function gameMap:onActionMoveRight(id, state)
-    pnprint("LUA GameMap:onActionMoveRight()\n")
-    self.entities.all[id]:onActionMoveRight(state)
+function gameMap:onMoveRight(srcId, targId, state)
+    pnprint("LUA GameMap:onMoveRight()\n")
+    self.entities.all[targId]:onMoveRight(state)
 end
 
 function gameMap:onMouseMove(xdelta, ydelta)
    -- pnprint("gameMap:onMouseMove()\n")  
-    renderCam:onMouseLook(xdelta, ydelta) 
+    PNRenderCam:onMouseLook(xdelta, ydelta) 
 end
+
+function gameMap:onFrustrumIn(sourceId, targetId)
+    self.entities.all[sourceId]:onFrustrumIn(target)
+end 
+
+function gameMap:onFrustrumOut(sourceId, targetId)
+    self.entities.all[sourceId]:onFrustrumIn(targetId)
+end 
 
 	
 --camera = PN3DCamera:getRenderCam()

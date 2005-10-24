@@ -96,56 +96,11 @@ namespace PN{
 		//  vm->loadMap(mapName);
 	}
 
-	void	sendGameActionEvent(std::string id, std::string action, ...)
+    void	sendGameActionEvent(std::string eventName, PN::PNGameActionEventData *eventData)
 	{
-		int count = 0;
-		va_list marker;
-
-		va_start( marker, action );     /* Initialize variable arguments. */
-		//while( i != -1 )
-		//{
-		//	sum += i;
-		//	count++;
-		//	i = va_arg( marker, int);
-		//}
-		//va_end( marker );              /* Reset variable arguments.      */
-		//return( sum ? (sum / count) : 0 );
+      PNLuaGame* game = (PNLuaGame*) PNLuaGame::getInstance();
+      game->sendGameActionEvent(eventName, eventData);	
 	}
 
-//	void	luaDebugLineHook(lua_State *S, lua_Debug *ar)
-	//{
-	  //printf("\n----\nEntered Lua Line Hook\n");
-	  //char* buf = (char*) malloc(512 * sizeof(char));
-	//  PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
 
-	 // lua_getinfo(vm->getLuaState(), "Snl", ar);
-	  //sprintf(buf, "##Line: File \"%s\" -- function \"%s\" -- line : \"%d\"\n", ar->source, ar->name, ar->currentline);
-	//  fprintf(vm->getDebugLogHandle(), "##Line: File \"%s\" -- function \"%s\" -- line : \"%d\"\n", ar->source, ar->name, ar->currentline);
-	  //fwrite(buf, strlen(buf), sizeof(char), vm->getDebugLogHandle());
-	  //free(buf);
-//	}
-
-	//void	activateDebug(bool b)
-	//{
-	//  PNLuaGame::getInstance()->setDebug(b);
-	//}
-
-
-
-	/*  void  onUpdate(float deltaTime)
-	{
-	PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
-	vm->onUpdate(deltaTime);
-	}
-	void  onInit()
-	{
-	PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
-	vm->onInit();
-	}
-	void  onReset()
-	{
-	PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
-	vm->onReset();
-	}
-	*/
 }
