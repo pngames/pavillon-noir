@@ -82,12 +82,14 @@ namespace PN
 	PNSoundEventData *data = new PNSoundEventData("theme", DEF::musicFilePath + "Honneur_PavillonNoir.ogg");
 	PNSoundEventData *data2 = new PNSoundEventData("click",  DEF::soundsFilePath + "menu_click.ogg");
 	PNSoundEventData *data3 = new PNSoundEventData("quit",  DEF::soundsFilePath + "redalert.ogg");
+	//PNSoundEventData *data4 = new PNSoundEventData("theme", 0.3f);
 
 	PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_DISABLE, 0, 0);
     PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_CREATE, 0, data2);
 	PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_CREATE, 0, data3);
 	//PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_CREATE, 0, data);
-	//PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, new PNSoundEventData("theme", 0.3f));
+	//PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, data4);
+	//delete data4;
 
 	//////////////////////////////////////////////////////////////////////////
   }
