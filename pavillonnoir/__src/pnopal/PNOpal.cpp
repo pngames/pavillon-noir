@@ -226,6 +226,7 @@ void PNOpal::setAllPhysicalObjectsStatic(bool state)
   {
 	if (_break == true)
 	  return;
+
 	currentObject = it->second;
 	currentObject->getPhysicalObject()->setStatic(state);
   }
