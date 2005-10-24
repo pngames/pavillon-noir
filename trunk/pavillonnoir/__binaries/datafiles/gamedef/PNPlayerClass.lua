@@ -96,6 +96,7 @@ function PNPlayerClass(id)
 ----------------------------------------------------------		
 	function PNPlayer:onInit()
         self.__index:onUpdate(deltaTime)
+		pnprint(self.id .. ":onInit()\n")
 	    ---------------setting camera behavior-----------------
 	   -- self.view = PNRenderCam
 	   -- self.view:setPositionTarget(PNPlayer)
