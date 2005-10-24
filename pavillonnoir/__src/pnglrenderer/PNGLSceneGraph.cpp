@@ -123,7 +123,9 @@ PNGLSceneGraph::render(pnuint deltaTime)
   if (!_inGame)
 	return PNEC_SUCCES;
 
-  PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_UPDATE, 0, new PNGameUpdateEventData((pnfloat)deltaTime));
+  PNGameUpdateEventData *gameUpdateData = new PNGameUpdateEventData((pnfloat)deltaTime);
+  PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_UPDATE, 0, gameUpdateData);
+  delete gameUpdateData;
 
   //////////////////////////////////////////////////////////////////////////
 
