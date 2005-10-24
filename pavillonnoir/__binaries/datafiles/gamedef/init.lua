@@ -21,8 +21,8 @@ loadLuaScript("PNItemClass.lua", true)
 loadLuaScript("PNWeaponClass.lua", true)
    pnprint("PNWeaponClass.lua loaded\n")
 
-loadLuaScript("PNCharacterClass_new.lua", true)
-   pnprint("PNCharacterClass_new.lua loaded\n")
+loadLuaScript("PNCharacterClass.lua", true)
+   pnprint("PNCharacterClass.lua loaded\n")
 
 loadLuaScript("PNPlayerClass.lua", true)
    pnprint("PNCharacterClass.lua loaded\n")
