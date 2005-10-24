@@ -5,10 +5,10 @@ function PNPlayerClass(id)
 	---------------setting camera behavior-----------------
 	PNRenderCam:setPositionTarget(PNPlayer)
 	PNRenderCam:setViewTarget(PNPlayer)
-    PNRenderCam:setTargetPosition(0, 600 , 1000)
-    PNRenderCam:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
-    PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_ABS_LOCKED)
-    PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_ABS_LOCKED)
+   PNRenderCam:setTargetPosition(0, 600 , 1000)
+   PNRenderCam:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
+   --PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_ABS_LOCKED)
+   --PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_ABS_LOCKED)
 	-----------------------------------------------------------
 	--------------- Rotation parameter ------------------------
 	PNPlayer.yawSpeed = 1.0
@@ -107,9 +107,9 @@ function PNPlayerClass(id)
 ----------------------------------------------------------
 	function PNPlayer:onDestroy()
 		nothing = 0
-		self.view:setMovingMode(PN3DObject.MMODE_FREE)
-		self.view:setTarget(tolua.cast(nothing, "PN3DObject"))
-		self.view:addTargetMode(PN3DObject.TMODE_VIEW_DISTANCE_ABS_LOCKED)
+		--self.view:setMovingMode(PN3DObject.MMODE_FREE)
+		PNRenderCam:setTarget(tolua.cast(nothing, "PN3DObject"))
+		--PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_DISTANCE_ABS_LOCKED)
 	end
 	-------------------------------------------------------
 	return PNPlayer
