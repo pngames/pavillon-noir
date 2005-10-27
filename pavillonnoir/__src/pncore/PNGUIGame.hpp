@@ -31,6 +31,7 @@
 # define _PNGUIGAME_HPP_
 
 #include "myCEGUI.h"
+#include <boost/thread/recursive_mutex.hpp>
 #include <set>
 #include <sstream>
 
@@ -47,6 +48,9 @@ namespace PN{
 	/                                   Properties                                /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
+	boost::recursive_mutex	_mutex;
+
+  public:
 	typedef			enum
 	{
 	  STATE_CONSOLE		= 0x000001,
@@ -55,10 +59,10 @@ namespace PN{
   private:
 	int				_inputHandleModifier;
 	CEGUI::Window* _rootWin;
-	CEGUI::Window* _pnConsole;
+	CEGUI::ProgressBar*	_lifeBar;
+
 	typedef std::set<CEGUI::Key::Scan> BufferedKeysDownSet;
 	BufferedKeysDownSet mBufferedKeysDown;
-	float _progBarVal;
 
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
@@ -69,6 +73,7 @@ namespace PN{
 	CEGUI::Window*  getWindow();
 	void  resetGUI();
 	void  startGUI();
+	void  setLifeValue(float val);
   private:
 	bool eventMouseMoveHandler(const CEGUI::EventArgs& e);
 	bool eventKeyPressedHandler(const CEGUI::EventArgs& e);
