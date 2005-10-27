@@ -2,5 +2,6 @@
 <!DOCTYPE model SYSTEM "object.dtd">
 <model path="JiveImportBox.pnm">
   <listmaterials>
+	<material path="cube_60x60x60_03 - Par defaut.pnt" />
   </listmaterials>
 </model>
