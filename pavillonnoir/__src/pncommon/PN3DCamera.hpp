@@ -63,7 +63,7 @@ public:
 protected:
   PN3DObjList				_list3DObj;
 
-  pnbool					_is3DObjVisible(PN3DObject* obj);
+  //pnbool					_is3DObjVisible(PN3DObject* obj);
   pnbool					_is3DObjVisible2(PN3DObject* obj);
 
   void			  		  	_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed);
