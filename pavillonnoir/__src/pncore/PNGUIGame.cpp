@@ -356,8 +356,7 @@ PNGUIGame::PNGUIGame()
 
   _rootWin->activate();
 
-  _progBarVal = 1;
-
+  _lifeBar = (CEGUI::ProgressBar*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/lifeBar");
   _myri = PNRendererInterface::getInstance();
   _skipFirstFrame = false;
   _inputHandleModifier = 0;
@@ -801,6 +800,11 @@ default:
   }
 }
 
+void  PNGUIGame::setLifeValue(float val)
+{
+  PNLOCK(this);
+  _lifeBar->setProgress(val);
+}
 
 void  PNGUIGame::show()
 {
