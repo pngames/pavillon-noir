@@ -525,7 +525,7 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 
 	  // <!-- entity markup open
 	  o << "<" << PNXML_ENTITY_MKP << " " << PNXML_ID_ATTR << "=\"" << shape->getId()
-		  << "\" " << PNXML_ID_ATTR << "=\"" << shape->getLabel() << "\" "
+		  << "\" " << PNXML_LABEL_ATTR << "=\"" << shape->getLabel() << "\" "
 		  << PNXML_MODELREFERENCE_ATTR << "=\"" << str << "\" " << PNXML_ENVTYPE_ATTR
 		  << "=\"";
 	  if (shape->getEnvType() == PN_GROUND)
