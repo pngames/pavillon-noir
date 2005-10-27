@@ -61,7 +61,7 @@ private:
 public:
   static PNGLSceneGraph*	getInstance();
 
-  void						resizeGLWindow(GLsizei width, GLsizei height);
+  void						resizeGLWindow(pnint width, pnint height);
   void						initFrame();
   PNGLRendererCamera&		getRenderCamera();
 

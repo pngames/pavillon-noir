@@ -54,10 +54,18 @@
 /// Convert degree to radian
 # define DEGREE_TO_RADIAN(degree)	((degree) * DTOR)
 #endif
+#ifndef DEGREE_TO_RADIAN_F
+/// Convert degree to radian
+# define DEGREE_TO_RADIAN_F(degree)	((float)DEGREE_TO_RADIAN(degree))
+#endif
 
 #ifndef RADIAN_TO_DEGREE
 /// Convert radian to degree
 # define RADIAN_TO_DEGREE(radian)	((radian) * RTOD)
+#endif
+#ifndef RADIAN_TO_DEGREE_F
+/// Convert radian to degree
+# define RADIAN_TO_DEGREE_F(radian)	((float)RADIAN_TO_DEGREE(radian))
 #endif
 
 /// Epsilon

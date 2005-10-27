@@ -78,24 +78,24 @@ PNGLRendererCamera::setUpdateGLFov(pnbool updatePersp)
 }
 
 void
-PNGLRendererCamera::resizeGLWindow(pnfloat width, pnfloat height)
+PNGLRendererCamera::resizeGLWindow(pnint width, pnint height)
 {
   PNLOCK(this);
 
-  _width = width;
-  _height = height;
+  _width = (pnfloat)width;
+  _height =(pnfloat)height;
 
   pnfloat ratio = _width / _height;
 
   if (ratio < 1.0)
   {
-	_viewYRadFov = DEGREE_TO_RADIAN(_viewFov);
-	_viewXRadFov = DEGREE_TO_RADIAN(_viewFov * ratio);
+	_viewYRadFov = DEGREE_TO_RADIAN_F(_viewFov);
+	_viewXRadFov = DEGREE_TO_RADIAN_F(_viewFov * ratio);
   }
   else
   {
-	_viewYRadFov = DEGREE_TO_RADIAN(_viewFov * ratio);
-	_viewXRadFov = DEGREE_TO_RADIAN(_viewFov);
+	_viewYRadFov = DEGREE_TO_RADIAN_F(_viewFov * ratio);
+	_viewXRadFov = DEGREE_TO_RADIAN_F(_viewFov);
   }
 
   setUpdateGLFov(true);
