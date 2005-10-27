@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE model SYSTEM "object.dtd">
+<object>
+<model path="JiveImportBox_02.pnm">
+  <listmaterials>
+    <material path="JiveImportBox_02_02 - Par defaut.pnt" />
+  </listmaterials>
+</model>
+</object>
+
