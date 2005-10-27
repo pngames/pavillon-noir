@@ -49,7 +49,7 @@ class			PNGLRendererCamera : public PN3DCamera
 public:
   void			updateViewMatrix();
 
-  void			resizeGLWindow(pnfloat width, pnfloat height);
+  void			resizeGLWindow(pnint width, pnint height);
   pnfloat		getWidth() const;
   pnfloat		getHeight() const;
 

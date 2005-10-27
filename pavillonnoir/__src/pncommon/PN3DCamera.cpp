@@ -97,6 +97,8 @@ PN3DCamera::_onMPEnded(pnEventType type, PNObject* source, PNEventData* ed)
 pnbool
 PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 {
+  return true;
+
   PNLOCK(obj);
 
   //////////////////////////////////////////////////////////////////////////
@@ -289,6 +291,8 @@ pnbool
 
 PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
 {
+  return true;
+
   PNLOCK(obj);
 
   //////////////////////////////////////////////////////////////////////////
