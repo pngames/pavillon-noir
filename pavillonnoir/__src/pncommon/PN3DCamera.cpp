@@ -94,7 +94,7 @@ PN3DCamera::_onMPEnded(pnEventType type, PNObject* source, PNEventData* ed)
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PN3DCamera::_updateFrustrum));
 }
 
-pnbool
+/*pnbool
 PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 {
   return true;
@@ -281,7 +281,7 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   inFov = rightFov && topFov;
 
   return (inFov && inNearFar);
-}
+}*/
 
 pnbool
 #define SUB_FOV_TEST(targetV, vFov1, vFov2)  \
@@ -291,8 +291,6 @@ pnbool
 
 PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
 {
-  return true;
-
   PNLOCK(obj);
 
   //////////////////////////////////////////////////////////////////////////
@@ -321,7 +319,10 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
 
   PNPoint coord = _coord - obj->getCoord();
   coord = obj->getOrient().getInvert() * coord;
+
   frontDirection = obj->getOrient().getInvert() * frontDirection;
+  rightDirection = obj->getOrient().getInvert() * rightDirection;
+  topDirection = obj->getOrient().getInvert() * topDirection;
 
   PNVector3f	targetVector = PNPoint::ZERO - coord;
 
