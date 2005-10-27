@@ -285,9 +285,13 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 
 pnbool
 #define SUB_FOV_TEST(targetV, vFov1, vFov2)  \
-  ((inTest1 = vFov1.scalarProduct(targetV) < 0) || inTest1 != firstInTest1)\
-  &&\
-  ((inTest2 = vFov2.scalarProduct(targetV) < 0) || inTest2 != firstInTest2)
+  ( \
+    ( \
+      ((inTest1 = vFov1.scalarProduct(targetV) < 0) == inTest1 && (inTest2 = vFov2.scalarProduct(targetV) < 0) == inTest1) \
+      && inTest1 && inTest2 \
+	) \
+  || inTest1 != firstInTest1 || inTest2 != firstInTest2 \
+  )
 
 PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
 {
