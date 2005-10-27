@@ -548,7 +548,7 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 		  << "=\"" << p.y << "\" " << PNXML_COORDZ_ATTR << "=\"" << p.z
 		  << "\" " << PNXML_ROTX_ATTR << "=\"" << q.x << "\" " << PNXML_ROTY_ATTR
 		  << "=\"" << q.y << "\" " << PNXML_ROTZ_ATTR << "=\"" << q.z << "\" "
-		  << PNXML_ROTY_ATTR << "=\"" << q.w << "\">" << std::endl;
+		  << PNXML_ROTW_ATTR << "=\"" << q.w << "\">" << std::endl;
 	  // entity markup open -->
 
 	  // actions
