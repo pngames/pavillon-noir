@@ -84,7 +84,7 @@ PNGLSceneGraph::_onMPEnded(pnEventType type, PNObject* source, PNEventData* ed)
 //////////////////////////////////////////////////////////////////////////
 
 void
-PNGLSceneGraph::resizeGLWindow(GLsizei width, GLsizei height)
+PNGLSceneGraph::resizeGLWindow(pnint width, pnint height)
 {
   _renderCam.resizeGLWindow(width, height);
 }
@@ -120,6 +120,16 @@ PNGLSceneGraph::getRenderCamera()
 pnuint
 PNGLSceneGraph::render(pnuint deltaTime)
 {
+  //////////////////////////////////////////////////////////////////////////
+  // TEST
+  GLint tstate;
+  glGetIntegerv(GL_DEPTH_WRITEMASK, &tstate);
+  cout << tstate << endl;
+
+  //if (tstate != GL_TRUE)
+
+  //////////////////////////////////////////////////////////////////////////
+
   if (!_inGame)
 	return PNEC_SUCCES;
 
