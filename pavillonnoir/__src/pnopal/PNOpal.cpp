@@ -199,6 +199,10 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 
 PNPhysicalObject* PNOpal::createPhysicalObjectBox(PN3DObject* object, bool isStatic)
 {
+  // FIXME : previously deprecated
+  if (!object->get3DModel())
+	return NULL;
+
   PNPhysicalObject* physicalObject = new PNOpalObject(_sim);
 
   physicalObject->setStatic(isStatic);
