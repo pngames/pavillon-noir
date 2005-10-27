@@ -2,8 +2,8 @@ Third party library:
 
 name		| current version
 
-* libxml2 	: 2.6.18
-* iconv 	: 1.9.1.0
+* libxml2 	: 2.6.22
+* iconv 	: 1.9.1
 * zlib 		: 1.2.2.0
 * Fox 		: 1.4.5.0
 * SDL 		: 1.2.9
