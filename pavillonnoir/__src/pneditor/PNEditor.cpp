@@ -524,7 +524,7 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 	  //obj->serialize();
 
 	  // <!-- entity markup open
-	  o << "<" << PNXML_ENTITY_MKP << " " << PNXML_ID_ATTR << "=\"" << shape->getId()
+	  o << "<" << PNXML_ENTITY_MKP << " " << PNXML_ID_ATTR << "=\"id_" << shape->getId()
 		  << "\" " << PNXML_LABEL_ATTR << "=\"" << shape->getLabel() << "\" "
 		  << PNXML_MODELREFERENCE_ATTR << "=\"" << str << "\" " << PNXML_ENVTYPE_ATTR
 		  << "=\"";
@@ -880,10 +880,22 @@ int	  PNEditor::_parseActions(void* node, PNGLShape* shape)
   return 1;
 }
 
+int	  PNEditor::_parseID(std::string id)
+{
+  std::string idstr = "id_";
+  std::string::size_type	  index = id.find(idstr);
+
+  if (index == std::string::npos)
+     return atoi(id.c_str());
+  
+  return atoi(id.c_str() + index + id.size());
+}
+
 int	  PNEditor::_parseEntity(void* node)
 {
   xmlNodePtr  current = (xmlNodePtr)node;
-  int		  id;
+  /// int id = atoi((const char *)xmlGetProp(current, PNXML_ID_ATTR));
+  int id = _parseID((const char *)xmlGetProp(current, PNXML_ID_ATTR));
   std::string mdref((const char *)xmlGetProp(current, PNXML_MODELREFERENCE_ATTR));
   std::string label((const char *)xmlGetProp(current, PNXML_LABEL_ATTR));
   std::string classStr((const char *)xmlGetProp(current, PNXML_CLASS_ATTR));
@@ -895,7 +907,6 @@ int	  PNEditor::_parseEntity(void* node)
 
   PN3DObject  *object = NULL;
 
-  id = atoi((const char *)xmlGetProp(current, PNXML_ID_ATTR));
   if (!xmlStrcmp(xmlGetProp(current, PNXML_ENVTYPE_ATTR), PNXML_GROUND_VAL))
 	envType = PN_GROUND;
   else if (!xmlStrcmp(xmlGetProp(current, PNXML_ENVTYPE_ATTR), PNXML_STATIC_VAL))
