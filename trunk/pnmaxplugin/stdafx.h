@@ -76,9 +76,10 @@
 #  error "You have to use 6 compiler"
 # endif
 #else
-#if MAX_PRODUCT_VERSION_MAJOR <= 7 
-# if _MSC_VER >= 1400
-#  error "You have to use 7 or 7.1 compiler"
+# if MAX_PRODUCT_VERSION_MAJOR <= 7 
+#  if _MSC_VER >= 1400
+#   error "You have to use 7 or 7.1 compiler"
+#  endif
 # endif
 #endif
 
