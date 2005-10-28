@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE object SYSTEM "object.dtd">
+<object>
+  <model path="JiveImportPlan.pnm"/>
+  <listmaterials>
+    <material path="JiveImportPlan_04 - Par defaut.pnt" />
+  </listmaterials>
+  <physics path="JiveImportPlan.pnp"/>
+</object>

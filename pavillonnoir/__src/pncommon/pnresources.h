@@ -41,6 +41,7 @@ namespace PN {
 	static const std::string	materialFilePath = dataFilePath + "materials/";
 	static const std::string	skeletonFilePath = dataFilePath + "skeletons/";
 	static const std::string	animationFilePath = dataFilePath + "animations/";
+	static const std::string	physicsFilePath = dataFilePath + "physics/";
 	static const std::string	objectFilePath = dataFilePath + "objects/";
 	static const std::string	gamedefFilePath = dataFilePath + "gamedef/";
 	static const std::string	texturesFilePath = dataFilePath + "textures/";

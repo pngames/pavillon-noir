@@ -175,12 +175,35 @@ PN3DObject::_parseModel(xmlNode* node)
 }
 
 pnint
+PN3DObject::_parsePhysics(xmlNode* node)
+{
+  xmlChar*	  attr = NULL;
+
+  _physicalObject = NULL;
+
+  if ((attr = xmlGetProp(node, (const xmlChar *)PNO_XMLPROP_PATH)) != NULL)
+  {
+	fs::path p(DEF::physicsFilePath + (const char*)attr, fs::native);
+
+	if (fs::exists(p))
+	  _physicalObject = (PNPhysicalObject*)PNImportManager::getInstance()->import(p, PN_IMPORT_PHYSICS);
+
+	if (_physicalObject == NULL)
+	  return PNEC_LOADING_PHYSICS;
+  }
+
+  return PNEC_SUCCES;
+}
+
+pnint
 PN3DObject::_unserializeNode(xmlNode* node)
 {
   if (PNO_XMLNODE_LISTMATERIALS == (const char*)node->name)
 	_parseMaterials(node);
   else if (PNO_XMLNODE_MODEL == (const char*)node->name)
 	_parseModel(node);
+  else if (PNO_XMLNODE_PHYSICS == (const char*)node->name)
+	_parsePhysics(node);
 
   return PNEC_SUCCES;
 }

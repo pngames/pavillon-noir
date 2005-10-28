@@ -3,9 +3,10 @@
      XML DTD for object.pno
 -->
 
-<!ELEMENT object (model?, listmaterials?, skeleton?, listanims?)>
+<!ELEMENT object (model?, listmaterials?, skeleton?, listanims?, physics?)>
 <!ELEMENT model EMPTY>
 <!ELEMENT skeleton EMPTY>
+<!ELEMENT physics EMPTY>
 <!ELEMENT listmaterials (material*)>
 	<!ELEMENT material EMPTY>
 <!ELEMENT listanims (anim*)>
@@ -18,3 +19,6 @@
 <!ATTLIST skeleton path CDATA #IMPLIED>
 
 <!ATTLIST anim path CDATA #IMPLIED>
+
+<!ATTLIST physics path CDATA #IMPLIED>
+

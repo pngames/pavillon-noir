@@ -30,6 +30,7 @@
 #ifndef _PNPHYSICALOBJECT_HPP_
 # define _PNPHYSICALOBJECT_HPP_
 
+#include <boost/filesystem/path.hpp>
 #include <libxml/xmlreader.h>
 
 #include "pndefs.h"
@@ -43,15 +44,6 @@
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
-
-typedef enum
-{
-  PN_PHYS_METAL,
-  PN_PHYS_WOOD,		
-  PN_PHYS_RUBBER,
-  PN_PHYS_ICE,
-  PN_PHYS_ROCKLIGHT
-} physicalmaterial;
 
 class PNPhysicalObject: public PNObject, public IPNSerializable
 {
@@ -75,7 +67,6 @@ public:
   virtual void			setCoord(pnfloat x, pnfloat y, pnfloat z)=0;
   virtual void			setOrient(const PNQuatf& orient)=0;
   virtual void			setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w)=0;
-  virtual void			setShape(const PNPoint& min, const PNPoint& max, physicalmaterial material)=0;
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -83,8 +74,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  /// Parse XML root node
-  virtual pnint				unserializeFromXML(xmlNode* node)=0;
+  virtual pnint			unserializeFromFile(const boost::filesystem::path& file)=0;
 
 };
 
