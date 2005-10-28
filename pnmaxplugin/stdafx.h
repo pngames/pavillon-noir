@@ -60,7 +60,6 @@
 #include <map>
 #include <list>
 #include <stack>
-#include <map>
 #include <set>
 #include <sstream>
 #include <algorithm>
@@ -71,6 +70,18 @@
 #include <Shlwapi.h>
 
 #include "Max.h"
+
+#if MAX_PRODUCT_VERSION_MAJOR <= 5
+# if _MSC_VER >= 1300
+#  error "You have to use 6 compiler"
+# endif
+#else
+#if MAX_PRODUCT_VERSION_MAJOR <= 7 
+# if _MSC_VER >= 1400
+#  error "You have to use 7 or 7.1 compiler"
+# endif
+#endif
+
 #include "istdplug.h"
 #include "iparamb2.h"
 #include "iparamm2.h"

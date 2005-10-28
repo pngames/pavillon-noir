@@ -26,7 +26,15 @@
 #ifndef _PNSKELETONEXPORTER_HPP_
 # define _PNSKELETONEXPORTER_HPP_
 
-#define PNSKELETONEXPORTER_CLASS_ID	Class_ID(0x6ced3dd8, 0x6ea47fc5)
+#ifdef _DEBUG
+# define PNSKELETONEXPORTER_CLASS_ID	Class_ID(0x6ced3dd8, 0x6ea47fc5)
+# define PNS_LONGDESC					"Skeleton exporter for Pavillon Noir 3D models (debug)"
+# define PNS_SHORTDESC					"Pavillon Noir Squeletor export (debug)"
+#else
+# define PNSKELETONEXPORTER_CLASS_ID	Class_ID(0x15281775, 0x549078a7)
+# define PNS_LONGDESC					"Skeleton exporter for Pavillon Noir 3D models"
+# define PNS_SHORTDESC					"Pavillon Noir Squeletor export"
+#endif
 
 #include "PNExporter.hpp"
 
