@@ -34,7 +34,7 @@ function PNCharacterClass(id)
 	OBJ.items = {}
 	--------------------------------------
 	-------LIST OF WEAPONS----------------
-	OBJ.items.weapons	=	{h2h=0}
+	OBJ.items.weapons	=	{h2h=PNWeaponH2HClass("h2h")} --FIXME id de merde
 	--------------------------------------
 	-------LIST OF WOUNDS BY MEMBER-------
 	OBJ.m_wounds=	{head=0,
@@ -86,8 +86,7 @@ Call when someone tell the object to go backward
 	true -> start , false -> stop  
 %--]]	
 	function OBJ:onMoveForward(state)
-		pnprint(self.id)
-		pnprint(":onMoveForward\n")
+		pnprint(self.id .. ":onMoveForward=" .. state .. "\n")
 		self.__index:onMoveForward(state)
 		OBJ:setMovingSpeed(self.actualSpeed)	
 		if (state == ACTION_STATE.START) then

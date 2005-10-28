@@ -69,6 +69,9 @@ public:
   PNWayPoint(pnint id, pnfloat x, pnfloat y, pnfloat z, PNIAGraph* g);
   virtual ~PNWayPoint();
 
+  /* extracts int # from "id_#" */
+  int	  _parseID(std::string id);
+
   /* functions to add a link to the WP preventing double entries */
   pnbool					addLink(PNWayPoint *p, pnfloat coef);
   pnbool					addLink(wayLink_t &link);
