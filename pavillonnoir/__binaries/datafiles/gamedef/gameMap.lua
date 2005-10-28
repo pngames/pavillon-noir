@@ -24,6 +24,8 @@ end
 function gameMap:clear()
 	pnprint("[LUA enter function] gameMap:clear\n")
     pnprint("\n")
+	local id
+	local entity
 	for id, entity in pairs(self.entities.all) do 
       pnprint(id)
       pnprint("\n")
@@ -44,6 +46,8 @@ end
 
 function gameMap:onUpdate(deltaTime)
 --	pnprint("=> LUA GameMap: onUpdate()")
+	local id
+	local entity
 	for id, entity in pairs(self.entities.all) do 
 		entity:onUpdate(deltaTime)
 	end
@@ -53,6 +57,8 @@ end
 
 function gameMap:onInit()
 	pnprint("LUA GameMap: onInit()\n")
+	local id
+	local entity
 	for id, entity in pairs(self.entities.all) do 
       pnprint(id)
       pnprint("\n")
@@ -118,7 +124,13 @@ function gameMap:onFrustrumOut(sourceId, targetId)
     self.entities.all[sourceId]:onFrustrumIn(self.entities.all[targetId])
 end 
 
-
+function gameMap:onAttack(sourceId, targetId)
+	local id
+	local entity
+	for id, entity in pairs(self.entities.all) do
+      self.entities.all[id]:onAttack(sourceId, targetId)
+	end	
+end
 	
 --camera = PN3DCamera:getRenderCam()
 --camera:setMovingSpeed(1.0)
