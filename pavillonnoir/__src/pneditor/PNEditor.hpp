@@ -191,6 +191,7 @@ public:
   int	  _parseListEntities(void* node);
   int	  _parseEntity(void* node);
   int	  _parseActions(void* node, PNGLShape* shape);
+  int	  _parseID(std::string id);
 
   // Builds WPGroup whith _graph contents
   void	  buildWPGroup();
