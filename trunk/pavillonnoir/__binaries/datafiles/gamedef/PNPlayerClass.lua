@@ -12,8 +12,8 @@ function PNPlayerClass(id)
 -----------------------------------------------------------
 --[[%
 Call at each iterate of main loop.
-
 Do some recurent stuff
+
 @param deltaTime real
 	is the delTaTime since the last call of the function
 %--]]			
@@ -77,7 +77,7 @@ Call when player push the primary attack button
 		end
 		--@TODO: launch attack annimation				
 	end
-	---------------------------------------------------------
+---------------------------------------------------------
 	
 	return OBJ
 end

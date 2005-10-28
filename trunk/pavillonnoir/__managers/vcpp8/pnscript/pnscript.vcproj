@@ -310,6 +310,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pnscript\PNGameEventData.pkg"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pnscript\PNGameMap.pkg"
 				>
 			</File>

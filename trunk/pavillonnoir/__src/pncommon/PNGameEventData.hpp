@@ -74,14 +74,14 @@ public:
 	std::string action;
 	std::string targetId;
 	std::string sourceId;
-	bool		state;
+	double		value;
 
 	PNGameActionEventData
-        (std::string anAction, std::string aTargetId, std::string aSourceId, bool theState):
+        (std::string anAction, std::string aTargetId, std::string aSourceId, double aValue):
 			action(anAction),
 			targetId(aTargetId),
             sourceId(aSourceId),
-			state(theState) {}
+			value(aValue) {}
 };
 
 class PNGameMouseMoveEventData : public PNEventData
@@ -98,8 +98,8 @@ public:
   std::string AITarget;
 
   PNGameAIEventData
-        (std::string anAction, std::string atargetId, std::string aSourceId ,bool theState, std::string anAITarget):
-           PNGameActionEventData(anAction, atargetId, aSourceId,theState),
+        (std::string anAction, std::string atargetId, std::string aSourceId ,double aValue, std::string anAITarget):
+           PNGameActionEventData(anAction, atargetId, aSourceId,aValue),
            AITarget(anAITarget){}
 
 };

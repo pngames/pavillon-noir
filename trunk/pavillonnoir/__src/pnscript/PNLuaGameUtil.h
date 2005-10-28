@@ -45,7 +45,7 @@ namespace PN{
   void  onInit();
   void  onReset();
   //void	activateDebug(bool b);
-  void	sendGameActionEvent(std::string eventName, std::string sourceid, std::string targetId, bool state);
+  void	sendGameActionEvent(std::string eventName, std::string sourceid, std::string targetId, double value);
   PNLuaGameMap* getGameMap();
 }
 
