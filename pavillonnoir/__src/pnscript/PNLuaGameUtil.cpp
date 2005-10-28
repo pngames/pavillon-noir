@@ -96,9 +96,9 @@ namespace PN{
 		//  vm->loadMap(mapName);
 	}
 
-    void	sendGameActionEvent(std::string eventName, std::string sourceid, std::string targetId, bool state)
+    void	sendGameActionEvent(std::string eventName, std::string sourceid, std::string targetId, double value)
 	{
-      PNGameActionEventData *eventData  = new PNGameActionEventData(eventName, targetId, sourceid, state);
+      PNGameActionEventData *eventData  = new PNGameActionEventData(eventName, targetId, sourceid, value);
       PNLuaGame* game = (PNLuaGame*) PNLuaGame::getInstance();
       game->sendGameActionEvent(eventName, eventData);
       delete eventData;
