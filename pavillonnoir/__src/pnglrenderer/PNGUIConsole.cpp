@@ -59,7 +59,7 @@ PNGUIConsole::PNGUIConsole()
   _editBox->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIConsole::textChangedHandler, this));
 
   //////////////////////////////////////////////////////////////////////////
-  addFonction("setalpha", changeAlpha, "change alpha to the console");
+ // addFonction("setalpha", changeAlpha, "change alpha to the console");
   addFonction("quit", quitGame, "quit game");
   addFonction("exit", quitGame, "quit game");
 
@@ -70,6 +70,9 @@ PNGUIConsole::PNGUIConsole()
   //  PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE_SHOW, EventCallback(this, &PNGUIConsole::consoleVisibility));
 
   PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE, EventCallback(this, &PNGUIConsole::consoleVisibility));
+   PNEventManager::getInstance()->addCallback(PN_EVENT_UPDATE_GUI, EventCallback(this, &PNGUIConsole::fadeInOut));
+   _fadeIn = false;
+   _fadeOut = false;
 }
 
 PNGUIConsole::~PNGUIConsole()
@@ -381,23 +384,22 @@ void  PNGUIConsole::consoleVisibility(pnEventType type, PNObject* source, PNEven
 {
   static bool cursor = false;
 
-  if (_consoleVisibility == false)
+  if (_consoleVisibility == false && _fadeOut == false)
   {
-	_pnConsole->show();
+	_fadeIn = true;
 	_editBox->activate();
-
 	cursor = CEGUI::MouseCursor::getSingleton().isVisible();
 	if (cursor == false) 
 	  CEGUI::MouseCursor::getSingleton().show();
 	_consoleVisibility = true;
   }
-  else if (_consoleVisibility == true)
+  else if (_consoleVisibility == true && _fadeIn == false)
   {
 	if (cursor == false) 
 	  CEGUI::MouseCursor::getSingleton().hide();
 	_editBox->deactivate();
-	_pnConsole->hide();
 	_consoleVisibility = false;
+	_fadeOut = true;
   }  
 }
 
@@ -437,5 +439,32 @@ void  PNGUIConsole::setlistboxItemSize(int size)
 {
   _listboxItemSize = size;
 }
+
+void  PNGUIConsole::fadeInOut(pnEventType type, PNObject* source, PNEventData* data)
+{
+  if (_fadeIn == true)
+  {
+	_pnConsole->show();
+	if (_pnConsole->getAlpha() < 0.85f)
+	  _pnConsole->setAlpha(_pnConsole->getAlpha()+0.05f);
+	else
+	{
+	  _fadeIn = false;
+	  _pnConsole->setAlpha(0.85f);
+	}
+  }
+  if (_fadeOut == true) 
+  {
+	if (_pnConsole->getAlpha() > 0.0f)
+	   _pnConsole->setAlpha(_pnConsole->getAlpha()-0.05f);
+	else
+	{
+	  _fadeOut = false;
+	  _pnConsole->hide();
+	  _pnConsole->setAlpha(0.0f);
+	}
+  }
+}
+
 //////////////////////////////////////////////////////////////////////////
 }

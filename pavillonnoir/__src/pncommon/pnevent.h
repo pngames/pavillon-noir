@@ -83,6 +83,7 @@ typedef enum
   PN_EVENT_MOUSE_MOVE,
 
   PN_EVENT_INFO_PANEL,
+  PN_EVENT_UPDATE_GUI,
 
   //////////////////////////////////////////////////////////////////////////
   // MAPS LOADING

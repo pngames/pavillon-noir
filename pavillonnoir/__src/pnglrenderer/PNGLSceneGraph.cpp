@@ -92,21 +92,7 @@ PNGLSceneGraph::resizeGLWindow(pnint width, pnint height)
 void
 PNGLSceneGraph::initFrame()
 {
-  // Reset matrices
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
 
-  glClearDepth(1.0);
-
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-  glColor3f(1.0f, 1.0f, 1.0f);
-
-  glDepthMask(GL_TRUE);
-  glEnable(GL_DEPTH_TEST);
-
-  //////////////////////////////////////////////////////////////////////////
-  PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_STARTING, this, NULL);
 }
 
 PNGLRendererCamera&
@@ -123,17 +109,21 @@ PNGLSceneGraph::render(pnuint deltaTime)
   if (!_inGame)
 	return PNEC_SUCCES;
 
-  PNGameUpdateEventData *gameUpdateData = new PNGameUpdateEventData((pnfloat)deltaTime);
-  PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_UPDATE, 0, gameUpdateData);
-  delete gameUpdateData;
+  PNGameUpdateEventData gameUpdateData((pnfloat)deltaTime);
+  PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_UPDATE, 0, &gameUpdateData);
+
+  ////////////////////////////////
+  // Initialise le buffer de rendu
+
+  glClearDepth(1.0);
+  glDepthMask(GL_TRUE);
+  glEnable(GL_DEPTH_TEST);
+
+  glColor3f(1.0f, 1.0f, 1.0f);
 
   //////////////////////////////////////////////////////////////////////////
 
   _renderCam.update(deltaTime);
-
-  ////////////////////////////////
-  // Initialise le buffer de rendu
-  initFrame();
 
   ////////////////////////////////
   // Place la camera
@@ -219,8 +209,6 @@ PNGLSceneGraph::render(pnuint deltaTime)
 #endif
 
   //////////////////////////////////////////////////////////////////////////
-
-  PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_ENDING, this, NULL);
 
   return PNEC_SUCCES;
 }

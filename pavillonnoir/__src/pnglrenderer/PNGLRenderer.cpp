@@ -43,7 +43,7 @@
 #include "PNGLRendererObject.hpp"
 #include "PNSDLEvent.hpp"
 #include "PNGLRendererCamera.hpp"
-#include "PNInfoPanel.hpp"
+
 #include "PNGameInterface.hpp"
 #include "PNGUIConsole.hpp"
 
@@ -310,7 +310,7 @@ PNGLRenderer::run()
   pnuint		currentLoopDate = getTicks();
   SDL_Event		event;
 
-  PNInfoPanel*	infoPanel = new PNInfoPanel();
+ 
   PNSDLEvent*	sdlEvent = new PNSDLEvent();
 
   //float Light1Pos[4] = {0.0f, 0.0f, 40.0f, 1.0f};
@@ -329,19 +329,32 @@ PNGLRenderer::run()
 	////////////////////////////////////////////
 	if (_isProgramLooping == true)
 	{
+	  //////////////////////////////////////////////////////////////////////////
+	  // INIT
+	  //////////////////////////////////////////////////////////////////////////
+	  
+	  // Reset matrices
+	  glMatrixMode(GL_MODELVIEW);
+	  glLoadIdentity();
+
+	  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+	  PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_STARTING, this, NULL);
+
+	  //////////////////////////////////////////////////////////////////////////
+	  // RENDER SCENE
+	  //////////////////////////////////////////////////////////////////////////
+
 	  _scene.render(deltaTime);
 
-	  //////////////////////////////////
-	  // CEGUI
+	  //////////////////////////////////////////////////////////////////////////
+	  // END
+	  //////////////////////////////////////////////////////////////////////////
 
-	  glEnable(GL_LIGHTING);
+	  PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_ENDING, this, NULL);
 
-	  //DRAW fps/tri info panel
-	  infoPanel->runInfoPanel();
-
-	  //DRAW CE GUI HERE
-	  CEGUI::System::getSingleton().renderGUI();
-
+	  //////////////////////////////////////////////////////////////////////////
+	  // APPLY
 	  //////////////////////////////////////////////////////////////////////////
 
 	  glFlush(); // force lexecution des commande opengl avant le rendu
@@ -350,6 +363,20 @@ PNGLRenderer::run()
   }
 
   delete sdlEvent;
+}
+
+void
+PNGLRenderer::updateGUI(pnEventType type, PNObject* source, PNEventData* data)
+{
+  //////////////////////////////////
+  // CEGUI
+   PNEventManager::getInstance()->sendEvent(PN_EVENT_UPDATE_GUI,0, NULL);
+
+  //DRAW fps/tri info panel
+  _infoPanel->runInfoPanel();
+
+  //DRAW CE GUI HERE
+  CEGUI::System::getSingleton().renderGUI();
 }
 
 void
@@ -608,6 +635,9 @@ PNGLRenderer::initGUI()
 
 	//init console
 	PNGUIConsole::getInstance();
+
+	PNEventManager::getInstance()->addCallback(PN_EVENT_RU_ENDING, EventCallback(this, &PNGLRenderer::updateGUI));
+	_infoPanel = new PNInfoPanel();
   }
   catch (CEGUI::Exception)
   {

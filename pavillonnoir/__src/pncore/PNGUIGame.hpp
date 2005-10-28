@@ -37,12 +37,13 @@
 
 #include "pndefs.h"
 #include "pnevent.h"
+#include "pnproperties.h"
 
 namespace PN{
 
   class PNRendererInterface;
 
-  class PNGUIGame
+  class PNGUIGame :  public PNConfigurableObject
   {
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                   Properties                                /
@@ -64,6 +65,9 @@ namespace PN{
 	typedef std::set<CEGUI::Key::Scan> BufferedKeysDownSet;
 	BufferedKeysDownSet mBufferedKeysDown;
 
+	std::string		_label;
+	float			_lifeValue; 
+
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
@@ -82,6 +86,19 @@ namespace PN{
 	bool eventMouseWheel(const CEGUI::EventArgs& e);
 	void  inputHandleModifierState(pnEventType type, PNObject* source, PNEventData* data);
 	static void  test(const std::string& tmp, std::istream& tmp2);
+
+	//////////////////////////////////////////////////////////////////////////
+	// ConfigurableObject
+
+  protected:
+	typedef std::vector<PNConfigurableParameter*> ParametersVector;
+	ParametersVector			_params;
+  public:
+	void						update(PNConfigurableParameter* p);
+	int							getNbParameters();
+	PNConfigurableParameter*	getParameter(int idx);
+	//void						reset();
+	const std::string&			getLabel() {return _label;}
 	
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
