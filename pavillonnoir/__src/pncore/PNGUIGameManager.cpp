@@ -123,7 +123,7 @@ namespace PN
 	  escMenu(PN_NUMBER_EVENTS,0,NULL);
 	  break;
 	case PAUSE_LOAD:
-	   launchMenuLoad(PN_NUMBER_EVENTS,0,NULL);
+	  launchMenuLoad(PN_NUMBER_EVENTS,0,NULL);
 	  break;
 	}
   }

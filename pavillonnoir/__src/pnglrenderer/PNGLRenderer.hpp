@@ -41,6 +41,8 @@
 #include "PNGLRendererCamera.hpp"
 #include "PNGLSceneGraph.hpp"
 
+#include "PNInfoPanel.hpp"
+
 namespace CEGUI
 {
   class Renderer;
@@ -146,9 +148,9 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   // CEGUI
-
+  PNInfoPanel*				_infoPanel;
   CEGUI::Renderer*			_guirenderer;
-
+  void						updateGUI(pnEventType type, PNObject* source, PNEventData* data);
   void*						getGUIRenderer();
   guiType					getGUIType();
   void						initGUI();

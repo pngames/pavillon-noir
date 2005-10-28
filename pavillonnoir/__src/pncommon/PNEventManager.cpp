@@ -114,6 +114,9 @@ PNEventManager::PNEventManager()
   _eventEnums["PN_EVENT_INFO_PANEL"] = PN_EVENT_INFO_PANEL;
   _eventNames[PN_EVENT_INFO_PANEL] = "PN_EVENT_INFO_PANEL";
 
+  _eventEnums["PN_EVENT_UPDATE_GUI"] = PN_EVENT_UPDATE_GUI;
+  _eventNames[PN_EVENT_UPDATE_GUI] = "PN_EVENT_UPDATE_GUI";
+
   //////////////////////////////////////////////////////////////////////////
   // MAPS LOADING
 

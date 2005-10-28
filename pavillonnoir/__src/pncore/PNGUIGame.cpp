@@ -350,7 +350,7 @@ void  PNGUIGame::_setScriptingDebug(const std::string&, std::istream& i)
 
 PNGUIGame::PNGUIGame()
 {
- 
+  _label = "PNGUIGame";
   _rootWin = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNGUIGame.layout");
   CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_rootWin);
 
@@ -368,7 +368,7 @@ PNGUIGame::PNGUIGame()
   _rootWin->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseClickdHandler, this));
   _rootWin->subscribeEvent(CEGUI::Window::EventMouseWheel, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseWheel, this));
 
-  
+  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &_lifeValue, "life bar value", "life bar value"));
  // CEGUI::MouseCursor::getSingleton().hide();
 }
 
@@ -824,5 +824,21 @@ CEGUI::Window*  PNGUIGame::getWindow()
 {
   return (_rootWin);
 }
+
+void  PNGUIGame::update(PNConfigurableParameter* p)
+{
+
+}
+
+int	PNGUIGame::getNbParameters()
+{
+  return _params.size();
+}
+
+PNConfigurableParameter*  PNGUIGame::getParameter(int idx)
+{
+ return _params[idx];
+}
+
 //////////////////////////////////////////////////////////////////////////
 };

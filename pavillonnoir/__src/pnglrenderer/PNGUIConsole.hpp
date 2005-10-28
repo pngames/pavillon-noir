@@ -63,6 +63,8 @@ namespace PN{
 	pnuint								  _listboxItemSize;
 	std::string							  _currentHistoryLine;
 	bool								  _consoleVisibility;
+	bool								  _fadeIn;
+	bool								  _fadeOut;
 
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
@@ -84,6 +86,8 @@ namespace PN{
 	void  addItemToListBox(CEGUI::ListboxTextItem* item);
 	static void  changeAlpha(const std::string& command, std::istream &parameters);
 	static void	 quitGame(const std::string& command, std::istream &parameters);
+
+	void  fadeInOut(pnEventType type, PNObject* source, PNEventData* data);
 
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
