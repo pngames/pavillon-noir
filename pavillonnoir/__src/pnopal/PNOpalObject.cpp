@@ -27,6 +27,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+#include <boost/filesystem/operations.hpp>
 #include <libxml/xmlreader.h>
 
 #include "pndefs.h"
@@ -43,6 +44,8 @@
 #include "PNVector3f.hpp"
 #include "PNMatrixTR4f.hpp"
 
+namespace fs = boost::filesystem;
+
 namespace PN {
 
 /** PNOpalObject constructor
@@ -50,13 +53,13 @@ namespace PN {
 * \param  sim  a pointer on the opal simulation
 */ 
 
-PNOpalObject::PNOpalObject(opal::Simulator* sim)
+PNOpalObject::PNOpalObject(opal::Simulator* sim) : _blueprint(), _blueprintInstance()
 {
   _sim = sim;
-  _solid = _sim->createSolid();
-  PNOpalCommonEventHandler* handler = new PNOpalCommonEventHandler();
-  _solid->setCollisionEventHandler(handler);
-  _solid->setLinearDamping(0.2f);
+  //_solid = _sim->createSolid();
+  //PNOpalCommonEventHandler* handler = new PNOpalCommonEventHandler();
+  //_solid->setCollisionEventHandler(handler);
+  //_solid->setLinearDamping(0.2f);
 }
 
 /** PNOpalObject destructor
@@ -193,65 +196,6 @@ void			PNOpalObject::setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w)
 
 //////////////////////////////////////////////////////////////////////////
 
-/** Set the dimensions of the physical object
-*
-* /param  min  the minimum point of the AABB (axis aligned bounding box)
-* /param  max  the maximum point of the AABB (axis aligned bounding box)
-*/ 
-
-void			PNOpalObject::setShape(const PNPoint& min, const PNPoint& max, physicalmaterial material)
-{
-  opal::BoxShapeData boxData;
-  PNVector3f dim = PNVector3f(min, max);
-
-  // PNConsole::writeLine("Object dimensions - x : %f, y : %f, z : %f", dim.x, dim.y, dim.z);
-  boxData.dimensions.set(dim.x, dim.y, dim.z);
-
-  switch(material)
-  {
-  case PN_PHYS_ICE:
-	boxData.material.hardness = opal::globals::iceHardness;
-	boxData.material.bounciness = opal::globals::iceBounciness;
-	boxData.material.friction = opal::globals::iceFriction;
-	boxData.material.density = opal::globals::iceDensity;
-	break;
-  case PN_PHYS_METAL:
-	boxData.material.hardness = opal::globals::metalHardness;
-	boxData.material.bounciness = opal::globals::metalBounciness;
-	boxData.material.friction = opal::globals::metalFriction;
-	boxData.material.density = opal::globals::metalDensity;
-	break;
-  case PN_PHYS_RUBBER:
-	boxData.material.hardness = opal::globals::rubberHardness;
-	boxData.material.bounciness = opal::globals::rubberBounciness;
-	boxData.material.friction = opal::globals::rubberFriction;
-	boxData.material.density = opal::globals::rubberDensity;
-	break;
-  case PN_PHYS_WOOD:
-	boxData.material.hardness = opal::globals::woodHardness;
-	boxData.material.bounciness = opal::globals::woodBounciness;
-	boxData.material.friction = opal::globals::woodFriction;
-	boxData.material.density = opal::globals::woodDensity;
-	break;
-  case PN_PHYS_ROCKLIGHT:
-	boxData.material.hardness = (opal::real)1.0;
-	boxData.material.bounciness = (opal::real)0.1;
-	boxData.material.friction = (opal::real)1.0;
-	boxData.material.density = (opal::real)0.5;
-	break;
-  default:
-	boxData.material.hardness = opal::globals::woodHardness;
-	boxData.material.bounciness = opal::globals::woodBounciness;
-	boxData.material.friction = opal::globals::woodFriction;
-	boxData.material.density = opal::globals::woodDensity;
-	break;
-  }
-
-  _solid->addShape(boxData);
-}
-
-//////////////////////////////////////////////////////////////////////////
-
 void		PNOpalObject::addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration)
 {
   /*opal::Force f;
@@ -264,21 +208,24 @@ void		PNOpalObject::addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration)
 
 //////////////////////////////////////////////////////////////////////////
 
-pnint		PNOpalObject::unserializeFromXML(xmlNode* node)
+pnint		PNOpalObject::unserializeFromFile(const boost::filesystem::path& file)
 {
-  /*
-  opal::Simulator* sim = opal::createSimulator();
-  opal::Blueprint sailboatBP;
+  int err = PNEC_SUCCES;
 
-  // Load the Blueprint from a file.
-  opal::loadFile(sailboatBP, �sailboat.xml�);
-  
-  // Instantiate the Blueprint.
-  opal::BlueprintInstance instance;
-  sim->instantiateBlueprint(instance, sailboatBP);
-  */
+  if (!fs::exists(file))
+	return PNEC_FILE_NOT_FOUND;
 
-  return PNEC_SUCCES;
+  if (fs::is_directory(file))
+	return PNEC_NOT_A_FILE;
+
+  _file = file.string();
+  opal::loadFile(_blueprint, _file);
+  _sim->instantiateBlueprint(_blueprintInstance, _blueprint);
+
+  // FIXME
+  _solid = _blueprintInstance.getSolid("Boite01");
+
+  return err;
 }
 
 }

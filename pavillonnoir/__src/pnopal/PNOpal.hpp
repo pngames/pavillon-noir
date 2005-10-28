@@ -68,8 +68,6 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  PNPhysicalObject*	createPhysicalObjectBox(PN3DObject* object, bool isStatic);
-  void				destroyPhysicalObject(PNPhysicalObject* physicalObject);
   void				setAllPhysicalObjectsStatic(bool state);
 
   //////////////////////////////////////////////////////////////////////////

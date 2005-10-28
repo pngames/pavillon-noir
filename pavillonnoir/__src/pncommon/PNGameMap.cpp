@@ -36,6 +36,7 @@
 #include "PN3DCamera.hpp"
 #include "PN3DSkeletonObject.hpp"
 #include "PNPhysicsInterface.hpp"
+#include "PNPhysicalObject.hpp"
 #include "PN3DCamera.hpp"
 #include "PNRendererInterface.hpp"
 #include "PNWayPoint.hpp"
@@ -107,36 +108,40 @@ int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
 
     //////////////////////////////////////////////////////////////////////////
 
+	// create boost path
     fs::path  file(DEF::objectFilePath + (const char*)xmlGetProp(current, (const xmlChar *)"mdref"), fs::native);
 
+	// set coordinates
     pnfloat x = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"x"))));
     pnfloat y = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"y"))));
     pnfloat z = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"z"))));
     object->setCoord(x, y, z);
-    pnfloat xx = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"xx"))));
+    
+	// set orientation
+	pnfloat xx = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"xx"))));
     pnfloat yy = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"yy"))));
     pnfloat zz = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"zz"))));
     pnfloat ww = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"ww"))));
     object->setOrient(xx, yy, zz, ww);
 
-    bool isStatic = (!strcmp((const char*)xmlGetProp(current, (const xmlChar *)"envtype"), "dynamic"))?false:true;
-
+	// load data files (model, squeleton, materials, physics, etc)
     pnint obj_error = object->unserializeFromFile(file);
 
+	// check for errors
     if (obj_error != PNEC_SUCCES)
         pnerror(PN_LOGLVL_ERROR, "%s : %s", (const char*)xmlGetProp(current, (const xmlChar *)"mdref"), pnGetErrorString(obj_error));
-    else
-    {
-        if (strcmp((const char*)xmlGetProp(current, (const xmlChar *)"envtype"), "ground")) {
-            object->setPhysicalObject(PNPhysicsInterface::getInstance()->createPhysicalObjectBox(object, isStatic));
-        }
-    }
+
+	// enable/disable physical simulation on the object
+	if (object->getPhysicalObject())
+	{
+	  bool isStatic = (!strcmp((const char*)xmlGetProp(current, (const xmlChar *)"envtype"), "dynamic"))?false:true;
+	  object->getPhysicalObject()->setStatic(isStatic);
+	}
 
     for (current = current->children; current != NULL; current = current->next)
-    {  
+    { 
         if (current->type != XML_ELEMENT_NODE)
             continue;
-        /*pnerror(PN_LOGLVL_DEBUG, "PNGameMap - Entity child: %s", current->name);*/
     }
 
     //  if (object->getObjType() == PN3DObject::OBJTYPE_CHARACTER)

@@ -175,47 +175,23 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 	if (_break == true)
 	  return;
 	PN3DObject*	current_obj = it->second;
-	PNLOCK_BEGIN(current_obj);
+	if (current_obj->getPhysicalObject())
 	{
-	  const PNPoint& coord = current_obj->getPhysicalObject()->getCoord();
-	  const PNPoint& center = current_obj->get3DModel()->getCenter();
-	  const PNQuatf& orient = current_obj->getPhysicalObject()->getOrient();
+	  PNLOCK_BEGIN(current_obj);
+	  {
+		const PNPoint& coord = current_obj->getPhysicalObject()->getCoord();
+		const PNPoint& center = current_obj->get3DModel()->getCenter();
+		const PNQuatf& orient = current_obj->getPhysicalObject()->getOrient();
 
-	  current_obj->setCoord(coord.x - center.x, coord.y - center.y, coord.z - center.z);
-	  current_obj->setOrient(orient);
+		current_obj->setCoord(coord.x - center.x, coord.y - center.y, coord.z - center.z);
+		current_obj->setOrient(orient);
+	  }
+	  PNLOCK_END(current_obj);
 	}
-	PNLOCK_END(current_obj);
   }
 }
 
 //////////////////////////////////////////////////////////////////////////
-
-/** Create a physical object (PNPhysicalObject)
-*
-* \param	object		a pointer on the PN3DObject
-*
-* \return	a pointer on the corresponding, newly created, physical object
-*/
-
-PNPhysicalObject* PNOpal::createPhysicalObjectBox(PN3DObject* object, bool isStatic)
-{
-  // FIXME : previously deprecated
-  if (!object->get3DModel())
-	return NULL;
-
-  PNPhysicalObject* physicalObject = new PNOpalObject(_sim);
-
-  physicalObject->setStatic(isStatic);
-  physicalObject->setShape(object->get3DModel()->getMin(), object->get3DModel()->getMax(), PN_PHYS_ROCKLIGHT);
-
-  const PNPoint&  coord = object->getCoord();
-  const PNPoint&  center = object->get3DModel()->getCenter();
-
-  physicalObject->setCoord(coord.x + center.x, coord.y + center.y, coord.z + center.z);
-  physicalObject->setOrient(object->getOrient());
-
-  return physicalObject;
-}
 
 /** Set the status of all the physical objects (static/dynamic)
 *
@@ -232,21 +208,10 @@ void PNOpal::setAllPhysicalObjectsStatic(bool state)
 	  return;
 
 	currentObject = it->second;
-	currentObject->getPhysicalObject()->setStatic(state);
+	if (currentObject->getPhysicalObject())
+	  currentObject->getPhysicalObject()->setStatic(state);
   }
 }
 
-/** Destroy a physical object
-*
-*  \param	physicalObject	pointer on the physical object to destroy
-*/
-
-void PNOpal::destroyPhysicalObject(PNPhysicalObject* physicalObject)
-{
-  PNOpalObject* opalObject = (PNOpalObject*)physicalObject;
-
-  _sim->destroySolid(opalObject->getOpalSolid());
-}
 
 }
-
