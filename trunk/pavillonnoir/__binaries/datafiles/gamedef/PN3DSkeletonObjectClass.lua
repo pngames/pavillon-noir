@@ -3,19 +3,19 @@ function PN3DSkeletonObjectClass(id)
 	-- make inheritance -----
 	pnprint("PN3DSkeletonObjectClass creating\n")
     -------------------------
-    local obj = inheritFrom({className = "PN3DSkeletonObject"}, PN3DSkeletonObject:new_local(), true)
+    local OBJ = inheritFrom({className = "PN3DSkeletonObject"}, PN3DSkeletonObject:new_local(), true)
     ------ tweak -- 
-    obj.__index.className = "PN3DObject"
+    OBJ.__index.className = "PN3DObject"
     -------------------------
 
-    obj:setId(id)
-    obj.id = id
-    function  obj:onUpdate(deltaTime)
+    OBJ:setId(id)
+    OBJ.id = id
+    function  OBJ:onUpdate(deltaTime)
        self:update(deltaTime)
     end
     
     ---------------------move events-----------------------
-	function obj:onMoveForward(state)	
+	function OBJ:onMoveForward(state)	
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_FORWARD)
 		else
@@ -23,7 +23,7 @@ function PN3DSkeletonObjectClass(id)
 		end 
 	end	
 
-	function obj:onMoveBackward(state)
+	function OBJ:onMoveBackward(state)
 		--pnprint(self.id)
 		--pnprint(":onMoveBackward\n")
 		if (state == true) then
@@ -33,7 +33,7 @@ function PN3DSkeletonObjectClass(id)
 		end 
 	end
 	
-	function obj:onMoveLeft(state)
+	function OBJ:onMoveLeft(state)
 		pnprint(self.id)
 		--pnprint(":onMoveLeft\n")	
 		if (state == true) then
@@ -45,7 +45,7 @@ function PN3DSkeletonObjectClass(id)
 		end 
 	end	
 
-	function obj:onMoveRight(state)
+	function OBJ:onMoveRight(state)
 		pnprint(self.id)
 		--pnprint(":onMoveRight\n")
 		if (state == true) then
@@ -57,8 +57,8 @@ function PN3DSkeletonObjectClass(id)
 		end 
 	end
 	
-	function obj:onRotateRight(state)
-		pnprint("LUA obj:onRotateRight(()\n")
+	function OBJ:onRotateRight(state)
+		pnprint("LUA OBJ:onRotateRight(()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_R_RIGHT)
 		else
@@ -66,8 +66,8 @@ function PN3DSkeletonObjectClass(id)
 		end 
 	end
 	
-	function obj:onRotateLeft(state)
-		pnprint("LUA obj:onRotateLeft()\n")
+	function OBJ:onRotateLeft(state)
+		pnprint("LUA OBJ:onRotateLeft()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_R_LEFT)
 		else
@@ -75,7 +75,7 @@ function PN3DSkeletonObjectClass(id)
 		end 
 	end
 	
-	function obj:onRotateUp(state)
+	function OBJ:onRotateUp(state)
 		pnprint("LUA obj:onRotateUp()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_R_TOP)
@@ -84,7 +84,7 @@ function PN3DSkeletonObjectClass(id)
 		end 
 	end
 	
-	function obj:onRotateDown(state)
+	function OBJ:onRotateDown(state)
 		pnprint("LUA obj:onRotateDown()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_R_BACK)
@@ -93,13 +93,13 @@ function PN3DSkeletonObjectClass(id)
 		end 
 	end
 	
-	function obj:onInit()
+	function OBJ:onInit()
 	end
 	
-	function obj:onDestroy()
+	function OBJ:onDestroy()
 	end
 	-------------------------------------------------------
 	pnprint("exit PN3DSkeletonObjectClass\n")
-    return obj
+    return OBJ
     
 end
