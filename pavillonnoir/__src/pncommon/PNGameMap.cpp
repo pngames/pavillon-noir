@@ -136,6 +136,8 @@ int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
 	{
 	  bool isStatic = (!strcmp((const char*)xmlGetProp(current, (const xmlChar *)"envtype"), "dynamic"))?false:true;
 	  object->getPhysicalObject()->setStatic(isStatic);
+	  object->getPhysicalObject()->setCoord(object->getCoord());
+	  object->getPhysicalObject()->setOrient(object->getOrient());
 	}
 
     for (current = current->children; current != NULL; current = current->next)
