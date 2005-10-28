@@ -48,6 +48,7 @@ PNWorldCollision.cpp
 pnerror.cpp
 PNDie.cpp
 PN3DCameraModel.cpp
+PNConf.cpp
 """.split()
 obj.target = 'libpncommon' + env['suffix']
 obj.vnum = env['package_version']
