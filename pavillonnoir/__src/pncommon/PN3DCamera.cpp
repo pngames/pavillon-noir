@@ -416,101 +416,15 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
 	SUB_FOV_TEST(targetVector7, topFov, backFov) ||
 	SUB_FOV_TEST(targetVector8, topFov, backFov);
 
-  return inHFoV && inVFoV;
+  inFov = inHFoV && inVFoV;
+
+  return inFov;
 
   //////////////////////////////////////////////////////////////////////////
   // NEAR-FAR
   //////////////////////////////////////////////////////////////////////////
 
-  /*inNearFar = 
-	(sp1 > 0.0 && norm1 >= _viewNear && norm1 <= _viewFar) ||
-	(sp2 > 0.0 && norm2 >= _viewNear && norm2 <= _viewFar) ||
-	(sp3 > 0.0 && norm3 >= _viewNear && norm3 <= _viewFar) ||
-	(sp4 > 0.0 && norm4 >= _viewNear && norm4 <= _viewFar) ||
-	(sp5 > 0.0 && norm5 >= _viewNear && norm5 <= _viewFar) ||
-	(sp6 > 0.0 && norm6 >= _viewNear && norm6 <= _viewFar) ||
-	(sp7 > 0.0 && norm7 >= _viewNear && norm7 <= _viewFar) ||
-	(sp8 > 0.0 && norm8 >= _viewNear && norm8 <= _viewFar);
-
-  //////////////////////////////////////////////////////////////////////////
-
-  if (inNearFar && inFov)
-	return true;
-
-  //////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////
-  // BIGGER THAN NEER-FAR
-
-  if (inNearFar == false)
-  {
-	pnbool bigger = sp1 > 0.0 && norm1 > _viewFar;
-
-	bigger = 
-	  (sp2 > 0.0 && norm2 > _viewFar != bigger) ||
-	  (sp3 > 0.0 && norm3 > _viewFar != bigger) ||
-	  (sp4 > 0.0 && norm4 > _viewFar != bigger) ||
-	  (sp5 > 0.0 && norm5 > _viewFar != bigger) ||
-	  (sp6 > 0.0 && norm6 > _viewFar != bigger) ||
-	  (sp7 > 0.0 && norm7 > _viewFar != bigger) ||
-	  (sp8 > 0.0 && norm8 > _viewFar != bigger);
-
-	if (bigger)
-	{
-	  if (inFov)
-		return true;
-	  else
-		inNearFar = true;
-	}
-	else
-	  return false;
-  }
-
-  //////////////////////////////////////////////////////////////////////////
-  // BIGGER THAN FOV
-
-  pndouble	spr1 = rightDirection.scalarProduct(targetVector1);
-  pndouble	spr2 = rightDirection.scalarProduct(targetVector2);
-  pndouble	spr3 = rightDirection.scalarProduct(targetVector3);
-  pndouble	spr4 = rightDirection.scalarProduct(targetVector4);
-  pndouble	spr5 = rightDirection.scalarProduct(targetVector5);
-  pndouble	spr6 = rightDirection.scalarProduct(targetVector6);
-  pndouble	spr7 = rightDirection.scalarProduct(targetVector7);
-  pndouble	spr8 = rightDirection.scalarProduct(targetVector8);
-
-  pnbool	rightFov = spr1 >= 0.0;
-
-  rightFov = 
-	(spr2 >= 0.0 != rightFov) ||
-	(spr3 >= 0.0 != rightFov) ||
-	(spr4 >= 0.0 != rightFov) ||
-	(spr5 >= 0.0 != rightFov) ||
-	(spr6 >= 0.0 != rightFov) ||
-	(spr7 >= 0.0 != rightFov) ||
-	(spr8 >= 0.0 != rightFov);
-
-  pndouble	spt1 = topDirection.scalarProduct(targetVector1);
-  pndouble	spt2 = topDirection.scalarProduct(targetVector2);
-  pndouble	spt3 = topDirection.scalarProduct(targetVector3);
-  pndouble	spt4 = topDirection.scalarProduct(targetVector4);
-  pndouble	spt5 = topDirection.scalarProduct(targetVector5);
-  pndouble	spt6 = topDirection.scalarProduct(targetVector6);
-  pndouble	spt7 = topDirection.scalarProduct(targetVector7);
-  pndouble	spt8 = topDirection.scalarProduct(targetVector8);
-
-  pnbool	topFov = spt1 >= 0.0;
-
-  topFov = 
-	(spt2 >= 0.0 != topFov) ||
-	(spt3 >= 0.0 != topFov) ||
-	(spt4 >= 0.0 != topFov) ||
-	(spt5 >= 0.0 != topFov) ||
-	(spt6 >= 0.0 != topFov) ||
-	(spt7 >= 0.0 != topFov) ||
-	(spt8 >= 0.0 != topFov);
-
-  inFov = rightFov && topFov;
-
-  return (inFov && inNearFar);*/
+  // FIXME : check Neer/Far
 }
 
 void
