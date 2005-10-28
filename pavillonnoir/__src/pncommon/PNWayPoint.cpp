@@ -186,10 +186,22 @@ PNWayPoint::serializeInStream(std::ostream& o)
 {
   PNLOCK(this);
 
-  o << "<wp id=\"" << _id << "\" x=\"" << _coord.x << "\" y=\"" << _coord.y << "\" z=\""
+  o << "<wp id=\"id_" << _id << "\" x=\"" << _coord.x << "\" y=\"" << _coord.y << "\" z=\""
 	<< _coord.z << "\"/>" << std::endl;
 
   return PNEC_SUCCES;
+}
+
+int
+PNWayPoint::_parseID(std::string id)
+{
+  std::string idstr = "id_";
+  std::string::size_type	  index = id.find(idstr);
+
+  if (index == std::string::npos)
+	return atoi(id.c_str());
+
+  return atoi(id.c_str() + index + id.size());
 }
 
 pnint
@@ -200,7 +212,7 @@ PNWayPoint::unserializeFromXML(xmlTextReader* _reader)
   xmlChar *attr;
 
   attr = xmlTextReaderGetAttribute(_reader, (const xmlChar *) PNXML_ID_ATTR);
-  _id = atoi((char*)attr);
+  _id = _parseID((char*)attr);
   attr = xmlTextReaderGetAttribute(_reader, (const xmlChar *) PNXML_COORDX_ATTR);
   _coord.x = (pnfloat)atof((char*)attr);
   attr = xmlTextReaderGetAttribute(_reader, (const xmlChar *) PNXML_COORDY_ATTR);
