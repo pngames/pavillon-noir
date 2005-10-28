@@ -39,8 +39,23 @@ namespace PN
 
 class PNAPI			IPNXMLSerializable : public IPNSerializable
 {
+protected:
+  static const std::string	_dtd;
+  static const std::string	_dtdName;
+
+  static const std::string	_rootNode;
+
+  IPNXMLSerializable();
 public:
   virtual ~IPNXMLSerializable() {}
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  virtual const std::string&  getDTD() const;
+  virtual const std::string&  getDTDName() const;
+  virtual const std::string&  getRootNodeName() const;
+
+  //////////////////////////////////////////////////////////////////////////
 
   /// Parse XML root node
   virtual pnint		unserializeFromXML(xmlNode* node);
@@ -48,13 +63,10 @@ public:
   virtual pnint		unserializeFromFile(const boost::filesystem::path& file);
 
   /// Save object to file
-  virtual pnint		serializeInFile(const boost::filesystem::path& file);
-  /// Save object to stream
-  virtual pnint		serializeInStream(std::ostream& o);
-  /// Save object into XML file
-  virtual pnint		serializeInXML(std::ostream& o, bool header);
-protected:
+  virtual pnint		serializeInXMLFile(const boost::filesystem::path& file);
 
+  /// Save object into XML file
+  virtual pnint		serializeInXML(xmlNode* node, pnbool root = false);
 };
 
 }

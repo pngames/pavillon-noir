@@ -335,15 +335,21 @@ protected:
 
   /// Write in model node content to out stream
   virtual pnint					_serializeContent(std::ostream& o);
+  virtual pnint					_serializeContent(xmlNode* node);
 
   //////////////////////////////////////////////////////////////////////////
-  // PNObject
+  // PNXMLSERIALIZABLE
+
+  virtual const std::string&	getDTD() const;
+  virtual const std::string&	getDTDName() const;
+  virtual const std::string&	getRootNodeName() const;
+
 public:
   /// Parse XML root node
   virtual pnint					unserializeFromXML(xmlNode* node);
 
   /// Save 3DObject into XML file
-  virtual pnint					serializeInXML(std::ostream& o, bool header);
+  virtual pnint					serializeInXML(xmlNode* node, pnbool isroot = false);
 
   //////////////////////////////////////////////////////////////////////////
   
