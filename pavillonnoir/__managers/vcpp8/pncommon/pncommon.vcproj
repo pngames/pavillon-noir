@@ -767,6 +767,18 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="conf"
+			>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNConf.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNConf.hpp"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
