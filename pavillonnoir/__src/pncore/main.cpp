@@ -66,6 +66,7 @@
 
 #include "PNSoundInterface.hpp"
 #include "PNPhysicsInterface.hpp"
+#include "PNConf.hpp"
 
 #include <fx3d.h>
 #include <PNQuatf.hpp>
@@ -99,6 +100,11 @@ int	  main(int argc, char* argv[])
   char buf[512] = "";
   std::cout <<  getcwd(buf, 511) << std::endl;
 
+  //////////////////////////////////////////////////////////////////////////
+  // Initialize configuration
+ 
+  PNConf::initialize();
+  
   //////////////////////////////////////////////////////////////////////////
   // Load Plugins
 
