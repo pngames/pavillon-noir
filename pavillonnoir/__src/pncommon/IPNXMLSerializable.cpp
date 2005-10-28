@@ -28,7 +28,10 @@
  */
  
 #include <fstream>
+#include <stdio.h>
 #include <boost/filesystem/operations.hpp>
+#include <libxml/parser.h>
+#include <libxml/tree.h>
 #include <libxml/xmlreader.h>
 
 #include "pndefs.h"
@@ -42,6 +45,37 @@ namespace fs = boost::filesystem;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
+const std::string	IPNXMLSerializable::_dtd;
+const std::string	IPNXMLSerializable::_dtdName;
+const std::string	IPNXMLSerializable::_rootNode = "root";
+
+//////////////////////////////////////////////////////////////////////////
+
+const std::string&
+IPNXMLSerializable::getDTD() const
+{
+  return _dtd;
+}
+
+const std::string&
+IPNXMLSerializable::getDTDName() const
+{
+  return _dtdName;
+}
+
+const std::string&
+IPNXMLSerializable::getRootNodeName() const
+{
+  return _rootNode;
+}
+
+IPNXMLSerializable::IPNXMLSerializable()
+{
+  
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 pnint
 IPNXMLSerializable::unserializeFromXML(xmlNode* root)
 {
@@ -53,7 +87,7 @@ IPNXMLSerializable::unserializeFromXML(xmlNode* root)
  *
  * @param file	File to load
  *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succed
+ * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succeed
  *
  * @see			pnGetErrorString
  */
@@ -81,7 +115,7 @@ IPNXMLSerializable::unserializeFromFile(const boost::filesystem::path& file)
   doc = xmlCtxtReadFile(ctxt, file.string().c_str(), NULL, XML_PARSE_DTDVALID); // parse the file, + DTD validation 
   xmlFreeParserCtxt(ctxt);							// free up the parser context
 
-  if (doc == NULL)									// check if parsing suceeded
+  if (doc == NULL)									// check if parsing succeeded
 	return PNEC_FAILED_TO_PARSE;
 
   xmlNodePtr  node = xmlDocGetRootElement(doc);
@@ -92,6 +126,8 @@ IPNXMLSerializable::unserializeFromFile(const boost::filesystem::path& file)
 
   pnint error = unserializeFromXML(node);
 
+  serializeInXMLFile(file);
+
   //////////////////////////////////////////////////////////////////////////
   // clean
 
@@ -100,25 +136,54 @@ IPNXMLSerializable::unserializeFromFile(const boost::filesystem::path& file)
   return error;
 }
 
-/**
- * @brief		Save object to file
- *
- * @param file	File to save
- *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succed
- *
- * @see			pnGetErrorString
- */
+/// Save object to file
 pnint
-IPNXMLSerializable::serializeInFile(const boost::filesystem::path& file)
+IPNXMLSerializable::serializeInXMLFile(const boost::filesystem::path& file)
 {
-  if (fs::exists(file))
-	if (fs::is_directory(file))
-	  return PNEC_NOT_A_FILE;
+  xmlDocPtr doc = NULL;       /* document pointer */
+  xmlNodePtr root_node = NULL;/* node pointers */
 
-  ofstream	o(file.string().c_str(), ofstream::binary);
+  LIBXML_TEST_VERSION;
 
-  return serializeInStream(o);
+  /* 
+  * Creates a new document, a node and set it as a root node
+  */
+  doc = xmlNewDoc(BAD_CAST "1.0");
+  root_node = xmlNewNode(NULL, BAD_CAST getRootNodeName().c_str());
+  xmlDocSetRootElement(doc, root_node);
+
+  /*
+  * Creates a DTD declaration. Isn't mandatory. 
+  */
+  if (!getDTD().empty())
+	xmlCreateIntSubset(doc, BAD_CAST getDTDName().c_str(), NULL, BAD_CAST getDTD().c_str());
+
+  //////////////////////////////////////////////////////////////////////////
+
+  serializeInXML(root_node, true);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  /* 
+  * Dumping document to stdio or file
+  */
+  xmlSaveFormatFile(file.string().c_str(), doc, 1);
+
+  /*free the document */
+  xmlFreeDoc(doc);
+
+  /*
+  *Free the global variables that may
+  *have been allocated by the parser.
+  */
+  xmlCleanupParser();
+
+  /*
+  * this is to debug memory for regression tests
+  */
+  xmlMemoryDump();
+
+  return PNEC_SUCCES;
 }
 
 /**
@@ -126,27 +191,33 @@ IPNXMLSerializable::serializeInFile(const boost::filesystem::path& file)
  *
  * @param o		Stream to load from
  *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succed
+ * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succeed
  *
  * @see			pnGetErrorString
  */
-pnint
+/*pnint
 IPNXMLSerializable::serializeInStream(ostream& o)
 {
   return serializeInXML(o, true);
-}
+}*/
 
 /**
  * @brief		Save object to stream
  *
  * @param o		Stream to load from
  *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succed
+ * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succeed
  *
  * @see			pnGetErrorString
  */
+/*pnint
+IPNXMLSerializable::serializeInXML(ostream& o, pnbool header)
+{
+  return PNEC_NOT_IMPLEMENTED;
+}*/
+
 pnint
-IPNXMLSerializable::serializeInXML(ostream& o, bool header)
+IPNXMLSerializable::serializeInXML(xmlNode* node, pnbool root /*=false*/)
 {
   return PNEC_NOT_IMPLEMENTED;
 }

@@ -202,24 +202,6 @@
 	</References>
 	<Files>
 		<Filter
-			Name="base cpp"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
-			>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNObject.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNObject.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNVRef.hpp"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="event"
 			>
 			<File
@@ -332,7 +314,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="base hpp"
+			Name="base objects"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
@@ -357,7 +339,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncommon\PNObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNObject.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\pnresources.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNVRef.hpp"
 				>
 			</File>
 		</Filter>
