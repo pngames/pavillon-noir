@@ -1,3 +1,7 @@
+ACTION_STATE = 	{STOP=0,
+				 START=1
+				}
+
 	
 gameMap = getGameMap()
 tolua:takeownership(gameMap)
@@ -128,7 +132,7 @@ function gameMap:onAttack(sourceId, targetId)
 	local id
 	local entity
 	for id, entity in pairs(self.entities.all) do
-      self.entities.all[id]:onAttack(sourceId, targetId)
+      self.entities.all[id]:onAttack(self.entities.all[sourceId], self.entities.all[targetId])
 	end	
 end
 	

@@ -371,19 +371,20 @@ void  PNLuaGame::onLeaveGame(pnEventType evt, PNObject* source, PNEventData* dat
 }
 void  PNLuaGame::onGameAction(pnEventType evt, PNObject* source, PNEventData* data)
 {
-    std::string luaOrder;
+    std::stringstream luaOrder;
 
     PNGameActionEventData* actionEvent= (PNGameActionEventData*) data;
-    luaOrder += "gameMap:on";
-	luaOrder += actionEvent->action;
-	luaOrder += "(\"" ;
-	luaOrder += actionEvent->sourceId;
-    luaOrder += "\", \"";
-    luaOrder += actionEvent->targetId;
-    luaOrder += "\", ";
-	luaOrder += (actionEvent->state == true ? "true": "false");
-	luaOrder += ")";
-	this->_LVM.execString(luaOrder.c_str());
+    luaOrder << "gameMap:on";
+	luaOrder << actionEvent->action;
+	luaOrder << "(\"" ;
+	luaOrder << actionEvent->sourceId;
+    luaOrder << "\", \"";
+    luaOrder << actionEvent->targetId;
+    luaOrder << "\", ";
+	luaOrder << (actionEvent->value);
+	luaOrder << ")";
+    luaOrder << std::ends;
+	this->_LVM.execString(luaOrder.str().c_str());
 }
 
 void  PNLuaGame::onColision(pnEventType evt, PNObject* source, PNEventData* data)

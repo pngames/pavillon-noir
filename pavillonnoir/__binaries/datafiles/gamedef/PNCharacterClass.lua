@@ -90,7 +90,7 @@ Call when someone tell the object to go backward
 		pnprint(":onMoveForward\n")
 		self.__index:onMoveForward(state)
 		OBJ:setMovingSpeed(self.actualSpeed)	
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:startAnimation(0, 0)
 		else
 			self:stopAnimation()
@@ -108,7 +108,7 @@ Call when someone tell the object to go backward and start apropriate annimation
 		pnprint(":onMoveBackward\n")
 		self.__index:onMoveBackward(state)
 		OBJ:setMovingSpeed(self.actualSpeed)	
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:startAnimation(0, 0)
 		else
 			self:stopAnimation()
@@ -175,10 +175,16 @@ Call when mouse is moved
 		pnprint(":MouseLook\n")
 	end
 
--------------------------------------------------------------------------------	
+-------------------------------------------------------------------------------
+--[[%
+Call when an entity entrer in character sight
+Add the entity in the seen_entities list
+@param 3DObject
+	the Entity entering in sight 
+%--]]	
 	function OBJ:onFrustrumIn(target)
 		if (target:getId() ~= self.id) then
-          OBJ.seen_entities[target.id] = gameMap.entities.all[targetId]
+          OBJ.seen_entities[target.id] = target
 		end
 	end
 -------------------------------------------------------------------------------

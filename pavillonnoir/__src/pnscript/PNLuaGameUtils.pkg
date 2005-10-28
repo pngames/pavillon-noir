@@ -10,5 +10,5 @@ void  loadGame(std::string saveName);
 void  saveGame(std::string saveName);
 void  loadMap(std::string mapName);
 //void  activateDebug(bool b);
-void sendGameActionEvent(std::string eventName, std::string sourceid, std::string targetId, bool state);
+void sendGameActionEvent(std::string eventName, std::string sourceid, std::string targetId, double value);
 ///////////////////////////////////////////////////////////////////////////////

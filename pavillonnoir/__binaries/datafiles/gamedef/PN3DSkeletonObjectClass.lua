@@ -16,7 +16,7 @@ function PN3DSkeletonObjectClass(id)
     
     ---------------------move events-----------------------
 	function OBJ:onMoveForward(state)	
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_T_FORWARD)
 		else
 			self:subMovingState(PN3DObject.STATE_T_FORWARD)
@@ -26,7 +26,7 @@ function PN3DSkeletonObjectClass(id)
 	function OBJ:onMoveBackward(state)
 		--pnprint(self.id)
 		--pnprint(":onMoveBackward\n")
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_T_BACKWARD)
 		else
 			self:subMovingState(PN3DObject.STATE_T_BACKWARD)
@@ -36,7 +36,7 @@ function PN3DSkeletonObjectClass(id)
 	function OBJ:onMoveLeft(state)
 		pnprint(self.id)
 		--pnprint(":onMoveLeft\n")	
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			pnprint(" key press\n")
 			self:addMovingState(PN3DObject.STATE_T_LEFT)
 		else
@@ -48,7 +48,7 @@ function PN3DSkeletonObjectClass(id)
 	function OBJ:onMoveRight(state)
 		pnprint(self.id)
 		--pnprint(":onMoveRight\n")
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			pnprint(" key press\n")
 			self:addMovingState(PN3DObject.STATE_T_RIGHT)
 		else
@@ -59,7 +59,7 @@ function PN3DSkeletonObjectClass(id)
 	
 	function OBJ:onRotateRight(state)
 		pnprint("LUA OBJ:onRotateRight(()\n")
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_R_RIGHT)
 		else
 			self:subMovingState(PN3DObject.STATE_R_RIGHT)
@@ -68,7 +68,7 @@ function PN3DSkeletonObjectClass(id)
 	
 	function OBJ:onRotateLeft(state)
 		pnprint("LUA OBJ:onRotateLeft()\n")
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_R_LEFT)
 		else
 			self:subMovingState(PN3DObject.STATE_R_LEFT)
@@ -77,7 +77,7 @@ function PN3DSkeletonObjectClass(id)
 	
 	function OBJ:onRotateUp(state)
 		pnprint("LUA obj:onRotateUp()\n")
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_R_TOP)
 		else
 			self:subMovingState(PN3DObject.STATE_R_TOP)
@@ -86,7 +86,7 @@ function PN3DSkeletonObjectClass(id)
 	
 	function OBJ:onRotateDown(state)
 		pnprint("LUA obj:onRotateDown()\n")
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_R_BACK)
 		else
 			self:subMovingState(PN3DObject.STATE_R_BACK)
