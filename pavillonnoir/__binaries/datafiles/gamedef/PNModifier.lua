@@ -1,5 +1,5 @@
 function PNModifierClass
-	local PNModifier= {easiness=	{strength=0,
+	local OBJ= {easiness=	{strength=0,
 									 address=0,
 									 adaptation=0,
 									 awareness=0,
@@ -14,6 +14,6 @@ function PNModifierClass
 									}
 						className=  "PNModifier"         
 					  }
-	return PNModifier
+	return OBJ
 end
 
