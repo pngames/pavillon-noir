@@ -93,6 +93,10 @@ namespace PN{
 	CEGUI::MouseCursor::getSingleton().hide();
 	setRandomBackground();
 	show();
+	// TODO : voir les conflis avec la console
+
+	//CEGUI::Rect* re = new CEGUI::Rect( CEGUI::Point(0 , 0), CEGUI::Size(0, 0));
+	//CEGUI::MouseCursor::getSingleton().setConstraintArea(re);
   }
 
   void	PNGUILoadingScreen::resetGUI()

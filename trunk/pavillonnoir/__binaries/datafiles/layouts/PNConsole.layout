@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <GUILayout>
   <Window Type="DefaultWindow" Name="PNConsole">
-    <Property Name="Alpha" Value="0.850000" />
+    <Property Name="Alpha" Value="0.000000" />
     <!--<Window Type="WindowsLook/StaticText" Name="PNConsole/Background">
       <Property Name="Alpha" Value="0.700000" />
       <Property Name="Enabled" Value="false" />
