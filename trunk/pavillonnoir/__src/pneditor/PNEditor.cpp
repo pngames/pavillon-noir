@@ -44,6 +44,7 @@ PNPropertiesPanel
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <stdio.h>
 #include <fcntl.h>
 #ifdef WIN32
@@ -472,31 +473,44 @@ PNEditor::buildWPGroup()
 
 long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 {
-	if (_graph == NULL)
+  if (_graph == NULL)
+  {
+	FXDirDialog open(this, "Choose level directory to save your work");
+	if (open.execute())
 	{
-		FXDirDialog open(this, "Choose level directory to save your work");
-		if (open.execute())
-		{
-			wpGroup = new FXGLGroup;
-			_graph = new PNIAGraph;
-			_dir = open.getDirectory().text();
-			_dir += PATHSEP;
-		}
-		else
-		{
-			return 1;
-		}
+	  wpGroup = new FXGLGroup;
+	  _graph = new PNIAGraph;
+	  _dir = open.getDirectory().text();
+	  _dir += PATHSEP;
 	}
-	
-  boost::filesystem::path objpath(_dir + "entities.xml", boost::filesystem::no_check);
-  boost::filesystem::path wppath(_dir + "waypoints.xml", boost::filesystem::no_check);
+	else
+	{
+	  return 1;
+	}
+  }
 
-  // 3DObjects
-  std::ofstream	o((const char *)objpath.string().c_str());
-  o << "<?xml version=\"1.0\"?>" << std::endl;
-  o << "<!DOCTYPE " << PNXML_LISTENTITIES_MKP << " SYSTEM \"../" << PNXML_ENTITIES_DTD 
-	  << "\">" << std::endl;
-  o << "<" << PNXML_LISTENTITIES_MKP << ">" << std::endl;
+  //////////////////////////////////////////////////////////////////////////
+  // CREATE XML DOCUMENT
+  //////////////////////////////////////////////////////////////////////////
+
+  xmlDocPtr doc = NULL;       /* document pointer */
+  xmlNodePtr root_node = NULL;/* node pointers */
+
+  LIBXML_TEST_VERSION;
+
+  /* 
+  * Creates a new document, a node and set it as a root node
+  */
+  doc = xmlNewDoc(BAD_CAST "1.0");
+  root_node = xmlNewNode(NULL, PNXML_LISTENTITIES_MKP);
+  xmlDocSetRootElement(doc, root_node);
+
+  /*
+  * Creates a DTD declaration. Isn't mandatory. 
+  */
+  xmlCreateIntSubset(doc, PNXML_LISTENTITIES_MKP, NULL, PNXML_ENTITIES_DTD);
+
+  //////////////////////////////////////////////////////////////////////////
 
   genScene->clear();
   genScene->append(groundGroup);
@@ -506,6 +520,8 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
   _groundshown = true;
   _staticshown = true;
   _dynamicshown = true;
+
+  char	tmpBuff[256];
 
   FXObjectList&	ol1 = genScene->getList();
   for (int i= 0; i < ol1.no(); i++)
@@ -517,70 +533,99 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 	  PN3DObject	*obj = shape->getObj();
 	  PNPoint		p = obj->getCoord();
 	  PNQuatf		q = obj->getOrient();
-	  int _DEF_SIZE = PN::DEF::objectFilePath.size();
-	  int _FILENAME_SIZE = obj->getFile()->string().size();
-	  std::string	str = obj->getFile()->string().substr(_DEF_SIZE, _FILENAME_SIZE - _DEF_SIZE);
 
 	  //obj->serialize();
 
-	  // <!-- entity markup open
-	  o << "<" << PNXML_ENTITY_MKP << " " << PNXML_ID_ATTR << "=\"id_" << shape->getId()
-		  << "\" " << PNXML_LABEL_ATTR << "=\"" << shape->getLabel() << "\" "
-		  << PNXML_MODELREFERENCE_ATTR << "=\"" << str << "\" " << PNXML_ENVTYPE_ATTR
-		  << "=\"";
-	  if (shape->getEnvType() == PN_GROUND)
-		o << PNXML_GROUND_VAL;
-	  else if (shape->getEnvType() == PN_STATIC)
-		o << PNXML_STATIC_VAL;
-	  else if (shape->getEnvType() == PN_DYNAMIC)
-		o << PNXML_DYNAMIC_VAL;
+	  xmlNodePtr node = xmlNewChild(root_node, NULL, PNXML_ENTITY_MKP, NULL);
+	  {
+		sprintf(tmpBuff, "%d\0", shape->getId());
+		xmlNewProp(node, PNXML_ID_ATTR, BAD_CAST tmpBuff);
+		xmlNewProp(node, PNXML_LABEL_ATTR, BAD_CAST shape->getLabel().c_str());
+		xmlNewProp(node, PNXML_MODELREFERENCE_ATTR,BAD_CAST DEF::convertPath(DEF::objectFilePath, obj->getFile()->string()).c_str());
 
-	  o << "\" "<< PNXML_OBJTYPE_ATTR << "=\"";
-	  if (obj->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ)
-		o << PNXML_DYNAMIC_VAL;
-	  else if (obj->getObjType() == PN3DObject::OBJTYPE_3DOBJ)
-		  o << PNXML_OBJECT_VAL;
-	  else if (obj->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
-		o << PNXML_CHARACTER_VAL;
+		if (shape->getEnvType() == PN_GROUND)
+		  xmlNewProp(node, PNXML_ENVTYPE_ATTR, PNXML_GROUND_VAL);
+		else if (shape->getEnvType() == PN_STATIC)
+		  xmlNewProp(node, PNXML_ENVTYPE_ATTR, PNXML_STATIC_VAL);
+		else if (shape->getEnvType() == PN_DYNAMIC)
+		  xmlNewProp(node, PNXML_ENVTYPE_ATTR, PNXML_DYNAMIC_VAL);
 
-	  o << "\" "<< PNXML_CLASS_ATTR <<"=\"" << shape->getClassStr() << "\" "
-		  << PNXML_COORDX_ATTR << "=\"" << p.x << "\" " << PNXML_COORDY_ATTR
-		  << "=\"" << p.y << "\" " << PNXML_COORDZ_ATTR << "=\"" << p.z
-		  << "\" " << PNXML_ROTX_ATTR << "=\"" << q.x << "\" " << PNXML_ROTY_ATTR
-		  << "=\"" << q.y << "\" " << PNXML_ROTZ_ATTR << "=\"" << q.z << "\" "
-		  << PNXML_ROTW_ATTR << "=\"" << q.w << "\">" << std::endl;
-	  // entity markup open -->
+		switch (obj->getObjType())
+		{
+		case PN3DObject::OBJTYPE_3DSKELETONOBJ:
+		  xmlNewProp(node, PNXML_OBJTYPE_ATTR, PNXML_DYNAMIC_VAL);
+		  break;
+		case PN3DObject::OBJTYPE_3DOBJ:
+		  xmlNewProp(node, PNXML_OBJTYPE_ATTR, PNXML_OBJECT_VAL);
+		  break;
+		case PN3DObject::OBJTYPE_CHARACTER:
+		  xmlNewProp(node, PNXML_OBJTYPE_ATTR, PNXML_CHARACTER_VAL);
+		  break;
+		default:
+		  break;
+		}
+
+		xmlNewProp(node, PNXML_CLASS_ATTR, BAD_CAST shape->getClassStr().c_str());
+
+		sprintf(tmpBuff, "%f\0", p.x);
+		xmlNewProp(node, PNXML_COORDX_ATTR, BAD_CAST tmpBuff);
+		sprintf(tmpBuff, "%f\0", p.y);
+		xmlNewProp(node, PNXML_COORDY_ATTR, BAD_CAST tmpBuff);
+		sprintf(tmpBuff, "%f\0", p.z);
+		xmlNewProp(node, PNXML_COORDZ_ATTR, BAD_CAST tmpBuff);
+
+		sprintf(tmpBuff, "%f\0", q.x);
+		xmlNewProp(node, PNXML_ROTX_ATTR, BAD_CAST tmpBuff);
+		sprintf(tmpBuff, "%f\0", q.y);
+		xmlNewProp(node, PNXML_ROTY_ATTR, BAD_CAST tmpBuff);
+		sprintf(tmpBuff, "%f\0", q.z);
+		xmlNewProp(node, PNXML_ROTZ_ATTR, BAD_CAST tmpBuff);
+		sprintf(tmpBuff, "%f\0", q.w);
+		xmlNewProp(node, PNXML_ROTW_ATTR, BAD_CAST tmpBuff);
+	  }
 
 	  // actions
 	  scriptMap&	  scripts = shape->getScripts();
 	  for (scriptMap::iterator i = scripts.begin(); i != scripts.end(); i++)
 	  {
-		o << "<" << PNXML_ACTION_MKP << " " << PNXML_REFERENCE_ATTR << "=\""
-			<< PNEventManager::getInstance()->getNameByType(i->first) << "\">"
-			<< std::endl;
+		xmlNodePtr node2 = xmlNewChild(node, NULL, PNXML_ACTION_MKP, NULL);
+		xmlNewProp(node2, PNXML_REFERENCE_ATTR, BAD_CAST PNEventManager::getInstance()->getNameByType(i->first).c_str());
 
 		for (scriptList::iterator j = i->second->begin(); j != i->second->end(); j++)
 		{
-		  str = (*j)->string().substr(PN::DEF::gamedefFilePath.size(),
+		  std::string str = (*j)->string().substr(PN::DEF::gamedefFilePath.size(),
 			(*j)->string().size() - PN::DEF::gamedefFilePath.size());
-		  o << "<" << PNXML_SCRIPT_MKP << " " << PNXML_REFERENCE_ATTR << "=\""
-			  << str.c_str() << "\"/>" << std::endl;
+
+		  xmlNodePtr node3 = xmlNewChild(node2, NULL, PNXML_SCRIPT_MKP, NULL);
+		  xmlNewProp(node2, PNXML_REFERENCE_ATTR, BAD_CAST str.c_str());
 		}
-		o << "</" << PNXML_ACTION_MKP << ">" << std::endl;
 	  }
 
 	  // save modifications of the pno if necessary
 	  if (shape->modified())
-		obj->serializeInXML(o, FALSE);
-
-	  o << "</" << PNXML_ENTITY_MKP << ">" << std::endl;
+		obj->serializeInXML(node);
 	}
   }
-  o << "</" << PNXML_LISTENTITIES_MKP << ">" << std::endl; // 
 
+  //////////////////////////////////////////////////////////////////////////
+  // SAVE XML DOCUMENT IN FILE
+  //////////////////////////////////////////////////////////////////////////
+
+  xmlSaveFormatFile((_dir + "entities.xml").c_str(), doc, 1);
+
+  xmlFreeDoc(doc);
+  xmlCleanupParser();
+  xmlMemoryDump();
+
+  //////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////
   // Waypoints
+
+  boost::filesystem::path wppath(_dir + "waypoints.xml", boost::filesystem::no_check);
+
   pnerror(PN_LOGLVL_DEBUG, "Saving waypoints in %s", wppath.string().c_str());
   _graph->serializeInFile(wppath);
+
   return 1;
 }
 
@@ -880,22 +925,10 @@ int	  PNEditor::_parseActions(void* node, PNGLShape* shape)
   return 1;
 }
 
-int	  PNEditor::_parseID(std::string id)
-{
-  std::string idstr = "id_";
-  std::string::size_type	  index = id.find(idstr);
-
-  if (index == std::string::npos)
-     return atoi(id.c_str());
-  
-  return atoi(id.c_str() + index + id.size());
-}
-
 int	  PNEditor::_parseEntity(void* node)
 {
   xmlNodePtr  current = (xmlNodePtr)node;
-  /// int id = atoi((const char *)xmlGetProp(current, PNXML_ID_ATTR));
-  int id = _parseID((const char *)xmlGetProp(current, PNXML_ID_ATTR));
+  int		  id;
   std::string mdref((const char *)xmlGetProp(current, PNXML_MODELREFERENCE_ATTR));
   std::string label((const char *)xmlGetProp(current, PNXML_LABEL_ATTR));
   std::string classStr((const char *)xmlGetProp(current, PNXML_CLASS_ATTR));
@@ -907,6 +940,7 @@ int	  PNEditor::_parseEntity(void* node)
 
   PN3DObject  *object = NULL;
 
+  id = atoi((const char *)xmlGetProp(current, PNXML_ID_ATTR));
   if (!xmlStrcmp(xmlGetProp(current, PNXML_ENVTYPE_ATTR), PNXML_GROUND_VAL))
 	envType = PN_GROUND;
   else if (!xmlStrcmp(xmlGetProp(current, PNXML_ENVTYPE_ATTR), PNXML_STATIC_VAL))
