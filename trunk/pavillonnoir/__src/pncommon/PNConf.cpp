@@ -102,7 +102,7 @@ PNConf::PNConf()
 	_homePath = getenv("HOME");
 	#endif
 
-	const fs::path pnConfDirPath(_homePath + PATHSEPSTRING + UNIXPREFIX + PNCONFPATH, fs::native);
+	const fs::path pnConfDirPath = this->getConfPath();
 	if (!fs::exists(pnConfDirPath))
 		fs::create_directory(pnConfDirPath);
 	_confFilePath = pnConfDirPath / PNCONFFILE;
@@ -112,12 +112,13 @@ PNConf::PNConf()
 }
 
 /**
- * @brief class destructor
+ * @brief class destructor. On deletion it saves current configuration.
  * @return nothing
  * @sa PNConf()
  */
 PNConf::~PNConf()
 {
+	this->saveConf();
 }
 
 /**
@@ -145,7 +146,7 @@ PNConf::saveConf()
 /**
  * @brief get the matching value to the given key
  * @param key string value representing an item key
- * @return value matching key or an empty string if key isn't found
+ * @return value of the matching key or an empty string if key isn't found
  * @sa setKey()
  */
 const std::string
@@ -177,7 +178,7 @@ PNConf::setKey(const std::string& key, const std::string& value)
 const fs::path
 PNConf::getConfPath()
 {
-	return fs::path(_homePath + PATHSEPSTRING + UNIXPREFIX + PNCONFPATH, fs::native);
+	return fs::path(_homePath + PATHSEPSTRING + UNIXPREFIX + PNCONFPATH, fs::no_check);
 }
 
 /**
