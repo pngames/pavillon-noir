@@ -85,8 +85,8 @@ HINSTANCE		PNAnimationExporterDesc::HInstance()
 PNAnimationExporter::PNAnimationExporter() : name("no name"), framerate(4)
 {
   _ext = PNA_EXT;
-  _longDesc = theApp.GetString(IDS_PNA_LONGDESC);
-  _shortDesc = theApp.GetString(IDS_PNA_SHORTDESC);
+  _longDesc = PNA_LONGDESC;
+  _shortDesc = PNA_SHORTDESC;
 }
 
 PNAnimationExporter::~PNAnimationExporter()

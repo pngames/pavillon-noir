@@ -86,8 +86,8 @@ HINSTANCE		PNModelExporterDesc::HInstance()
 PNModelExporter::PNModelExporter()
 {
   _ext = PNM_EXT;
-  _longDesc = theApp.GetString(IDS_PNM_LONGDESC);
-  _shortDesc = theApp.GetString(IDS_PNM_SHORTDESC);
+  _longDesc = PNM_LONGDESC;
+  _shortDesc = PNM_SHORTDESC;
 }
 
 PNModelExporter::~PNModelExporter() 

@@ -288,31 +288,8 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_PNM_SHORTDESC       "Pavillon Noir Model export"
-    IDS_PNM_LONGDESC        "Material exporter for Pavillon Noir 3D models"
-    IDS_PNM_EXT             "pnm"
-    IDS_PNT_SHORTDESC       "Pavillon Noir Material export"
-    IDS_PNT_LONGDESC        "Material exporter for Pavillon Noir 3D models"
-    IDS_PNT_EXT             "pnt"
-    IDS_PNS_SHORTDESC       "Pavillon Noir Squeletor export"
-    IDS_PNS_LONGDESC        "Skeleton exporter for Pavillon Noir 3D models"
-    IDS_PNS_EXT             "pns"
-    IDS_PNA_SHORTDESC       "Pavillon Noir Animation export"
-    IDS_PNA_LONGDESC        "Animation exporter for Pavillon Noir 3D models"
-    IDS_PNA_EXT             "pna"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_COPYRIGHT           "Tss tss pas touche, tention je surveille"
     IDS_AUTHORNAME          "Pavillon-Noir Team"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_PNO_SHORTDESC       "Pavillon Noir 3DObject export"
-    IDS_PNO_LONGDESC        "3DObject exporter for Pavillon Noir"
-    IDS_PNO_EXT             "pno"
 END
 
 #endif    // Français (France) resources

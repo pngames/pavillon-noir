@@ -26,7 +26,15 @@
 #ifndef _PNANIMATIONEXPORTER_HPP_
 # define _PNANIMATIONEXPORTER_HPP_
 
-#define PNANIMATIONEXPORTER_CLASS_ID	Class_ID(0x68367838, 0x61954c85)
+#ifdef _DEBUG
+# define PNANIMATIONEXPORTER_CLASS_ID	Class_ID(0x68367838, 0x61954c85)
+# define PNA_LONGDESC					"Animation exporter for Pavillon Noir 3D models (debug)"
+# define PNA_SHORTDESC					"Pavillon Noir Animation export (debug)"
+#else
+# define PNANIMATIONEXPORTER_CLASS_ID	Class_ID(0x5404268e, 0x2b2134c2)
+# define PNA_LONGDESC					"Animation exporter for Pavillon Noir 3D models"
+# define PNA_SHORTDESC					"Pavillon Noir Animation export"
+#endif
 
 #include "PNSkeletonExporter.hpp"
 

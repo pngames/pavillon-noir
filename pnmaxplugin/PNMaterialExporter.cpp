@@ -85,8 +85,8 @@ HINSTANCE		PNMaterialExporterDesc::HInstance()
 PNMaterialExporter::PNMaterialExporter()
 {
   _ext = PNT_EXT;
-  _longDesc = theApp.GetString(IDS_PNT_LONGDESC);
-  _shortDesc = theApp.GetString(IDS_PNT_SHORTDESC);
+  _longDesc = PNT_LONGDESC;
+  _shortDesc = PNT_SHORTDESC;
 }
 
 PNMaterialExporter::~PNMaterialExporter() 

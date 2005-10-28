@@ -89,9 +89,9 @@ HINSTANCE		PN3DObjectExporterDesc::HInstance()
 
 PN3DObjectExporter::PN3DObjectExporter()
 {
-  _ext = theApp.GetString(IDS_PNO_EXT);
-  _longDesc = theApp.GetString(IDS_PNO_LONGDESC);
-  _shortDesc = theApp.GetString(IDS_PNO_SHORTDESC);
+  _ext = PNO_EXT;
+  _longDesc = PNO_LONGDESC;
+  _shortDesc = PNO_SHORTDESC;
 
   _hasModel = true;
   _hasMaterials = true;
@@ -177,13 +177,15 @@ int PN3DObjectExporter::exportBody()
 
   std::stringstream	objString;
 
+  objString << "<" << PNO_XMLNODE_ROOT << ">\n";
+
   if (_owin->hasModel())
   {
 	PNMainWin::WriteLine(_owin->getModelFullPath());
 	_modelExporter.export(_owin->getModelFullPath());
-  }
 
-  objString << "<" << PNO_XMLNODE_ROOT << " " << PNO_XMLPROP_PATH << "=\"" << (_owin->hasModel() ? _owin->getModelFile().GetString() : "none") << "\">\n";
+	objString << "  " << "<" << PNO_XMLNODE_MODEL << " " << PNO_XMLPROP_PATH << "=\"" << _owin->getModelFile().GetString() << "\" />\n";
+  }
 
   if (_owin->hasMaterials())
   {
