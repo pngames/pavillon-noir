@@ -26,7 +26,15 @@
 #ifndef _PN3DOBJECTEXPORTER_HPP_
 # define _PN3DOBJECTEXPORTER_HPP_
 
-#define PN3DOBJECEXPORTER_CLASS_ID	Class_ID(0x5e3b4160, 0x5a106653)
+#ifdef _DEBUG
+# define PN3DOBJECEXPORTER_CLASS_ID	Class_ID(0x5e3b4160, 0x5a106653)
+# define PNO_LONGDESC				"3DObject exporter for Pavillon Noir (debug)"
+# define PNO_SHORTDESC				"Pavillon Noir 3DObject export (debug)"
+#else
+# define PN3DOBJECEXPORTER_CLASS_ID	Class_ID(0xfed2fc7, 0x6b731dc)
+# define PNO_LONGDESC				"3DObject exporter for Pavillon Noir"
+# define PNO_SHORTDESC				"Pavillon Noir 3DObject export"
+#endif
 
 #include "PNExporter.hpp"
 

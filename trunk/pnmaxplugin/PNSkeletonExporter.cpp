@@ -86,8 +86,8 @@ HINSTANCE		PNSkeletonExporterDesc::HInstance()
 PNSkeletonExporter::PNSkeletonExporter() : _tabBones(NULL)
 {
   _ext = PNS_EXT;
-  _longDesc = theApp.GetString(IDS_PNS_LONGDESC);
-  _shortDesc = theApp.GetString(IDS_PNS_SHORTDESC);
+  _longDesc = PNS_LONGDESC;
+  _shortDesc = PNS_SHORTDESC;
 }
 
 PNSkeletonExporter::~PNSkeletonExporter() 
