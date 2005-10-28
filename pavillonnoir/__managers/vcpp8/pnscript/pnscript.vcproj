@@ -390,7 +390,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNModifier.lua"
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNModifierClass.lua"
 				>
 			</File>
 			<File

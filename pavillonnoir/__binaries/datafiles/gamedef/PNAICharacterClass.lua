@@ -1,176 +1,184 @@
-function PNCharacterClass(id)
-	pnprint("PNCharacterClass creating\n")
+function PNAICharacterClass(id)
+	pnprint("PNAICharacterClass creating\n")
 	-- make inheritance -----
-	pnprint("PNCharaterClass creating\n")
-    local PNCharacter = {__index = PNCharacter:new_local()}
-	PNCharacter.__instance  = PNCharacter.__index
-    setmetatable(PNCharacter, PNCharacter)
-    tolua.inherit(PNCharacter, PNCharacter.__instance) -- make obj be recognize as PN3DSkeletonObject
-	PNCharacter.className = "PNCharacter"
+	local OBJ = inheritFrom({className = "PNAICharacter"}, PNCharacterClass(id))
     -------------------------
-    PNCharacter:setId(id)
-    PNCharacter.id = id
+    OBJ:setId(id)
+    OBJ.id = id
     pnprint("PNCharacterClass creating 2\n")
 
-	PNCharacter:setMovingSpeed(0.5)
-	PNCharacter.hurry = false
-	PNCharacter.characTypeEnum = {PN_CHARAC_PIRATE = 0, PN_CHARAC_NAVY = 1, PN_CHARAC_CIVILIAN = 2}
-	PNCharacter.realCharacType = PNCharacter.characTypeEnum.PN_CHARAC_CIVILIAN
-	PNCharacter.shownCharacType = PNCharacter.characTypeEnum.PN_CHARAC_CIVILIAN
+	OBJ:setMovingSpeed(0.5)
+	OBJ.hurry = false
+	OBJ.realCharacType = CHARACTER_TYPE.CIVILIAN
+	OBJ.shownCharacType = CHARACTER_TYPE.CIVILIAN
 --	pnprint("create pathFinding\n")
-	PNCharacter.pathFinding = PNPathFinding:new_local(PNCharacter:getCoord())
+	OBJ.pathFinding = PNPathFinding:new_local(OBJ:getCoord())
 --	pnprint("pathFinding created\n")
 --	pnprint("create pathFinding\n")
-	PNCharacter.pathFinding:unserializeFromFile(gameMap:getWpFile())
+	OBJ.pathFinding:unserializeFromFile(gameMap:getWpFile())
 --	pnprint("pathFinding created\n")
-	PNCharacter.toReach = PN3DObject:new_local()
-	PNCharacter.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2}
-	PNCharacter.state = PNCharacter.stateEnum.PN_IA_PASSIVE
-	PNCharacter.pastStates = {}
-	PNCharacter.ennemies = {}
-	
-	function PNCharacter:onInit()
+	OBJ.toReach = PN3DObject:new_local()
+	OBJ.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2}
+	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
+	OBJ.pastStates = {}
+	OBJ.ennemies = {}
+--------------------------------------------------------
+--[[%
+Called at the update
+Calls a Behaviour Function depending on the state in which the character is
+%--]]		
+	function OBJ:beSmart()
+		if (self.state == self.stateEnum.PN_IA_TRAVELLING) then
+			self:manageTravel()
+		
+		elseif (self.state == self.stateEnum.PN_IA_FIGHTING) then
+			self:manageFight()
+		end
 	end
-	
-	function PNCharacter:beSmart()
-		if (self.state == self.stateEnum.PN_IA_TRAVELLING) then --ca pete ici, la 
-			local distance = self:getCoord():getDistance(self.toReach:getCoord())
+--------------------------------------------------------
+--[[%
+Behaviour Function
+Called during PathFinding to resolve the travel
+%--]]
+	function OBJ:manageTravel()
+		local distance = self:getCoord():getDistance(self.toReach:getCoord())
 			if (distance <= 50.0) then
 				self.pathFinding:moveNext(self.toReach)
 				local distance2 = self:getCoord():getDistance(self.toReach:getCoord())
 					if (distance2 <= 50.0) then
 						self:restoreState()
-						self:onActionMoveForward(false)
+						self:onMoveForward(ACTION_STATE.STOP)
 						return
 					end
-					self:setTarget(self.toReach)
-					self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
+				self:setTarget(self.toReach)
+				self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
 			end
-		end
-		
 	end
-
-	function PNCharacter:moveTo(p)
+--------------------------------------------------------
+--[[%
+Called while handling a fight
+%--]]
+	function OBJ:manageFight()
+	end
+--------------------------------------------------------
+--[[%
+Called on a MoveTo event
+Prepares the character to handle the PathFinding
+%--]]
+	function OBJ:moveTo(p)
 		self.state = self.stateEnum.PN_IA_TRAVELLING
 		self.pathFinding:moveTo(p)
 		self.pathFinding:moveNext(self.toReach)
 		-- setDirect and rotate
 		self:setTarget(self.toReach)
 		self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
-		self:onActionMoveForward(true)
+		self:onMoveForward(ACTION_STATE.START)
 	end
-
-	function PNCharacter:hear()
+--------------------------------------------------------
+--[[%
+Called when an ennemy enters the frustrum
+Prepares the Character to handle a fight
+%--]]
+	function OBJ:startFight()
+	end
+--------------------------------------------------------
+--[[%
+Called when hearing a sound
+No yet implemented
+%--]]	
+	function OBJ:hear()
 		--do something
 	end
-
-	function PNCharacter:see()
-		--do something
-	end
-
-	function PNCharacter:startFight()
-		--do something
-	end
-
-	function PNCharacter:manageFight()
-		--do something
-	end
-
-	function PNCharacter:getCharacType()
+--------------------------------------------------------
+--[[%
+Returns the type of the character that is visible to others
+%--]]
+	function OBJ:getCharacType()
 		return self.shownCharacType
 	end
-
-	function PNCharacter:setState(st)
+--------------------------------------------------------
+--[[%
+Called on a behaviour change
+Sets a new state impliying a new behaviour for the character
+Adds the old state on a stack to retrieve it later
+%--]]
+	function OBJ:setState(st)
 		table.insert(self.pastStates, 0, self.state)
 		self.state = st
 		if (self.pastStates[0] == self.stateEnum.PN_IA_TRAVELLING) then
-			self:onActionMoveForward(false)
+			self:onMoveForward(ACTION_STATE.STOP)
 		end
 	end
-
-	function PNCharacter:restoreState()
+--------------------------------------------------------
+--[[%
+Called when a behaviour is not needed anymore
+Sets the character's behaviour to the previous state on the stack
+%--]]
+	function OBJ:restoreState()
 --		pnprint("=> PNCharacter:restoreState()\n")
 		self.state = self.pastStates[0]
 		table.remove(self.pastStates,0)
 --		pnprint("<= PNCharacter:restoreState()\n")
 	end
-
-	--temp function
-
-	function PNCharacter:onUpdate(deltaTime)
+--------------------------------------------------------
+--[[%
+Called at every loop
+%--]]
+	function OBJ:onUpdate(deltaTime)
 		self:beSmart()
 		self:update(deltaTime)
 	end
-
-	function PNCharacter:onActionMoveTo(target)
-		--do something
-	end
-
-	function PNCharacter:oncollision(target, direction)
+--------------------------------------------------------
+--[[%
+Called on a collision event
+Not yet implemented
+%--]]
+	function OBJ:onCollision(target, direction)
 	-- Si target et direction et autre condition ok alors
 		-- lance premier script self.scripts.event.collision[0]		
 	end
-
-    ---------------------move events-----------------------
-	function PNCharacter:onActionMoveForward(state)
-		pnprint("LUA PNCharacter:onActionMoveForward()\n")	
-		if (state == true) then
-			self:addMovingState(PN3DObject.STATE_T_FORWARD)
-		else
-			self:subMovingState(PN3DObject.STATE_T_FORWARD)
-		end 
-	end	
-
-	function PNCharacter:onActionMoveBackward(state)
-		pnprint("LUA PNCharacter:onActionMoveBackward()\n")
-		if (state == true) then
-			self:addMovingState(PN3DObject.STATE_T_BACKWARD)
-		else
-			self:subMovingState(PN3DObject.STATE_T_BACKWARD)
-		end 
-	end
-
-	function PNCharacter:onActionMoveLeft(state)
-		pnprint("LUA PNCharacter:onActionMoveLeft()\n")	
-		if (state == true) then
-			self:addMovingState(PN3DObject.STATE_T_LEFT)
-		else
-			self:subMovingState(PN3DObject.STATE_T_LEFT)
-		end 
-	end	
-
-	function PNCharacter:onActionMoveRight(state)
-		pnprint("LUA PNCharacter:onActionMoveRight()\n")
-		if (state == true) then
-			self:addMovingState(PN3DObject.STATE_T_RIGHT)
-		else
-			self:subMovingState(PN3DObject.STATE_T_RIGHT)
-		end 
-	end
-
-	function PNCharacter:onFrustrumIn(target)
-		if (target:getId() ~= self.id) then
+--------------------------------------------------------
+--[[%
+Called when an object enters the frustrum of the character
+If it is detected as an ennemy, the character switches to the fighting mode
+%--]]
+	function OBJ:onFrustrumIn(target)
+		self.__index:onFrustrumIn(target)
+		pnprint(self.id .. " viewing " .. target:getId() .. "\n")
+		if ((target:getId() ~= self.id) and (isInstanceOf(target, "PNCharacter"))) then
+			pnprint("ennemy spotted\n")
 			self.ennemies[target:getId()] = 1
-			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= PNCharacter.characTypeEnum.PN_CHARAC_CIVILIAN)) then
+			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= CHARACTER_TYPE.CIVILIAN)) then
 				self:setTarget(target)
-				self:setState(PN_IA_FIGHTING)
+				self:startFight()
 			end
 		end
 	end
-
-	function PNCharacter:onFrustrumOut(target)
+--------------------------------------------------------
+--[[%
+Called when an object enters the frustrum of the character
+%--]]
+	function OBJ:onFrustrumOut(target)
 		if (target:getId() ~= self.id) then
 			if (self.ennemies[target:getId()] ~= NULL) then
 				self.ennemies[target:getId()] = NULL
 			end
 		end
 	end
-
-  	function PNCharacter:onInit()
+--------------------------------------------------------
+--[[%
+Called at init
+Not used yet
+%--]]
+  	function OBJ:onInit()
 	end
-
-	function PNCharacter:onDestroy()
+--------------------------------------------------------
+--[[%
+Call at destruction
+Not used yet
+%--]]
+	function OBJ:onDestroy()
 	end
-
-	return PNCharacter
+--------------------------------------------------------
+	return OBJ
 end
