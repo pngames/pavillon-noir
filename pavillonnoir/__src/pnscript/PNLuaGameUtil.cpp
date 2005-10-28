@@ -33,7 +33,7 @@
 #include "PNConsole.hpp"
 #include "PNLuaGame.hpp"
 #include "PNLuaGameUtil.h"
-
+#include "PNGameEventData.hpp"
 namespace PN{
 	//load a lua script file
 	void loadLuaScript(const pnchar* file, bool reload/*=0*/)
@@ -96,10 +96,12 @@ namespace PN{
 		//  vm->loadMap(mapName);
 	}
 
-    void	sendGameActionEvent(std::string eventName, PN::PNGameActionEventData *eventData)
+    void	sendGameActionEvent(std::string eventName, std::string sourceid, std::string targetId, bool state)
 	{
+      PNGameActionEventData *eventData  = new PNGameActionEventData(eventName, targetId, sourceid, state);
       PNLuaGame* game = (PNLuaGame*) PNLuaGame::getInstance();
-      game->sendGameActionEvent(eventName, eventData);	
+      game->sendGameActionEvent(eventName, eventData);
+      delete eventData;
 	}
 
 
