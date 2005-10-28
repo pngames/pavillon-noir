@@ -219,6 +219,10 @@ public:
   // Unsets OpenGL context
   void	  makeViewerNonCurrent();
 
+  // access to ground elements for space partitionning
+  FXGLGroup*        getGroundGroup() { return groundGroup; }
+
+
   // PNEditor constructor
   PNEditor(FXApp* a);
 
