@@ -328,6 +328,8 @@ protected:
   pnint							_parseModel(xmlNode* node);
   /// Parse XML Materials node
   pnint							_parseMaterials(xmlNode* node);
+  /// Parse XML Physics node
+  pnint							_parsePhysics(xmlNode* node);
   /// Parse XML PNO internal node
   virtual pnint					_unserializeNode(xmlNode* node);
 

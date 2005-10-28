@@ -27,9 +27,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-//#include <fstream>
-//#include <boost/filesystem/operations.hpp>
-
 #include <opal/opal.h>
 
 #include "pndefs.h"
@@ -84,7 +81,7 @@ PNObject*	PNOpalImporter::doImport(const fs::path& path)
 
 importtype	PNOpalImporter::getImportType()
 {
-  return PN_IMPORT_PHYSIC;
+  return PN_IMPORT_PHYSICS;
 }
 
 //////////////////////////////////////////////////////////////////////////

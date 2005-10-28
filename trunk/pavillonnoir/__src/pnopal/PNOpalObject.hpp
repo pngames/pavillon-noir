@@ -30,6 +30,7 @@
 #ifndef _PNOPALOBJECT_HPP_
 # define _PNOPALOBJECT_HPP_
 
+#include <boost/filesystem/path.hpp>
 #include <libxml/xmlreader.h>
 #include <opal/opal.h>
 
@@ -44,10 +45,13 @@ namespace PN {
   class PNOpalObject : public PNPhysicalObject
   {
   private:
-	PNPoint				_coord;
-	PNQuatf				_orient;
-	opal::Solid*		_solid;
-	opal::Simulator*	_sim;
+	PNPoint					  _coord;
+	PNQuatf					  _orient;
+	opal::Solid*			  _solid;
+	opal::Simulator*		  _sim;
+	opal::Blueprint			  _blueprint;
+	opal::BlueprintInstance	  _blueprintInstance;
+	std::string				  _file;
 
   public:
 	PNOpalObject(opal::Simulator* sim);
@@ -71,16 +75,12 @@ namespace PN {
 	void				setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w);
 
 	//////////////////////////////////////////////////////////////////////////
-
-	void				setShape(const PNPoint& min, const PNPoint& max, physicalmaterial material);
-
-	//////////////////////////////////////////////////////////////////////////
 	
 	void				addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration);
 
 	//////////////////////////////////////////////////////////////////////////
 
-	pnint				unserializeFromXML(xmlNode* node);
+	pnint				unserializeFromFile(const boost::filesystem::path& file);
   };
 }
 
