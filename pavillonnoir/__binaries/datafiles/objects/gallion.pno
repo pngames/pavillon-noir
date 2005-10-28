@@ -3,9 +3,9 @@
 <object>
   <model path="gallion.pnm" />
   <listmaterials>
-    <material path="gallion_rGalleon&lo&Material0.pnt" />
-    <material path="gallion_rGalleon&lo&Material1.pnt" />
-    <material path="gallion_rGalleon&lo&Material2.pnt" />
-    <material path="gallion_rGalleon&lo&Material3.pnt" />
+    <material path="gallion_rGalleonMaterial0.pnt" />
+    <material path="gallion_rGalleonMaterial1.pnt" />
+    <material path="gallion_rGalleonMaterial2.pnt" />
+    <material path="gallion_rGalleonMaterial3.pnt" />
   </listmaterials>
 </object>
