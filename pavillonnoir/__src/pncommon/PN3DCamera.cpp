@@ -54,8 +54,8 @@ PN3DCamera::PN3DCamera()
 
   _viewFar = 20000.0f;
   _viewNear = 0.1f;
-  _viewFov = 45.0f;
-  _viewXRadFov = _viewYRadFov = (pnfloat)DEGREE_TO_RADIAN(_viewFov);
+
+  setFov(45.0f);
 
   _renderMode = RENDER_MODEL;
 
@@ -78,6 +78,34 @@ PN3DCamera::~PN3DCamera()
 {
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_MP_STARTED, EventCallback(this, &PN3DCamera::_onMPStarted));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PN3DCamera::_onMPEnded));
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void
+PN3DCamera::setFov(pnfloat deg)
+{
+  PNLOCK(this);
+
+  _viewFov = 45.0f;
+  setHFov(DEGREE_TO_RADIAN_F(deg));
+  setVFov(DEGREE_TO_RADIAN_F(deg));
+}
+
+void
+PN3DCamera::setHFov(pnfloat rad)
+{
+  PNLOCK(this);
+
+  _viewHRadFov = rad;
+}
+
+void
+PN3DCamera::setVFov(pnfloat rad)
+{
+  PNLOCK(this);
+
+  _viewVRadFov = rad;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -304,11 +332,11 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
 
   //////////////////////////////////////////////////////////////////////////
 
-  _viewMaxCosFov = cosf(max(_viewYRadFov, _viewXRadFov)/2);
+  //_viewMaxCosFov = cosf(max(_viewHRadFov, _viewVRadFov)/2);
 
-  pnfloat		viewLeftFov = _viewYRadFov / 2 + (pnfloat)DEGREE_TO_RADIAN(90.0);
+  pnfloat		viewLeftFov = _viewHRadFov / 2 + (pnfloat)DEGREE_TO_RADIAN(90.0);
   pnfloat		viewRightFov = -viewLeftFov;
-  pnfloat		viewTopFov = _viewXRadFov / 2 + (pnfloat)DEGREE_TO_RADIAN(90.0);
+  pnfloat		viewTopFov = _viewVRadFov / 2 + (pnfloat)DEGREE_TO_RADIAN(90.0);
   pnfloat		viewBackFov = -viewTopFov;
 
   PNVector3f	frontDirection = _orient * _frontDirection.getVector();
@@ -361,9 +389,6 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
   pnfloat	  norm7 = targetVector7.getNorm();
   pnfloat	  norm8 = targetVector8.getNorm();
 
-  pnbool	  inNearFar = true;
-  pnbool	  inFov = true;
-
   //////////////////////////////////////////////////////////////////////////
   // FOV
   //////////////////////////////////////////////////////////////////////////
@@ -384,14 +409,14 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
   targetVector7 /= norm7;
   targetVector8 /= norm8;
 
-  pnbool  inTest1, inTest2, firstInTest1, firstInTest2;
+  pnbool	inTest1, inTest2, firstInTest1, firstInTest2;
 
   //////////////////////////////////////////////////////////////////////////
 
   firstInTest1 = rightFov.scalarProduct(targetVector1) < 0;
   firstInTest2 = leftFov.scalarProduct(targetVector1) < 0;
 
-  pnbool inHFoV = 
+  pnbool	inHFoV = 
 	SUB_FOV_TEST(targetVector1, rightFov, leftFov) ||
 	SUB_FOV_TEST(targetVector2, rightFov, leftFov) ||
 	SUB_FOV_TEST(targetVector3, rightFov, leftFov) ||
@@ -406,7 +431,7 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
   firstInTest1 = topFov.scalarProduct(targetVector1) < 0;
   firstInTest2 = backFov.scalarProduct(targetVector1) < 0;
 
-  pnbool inVFoV = 
+  pnbool	inVFoV = 
 	SUB_FOV_TEST(targetVector1, topFov, backFov) ||
 	SUB_FOV_TEST(targetVector2, topFov, backFov) ||
 	SUB_FOV_TEST(targetVector3, topFov, backFov) ||
@@ -416,15 +441,16 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
 	SUB_FOV_TEST(targetVector7, topFov, backFov) ||
 	SUB_FOV_TEST(targetVector8, topFov, backFov);
 
-  inFov = inHFoV && inVFoV;
-
-  return inFov;
+  pnbool	inFov = inHFoV && inVFoV;
 
   //////////////////////////////////////////////////////////////////////////
   // NEAR-FAR
   //////////////////////////////////////////////////////////////////////////
 
-  // FIXME : check Neer/Far
+  // TODO : check Neer/Far
+  pnbool	  inNearFar = true;
+
+  return inFov && inNearFar;
 }
 
 void

@@ -60,6 +60,12 @@ public:
 
   /// Return list of 3d objects in camera frustrum
   const PN3DObjList&		getListObj();
+  
+  //////////////////////////////////////////////////////////////////////////
+  
+  virtual void				setFov(pnfloat deg);
+  void						setHFov(pnfloat rad);
+  void						setVFov(pnfloat rad);
 protected:
   PN3DObjList				_list3DObj;
 
@@ -76,9 +82,9 @@ protected:
   pnfloat					_viewFar;
   pnfloat					_viewNear;
   pnfloat					_viewFov;
-  pnfloat					_viewYRadFov;
-  pnfloat					_viewXRadFov;
-  pnfloat					_viewMaxCosFov;
+  pnfloat					_viewHRadFov;
+  pnfloat					_viewVRadFov;
+  //pnfloat					_viewMaxCosFov;
 
   //////////////////////////////////////////////////////////////////////////
 

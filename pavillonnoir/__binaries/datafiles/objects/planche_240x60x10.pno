@@ -1,4 +1,4 @@
-<?xml version="1.0"?><!DOCTYPE object SYSTEM "object.dtd">
+<?xml version="1.0"?><!DOCTYPE object SYSTEM "object.dtd">
 <object>
   <model path="planche_240x60x10.pnm" />
   <listmaterials>
