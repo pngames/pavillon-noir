@@ -70,6 +70,8 @@ PNGameMap::getEntityList() const
   return _entityList;
 }
 
+// FIXME : UNUSED FUNCTION
+
 int	  PNGameMap::_parseStaticEntity(xmlNode* node)
 {
   for (xmlNodePtr current = node; current->next; current = current->next)
@@ -88,11 +90,6 @@ int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
   xmlNodePtr  current = node;
   std::string id;
   std::string className;
-
-  /*pnerror(PN_LOGLVL_DEBUG, "PNGameMap - New dynamic entity : name %s, id %s, mdref %s", 
-  current->name, 
-  xmlGetProp(current, (const xmlChar *)"id"), 
-  xmlGetProp(current, (const xmlChar *)"mdref"));*/
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -131,7 +128,7 @@ int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
   if (obj_error != PNEC_SUCCESS)
 	pnerror(PN_LOGLVL_ERROR, "%s : %s", (const char*)xmlGetProp(current, (const xmlChar *)"mdref"), pnGetErrorString(obj_error));
 
-  // enable/disable physical simulation on the object
+  // physical settings
   if (object->getPhysicalObject())
   {
 	bool isStatic = (!strcmp((const char*)xmlGetProp(current, (const xmlChar *)"envtype"), "dynamic"))?false:true;
@@ -162,14 +159,7 @@ int	  PNGameMap::_parseListEntities(xmlNode* node)
   {
 	if (current->type != XML_ELEMENT_NODE)
 	  continue;
-	//if ((attr = xmlGetProp((xmlNodePtr)current, (const xmlChar *)"static")) != NULL)
-	//{
-	//if (!strcmp((const char*)attr, STATIC_ENTITY))
-	//	error = _parseStaticEntity(current);
-	// if (!strcmp((const char*)attr, DYNAMIC_ENTITY))
 	error = _parseDynamicEntity(current);
-	//}
-	//	else
 	if (error != PNEC_SUCCESS)
 	  break;
 	pnerror(PN_LOGLVL_DEBUG, "PNGameMap - null static attr : %s", current->name);
@@ -251,11 +241,6 @@ void PNGameMap::addToMap(const std::string& entityName,const std::string& id)
 
 void PNGameMap::clear()
 {
-  // for (ObjMap::iterator it  = _entityList.begin(); it !=  _entityList.end(); ++it)
-  // {
-  //     if (it->second != NULL)
-  //        delete (it->second);
-  // }
   _entityList.clear();
   PNImportManager::getInstance()->clean(); //fixeMe
   //PNPhysicsInterface::clean();

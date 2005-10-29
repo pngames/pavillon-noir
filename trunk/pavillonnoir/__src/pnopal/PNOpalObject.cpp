@@ -56,10 +56,8 @@ namespace PN {
 PNOpalObject::PNOpalObject(opal::Simulator* sim) : _blueprint(), _blueprintInstance()
 {
   _sim = sim;
-  //_solid = _sim->createSolid();
   //PNOpalCommonEventHandler* handler = new PNOpalCommonEventHandler();
   //_solid->setCollisionEventHandler(handler);
-  //_solid->setLinearDamping(0.2f);
 }
 
 /** PNOpalObject destructor
@@ -78,10 +76,12 @@ void PNOpalObject::update(pnuint elapsed_time)
 
 void PNOpalObject::render()
 {
-  /*pnuint i = _solid->getData().getNumShapes();
-  opal::BoxShapeData* sd = (opal::BoxShapeData*)_solid->getData().getShapeData(i);
-  */
-  
+  // FIXME 
+
+  opal::BoxShapeData* sd = (opal::BoxShapeData*)_solid->getData().getShapeData(0);
+  pnfloat aabb[6];
+
+  sd->getLocalAABB(aabb);
 }
 
 //////////////////////////////////////////////////////////////////////////

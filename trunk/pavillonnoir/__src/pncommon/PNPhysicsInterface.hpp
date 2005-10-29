@@ -46,7 +46,6 @@ class PNAPI					PNPhysicsInterface : public PNInterface
 protected:
   bool						_paused;
   static PNPhysicsInterface*  _instance;
-  // std::map<std::string, PNPhysicalObject*> _physicalObjectsMap;
 
 public:
   static PNPhysicsInterface*  getInstance();
