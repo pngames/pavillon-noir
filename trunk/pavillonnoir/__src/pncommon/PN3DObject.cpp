@@ -150,7 +150,7 @@ PN3DObject::_parseMaterials(xmlNode* parent)
 	_materials.push_back(material);
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnint
@@ -171,7 +171,7 @@ PN3DObject::_parseModel(xmlNode* node)
 	  return PNEC_LOADING_MODEL;
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnint
@@ -192,7 +192,7 @@ PN3DObject::_parsePhysics(xmlNode* node)
 	  return PNEC_LOADING_PHYSICS;
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnint
@@ -205,7 +205,7 @@ PN3DObject::_unserializeNode(xmlNode* node)
   else if (PNO_XMLNODE_PHYSICS == (const char*)node->name)
 	_parsePhysics(node);
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -238,12 +238,12 @@ PN3DObject::unserializeFromXML(xmlNode* root)
 
   //////////////////////////////////////////////////////////////////////////
 
-  //pnint	error = PNEC_SUCCES;
+  //pnint	error = PNEC_SUCCESS;
 
   /*//////////////////////////////////////////////////////////////////////////
   // MODEL
 
-  if ((error = _parseModel(root)) != PNEC_SUCCES)
+  if ((error = _parseModel(root)) != PNEC_SUCCESS)
 	return error;*/
 
   //////////////////////////////////////////////////////////////////////////
@@ -254,7 +254,7 @@ PN3DObject::unserializeFromXML(xmlNode* root)
 	_unserializeNode(root);
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnint
@@ -267,35 +267,16 @@ PN3DObject::serializeInXML(xmlNode* node, pnbool isroot)
 
   _serializeContent(root);
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 /**
 * @brief		Save PN3DObject content to XML file
 *
-* @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succeed
+* @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCESS if succeed
 *
 * @see			pnGetErrorString
 */
-pnint
-PN3DObject::_serializeContent(std::ostream& o)
-{
-  if (_model != NULL && _model->getFile() != NULL)
-	o << "  " << "<" << PNO_XMLNODE_MODEL << " " << PNO_XMLPROP_PATH << "=\"" << (_model == NULL ? "none" : DEF::convertPath(DEF::modelFilePath, _model->getFile()->string())) << "\" />" << endl;
-
-  //////////////////////////////////////////////////////////////////////////
-
-  o << "  " << "<" << PNO_XMLNODE_LISTMATERIALS << ">" << endl;
-
-  for (VectorMaterial::iterator it = _materials.begin(); it != _materials.end(); ++it)
-	if (*it != NULL && ((PN3DMaterial*)*it)->getFile() != NULL)
-	  o << "    " << "<" << PNO_XMLNODE_MATERIAL << " " << PNO_XMLPROP_PATH << "=\"" << DEF::convertPath(DEF::materialFilePath, ((PN3DMaterial*)*it)->getFile()->string()) << "\" />" << endl;
-
-  o << "  " << "</" << PNO_XMLNODE_LISTMATERIALS << ">" << endl;
-
-  return PNEC_SUCCES;
-}
-
 pnint
 PN3DObject::_serializeContent(xmlNode* root)
 {
@@ -304,7 +285,7 @@ PN3DObject::_serializeContent(xmlNode* root)
   if (_model != NULL && _model->getFile() != NULL)
   {
 	node = xmlNewChild(root, NULL, BAD_CAST PNO_XMLNODE_MODEL.c_str(), NULL);
-	xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST (_model == NULL ? "none" : DEF::convertPath(DEF::modelFilePath, _model->getFile()->string()).c_str()));
+	xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::modelFilePath, _model->getFile()->string()).c_str());
   }
 
   if (_materials.size() > 0)
@@ -319,7 +300,7 @@ PN3DObject::_serializeContent(xmlNode* root)
 	  }
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////

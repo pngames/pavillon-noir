@@ -63,7 +63,7 @@ PNI3DAnimation::getTotalTime()
 pnint
 PNI3DAnimation::unserializeFromStream(std::istream& istm)
 {
-  int err = PNEC_SUCCES;
+  int err = PNEC_SUCCESS;
 
   if ((err = parseHeader(istm)) == 0)
 	err = parseBody(istm);

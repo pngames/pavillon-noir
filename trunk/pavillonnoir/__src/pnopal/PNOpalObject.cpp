@@ -210,7 +210,7 @@ void		PNOpalObject::addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration)
 
 pnint		PNOpalObject::unserializeFromFile(const boost::filesystem::path& file)
 {
-  int err = PNEC_SUCCES;
+  int err = PNEC_SUCCESS;
 
   if (!fs::exists(file))
 	return PNEC_FILE_NOT_FOUND;

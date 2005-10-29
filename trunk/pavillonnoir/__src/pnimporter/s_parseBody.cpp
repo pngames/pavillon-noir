@@ -62,7 +62,7 @@ pnint	PNI3DSkeleton::parseBody(std::istream& istm)
 
   delete[]	tabBones;
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////

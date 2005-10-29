@@ -89,7 +89,7 @@ PN3DSkeletonObject::_parseAnimations(xmlNode* parent)
 	_animations.push_back(anim);
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 int
@@ -110,7 +110,7 @@ PN3DSkeletonObject::_parseSkeleton(xmlNode* node)
 	  return PNEC_LOADING_MODEL;
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnint
@@ -125,7 +125,7 @@ PN3DSkeletonObject::_unserializeNode(xmlNode* node)
   else
 	PN3DObject::_unserializeNode(node);
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 int
@@ -144,24 +144,33 @@ PN3DSkeletonObject::unserializeFromXML(xmlNode* root)
 //////////////////////////////////////////////////////////////////////////
 
 pnint
-PN3DSkeletonObject::_serializeContent(std::ostream& o)
+PN3DSkeletonObject::_serializeContent(xmlNode* root)
 {
-  PN3DObject::_serializeContent(o);
-
-  if (_skeleton != NULL && _skeleton->getFile() != NULL)
-	o << "  " << "<" << PNO_XMLNODE_SKELETON << " " << PNO_XMLPROP_PATH << "=\"" << DEF::convertPath(DEF::skeletonFilePath, _skeleton->getFile()->string()) << "\" />" << endl;
+  PN3DObject::_serializeContent(root);
 
   //////////////////////////////////////////////////////////////////////////
 
-  o << "  " << "<" << PNO_XMLNODE_LISTANIMS << ">" << endl;
+  xmlNode* node = NULL;
 
-  for (VECTORANIMATION::iterator it = _animations.begin(); it != _animations.end(); ++it)
-	if (*it != NULL && ((PN3DAnimation*)*it)->getFile() != NULL)
-	  o << "    " << "<" << PNO_XMLNODE_ANIM << " " << PNO_XMLPROP_PATH << "=\"" << DEF::convertPath(DEF::animationFilePath, ((PN3DAnimation*)*it)->getFile()->string()) << "\" />" << endl;
+  if (_skeleton != NULL && _skeleton->getFile() != NULL)
+  {
+	node = xmlNewChild(root, NULL, BAD_CAST PNO_XMLNODE_SKELETON.c_str(), NULL);
+	xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::skeletonFilePath, _skeleton->getFile()->string()).c_str());
+  }
 
-  o << "  " << "</" << PNO_XMLNODE_LISTANIMS << ">" << endl;
+  if (_animations.size() > 0)
+  {
+	root = xmlNewChild(root, NULL, BAD_CAST PNO_XMLNODE_LISTANIMS.c_str(), NULL);
 
-  return PNEC_SUCCES;
+	for (VECTORANIMATION::iterator it = _animations.begin(); it != _animations.end(); ++it)
+	  if (*it != NULL && ((PN3DAnimation*)*it)->getFile() != NULL)
+	  {
+		node = xmlNewChild(root, NULL, BAD_CAST PNO_XMLNODE_ANIM.c_str(), NULL);
+		xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::animationFilePath, ((PN3DAnimation*)*it)->getFile()->string()).c_str());
+	  }
+  }
+
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////

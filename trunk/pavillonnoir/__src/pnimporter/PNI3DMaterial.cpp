@@ -81,7 +81,7 @@ PNI3DMaterial::_parse(std::istream& istm)
   if (!_header.nbMap)
   {
 	_texture.clear();
-	return PNEC_SUCCES;
+	return PNEC_SUCCESS;
   }
 
   pntMap_t  map;
@@ -95,7 +95,7 @@ PNI3DMaterial::_parse(std::istream& istm)
 	_texture = buff;
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnint
@@ -103,7 +103,7 @@ PNI3DMaterial::unserializeFromStream(std::istream& istm)
 {
   int err = _parse(istm);
 
-  if (err != PNEC_SUCCES)
+  if (err != PNEC_SUCCESS)
   {
 	pnerror(PN_LOGLVL_ERROR, "%s : %s", _file.string().c_str(), pnGetErrorString(err));
 	return err;

@@ -71,7 +71,7 @@ IPNSerializable::setFile(const boost::filesystem::path& file)
  *
  * @param file	File to load
  *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succeed
+ * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCESS if succeed
  *
  * @see			pnGetErrorString
  */
@@ -96,7 +96,7 @@ IPNSerializable::unserializeFromFile(const boost::filesystem::path& file)
  *
  * @param i		Stream to load from
  *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succeed
+ * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCESS if succeed
  *
  * @see			pnGetErrorString
  */
@@ -109,7 +109,7 @@ IPNSerializable::unserializeFromStream(istream& i)
 /**
 * @brief		Load object
 *
-* @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succeed
+* @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCESS if succeed
 *
 * @see			pnGetErrorString
 */
@@ -124,7 +124,7 @@ IPNSerializable::unserialize()
  *
  * @param file	File to save
  *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succeed
+ * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCESS if succeed
  *
  * @see			pnGetErrorString
  */
@@ -149,7 +149,7 @@ IPNSerializable::serializeInFile(const boost::filesystem::path& file)
  *
  * @param o		Stream to load from
  *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succeed
+ * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCESS if succeed
  *
  * @see			pnGetErrorString
  */
@@ -162,7 +162,7 @@ IPNSerializable::serializeInStream(ostream& o)
 /**
 * @brief		Save object
 *
-* @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succeed
+* @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCESS if succeed
 *
 * @see			pnGetErrorString
 */

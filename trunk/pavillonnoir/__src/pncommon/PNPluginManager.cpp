@@ -96,7 +96,7 @@ pnint		PNPluginManager::addPlugin(const fs::path& file)
 
   push_front(plugin);
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnint			PNPluginManager::addDirectory(const fs::path& dir, pnbool recursive)
@@ -123,7 +123,7 @@ pnint			PNPluginManager::addDirectory(const fs::path& dir, pnbool recursive)
 	  addPlugin(path);
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////

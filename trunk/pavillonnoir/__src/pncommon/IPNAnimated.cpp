@@ -77,7 +77,7 @@ IPNAnimated::startAnimation()
   
   printf("IPNAnimated::startAnimation()\n");
   
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 void

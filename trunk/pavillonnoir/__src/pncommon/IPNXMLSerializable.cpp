@@ -87,7 +87,7 @@ IPNXMLSerializable::unserializeFromXML(xmlNode* root)
  *
  * @param file	File to load
  *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succeed
+ * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCESS if succeed
  *
  * @see			pnGetErrorString
  */
@@ -181,7 +181,7 @@ IPNXMLSerializable::serializeInXMLFile(const boost::filesystem::path& file)
   */
   xmlMemoryDump();
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 /**
@@ -189,7 +189,7 @@ IPNXMLSerializable::serializeInXMLFile(const boost::filesystem::path& file)
  *
  * @param o		Stream to load from
  *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succeed
+ * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCESS if succeed
  *
  * @see			pnGetErrorString
  */
@@ -204,7 +204,7 @@ IPNXMLSerializable::serializeInStream(ostream& o)
  *
  * @param o		Stream to load from
  *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCES if succeed
+ * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCESS if succeed
  *
  * @see			pnGetErrorString
  */
