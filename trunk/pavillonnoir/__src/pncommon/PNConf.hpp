@@ -33,10 +33,6 @@
 #include <string>
 #include <map>
 #include <boost/filesystem/path.hpp>
-#include <libxml/parser.h>
-#include <libxml/xmlstring.h>
-#include <libxml/tree.h>
-#include "pndefs.h"
 
 #define PNCONFFILE	"configuration.xml"
 #define PNCONFPATH	"pavillon-noir"
@@ -46,37 +42,33 @@
 # define UNIXPREFIX	"."
 #endif
 
-namespace fs = boost::filesystem;
-
 namespace PN
 {
-	/**
-	 * Configuration file management class
-	 */
-	class PNAPI	PNConf
-	{
-		private:
-		
-			static PNConf* _instance;
-			std::string _homePath;
-			fs::path _confFilePath;
-			std::map<std::string, std::string> _confHash;
-			std::map<std::string, std::string> _defaultHash;
-			
-			PNConf();
-			~PNConf();
-			void _loadConfFile();
-			void _createDefaultConf();
+  /**
+  * Configuration file management class
+  */
+  class PNAPI							PNConf
+  {
+  private:
+	static PNConf*						_instance;
+	std::string							_homePath;
+	boost::filesystem::path				_confFilePath;
+	std::map<std::string, std::string>	_confHash;
+	std::map<std::string, std::string>	_defaultHash;
 
-		public:
-		
-			static void initialize();
-			static PNConf* getInstance();
-			void setKey(const std::string& key, const std::string& value);
-			const std::string getKey(const std::string& key);
-			void saveConf();
-			const fs::path getConfPath();
-	};
+	PNConf();
+	~PNConf();
+	void								_loadConfFile();
+	void								_createDefaultConf();
+  public:
+
+	static void							initialize();
+	static PNConf*						getInstance();
+	void								setKey(const std::string& key, const std::string& value);
+	const std::string&					getKey(const std::string& key);
+	void								saveConf();
+	boost::filesystem::path				getConfPath();
+  };
 }
 
 #endif /*_PNCONF_HPP_*/
