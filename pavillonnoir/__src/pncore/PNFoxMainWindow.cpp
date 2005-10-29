@@ -93,7 +93,7 @@ FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|
 				entitiesPath = PN::DEF::mapsFilePath + dir_itr->leaf();
 				entitiesPath += "/entities.xml";
 				
-				if (fs::exists(entitiesPath) == true)
+				if (fs::exists(fs::path(entitiesPath, fs::native)) == true)
 				{
 					++dir_count;
 					_mapSelector->setNumVisible(dir_count);
