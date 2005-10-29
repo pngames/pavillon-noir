@@ -186,7 +186,7 @@ PNWayPoint::serializeInStream(std::ostream& o)
 {
   PNLOCK(this);
 
-  o << "<wp id=\"id_" << _id << "\" x=\"" << _coord.x << "\" y=\"" << _coord.y << "\" z=\""
+  o << "<wp id=\"" << PNXML_IDBASE_VAL << _id << "\" x=\"" << _coord.x << "\" y=\"" << _coord.y << "\" z=\""
 	<< _coord.z << "\"/>" << std::endl;
 
   return PNEC_SUCCES;
@@ -195,7 +195,7 @@ PNWayPoint::serializeInStream(std::ostream& o)
 int
 PNWayPoint::_parseID(std::string id)
 {
-  std::string idstr = "id_";
+  std::string idstr((const char *)PNXML_IDBASE_VAL);
   std::string::size_type	  index = id.find(idstr);
 
   if (index == std::string::npos)

@@ -90,14 +90,11 @@ namespace PN
 	  PNEnvType			  getEnvType() {return _envType;}
 	  scriptMap&		  getScripts() {return _scripts;}
 	  std::string&		  getClassStr() {return _classStr;}
-	  bool				  modified() {return _modified;}
 	  void				  setDragable() {_canDrag = TRUE;}
 	  void				  setUndragable() {_canDrag = FALSE;}
 	  void				  setPosNull();
 	  void				  setPosFromObj();
 	  void				  setMinMax();
-	  void				  setModified() {_modified = TRUE;}
-	  void				  setUnmodified() {_modified = FALSE;}
 	  void				  buildParams();
 
 	  FXbool			  drag(FXGLViewer* viewer,FXint fx,FXint fy,FXint tx,FXint ty);
@@ -125,6 +122,10 @@ namespace PN
 	  int						getNbParameters();
 	  PNConfigurableParameter*	getParameter(int idx);
 	  void						reset();
+	  
+	  bool						modified() {return _modified;}
+	  void						setModified() {_modified = TRUE;}
+	  void						setUnmodified() {_modified = FALSE;}
 
 	  const std::string&		getLabel() {return _label;}
 	};

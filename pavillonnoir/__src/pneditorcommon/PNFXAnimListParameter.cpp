@@ -192,8 +192,10 @@ namespace PN {
   void	PNFXAnimListParameter::update(void)
   {
 	pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::update");
+	PNConfigurableObject* co = _param->getConfigurableObject();
 	buildList();
-	_param->getConfigurableObject()->update(_param);
+	co->update(_param);
+	co->setModified();
 	_listBox->sortItems();
 
 	return;

@@ -30,7 +30,7 @@
 
 /************************************************************************
  _______________________________________________________________________
-| ______  ___ Graphics ________________________________________________ |
+| ______  ___ Graphics Settings _______________________________________ |
 ||      |                                                               |
 || Graph|  Resolution                      FXLISTBOX	                |
 ||      |  Fullscreen                      FXCHECKBOX                   |
@@ -43,7 +43,16 @@
 || Input|                                                               |
 ||      |                                                               |
 ||______|                                                               |
+|  ___________________________________________________________________  |
+|                                       ________   ________   ________  |
+|                                      |___OK___| |_CANCEL_| |_ACCEPT_| |
 |_______________________________________________________________________|
+
+ - For each tab (Graph, Sound, Input, ...) a PNFoxOptionsObject is created.
+ - These objects contain parameters stroed in a vector.
+ - The vector is displayed in a FXMatrix-like object : PNPropertiesGrid.
+ - Each parameter contains some required informations such as the parent 
+ object, a type identifier, a name (or label), a tooltip text, ...
 
 ************************************************************************/
 
