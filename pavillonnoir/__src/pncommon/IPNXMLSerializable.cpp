@@ -126,8 +126,6 @@ IPNXMLSerializable::unserializeFromFile(const boost::filesystem::path& file)
 
   pnint error = unserializeFromXML(node);
 
-  serializeInXMLFile(file);
-
   //////////////////////////////////////////////////////////////////////////
   // clean
 
