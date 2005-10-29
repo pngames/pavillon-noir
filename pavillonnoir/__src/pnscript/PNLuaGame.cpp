@@ -83,8 +83,8 @@ pnerrorcode PNLuaGame::run(void)
     //const pnchar * tempFilePathVar2 = tempFilePathVar.c_str();
     //lua_dofile(this->L, tempFilePathVar2);
     this->_LVM.execFile(initScriptFile);
-    DEBUG_PRINTER("Leaving PNLuaGame::run() -> PNEC_SUCCES\n");
-    return PNEC_SUCCES;
+    DEBUG_PRINTER("Leaving PNLuaGame::run() -> PNEC_SUCCESS\n");
+    return PNEC_SUCCESS;
 
 }
 
@@ -93,14 +93,14 @@ pnerrorcode PNLuaGame::run(void)
 //return true if succeed, else return false
 pnerrorcode PNLuaGame::pause(void)
 {
-    return PNEC_SUCCES;
+    return PNEC_SUCCESS;
 }
 
 //set the script into STOPED state and jump to the 1st instruction; 
 //return true if succeed, else return false
 pnerrorcode PNLuaGame::stop(void) 
 {
-    return PNEC_SUCCES;
+    return PNEC_SUCCESS;
 }
 
 //Return the state of the script. It could be RUNNING | PAUSED | STOPED | OVER 
@@ -128,7 +128,7 @@ pnerrorcode PNLuaGame::setGameRoot(const pnchar *name)
     }
     DEBUG_PRINTER("GameRootPath : %s\n", this->_gameRootDirectory.native_file_string().c_str());
     DEBUG_PRINTER("Leaving PNLuaGame::setGameRoot()\n");
-    return (PNEC_SUCCES);
+    return (PNEC_SUCCESS);
 }
 
 
@@ -144,7 +144,7 @@ void PNLuaGame::init()
     DEBUG_PRINTER("Entering PNLuaGame::init()\n");
     fs::path currentDiectory = fs::current_path();
     std::cout << "currentDiectory : " <<  currentDiectory.native_file_string() <<  std::endl;
-    int errorCode = PNEC_SUCCES;
+    int errorCode = PNEC_SUCCESS;
 
     ////////////////////////////////
 
@@ -157,7 +157,7 @@ void PNLuaGame::init()
     this->_modsDirectory = currentDiectory / fs::path(DEF::gamedefFilePath);
     errorCode =  this->setGameRoot(".");
 #ifdef _DEBUG
-    if (errorCode != PNEC_SUCCES)
+    if (errorCode != PNEC_SUCCESS)
     {
         pnerror(PN_LOGLVL_ERROR, "GameRoot :\n\t%s : %s\n", this->getGameRoot().native_file_string().c_str(), pnGetErrorString(errorCode));
         return;
@@ -203,7 +203,7 @@ pnerrorcode PNLuaGame::loadLuaScript(const pnchar* file, bool reload/*=0*/)
     //si le flag de reload est pas sette et que le fichier est deja loader dans la vm 
     //on relance pas le script;
     if (reload == false && (this->_loadedScripts.find(file) != this->_loadedScripts.end()))
-        return PNEC_SUCCES;
+        return PNEC_SUCCESS;
     else 
         this->_loadedScripts.insert(file); // it could be only one instance of an item in a set
     fs::path filePath = this->getGameRoot();
@@ -221,7 +221,7 @@ pnerrorcode PNLuaGame::loadLuaScript(const pnchar* file, bool reload/*=0*/)
     //lua_dofile(localL, filePath.native_file_string().c_str());
     this->_LVM.execFile(filePath);
     //  DEBUG_PRINTER("Leaving PNLuaGame::luoadLuaScript()\n"); 
-    return PNEC_SUCCES;
+    return PNEC_SUCCESS;
 }
 
 PNGameMap* PNLuaGame::getGameMap()
@@ -480,7 +480,7 @@ void  PNLuaGame::loadMap()
     this->loadLuaScript("gameMap.lua", true);
     error = this->_gameMap->unserializeFromFile(this->_mapToLoad.c_str());
     this->_isLoadingMap = false;
-    if (error != PNEC_SUCCES)
+    if (error != PNEC_SUCCESS)
     {
         PNEventManager::getInstance()->sendEvent(PN_EVENT_MU_START, NULL, NULL);
         return;

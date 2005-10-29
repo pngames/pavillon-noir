@@ -260,7 +260,7 @@ pnint				PNI3DModel::unserializeFromStream(std::istream& i)
 {
   _istream = &i;
 
-  int err = PNEC_SUCCES;
+  int err = PNEC_SUCCESS;
 
   if ((err = parseHeader()) == 0)
 	err = parseBody();

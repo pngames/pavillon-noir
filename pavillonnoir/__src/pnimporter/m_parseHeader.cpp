@@ -55,7 +55,7 @@ pnint	  PNI3DModel::parseHeader()
 
   std::cout << "nbMeshes : " << _header.nbMeshes << std::endl;
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////

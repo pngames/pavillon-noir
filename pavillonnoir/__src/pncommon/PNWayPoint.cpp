@@ -189,7 +189,7 @@ PNWayPoint::serializeInStream(std::ostream& o)
   o << "<wp id=\"" << PNXML_IDBASE_VAL << _id << "\" x=\"" << _coord.x << "\" y=\"" << _coord.y << "\" z=\""
 	<< _coord.z << "\"/>" << std::endl;
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 int
@@ -220,7 +220,7 @@ PNWayPoint::unserializeFromXML(xmlTextReader* _reader)
   attr = xmlTextReaderGetAttribute(_reader, (const xmlChar *) PNXML_COORDZ_ATTR);
   _coord.z = (pnfloat)atof((char*)attr);
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 void

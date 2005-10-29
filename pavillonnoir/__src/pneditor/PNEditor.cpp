@@ -977,7 +977,7 @@ int	  PNEditor::_parseEntity(void* node)
   {
     fs::path  file(DEF::objectFilePath + mdref, fs::native);
     pnint obj_error = object->unserializeFromFile(file);
-    if (obj_error != PNEC_SUCCES)
+    if (obj_error != PNEC_SUCCESS)
     {
 	  pnerror(PN_LOGLVL_ERROR, "%s%s : %s", DEF::objectFilePath.c_str(), mdref.c_str(), pnGetErrorString(obj_error));
 	  return obj_error;
@@ -986,7 +986,7 @@ int	  PNEditor::_parseEntity(void* node)
   else
   {
 	pnint obj_error = object->unserializeFromXML(current->last->prev);
-    if (obj_error != PNEC_SUCCES)
+    if (obj_error != PNEC_SUCCESS)
     {
 	  pnerror(PN_LOGLVL_ERROR, "%s%s : %s", DEF::objectFilePath.c_str(), mdref.c_str(), pnGetErrorString(obj_error));
 	  return obj_error;
@@ -1041,14 +1041,14 @@ int	  PNEditor::_parseEntity(void* node)
 	  break;
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 int	  PNEditor::_parseListEntities(void* node)
 {
   xmlChar*	  attr = NULL;
   xmlNodePtr  current = (xmlNodePtr)node;
-  pnint error = PNEC_SUCCES;
+  pnint error = PNEC_SUCCESS;
 
   for (; current != NULL; current = current->next)
   {
@@ -1077,7 +1077,7 @@ int	PNEditor::_parse(void* node)
   xmlNodePtr root = (xmlNodePtr)node;
   xmlNodePtr current;
 
-  pnint	error = PNEC_SUCCES;
+  pnint	error = PNEC_SUCCESS;
 
   pnerror(PN_LOGLVL_DEBUG, "%s : %s", "PNEditor - node name", root->name);
 
@@ -1090,7 +1090,7 @@ int	PNEditor::_parse(void* node)
 	{
 	  //if (current->type != XML_ELEMENT_NODE)
 	  //continue;
-	  if ((error = _parseListEntities(current)) != PNEC_SUCCES)
+	  if ((error = _parseListEntities(current)) != PNEC_SUCCESS)
 		return error;
 	}
   }

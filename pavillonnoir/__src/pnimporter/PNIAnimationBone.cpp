@@ -93,7 +93,7 @@ pnint		PNIAnimationBone::unserializeFromStream(std::istream& i)
 	pos.pos = apos.pos;
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -167,7 +167,7 @@ pnuint		PNIAnimationBone::setTransformation(pnuint time, PNMatrixTR4f& transform
 	transform.setTranslation(transPos);
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnbool		PNIAnimationBone::setRotation(pnuint time, PNQuatf& rot)

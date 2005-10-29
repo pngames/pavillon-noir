@@ -202,7 +202,7 @@ PNI3DMesh::_parseVertices()
 	ivert.addIndex(this, i);
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnint
@@ -212,7 +212,7 @@ PNI3DMesh::_parseFaces()
 
   _parent._istream->read((char*)_idBuffer, sizeof(*_idBuffer) * _header.nbFaces);
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -235,7 +235,7 @@ PNI3DMesh::unserializeFromStream(std::istream& i)
 	(pnfloat*)_vertBuffer, (pnfloat*)_normBuffer, (pnfloat*)_colorBuffer, (pnfloat*)_texCoordBuffer, _header.nbVerts,
 	(pnuint*)_idBuffer,	_header.nbFaces * 3);
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////

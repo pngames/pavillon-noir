@@ -178,7 +178,7 @@ namespace PN
 	//pnint err = map->unserialize(fs::path(DEF::mapsFilePath + "entities-1.0.xml", fs::native));
 	//pnint err = map->unserialize(fs::path(DEF::mapsFilePath + "test_model.xml", fs::native));
   
-	//if (err != PNEC_SUCCES)
+	//if (err != PNEC_SUCCESS)
 	//  pnerror(PN_LOGLVL_ERROR, "%s : %s", "Error loading level", pnGetErrorString(err));
 
 	//State::gStateMgr->changeState(LOADING);
@@ -243,7 +243,7 @@ namespace PN
 
 	/*hideMenuRoot();
 
-	if (PN3DGround::getInstance()->unserialize(fs::path(DEF::objectFilePath + "groundLevel3.pno", fs::native)) != PNEC_SUCCES)
+	if (PN3DGround::getInstance()->unserialize(fs::path(DEF::objectFilePath + "groundLevel3.pno", fs::native)) != PNEC_SUCCESS)
 	  return false;
 
 	PNGUIGame*		guigame = new PNGUIGame();*/

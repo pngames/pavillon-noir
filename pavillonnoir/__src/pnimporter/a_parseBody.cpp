@@ -49,7 +49,7 @@ PNI3DAnimation::parseBody(std::istream& istm)
   for (pnuint i = 0; i < _header.nbBones; ++i)
 	_bones.push_back(PNIAnimationBone(istm));
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////

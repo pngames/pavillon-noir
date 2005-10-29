@@ -120,7 +120,7 @@ pnint			PNGLMaterial::setTexture(const boost::filesystem::path& file, void* ligh
   if (cit != _textureMap.end())
   {
     _texture = cit->second;
-	return PNEC_SUCCES;
+	return PNEC_SUCCESS;
   }
 
   if (!fs::exists(file))
@@ -131,13 +131,13 @@ pnint			PNGLMaterial::setTexture(const boost::filesystem::path& file, void* ligh
 
   _texture = (PNGLTexture*)PNGLRenderer::getInstance()->newTexture();
 
-  if (_texture->loadFromFile(file, lightMap) != PNEC_SUCCES)
+  if (_texture->loadFromFile(file, lightMap) != PNEC_SUCCESS)
   {
 	PNGLRenderer::getInstance()->deleteTexture(_texture);
 	_texture = NULL;
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -202,7 +202,7 @@ pnint			PNGLMaterial::bind()
 	glDisable(GL_TEXTURE_2D);
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////

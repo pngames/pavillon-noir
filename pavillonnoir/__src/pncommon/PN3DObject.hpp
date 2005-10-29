@@ -334,7 +334,6 @@ protected:
   virtual pnint					_unserializeNode(xmlNode* node);
 
   /// Write in model node content to out stream
-  virtual pnint					_serializeContent(std::ostream& o);
   virtual pnint					_serializeContent(xmlNode* node);
 
   //////////////////////////////////////////////////////////////////////////

@@ -54,7 +54,7 @@ PNGLVideo::unserializeFromFile(const boost::filesystem::path& file)
 {		  
   _file = file;
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnuint
@@ -64,7 +64,7 @@ PNGLVideo::startAnimation()
 
   pnuint err = IPNAnimated::startAnimation();
 
-  if (err != PNEC_SUCCES)
+  if (err != PNEC_SUCCESS)
     return err;
 
 #ifdef WIN32
@@ -75,7 +75,7 @@ PNGLVideo::startAnimation()
 
   boost::thread thrd(fastdelegate::FastDelegate0<void>(this, &PNGLVideo::_playVideo));
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 void

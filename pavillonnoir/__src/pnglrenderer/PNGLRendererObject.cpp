@@ -193,7 +193,7 @@ PNGLRendererObject::addFaces(PNFace* faces, pnuint nb)
   for (pnuint i = 0; i < nb; ++i, ++faces)
 	_faces.push_back(faces);
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnint
@@ -283,7 +283,7 @@ PNGLRendererObject::renderAllFaces(pnbool clear)
   
   _restoreAttrib();
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnint
@@ -302,13 +302,13 @@ pnint
 PNGLRendererObject::_renderBuffer()
 {
   if (_sizeFaceBuffer <= 0)
-	return PNEC_SUCCES;
+	return PNEC_SUCCESS;
 
   glDrawElements(_renderer.convertFlag(_mode), _sizeFaceBuffer, GL_UNSIGNED_INT, _facesBuffer);
 
   _sizeFaceBuffer = 0;
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////
