@@ -64,10 +64,11 @@ namespace PN
 		static void	luaDebugLineHook(lua_State *S, lua_Debug *ar);
 		
     //-------------------------------MANIPULATION METHODS---------------------------------
-        pnerrorcode    execFile(const boost::filesystem::path &path);
-        pnerrorcode    execString(const std::string &orders);
-        pnerrorcode    registerLuaLibrary(lua_library_register);
+        int    execFile(const boost::filesystem::path &path);
+        int    execString(const std::string &orders);
+        int    registerLuaLibrary(lua_library_register);
         void		   setDebugLogPath(boost::filesystem::path path);
+		void   reset();
     };
 }
 #endif
