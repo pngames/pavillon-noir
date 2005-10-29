@@ -83,12 +83,12 @@ pnerrorcode    PNLuaVm::execFile(const boost::filesystem::path &path)
         myret = PNEC_ERROR;
         break;
     case 0:
-        myret = PNEC_SUCCES;
+        myret = PNEC_SUCCESS;
         break;
     default:
         myret = PNEC_ERROR;
     }
-    assert(myret == PNEC_SUCCES);
+    assert(myret == PNEC_SUCCESS);
     return myret;
 }
 
@@ -110,12 +110,12 @@ pnerrorcode    PNLuaVm::execString(const std::string &orders)
         myret = PNEC_ERROR;
         break;
     case 0:
-        myret = PNEC_SUCCES;
+        myret = PNEC_SUCCESS;
         break;
     default:
         myret = PNEC_ERROR;
     }
-    assert(myret == PNEC_SUCCES);
+    assert(myret == PNEC_SUCCESS);
     return myret;
 }
 

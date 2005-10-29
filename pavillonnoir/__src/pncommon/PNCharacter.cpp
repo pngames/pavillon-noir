@@ -155,11 +155,11 @@ PNCharacter::restoreState()
 //////////////////////////////////////////////////////////////////////////
 
 pnint
-PNCharacter::_serializeContent(std::ostream& o)
+PNCharacter::_serializeContent(xmlNode* node)
 {
-  pnint	err = PN3DSkeletonObject::_serializeContent(o);
+  pnint	err = PN3DSkeletonObject::_serializeContent(node);
 
-  if (err == PNEC_SUCCES)
+  if (err == PNEC_SUCCESS)
   {  
 	_view->setOrient(getOrient());
 	_view->update(0);

@@ -53,7 +53,7 @@ pnint	  PNI3DAnimation::parseHeader(std::istream& istm)
 
   std::cout << "nbBones : " << _header.nbBones << std::endl;
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////

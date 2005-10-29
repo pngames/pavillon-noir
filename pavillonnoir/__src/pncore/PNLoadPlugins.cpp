@@ -55,7 +55,7 @@ namespace PN {
   {
 	pnuint error = _plist->addDirectory(dir, false);
 
-	if (error != PNEC_SUCCES)
+	if (error != PNEC_SUCCESS)
 	  pnerror(PN_LOGLVL_ERROR, "%s: %s", dir.native_file_string().c_str(), pnGetErrorString(error));
   }
 
@@ -69,7 +69,7 @@ namespace PN {
   {
   	pnuint error = _plist->addDefaultPlugin(plugName);
 
-	if (error != PNEC_SUCCES)
+	if (error != PNEC_SUCCESS)
 	  pnerror(PN_LOGLVL_ERROR, "%s: %s", plugName.c_str(), pnGetErrorString(error));
   }
 
@@ -83,7 +83,7 @@ namespace PN {
   {
 	pnuint error = _plist->addPlugin(file);
 
-	if (error != PNEC_SUCCES)
+	if (error != PNEC_SUCCESS)
 	  pnerror(PN_LOGLVL_ERROR, "%s: %s", file.native_file_string().c_str(), pnGetErrorString(error));
   }
 

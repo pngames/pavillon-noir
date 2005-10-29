@@ -69,7 +69,7 @@ PNObject*	PNOpalImporter::doImport(const fs::path& path)
 
   pnuint error = physicalObject->unserializeFromFile(path);
 
-  if (error != PNEC_SUCCES)
+  if (error != PNEC_SUCCESS)
   {
 	pnerror(PN_LOGLVL_ERROR, "%s : %s", path.string().c_str(), pnGetErrorString(error));
 	delete physicalObject;

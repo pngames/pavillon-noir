@@ -79,7 +79,7 @@ int	  PNGameMap::_parseStaticEntity(xmlNode* node)
 
   /* FIXME : creer le BSP via le module BSP */
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 
@@ -128,7 +128,7 @@ int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
   pnint obj_error = object->unserializeFromFile(file);
 
   // check for errors
-  if (obj_error != PNEC_SUCCES)
+  if (obj_error != PNEC_SUCCESS)
 	pnerror(PN_LOGLVL_ERROR, "%s : %s", (const char*)xmlGetProp(current, (const xmlChar *)"mdref"), pnGetErrorString(obj_error));
 
   // enable/disable physical simulation on the object
@@ -149,14 +149,14 @@ int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
   //  if (object->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
   //	((PNCharacter*)object)->buildGraph(*_wpFile);
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 int	  PNGameMap::_parseListEntities(xmlNode* node)
 {
   //  xmlChar*	  attr = NULL;
   xmlNodePtr  current = node;
-  pnint error = PNEC_SUCCES;
+  pnint error = PNEC_SUCCESS;
 
   for (; current != NULL; current = current->next)
   {
@@ -170,7 +170,7 @@ int	  PNGameMap::_parseListEntities(xmlNode* node)
 	error = _parseDynamicEntity(current);
 	//}
 	//	else
-	if (error != PNEC_SUCCES)
+	if (error != PNEC_SUCCESS)
 	  break;
 	pnerror(PN_LOGLVL_DEBUG, "PNGameMap - null static attr : %s", current->name);
   }
@@ -184,7 +184,7 @@ int	PNGameMap::unserializeFromXML(xmlNode* node)
   xmlNodePtr root = node;
   xmlNodePtr current;
 
-  pnint	error = PNEC_SUCCES;
+  pnint	error = PNEC_SUCCESS;
 
   //pnerror(PN_LOGLVL_DEBUG, "%s : %s", "PNGameMap - node name", root->name);
 
@@ -197,7 +197,7 @@ int	PNGameMap::unserializeFromXML(xmlNode* node)
 	{
 	  //if (current->type != XML_ELEMENT_NODE)
 	  //continue;
-	  if ((error = _parseListEntities(current)) != PNEC_SUCCES)
+	  if ((error = _parseListEntities(current)) != PNEC_SUCCESS)
 		return error;
 	}
   }

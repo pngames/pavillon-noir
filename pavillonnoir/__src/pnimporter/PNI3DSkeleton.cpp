@@ -124,7 +124,7 @@ PNI3DSkeleton::update(pndouble rtime, PN3DAnimation* anim)
 pnint
 PNI3DSkeleton::unserializeFromStream(std::istream& istm)
 {
-  int err = PNEC_SUCCES;
+  int err = PNEC_SUCCESS;
 
   if ((err = parseHeader(istm)) == 0)
 	err = parseBody(istm);

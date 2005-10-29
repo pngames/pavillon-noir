@@ -91,7 +91,7 @@ PNI3DModel::parseVertexes()
   _center = _min;
   _center += dim;
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnint
@@ -111,7 +111,7 @@ PNI3DModel::parseMeshes()
 	_meshes.push_back(mesh);
   }
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnint
@@ -121,7 +121,7 @@ PNI3DModel::parseBody()
 
   parseMeshes();
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////

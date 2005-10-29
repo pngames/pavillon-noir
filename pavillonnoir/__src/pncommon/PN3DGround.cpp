@@ -100,7 +100,7 @@ PN3DGround::unserializeFromFile(const fs::path& file)
 {
   PN3DObject ground;
 
-  if (ground.unserializeFromFile(file) != PNEC_SUCCES)
+  if (ground.unserializeFromFile(file) != PNEC_SUCCESS)
 	return (PNEC_ERROR);
 
   if (!_convertIntoGroundRepresentation(ground))
@@ -109,7 +109,7 @@ PN3DGround::unserializeFromFile(const fs::path& file)
 	return (PNEC_ERROR);
   }
 
-  return (PNEC_SUCCES);
+  return (PNEC_SUCCESS);
 }
 
 bool

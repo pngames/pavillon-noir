@@ -299,7 +299,7 @@ PNIAGraph::serializeInStream(std::ostream& o)
   }
   o << "</listlnk>" << std::endl;
   o << "</graph>" << std::endl;
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 pnint
@@ -329,7 +329,7 @@ PNIAGraph::unserializeFromFile(const boost::filesystem::path& file)
 	printf("Unable to open %s\n", file.string().c_str());
 	return PNEC_FILE_NOT_FOUND;
   }
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 int
@@ -367,7 +367,7 @@ PNIAGraph::processChild(xmlTextReader* _reader)
   if (value != NULL)
 	xmlFree(value);
 
-  return PNEC_SUCCES;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////

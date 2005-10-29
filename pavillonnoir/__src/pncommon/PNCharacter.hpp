@@ -82,7 +82,7 @@ public:
 
 protected:
   /// Write in model node content to out stream
-  virtual pnint							_serializeContent(std::ostream& o);
+  virtual pnint							_serializeContent(xmlNode* node);
 
 public:
   /// Update skeleton object informations

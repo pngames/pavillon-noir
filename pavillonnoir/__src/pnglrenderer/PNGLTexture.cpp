@@ -124,7 +124,7 @@ pnint		PNGLTexture::loadFromFile(const boost::filesystem::path& file, void* ligh
 	// delete DevIL image
 	iluDeleteImage(imgName);
 
-	return PNEC_SUCCES;
+	return PNEC_SUCCESS;
   }
   else
   {

@@ -46,7 +46,7 @@ typedef enum
 
 typedef enum
 {
-  PNEC_SUCCES,
+  PNEC_SUCCESS,
   PNEC_ERROR,
   PNEC_NOT_IMPLEMENTED,
 
