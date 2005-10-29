@@ -74,8 +74,10 @@ namespace PN
     /////////////////////////////////////////////////////////////////////////////*/
 	
 	// register all the needed callbacks to the event manager.
-    void                            registerCallbacks();
+    void                      registerCallbacks();
 
+	//managed lua error
+	void					  manageLuaError(int errorcode); 
   public:
 
     //lua_State* getLuaState(){ return this->L;}
@@ -117,8 +119,6 @@ namespace PN
     void loadMap();
     //unloadthe map;
     void unloadMap();
-   
-
 
     //////////////////////////////////--------  callbacks ---------////////////////////////////////////
 //	void onUpdate(pnuint deltaTime);

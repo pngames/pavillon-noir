@@ -62,69 +62,71 @@ PNLuaVm::~PNLuaVm()
 //-------------------------------------------------------------------------
 
 //-------------------------------MANIPULATION METHODS----------------------
-pnerrorcode    PNLuaVm::execFile(const boost::filesystem::path &path)
+int    PNLuaVm::execFile(const boost::filesystem::path &path)
 {
     PNLOCK(this);
 
     pnerrorcode myret;
     int lret = lua_dofile(this->_luaVm, path.native_file_string().c_str());
-    switch (lret)
-    {
-    case LUA_ERRSYNTAX:
-        myret = PNEC_FAILED_TO_PARSE;
-        break;
-    case LUA_ERRMEM:
-        myret = PNEC_ERROR;
-        break;
-    case LUA_ERRRUN:
-        myret = PNEC_ERROR;
-        break;
-    case LUA_ERRFILE:
-        myret = PNEC_ERROR;
-        break;
-    case 0:
-        myret = PNEC_SUCCESS;
-        break;
-    default:
-        myret = PNEC_ERROR;
-    }
-    assert(myret == PNEC_SUCCESS);
-    return myret;
+    //switch (lret)
+    //{
+    //case LUA_ERRSYNTAX:
+    //    myret = PNEC_FAILED_TO_PARSE;
+    //    break;
+    //case LUA_ERRMEM:
+    //    myret = PNEC_ERROR;
+    //    break;
+    //case LUA_ERRRUN:
+    //    myret = PNEC_ERROR;
+    //    break;
+    //case LUA_ERRFILE:
+    //    myret = PNEC_ERROR;
+    //    break;
+    //case 0:
+    //    myret = PNEC_SUCCES;
+    //    break;
+    //default:
+    //    myret = PNEC_ERROR;
+    //}
+    //assert(myret == PNEC_SUCCES);
+    //return myret;
+	return lret;
 }
 
-pnerrorcode    PNLuaVm::execString(const std::string &orders)
+int    PNLuaVm::execString(const std::string &orders)
 {   
     PNLOCK(this);
 
     pnerrorcode myret;
     int lret = lua_dostring(this->_luaVm, orders.c_str());
-    switch (lret)
-    {
-    case LUA_ERRSYNTAX:
-        myret = PNEC_FAILED_TO_PARSE;
-        break;
-    case LUA_ERRMEM:
-        myret = PNEC_ERROR;
-        break;
-    case LUA_ERRRUN:
-        myret = PNEC_ERROR;
-        break;
-    case 0:
-        myret = PNEC_SUCCESS;
-        break;
-    default:
-        myret = PNEC_ERROR;
-    }
-    assert(myret == PNEC_SUCCESS);
-    return myret;
+    //switch (lret)
+    //{
+    //case LUA_ERRSYNTAX:
+    //    myret = PNEC_FAILED_TO_PARSE;
+    //    break;
+    //case LUA_ERRMEM:
+    //    myret = PNEC_ERROR;
+    //    break;
+    //case LUA_ERRRUN:
+    //    myret = PNEC_ERROR;
+    //    break;
+    //case 0:
+    //    myret = PNEC_SUCCES;
+    //    break;
+    //default:
+    //    myret = PNEC_ERROR;
+    //}
+    //assert(myret == PNEC_SUCCES);
+    //return myret;
+	return lret;
 }
 
-pnerrorcode    PNLuaVm::registerLuaLibrary(lua_library_register f)
+int    PNLuaVm::registerLuaLibrary(lua_library_register f)
 {
     PNLOCK(this);
 
-    f(this->_luaVm);
-    return PNEC_ERROR;
+    return f(this->_luaVm);
+    
 }
 
 void       PNLuaVm::setDebugLogPath(boost::filesystem::path path)
@@ -161,4 +163,10 @@ void PNLuaVm::setDebug(bool b)
 bool	PNLuaVm::getLuaDebugLogging()
 {
 	return(this->_debug);
+}
+
+void	PNLuaVm::reset()
+{
+	lua_close(_luaVm);
+	_luaVm = lua_open();
 }
