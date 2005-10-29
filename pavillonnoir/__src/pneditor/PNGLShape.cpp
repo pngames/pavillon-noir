@@ -290,6 +290,7 @@ void			PNGLShape::reset()
 {
 	boost::filesystem::path* f = _obj->getFile();
 	_obj->unserializeFromFile(*f);
+	this->setUnmodified();
 }
 
 };

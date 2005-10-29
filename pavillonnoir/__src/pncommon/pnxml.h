@@ -79,6 +79,7 @@
 #define PNXML_OBJECT_VAL			(const xmlChar *)"object"
 #define PNXML_TRUE_VAL				(const xmlChar *)"true"
 #define PNXML_FALSE_VAL				(const xmlChar *)"false"
+#define PNXML_IDBASE_VAL			(const xmlChar *)"id:"
 
 // DTD Files
 #define PNXML_ENTITIES_DTD			(const xmlChar *)"../entities.dtd"
