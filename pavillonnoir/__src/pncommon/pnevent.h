@@ -62,7 +62,8 @@ typedef enum
   PN_EVENT_GAME_ACTION,			/// lunch a game action event	
   PN_EVENT_GAME_QUIT,			/// quit game
   PN_EVENT_GAME_QUIT_STARTED,
-  PN_EVENT_GAME_QUIT_ENDED,				
+  PN_EVENT_GAME_QUIT_ENDED,	
+  PN_EVENT_GAME_ERROR,			/// when an fatal erro is raise in game
 
   PN_EVENT_GUI_MENU_ROOT,
   PN_EVENT_GUI_MENU_LOAD,
