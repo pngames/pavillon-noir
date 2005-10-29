@@ -49,6 +49,10 @@ public:
   virtual PNConfigurableParameter*	getParameter(int idx) = 0;
 
   virtual const std::string&		getLabel() = 0;
+
+  virtual bool						modified() { return FALSE; }
+  virtual void						setModified() { }
+  virtual void						setUnmodified() { }
 };
 
 //////////////////////////////////////////////////////////////////////////

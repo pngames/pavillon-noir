@@ -198,10 +198,12 @@ namespace PN {
   */
   void	PNFXMaterialListParameter::update(void)
   {
+    pnerror(PN_LOGLVL_DEBUG, "PNFXMaterialListParameter::update");
+	PNConfigurableObject* co = _param->getConfigurableObject();
 	buildList();
-	_param->getConfigurableObject()->update(_param);
+	co->update(_param);
+	co->setModified();
 	_listBox->sortItems();
-
 	return;
   }
 

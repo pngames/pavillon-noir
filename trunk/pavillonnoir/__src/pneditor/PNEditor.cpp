@@ -538,7 +538,8 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 
 	  xmlNodePtr node = xmlNewChild(root_node, NULL, PNXML_ENTITY_MKP, NULL);
 	  {
-		sprintf(tmpBuff, "%d\0", shape->getId());
+		//sprintf(tmpBuff, "%d\0", shape->getId());
+		sprintf(tmpBuff, "%s%d\0", PNXML_IDBASE_VAL, shape->getId());
 		xmlNewProp(node, PNXML_ID_ATTR, BAD_CAST tmpBuff);
 		xmlNewProp(node, PNXML_LABEL_ATTR, BAD_CAST shape->getLabel().c_str());
 		xmlNewProp(node, PNXML_MODELREFERENCE_ATTR,BAD_CAST DEF::convertPath(DEF::objectFilePath, obj->getFile()->string()).c_str());
@@ -925,10 +926,22 @@ int	  PNEditor::_parseActions(void* node, PNGLShape* shape)
   return 1;
 }
 
+int	  PNEditor::_parseID(std::string id)
+{
+  std::string idstr((const char *)PNXML_IDBASE_VAL);
+  std::string::size_type	  index = id.find(idstr);
+
+  if (index == std::string::npos)
+  	return atoi(id.c_str());
+
+  return atoi(id.c_str() + index + id.size());
+}
+
 int	  PNEditor::_parseEntity(void* node)
 {
   xmlNodePtr  current = (xmlNodePtr)node;
-  int		  id;
+  /// int id = atoi((const char *)xmlGetProp(current, PNXML_ID_ATTR));
+  int id = _parseID((const char *)xmlGetProp(current, PNXML_ID_ATTR));
   std::string mdref((const char *)xmlGetProp(current, PNXML_MODELREFERENCE_ATTR));
   std::string label((const char *)xmlGetProp(current, PNXML_LABEL_ATTR));
   std::string classStr((const char *)xmlGetProp(current, PNXML_CLASS_ATTR));
@@ -959,7 +972,8 @@ int	  PNEditor::_parseEntity(void* node)
 	return PNEC_FAILED_TO_PARSE;
 
   bool fromFile = TRUE;
-  if (!current->last->prev)
+  //if (!current->last->prev)
+  if (!current->children)
   {
     fs::path  file(DEF::objectFilePath + mdref, fs::native);
     pnint obj_error = object->unserializeFromFile(file);
