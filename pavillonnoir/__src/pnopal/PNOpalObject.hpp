@@ -36,6 +36,7 @@
 
 #include "pndefs.h"
 #include "pnmath.h"
+#include "pnrender.h"
 
 #include "PNPoint.hpp"
 #include "PNQuatf.hpp"
@@ -52,6 +53,10 @@ namespace PN {
 	opal::Blueprint			  _blueprint;
 	opal::BlueprintInstance	  _blueprintInstance;
 	std::string				  _file;
+
+	pnpoint3f*				  _vertBuffer;
+	pnpoint2ui*				  _idBuffer;
+	PNRendererObject*		  _robject;
 
   public:
 	PNOpalObject(opal::Simulator* sim);

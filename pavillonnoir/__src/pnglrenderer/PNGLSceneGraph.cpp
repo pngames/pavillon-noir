@@ -33,6 +33,7 @@
 #include "PNGameEventData.hpp"
 #include "PN3DGround.hpp"
 #include "PNRendererInterface.hpp"
+#include "PNPhysicalObject.hpp"
 
 #include "PNGLSceneGraph.hpp"
 
@@ -161,6 +162,11 @@ PNGLSceneGraph::render(pnuint deltaTime)
 		  const PNPoint&  pos = obj->getCoord();
 		  const PNPoint&  center = obj->getCenter();
 		  const PNQuatf&  orient = obj->getOrient();
+
+		  #ifdef DEBUG
+		  if (obj->getPhysicalObject())
+			obj->getPhysicalObject()->render();
+		  #endif
 
 		  transMatrix.setRotationQuaternion(orient);
 		  transMatrix.setTranslation(pos);
