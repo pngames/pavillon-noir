@@ -74,14 +74,28 @@ void PNOpalObject::update(pnuint elapsed_time)
   /* deprecated */
 }
 
+/** Display the Axis Aligned Bounding Boxes of the solid (physical object)
+*/
+
 void PNOpalObject::render()
 {
-  // FIXME 
-
-  opal::BoxShapeData* sd = (opal::BoxShapeData*)_solid->getData().getShapeData(0);
+  pnuint numshapes;
   pnfloat aabb[6];
+  pnfloat	color[4] = {0.0f, 1.0f, 0.0f, 1.0f};
 
-  sd->getLocalAABB(aabb);
+  opal::SolidData solidData;
+  opal::BoxShapeData* boxShapeData;
+  
+  solidData = _solid->getData();
+  numshapes = solidData.getNumShapes();
+
+  for (int i = 0; i < numshapes; i++)
+  {
+	boxShapeData = (opal::BoxShapeData*)solidData.getShapeData(i);
+	boxShapeData->getLocalAABB(aabb);
+
+	PNRendererInterface::getInstance()->renderBox(aabb[1] - aabb[0], aabb[3] - aabb[2], aabb[5] - aabb[4], color);	
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////
