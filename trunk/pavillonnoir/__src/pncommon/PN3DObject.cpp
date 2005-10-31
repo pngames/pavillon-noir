@@ -42,6 +42,7 @@
 #include "PN3DObject.hpp"
 #include "PN3DSkeletonObject.hpp"
 #include "PN3DSkeleton.hpp"
+#include "PNPhysicalObject.hpp"
 
 #include "pno_format.h"
 
@@ -74,7 +75,7 @@ PN3DObject::PN3DObject()
   _rightDirection.setArray(PNVector3f::UNIT_X);
   _topDirection.setArray(PNVector3f::UNIT_Y);
 
-  _renderMode = RENDER_MODEL | RENDER_MATERIALS;
+  _renderMode = RENDER_MODEL | RENDER_MATERIALS | RENDER_PHYSICAL;
   _movingState = STATE_NONE;
 
   setTargetMode(TMODE_FREE);
@@ -186,7 +187,7 @@ PN3DObject::_parsePhysics(xmlNode* node)
 	fs::path p(DEF::physicsFilePath + (const char*)attr, fs::native);
 
 	if (fs::exists(p))
-	  _physicalObject = (PNPhysicalObject*)PNImportManager::getInstance()->import(p, PN_IMPORT_PHYSICS);
+	  _physicalObject = (PNPhysicalObject*)PNImportManager::getInstance()->import(p, PN_IMPORT_PHYSICS, true);
 
 	if (_physicalObject == NULL)
 	  return PNEC_LOADING_PHYSICS;
@@ -930,7 +931,6 @@ PN3DObject::setPhysicalObject(PNPhysicalObject* physical_object)
   PNLOCK(this);
 
   _physicalObject = physical_object;
-  // FIXME : make a test on the value returned by PNPhysicsInterface
   return true;
 }
 
@@ -1151,6 +1151,8 @@ PN3DObject::render()
   {
 	if (_renderMode & RENDER_MATERIALS && _materials.size() > 0)
 	  _model->render(_materials);
+	if (_renderMode & RENDER_PHYSICAL && _physicalObject)
+	  _physicalObject->render();
 	else
 	  _model->render();
   }
