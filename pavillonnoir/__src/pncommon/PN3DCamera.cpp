@@ -83,6 +83,22 @@ PN3DCamera::~PN3DCamera()
 //////////////////////////////////////////////////////////////////////////
 
 void
+PN3DCamera::setFar(pnfloat far)
+{
+  PNLOCK(this);
+
+  _viewFar = far;
+}
+
+void
+PN3DCamera::setNear(pnfloat near)
+{
+  PNLOCK(this);
+
+  _viewNear = near;
+}
+
+void
 PN3DCamera::setFov(pnfloat deg)
 {
   PNLOCK(this);
@@ -106,6 +122,20 @@ PN3DCamera::setVFov(pnfloat rad)
   PNLOCK(this);
 
   _viewVRadFov = rad;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+pnfloat
+PN3DCamera::getFar() const
+{
+  return _viewFar;
+}
+
+pnfloat
+PN3DCamera::getNear() const
+{
+  return _viewNear;
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -217,7 +217,7 @@ public:
   /// Retrieve 3d object position target
   PN3DObject*						getPositionTarget() const;
   /// Retrieve 3d object position target bone
-  const std::string&				getPositionBoneTarget();
+  const std::string&				getPositionBoneTarget() const;
   /// Retrieve 3d object position coordinate
   PNPoint							getPositionTargetCoord() const;
   /// Retrieve 3d object position orientation
@@ -231,7 +231,7 @@ public:
   /// Retrieve 3d object view target
   PN3DObject*						getViewTarget() const;
   /// Retrieve 3d object view target bone
-  const std::string&				getViewBoneTarget();
+  const std::string&				getViewBoneTarget() const;
   /// Retrieve 3d object position coordinate
   virtual PNPoint					getViewTargetCoord() const;
   /// Retrieve 3d object position orientation
