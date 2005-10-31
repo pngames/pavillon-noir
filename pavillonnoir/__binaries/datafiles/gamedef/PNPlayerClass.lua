@@ -5,7 +5,7 @@ function PNPlayerClass(id)
 	---------------setting camera behavior-----------------
 	PNRenderCam:setPositionTarget(OBJ)
 	PNRenderCam:setViewTarget(OBJ)
-    PNRenderCam:setTargetPosition(0, 300 , 1000)
+    PNRenderCam:setTargetPosition(0, 30 , 150)
     PNRenderCam:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
     PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_ABS_LOCKED)
    --PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_ABS_LOCKED)
