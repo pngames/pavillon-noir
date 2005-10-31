@@ -3,7 +3,7 @@
 	<Solid>
 		<Name value="Boite01"/>
 		<Offset>
-			<Transform type="translate" x="0.672871" y="-0.672871" z="0.848515"/>
+			<Transform type="translate" x="0.672871" y="-20.0" z="0.848515"/>
 		</Offset>
 		<Shape type="box">
 			<Dimensions x="40.0" y="40.0" z="40.0"/>

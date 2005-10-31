@@ -62,6 +62,7 @@ namespace PN {
 
 	// previously deprecated
 	pnfloat					  _aabb[6];
+	PNPoint					  _offset;
 	
   public:
 	PNOpalObject(opal::Simulator* sim);

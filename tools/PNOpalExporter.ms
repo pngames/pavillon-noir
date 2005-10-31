@@ -33,7 +33,7 @@ function printSolidOffset trans angle axis =
 (
 	format "\t\t<Offset>\n" to:outFile
 
-	tmpz = trans.x * -1
+	tmpz = trans.z * -1
 
 	format "\t\t\t<Transform type=\"translate\" x=\"%\" y=\"%\" z=\"%\"/>\n" trans.x tmpz trans.y to:outFile
 
