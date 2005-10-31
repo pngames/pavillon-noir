@@ -972,8 +972,8 @@ int	  PNEditor::_parseEntity(void* node)
 	return PNEC_FAILED_TO_PARSE;
 
   bool fromFile = TRUE;
-  //if (!current->last->prev)
-  if (!current->children)
+  if (!current->last->prev)
+  //if (!current->children)
   {
     fs::path  file(DEF::objectFilePath + mdref, fs::native);
     pnint obj_error = object->unserializeFromFile(file);
