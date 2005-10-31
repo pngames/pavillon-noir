@@ -46,18 +46,23 @@ namespace PN {
   class PNOpalObject : public PNPhysicalObject
   {
   private:
+	std::string				  _file;
 	PNPoint					  _coord;
 	PNQuatf					  _orient;
-	opal::Solid*			  _solid;
-	opal::Simulator*		  _sim;
+
 	opal::Blueprint			  _blueprint;
 	opal::BlueprintInstance	  _blueprintInstance;
-	std::string				  _file;
+	opal::Solid*			  _solid;
+	opal::Simulator*		  _sim;
 
+	// deprecated
 	pnpoint3f*				  _vertBuffer;
 	pnpoint2ui*				  _idBuffer;
 	PNRendererObject*		  _robject;
 
+	// previously deprecated
+	pnfloat					  _aabb[6];
+	
   public:
 	PNOpalObject(opal::Simulator* sim);
 	~PNOpalObject();

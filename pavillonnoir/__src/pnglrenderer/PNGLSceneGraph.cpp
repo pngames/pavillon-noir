@@ -163,11 +163,6 @@ PNGLSceneGraph::render(pnuint deltaTime)
 		  const PNPoint&  center = obj->getCenter();
 		  const PNQuatf&  orient = obj->getOrient();
 
-		  #ifdef DEBUG
-		  if (obj->getPhysicalObject())
-			obj->getPhysicalObject()->render();
-		  #endif
-
 		  transMatrix.setRotationQuaternion(orient);
 		  transMatrix.setTranslation(pos);
 		  transMatrix.addTranslation(center);
