@@ -35,7 +35,7 @@ namespace PN {
 
 typedef enum
 {
-  PN_TRIANGLES,			/// Draw triangles (see opengl definitions)
+  PN_TRIANGLES,			/// Draw triangles (see Spengler definitions)
   PN_TRIANGLE_STRIP,	/// Draw triangles strip (see opengl definitions)
   PN_TRIANGLE_FAN,		/// Draw triangles fan (see opengl definitions)
   PN_POINTS,			/// Draw points

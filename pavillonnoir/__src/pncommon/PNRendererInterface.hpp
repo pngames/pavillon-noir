@@ -96,14 +96,31 @@ public:
   virtual void				deleteObj(PNRendererObject* obj)=0;
 
   //////////////////////////////////////////////////////////////////////////
+  // SKY
+
+  /// Set the skyBox enabled or disabled
+  virtual void				setSkyBoxEnabled(pnbool enabled)=0;
+
+  /// Set the sky box properties
+  virtual void				setSkyBox(PNRendererObject* skyBox)=0;
+  /// Set the sky box properties
+  virtual void				setSkyBox(pnfloat* textCoords, PNRenderMaterial* skyBox)=0;
+  /// Set the sky box properties
+  virtual void				setSkyBox(PNRenderMaterial* top, PNRenderMaterial* bottom, PNRenderMaterial* left, PNRenderMaterial* right, PNRenderMaterial* front, PNRenderMaterial* back)=0;
+
+  //////////////////////////////////////////////////////////////////////////
   // Material
 
+  /// Make a new material
   virtual PNRenderMaterial*	newMaterial()=0;
+  /// Delee a material
   virtual void				deleteMaterial(PNRenderMaterial* material)=0;
 
   //////////////////////////////////////////////////////////////////////////
   
+  /// Render sphere
   virtual void				renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color)=0;
+  /// Render box
   virtual void				renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat* color)=0;
 
   typedef enum
