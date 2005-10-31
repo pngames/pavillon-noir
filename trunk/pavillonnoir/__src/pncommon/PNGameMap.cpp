@@ -183,7 +183,7 @@ int	PNGameMap::unserializeFromXML(xmlNode* node)
 
   if (!strcmp((const char*)root->name, LISTENTITIES_MARKUP))
   {
-	for (current = root->children; current->type != XML_ELEMENT_NODE; current = current->next)
+	for (current = root->children; current != NULL && current->type != XML_ELEMENT_NODE; current = current->next)
 	{
 	  //if (current->type != XML_ELEMENT_NODE)
 	  //continue;
