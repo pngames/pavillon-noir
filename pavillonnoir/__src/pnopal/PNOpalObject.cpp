@@ -254,9 +254,9 @@ pnint		PNOpalObject::unserializeFromFile(const boost::filesystem::path& file)
   for (int i = 0; i < 6; i++)
   {
 	if (_aabb[i] < 0)
-	  _aabb[i] -= 2.0;
+	  _aabb[i] -= 1.0;
 	else
-	  _aabb[i] += 2.0;
+	  _aabb[i] += 1.0;
   }
 
   // get the solid translation (will allow the renderer to represent the AABB at the good coords)
