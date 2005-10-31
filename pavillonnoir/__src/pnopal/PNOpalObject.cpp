@@ -244,14 +244,15 @@ pnint		PNOpalObject::unserializeFromFile(const boost::filesystem::path& file)
   // FIXME
   _solid = _blueprintInstance.getSolid("Boite01");
 
+  if (!_solid)
+	return PNEC_NOT_INITIALIZED;
+
   // FIXME
   _solid->getData().getShapeData(0)->getLocalAABB(_aabb);
-  _aabb[0] *= 1.05;
-  _aabb[1] *= 1.05;
-  _aabb[2] *= 1.05;
-  _aabb[3] *= 1.05;
-  _aabb[4] *= 1.05;
-  _aabb[5] *= 1.05;
+  
+  // make the AABB representation a little bigger
+  for (int i = 0; i < 6; i++)
+	_aabb[i] += 2.0;
   
   return err;
 }
