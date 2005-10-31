@@ -711,7 +711,7 @@ PN3DObject::getPositionTarget() const
 
 /// Retrieve 3d object position target bone
 const std::string&
-PN3DObject::getPositionBoneTarget()
+PN3DObject::getPositionBoneTarget() const
 {
   return _positionBoneTarget;
 }
@@ -787,7 +787,7 @@ PN3DObject::getViewTarget() const
 
 /// Retrieve 3d object view target bone
 const std::string&
-PN3DObject::getViewBoneTarget()
+PN3DObject::getViewBoneTarget() const
 {
   return _viewBoneTarget;
 }

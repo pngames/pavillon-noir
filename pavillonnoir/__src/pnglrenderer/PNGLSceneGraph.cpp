@@ -129,17 +129,19 @@ PNGLSceneGraph::render(pnuint deltaTime)
 
   //////////////////////////////////////////////////////////////////////////
   
-  glPushMatrix();
+  //glPushMatrix();
   {
-	glTranslatef(-_renderCam.getCoord().x, -_renderCam.getCoord().y, _renderCam.getCoord().z);
-	PNGLSkyBox::getInstance()->render();
+	//glTranslatef(-_renderCam.getCoord().x, -_renderCam.getCoord().y, _renderCam.getCoord().z);
+	//PNGLSkyBox::getInstance()->render();
   }
-  glPopMatrix();
+  //glPopMatrix();
 
   ////////////////////////////////
   // Place la camera
 
   _renderCam.updateViewMatrix();
+
+  //PNGLSkyBox::getInstance()->render();
 
   /////////////////////////////////
   // PNGround: rend le terrain et remplit la liste des object dans la camera

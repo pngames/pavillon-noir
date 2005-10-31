@@ -29,6 +29,7 @@
 
 #include <libxml/xmlreader.h>
 #include <boost/filesystem/operations.hpp>
+#include <assert.h>
 
 #include "pndefs.h"
 #include "pnmath.h"
@@ -195,6 +196,10 @@ PN3DSkeletonObject::update(pnuint deltaTime)
 	  step = (pnuint)(_animSpeed * (_animTimePause - _animTimeStart));
 	else
 	  step = (pnuint)(_animSpeed * (PNRendererInterface::getInstance()->getTicks() - _animTimeStart));
+
+	//////////////////////////////////////////////////////////////////////////
+
+	assert(_animId >= 0 && _animations.size() < (pnuint)_animId);
 
 	if (_animTransTime > 0)
 	  _skeleton->update(step / (double)_animTransTime, _animations[_animId]);

@@ -131,11 +131,8 @@ IPNSerializable::unserialize()
 pnint
 IPNSerializable::serializeInFile(const boost::filesystem::path& file)
 {
-  if (!fs::exists(file))
-	return PNEC_FILE_NOT_FOUND;
-
-  if (fs::is_directory(file))
-    return PNEC_NOT_A_FILE;
+  if (fs::exists(file) && fs::is_directory(file))
+	return PNEC_NOT_A_FILE;
 
   setFile(file);
 

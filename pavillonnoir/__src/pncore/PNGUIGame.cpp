@@ -522,7 +522,12 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
 
   PN3DCamera*	cam = PN3DCamera::getRenderCam();
 
-  PN3DObject*	obj = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin()->second;
+  PN3DObject*	obj = NULL;
+  
+  if (PNGameInterface::getInstance()->getGameMap()->getEntityList().size() > 0)
+  {
+	obj = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin()->second;
+  }
 
   PNVector3f axis(1.0f, 0.0f, 0.0f);
   pnfloat phi;
@@ -622,8 +627,8 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
   case CEGUI::Key::LeftControl :
   case CEGUI::Key::RightControl :
 	std::cout << "Control";
-	cam->setTarget(obj);
 	cam->setTargetMode(PN3DObject::TMODE_VIEW_ABS_LOCKED);
+	cam->setTarget(obj);
 	break;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -638,7 +643,8 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
 
   case CEGUI::Key::Return : // key Return start animation
 	std::cout << "Return";
-	obj->startAnimation(0, 0);
+	if (obj != NULL)
+	  obj->startAnimation(0, 0);
 	break;
 
   default:

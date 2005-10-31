@@ -28,6 +28,7 @@
 */
 
 #include "pndefs.h"
+#include "pnrender.h"
 
 #include "PNGLRendererCamera.hpp"
 
@@ -109,7 +110,9 @@ PNGLSkyBox::render()
 {
   PNGLRendererCamera*	camera = (PNGLRendererCamera*)PN3DCamera::getRenderCam();
 
+  pnfloat	color[4] = {0.2f, 0.2f, 0.8f, 1.0f};
 
+  PNRendererInterface::getInstance()->renderBox(1000/*camera->getFar()*/, 1000/*camera->getFar()*/, 1000/*camera->getFar()*/, color);
 }
 
 //////////////////////////////////////////////////////////////////////////

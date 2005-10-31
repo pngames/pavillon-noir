@@ -63,9 +63,19 @@ public:
   
   //////////////////////////////////////////////////////////////////////////
   
+  void						setFar(pnfloat near);
+  void						setNear(pnfloat far);
+
   virtual void				setFov(pnfloat deg);
   void						setHFov(pnfloat rad);
   void						setVFov(pnfloat rad);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  pnfloat					getFar() const;
+  pnfloat					getNear() const;
+
+  //////////////////////////////////////////////////////////////////////////
 protected:
   PN3DObjList				_list3DObj;
 
