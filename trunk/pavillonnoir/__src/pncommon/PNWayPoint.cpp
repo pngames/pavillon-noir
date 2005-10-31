@@ -201,7 +201,7 @@ PNWayPoint::_parseID(std::string id)
   if (index == std::string::npos)
 	return atoi(id.c_str());
 
-  return atoi(id.c_str() + index + id.size());
+  return atoi(id.c_str() + index + idstr.size());
 }
 
 pnint

@@ -934,7 +934,7 @@ int	  PNEditor::_parseID(std::string id)
   if (index == std::string::npos)
   	return atoi(id.c_str());
 
-  return atoi(id.c_str() + index + id.size());
+  return atoi(id.c_str() + index + idstr.size());
 }
 
 int	  PNEditor::_parseEntity(void* node)
@@ -953,7 +953,7 @@ int	  PNEditor::_parseEntity(void* node)
 
   PN3DObject  *object = NULL;
 
-  id = atoi((const char *)xmlGetProp(current, PNXML_ID_ATTR));
+  //id = atoi((const char *)xmlGetProp(current, PNXML_ID_ATTR));
   if (!xmlStrcmp(xmlGetProp(current, PNXML_ENVTYPE_ATTR), PNXML_GROUND_VAL))
 	envType = PN_GROUND;
   else if (!xmlStrcmp(xmlGetProp(current, PNXML_ENVTYPE_ATTR), PNXML_STATIC_VAL))
