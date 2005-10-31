@@ -51,7 +51,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pnopal", "pnopal\pnopal.vcp
 		{8FA92B12-D5D9-413B-8ABC-9BFDED44EDE6} = {8FA92B12-D5D9-413B-8ABC-9BFDED44EDE6}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pnmaxplugin", "..\..\..\pnmaxplugin\pnmaxplugin.710.vcproj", "{FBE8C34C-1861-41C3-87AF-BECA84744864}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pnmaxplugin", "..\..\..\tools\pnmaxplugin\pnmaxplugin.710.vcproj", "{FBE8C34C-1861-41C3-87AF-BECA84744864}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -123,6 +123,7 @@ Global
 		{7290FB2A-EAE3-4A36-8731-3BF4FF32CF86}.Release.ActiveCfg = Release|Win32
 		{7290FB2A-EAE3-4A36-8731-3BF4FF32CF86}.Release.Build.0 = Release|Win32
 		{FBE8C34C-1861-41C3-87AF-BECA84744864}.Debug.ActiveCfg = Debug|Win32
+		{FBE8C34C-1861-41C3-87AF-BECA84744864}.Debug.Build.0 = Debug|Win32
 		{FBE8C34C-1861-41C3-87AF-BECA84744864}.Hybrid.ActiveCfg = Release|Win32
 		{FBE8C34C-1861-41C3-87AF-BECA84744864}.Hybrid.Build.0 = Release|Win32
 		{FBE8C34C-1861-41C3-87AF-BECA84744864}.Release.ActiveCfg = Release|Win32
