@@ -100,6 +100,7 @@ void PNOpalObject::render()
   */
   pnfloat					  color[4] = {1.0f, 1.0f, 1.0f, 0.3f};
 
+  opal::Point3r point = _solid->getTransform().getPosition();
   PNRendererInterface::getInstance()->renderBox(_aabb[1] - _aabb[0], _aabb[3] - _aabb[2], _aabb[5] - _aabb[4], color, _offset);	
 }
 
@@ -242,7 +243,10 @@ pnint		PNOpalObject::unserializeFromFile(const boost::filesystem::path& file)
   _sim->instantiateBlueprint(_blueprintInstance, _blueprint);
 
   // FIXME : get the first shape (supposed to be Boite01)
-  _solid = _blueprintInstance.getSolid("Boite01");
+  if (_solid = _blueprintInstance.getSolid("Boite01"))
+	;
+  else 
+	_solid = _blueprintInstance.getSolid("Sphere01");
 
   if (!_solid)
 	return PNEC_NOT_INITIALIZED;
@@ -262,7 +266,7 @@ pnint		PNOpalObject::unserializeFromFile(const boost::filesystem::path& file)
   // get the solid translation (will allow the renderer to represent the AABB at the good coords)
   opal::real* translation = _solid->getTransform().getTranslation().getData();
   _offset.set(translation[0] * -1, translation[1] * -1, translation[2] * -1);
-  
+
   return err;
 }
 

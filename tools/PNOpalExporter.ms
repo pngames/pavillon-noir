@@ -34,8 +34,9 @@ function printSolidOffset trans angle axis =
 	format "\t\t<Offset>\n" to:outFile
 
 	tmpz = trans.z * -1
+	tmpx = trans.x * -1
 
-	format "\t\t\t<Transform type=\"translate\" x=\"%\" y=\"%\" z=\"%\"/>\n" trans.x tmpz trans.y to:outFile
+	format "\t\t\t<Transform type=\"translate\" x=\"%\" y=\"%\" z=\"%\"/>\n" tmpx tmpz trans.y to:outFile
 
 	-- Only save the rotation if it's significant.
 	if abs(angle) > 0.001 then
