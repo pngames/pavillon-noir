@@ -218,6 +218,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pnglrenderer\PNGLSkyBox.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pnglrenderer\PNGLTexture.cpp"
 				>
 			</File>
@@ -273,6 +277,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pnglrenderer\PNGLSceneGraph.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pnglrenderer\PNGLSkyBox.hpp"
 				>
 			</File>
 			<File
