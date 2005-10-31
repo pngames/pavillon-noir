@@ -34,6 +34,7 @@
 #include "PN3DGround.hpp"
 #include "PNRendererInterface.hpp"
 #include "PNPhysicalObject.hpp"
+#include "PNGLSkyBox.hpp"
 
 #include "PNGLSceneGraph.hpp"
 
@@ -125,6 +126,15 @@ PNGLSceneGraph::render(pnuint deltaTime)
   //////////////////////////////////////////////////////////////////////////
 
   _renderCam.update(deltaTime);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  glPushMatrix();
+  {
+	glTranslatef(-_renderCam.getCoord().x, -_renderCam.getCoord().y, _renderCam.getCoord().z);
+	PNGLSkyBox::getInstance()->render();
+  }
+  glPopMatrix();
 
   ////////////////////////////////
   // Place la camera

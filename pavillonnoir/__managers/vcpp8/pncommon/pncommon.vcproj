@@ -739,6 +739,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncommon\PNSkyBox.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\PNTexture.hpp"
 				>
 			</File>
