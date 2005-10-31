@@ -507,8 +507,14 @@ PNGLRenderer::deleteTexture(PNGLTexture* texture)
 //////////////////////////////////////////////////////////////////////////
 
 void
-PNGLRenderer::renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color)
+PNGLRenderer::renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord/* = PNPoint::ZERO*/)
 {
+  glPushMatrix();
+  glTranslatef(coord.x, coord.y, coord. z);
+  glPopMatrix();
+
+  //////////////////////////////////////////////////////////////////////////
+
   glColor4fv(color);
   glMaterialfv(GL_FRONT,  GL_DIFFUSE, color);
 
@@ -519,8 +525,14 @@ PNGLRenderer::renderSphere(pndouble radius, pnint slices, pnint stacks, const pn
 }
 
 void
-PNGLRenderer::renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat* color)
+PNGLRenderer::renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat* color, const PNPoint& coord/* = PNPoint::ZERO*/)
 {
+  glPushMatrix();
+  glTranslatef(coord.x, coord.y, coord. z);
+  glPopMatrix();
+
+  //////////////////////////////////////////////////////////////////////////
+
   glColor4fv(color);
   glMaterialfv(GL_FRONT,  GL_DIFFUSE, color);
 

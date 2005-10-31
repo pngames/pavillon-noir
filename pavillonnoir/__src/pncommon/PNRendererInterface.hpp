@@ -119,9 +119,9 @@ public:
   //////////////////////////////////////////////////////////////////////////
   
   /// Render sphere
-  virtual void				renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color)=0;
+  virtual void				renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord = PNPoint::ZERO)=0;
   /// Render box
-  virtual void				renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat* color)=0;
+  virtual void				renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat* color, const PNPoint& coord = PNPoint::ZERO)=0;
 
   typedef enum
   {

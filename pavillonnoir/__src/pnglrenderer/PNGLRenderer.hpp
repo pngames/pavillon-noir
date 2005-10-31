@@ -154,8 +154,8 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   
-  void						renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color);
-  void						renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat* color);
+  void						renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord = PNPoint::ZERO);
+  void						renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat* color, const PNPoint& coord = PNPoint::ZERO);
 
   void						renderLink(const PNPoint& p1, const PNPoint& p2, const pnfloat* color, pnuint direction = 0, pnfloat thickness = 1.0f);
 
