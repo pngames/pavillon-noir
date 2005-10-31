@@ -464,26 +464,6 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="error"
-			>
-			<File
-				RelativePath="..\..\..\__src\pncommon\pnerror.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\pnerror.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\pnexception.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNException.hpp"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="ia"
 			>
 			<File
@@ -776,6 +756,26 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNConf.hpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="error"
+			>
+			<File
+				RelativePath="..\..\..\__src\pncommon\pnerror.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\pnerror.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\pnexception.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNException.hpp"
 				>
 			</File>
 		</Filter>
