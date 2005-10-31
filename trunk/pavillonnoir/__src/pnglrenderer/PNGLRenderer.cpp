@@ -531,7 +531,7 @@ PNGLRenderer::renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat
 {
   glPushMatrix();
   {
-	glTranslatef(coord.x, coord.y, coord. z);
+	glTranslatef(coord.x, coord.y, coord.z);
 
 	//////////////////////////////////////////////////////////////////////////
 
