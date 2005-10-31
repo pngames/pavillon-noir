@@ -75,7 +75,7 @@ PN3DObject::PN3DObject()
   _rightDirection.setArray(PNVector3f::UNIT_X);
   _topDirection.setArray(PNVector3f::UNIT_Y);
 
-  _renderMode = RENDER_MODEL | RENDER_MATERIALS | RENDER_PHYSICAL;
+  _renderMode = RENDER_MODEL | RENDER_MATERIALS;
   _movingState = STATE_NONE;
 
   setTargetMode(TMODE_FREE);
@@ -1151,11 +1151,12 @@ PN3DObject::render()
   {
 	if (_renderMode & RENDER_MATERIALS && _materials.size() > 0)
 	  _model->render(_materials);
-	if (_renderMode & RENDER_PHYSICAL && _physicalObject)
-	  _physicalObject->render();
 	else
 	  _model->render();
   }
+
+  if (_renderMode & RENDER_PHYSICAL && _physicalObject)
+	_physicalObject->render();
 }
 
 //////////////////////////////////////////////////////////////////////////
