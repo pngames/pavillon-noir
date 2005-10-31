@@ -510,98 +510,102 @@ void
 PNGLRenderer::renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord/* = PNPoint::ZERO*/)
 {
   glPushMatrix();
-  glTranslatef(coord.x, coord.y, coord. z);
+  {
+	glTranslatef(coord.x, coord.y, coord. z);
+
+	//////////////////////////////////////////////////////////////////////////
+
+	glColor4fv(color);
+	glMaterialfv(GL_FRONT,  GL_DIFFUSE, color);
+
+	GLUquadricObj* quad = gluNewQuadric();
+	gluQuadricDrawStyle(quad, (GLenum)GLU_FILL);
+	gluSphere(quad, radius, slices, stacks);
+	gluDeleteQuadric(quad);
+  }
   glPopMatrix();
-
-  //////////////////////////////////////////////////////////////////////////
-
-  glColor4fv(color);
-  glMaterialfv(GL_FRONT,  GL_DIFFUSE, color);
-
-  GLUquadricObj* quad = gluNewQuadric();
-  gluQuadricDrawStyle(quad, (GLenum)GLU_FILL);
-  gluSphere(quad, radius, slices, stacks);
-  gluDeleteQuadric(quad);
 }
 
 void
 PNGLRenderer::renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat* color, const PNPoint& coord/* = PNPoint::ZERO*/)
 {
   glPushMatrix();
-  glTranslatef(coord.x, coord.y, coord. z);
+  {
+	glTranslatef(coord.x, coord.y, coord. z);
+
+	//////////////////////////////////////////////////////////////////////////
+
+	glColor4fv(color);
+	glMaterialfv(GL_FRONT,  GL_DIFFUSE, color);
+
+	pnfloat xmin =-0.5f * width;
+	pnfloat xmax = 0.5f * width;
+	pnfloat ymin =-0.5f * height;
+	pnfloat ymax = 0.5f * height;
+	pnfloat zmin =-0.5f * depth;
+	pnfloat zmax = 0.5f * depth;
+
+	glBegin(GL_TRIANGLE_STRIP);
+	{
+	  glNormal3f(0.0f, 0.0f, -1.0f);
+	  glVertex3f(xmin, ymin, zmin);
+	  glVertex3f(xmin, ymax, zmin);
+	  glVertex3f(xmax, ymin, zmin);
+	  glVertex3f(xmax, ymax, zmin);
+	}
+	glEnd();
+
+	glBegin(GL_TRIANGLE_STRIP);
+	{
+	  glNormal3f(1.0f, 0.0f, 0.0f);
+	  glVertex3f(xmax, ymin, zmin);
+	  glVertex3f(xmax, ymax, zmin);
+	  glVertex3f(xmax, ymin, zmax);
+	  glVertex3f(xmax, ymax, zmax);
+	}
+	glEnd();
+
+	glBegin(GL_TRIANGLE_STRIP);
+	{
+	  glNormal3f(0.0f, 0.0f, 1.0f);
+	  glVertex3f(xmax, ymin, zmax);
+	  glVertex3f(xmax, ymax, zmax);
+	  glVertex3f(xmin, ymin, zmax);
+	  glVertex3f(xmin, ymax, zmax);
+	}
+	glEnd();
+
+	glBegin(GL_TRIANGLE_STRIP);
+	{
+	  glNormal3f(-1.0f, 0.0f, 0.0f);
+	  glVertex3f(xmin, ymin, zmax);
+	  glVertex3f(xmin, ymax, zmax);
+	  glVertex3f(xmin, ymin, zmin);
+	  glVertex3f(xmin, ymax, zmin);
+	}
+	glEnd();
+
+	glBegin(GL_TRIANGLE_STRIP);
+	{
+	  glNormal3f(0.0f, 1.0f, 0.0f);
+	  glVertex3f(xmin, ymax, zmin);
+	  glVertex3f(xmin, ymax, zmax);
+	  glVertex3f(xmax, ymax, zmin);
+	  glVertex3f(xmax, ymax, zmax);
+	}
+	glEnd();
+
+	glBegin(GL_TRIANGLE_STRIP);
+	{
+	  glNormal3f(0.0f, -1.0f, 0.0f);
+	  glVertex3f(xmin, ymin, zmax);
+	  glVertex3f(xmin, ymin, zmin);
+	  glVertex3f(xmax, ymin, zmax);
+	  glVertex3f(xmax, ymin, zmin);
+	}
+	glEnd();
+  }
   glPopMatrix();
-
-  //////////////////////////////////////////////////////////////////////////
-
-  glColor4fv(color);
-  glMaterialfv(GL_FRONT,  GL_DIFFUSE, color);
-
-  pnfloat xmin =-0.5f * width;
-  pnfloat xmax = 0.5f * width;
-  pnfloat ymin =-0.5f * height;
-  pnfloat ymax = 0.5f * height;
-  pnfloat zmin =-0.5f * depth;
-  pnfloat zmax = 0.5f * depth;
-
-  glBegin(GL_TRIANGLE_STRIP);
-  {
-	glNormal3f(0.0f, 0.0f, -1.0f);
-	glVertex3f(xmin, ymin, zmin);
-	glVertex3f(xmin, ymax, zmin);
-	glVertex3f(xmax, ymin, zmin);
-	glVertex3f(xmax, ymax, zmin);
-  }
-  glEnd();
-
-  glBegin(GL_TRIANGLE_STRIP);
-  {
-	glNormal3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(xmax, ymin, zmin);
-	glVertex3f(xmax, ymax, zmin);
-	glVertex3f(xmax, ymin, zmax);
-	glVertex3f(xmax, ymax, zmax);
-  }
-  glEnd();
-
-  glBegin(GL_TRIANGLE_STRIP);
-  {
-	glNormal3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(xmax, ymin, zmax);
-	glVertex3f(xmax, ymax, zmax);
-	glVertex3f(xmin, ymin, zmax);
-	glVertex3f(xmin, ymax, zmax);
-  }
-  glEnd();
-
-  glBegin(GL_TRIANGLE_STRIP);
-  {
-	glNormal3f(-1.0f, 0.0f, 0.0f);
-	glVertex3f(xmin, ymin, zmax);
-	glVertex3f(xmin, ymax, zmax);
-	glVertex3f(xmin, ymin, zmin);
-	glVertex3f(xmin, ymax, zmin);
-  }
-  glEnd();
-
-  glBegin(GL_TRIANGLE_STRIP);
-  {
-	glNormal3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(xmin, ymax, zmin);
-	glVertex3f(xmin, ymax, zmax);
-	glVertex3f(xmax, ymax, zmin);
-	glVertex3f(xmax, ymax, zmax);
-  }
-  glEnd();
-
-  glBegin(GL_TRIANGLE_STRIP);
-  {
-	glNormal3f(0.0f, -1.0f, 0.0f);
-	glVertex3f(xmin, ymin, zmax);
-	glVertex3f(xmin, ymin, zmin);
-	glVertex3f(xmax, ymin, zmax);
-	glVertex3f(xmax, ymin, zmin);
-  }
-  glEnd();
 }
 
 void
