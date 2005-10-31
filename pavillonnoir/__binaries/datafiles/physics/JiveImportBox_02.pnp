@@ -2,17 +2,11 @@
 <OpalBlueprint>
 	<Solid>
 		<Name value="Boite01"/>
-            <Sleepiness value="0.5"/>
-            <LinearDamping value="0.15"/>
-            <AngularDamping value="0.15"/>
-            <LinearVelocity x="0.0" y="0.0" z="0.0"/>
-            <AngularVelocity x="0.0" y="0.0" z="0.0"/>
 		<Offset>
-			<Transform type="translate" x="0.672871" y="0.848515" z="0.0"/>
+			<Transform type="translate" x="0.672871" y="-0.672871" z="0.848515"/>
 		</Offset>
 		<Shape type="box">
 			<Dimensions x="40.0" y="40.0" z="40.0"/>
-                  <Material hardness="0.5" friction="0.5" bounciness="0.5" density="1.0"/>
 		</Shape>
 	</Solid>
 </OpalBlueprint>
