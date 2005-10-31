@@ -22,7 +22,7 @@ function checkScene =
 	)
 		
 	-- if saving is canceled return false
-	savePath = getSaveFileName caption:"Export Solid To..." filename:"untitled" types:"Opal Blueprint(*.xml)|*.xml|All|*.*"
+	savePath = getSaveFileName caption:"Export Solid To..." filename:"untitled" types:"PNOpal Blueprint(*.pnp)|*.pnp|All|*.*"
 	if savePath == undefined then return D_FALSE
 
 	return D_TRUE
@@ -33,7 +33,9 @@ function printSolidOffset trans angle axis =
 (
 	format "\t\t<Offset>\n" to:outFile
 
-	format "\t\t\t<Transform type=\"translate\" x=\"%\" y=\"%\" z=\"%\"/>\n" trans.x trans.y trans.z to:outFile
+	tmpz = trans.x * -1
+
+	format "\t\t\t<Transform type=\"translate\" x=\"%\" y=\"%\" z=\"%\"/>\n" trans.x tmpz trans.y to:outFile
 
 	-- Only save the rotation if it's significant.
 	if abs(angle) > 0.001 then
@@ -95,7 +97,7 @@ function printShape object printOffset =
 		object.transform = originalTransform
 
 		format "\t\t<Shape type=\"box\">\n" to:outFile
-		format "\t\t\t<Dimensions x=\"%\" y=\"%\" z=\"%\"/>\n" dimensions.x dimensions.y dimensions.z to:outFile
+		format "\t\t\t<Dimensions x=\"%\" y=\"%\" z=\"%\"/>\n" dimensions.x dimensions.z dimensions.y to:outFile
 	)
 
 	-- If requested, print the Shape's offset from its parent.
