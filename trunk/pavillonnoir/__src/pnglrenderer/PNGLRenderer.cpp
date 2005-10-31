@@ -34,7 +34,7 @@
 
 #include "pndefs.h"
 #include "pnevent.h"
-#include "PNExNotImplemented.hpp"
+#include "pnexception.h"
 #include "PNGameEventData.hpp"
 #include "pnresources.h"
 
