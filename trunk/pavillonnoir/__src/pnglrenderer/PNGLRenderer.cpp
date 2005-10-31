@@ -34,6 +34,7 @@
 
 #include "pndefs.h"
 #include "pnevent.h"
+#include "PNExNotImplemented.hpp"
 #include "PNGameEventData.hpp"
 #include "pnresources.h"
 
@@ -439,6 +440,36 @@ PNGLRenderer::deleteObj(PNRendererObject* obj)
 {
   if (obj != NULL)
 	delete (PNGLRendererObject*)obj;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+/// Set the skyBox enabled or disabled
+void
+PNGLRenderer::setSkyBoxEnabled(pnbool enabled)
+{
+  throw PNException("Not implemented.");
+}
+
+/// Set the sky box properties
+void
+PNGLRenderer::setSkyBox(PNRendererObject* skyBox)
+{
+  throw PNException("Not implemented.");
+}
+
+/// Set the sky box properties
+void
+PNGLRenderer::setSkyBox(pnfloat* textCoords, PNRenderMaterial* skyBox)
+{
+  throw PNException("Not implemented.");
+}
+
+/// Set the sky box properties
+void
+PNGLRenderer::setSkyBox(PNRenderMaterial* top, PNRenderMaterial* bottom, PNRenderMaterial* left, PNRenderMaterial* right, PNRenderMaterial* front, PNRenderMaterial* back)
+{
+  throw PNException("Not implemented.");
 }
 
 //////////////////////////////////////////////////////////////////////////

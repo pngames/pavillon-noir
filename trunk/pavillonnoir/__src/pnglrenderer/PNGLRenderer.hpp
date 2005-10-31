@@ -121,6 +121,19 @@ public:
   void						deleteObj(PNRendererObject* obj);
 
   //////////////////////////////////////////////////////////////////////////
+  // SKY
+
+  /// Set the skyBox enabled or disabled
+  virtual void				setSkyBoxEnabled(pnbool enabled);
+
+  /// Set the sky box properties
+  virtual void				setSkyBox(PNRendererObject* skyBox);
+  /// Set the sky box properties
+  virtual void				setSkyBox(pnfloat* textCoords, PNRenderMaterial* skyBox);
+  /// Set the sky box properties
+  virtual void				setSkyBox(PNRenderMaterial* top, PNRenderMaterial* bottom, PNRenderMaterial* left, PNRenderMaterial* right, PNRenderMaterial* front, PNRenderMaterial* back);
+
+  //////////////////////////////////////////////////////////////////////////
   
   PNRenderMaterial*			newMaterial();
   void						deleteMaterial(PNRenderMaterial* material);
