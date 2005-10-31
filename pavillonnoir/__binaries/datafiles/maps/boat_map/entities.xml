@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE listentities SYSTEM "../entities.dtd">
+<listentities>
+  <entity id="id:1" label="Ground" mdref="JiveImportPlan.pno" envtype="ground" objtype="object" class="PN3DObject" x="-29.970739" y="-135.420837" z="31.928188" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
+    <object>
+      <model path="JiveImportPlan.pnm"/>
+      <listmaterials>
+        <material path="JiveImportPlan_04 - Par defaut.pnt"/>
+      </listmaterials>
+    </object>
+  </entity>
+  <entity id="id:0" label="boat" mdref="boat.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-4.964279" y="-113.152290" z="29.042416" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
+    <object>
+      <model path="boat.pnm"/>
+      <listmaterials>
+        <material path="boat_sails.tga.pnt"/>
+        <material path="boat_ship.tga.pnt"/>
+      </listmaterials>
+    </object>
+  </entity>
+  <entity id="Player" label="pirate1" mdref="bonhomme.pno" envtype="dynamic" objtype="object" class="PNPlayer" x="-349.293274" y="-82.972862" z="-161.569168" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
+    <object>
+      <model path="bonhomme.pnm"/>
+      <listmaterials>
+        <material path="bonhomme_foot.tga.pnt"/>
+        <material path="bonhomme_leg.tga.pnt"/>
+        <material path="bonhomme_pants.tga.pnt"/>
+        <material path="bonhomme_handback.tga.pnt"/>
+        <material path="bonhomme_handfront2.tga.pnt"/>
+        <material path="bonhomme_hankerchief.tga.pnt"/>
+        <material path="bonhomme_matt.tga.pnt"/>
+        <material path="bonhomme_chest.tga.pnt"/>
+        <material path="bonhomme_arm.tga.pnt"/>
+        <material path="bonhomme_sleeve.tga.pnt"/>
+        <material path="bonhomme_shirt.tga.pnt"/>
+      </listmaterials>
+    </object>
+  </entity>
+</listentities>
