@@ -199,7 +199,7 @@ PN3DSkeletonObject::update(pnuint deltaTime)
 
 	//////////////////////////////////////////////////////////////////////////
 
-	assert(_animId >= 0 && _animations.size() < (pnuint)_animId);
+	assert(_animId >= 0 && (pnuint)_animId < _animations.size());
 
 	if (_animTransTime > 0)
 	  _skeleton->update(step / (double)_animTransTime, _animations[_animId]);
