@@ -42,7 +42,7 @@
 
 #include "PNConsole.hpp"
 
-#include "PN3DSkeletonObject.hpp"  // FIXME : just tests
+#include "PN3DSkeletonObject.hpp"  // FIXME : testing requirement
 
 #include "PNSoundInterface.hpp"
 #include "PNPhysicsInterface.hpp"
@@ -297,6 +297,28 @@ void  PNGUIGame::_setPhysics(const std::string&, std::istream& i)
   }
 }
 
+void  PNGUIGame::_renderPhysics(const std::string&, std::istream& i)
+{
+  bool	b;
+  i >> b;
+
+  for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
+  {
+	PN3DObject*	current_obj = it->second;
+	PNLOCK_BEGIN(current_obj);
+	{
+	  if (current_obj->getPhysicalObject())
+	  {
+		if (b == true)
+		  current_obj->setRenderMode(current_obj->getRenderMode() | PN3DObject::RENDER_PHYSICAL);
+		else
+		  current_obj->setRenderMode(current_obj->getRenderMode() ^ PN3DObject::RENDER_PHYSICAL);
+	  }
+	}
+	PNLOCK_END(current_obj);
+  }
+}
+
 void  PNGUIGame::_setAlldynamic(const std::string&, std::istream& i)
 {
   bool	b;
@@ -392,6 +414,7 @@ void PNGUIGame::startGUI()
   PNConsole::addFonction("rcspeed", &PNGUIGame::_commandRenderCameraMovingSpeed, "Set render camera moving speed, 1.0=normal");
   //////////////////////////////////////////////////////////////////////////
   PNConsole::addFonction("physics", &PNGUIGame::_setPhysics, "Physical simulation, 0=false or 1=true");
+  PNConsole::addFonction("renderphysics", &PNGUIGame::_renderPhysics, "Display object's AABB, 0=false or 1=true");
   PNConsole::addFonction("addforce", &PNGUIGame::_addForce, "Add force to a physical object, addforce object_number x y z duration");
   PNConsole::addFonction("setdyn", &PNGUIGame::_setAlldynamic, "Set all physical objects dynamic, 0=false or 1=true");
   //////////////////////////////////////////////////////////////////////////
@@ -428,6 +451,7 @@ void PNGUIGame::resetGUI()
   PNConsole::delFonction("changesoundvolume");
   /////////////////////////////////////////////
   PNConsole::delFonction("physics");
+  PNConsole::delFonction("renderphysics");
   PNConsole::delFonction("addforce");
   PNConsole::delFonction("setdyn");
   /////////////////////////////////////////////

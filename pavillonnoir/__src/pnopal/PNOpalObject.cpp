@@ -98,7 +98,7 @@ void PNOpalObject::render()
 	PNRendererInterface::getInstance()->renderBox(aabb[1] - aabb[0], aabb[3] - aabb[2], aabb[5] - aabb[4], color);	
   }
   */
-  pnfloat					  color[4] = {0.0f, 1.0f, 0.0f, 1.0f};
+  pnfloat					  color[4] = {1.0f, 1.0f, 1.0f, 0.3f};
 
   PNRendererInterface::getInstance()->renderBox(_aabb[1] - _aabb[0], _aabb[3] - _aabb[2], _aabb[5] - _aabb[4], color);	
 }
@@ -246,6 +246,12 @@ pnint		PNOpalObject::unserializeFromFile(const boost::filesystem::path& file)
 
   // FIXME
   _solid->getData().getShapeData(0)->getLocalAABB(_aabb);
+  _aabb[0] *= 1.05;
+  _aabb[1] *= 1.05;
+  _aabb[2] *= 1.05;
+  _aabb[3] *= 1.05;
+  _aabb[4] *= 1.05;
+  _aabb[5] *= 1.05;
   
   return err;
 }
