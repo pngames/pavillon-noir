@@ -95,6 +95,7 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 	// ** Audio Tab ** //
 	_audioObj  = new PNFoxOptionsObject("Audio settings");
 	FXVerticalFrame* audioFrame=new FXVerticalFrame(switcher,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0, 0,0);
+	audioFrame->create();
 	new FXLabel(audioFrame,_audioObj->getLabel().c_str(),NULL,LAYOUT_LEFT);
 	new FXHorizontalSeparator(audioFrame,SEPARATOR_LINE|LAYOUT_FILL_X);
 	new FXButton(buttons,"AUDIO",NULL,switcher,FXSwitcher::ID_OPEN_SECOND,FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y);
@@ -113,20 +114,21 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 	volumeGraduation.push_back("80");
 	volumeGraduation.push_back("90");
 	volumeGraduation.push_back("100");
-	_audioObj->addParam(new PNConfigurableParameter(_graphicObj, PN_PARAMTYPE_STRINGLIST, &volumeGraduation, "Music volume", "Don't mute me!", TRUE));
+	_audioObj->addParam(new PNConfigurableParameter(_audioObj, PN_PARAMTYPE_STRINGLIST, &volumeGraduation, "Music volume", "Don't mute me!", TRUE));
 
 	//// Second Parameter : game volume
 	// TODO : hey! change my type to PN_PARAMTYPE_DIAL_something..., thx (needs a something class)
-	_audioObj->addParam(new PNConfigurableParameter(_graphicObj, PN_PARAMTYPE_STRINGLIST, &volumeGraduation, "Game volume", "Don't mute me!", TRUE));
+	_audioObj->addParam(new PNConfigurableParameter(_audioObj, PN_PARAMTYPE_STRINGLIST, &volumeGraduation, "Game volume", "Don't mute me!", TRUE));
 
 	// Use a grid to display our parameters
-	PNPropertiesGrid* audioGrid = new PNPropertiesGrid(graphicFrame, NULL);
+	PNPropertiesGrid* audioGrid = new PNPropertiesGrid(audioFrame, NULL);
 	audioGrid->setObject(_audioObj);
 
 
 	// ** Input Tab ** //
-	_inputObj  = new PNFoxOptionsObject("Input Settings");
+	_inputObj  = new PNFoxOptionsObject("Input settings");
 	FXVerticalFrame* inputFrame=new FXVerticalFrame(switcher,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0, 0,0);
+	inputFrame->create();
 	new FXLabel(inputFrame,_inputObj->getLabel().c_str(),NULL,LAYOUT_LEFT);
 	new FXHorizontalSeparator(inputFrame,SEPARATOR_LINE|LAYOUT_FILL_X);
 	new FXButton(buttons,"INPUT",NULL,switcher,FXSwitcher::ID_OPEN_THIRD,FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y);
@@ -142,16 +144,16 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 	//_graphicObj->addParam(new PNConfigurableParameter(_inputObj, PN_PARAMTYPE_STRING , void*elem, "Input Configuration", "Key bindings", TRUE));
 
 	// Use a grid to display our parameters
-	PNPropertiesGrid* inputGrid = new PNPropertiesGrid(graphicFrame, NULL);
+	PNPropertiesGrid* inputGrid = new PNPropertiesGrid(inputFrame, NULL);
 	inputGrid->setObject(_inputObj);
 
 
 	// Bottom part
 	new FXHorizontalSeparator(vertical,SEPARATOR_RIDGE|LAYOUT_FILL_X);
 	FXHorizontalFrame *closebox=new FXHorizontalFrame(vertical,LAYOUT_BOTTOM|LAYOUT_FILL_X|PACK_UNIFORM_WIDTH);
-	new FXButton(closebox,"&Accept",NULL,this,FXDialogBox::ID_ACCEPT,BUTTON_INITIAL|BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
-	new FXButton(closebox,"&Cancel",NULL,this,FXDialogBox::ID_CANCEL,BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
+	//new FXButton(closebox,"&Accept",NULL,this,FXDialogBox::ID_ACCEPT,BUTTON_INITIAL|BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
 	new FXButton(closebox,"&Ok",NULL,this,FXDialogBox::ID_ACCEPT,BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
+	new FXButton(closebox,"&Cancel",NULL,this,FXDialogBox::ID_CANCEL,BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
 }
 
 /*
