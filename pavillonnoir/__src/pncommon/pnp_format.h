@@ -50,7 +50,4 @@ static const std::string	PNP_XMLATTR_TYPEOPAL		= "opal";
 #define						PNP_XMLPROP_TYPE			(BAD_CAST "type")
 #define						PNP_XMLPROP_PATH			(BAD_CAST "path")
 
-#define						PNP_XMLPROPCONTENT_TYPEPNM	(BAD_CAST "pnm")
-#define						PNP_XMLPROPCONTENT_TYPEOPAL	(BAD_CAST "opal")
-
 #endif /*_PNP_FORMAT_H_*/
