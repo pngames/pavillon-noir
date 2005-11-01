@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opal-ode_d.lib"
+				AdditionalDependencies="opal-ode_d.lib libxml2.lib"
 				OutputFile="../../../__binaries/win32/plugins/Debug/pnopal-dbg.pnp"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
