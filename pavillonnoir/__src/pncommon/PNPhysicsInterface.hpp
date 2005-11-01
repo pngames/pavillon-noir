@@ -59,10 +59,7 @@ protected:
 public:
   plugintypes				getType();
   virtual void				init(void)=0;
-  /* previously deprecated */
   virtual void				setPause(bool state)=0;
-  /* previously deprecated */
-  virtual void				addForceToObj(pnuint nb, pnfloat x, pnfloat y, pnfloat z, pnfloat duration)=0;
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -73,6 +70,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
   virtual void		  		setAllPhysicalObjectsStatic(bool state)=0;
+
 };
 
 //////////////////////////////////////////////////////////////////////////

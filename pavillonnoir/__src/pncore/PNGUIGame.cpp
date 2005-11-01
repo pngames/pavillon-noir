@@ -336,19 +336,7 @@ void  PNGUIGame::_setAlldynamic(const std::string&, std::istream& i)
 
 void  PNGUIGame::_addForce(const std::string&, std::istream& i)
 {
-  pnuint  nb;
-  pnfloat x;
-  pnfloat y;
-  pnfloat z;
-  pnfloat duration;
-
-  i >> nb;
-  i >> x;
-  i >> y;
-  i >> z;
-  i >> duration;
-
-  PNPhysicsInterface::getInstance()->addForceToObj(nb, x, y, z, duration);
+ // FIXME, deprecated
 }
 
 void  PNGUIGame::_setScriptingDebug(const std::string&, std::istream& i)

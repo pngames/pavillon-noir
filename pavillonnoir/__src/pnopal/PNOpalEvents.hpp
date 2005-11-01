@@ -30,7 +30,7 @@
 #ifndef _PNOPALEVENTS_HPP_
 # define _PNOPALEVENTS_HPP_
 
-#include "PNOpal.hpp"
+#include <opal/opal.h>
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////

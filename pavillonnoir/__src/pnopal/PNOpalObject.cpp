@@ -32,6 +32,7 @@
 
 #include "pndefs.h"
 #include "pnplugins.h"
+#include "pnp_format.h"
 
 #include "PNPhysicsInterface.hpp"
 #include "PNPhysicalObject.hpp"
@@ -56,8 +57,6 @@ namespace PN {
 PNOpalObject::PNOpalObject(opal::Simulator* sim) : _blueprint(), _blueprintInstance()
 {
   _sim = sim;
-  //PNOpalCommonEventHandler* handler = new PNOpalCommonEventHandler();
-  //_solid->setCollisionEventHandler(handler);
 }
 
 /** PNOpalObject destructor
@@ -234,11 +233,18 @@ void		PNOpalObject::addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration)
 }
 
 //////////////////////////////////////////////////////////////////////////
+// IPNXMLSerializable
 
-pnint		PNOpalObject::unserializeFromFile(const boost::filesystem::path& file)
+pnint		  PNOpalObject::_parseTypeMesh(const boost::filesystem::path& file)
 {
-  int err = PNEC_SUCCESS;
+  // FIXME :
+  // must create a solid
+  // must use the model file to create the shape
+  return PNEC_SUCCESS;
+}
 
+pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
+{
   if (!fs::exists(file))
 	return PNEC_FILE_NOT_FOUND;
 
@@ -249,7 +255,6 @@ pnint		PNOpalObject::unserializeFromFile(const boost::filesystem::path& file)
   opal::loadFile(_blueprint, _file);
   _sim->instantiateBlueprint(_blueprintInstance, _blueprint);
 
-  // FIXME : get the first shape (supposed to be Boite01)
   if (_solid = _blueprintInstance.getSolid("Boite01"))
   {
 	// store the shape type
@@ -275,14 +280,51 @@ pnint		PNOpalObject::unserializeFromFile(const boost::filesystem::path& file)
 	_radius = shapeData->radius + 1.0;
   }
 
+  // check for loading errors
   if (!_solid)
 	return PNEC_NOT_INITIALIZED;
+
+  // set Collision handling function
+  PNOpal* pnopalInstance = (PNOpal*)PNOpal::getInstance();
+  _solid->setCollisionEventHandler((opal::CollisionEventHandler*)pnopalInstance->getEventHandler());
 
   // get the solid translation (will allow the renderer to represent the AABB at the good coords)
   opal::real* translation = _solid->getTransform().getTranslation().getData();
   _offset.set(translation[0] * -1, translation[1] * -1, translation[2] * -1);
 
-  return err;
+  return PNEC_SUCCESS;
+}
+
+pnint		  PNOpalObject::_parseModel(xmlNode* node)
+{
+  xmlChar*	  attr = NULL;
+
+  if ((attr = xmlGetProp(node, (const xmlChar *)PNP_XMLPROP_TYPE)) != NULL)
+  {
+	if (attr == PNP_XMLPROPCONTENT_TYPEOPAL)
+	  if ((attr = xmlGetProp(node, (const xmlChar *)PNP_XMLPROP_PATH)) != NULL)
+	  {
+		fs::path p(PNOPAL_XML_DEF::opalFilePath + (const char*)attr, fs::native);
+		_parseTypeOpal(p);
+	  }
+	  else
+		;
+	if (attr == PNP_XMLPROPCONTENT_TYPEPNM)
+	  if ((attr = xmlGetProp(node, (const xmlChar *)PNP_XMLPROP_PATH)) != NULL)
+	  {
+		fs::path p(PNOPAL_XML_DEF::modelFilePath + (const char*)attr, fs::native);
+	  }
+  }
+
+  return PNEC_SUCCESS;
+}
+
+pnint			PNOpalObject::_unserializeNode(xmlNode* node)
+{
+  if (PNP_XMLNODE_MODEL == (const char*)node->name)
+	_parseModel(node);
+ 
+  return PNEC_SUCCESS;
 }
 
 }

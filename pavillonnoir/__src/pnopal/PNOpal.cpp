@@ -39,6 +39,7 @@
 
 #include "PNOpal.hpp"
 #include "PNOpalObject.hpp"
+#include "PNOpalEvents.hpp"
 
 #include "PN3DModel.hpp"
 #include "PN3DObject.hpp"
@@ -84,10 +85,6 @@ void  PNOpal::setPause(bool state)
   _paused = state;
 }
 
-void PNOpal::addForceToObj(pnuint nb, pnfloat x, pnfloat y, pnfloat z, pnfloat duration)
-{
-}
-
 /** Create the physical simulation (opal::Simulator)
 */
 
@@ -98,7 +95,7 @@ void PNOpal::createSimulation()
   _sim->setGravity(opal::Vec3r(0, (opal::real)GRAVITY, 0));
   _sim->setStepSize((opal::real)STEPSIZE);
 
-  _gameMap = PNGameInterface::getInstance()->getGameMap();
+  _eventHandler = new PNOpalCommonEventHandler();
   _break = false;
 }
 
@@ -108,6 +105,8 @@ void PNOpal::createSimulation()
 void PNOpal::destroySimulation()
 {
   _sim->destroyAllSolids();
+  if (_eventHandler)
+	delete _eventHandler;
   // _sim->destroy();
   // unexpected read/write error !
 }
@@ -118,6 +117,14 @@ void PNOpal::destroySimulation()
 void* PNOpal::getSimulation()
 {
   return _sim;
+}
+
+/** Return a pointer to the PNOPAL event class (PNOpalCommonEventHandler*)
+*/
+
+void* PNOpal::getEventHandler()
+{
+  return _eventHandler;
 }
 
 /** invoked by PN_EVENT_MP_ENDED (level destruction)
