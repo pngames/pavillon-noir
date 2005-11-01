@@ -44,6 +44,9 @@ static const std::string	PNP_XMLDTD					= PNP_XMLDTD_NAME + ".dtd";
 static const std::string	PNP_XMLNODE_ROOT			= "physics";
 static const std::string	PNP_XMLNODE_MODEL			= "model";
 
+static const std::string	PNP_XMLATTR_TYPEPNM			= "pnm";
+static const std::string	PNP_XMLATTR_TYPEOPAL		= "opal";
+
 #define						PNP_XMLPROP_TYPE			(BAD_CAST "type")
 #define						PNP_XMLPROP_PATH			(BAD_CAST "path")
 
