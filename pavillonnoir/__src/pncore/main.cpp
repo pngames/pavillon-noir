@@ -57,6 +57,7 @@
 
 #include "PNGUIMenuRootManager.hpp"
 #include "PNGUIGameManager.hpp"
+#include "PNGUIStateManager.hpp"
 
 #include "PNGameInterface.hpp"
 
@@ -141,9 +142,14 @@ int	  main(int argc, char* argv[])
 	new CEGUI::System((CEGUI::Renderer*)ri->getGUIRenderer());
 	ri->initGUI();
 
-	PNGUIMenuRootManager::getInstance();
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_ROOT, NULL, NULL);
-	PNGUIGameManager::getInstance();
+	PNGUIStateManager::getInstance();
+	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::NONE && PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
+	{
+	  PNGUIMenuRoot::getInstance()->startGUI();
+	}
+	//PNGUIMenuRootManager::getInstance();
+	//PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_ROOT, NULL, NULL);
+	//PNGUIGameManager::getInstance();
 
 	//////////////////////////////////////////////////////////////////////////
 	///					Init of the event's manager						   ///

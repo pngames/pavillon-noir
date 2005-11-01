@@ -35,6 +35,7 @@
 #include "pndefs.h"
 #include "pnresources.h"
 #include "pnevent.h"
+#include "pnrender.h"
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -56,8 +57,11 @@
 
 ////Changes music volume (specific for the demo, please delete later)
 #include "PNSoundInterface.hpp"
+
 #include "PNGUIChatWindow.hpp"
-#include  "PNGUILoadingScreen.hpp"
+#include "PNGUILoadingScreen.hpp"
+#include "PNGUIMenuLoad.hpp"
+#include "PNGUIStateManager.hpp"
 //////////////////////////////////////////////////////////////////////////
 
 using namespace PN;
@@ -65,6 +69,8 @@ namespace fs = boost::filesystem;
 
 namespace PN
 {
+ PNGUIMenuRoot*	PNGUIMenuRoot::_instance = NULL;
+
   PNGUIMenuRoot::PNGUIMenuRoot()
   {
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("MenuRootImage") == false)
@@ -101,8 +107,18 @@ namespace PN
 	
   }
 
+  PNGUIMenuRoot*	PNGUIMenuRoot::getInstance()
+  {
+	if (_instance == NULL)
+	  _instance = new PNGUIMenuRoot();
+	return _instance;
+  }
+
   void  PNGUIMenuRoot::startGUI()
   {
+	  PNGUIStateManager::getInstance()->setMainState(PNGUIStateManager::MENUROOT);
+	  PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::NONE);
+
 	  PNConsole::addFonction("loadlevel", &PNGUIMenuRoot::loadLevel, "loadlevel [level]");
 	  show();
   }
@@ -150,8 +166,7 @@ namespace PN
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-	hide();
-
+	resetGUI();
 	//////////////////////////////////////////////////////////////////////////
 	// loading
 
@@ -186,11 +201,11 @@ namespace PN
 	//////////////////////////////////////////////////////////////////////////
 	// game
 
-	 PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_NEW_GAME, NULL, data);
+	PNGUIStateManager::getInstance()->LoadManager(data, PNGUIStateManager::INGAME);
+	// PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_NEW_GAME, NULL, data);
 	 delete (data);
 	//PNGUIGame*		guigame = new PNGUIGame();
 	//State::gStateMgr->changeState(GAME);
-
 	return true;
   }
 
@@ -204,9 +219,10 @@ namespace PN
 	  return true;
 
 	PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_PLAY, 0, new PNSoundEventData("quit", 0.5f));
-
-		PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_QUIT, 0, NULL);
-	//PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous reellement\nquitter ?", PNGUIMsgBox::YES_NO, callbackQuit, _mainSheet);
+	//PNRendererInterface::getInstance()->endRendering();
+	
+	//PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_QUIT, 0, NULL);
+	PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "Voulez-vous quitter ?", PNGUIMsgBox::YES_NO, callbackQuit, _mainSheet);
 	//PNGUIMsgBox* tmp = new PNGUIMsgBox("QUITTER ?", "sauter", PNGUIMsgBox::CONF, callbackQuit, _mainSheet);
 
 	return true;
@@ -223,8 +239,9 @@ namespace PN
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-
-	 PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_LOAD, NULL, NULL);
+	resetGUI();
+	PNGUIMenuLoad::getInstance()->startGUI();
+	// PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_LOAD, NULL, NULL);
 
 	//Transition to the load state
 	//State::gStateMgr->changeState(LOAD);
@@ -269,9 +286,10 @@ namespace PN
 	//CEGUI::System::getSingleton().getGUISheet()->addChildWindow(CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/myschemas/demolayout.xml"));
 	
 	//PNGUIChatWindow::getInstance()->startGUI();
+	resetGUI();
 	PNGUILoadingScreen* tmp =  new PNGUILoadingScreen();
 	tmp->startGUI();
-	hide();
+	
 	return true;
   }
 
