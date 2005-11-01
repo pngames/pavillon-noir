@@ -415,6 +415,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncommon\pnp_format.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\pns_format.h"
 				>
 			</File>
