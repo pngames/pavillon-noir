@@ -152,5 +152,30 @@ namespace PN {
 	_numVisibleItems = numItems;
   }
 
+  const std::string&	PNFXStringListParameter::getStringValue()
+  {
+	FXString fxstr = _listBox->getItemText(_listBox->getCurrentItem());
+	std::string* str = new std::string(fxstr.text());
+	return *str;
+  }
+
+  /*! Runs throught the list and selects the given string.
+  *  \param	val	  the string to select in _listBox
+  *	 \return true on success, false if val is not part of _listBox
+  */
+  bool				PNFXStringListParameter::setStringValue(const std::string& val)
+  {
+	for (int i=0; i < _listBox->getNumItems(); i++)
+	{
+	  FXString text = _listBox->getItem(i);
+	  if (text.text() == val.c_str())
+	  {
+		_listBox->setCurrentItem(i);
+		return TRUE;
+	  }
+	}
+	return FALSE;
+  }
+
   //////////////////////////////////////////////////////////////////////////
 };

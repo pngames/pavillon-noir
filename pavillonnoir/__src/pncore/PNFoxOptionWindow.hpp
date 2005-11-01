@@ -49,7 +49,7 @@
 |_______________________________________________________________________|
 
  - For each tab (Graph, Sound, Input, ...) a PNFoxOptionsObject is created.
- - These objects contain parameters stroed in a vector.
+ - These objects contain parameters stored in a vector.
  - The vector is displayed in a FXMatrix-like object : PNPropertiesGrid.
  - Each parameter contains some required informations such as the parent 
  object, a type identifier, a name (or label), a tooltip text, ...
@@ -63,6 +63,8 @@
 
 #include "PNFoxMainWindow.hpp"
 #include "PNFoxOptionsObject.hpp"
+#include "PNPropertiesGrid.hpp"
+#include "PNConf.hpp"
 
 namespace PN
 {
@@ -75,6 +77,10 @@ private:
 	PNFoxOptionsObject*		_graphicObj;
 	PNFoxOptionsObject*		_audioObj;
 	PNFoxOptionsObject*		_inputObj;
+	
+	PNPropertiesGrid*		_graphicGrid;
+	PNPropertiesGrid*		_audioGrid;
+	PNPropertiesGrid*		_inputGrid;
 
 protected:
 	FXHorizontalFrame*		buttons;
@@ -87,6 +93,16 @@ public:
 	virtual					~PNFoxOptionWindow();
 
 	virtual void	create();
+	long			onAccept(FXObject* obj,FXSelector sel,void* ptr);
+	long			onApply(FXObject* obj,FXSelector sel,void* ptr);
+	
+	void			saveGrid(PNPropertiesGrid* grid, PNConf* conf);
+
+public:
+  enum {
+	ID_APPLY = FXDialogBox::ID_LAST,
+	ID_LAST
+  };
 };
 
 };
