@@ -7,6 +7,7 @@
 <!ELEMENT entity (action*, object?)>
 <!ELEMENT action (script+)>
 <!ELEMENT script EMPTY>
+<!ELEMENT skybox (enabled?)>
 
 <!ATTLIST entity id ID #REQUIRED>
 <!ATTLIST entity label CDATA #IMPLIED>
@@ -26,6 +27,7 @@
 
 <!ATTLIST script ref CDATA #REQUIRED>
 
+<!ATTLIST skybox enabled (ture|false) #IMPLIED>
 
 <!-- imported from object.dtd -->
 
