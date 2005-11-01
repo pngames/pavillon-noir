@@ -1,12 +1,4 @@
 <?xml version="1.0"?>
-<OpalBlueprint>
-	<Solid>
-		<Name value="Boîte01"/>
-		<Offset>
-			<Transform type="translate" x="-44.4954" y="-34.8178" z="20.0"/>
-		</Offset>
-		<Shape type="box">
-			<Dimensions x="30.0" y="30.0" z="40.0"/>
-		</Shape>
-	</Solid>
-</OpalBlueprint>
+<physics>
+  <model type="opal" path="JiveImportBox.xml" />
+</physics>

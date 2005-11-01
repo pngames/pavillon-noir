@@ -44,62 +44,83 @@
 
 namespace PN {
 
+  namespace PNOPAL_XML_DEF {
+	static const std::string	dataFilePath = "datafiles/";
+	static const std::string	modelFilePath = dataFilePath + "models/";
+	static const std::string	physicsFilePath = dataFilePath + "physics/";
+	static const std::string	opalFilePath = physicsFilePath + "opal/";
+
+	inline std::string			convertPath(const std::string& type, const std::string& path)
+	{
+	  std::string::size_type	  index = path.rfind(type);
+
+	  if (index == std::string::npos)
+		return path;
+
+	  return path.c_str() + index + type.size();
+	}
+  }
+
   typedef enum {
 	OPALBOX = 1,
 	OPALSPHERE = 2
   }		  opaltypes;
 
-  class PNOpalObject : public PNPhysicalObject
+  class PNOpalObject : public PNPhysicalObject, public IPNXMLSerializable
   {
   private:
+	/* pnengine */
 	std::string				  _file;
 	PNPoint					  _coord;
 	PNQuatf					  _orient;
 
+	/* opal */
 	opal::Blueprint			  _blueprint;
 	opal::BlueprintInstance	  _blueprintInstance;
 	opal::Solid*			  _solid;
 	opal::Simulator*		  _sim;
 
-	// deprecated (or not at all)
+	/* deprecated trimeshes data (or not at all) */
 	pnpoint3f*				  _vertBuffer;
 	pnpoint2ui*				  _idBuffer;
 	PNRendererObject*		  _robject;
 
-	// previously deprecated
+	/* rendering previously deprecated */
 	pnfloat					  _aabb[6];
 	pndouble				  _radius;
 	PNPoint					  _offset;
-	opaltypes				  _type;
-	
+	opaltypes			  _type;
+
   public:
 	PNOpalObject(opal::Simulator* sim);
 	~PNOpalObject();
 
+	//////////////////////////////////////////////////////////////////////////
+	// PNPhysicalObject
+
 	void				update(pnuint elapsed_time);
 	void				render();
 
-	//////////////////////////////////////////////////////////////////////////
-	
   	const PNPoint&		getCoord();
 	const PNQuatf&		getOrient();
 	opal::Solid*		getOpalSolid();
-
-	//////////////////////////////////////////////////////////////////////////
-
+	
 	void				setStatic(bool state);
 	void				setCoord(const PNPoint& coord);
 	void				setCoord(pnfloat x, pnfloat y, pnfloat z);
 	void				setOrient(const PNQuatf& orient);
 	void				setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w);
 
-	//////////////////////////////////////////////////////////////////////////
-	
-	void				addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration);
+	void				addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration); // previously deprecated
 
-	//////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////
+	// IPNXMLSerializable
 
-	pnint				unserializeFromFile(const boost::filesystem::path& file);
+  protected:
+	pnint				_parseTypeMesh(const boost::filesystem::path& file);
+	pnint				_parseTypeOpal(const boost::filesystem::path& file);
+	pnint				_parseModel(xmlNode* node);
+	pnint				_unserializeNode(xmlNode* node);
   };
 }
 

@@ -32,46 +32,46 @@
 
 #include <opal/opal.h>
 
-#include "pndefs.h"
-#include "pnmath.h"
 #include "pnevent.h"
 
 #include "PNPhysicsInterface.hpp"
-#include "PNGameMap.hpp"
+#include "IPNXMLSerializable.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 typedef std::list<PN3DObject *> PN3DObjList;
 
-class				PNOpal : public PNPhysicsInterface
+class PNOpalCommonEventHandler;
+
+class				PNOpal : public PNPhysicsInterface, public IPNXMLSerializable
 {
 private:
-  opal::Simulator*	_sim;
-  PNGameMap*		_gameMap;
-  bool				_break;
-  pnfloat			_lastTicks;
+  opal::Simulator*			_sim;
+  bool						_break;
+  pnfloat					_lastTicks;
+  PNOpalCommonEventHandler* _eventHandler;
 
 public:
   PNOpal();
   ~PNOpal();
 
+  //////////////////////////////////////////////////////////////////////////
+  // PNPhysicalInterface
+
   void				init();
   void				setPause(bool state);
-  void				addForceToObj(pnuint nb, pnfloat x, pnfloat y, pnfloat z, pnfloat duration);
-
-  //////////////////////////////////////////////////////////////////////////
 
   void				createSimulation();
   void				destroySimulation();
   void*				getSimulation();
 
-  //////////////////////////////////////////////////////////////////////////
-
   void				setAllPhysicalObjectsStatic(bool state);
 
   //////////////////////////////////////////////////////////////////////////
+  // Internal
 
+  void*				getEventHandler();
   pnfloat			getElapsedTime();
   void				mapEnded(pnEventType type, PNObject* source, PNEventData* data);
   void				frameStarted(pnEventType type, PNObject* source, PNEventData* data);

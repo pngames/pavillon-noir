@@ -79,7 +79,7 @@ int	  PNGameMap::_parseStaticEntity(xmlNode* node)
 	pnerror(PN_LOGLVL_DEBUG, "%s : %s", "PNGameMap - New static entity", xmlGetProp((xmlNodePtr)node, (const xmlChar *)"mdref"));
   }
 
-  /* FIXME : creer le BSP via le module BSP */
+  /* FIXME : was supposed to load BSP files */
 
   return PNEC_SUCCESS;
 }
@@ -131,9 +131,12 @@ int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
   // physical settings
   if (object->getPhysicalObject())
   {
+	// set the object status (static/dynamic)
 	bool isStatic = (!strcmp((const char*)xmlGetProp(current, (const xmlChar *)"envtype"), "dynamic"))?false:true;
 	object->getPhysicalObject()->setStatic(isStatic);
+	// set the physical object coordinates
 	object->getPhysicalObject()->setCoord(object->getCoord());
+	// set the physical object orientation
 	object->getPhysicalObject()->setOrient(object->getOrient());
   }
 

@@ -5,6 +5,6 @@
   <listmaterials>
     <material path="JiveImportBox_02_02 - Par defaut.pnt" />
   </listmaterials>
-  <physics path="JiveImportBox_02.pnp"/>
+  <physics path="JiveImportBox_02.pnp" />
 </object>
 
