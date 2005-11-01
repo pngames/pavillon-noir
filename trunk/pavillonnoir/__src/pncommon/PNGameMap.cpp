@@ -33,6 +33,7 @@
 #include "pndefs.h"
 #include "pnimport.h"
 #include "pnresources.h"
+
 #include "PN3DCamera.hpp"
 #include "PN3DSkeletonObject.hpp"
 #include "PNPhysicsInterface.hpp"
@@ -43,8 +44,10 @@
 #include "PNIAGraph.hpp"
 #include "PNCharacter.hpp"
 
-#include "PNGameMap.hpp"
+#include "pnxml.h"
+#include "pno_format.h"
 
+#include "PNGameMap.hpp"
 
 namespace fs = boost::filesystem;
 using namespace PN;
@@ -70,69 +73,79 @@ PNGameMap::getEntityList() const
   return _entityList;
 }
 
-// FIXME : UNUSED FUNCTION
-
-int	  PNGameMap::_parseStaticEntity(xmlNode* node)
+pnint
+PNGameMap::_unserializeEntity(xmlNode* node)
 {
-  for (xmlNodePtr current = node; current->next; current = current->next)
-  {
-	pnerror(PN_LOGLVL_DEBUG, "%s : %s", "PNGameMap - New static entity", xmlGetProp((xmlNodePtr)node, (const xmlChar *)"mdref"));
-  }
-
-  /* FIXME : was supposed to load BSP files */
-
-  return PNEC_SUCCESS;
-}
-
-
-int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
-{
-  xmlNodePtr  current = node;
-  std::string id;
-  std::string className;
+  std::string id = (char *)xmlGetProp(node, PNXML_ID_ATTR);
+  std::string className = (char *)xmlGetProp(node, PNXML_CLASS_ATTR);
 
   //////////////////////////////////////////////////////////////////////////
 
-  id = (char *)xmlGetProp(current, (const xmlChar *)"id");
   if (_entityList.find(id) != _entityList.end())
   {
 	pnerror(PN_LOGLVL_ERROR, "An object with id: [%s] already exists", id.c_str());
+
 	return PNEC_ERROR;
   }
-  className = (char *)xmlGetProp(current, (const xmlChar *)"class");
-  addToMap(className, id); //cree et stocke l'objet a la fois dans le script et le fw
-  PN3DObject*  object = _entityList[id]; //recurepere l'instance du fw 
 
   //////////////////////////////////////////////////////////////////////////
 
+  addToMap(className, id);
+
+  PN3DObject*  object = _entityList[id];
+
+  //////////////////////////////////////////////////////////////////////////
+  
   // create boost path
-  fs::path  file(DEF::objectFilePath + (const char*)xmlGetProp(current, (const xmlChar *)"mdref"), fs::native);
+  fs::path  file(DEF::objectFilePath + (const char*)xmlGetProp(node, PNXML_MODELREFERENCE_ATTR), fs::native);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  pnint		error = -1;
+  pnbool	objLoaded = false;
+
+  for (xmlNodePtr n = node->children; n != NULL; n = n->next)
+  {
+	if (PNO_XMLNODE_ROOT == (const char*)n->name)
+	{
+	  error = object->unserializeFromXML(n);
+	  break;
+	}
+  }
+
+  if (error == -1)
+	error = object->unserializeFromFile(file);
+
+  // check for errors
+  if (error != PNEC_SUCCESS)
+  {
+	pnerror(PN_LOGLVL_ERROR, "%s : %s", (const char*)xmlGetProp(node, PNXML_MODELREFERENCE_ATTR), pnGetErrorString(error));
+
+	return error;
+  }
+
+  //////////////////////////////////////////////////////////////////////////
 
   // set coordinates
-  pnfloat x = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"x"))));
-  pnfloat y = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"y"))));
-  pnfloat z = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"z"))));
+  pnfloat x = (pnfloat)(atof((const char *)(xmlGetProp(node, PNXML_COORDX_ATTR))));
+  pnfloat y = (pnfloat)(atof((const char *)(xmlGetProp(node, PNXML_COORDY_ATTR))));
+  pnfloat z = (pnfloat)(atof((const char *)(xmlGetProp(node, PNXML_COORDZ_ATTR))));
   object->setCoord(x, y, z);
 
   // set orientation
-  pnfloat xx = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"xx"))));
-  pnfloat yy = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"yy"))));
-  pnfloat zz = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"zz"))));
-  pnfloat ww = (float)(atof((const char *)(xmlGetProp(current, (const xmlChar *)"ww"))));
+  pnfloat xx = (pnfloat)(atof((const char *)(xmlGetProp(node, PNXML_ROTX_ATTR))));
+  pnfloat yy = (pnfloat)(atof((const char *)(xmlGetProp(node, PNXML_ROTY_ATTR))));
+  pnfloat zz = (pnfloat)(atof((const char *)(xmlGetProp(node, PNXML_ROTZ_ATTR))));
+  pnfloat ww = (pnfloat)(atof((const char *)(xmlGetProp(node, PNXML_ROTW_ATTR))));
   object->setOrient(xx, yy, zz, ww);
 
-  // load data files (model, skeleton, materials, physics, etc)
-  pnint obj_error = object->unserializeFromFile(file);
-
-  // check for errors
-  if (obj_error != PNEC_SUCCESS)
-	pnerror(PN_LOGLVL_ERROR, "%s : %s", (const char*)xmlGetProp(current, (const xmlChar *)"mdref"), pnGetErrorString(obj_error));
+  //////////////////////////////////////////////////////////////////////////
 
   // physical settings
-  if (object->getPhysicalObject())
+  if (object->getPhysicalObject() != NULL)
   {
 	// set the object status (static/dynamic)
-	bool isStatic = (!strcmp((const char*)xmlGetProp(current, (const xmlChar *)"envtype"), "dynamic"))?false:true;
+	bool isStatic = (!strcmp((const char*)xmlGetProp(node, PNXML_ENVTYPE_ATTR), "dynamic")) ? false : true;
 	object->getPhysicalObject()->setStatic(isStatic);
 	// set the physical object coordinates
 	object->getPhysicalObject()->setCoord(object->getCoord());
@@ -140,35 +153,19 @@ int	  PNGameMap::_parseDynamicEntity(xmlNode* node)
 	object->getPhysicalObject()->setOrient(object->getOrient());
   }
 
-  for (current = current->children; current != NULL; current = current->next)
-  { 
-	if (current->type != XML_ELEMENT_NODE)
-	  continue;
-  }
+  return PNEC_SUCCESS;
+}
 
-  //  if (object->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
-  //	((PNCharacter*)object)->buildGraph(*_wpFile);
+pnint
+PNGameMap::_unserializeNode(xmlNode* node)
+{
+  if (strcmp((const char*)PNXML_ENTITY_MKP, (const char*)node->name) == 0)
+	_unserializeEntity(node);
 
   return PNEC_SUCCESS;
 }
 
-int	  PNGameMap::_parseListEntities(xmlNode* node)
-{
-  //  xmlChar*	  attr = NULL;
-  xmlNodePtr  current = node;
-  pnint error = PNEC_SUCCESS;
-
-  for (; current != NULL; current = current->next)
-  {
-	if (current->type != XML_ELEMENT_NODE)
-	  continue;
-	error = _parseDynamicEntity(current);
-	if (error != PNEC_SUCCESS)
-	  break;
-	pnerror(PN_LOGLVL_DEBUG, "PNGameMap - null static attr : %s", current->name);
-  }
-  return error;
-}
+//////////////////////////////////////////////////////////////////////////
 
 int	PNGameMap::unserializeFromXML(xmlNode* node)
 {
@@ -179,19 +176,22 @@ int	PNGameMap::unserializeFromXML(xmlNode* node)
 
   pnint	error = PNEC_SUCCESS;
 
-  //pnerror(PN_LOGLVL_DEBUG, "%s : %s", "PNGameMap - node name", root->name);
-
   //////////////////////////////////////////////////////////////////////////
   // LISTENTITIES
 
-  if (!strcmp((const char*)root->name, LISTENTITIES_MARKUP))
+  if (!strcmp((const char*)root->name, LISTENTITIES_MARKUP) && root->children != NULL)
   {
-	for (current = root->children; current != NULL && current->type != XML_ELEMENT_NODE; current = current->next)
+	for (current = root->children; current != NULL; current = current->next)
 	{
-	  //if (current->type != XML_ELEMENT_NODE)
+	  error = _unserializeNode(current);
+
+	  if (error != PNEC_SUCCESS)
+		break ;
+
+	  /*//if (current->type != XML_ELEMENT_NODE)
 	  //continue;
 	  if ((error = _parseListEntities(current)) != PNEC_SUCCESS)
-		return error;
+		return error;*/
 	}
   }
 
@@ -229,17 +229,9 @@ pnint PNGameMap::unserializeFromFile(const fs::path& dir)
   return error;
 }
 
-/*
-std::map<std::string, PN3DObject *>& PNGameMap::getEntityList()
-{
-return _entityList;
-}
-*/
-
 void PNGameMap::addToMap(const std::string& entityName,const std::string& id)
 {
-  PN3DSkeletonObject* entity = new PN3DSkeletonObject();
-  _entityList[id] = entity;
+  _entityList[id] = new PN3DSkeletonObject();
 }
 
 void PNGameMap::clear()

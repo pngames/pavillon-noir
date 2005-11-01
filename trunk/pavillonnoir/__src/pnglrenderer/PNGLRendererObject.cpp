@@ -237,7 +237,7 @@ PNGLRendererObject::renderAllFaces(pnbool clear)
 		else if (tex != currentTexture)
 		{
 		  glEnable(GL_TEXTURE_2D);
-		  glBindTexture(GL_TEXTURE_2D, tex->getOGLTexid());
+		  tex->bind();
 
 		  currentTexture = tex;
 		}

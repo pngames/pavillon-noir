@@ -441,7 +441,6 @@ long PNEditor::onCmdOpen(FXObject*, FXSelector, void*)
 	buildWPGroup();
 	if (_wpenabled)
 	  genScene->append(wpGroup);
-
   }
 
   return 1;
