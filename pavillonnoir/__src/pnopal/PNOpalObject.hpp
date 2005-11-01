@@ -43,6 +43,12 @@
 #include "PNPhysicalObject.hpp"
 
 namespace PN {
+
+  typedef enum {
+	OPALBOX = 1,
+	OPALSPHERE = 2
+  }		  opaltypes;
+
   class PNOpalObject : public PNPhysicalObject
   {
   private:
@@ -55,14 +61,16 @@ namespace PN {
 	opal::Solid*			  _solid;
 	opal::Simulator*		  _sim;
 
-	// deprecated
+	// deprecated (or not at all)
 	pnpoint3f*				  _vertBuffer;
 	pnpoint2ui*				  _idBuffer;
 	PNRendererObject*		  _robject;
 
 	// previously deprecated
 	pnfloat					  _aabb[6];
+	pndouble				  _radius;
 	PNPoint					  _offset;
+	opaltypes				  _type;
 	
   public:
 	PNOpalObject(opal::Simulator* sim);
