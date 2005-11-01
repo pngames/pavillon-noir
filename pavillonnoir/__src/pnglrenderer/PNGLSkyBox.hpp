@@ -46,6 +46,9 @@ private:
   ~PNGLSkyBox(void);
 public:
   static PNGLSkyBox*	getInstance();
+
+  pnbool				isEnabled();
+
   //////////////////////////////////////////////////////////////////////////
 
   /// Set the skyBox enabled or disabled

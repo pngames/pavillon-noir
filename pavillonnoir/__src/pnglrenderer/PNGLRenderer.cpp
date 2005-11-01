@@ -507,27 +507,7 @@ PNGLRenderer::deleteTexture(PNGLTexture* texture)
 //////////////////////////////////////////////////////////////////////////
 
 void
-PNGLRenderer::renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord/* = PNPoint::ZERO*/)
-{
-  glPushMatrix();
-  {
-	glTranslatef(coord.x, coord.y, coord. z);
-
-	//////////////////////////////////////////////////////////////////////////
-
-	glColor4fv(color);
-	glMaterialfv(GL_FRONT,  GL_DIFFUSE, color);
-
-	GLUquadricObj* quad = gluNewQuadric();
-	gluQuadricDrawStyle(quad, (GLenum)GLU_FILL);
-	gluSphere(quad, radius, slices, stacks);
-	gluDeleteQuadric(quad);
-  }
-  glPopMatrix();
-}
-
-void
-PNGLRenderer::renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat* color, const PNPoint& coord/* = PNPoint::ZERO*/)
+PNGLRenderer::renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord/* = PNPoint::ZERO*/, pnbool outside/* = true*/)
 {
   glPushMatrix();
   {
@@ -536,7 +516,55 @@ PNGLRenderer::renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat
 	//////////////////////////////////////////////////////////////////////////
 
 	glColor4fv(color);
-	glMaterialfv(GL_FRONT,  GL_DIFFUSE, color);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
+
+	GLUquadricObj* quad = gluNewQuadric();
+	gluQuadricDrawStyle(quad, (GLenum)GLU_FILL);
+	if (!outside)
+	  gluQuadricOrientation(quad, GLU_INSIDE);
+
+	gluSphere(quad, radius, slices, stacks);
+	
+	gluDeleteQuadric(quad);
+  }
+  glPopMatrix();
+}
+
+void
+PNGLRenderer::renderCylinder(pndouble baseRadius, pndouble topRadius, pndouble height, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord/* = PNPoint::ZERO*/, pnbool outside/* = true*/)
+{
+  glPushMatrix();
+  {
+	glTranslatef(coord.x, coord.y, coord.z);
+
+	//////////////////////////////////////////////////////////////////////////
+
+	glColor4fv(color);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
+
+	GLUquadricObj* quad = gluNewQuadric();
+	gluQuadricDrawStyle(quad, (GLenum)GLU_FILL);
+	if (!outside)
+	  gluQuadricOrientation(quad, GLU_INSIDE);
+
+	gluCylinder(quad, baseRadius, topRadius, height, slices, stacks);
+
+	gluDeleteQuadric(quad);
+  }
+  glPopMatrix();
+}
+
+void
+PNGLRenderer::renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat* color, const PNPoint& coord/* = PNPoint::ZERO*/, pnbool outside/* = true*/)
+{
+  glPushMatrix();
+  {
+	glTranslatef(coord.x, coord.y, coord.z);
+
+	//////////////////////////////////////////////////////////////////////////
+
+	glColor4fv(color);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
 
 	pnfloat xmin =-0.5f * width;
 	pnfloat xmax = 0.5f * width;
@@ -545,9 +573,11 @@ PNGLRenderer::renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat
 	pnfloat zmin =-0.5f * depth;
 	pnfloat zmax = 0.5f * depth;
 
+	pnint	out = !outside ? -1 : 1;
+
 	glBegin(GL_TRIANGLE_STRIP);
 	{
-	  glNormal3f(0.0f, 0.0f, -1.0f);
+	  glNormal3f(0.0f, 0.0f, -1.0f * out);
 	  glVertex3f(xmin, ymin, zmin);
 	  glVertex3f(xmin, ymax, zmin);
 	  glVertex3f(xmax, ymin, zmin);
@@ -557,7 +587,17 @@ PNGLRenderer::renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat
 
 	glBegin(GL_TRIANGLE_STRIP);
 	{
-	  glNormal3f(1.0f, 0.0f, 0.0f);
+	  glNormal3f(0.0f, 0.0f, 1.0f * out);
+	  glVertex3f(xmax, ymin, zmax);
+	  glVertex3f(xmax, ymax, zmax);
+	  glVertex3f(xmin, ymin, zmax);
+	  glVertex3f(xmin, ymax, zmax);
+	}
+	glEnd();
+
+	glBegin(GL_TRIANGLE_STRIP);
+	{
+	  glNormal3f(1.0f * out, 0.0f, 0.0f);
 	  glVertex3f(xmax, ymin, zmin);
 	  glVertex3f(xmax, ymax, zmin);
 	  glVertex3f(xmax, ymin, zmax);
@@ -567,17 +607,7 @@ PNGLRenderer::renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat
 
 	glBegin(GL_TRIANGLE_STRIP);
 	{
-	  glNormal3f(0.0f, 0.0f, 1.0f);
-	  glVertex3f(xmax, ymin, zmax);
-	  glVertex3f(xmax, ymax, zmax);
-	  glVertex3f(xmin, ymin, zmax);
-	  glVertex3f(xmin, ymax, zmax);
-	}
-	glEnd();
-
-	glBegin(GL_TRIANGLE_STRIP);
-	{
-	  glNormal3f(-1.0f, 0.0f, 0.0f);
+	  glNormal3f(-1.0f * out, 0.0f, 0.0f);
 	  glVertex3f(xmin, ymin, zmax);
 	  glVertex3f(xmin, ymax, zmax);
 	  glVertex3f(xmin, ymin, zmin);
@@ -587,7 +617,7 @@ PNGLRenderer::renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat
 
 	glBegin(GL_TRIANGLE_STRIP);
 	{
-	  glNormal3f(0.0f, 1.0f, 0.0f);
+	  glNormal3f(0.0f, 1.0f * out, 0.0f);
 	  glVertex3f(xmin, ymax, zmin);
 	  glVertex3f(xmin, ymax, zmax);
 	  glVertex3f(xmax, ymax, zmin);
@@ -597,7 +627,7 @@ PNGLRenderer::renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat
 
 	glBegin(GL_TRIANGLE_STRIP);
 	{
-	  glNormal3f(0.0f, -1.0f, 0.0f);
+	  glNormal3f(0.0f, -1.0f * out, 0.0f);
 	  glVertex3f(xmin, ymin, zmax);
 	  glVertex3f(xmin, ymin, zmin);
 	  glVertex3f(xmax, ymin, zmax);
@@ -620,8 +650,8 @@ PNGLRenderer::renderLink(const PNPoint& p1, const PNPoint& p2, const pnfloat* co
 	glVertex3fv(p1);
 	glVertex3fv(p2);
 
-	// draw righ arrow
-	// draw left arrow
+	// TODO : draw right arrow
+	// TODO : draw left arrow
   }
   glEnd();
 
