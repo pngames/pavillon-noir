@@ -19,21 +19,5 @@
     </object>
   </entity>
   <entity id="Player" label="pirate1" mdref="pirate.pno" envtype="dynamic" objtype="object" class="PNPlayer" x="-349.293274" y="-82.972862" z="-161.569168" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
-    <object>
-      <model path="pirate.pnm"/>
-      <listmaterials>
-        <material path="pirate_foot.tga.pnt"/>
-        <material path="pirate_leg.tga.pnt"/>
-        <material path="pirate_pants.tga.pnt"/>
-        <material path="pirate_handback.tga.pnt"/>
-        <material path="pirate_handfront2.tga.pnt"/>
-        <material path="pirate_hankerchief.tga.pnt"/>
-        <material path="pirate_matt.tga.pnt"/>
-        <material path="pirate_chest.tga.pnt"/>
-        <material path="pirate_arm.tga.pnt"/>
-        <material path="pirate_sleeve.tga.pnt"/>
-        <material path="pirate_shirt.tga.pnt"/>
-      </listmaterials>
-    </object>
-  </entity>
+   </entity>
 </listentities>
