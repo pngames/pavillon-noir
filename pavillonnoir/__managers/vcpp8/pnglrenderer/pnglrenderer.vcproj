@@ -226,6 +226,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pnglrenderer\PNGLTextureManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pnglrenderer\PNGLVideo.cpp"
 				>
 			</File>
@@ -285,6 +289,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pnglrenderer\PNGLTexture.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pnglrenderer\PNGLTextureManager.hpp"
 				>
 			</File>
 			<File

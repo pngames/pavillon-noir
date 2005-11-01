@@ -55,7 +55,6 @@ namespace PN
 class PNRendererObject;
 class PN3DObject;
 class PNFace;
-class PNGLTexture;
 class PNEventData;
 
 #define PNGL_MAX_FACES		4096
@@ -107,7 +106,7 @@ public:
   void						disable(pnrenderflag flag);
 
   //////////////////////////////////////////////////////////////////////////
-  
+public:
   PNRendererObject*			newObj();
 
   PNRendererObject*			newObj(
@@ -138,6 +137,8 @@ public:
   PNRenderMaterial*			newMaterial();
   void						deleteMaterial(PNRenderMaterial* material);
 
+  void						cleanSceneTextures();
+
   //////////////////////////////////////////////////////////////////////////
   // MAIN
   //////////////////////////////////////////////////////////////////////////
@@ -146,11 +147,6 @@ public:
   void						setSDLFlags(int *flags, bool fullscreen);
 
   void						initGL(GLsizei width, GLsizei height);
-
-  //////////////////////////////////////////////////////////////////////////
-  
-  PNGLTexture*				newTexture(void);
-  void						deleteTexture(PNGLTexture* texture);
 
   //////////////////////////////////////////////////////////////////////////
   
