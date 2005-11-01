@@ -38,6 +38,8 @@
 #include "pnresources.h"
 
 #include "PNGUIGame.hpp"
+#include "PNGUIStateManager.hpp"
+#include "PNGUIEscMenu.hpp"
 #include "PN3DCamera.hpp"
 
 #include "PNConsole.hpp"
@@ -357,6 +359,7 @@ void  PNGUIGame::_setScriptingDebug(const std::string&, std::istream& i)
 }
 
 //////////////////////////////////////////////////////////////////////////
+PNGUIGame*	PNGUIGame::_instance = NULL;
 
 PNGUIGame::PNGUIGame()
 {
@@ -388,8 +391,18 @@ PNGUIGame::~PNGUIGame()
   _rootWin->destroy();
 }
 
+PNGUIGame*	PNGUIGame::getInstance()
+{
+  if (_instance == NULL)
+	_instance = new PNGUIGame();
+  return _instance;
+}
+
 void PNGUIGame::startGUI()
 {
+  PNGUIStateManager::getInstance()->setMainState(PNGUIStateManager::INGAME);
+  PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::NONE);
+
   //////////////////////////////////////////////////////////////////////////
   PNConsole::addFonction("loadmap", &PNGUIGame::_commandLoadMap, "Load game map, parameter : string MapFileName");
   //////////////////////////////////////////////////////////////////////////
@@ -415,6 +428,7 @@ void PNGUIGame::startGUI()
   PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_OFF, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
+   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
 
   show();
 }
@@ -452,8 +466,19 @@ void PNGUIGame::resetGUI()
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_CONSOLE, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_GRAB_OFF, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
 
   hide();
+}
+
+void  PNGUIGame::inputHandleEsc(pnEventType type, PNObject* source, PNEventData* data)
+{
+  if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME &&
+	PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
+  {
+	resetGUI();
+	PNGUIEscMenu::getInstance()->startGUI();
+  }
 }
 
 /*!

@@ -58,6 +58,7 @@ namespace PN{
 	  STATE_SDL_GRAB	= 0x000001 << 1,
 	}				inputHandleModifier;
   private:
+	static	PNGUIGame* _instance;
 	int				_inputHandleModifier;
 	CEGUI::Window* _rootWin;
 	CEGUI::ProgressBar*	_lifeBar;
@@ -72,6 +73,7 @@ namespace PN{
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
+	static PNGUIGame*	getInstance();
 	void  show();
 	void  hide();
 	CEGUI::Window*  getWindow();
@@ -85,6 +87,7 @@ namespace PN{
 	bool eventMouseClickdHandler(const CEGUI::EventArgs& e);
 	bool eventMouseWheel(const CEGUI::EventArgs& e);
 	void  inputHandleModifierState(pnEventType type, PNObject* source, PNEventData* data);
+	void  inputHandleEsc(pnEventType type, PNObject* source, PNEventData* data);
 	static void  test(const std::string& tmp, std::istream& tmp2);
 
 	//////////////////////////////////////////////////////////////////////////

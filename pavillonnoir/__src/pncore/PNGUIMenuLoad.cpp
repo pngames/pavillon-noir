@@ -32,6 +32,9 @@
 
 
 #include "PNGUIMenuLoad.hpp"
+#include "PNGUIMenuRoot.hpp"
+#include "PNGUIEscMenu.hpp"
+#include "PNGUIStateManager.hpp"
 #include "PNGameEventData.hpp"
 #include "PNConsole.hpp"
 #include "PNGUIMsgBox.hpp"
@@ -74,6 +77,14 @@ namespace PN
 
   void PNGUIMenuLoad::startGUI()
   {
+	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::MENUROOT&& 
+	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
+	  PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::MENULOAD);
+
+	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME && 
+	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::MENUPAUSE)
+	  PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::PAUSE_MENULOAD);
+
 	show();
   }
 
@@ -128,12 +139,22 @@ namespace PN
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
+	resetGUI();
 	if (_cbBox->getFirstSelectedItem() != NULL)
 	{
 	  PNGameLoadMapEventData* data = new PNGameLoadMapEventData();
 	  data->mapName =  DEF::mapsFilePath;
 	  data->mapName += _cbBox->getFirstSelectedItem()->getText().c_str();
-	  PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_NEW_GAME, 0, data);
+	 // PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_NEW_GAME, 0, data);
+
+	  if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::MENUROOT &&
+		PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::MENULOAD)
+		PNGUIStateManager::getInstance()->LoadManager(data, PNGUIStateManager::INGAME);
+	 
+	  if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME &&
+		PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::PAUSE_MENULOAD)
+		PNGUIStateManager::getInstance()->LoadManager(data, PNGUIStateManager::INGAME);
+
 	  delete (data);
 	}
 	else
@@ -150,7 +171,14 @@ namespace PN
   {	
 	if (_mainSheet->isMuted() == true)
 	  return true;
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_LOAD, NULL, NULL);
+	resetGUI();
+	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::MENUROOT&& 
+	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::MENULOAD)
+	  PNGUIMenuRoot::getInstance()->startGUI();
+
+	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME && 
+	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::PAUSE_MENULOAD)
+	  PNGUIEscMenu::getInstance()->startGUI();
 	return true;
   }
 

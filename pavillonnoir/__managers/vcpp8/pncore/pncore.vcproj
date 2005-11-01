@@ -243,6 +243,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncore\PNGUIStateManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncore\PNLoadPlugins.cpp"
 				>
 			</File>
@@ -302,6 +306,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncore\PNGUIMsgBox.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncore\PNGUIStateManager.hpp"
 				>
 			</File>
 			<File
