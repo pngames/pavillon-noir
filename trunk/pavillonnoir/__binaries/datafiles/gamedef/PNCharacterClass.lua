@@ -281,6 +281,31 @@ Add the entity in the seen_entities list
 			self.idleTime = 0
 		end
 	end
+	
+--------------------------------------------------------------------------------
+    function OBJ:onRun(state)
+		if (state == ACTION_STATE.START)then
+		    self.attitude = CHARACTER_ATTITUDE.RUNNING
+		    self.actualSpeed = self.runningSpeed
+		else
+		    self.attitude = CHARACTER_ATTITUDE.WALKING
+		    self.actualSpeed = self.walkingSpeed
+		end
+		self:setMovingSpeed(self.actualSpeed)
+		self:launchGoodAnimation()
+    end	
+--------------------------------------------------------------------------------
+    function OBJ:onCrouch(state)
+		if (state == ACTION_STATE.START)then
+		    self.attitude = CHARACTER_ATTITUDE.CROUCHING
+		    self.actualSpeed = self.walkingSpeed
+		else
+		    self.attitude = CHARACTER_ATTITUDE.WALKING
+		    self.actualSpeed = self.walkingSpeed
+		end
+		self:setMovingSpeed(self.actualSpeed)
+		self:launchGoodAnimation()
+    end	
 --------------------------------------------------------------------------------
 	function OBJ:getCharacType()
 		return self.shownCharactType
@@ -316,10 +341,11 @@ Add the entity in the seen_entities list
 				return	
 			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
 				pnprint ("walk left\n")
-				self:startAnimation(CHARACTER_ANIM.WALK_R, 0)
+				self:startAnimation(CHARACTER_ANIM.WALK_L, 0)
 				return		
 			end 
 		elseif (self.attitude == CHARACTER_ATTITUDE.RUNNING) then
+		    pnprint ("Run\n")
 			if 	   (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
 				self:startAnimation(CHARACTER_ANIM.RUN_L, 0)
 				return
@@ -346,6 +372,7 @@ Add the entity in the seen_entities list
 				return		
 			end 		
 		elseif (self.attitude == CHARACTER_ATTITUDE.CROUCHING) then
+		    pnprint ("Crouch\n")
 			if 	   (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
 				self:startAnimation(CHARACTER_ANIM.CROUCH_L, 0)
 				return
