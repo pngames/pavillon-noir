@@ -100,8 +100,15 @@ void PNOpalObject::render()
   */
   pnfloat					  color[4] = {1.0f, 1.0f, 1.0f, 0.3f};
 
-  opal::Point3r point = _solid->getTransform().getPosition();
-  PNRendererInterface::getInstance()->renderBox(_aabb[1] - _aabb[0], _aabb[3] - _aabb[2], _aabb[5] - _aabb[4], color, _offset);	
+  switch (_type) 
+  {
+  case OPALBOX : 
+	PNRendererInterface::getInstance()->renderBox(_aabb[1] - _aabb[0], _aabb[3] - _aabb[2], _aabb[5] - _aabb[4], color, _offset);
+	break;
+  case OPALSPHERE :
+	PNRendererInterface::getInstance()->renderSphere(_radius, 20, 20, color, _offset);
+	break;
+  }	
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -244,24 +251,32 @@ pnint		PNOpalObject::unserializeFromFile(const boost::filesystem::path& file)
 
   // FIXME : get the first shape (supposed to be Boite01)
   if (_solid = _blueprintInstance.getSolid("Boite01"))
-	;
+  {
+	// store the shape type
+	_type = OPALBOX;
+
+	// get the AABB dimensions
+	_solid->getData().getShapeData(0)->getLocalAABB(_aabb);
+
+	// enlarge the local AABB (make the AABB rendering a little bigger)
+	for (int i = 0; i < 6; i++)
+	{
+	  if (_aabb[i] < 0)
+		_aabb[i] -= 1.0;
+	  else
+		_aabb[i] += 1.0;
+	}
+  }
   else 
+  {
 	_solid = _blueprintInstance.getSolid("Sphere01");
+	_type = OPALSPHERE;
+	opal::SphereShapeData* shapeData = (opal::SphereShapeData*)_solid->getData().getShapeData(0);
+	_radius = shapeData->radius + 1.0;
+  }
 
   if (!_solid)
 	return PNEC_NOT_INITIALIZED;
-
-  // get the AABB dimensions
-  _solid->getData().getShapeData(0)->getLocalAABB(_aabb);
-
-  // enlarge the local AABB (make the AABB rendering a little bigger)
-  for (int i = 0; i < 6; i++)
-  {
-	if (_aabb[i] < 0)
-	  _aabb[i] -= 1.0;
-	else
-	  _aabb[i] += 1.0;
-  }
 
   // get the solid translation (will allow the renderer to represent the AABB at the good coords)
   opal::real* translation = _solid->getTransform().getTranslation().getData();
