@@ -137,6 +137,16 @@ function gameMap:onMouseMove(xdelta, ydelta)
 	end 
 end
 
+function gameMap:onRun(srcId, targId, state)
+    pnprint("LUA GameMap:onRun()\n")
+    self.entities.all[targId]:onRun(state)
+end
+
+function gameMap:onCrouch(srcId, targId, state)
+    pnprint("LUA GameMap:onCrouch()\n")
+    self.entities.all[targId]:onCrouch(state)
+end
+
 function gameMap:onFrustrumIn(sourceId, targetId)
     self.entities.all[sourceId]:onFrustrumIn(self.entities.all[targetId])
 end 

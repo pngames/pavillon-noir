@@ -640,10 +640,17 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
   case CEGUI::Key::LeftControl :
   case CEGUI::Key::RightControl :
 	std::cout << "Control";
-	cam->setTargetMode(PN3DObject::TMODE_VIEW_ABS_LOCKED);
-	cam->setTarget(obj);
+	//cam->setTargetMode(PN3DObject::TMODE_VIEW_ABS_LOCKED);
+	//cam->setTarget(obj);
+    PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Crouch","Player","null",true));
 	break;
-
+  case CEGUI::Key::LeftShift :
+  case CEGUI::Key::RightShift :
+	std::cout << "shift";
+	//cam->setTarget(NULL);
+	//cam->setTargetMode(PN3DObject::TMODE_FREE);
+	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Run","Player","null",true));
+    break;
 	//////////////////////////////////////////////////////////////////////////
 
   case CEGUI::Key::PageUp : //key "q" step left
@@ -775,10 +782,17 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
   case CEGUI::Key::LeftControl :
   case CEGUI::Key::RightControl :
 	std::cout << "Control";
-	cam->setTarget(NULL);
-	cam->setTargetMode(PN3DObject::TMODE_FREE);
-	break;
-
+	//cam->setTarget(NULL);
+	//cam->setTargetMode(PN3DObject::TMODE_FREE);
+	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Crouch","Player","null",false));
+    break;
+  case CEGUI::Key::LeftShift :
+  case CEGUI::Key::RightShift :
+	std::cout << "shift";
+	//cam->setTarget(NULL);
+	//cam->setTargetMode(PN3DObject::TMODE_FREE);
+	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Run","Player","null",false));
+    break;
   default:
 	std::cout << "not managed key";
 	break;
