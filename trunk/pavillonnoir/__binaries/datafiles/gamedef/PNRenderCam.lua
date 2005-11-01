@@ -96,6 +96,10 @@
       if (isInstanceOf(self, "PN3DCamera") == true and self.isRenderCam == false) then 
          pnprint("PNRenderCam:MouseLook\n")
       end
+      	
+    	--self:subTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
+    	--PNRenderCam:addTargetMode(PN3DObject.TMODE_DISTANCE_LOCKED)
+    	--PNRenderCam:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 		local obj = self:getPositionTarget()		
 		yd = 0.0
 		xd = 0.0
@@ -119,12 +123,16 @@
 		--pnprint("\nsize: " .. size .. "\nxd: " .. xd .. "\nyd: " .. yd .. "\nxdelta: " .. xdelta .. "\nydelta: " .. ydelta .. "\n")
 		----------------------------
 		self:rotatePitchRadians(math.rad(yd))
-		if ((obj ~= nil) and (obj:getId() == "Player")) then
-         pnprint("player rotate\n")
-			obj:rotateYawRadians(math.rad(xd))
-		end
+		--if ((obj ~= nil) and (obj:getId() == "Player")) then
+         --pnprint("player rotate\n")
+		--	obj:rotateYawRadians(math.rad(xd))
+		--end
        pnprint("PNRenderCamera: rotate\n")
 	    self:rotateYawRadians(math.rad(xd))
+	    
+    	--self:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
+    	--PNRenderCam:addTargetMode(PN3DObject.TMODE_DISTANCE_LOCKED)
+    	--PNRenderCam:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 		--self.lastYdelta = yd
 		--self.lastXdelta = xd
 	end

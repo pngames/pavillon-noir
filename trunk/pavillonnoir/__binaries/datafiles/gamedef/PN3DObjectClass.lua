@@ -12,7 +12,8 @@ function PN3DObjectClass(id)
        self:update(deltaTime)
     end
 
-
+	function OBJ:onMouseLook(y, x)
+	end
 ------------------------------ MOVE -----------------------
 	function OBJ:onMoveForward(state)
 		pnprint("LUA PN3DObject:onMoveForward()\n")	

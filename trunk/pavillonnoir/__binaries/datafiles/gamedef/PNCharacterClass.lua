@@ -9,6 +9,41 @@ CHARACTER_TYPE={CIVILAN=0,
 				PIRATE=2
 				}
 
+CHARACTER_ANIM={IDLE=0,
+				WALK_F=1,
+				WALK_B=2,
+				WALK_L=3,
+				WALK_R=4,
+				RUN_F=5,
+				RUN_B=6,
+				RUN_L=7,
+				RUN_R=8,
+				CROUCH=9,
+				CROUCH_F=10,
+				CROUCH_B=11,
+				CROUCH_L=12,
+				CROUCH_R=13,
+				JUMP=14,
+				DIE=15,
+				STRIKE_1=16
+				}
+								
+CHARACTER_ATTITUDE={
+					WALKING=0,
+				  	RUNNING=1,
+				  	CROUCHING=2,
+				  	JUMPING=3
+				  }
+				  
+CHARACTER_DIR_LONG={NONE=0,
+					FORWARD=1,
+					BACKWARD=-1
+					}
+					
+CHARACTER_DIR_LATE={NONE=0,
+					LEFT=1,
+				  	RIGHT=-1
+				    }				  
 function PNCharacterClass(id)
 	----------inheritance-----------------
 	local OBJ = inheritFrom({className = "PNCharacter"}, PN3DSkeletonObjectClass(id))
@@ -69,15 +104,17 @@ function PNCharacterClass(id)
 	OBJ.defaulRotateSpeed = 1.0
 	----------------------------------------------------------
 	--------------- Translations parameter -------------------	
-	OBJ.walkingSpeed = 1.0
-	OBJ.runningSpeed = 4.0
+	OBJ.walkingSpeed = 0.1
+	OBJ.runningSpeed = 0.4
 	
-	OBJ.isRunning = false
+	OBJ.attitude=CHARACTER_ATTITUDE.WALKING;
+	OBJ.dirLong= CHARACTER_DIR_LONG.NONE; -- longitudinal direction
+	OBJ.dirLate=CHARACTER_ATTITUDE.WALKING;	-- latteral direction
 	OBJ.actualSpeed = OBJ.walkingSpeed;
 	-----------------------------------------------------------
 	--------------- Animation parameters ---------------------- 
 	OBJ:setAnimSpeed(4.0)
-	OBJ:setEnableLoop(true)
+	OBJ.idleTime = 0
 -------------------------------------------------------------------------------
 ---------------------move order callback-----------------------
 --[[%
@@ -87,14 +124,14 @@ Call when someone tell the object to go backward
 %--]]	
 	function OBJ:onMoveForward(state)
 		pnprint(self.id .. ":onMoveForward=" .. state .. "\n")
-		self.__index:onMoveForward(state)
-		OBJ:setMovingSpeed(self.actualSpeed)	
+		OBJ:setMovingSpeed(self.actualSpeed)
+		self.__index:onMoveForward(state)	
 		if (state == ACTION_STATE.START) then
-			self:startAnimation(0, 0)
+			self.dirLong = CHARACTER_DIR_LONG.FORWARD
 		else
-			self:stopAnimation()
+			self.dirLong = CHARACTER_DIR_LONG.NONE
 		end 
-		
+		self:launchGoodAnimation()
 	end
 -------------------------------------------------------------------------------
 --[[%
@@ -108,12 +145,49 @@ Call when someone tell the object to go backward and start apropriate annimation
 		self.__index:onMoveBackward(state)
 		OBJ:setMovingSpeed(self.actualSpeed)	
 		if (state == ACTION_STATE.START) then
-			self:startAnimation(0, 0)
+			self.dirLong = CHARACTER_DIR_LONG.BACKWARD
 		else
-			self:stopAnimation()
+			self.dirLong = CHARACTER_DIR_LONG.NONE
 		end 
+		self:launchGoodAnimation()
 	end
 -------------------------------------------------------------------------------
+--[[%
+Call when someone tell the object to go Left
+@param state boolean
+	true -> start , false -> stop  
+%--]]	
+	function OBJ:onMoveLeft(state)
+		pnprint(self.id .. ":onMoveForLeft=" .. state .. "\n")
+		OBJ:setMovingSpeed(self.actualSpeed)
+		self.__index:onMoveLeft(state)	
+		if (state == ACTION_STATE.START) then
+			self.dirLate = CHARACTER_DIR_LATE.LEFT
+		else
+			self.dirLate = CHARACTER_DIR_LATE.NONE
+		end 
+		self:launchGoodAnimation()
+	end
+-------------------------------------------------------------------------------
+--[[%
+Call when someone tell the object to left and start apropriate animation 
+@param state boolean
+	true -> start , false -> stop  
+%--]]		
+	function OBJ:onMoveRight(state)
+		pnprint(self.id)
+		pnprint(self.id .. ":onMoveForRight=" .. state .. "\n")
+		self.__index:onMoveRight(state)
+		OBJ:setMovingSpeed(self.actualSpeed)	
+		if (state == ACTION_STATE.START) then
+			self.dirLate = CHARACTER_DIR_LATE.RIGHT
+		else
+			self.dirLate = CHARACTER_DIR_LATE.NONE
+		end 
+		self:launchGoodAnimation()
+	end
+-------------------------------------------------------------------------------
+
 --[[%
 Call when someone tell the object to rotate right
 @param state boolean
@@ -200,12 +274,110 @@ Add the entity in the seen_entities list
 	function OBJ:onUpdate(deltaTime)
 		self.view:update(deltaTime)
 		self.__index:update(deltaTime)
+		self.idleTime = self.idleTime + deltaTime;
+		if (self.idleTime >= 10000 and self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.NONE)then
+			self:setEnableLoop(false)
+			self:startAnimation(CHARACTER_ANIM.IDLE, 0)
+			self.idleTime = 0
+		end
 	end
-
+--------------------------------------------------------------------------------
 	function OBJ:getCharacType()
 		return self.shownCharactType
 	end
-
+--------------------------------------------------------------------------------
+	function OBJ:launchGoodAnimation()
+		self:setEnableLoop(true)
+		if (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.NONE)then
+			self:stopAnimation()
+			self.idleTime = 0
+			return
+		elseif (self.attitude == CHARACTER_ATTITUDE.WALKING) then
+			if 	   (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
+				self:startAnimation(CHARACTER_ANIM.WALK_L, 0)
+				return
+			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
+				self:startAnimation(CHARACTER_ANIM.WALK_R, 0)
+				return
+			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.NONE) then
+				self:startAnimation(CHARACTER_ANIM.WALK_F, 0)
+				return	
+			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
+				self:startAnimation(CHARACTER_ANIM.WALK_L, 0)
+				return
+			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
+				self:startAnimation(CHARACTER_ANIM.WALK_R, 0)
+				return	
+			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.NONE) then
+				self:startAnimation(CHARACTER_ANIM.WALK_B, 0)
+				return
+			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
+				self:startAnimation(CHARACTER_ANIM.WALK_R, 0)
+				return	
+			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
+				pnprint ("walk left\n")
+				self:startAnimation(CHARACTER_ANIM.WALK_R, 0)
+				return		
+			end 
+		elseif (self.attitude == CHARACTER_ATTITUDE.RUNNING) then
+			if 	   (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
+				self:startAnimation(CHARACTER_ANIM.RUN_L, 0)
+				return
+			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
+				self:startAnimation(CHARACTER_ANIM.RUN_R, 0)
+				return
+			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.NONE) then
+				self:startAnimation(CHARACTER_ANIM.RUN_F, 0)
+				return	
+			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
+				self:startAnimation(CHARACTER_ANIM.RUN_L, 0)
+				return
+			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
+				self:startAnimation(CHARACTER_ANIM.RUN_R, 0)
+				return	
+			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.NONE) then
+				self:startAnimation(CHARACTER_ANIM.RUN_B, 0)
+				return
+			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
+				self:startAnimation(CHARACTER_ANIM.RUN_R, 0)
+				return	
+			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
+				self:startAnimation(CHARACTER_ANIM.RUN_L, 0)
+				return		
+			end 		
+		elseif (self.attitude == CHARACTER_ATTITUDE.CROUCHING) then
+			if 	   (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_L, 0)
+				return
+			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_R, 0)
+				return
+			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.NONE) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_F, 0)
+				return	
+			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_L, 0)
+				return
+			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_R, 0)
+				return	
+			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.NONE) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_B, 0)
+				return
+			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_R, 0)
+				return	
+			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_L, 0)
+				return		
+			end 						
+		elseif (self.attitude == CHARACTER_ATTITUDE.JUMPING) then
+			if 	   (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
+				self:startAnimation(CHARACTER_ANIM.JUMP, 0)
+				return		
+			end 		
+		end
+	end
 	
 	return OBJ
 end
