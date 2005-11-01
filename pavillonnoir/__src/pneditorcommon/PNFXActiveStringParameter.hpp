@@ -75,6 +75,7 @@ namespace PN {
 
   public:
 	long	onKeyRelease(FXObject*,FXSelector,void* ptr);
+	PNConfigurableParameter* getParam() { return _param; }
   };
 
   //////////////////////////////////////////////////////////////////////////

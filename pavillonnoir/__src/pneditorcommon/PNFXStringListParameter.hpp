@@ -86,6 +86,11 @@ namespace PN {
 
 	void	setNumVisibleItems(int numItems);
 	void	setLabelsNumChars(int numChars);
+
+	PNConfigurableParameter* getParam() { return _param; }
+
+	const std::string&	getStringValue();
+	pnbool				setStringValue(const std::string& val);
 	
   public:
 	  enum {

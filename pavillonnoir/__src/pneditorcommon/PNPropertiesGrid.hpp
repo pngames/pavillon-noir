@@ -63,6 +63,7 @@ public:
   void	create();
   void	update();
   void	updateParent();
+  std::list<PNPropertiesGridParameter*> getParams() { return _params; }
 
   void  setObject(PNConfigurableObject* object);
   PNConfigurableObject*  getObject();
