@@ -14,6 +14,9 @@ function PN3DSkeletonObjectClass(id)
        self:update(deltaTime)
     end
     
+	function OBJ:onMouseLook(y, x)
+	end
+	    
     ---------------------move events-----------------------
 	function OBJ:onMoveForward(state)	
 		if (state == ACTION_STATE.START) then

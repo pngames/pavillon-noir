@@ -52,10 +52,11 @@ function gameMap:onUpdate(deltaTime)
 --	pnprint("=> LUA GameMap: onUpdate()")
 	local id
 	local entity
+	
+	PNRenderCam:onUpdate(deltaTime)
 	for id, entity in pairs(self.entities.all) do 
 		entity:onUpdate(deltaTime)
 	end
-	PNRenderCam:onUpdate(deltaTime)
 --	pnprint("<= LUA GameMap: onUpdate()")
 end
 
@@ -115,9 +116,25 @@ function gameMap:onMoveRight(srcId, targId, state)
     self.entities.all[targId]:onMoveRight(state)
 end
 
+function gameMap:onRotateLeft(srcId, targId, state)
+    pnprint("LUA GameMap:onRotateLeft()\n")
+    self.entities.all[targId]:onRotateLeft(state)
+end	
+
+function gameMap:onRotateRight(srcId, targId, state)
+    pnprint("LUA GameMap:onRotateRight()\n")
+    self.entities.all[targId]:onRotateRight(state)
+end
+
 function gameMap:onMouseMove(xdelta, ydelta)
-   -- pnprint("gameMap:onMouseMove()\n")  
+   -- pnprint("gameMap:onMouseMove()\n")
+	local id
+	local entity
+	 
     PNRenderCam:onMouseLook(xdelta, ydelta) 
+	for id, entity in pairs(self.entities.all) do 
+		entity:onMouseLook(xdelta, ydelta)
+	end 
 end
 
 function gameMap:onFrustrumIn(sourceId, targetId)
