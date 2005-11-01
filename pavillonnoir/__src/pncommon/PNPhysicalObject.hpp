@@ -37,7 +37,7 @@
 #include "pnmath.h"
 
 #include "PNObject.hpp"
-#include "IPNSerializable.hpp"
+#include "IPNXMLSerializable.hpp"
 
 #include "PNPoint.hpp"
 #include "PNQuatf.hpp"
@@ -45,7 +45,7 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNPhysicalObject: public PNObject, public IPNSerializable
+class PNPhysicalObject: public PNObject, public IPNXMLSerializable
 {
 public:
   virtual ~PNPhysicalObject(void) {}

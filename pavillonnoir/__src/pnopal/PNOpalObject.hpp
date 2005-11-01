@@ -66,7 +66,7 @@ namespace PN {
 	OPALSPHERE = 2
   }		  opaltypes;
 
-  class PNOpalObject : public PNPhysicalObject, public IPNXMLSerializable
+  class PNOpalObject : public PNPhysicalObject
   {
   private:
 	/* pnengine */
@@ -117,10 +117,13 @@ namespace PN {
 	// IPNXMLSerializable
 
   protected:
-	pnint				_parseTypeMesh(const boost::filesystem::path& file);
+	pnint				_parseTypePnm(const boost::filesystem::path& file);
 	pnint				_parseTypeOpal(const boost::filesystem::path& file);
 	pnint				_parseModel(xmlNode* node);
 	pnint				_unserializeNode(xmlNode* node);
+	
+  public:
+	pnint				unserializeFromXML(xmlNode* node);
   };
 }
 

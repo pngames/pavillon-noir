@@ -347,10 +347,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pnopal\pnp_format.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pncommon\pnresources.h"
 				>
 			</File>

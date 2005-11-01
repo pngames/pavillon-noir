@@ -235,7 +235,7 @@ void		PNOpalObject::addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration)
 //////////////////////////////////////////////////////////////////////////
 // IPNXMLSerializable
 
-pnint		  PNOpalObject::_parseTypeMesh(const boost::filesystem::path& file)
+pnint		  PNOpalObject::_parseTypePnm(const boost::filesystem::path& file)
 {
   // FIXME :
   // must create a solid
@@ -245,12 +245,14 @@ pnint		  PNOpalObject::_parseTypeMesh(const boost::filesystem::path& file)
 
 pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
 {
+
+  // check for errors
   if (!fs::exists(file))
 	return PNEC_FILE_NOT_FOUND;
-
   if (fs::is_directory(file))
 	return PNEC_NOT_A_FILE;
 
+  // create and instantiate the opal blueprint
   _file = file.string();
   opal::loadFile(_blueprint, _file);
   _sim->instantiateBlueprint(_blueprintInstance, _blueprint);
@@ -301,19 +303,24 @@ pnint		  PNOpalObject::_parseModel(xmlNode* node)
 
   if ((attr = xmlGetProp(node, (const xmlChar *)PNP_XMLPROP_TYPE)) != NULL)
   {
-	if (attr == PNP_XMLPROPCONTENT_TYPEOPAL)
+	if (PNP_XMLATTR_TYPEOPAL == (const char*)attr)
+	{
 	  if ((attr = xmlGetProp(node, (const xmlChar *)PNP_XMLPROP_PATH)) != NULL)
 	  {
 		fs::path p(PNOPAL_XML_DEF::opalFilePath + (const char*)attr, fs::native);
 		_parseTypeOpal(p);
 	  }
-	  else
-		;
-	if (attr == PNP_XMLPROPCONTENT_TYPEPNM)
+	}
+	else if (PNP_XMLATTR_TYPEPNM == (const char *)attr)
+	{
 	  if ((attr = xmlGetProp(node, (const xmlChar *)PNP_XMLPROP_PATH)) != NULL)
 	  {
 		fs::path p(PNOPAL_XML_DEF::modelFilePath + (const char*)attr, fs::native);
+		_parseTypePnm(p);
 	  }
+	}
+	else
+	  return PNEC_FAILED_TO_PARSE;
   }
 
   return PNEC_SUCCESS;
@@ -324,6 +331,16 @@ pnint			PNOpalObject::_unserializeNode(xmlNode* node)
   if (PNP_XMLNODE_MODEL == (const char*)node->name)
 	_parseModel(node);
  
+  return PNEC_SUCCESS;
+}
+
+pnint			PNOpalObject::unserializeFromXML(xmlNode* root)
+{
+  for (root = root->children ; root != NULL; root = root->next)
+  {
+	 _unserializeNode(root);
+  }
+
   return PNEC_SUCCESS;
 }
 

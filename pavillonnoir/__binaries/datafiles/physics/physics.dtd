@@ -1,25 +1,9 @@
 <!--
      http://www.pavillon-noir.org/
-     XML DTD for object.pno
+     XML DTD for physics.pnp
 -->
 
-<!ELEMENT object (model?, listmaterials?, skeleton?, listanims?, physics?)>
+<!ELEMENT physics (model?)>
 <!ELEMENT model EMPTY>
-<!ELEMENT skeleton EMPTY>
-<!ELEMENT physics EMPTY>
-<!ELEMENT listmaterials (material*)>
-	<!ELEMENT material EMPTY>
-<!ELEMENT listanims (anim*)>
-	<!ELEMENT anim EMPTY>
-
+<!ATTLIST model type CDATA #IMPLIED>
 <!ATTLIST model path CDATA #IMPLIED>
-
-<!ATTLIST material path CDATA #IMPLIED>
-
-<!ATTLIST skeleton path CDATA #IMPLIED>
-
-<!ATTLIST anim path CDATA #IMPLIED>
-
-<!ATTLIST physics path CDATA #IMPLIED>
-<!ATTLIST physics mesh BOOL #IMPLIED>
-
