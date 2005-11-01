@@ -151,15 +151,6 @@ PNPoint::isEquals(pnfloat x, pnfloat y, pnfloat z)
 
 //////////////////////////////////////////////////////////////////////////
 
-std::string
-PNPoint::toString(const char * title) const
-{
-	static 	char	buffer[256];
-		
-	sprintf(buffer, "PNPoint:%s: X=%f Y=%f Z=%f", title, x, y, z);
-	return (buffer);
-}
-
 
 PNPoint::operator const pnfloat*() const
 {
@@ -278,12 +269,18 @@ PNPoint::operator/=(const pnfloat k)
 
 //////////////////////////////////////////////////////////////////////////
 
+PNPoint
+PNPoint::operator-()
+{
+  return PNPoint(-x, -y, -z);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 PNAPI PNPoint
 operator+(const PNPoint& p1, const PNPoint& p2)
 {
-  PNPoint	res(0.0, 0.0, 0.0);
-
-  res = p1;
+  PNPoint	res(p1);
 
   return (res += p2);
 }
@@ -291,9 +288,7 @@ operator+(const PNPoint& p1, const PNPoint& p2)
 PNAPI PNPoint
 operator-(const PNPoint& p1, const PNPoint& p2)
 {
-  PNPoint	res(0.0, 0.0, 0.0);
-
-  res = p1;
+  PNPoint	res(p1);
 
   return (res -= p2);
 }
@@ -301,19 +296,15 @@ operator-(const PNPoint& p1, const PNPoint& p2)
 PNAPI PNPoint
 operator*(const PNPoint& p1, const PNPoint& p2)
 {
-  PNPoint	res(0.0, 0.0, 0.0);
+  PNPoint	res(p1);
 
-  res = p1;
-
-  return (res*= p2);
+  return (res *= p2);
 }
 
 PNAPI PNPoint
 operator/(const PNPoint& p1, const PNPoint& p2)
 {
-  PNPoint	res(0.0, 0.0, 0.0);
-
-  res = p1;
+  PNPoint	res(p1);
 
   return (res /= p2);
 }

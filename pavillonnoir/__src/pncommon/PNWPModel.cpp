@@ -88,7 +88,7 @@ PNWPModel::render(PN3DSkeleton* sk)
 
 void
 PNWPModel::renderLink(const PNPoint &p1, const PNPoint &p2, const pnfloat* color,
-					  pnuint direction, pnuint thickness)
+					  pnuint direction, pnfloat thickness)
 {
   PNRendererInterface* pnri = PNRendererInterface::getInstance();
   pnri->renderLink(p1, p2, color, direction, thickness);

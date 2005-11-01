@@ -2,7 +2,7 @@ Third party library:
 
 name		| current version
 
-* libxml2 	: 2.6.18
+* libxml2 	: 2.6.20
 * Fox 	: 1.4.5.0
 * SDL 	: 1.2.9
 * CEGUI	: 0.4

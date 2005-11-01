@@ -75,9 +75,6 @@ public:
 	bool			checkCollision			(const PNBoundingSphere & sphere) const;
 	bool			translateSphere			(const PNBoundingSphere & sphere, const PNVector3f & translation, PNVector3f & resultingPos) const;
 	
-public:
-	void			dumpTriangles			(void) const;
-	
 private:
 	void			_fillCollidersList		(const PNBoundingSphere & sphere, const PNPoint & startPosition, std::list<int> & colliders) const;	
 	int				_getBestColliderOfList	(const PNBoundingSphere & sphere, const PNNormal3f & force, std::list<int> & colliders) const;	

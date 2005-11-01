@@ -63,7 +63,7 @@ public:
   void				render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk = NULL);
   void				render(PN3DSkeleton* sk = NULL);
   void				renderLink(const PNPoint &p1, const PNPoint &p2, const pnfloat* color,
-								pnuint direction = 0, pnuint thickness = 1);
+								pnuint direction = 0, pnfloat thickness = 1);
 
   void				setSlctColor();
   void				setDflColor();
