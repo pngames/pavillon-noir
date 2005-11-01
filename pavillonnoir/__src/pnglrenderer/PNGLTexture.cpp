@@ -41,11 +41,12 @@ namespace fs = boost::filesystem;
 
 namespace PN
 {
+//////////////////////////////////////////////////////////////////////////
 
-  /*************************************************************************
-  Constructor
-  *************************************************************************/
-  PNGLTexture::PNGLTexture()
+/*************************************************************************
+Constructor
+*************************************************************************/
+PNGLTexture::PNGLTexture()
 {
   // generate a OGL texture that we will use.
   glGenTextures(1, &_ogltexture);
@@ -53,12 +54,10 @@ namespace PN
   // set some parameters for this texture.
   glBindTexture(GL_TEXTURE_2D, _ogltexture);
 
-  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR_MIPMAP_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-  // use it for sky box
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  _repeat = true;
 }
 
 /*************************************************************************
@@ -139,9 +138,21 @@ pnint		PNGLTexture::loadFromFile(const boost::filesystem::path& file, void* ligh
   return PNEC_ERROR;
 }
 
-GLuint		PNGLTexture::getOGLTexid(void) const
+//////////////////////////////////////////////////////////////////////////
+
+void
+PNGLTexture::setRepeat(pnbool repeat)
 {
-  return _ogltexture;
+  _repeat = repeat;
+}
+
+void
+PNGLTexture::bind()
+{
+  glBindTexture(GL_TEXTURE_2D, _ogltexture);
+
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _repeat ? GL_CLAMP_TO_EDGE : GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _repeat ? GL_CLAMP_TO_EDGE : GL_REPEAT);
 }
 
 //////////////////////////////////////////////////////////////////////////

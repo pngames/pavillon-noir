@@ -33,6 +33,7 @@
 
 #include "PNGLRenderer.hpp"
 #include "PNGLTexture.hpp"
+#include "PNGLTextureManager.hpp"
 
 #include "PNGLMaterial.hpp"
 
@@ -40,10 +41,6 @@ using namespace PN;
 namespace fs = boost::filesystem;
 
 namespace PN {
-//////////////////////////////////////////////////////////////////////////
-
-PNGLMaterial::MAPTEXTURE	PNGLMaterial::_textureMap;
-
 //////////////////////////////////////////////////////////////////////////
 
 PNGLMaterial::PNGLMaterial()
@@ -62,8 +59,6 @@ PNGLMaterial::PNGLMaterial()
 
 PNGLMaterial::~PNGLMaterial()
 {
-  if (_texture != NULL)
-	PNGLRenderer::getInstance()->deleteTexture(_texture);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -115,27 +110,10 @@ void			PNGLMaterial::setSpecular(const pnfloat* color)
 
 pnint			PNGLMaterial::setTexture(const boost::filesystem::path& file, void* lightMap)
 {
-  MAPTEXTURE::const_iterator cit = _textureMap.find(file);
+  _texture = PNGLTextureManager::getInstance()->getTexture(file, lightMap);
 
-  if (cit != _textureMap.end())
-  {
-    _texture = cit->second;
-	return PNEC_SUCCESS;
-  }
-
-  if (!fs::exists(file))
-	return PNEC_FILE_NOT_FOUND;
-
-  if (fs::is_directory(file))
-	return PNEC_NOT_A_FILE;
-
-  _texture = (PNGLTexture*)PNGLRenderer::getInstance()->newTexture();
-
-  if (_texture->loadFromFile(file, lightMap) != PNEC_SUCCESS)
-  {
-	PNGLRenderer::getInstance()->deleteTexture(_texture);
-	_texture = NULL;
-  }
+  if (_texture == NULL)
+	return PNEC_ERROR;
 
   return PNEC_SUCCESS;
 }
@@ -195,7 +173,7 @@ pnint			PNGLMaterial::bind()
   if (_texture != NULL)
   {
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, _texture->getOGLTexid());
+	_texture->bind();
   }
   else
   {

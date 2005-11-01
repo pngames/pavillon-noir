@@ -53,42 +53,34 @@ class PNAPI PNGameMap : public PNObject, public IPNXMLSerializable
 public:
     typedef std::map<std::string, PN3DObject *>	ObjMap;
 protected:
-  ObjMap							_entityList;
-  PN3DCamera*                       _camera;
-  boost::filesystem::path			*_wpFile;
+  ObjMap					_entityList;
+  PN3DCamera*				_camera;
+  boost::filesystem::path*	_wpFile;
 
-  //PN3DGround* _ground;
-  //PN3DSkeletonObject* _player;
-
-  pnint	  _parseListEntities(xmlNode* node);
-  pnint	  _parseDynamicEntity(xmlNode* node);
-  pnint	  _parseStaticEntity(xmlNode* node);
-
+  pnint						_unserializeEntity(xmlNode* node);
+  pnint						_unserializeNode(xmlNode* node);
 public:
   PNGameMap();
   ~PNGameMap();
 
   /// Parse XML root node
-  pnint	unserializeFromXML(xmlNode* node);
+  pnint						unserializeFromXML(xmlNode* node);
   /// Load object from file
-  pnint unserializeFromFile(const boost::filesystem::path& dir);
+  pnint						unserializeFromFile(const boost::filesystem::path& dir);
 
   //////////////////////////////////////////////////////////////////////////
 
-  const ObjMap&		getEntityList() const;
+  const ObjMap&				getEntityList() const;
 
-  //////////////////////////////////////////////////////////////////////////
-  // Will be operational when pnscript will instantiate PNGameMap
-  // std::map<std::string, PN3DObject *>&  getEntityList();
+  virtual void				executeScript(const std::string& ScriptName){}
 
-  virtual void executeScript(const std::string& ScriptName){}
   //add an object to the gameMap
-  virtual void addToMap(const std::string& entityName,const std::string& id);
-  virtual void clear();
+  virtual void				addToMap(const std::string& entityName,const std::string& id);
+  virtual void				clear();
   
   //virtual void loadScript(const std::string& file, const std::string& id, const std::string& events)=0;
   //virtual void unloadScript(const std::string& file, const std::string& id, const std::string& events)=0;
-  const std::string&	getWpFile();
+  const std::string&		getWpFile();
 
   /////////////////////////////////////////////////////////////////////////
 };

@@ -46,11 +46,8 @@ class PNGLTexture;
 
 class PNGLMaterial : public PNRenderMaterial
 {
-  friend			PNRenderMaterial*		PNGLRenderer::newMaterial();
-  friend			void			PNGLRenderer::deleteMaterial(PNRenderMaterial* material);
-private:
-  typedef std::map<const boost::filesystem::path, PNGLTexture*>	  MAPTEXTURE;
-  static MAPTEXTURE	_textureMap;
+  friend PNRenderMaterial* PNGLRenderer::newMaterial();
+  friend void PNGLRenderer::deleteMaterial(PNRenderMaterial* material);
 private:
   PNGLMaterial();
   virtual ~PNGLMaterial();

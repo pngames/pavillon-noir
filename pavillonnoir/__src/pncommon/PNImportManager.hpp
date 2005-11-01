@@ -34,6 +34,8 @@
 #include <map>
 #include <boost/filesystem/path.hpp>
 
+#include "pnevent.h"
+
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
@@ -59,6 +61,8 @@ public:
   PNObject*			import(const boost::filesystem::path& file, importtype type = PN_IMPORT_DEFAULT, bool copy = false);
 
   void				clean();
+
+  //////////////////////////////////////////////////////////////////////////
 private:
   typedef std::list<PNImportInterface*>							  LIST_IMPORTER;
   typedef std::map<const boost::filesystem::path, PNObject*>	  MAPIMPORTER;

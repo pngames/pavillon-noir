@@ -39,30 +39,37 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class		PNGLTexture : public PNTexture
+class				PNGLTexture : public PNTexture
 {
+  friend class PNGLTextureManager;
 private:
-  friend	PNGLTexture*	PNGLRenderer::newTexture(void);
-  friend	void			PNGLRenderer::deleteTexture(PNGLTexture* texture);
-
   PNGLTexture();
   ~PNGLTexture(void);
+
+  //////////////////////////////////////////////////////////////////////////
 public:
-  pnushort	getWidth(void) const;
-  pnushort	getHeight(void) const;
+  pnushort			getWidth(void) const;
+  pnushort			getHeight(void) const;
 
   //////////////////////////////////////////////////////////////////////////
 
-  pnint		loadFromFile(const boost::filesystem::path& file, void* lightMap = NULL);
+  pnint				loadFromFile(const boost::filesystem::path& file, void* lightMap = NULL);
 
-  GLuint	getOGLTexid(void) const;
+  //////////////////////////////////////////////////////////////////////////
+  
+  void				setRepeat(pnbool repeat);
 
+  void				bind();
+
+  //////////////////////////////////////////////////////////////////////////
 private:
-  GLuint 	_ogltexture;	/// The 'real' texture.
-  pnushort	_width;			/// cached width of the texture
-  pnushort	_height;		/// cached height of the texture
+  GLuint 			_ogltexture;	/// The 'real' texture.
+  pnushort			_width;			/// cached width of the texture
+  pnushort			_height;		/// cached height of the texture
 
-  std::string _file;
+  std::string		_file;
+
+  pnbool			_repeat;
 };
 
 //////////////////////////////////////////////////////////////////////////

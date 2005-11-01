@@ -52,8 +52,8 @@
 #include "PNPoint.hpp"
 #include "PNQuatf.hpp"
 #include "PN3DModel.hpp"
-#include "PNGLTexture.hpp"
 #include "PNGLMaterial.hpp"
+#include "PNGLTextureManager.hpp"
 
 #include "PN3DGround.hpp"
 #include "PNPhysicsInterface.hpp"
@@ -61,8 +61,6 @@
 
 #include "PNWayPoint.hpp"
 #include "PNCharacter.hpp"
-
-//#include "PNGLRenderUpdateEventData.hpp"
 
 #include "PNGLVideo.hpp"
 
@@ -487,21 +485,10 @@ PNGLRenderer::deleteMaterial(PNRenderMaterial* material)
 	delete (PNGLMaterial*)material;
 }
 
-//////////////////////////////////////////////////////////////////////////
-
-PNGLTexture*
-PNGLRenderer::newTexture(void)
-{
-  return new PNGLTexture();
-}
-
 void
-PNGLRenderer::deleteTexture(PNGLTexture* texture)
+PNGLRenderer::cleanSceneTextures()
 {
-  if (texture != NULL)
-  {
-	delete texture;
-  }
+  PNGLTextureManager::getInstance()->clean();
 }
 
 //////////////////////////////////////////////////////////////////////////
