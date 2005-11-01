@@ -105,7 +105,7 @@ namespace PN {
 	pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::buildList");
 	_listBox->clearItems();
 
-	for (pnint i = 0; i < v->size(); i++)
+	for (PN3DSkeletonObject::VECTORANIMATION::size_type i = 0; i < v->size(); i++)
 	{
 	  std::string s = v->at(i)->getFile()->string();
 	  if (s.size() > 29)
@@ -151,7 +151,7 @@ namespace PN {
 	if (fd.execute())
 	{
 	  PN3DSkeletonObject::VECTORANIMATION* v = (PN3DSkeletonObject::VECTORANIMATION*)_param->getElem(); 
-	  pnint i = v->size();
+	  pnint i = (pnint)v->size();
 	  FXString	str = fd.getFilename().substitute('\\', '/');;
 
 	  char buf[512] = "";

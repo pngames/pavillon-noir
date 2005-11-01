@@ -75,10 +75,8 @@ public:
   bool			isEquals(const PNPoint & point);  
   bool			isEquals(pnfloat x, pnfloat y, pnfloat z);
   
-public:
-  std::string	toString(const char * title) const;
-
   //////////////////////////////////////////////////////////////////////////
+public:
 
   operator const pnfloat*() const;
 
@@ -94,6 +92,9 @@ public:
   PNPoint&		operator*=(const pnfloat k);
   PNPoint&		operator/=(const PNPoint& p);
   PNPoint&		operator/=(const pnfloat k);
+
+  PNPoint		operator-();
+
 public:
   static const PNPoint ZERO;
 };

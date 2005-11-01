@@ -389,27 +389,4 @@ PNWorldCollision::_computeStepCollision(const PNBoundingSphere & sphere, const P
 }
 
 /////////////////////////////////////////////
-
-/**
- * \brief Dumps the array of triangles.
- * Just here for debugging purposes
- */
-void
-PNWorldCollision::dumpTriangles() const
-{
-	int		i;
-	
-	cerr << "[PNWorldCollision] --- dumping array ---\n";
-	for (i = 0; i < _nbTriangle; i++)
-		cerr << _triangles[i].toString(i) << endl;
-	cerr << "------------ end of dump ---------------\n";
-	
-	return;
-}
-
-/////////////////////////////////////////////
-
-
 } /* end of namespace */
-
-/////////////////////////////////////////////

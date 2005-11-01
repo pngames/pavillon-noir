@@ -525,56 +525,6 @@ PNVector3f::intersection(const PNPoint & originOne, const PNPoint & extremityOne
   return (false);
 }
 
-/**
- * Returns the string of the current instance.
- */
-std::string
-PNVector3f::toString(string title)
-{
-  string	res;
-  char		buffer[256];
-
-  sprintf(buffer, "PNVector3f: %s:{X=%f Y=%f Z=%f}", title.c_str(), x, y, z);
-  res = buffer;
-
-  return (res);
-}
-
-/////////////////////////////////////
-
-bool
-PNVector3f::___IsEqualsTo(PNVector3f * v, string & bugReport)
-{
-  if (!isEquals(*v))
-    {
-      pnchar	buffer[512];
-
-      sprintf(buffer, "expecting PNVector3f:{X=%f Y=%f Z=%f}\n  * getting   PNVector3f:{X=%f Y=%f Z=%f}\n",
-	      x, y, z, v->x, v->y, v->z);
-      bugReport = buffer;
-
-      return (false);
-    }
-
-  return (true);
-}
-
-bool
-PNVector3f::___IsNotEqualsTo(PNVector3f * testable, string & bugReport)
-{
-  if (___IsEqualsTo(testable, bugReport))
-    {
-      pnchar	buffer[512];
-
-      sprintf(buffer,"PNVector3f values were not expected: (X=%.f Y=%.f Z=%.f}\n", x, y, z);
-      bugReport = buffer;
-
-      return (false);
-    }
-
-  return (true);
-}
-
 //////////////////////////////////////////////////////////////////////////
 
 const PNVector3f PNVector3f::ZERO( 0, 0, 0 );

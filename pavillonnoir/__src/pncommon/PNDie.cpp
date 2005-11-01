@@ -36,7 +36,7 @@ namespace PN {
 
 PNDie::PNDie(void)
 {
-  srand(time(0));
+  srand((pnuint)time(0));
 }
 
 PNDie::~PNDie(void)

@@ -10,15 +10,15 @@ public:
    ~PNNormal3f();
 
 public:
- void				setCrd(float nX, float nY, float nZ)
- void				setArray(const float * array)		
+ void						setCrd(float nX, float nY, float nZ)
+ void						setArray(const float * array)		
    
 public:
- float			getX()	const	
- float			getY()	const	
- float			getZ()	const 	
- void				get(float & nX, float & nY, float & nZ)
- void				get(float * array)					
+ float						getX()	const
+ float						getY()	const
+ float						getZ()	const
+ void						get(float & nX, float & nY, float & nZ)
+ void						get(float * array)
 public:
   virtual const PNVector3f&	getVector() const {return *this;};
 
@@ -33,21 +33,20 @@ public:
  bool						isNull();
   
 public:
- float					radianRangePi(PNNormal3f & n);
- float					radianRange2Pi(PNNormal3f & cosinusReferentiel, PNNormal3f & sinusReferentiel);
- float					degreeRangePi(PNNormal3f & n);
- float					degreeRange2Pi(PNNormal3f & cosinusReferentiel, PNNormal3f & sinusReferentiel);
+ float						radianRangePi(PNNormal3f & n);
+ float						radianRange2Pi(PNNormal3f & cosinusReferentiel, PNNormal3f & sinusReferentiel);
+ float						degreeRangePi(PNNormal3f & n);
+ float						degreeRange2Pi(PNNormal3f & cosinusReferentiel, PNNormal3f & sinusReferentiel);
   
 public:
  void						crossProduct(PNPoint & u, PNPoint & v);
  void						crossProduct(PNNormal3f & u, PNNormal3f & v);
   
 public:  
- float					scalarProduct(const PNNormal3f & n) const;
- float					scalarProduct(const PNPoint & u) const;
- float					scalarProduct(float nX, float nY, float nZ) const;
+ float						scalarProduct(const PNNormal3f & n) const;
+ float						scalarProduct(const PNPoint & u) const;
+ float						scalarProduct(float nX, float nY, float nZ) const;
   
 public:
-  float getNorm			();
-
+  float						getNorm();
 };
