@@ -28,10 +28,16 @@
  */
 
 #include "PNGUIEscMenu.hpp"
+#include "pnrender.h"
+#include "PNGUIMenuLoad.hpp"
+#include "PNGUIGame.hpp"
+#include "PNGUIStateManager.hpp"
 
 using namespace PN;
 
 namespace PN {
+  PNGUIEscMenu* PNGUIEscMenu::_instance = NULL;
+
   PNGUIEscMenu::PNGUIEscMenu()
   {
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/ESCMenu.layout");
@@ -46,14 +52,27 @@ namespace PN {
 	_mainSheet->destroy();
   }
 
+  PNGUIEscMenu* PNGUIEscMenu::getInstance()
+  {
+	if (_instance == NULL)
+	  _instance = new PNGUIEscMenu();
+	return _instance;
+  }
+
   void PNGUIEscMenu::startGUI()
   {
+	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME && 
+	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
+	PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::MENUPAUSE);
+
 	show();
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_PAUSE, NULL, NULL);
   }
 
   void PNGUIEscMenu::resetGUI()
   {
 	hide();
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_UNPAUSE, NULL, NULL);
   }
   
   CEGUI::Window* PNGUIEscMenu::getWindow()
@@ -76,7 +95,7 @@ namespace PN {
 	_mainSheet->show();
 	//win->setEnabled(true);
 	
-	_mainSheet->setAlwaysOnTop(true);
+	//_mainSheet->setAlwaysOnTop(true);
 	_mainSheet->setMutedState(false);
 	CEGUI::MouseCursor::getSingleton().show();
   }
@@ -92,7 +111,9 @@ namespace PN {
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_PAUSE, NULL, NULL);
+	resetGUI();
+	PNGUIGame::getInstance()->startGUI();
+	//PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_PAUSE, NULL, NULL);
 	return true;
   }
 
@@ -100,7 +121,9 @@ namespace PN {
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_LOAD, NULL, NULL);
+	resetGUI();
+	PNGUIMenuLoad::getInstance()->startGUI();
+	//PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_LOAD, NULL, NULL);
 	//hide();
 	return true;
   }
@@ -125,7 +148,9 @@ namespace PN {
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_QUIT_MENU_ROOT, NULL, NULL);
+	resetGUI();
+	PNGUIStateManager::getInstance()->LoadManager(NULL, PNGUIStateManager::MENUROOT);
+	//PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_QUIT_MENU_ROOT, NULL, NULL);
 	return true;
   }
 
@@ -141,7 +166,8 @@ namespace PN {
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_QUIT, NULL, NULL);
+	PNRendererInterface::getInstance()->endRendering();
+	//PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_QUIT, NULL, NULL);
 	
 	return true;
   }

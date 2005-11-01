@@ -34,7 +34,7 @@
 
 #include "pndefs.h"
 #include "pnplugins.h"
-#include "pnrender.h"
+
 
 namespace PN{
   class PNGUIMenuRoot
@@ -44,12 +44,14 @@ namespace PN{
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
   private:
+	static PNGUIMenuRoot* _instance;
 	CEGUI::Window* _mainSheet;
 	CEGUI::Imageset* _imageSet;
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
+	static PNGUIMenuRoot* getInstance();
 	void  hide();
 	void  show();
 	CEGUI::Window*	getWindow();
