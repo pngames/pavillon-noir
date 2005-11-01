@@ -127,33 +127,33 @@ PNGLSceneGraph::render(pnuint deltaTime)
 
   _renderCam.update(deltaTime);
 
-  //////////////////////////////////////////////////////////////////////////
-  
-  //glPushMatrix();
-  {
-	//glTranslatef(-_renderCam.getCoord().x, -_renderCam.getCoord().y, _renderCam.getCoord().z);
-	//PNGLSkyBox::getInstance()->render();
-  }
-  //glPopMatrix();
-
   ////////////////////////////////
-  // Place la camera
+  // PLACE RENDER CAMERA
 
   _renderCam.updateViewMatrix();
 
-  //PNGLSkyBox::getInstance()->render();
+  if (PNGLSkyBox::getInstance()->isEnabled())
+  {
+	glPushMatrix();
+	{
+	  glTranslatef(_renderCam.getCoord().x, _renderCam.getCoord().y, _renderCam.getCoord().z);
+	  PNGLSkyBox::getInstance()->render();
+	}
+	glPopMatrix();
+  }
 
   /////////////////////////////////
-  // PNGround: rend le terrain et remplit la liste des object dans la camera
+  // RENDER PNGROUND
 
   PN3DGround::getInstance()->render(_renderCam);
 
-  /////////////////////////////////
-  // Parcourir la liste des object de la camera et les rendre
+  //////////////////////////////////////////////////////////////////////////
+  // RENDER 3D OBJETCTS
+  //////////////////////////////////////////////////////////////////////////
 
   glDisable(GL_LIGHTING);
-  //glEnable(GL_LIGHTING);
 
+  //glEnable(GL_LIGHTING);
   //glLightfv(GL_LIGHT0, GL_POSITION, Light1Pos);
 
   PNLOCK_BEGIN(&_renderCam);
@@ -181,12 +181,8 @@ PNGLSceneGraph::render(pnuint deltaTime)
 
 		  glMultMatrixf(transMatrix.getMatrix());
 
-		  glPushMatrix();
-		  {
-			glTranslatef(-center.x, -center.y, -center.z);
-			obj->render();
-		  }
-		  glPopMatrix();
+		  glTranslatef(-center.x, -center.y, -center.z);
+		  obj->render();
 		}
 		PNLOCK_END(obj);
 	  }

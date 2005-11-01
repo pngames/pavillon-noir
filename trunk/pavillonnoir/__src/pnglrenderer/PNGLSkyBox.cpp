@@ -75,6 +75,14 @@ PNGLSkyBox::~PNGLSkyBox(void)
 
 //////////////////////////////////////////////////////////////////////////
 
+pnbool
+PNGLSkyBox::isEnabled()
+{
+  return _enabled;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 /// Set the skyBox enabled or disabled
 void
 PNGLSkyBox::setEnabled(pnbool enabled)
@@ -108,11 +116,17 @@ PNGLSkyBox::set(PNRenderMaterial* top, PNRenderMaterial* bottom, PNRenderMateria
 void
 PNGLSkyBox::render()
 {
+  glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+  glDisable(GL_CULL_FACE);
+
   PNGLRendererCamera*	camera = (PNGLRendererCamera*)PN3DCamera::getRenderCam();
 
   pnfloat	color[4] = {0.2f, 0.2f, 0.8f, 1.0f};
 
-  PNRendererInterface::getInstance()->renderBox(1000/*camera->getFar()*/, 1000/*camera->getFar()*/, 1000/*camera->getFar()*/, color);
+  PNRendererInterface::getInstance()->renderBox((pnuint)camera->getFar(), (pnuint)camera->getFar(), (pnuint)camera->getFar(), color, PNPoint::ZERO, false);
+
+  glPopAttrib();
 }
 
 //////////////////////////////////////////////////////////////////////////
