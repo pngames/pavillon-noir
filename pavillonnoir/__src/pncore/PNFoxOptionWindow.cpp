@@ -196,6 +196,8 @@ long  PNFoxOptionWindow::onApply(FXObject* obj,FXSelector sel,void* ptr)
   // INPUT
   saveGrid(_inputGrid, conf);
 
+  conf->saveConf();
+
   return 1;
 }
 
