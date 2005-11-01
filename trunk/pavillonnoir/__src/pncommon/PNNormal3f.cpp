@@ -329,59 +329,6 @@ PNNormal3f::scalarProduct(pnfloat nX, pnfloat nY, pnfloat nZ) const
 	return (this->PNVector3f::scalarProduct(uNormalized));
 }
 
-
-/**
- * Returns the string of the current instance.
- */
-std::string
-PNNormal3f::toString(string title) const
-{
-  char	buffer[256];
-
-  sprintf(buffer, "PNNormal3f:%s: X=%f Y=%f Z=%f", title.c_str(), x, y, z);
-  return (buffer);
-}
-
-/////////////////////////////////////
-
-bool
-PNNormal3f::___IsEqualsTo(IAutoTestable * testable, string & bugReport)
-{
-  PNNormal3f	* v = (PNNormal3f *) testable;
-
-  if (this->isColinear(v->getX(), v->getY(), v->getZ()) == false)
-    {
-      char	buffer[512];
-
-      sprintf(buffer, "expecting PNNormal3f:{X=%.f Y=%.f Z=%.f}\n  * getting   PNNormal3f:{X=%f Y=%f Z=%f}\n",
-	      this->getX(), this->getY(), this->getZ(), v->getX(), v->getY(), v->getZ());
-      bugReport = buffer;
-
-      return (false);
-    }
-
-  return (true);
-}
-
-bool
-PNNormal3f::___IsNotEqualsTo(IAutoTestable * testable, string & bugReport)
-{
-  if (___IsEqualsTo(testable, bugReport))
-    {
-      char	buffer[512];
-
-      sprintf(buffer,"PNNormal3f values were not expected: (X=%.f Y=%.f Z=%.f}\n",
-	      this->getX(), this->getY(), this->getZ());
-      bugReport = buffer;
-
-      return (false);
-    }
-
-  return (true);
-}
-
 /////////////////////////////////////
 
 } /* end of namespace */
-
-/////////////////////////////////////

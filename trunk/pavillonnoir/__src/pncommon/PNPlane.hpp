@@ -52,7 +52,7 @@ planeSide_t;
 
 ////////////////////////////////////////
 
-class PNAPI PNPlane : public IAutoTestable
+class PNAPI PNPlane
 {
 public:
   PNPlane	();
@@ -90,13 +90,6 @@ public:
 public:
   virtual planeSide_t classifyVertex			(const PNPoint & position) const;
   virtual planeSide_t classifyTriangle			(const PNPoint & a, const PNPoint & b, const PNPoint & c);  
-
-public:
-  virtual std::string	toString					(const char * title);
-
-public: /* XXX: unit test interface, Don't TOUCH! */
-  virtual bool	___IsEqualsTo			(IAutoTestable * testable, std::string & bugReport);
-  virtual bool	___IsNotEqualsTo		(IAutoTestable * testable, std::string & bugReport);
 
 private:
   pnfloat		_x;

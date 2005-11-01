@@ -526,7 +526,7 @@ PNTriangle::clipWith(PNPlane & plane, std::vector<PNTriangle> & triangles)
 		{
 			plane.isSegmentIntersectPlane(_pt[idCurrent], _pt[idNext], ptIntersection[nbIntersection]);			
 			ptIntersection[nbIntersection].setSide(_pt[idCurrent], _pt[idNext]);
-	    	idOfIntersection[nbIntersection] = points.size();
+	    	idOfIntersection[nbIntersection] = (pnint)points.size();
 	    	points.push_back(ptIntersection[nbIntersection]);
 	    	nbIntersection++;
 		}
@@ -587,81 +587,7 @@ PNTriangle::substract(PNTriangle & triangle, std::vector<PNTriangle> & triangles
 {
 	return (false);
 }
-
-/**
- * \return A string containing the data of the triangle
- */
-const char *
-PNTriangle::toString(int id)
-{
-		static char buffer[512];
-		PNNormal3f	normal;
-
-		getOrientation(normal);
-
-		sprintf(buffer, "triangle #%d {{%.10f, %.10f, %.10f}\n,    {%.10f, %.10f, %.10f},\n    {%.10f, %.10f, %.10f}}",
-						id, _pt[0].x, _pt[0].y, _pt[0].z, _pt[1].x, _pt[1].y, _pt[1].z, _pt[2].x, _pt[2].y, _pt[2].z);
-
-		return (buffer);
-}
-
-///////////////////////////////////////////////////
- 	
-bool
-PNTriangle::___IsEqualsTo(IAutoTestable * testable, string & bugReport)
-{
-  PNTriangle * t = (PNTriangle *) testable;
-  PNVector3f	pt;
-
-  if (this->getOrientationX() != t->getOrientationX() ||
-      this->getOrientationY() != t->getOrientationY() ||
-      this->getOrientationZ() != t->getOrientationZ() ||
-      this->getDistanceFromOrigin() != t->getDistanceFromOrigin() ||
-      this->_pt[0].isEquals(t->getPoint(0, pt)) == false ||
-      this->_pt[1].isEquals(t->getPoint(1, pt)) == false ||
-      this->_pt[2].isEquals(t->getPoint(2, pt)) == false)
-    {
-    	bugReport = "expecting PNTriangle : ";
-    	bugReport += _pt[0].toString("pt#0");
-    	bugReport += " ";
-    	bugReport += _pt[1].toString("pt#1");
-    	bugReport += " ";
-    	bugReport += _pt[2].toString("pt#2");
-    	bugReport += "\n  * getting PNTriangle : ";
-    	bugReport += t->getPoint(0, pt).toString("pt#0");
-    	bugReport += " ";
-    	bugReport += t->getPoint(1, pt).toString("pt#1");
-    	bugReport += " ";
-    	bugReport += t->getPoint(2, pt).toString("pt#2");
-    	bugReport += "\n";
-    	
-	    return (false);
-    }
-
-  return (true);
-}
-
-bool
-PNTriangle::___IsNotEqualsTo(IAutoTestable * testable, string & bugReport)
-{
-  if (___IsEqualsTo(testable, bugReport))
-    {
-    	bugReport = "PNTriangle values were not expected: ";
-    	bugReport += _pt[0].toString("pt#0");
-    	bugReport += " ";
-    	bugReport += _pt[1].toString("pt#1");
-    	bugReport += " ";
-    	bugReport += _pt[2].toString("pt#2");
-    	bugReport += "\n";
-      return (false);
-    }
-
-  return (true);
-}
  
- ///////////////////////////////////////////////////
+///////////////////////////////////////////////////
  
 }	/* end of namespace */
-
-  ///////////////////////////////////////////////////
- 

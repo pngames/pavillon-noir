@@ -47,7 +47,7 @@ namespace PN {
 
 /////////////////////////////////////
 
-class PNAPI							PNNormal3f : private PNVector3f, public IAutoTestable
+class PNAPI							PNNormal3f : private PNVector3f
 {
 public:
   PNNormal3f();
@@ -97,13 +97,6 @@ public:
   
 public:
   virtual pnfloat getNorm			();
-
-public:
-  virtual std::string toString	(std::string title) const;
-
-public: /* XXX: unit test interface, Don't TOUCH! */
-  bool	___IsEqualsTo		(IAutoTestable * testable, std::string & bugReport);
-  bool	___IsNotEqualsTo	(IAutoTestable * testable, std::string & bugReport);
 };
 
 /////////////////////////////////////

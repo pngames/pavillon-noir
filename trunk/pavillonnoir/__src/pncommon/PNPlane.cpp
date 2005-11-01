@@ -496,69 +496,6 @@ PNPlane::getDistanceFromPlane(const PNPoint & position) const
 
 ////////////////////////////////////////
 
-/**
- * \brief Return a string corresponding to the current plane.
- *
- * \param	title	a null terminated string containint the caption of the plane.
- * \return	the string corresponding to the plane.
- */
-string
-PNPlane::toString(const char * title)
-{
-  PNVector3f	pos;
-  PNNormal3f	dir;
-  char		buffer[512];
-
-  this->getPosition(pos);
-  this->getOrientation(dir);
-
-  sprintf(buffer, "Plane: %s: Pos={%f, %f, %f}  Dir={%f, %f, %f}",
-	  title, pos.x, pos.y, pos.z, dir.getX(), dir.getY(), dir.getZ());
-
-  return (buffer);
-}
-
-////////////////////////////////////////
-
-bool
-PNPlane::___IsEqualsTo(IAutoTestable * testable, string & bugReport)
-{
-  PNPlane * p = (PNPlane *) testable;
-
-  if (!this->isEquals(*p))
-    {
-      char	buffer[512];
-
-      sprintf(buffer, "expecting PNPlane : {X=%f Y=%f Z=%f D=%f}\n  * getting  PNPlane : {X=%f Y=%f Z=%f D=%f}\n",
-	      this->getOrientationX(), this->getOrientationY(), this->getOrientationZ(), this->getDistanceFromOrigin(),
-	      p->getOrientationX(), p->getOrientationY(), p->getOrientationZ(), p->getDistanceFromOrigin());
-      bugReport = buffer;
-
-      return (false);
-    }
-
-  return (true);
-}
-
-bool
-PNPlane::___IsNotEqualsTo(IAutoTestable * testable, string & bugReport)
-{
-  if (___IsEqualsTo(testable, bugReport))
-    {
-      char	buffer[512];
-
-      sprintf(buffer, "PNPlane values were not expected: {X=%f Y=%f Z=%f D=%f}\n",
-	      this->getOrientationX(), this->getOrientationY(), this->getOrientationZ(), this->getDistanceFromOrigin());
-      bugReport = buffer;
-
-      return (false);
-    }
-
-  return (true);
-}
-
-////////////////////////////////////////
-
 } /* end of namespace */
 
 ////////////////////////////////////////

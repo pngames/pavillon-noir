@@ -74,13 +74,6 @@ public:
 public:
 	bool			clipWith				(PNPlane & plane, std::vector<PNTriangle> & triangles);
 	bool			substract				(PNTriangle & triangle, std::vector<PNTriangle> & triangles);
- 	
-public:
-  virtual bool	___IsEqualsTo				(IAutoTestable * testable, std::string & bugReport);
-  virtual bool	___IsNotEqualsTo			(IAutoTestable * testable, std::string & bugReport);
-
- public:
-		 const char *		toString				(int id);
   
 private:
 	
