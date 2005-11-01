@@ -362,8 +362,6 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
 
   //////////////////////////////////////////////////////////////////////////
 
-  //_viewMaxCosFov = cosf(max(_viewHRadFov, _viewVRadFov)/2);
-
   pnfloat		viewLeftFov = _viewHRadFov / 2 + (pnfloat)DEGREE_TO_RADIAN(90.0);
   pnfloat		viewRightFov = -viewLeftFov;
   pnfloat		viewTopFov = _viewVRadFov / 2 + (pnfloat)DEGREE_TO_RADIAN(90.0);
