@@ -40,6 +40,12 @@ public:
   virtual		  ~PNPropertiesGridParameter() {};
 
   virtual void  update() = 0;
+
+  // TOOD : remove all NULL references
+  virtual PNConfigurableParameter* getParam() {return NULL; }
+
+  virtual const std::string&	getStringValue() { return NULL; }
+  virtual pnbool				setStringValue(const std::string& val) { return FALSE; }
 };
 
 //////////////////////////////////////////////////////////////////////////

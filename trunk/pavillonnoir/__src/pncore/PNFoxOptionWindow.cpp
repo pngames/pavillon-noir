@@ -41,8 +41,18 @@
 namespace PN
 {
 
-FXIMPLEMENT(PNFoxOptionWindow,FXDialogBox,NULL,0)
+  // Map
+  FXDEFMAP(PNFoxOptionWindow) PNFoxOptionWindowMap[]={
+	FXMAPFUNC(SEL_COMMAND,FXDialogBox::ID_ACCEPT,PNFoxOptionWindow::onAccept),
+	FXMAPFUNC(SEL_COMMAND,PNFoxOptionWindow::ID_APPLY,PNFoxOptionWindow::onApply)
+  };
 
+  //////////////////////////////////////////////////////////////////////////
+
+  FXIMPLEMENT(PNFoxOptionWindow,FXDialogBox,PNFoxOptionWindowMap,ARRAYNUMBER(PNFoxOptionWindowMap))
+
+  //////////////////////////////////////////////////////////////////////////
+  
 /*
 * Ctor
 */
@@ -54,7 +64,7 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 	FXVerticalFrame* buttons = new FXVerticalFrame(horizontal,LAYOUT_LEFT|LAYOUT_FILL_Y|FRAME_SUNKEN|PACK_UNIFORM_WIDTH|PACK_UNIFORM_HEIGHT,0,0,0,0, 0,0,0,0, 0,0);
 	FXSwitcher* switcher = new FXSwitcher(horizontal,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0);
 
-	// probably dirty but the app crashes if we don't do that, eat some documentation!
+	// probably dirty but the app crashes if we don't do that, eat some fox documentation!
 	owner->create();
 	this->create();
 	vertical->create();
@@ -88,8 +98,8 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 	_graphicObj->addParam(new PNConfigurableParameter(_graphicObj, PN_PARAMTYPE_STRINGLIST, &fullscreenYesNo, "Fullscreen", "Do you want to play fullscreen ?", TRUE));
 	
 	// Use a grid to display our parameters
-	PNPropertiesGrid* graphicGrid = new PNPropertiesGrid(graphicFrame, NULL);
-	graphicGrid->setObject(_graphicObj);
+	_graphicGrid = new PNPropertiesGrid(graphicFrame, NULL);
+	_graphicGrid->setObject(_graphicObj);
 
 
 	// ** Audio Tab ** //
@@ -121,8 +131,8 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 	_audioObj->addParam(new PNConfigurableParameter(_audioObj, PN_PARAMTYPE_STRINGLIST, &volumeGraduation, "Game volume", "Don't mute me!", TRUE));
 
 	// Use a grid to display our parameters
-	PNPropertiesGrid* audioGrid = new PNPropertiesGrid(audioFrame, NULL);
-	audioGrid->setObject(_audioObj);
+	_audioGrid = new PNPropertiesGrid(audioFrame, NULL);
+	_audioGrid->setObject(_audioObj);
 
 
 	// ** Input Tab ** //
@@ -144,16 +154,16 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 	//_graphicObj->addParam(new PNConfigurableParameter(_inputObj, PN_PARAMTYPE_STRING , void*elem, "Input Configuration", "Key bindings", TRUE));
 
 	// Use a grid to display our parameters
-	PNPropertiesGrid* inputGrid = new PNPropertiesGrid(inputFrame, NULL);
-	inputGrid->setObject(_inputObj);
+	_inputGrid = new PNPropertiesGrid(inputFrame, NULL);
+	_inputGrid->setObject(_inputObj);
 
 
 	// Bottom part
 	new FXHorizontalSeparator(vertical,SEPARATOR_RIDGE|LAYOUT_FILL_X);
 	FXHorizontalFrame *closebox=new FXHorizontalFrame(vertical,LAYOUT_BOTTOM|LAYOUT_FILL_X|PACK_UNIFORM_WIDTH);
-	//new FXButton(closebox,"&Accept",NULL,this,FXDialogBox::ID_ACCEPT,BUTTON_INITIAL|BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
 	new FXButton(closebox,"&Ok",NULL,this,FXDialogBox::ID_ACCEPT,BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
 	new FXButton(closebox,"&Cancel",NULL,this,FXDialogBox::ID_CANCEL,BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
+	new FXButton(closebox,"&Apply",NULL,this,PNFoxOptionWindow::ID_APPLY,BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
 }
 
 /*
@@ -166,6 +176,59 @@ PNFoxOptionWindow::~PNFoxOptionWindow()
 void  PNFoxOptionWindow::create()
 {
 	FXDialogBox::create();
+}
+
+/*! \brief Saves the preferences using PNConf
+* For each grid in the option window, goes through the different parameters
+* and get a string value to save.
+*/
+long  PNFoxOptionWindow::onApply(FXObject* obj,FXSelector sel,void* ptr)
+{
+  // TODO : FACTORIZE
+  pnerror(PN_LOGLVL_DEBUG, "PNFoxOptionWindow::onApply");
+  PNConf* conf = PNConf::getInstance();
+
+  // first the graphical options
+  // conf->setComment("First the graphical options")
+  saveGrid(_graphicGrid, conf);
+  // AUDIO
+  saveGrid(_audioGrid, conf);
+  // INPUT
+  saveGrid(_inputGrid, conf);
+
+  return 1;
+}
+
+void  PNFoxOptionWindow::saveGrid(PNPropertiesGrid* grid, PNConf* conf)
+{
+  std::list<PNPropertiesGridParameter*> gridParameters = grid->getParams();
+  for (std::list<PNPropertiesGridParameter*>::iterator it = gridParameters.begin(); 
+	it != gridParameters.end(); it++)
+  {
+	PNConfigurableParameter* configurableParameter  = (*it)->getParam();
+	PNPropertiesGridParameter* gridParameter;
+	// first check the type of the GridParameters we're dealing with (float, string, stringlist ...)
+	// then call the appropriate method
+	switch (configurableParameter->getType())
+	{
+	case PN_PARAMTYPE_STRINGLIST:
+	  gridParameter = (PNFXStringListParameter*)(*it);
+	  conf->setKey(gridParameter->getParam()->getLabel().c_str(), gridParameter->getStringValue().c_str());
+	  break;
+	default:
+	  break;
+	}
+  }
+}
+
+
+/*! \brief Saves the preferences using PNConf and closes the window.
+*/
+long  PNFoxOptionWindow::onAccept(FXObject* obj,FXSelector sel,void* ptr)
+{
+  pnerror(PN_LOGLVL_DEBUG, "PNFoxOptionWindow::onAccept");
+  onApply(obj,sel,ptr);
+  return FXDialogBox::onCmdAccept(obj, sel, ptr);
 }
 
 };
