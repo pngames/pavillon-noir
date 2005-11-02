@@ -6,6 +6,6 @@
       <model path="harbor.pnm"/>
     </object>
   </entity>
-  <entity id="Player" label="New Object" mdref="pirate.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="330.322876" y="-721.669250" z="-952.191528" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
+  <entity id="Player" label="New Object" mdref="pirate.pno" envtype="dynamic" objtype="object" class="PNPlayer" x="330.322876" y="-721.669250" z="-952.191528" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
    </entity>
 </listentities>
