@@ -63,16 +63,21 @@ namespace PN {
   {
 	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME && 
 	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
-	PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::MENUPAUSE);
-
+	{
+	  PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_PAUSE, NULL, NULL);
+	 
+	}
+	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME )
+	  PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::MENUPAUSE);
 	show();
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_PAUSE, NULL, NULL);
+
+	
   }
 
   void PNGUIEscMenu::resetGUI()
   {
 	hide();
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_UNPAUSE, NULL, NULL);
+	
   }
   
   CEGUI::Window* PNGUIEscMenu::getWindow()
@@ -112,6 +117,7 @@ namespace PN {
 	if (_mainSheet->isMuted() == true)
 	  return true;
 	resetGUI();
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_UNPAUSE, NULL, NULL);
 	PNGUIGame::getInstance()->startGUI();
 	//PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_PAUSE, NULL, NULL);
 	return true;
@@ -149,6 +155,7 @@ namespace PN {
 	if (_mainSheet->isMuted() == true)
 	  return true;
 	resetGUI();
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_UNPAUSE, NULL, NULL);
 	PNGUIStateManager::getInstance()->LoadManager(NULL, PNGUIStateManager::MENUROOT);
 	//PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_QUIT_MENU_ROOT, NULL, NULL);
 	return true;
@@ -166,7 +173,9 @@ namespace PN {
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-	PNRendererInterface::getInstance()->endRendering();
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_UNPAUSE, NULL, NULL);
+	PNGUIStateManager::getInstance()->LoadManager(NULL, PNGUIStateManager::NONE);
+	//PNRendererInterface::getInstance()->endRendering();
 	//PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_QUIT, NULL, NULL);
 	
 	return true;
