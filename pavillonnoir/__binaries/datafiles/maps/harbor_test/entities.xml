@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE listentities SYSTEM "../entities.dtd">
+<listentities>
+  <entity id="id:0" label="Level" mdref="harbor.pno" envtype="ground" objtype="dynamic" class="PN3DObject" x="-1332.706909" y="-540.287476" z="-2004.186768" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
+    <object>
+      <model path="harbor.pnm"/>
+    </object>
+  </entity>
+  <entity id="Player" label="New Object" mdref="pirate.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="330.322876" y="-721.669250" z="-952.191528" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
+   </entity>
+</listentities>
