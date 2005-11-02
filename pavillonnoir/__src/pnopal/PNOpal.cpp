@@ -105,10 +105,10 @@ void PNOpal::createSimulation()
 void PNOpal::destroySimulation()
 {
   _sim->destroyAllSolids();
-  if (_eventHandler)
-	delete _eventHandler;
-  // _sim->destroy();
-  // unexpected read/write error !
+  // if (_eventHandler)
+  // delete _eventHandler; // unexpected read/write error !
+  // _sim->destroy(); // unexpected read/write error !
+
 }
 
 /** Return a pointer to the OPAL simulation (opal::Simulator*)
