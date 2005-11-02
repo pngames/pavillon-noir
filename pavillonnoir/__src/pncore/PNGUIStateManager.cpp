@@ -29,6 +29,7 @@
 
 #include "PNGUIStateManager.hpp"
 #include "pnevent.h"
+#include "pnrender.h"
 
 #include "PNGUIMenuRoot.hpp"
 #include "PNGUIGame.hpp"
@@ -119,6 +120,8 @@ namespace PN
 		  PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_START, 0, _nextData);
 		if (_nextStep == MENUROOT)
 		  PNGUIMenuRoot::getInstance()->startGUI();
+		if (_nextStep == NONE)
+		  PNRendererInterface::getInstance()->endRendering();
 	  }
 	}
   }
