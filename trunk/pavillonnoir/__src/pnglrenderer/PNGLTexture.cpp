@@ -151,8 +151,8 @@ PNGLTexture::bind()
 {
   glBindTexture(GL_TEXTURE_2D, _ogltexture);
 
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _repeat ? GL_CLAMP_TO_EDGE : GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _repeat ? GL_CLAMP_TO_EDGE : GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _repeat ? GL_REPEAT : GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _repeat ? GL_REPEAT : GL_CLAMP_TO_EDGE);
 }
 
 //////////////////////////////////////////////////////////////////////////
