@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE listentities SYSTEM "../entities.dtd">
 <listentities>
-  <entity id="id:0" label="Level" mdref="lighthouse.pno" envtype="ground" objtype="dynamic" class="PN3DObject" x="-2986.167236" y="-342.173462" z="-952.223267" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
+  <entity id="id:1" label="Level" mdref="lighthouse.pno" envtype="ground" objtype="dynamic" class="PN3DObject" x="-2986.167236" y="-342.173462" z="-952.223267" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
   </entity>
   <entity id="id:0" label="New Object" mdref="pirate.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-886.266235" y="-584.457703" z="80.715042" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
     <object>
