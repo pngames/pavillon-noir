@@ -1,5 +1,5 @@
 # Loic Guitaut, 2005
-# GPL License (see COPYING)
+# GPL license (see COPYING)
 
 """
 This is a simple bksys module that detects the availability
@@ -19,7 +19,7 @@ The configuration is done in several steps :
 """
 
 """
-Simple detection for Opal
+Simple detection for OPAL
 """
 
 from SCons.Options import Options
@@ -29,13 +29,13 @@ def exists(env):
 	return true
 
 def generate(env):
-	# Detect Opal
+	# Detect OPAL
 	optionfile = env['CACHEDIR']+'opal.cache.py'
         opts = Options(optionfile)
 
         opts.AddOptions(
 		( 'OPAL_FLAGS', 'compilation flags for OPAL' ),
-		( 'OPAL_LDFLAGS', 'link flags for OPAL' ),
+		( 'OPAL_LDFLAGS', 'link flags for OPAL'),
 		( 'OPALISCONFIGURED', 'configuration succeeded' ),
         )
         opts.Update(env)
@@ -43,44 +43,29 @@ def generate(env):
 
 	# this condition is used to check when to redetect the configuration (do not remove)
 	if not env['HELP'] and (env['_CONFIGURE'] or not env.has_key('OPALISCONFIGURED')):
-		print "Checking for Opal            : ",
+		print "Checking for OPAL            : ",
 		
 		if env.has_key('OPALISCONFIGURED'): env.__delitem__('OPALISCONFIGURED')
 
 		# clear options set previously
 		if env.has_key('OPAL_FLAGS'): env.__delitem__('OPAL_FLAGS')
 		if env.has_key('OPAL_LDFLAGS'): env.__delitem__('OPAL_LDFLAGS')
-
-		includes_path = """/usr/include
-/usr/local/include
-/opt/include
-/mingw/include
-""".split()
-		include = '';
-		for inc in includes_path:
-			if os.path.exists(inc+'/opal/opal.h'):
-				include = inc
-				break
-		if include == '':
-			env.pprint('RED','[failed] includes not found !')
+	
+		fd_path = env.Dir('#./__library/linux/include/opal').abspath
+		hasfd = os.path.exists(fd_path)
+		if hasfd != True:
+			env.pprint('RED','[failed] include not found !')
 			env.Exit(1)
 
-		libs_path = """/usr/lib
-/usr/local/lib
-/opt/lib
-/mingw/lib""".split()
-
-		library = ''
-		for lib in libs_path:
-			if os.path.exists(lib+'/libopal-ode.so'):
-				library = lib
-
-		if library == '':
-			env.pprint('RED','[failed] libraries not found !')
+		env['OPAL_FLAGS'] = '-I'+env.Dir('#./__library/linux/include').path
+		
+		fd_path = env.File('#./__library/linux/lib/opal/libopal-ode.so').abspath
+		hasfd = os.path.exists(fd_path)
+		if hasfd != True:
+			env.pprint('RED','[failed] library not found !')
 			env.Exit(1)
 
-		env['OPAL_FLAGS'] = "-I"+include
-		env['OPAL_LDFLAGS'] = "-lopal-ode"
+		env['OPAL_LDFLAGS'] = '-L' + env.Dir('#./__library/linux/lib/opal').path + ' -lopal-ode'
 
 		# success
 		env['OPALISCONFIGURED']=1
@@ -94,4 +79,3 @@ def generate(env):
 
 	# load the variables detected into the environment
 	#if env.has_key('OPAL_FLAGS'): env.AppendUnique( CXXFLAGS = env['OPAL_FLAGS'] )
-	#if env.has_key('OPAL_LDFLAGS'): env.AppendUnique( LINKFLAGS = env['OPAL_LDFLAGS'] )
