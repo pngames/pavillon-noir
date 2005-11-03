@@ -2,4 +2,7 @@
 <!DOCTYPE object SYSTEM "object.dtd">
 <object>
   <model path="harbor.pnm" />
+  <listmaterials>
+    <material path="harbor_default02.pnt" />
+  </listmaterials>
 </object>
