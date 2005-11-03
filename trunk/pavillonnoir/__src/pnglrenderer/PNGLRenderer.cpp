@@ -37,6 +37,7 @@
 #include "pnexception.h"
 #include "PNGameEventData.hpp"
 #include "pnresources.h"
+#include "PNConf.hpp"
 
 #include "PNVideoEventData.hpp"
 #include "PNGLRenderer.hpp"
@@ -672,7 +673,12 @@ PNGLRenderer::initGUI()
 {
   try
   {
+	std::string tmpFile = PNConf::getInstance()->getConfPath().native_directory_string();
+	tmpFile += PATHSEPSTRING;
+	tmpFile += "CEGUI.log";
+	CEGUI::Logger::getSingleton().setLogFilename(tmpFile);
 	CEGUI::Logger::getSingleton().setLoggingLevel(CEGUI::Insane);
+
 	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/TaharezLook.scheme");
 	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/WindowsLook.scheme");
 	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/VanillaSkin.scheme");

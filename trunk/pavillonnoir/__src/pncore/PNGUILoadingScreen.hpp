@@ -44,6 +44,7 @@ namespace PN{
   public:
   protected:
   private:
+	static	PNGUILoadingScreen* _instance;
 	CEGUI::Window*		_mainSheet;
 	CEGUI::StaticImage*	_backGround;
 	CEGUI::ProgressBar*	_progBar;
@@ -52,9 +53,10 @@ namespace PN{
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
+	static	PNGUILoadingScreen* getInstance();
 	void refreshScreen(float val, std::string update);
-	void  startGUI();
-	void  resetGUI();
+	void  startGUI(pnEventType type, PNObject* source, PNEventData* data);
+	void  resetGUI(pnEventType type, PNObject* source, PNEventData* data);
 	void  show();
 	void  hide();
   protected:

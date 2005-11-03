@@ -287,9 +287,7 @@ namespace PN
 	
 	//PNGUIChatWindow::getInstance()->startGUI();
 	resetGUI();
-	PNGUILoadingScreen* tmp =  new PNGUILoadingScreen();
-	tmp->startGUI();
-	
+
 	return true;
   }
 
