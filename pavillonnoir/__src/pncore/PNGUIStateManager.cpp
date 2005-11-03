@@ -103,6 +103,7 @@ namespace PN
 
   void	  PNGUIStateManager::LoadManagerHandler(pnEventType type, PNObject* source, PNEventData* data)
   {
+	std::string tmp;
 	if (_currentMainState == MENUROOT && (_currentSubState == MENULOAD || _currentSubState == NONE))
 	{
 	  if (type == PN_EVENT_ML_ENDED)
@@ -110,13 +111,19 @@ namespace PN
 
 	  if (type == PN_EVENT_MP_STARTED)
 		PNGUIGame::getInstance()->startGUI();
-	  
 	}
 
 	if (_currentMainState == INGAME && (_currentSubState == MENUPAUSE || _currentSubState == PAUSE_MENULOAD))
 	{
+	  if (type == PN_EVENT_ML_ENDED)
+		PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_START, 0, NULL);
+
+	  if (type == PN_EVENT_MP_STARTED)
+		PNGUIGame::getInstance()->startGUI();
+
 	  if (type == PN_EVENT_MP_ENDED)
 		PNEventManager::getInstance()->sendEvent(PN_EVENT_MU_START, 0, NULL);
+
 	  if (type == PN_EVENT_MU_ENDED)
 	  {
 		if (_nextStep == INGAME)
