@@ -33,6 +33,7 @@
 			<Property Name="RelativeRect" Value="l:0.550980 t:0.800000 r:0.850980 b:0.850000" />
 			<Property Name="Text" Value="Options" />
 			<Property Name="UnifiedAreaRect" Value="{{0.550980,0.000000},{0.800000,0.000000},{0.850980,0.000000},{0.850000,0.000000}}" />
+			<Property Name="Disabled" Value="true"/>
 			</Window>
 		<Window Type="Vanilla/Button" Name="MenuRoot/Exit">
 			<Property Name="AbsoluteRect" Value="l:561.000000 t:704.000000 r:867.000000 b:743.000000" />

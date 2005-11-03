@@ -35,6 +35,7 @@
 				<Property Name="RelativeRect" Value="l:0.100000 t:0.230000 r:0.900000 b:0.380000" />
 				<Property Name="Text" Value="Nouvelle partie" />
 				<Property Name="UnifiedAreaRect" Value="{{0.100000,0.000000},{0.230000,0.000000},{0.900000,0.000000},{0.380000,0.000000}}" />
+				<Property Name="Disabled" Value="true"/>
 				</Window>
 			<Window Type="Vanilla/Button" Name="PNESCMenu/quitGame">
 				<Property Name="AbsoluteRect" Value="l:51.000000 t:266.000000 r:459.000000 b:304.000000" />
