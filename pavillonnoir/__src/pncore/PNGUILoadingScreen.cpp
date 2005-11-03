@@ -35,6 +35,8 @@ using namespace PN;
 
 namespace PN{
 
+  PNGUILoadingScreen*	PNGUILoadingScreen::_instance = NULL;
+
   PNGUILoadingScreen::PNGUILoadingScreen()
   {
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("LoadingScreenImage") == false)
@@ -49,12 +51,20 @@ namespace PN{
 	_mainSheet->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&PNGUILoadingScreen::handleClickTest, this));
 
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
+	//resetProgBar();
 	hide();
   }
 
   PNGUILoadingScreen::~PNGUILoadingScreen()
   {
 	_mainSheet->destroy();
+  }
+
+  PNGUILoadingScreen* PNGUILoadingScreen::getInstance()
+  {
+	if (_instance == NULL)
+	  _instance = new PNGUILoadingScreen();
+	return _instance;
   }
 
   void PNGUILoadingScreen::refreshScreen(float val, std::string update)
@@ -72,6 +82,11 @@ namespace PN{
   {
   }
 
+ // void  PNGUILoadingScreen::resetScreen()
+ // {
+	//_progBar->setProgress(0.0f;
+ // }
+
  bool PNGUILoadingScreen::handleClickTest(const CEGUI::EventArgs& e)
  {
    static float tmp = 0.0f;
@@ -88,10 +103,10 @@ namespace PN{
   return true;
  }
 
-  void	PNGUILoadingScreen::startGUI()
+  void	PNGUILoadingScreen::startGUI(pnEventType type, PNObject* source, PNEventData* data)
   {
-	CEGUI::MouseCursor::getSingleton().hide();
-	setRandomBackground();
+	//CEGUI::MouseCursor::getSingleton().hide();
+	//setRandomBackground();
 	show();
 	// TODO : voir les conflis avec la console
 
@@ -99,7 +114,7 @@ namespace PN{
 	//CEGUI::MouseCursor::getSingleton().setConstraintArea(re);
   }
 
-  void	PNGUILoadingScreen::resetGUI()
+  void	PNGUILoadingScreen::resetGUI(pnEventType type, PNObject* source, PNEventData* data)
   {
 	hide();
   }

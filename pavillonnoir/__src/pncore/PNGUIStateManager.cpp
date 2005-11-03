@@ -33,6 +33,7 @@
 
 #include "PNGUIMenuRoot.hpp"
 #include "PNGUIGame.hpp"
+#include "PNGUILoadingScreen.hpp"
 
 using namespace PN;
 
@@ -54,6 +55,7 @@ namespace PN
 
 	PNEventManager::getInstance()->addCallback(PN_EVENT_MU_STARTED, EventCallback(this, &PNGUIStateManager::LoadManagerHandler));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_MU_ENDED, EventCallback(this, &PNGUIStateManager::LoadManagerHandler));
+	PNGUILoadingScreen::getInstance();
   }
 
   PNGUIStateManager::~PNGUIStateManager()
@@ -108,6 +110,7 @@ namespace PN
 
 	  if (type == PN_EVENT_MP_STARTED)
 		PNGUIGame::getInstance()->startGUI();
+	  
 	}
 
 	if (_currentMainState == INGAME && (_currentSubState == MENUPAUSE || _currentSubState == PAUSE_MENULOAD))

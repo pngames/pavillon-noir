@@ -41,6 +41,7 @@
 
 #include "pndefs.h"
 #include "PNConsole.hpp"
+#include "PNConf.hpp"
 
 using namespace PN;
 
@@ -63,7 +64,11 @@ PNConsole::~PNConsole()
 
 void	PNConsole::init()
 {
-  _consoleLogFile = fopen("pnConsole.log", "w");
+  std::string tmpFile = PNConf::getInstance()->getConfPath().native_directory_string();
+  tmpFile += PATHSEPSTRING;
+  tmpFile += "pnConsole.log";
+
+  _consoleLogFile = fopen(tmpFile.c_str(), "w");
 }
 
 void	PNConsole::_addFonction(const std::string& command, const Callback& fonction, const std::string& desc)
