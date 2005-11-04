@@ -277,7 +277,11 @@ public:
 
   /// Fill buffer from step with faces owned by 3d object
   // unsigned int			computeFaces(PNFace* faces, unsigned int step = 0);
-
+  //////////////////////////////////////////////////////////////////////////
+  /// Get minimum x y z coordinate
+  const PNPoint&	getMin() const;
+  /// Get maximum x y z coordinate
+  const PNPoint&	getMax() const;
   //////////////////////////////////////////////////////////////////////////
 
   /// Retrieve model of 3d object
