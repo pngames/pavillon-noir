@@ -65,5 +65,4 @@ PNConfigurableParameter*	PNFoxOptionsObject::getParameter(int idx)
 	return _params[idx];
 }
 
-
 };

@@ -95,8 +95,9 @@ public:
 	virtual void	create();
 	long			onAccept(FXObject* obj,FXSelector sel,void* ptr);
 	long			onApply(FXObject* obj,FXSelector sel,void* ptr);
-	
+
 	void			saveGrid(PNPropertiesGrid* grid, PNConf* conf);
+	void			loadGrid(PNPropertiesGrid* grid, PNConf* conf);
 
 public:
   enum {
