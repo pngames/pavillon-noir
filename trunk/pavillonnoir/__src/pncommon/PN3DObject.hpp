@@ -437,6 +437,11 @@ public:
   virtual pnuint				computeFaces(PNFace* faces, pnuint step = 0);
 
   //////////////////////////////////////////////////////////////////////////
+  /// Get minimum x y z coordinate
+  const PNPoint&	getMin() const;
+  /// Get maximum x y z coordinate
+  const PNPoint&	getMax() const;
+  //////////////////////////////////////////////////////////////////////////
 
   /// Retrieve model of 3d object
   PN3DModel*					get3DModel() const;

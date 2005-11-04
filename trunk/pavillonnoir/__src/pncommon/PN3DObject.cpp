@@ -896,6 +896,17 @@ PN3DObject::setTargetOrientation(const PNQuatf& quat)
 
   _targetOrientation = quat;
 }
+//////////////////////////////////////////////////////////////////////////
+/// Get minimum x y z coordinate
+const PNPoint&	PN3DObject::getMin() const 
+{
+  return _model->getMin();
+}
+/// Get maximum x y z coordinate
+const PNPoint&	PN3DObject::getMax() const
+{
+  return  _model->getMax();
+}
 
 //////////////////////////////////////////////////////////////////////////
 
