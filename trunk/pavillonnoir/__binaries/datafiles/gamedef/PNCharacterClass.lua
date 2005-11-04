@@ -107,11 +107,13 @@ function PNCharacterClass(id)
 	OBJ.walkingSpeed = 0.1
 	OBJ.runningSpeed = 0.4
 	
-	OBJ.attitude=CHARACTER_ATTITUDE.WALKING;
-	OBJ.dirLong= CHARACTER_DIR_LONG.NONE; -- longitudinal direction
-	OBJ.dirLate=CHARACTER_ATTITUDE.WALKING;	-- latteral direction
-	OBJ.actualSpeed = OBJ.walkingSpeed;
+	OBJ.attitude=CHARACTER_ATTITUDE.WALKING
+	OBJ.dirLong= CHARACTER_DIR_LONG.NONE -- longitudinal direction
+	OBJ.dirLate= CHARACTER_DIR_LATE.NONE	-- latteral direction
+	OBJ.actualSpeed = OBJ.walkingSpeed
 	-----------------------------------------------------------
+	------------------- Jump Parameter ------------------------
+	OBJ.JumpHight= 0;
 	--------------- Animation parameters ---------------------- 
 	OBJ:setAnimSpeed(4.0)
 	OBJ.idleTime = 0
@@ -121,17 +123,24 @@ function PNCharacterClass(id)
 Call when someone tell the object to go backward
 @param state boolean
 	true -> start , false -> stop  
-%--]]	
+%--]]
+	OVERRIDE(OBJ, "onMoveForward")	
 	function OBJ:onMoveForward(state)
+    	pnprint("==>> PNCharacter:onMoveForward()\n")
+		pnprint("speed: " .. self.actualSpeed .."\n")
+		pnprint("attitude: " .. self.attitude.."\n")
 		pnprint(self.id .. ":onMoveForward=" .. state .. "\n")
-		OBJ:setMovingSpeed(self.actualSpeed)
-		self.__index:onMoveForward(state)	
+		--OBJ:setMovingSpeed(self.actualSpeed)
+		self:PN3DSkeletonObject_onMoveForward(state)	
 		if (state == ACTION_STATE.START) then
-			self.dirLong = CHARACTER_DIR_LONG.FORWARD
+			self.dirLong = self.dirLong + CHARACTER_DIR_LONG.FORWARD
 		else
-			self.dirLong = CHARACTER_DIR_LONG.NONE
+			self.dirLong = self.dirLong - CHARACTER_DIR_LONG.FORWARD
 		end 
 		self:launchGoodAnimation()
+		pnprint("speed: " .. self.actualSpeed .."\n")
+		pnprint("attitude: " .. self.attitude.."\n")
+		pnprint("<<== PNCharacter:onMoveForward()\n")
 	end
 -------------------------------------------------------------------------------
 --[[%
@@ -139,15 +148,16 @@ Call when someone tell the object to go backward and start apropriate annimation
 @param state boolean
 	true -> start , false -> stop  
 %--]]		
+	OVERRIDE(OBJ, "onMoveBackward")	
 	function OBJ:onMoveBackward(state)
 		pnprint(self.id)
 		pnprint(":onMoveBackward\n")
-		self.__index:onMoveBackward(state)
-		OBJ:setMovingSpeed(self.actualSpeed)	
+		self:PN3DSkeletonObject_onMoveBackward(state)
+		--OBJ:setMovingSpeed(self.actualSpeed)	
 		if (state == ACTION_STATE.START) then
-			self.dirLong = CHARACTER_DIR_LONG.BACKWARD
+			self.dirLong = self.dirLong + CHARACTER_DIR_LONG.BACKWARD
 		else
-			self.dirLong = CHARACTER_DIR_LONG.NONE
+			self.dirLong = self.dirLong - CHARACTER_DIR_LONG.BACKWARD
 		end 
 		self:launchGoodAnimation()
 	end
@@ -157,14 +167,15 @@ Call when someone tell the object to go Left
 @param state boolean
 	true -> start , false -> stop  
 %--]]	
+	OVERRIDE(OBJ, "onMoveLeft")	
 	function OBJ:onMoveLeft(state)
 		pnprint(self.id .. ":onMoveForLeft=" .. state .. "\n")
-		OBJ:setMovingSpeed(self.actualSpeed)
-		self.__index:onMoveLeft(state)	
+		--OBJ:setMovingSpeed(self.actualSpeed)
+		self:PN3DSkeletonObject_onMoveLeft(state)	
 		if (state == ACTION_STATE.START) then
-			self.dirLate = CHARACTER_DIR_LATE.LEFT
+			self.dirLate = self.dirLate + CHARACTER_DIR_LATE.LEFT
 		else
-			self.dirLate = CHARACTER_DIR_LATE.NONE
+			self.dirLate = self.dirLate - CHARACTER_DIR_LATE.LEFT
 		end 
 		self:launchGoodAnimation()
 	end
@@ -174,15 +185,16 @@ Call when someone tell the object to left and start apropriate animation
 @param state boolean
 	true -> start , false -> stop  
 %--]]		
+	OVERRIDE(OBJ, "onMoveRight")	
 	function OBJ:onMoveRight(state)
 		pnprint(self.id)
 		pnprint(self.id .. ":onMoveForRight=" .. state .. "\n")
-		self.__index:onMoveRight(state)
-		OBJ:setMovingSpeed(self.actualSpeed)	
+		self:PN3DSkeletonObject_onMoveRight(state)
+		--OBJ:setMovingSpeed(self.actualSpeed)	
 		if (state == ACTION_STATE.START) then
-			self.dirLate = CHARACTER_DIR_LATE.RIGHT
+			self.dirLate = self.dirLate + CHARACTER_DIR_LATE.RIGHT
 		else
-			self.dirLate = CHARACTER_DIR_LATE.NONE
+			self.dirLate = self.dirLate - CHARACTER_DIR_LATE.RIGHT
 		end 
 		self:launchGoodAnimation()
 	end
@@ -193,10 +205,11 @@ Call when someone tell the object to rotate right
 @param state boolean
 	true -> start , false -> stop  
 %--]]	
+	OVERRIDE(OBJ, "onRotateRight")	
 	function OBJ:onRotateRight(state)
 		pnprint(self.id)
 		pnprint(":onRotateRight\n")
-		self.__index:onRotateRight(state)		
+		self:PN3DSkeletonObject_onRotateRight(state)		
 	end	
 -------------------------------------------------------------------------------
 --[[%
@@ -204,10 +217,11 @@ Call when someone tell the object to rotate left
 @param state boolean
 	true -> start , false -> stop  
 %--]]		
+	OVERRIDE(OBJ, "onRotateLeft")	
 	function OBJ:onRotateLeft(state)
 		pnprint(self.id)
 		pnprint(":onRotateLeft\n")
-		self.__index:onRotateLeft(state)	
+		self:PN3DSkeletonObject_onRotateLeft(state)	
 		self.yawSpeed = self.defaultRotateSpeed;
 	end
 -------------------------------------------------------------------------------
@@ -216,11 +230,12 @@ Call when someone tell the object to rotate up
 @param state boolean
 	true -> start , false -> stop  
 %--]]	
+	OVERRIDE(OBJ, "onRotateUp")	
 	function OBJ:onRotateUp(state)
 		pnprint(self.id)
 		pnprint(":onRotateUp\n")
 		self.pitchSpeed = self.defaultRotateSpeed;
-		self.__index:onRotateUp(state)		
+		self:PN3DSkeletonObject_onRotateUp(state)		
 	end
 -------------------------------------------------------------------------------
 --[[%
@@ -228,11 +243,12 @@ Call when someone tell the object to rotate down
 @param state boolean
 	true -> start , false -> stop  
 %--]]	
+	OVERRIDE(OBJ, "onRotateDown")	
 	function OBJ:onRotateDown(state)
 		pnprint(self.id)
 		pnprint(":onRotateDown\n")
 		self.pitchSpeed = self.defaultRotateSpeed
-		self.__index:onRotateDown(state)	
+		self:PN3DSkeletonObject_onRotateDown(state)	
 	end
 -------------------------------------------------------------------------------
 --[[%
@@ -271,39 +287,72 @@ Add the entity in the seen_entities list
 		
     end
 --------------------------------------------------------------------------------
+    OVERRIDE(OBJ, "onInit")	
+	function OBJ:onInit()
+    	pnprint("onInit()\n")
+    	self:PN3DSkeletonObject_onInit()
+    	--self.JumpHight= (self:getMax().y - self:getMin().y ) /3
+		--self.attitude = CHARACTER_ATTITUDE.WALKING
+		--self.actualSpeed = self.walkingSpeed	
+    end
+--------------------------------------------------------------------------------	
+	OVERRIDE(OBJ, "onUpdate")	
 	function OBJ:onUpdate(deltaTime)
+		--pnprint("speed: " .. self.actualSpeed .."\n")
+		--pnprint("attitude: " .. self.attitude.."\n")
 		self.view:update(deltaTime)
-		self.__index:update(deltaTime)
+		self:setMovingSpeed(self.actualSpeed)
 		self.idleTime = self.idleTime + deltaTime;
 		if (self.idleTime >= 10000 and self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.NONE)then
 			self:setEnableLoop(false)
 			self:startAnimation(CHARACTER_ANIM.IDLE, 0)
 			self.idleTime = 0
 		end
+		self:PN3DSkeletonObject_onUpdate(deltaTime)
 	end
 	
 --------------------------------------------------------------------------------
-    function OBJ:onRun(state)
+	function OBJ:onRun(state)
+   		print(self)
+    	pnprint("==>> "..self.className..":onRun()\n")
+		pnprint("speed: " .. self.actualSpeed .."\n")
+		pnprint("attitude: " .. self.attitude.."\n")
 		if (state == ACTION_STATE.START)then
+			pnprint("start run\n")
 		    self.attitude = CHARACTER_ATTITUDE.RUNNING
 		    self.actualSpeed = self.runningSpeed
 		else
+			pnprint("stop run\n")
 		    self.attitude = CHARACTER_ATTITUDE.WALKING
 		    self.actualSpeed = self.walkingSpeed
 		end
-		self:setMovingSpeed(self.actualSpeed)
+		--self:setMovingSpeed(self.actualSpeed)
+		self:launchGoodAnimation()
+		pnprint("speed: " .. self.actualSpeed .."\n")
+		pnprint("attitude: " .. self.attitude.."\n")
+    	pnprint("<<== "..self.className..":onRun()\n")
+    end	
+--------------------------------------------------------------------------------
+	function OBJ:onCrouch(state)
+		if (state == ACTION_STATE.START)then
+			pnprint("start crouch\n")
+		    self.attitude = CHARACTER_ATTITUDE.CROUCHING
+		    
+		else
+			pnprint("stop Crouch\n")
+		    self.attitude = CHARACTER_ATTITUDE.WALKING
+		end
+		self.actualSpeed = self.walkingSpeed
+		--self:setMovingSpeed(self.actualSpeed)
 		self:launchGoodAnimation()
     end	
 --------------------------------------------------------------------------------
-    function OBJ:onCrouch(state)
+    function OBJ:onJump(state)
 		if (state == ACTION_STATE.START)then
-		    self.attitude = CHARACTER_ATTITUDE.CROUCHING
-		    self.actualSpeed = self.walkingSpeed
-		else
-		    self.attitude = CHARACTER_ATTITUDE.WALKING
+		    self.attitude = CHARACTER_ATTITUDE.JUMPIMG
 		    self.actualSpeed = self.walkingSpeed
 		end
-		self:setMovingSpeed(self.actualSpeed)
+		--self:setMovingSpeed(self.actualSpeed)
 		self:launchGoodAnimation()
     end	
 --------------------------------------------------------------------------------
@@ -313,12 +362,13 @@ Add the entity in the seen_entities list
 --------------------------------------------------------------------------------
 	function OBJ:launchGoodAnimation()
 		self:setEnableLoop(true)
-		if (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.NONE)then
-			self:stopAnimation()
-			self.idleTime = 0
-			return
-		elseif (self.attitude == CHARACTER_ATTITUDE.WALKING) then
-			if 	   (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
+		if (self.attitude == CHARACTER_ATTITUDE.WALKING) then
+			pnprint ("walk\n")
+			if (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.NONE)then
+				self:startAnimation(CHARACTER_ANIM.IDLE, 0)
+				self.idleTime = 0
+				return
+			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
 				self:startAnimation(CHARACTER_ANIM.WALK_L, 0)
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
@@ -340,7 +390,6 @@ Add the entity in the seen_entities list
 				self:startAnimation(CHARACTER_ANIM.WALK_R, 0)
 				return	
 			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
-				pnprint ("walk left\n")
 				self:startAnimation(CHARACTER_ANIM.WALK_L, 0)
 				return		
 			end 
@@ -396,6 +445,9 @@ Add the entity in the seen_entities list
 				return	
 			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
 				self:startAnimation(CHARACTER_ANIM.CROUCH_L, 0)
+				return
+			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.NONE) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH, 0)
 				return		
 			end 						
 		elseif (self.attitude == CHARACTER_ATTITUDE.JUMPING) then
@@ -404,6 +456,10 @@ Add the entity in the seen_entities list
 				return		
 			end 		
 		end
+	end
+	
+	function OBJ:updateJump()
+		
 	end
 	
 	return OBJ

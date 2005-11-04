@@ -28,18 +28,22 @@ function PNPlayerClass(id)
 		
 	end    
 ------------------------------ MOVE -----------------------
+	OVERRIDE(OBJ, "onMoveForward")
 	function OBJ:onMoveForward(state)
-		self.__index:onMoveForward(state)
-		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
+	pnprint("==>> PNPlayer:onMoveForward()\n")
+		self:PNCharacter_onMoveForward(state)
+		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)		
+	pnprint("<<== PNPlayer:onMoveForward()\n")
 		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 		--if (state == ACTION_STATE.START) then
 		--	PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
 		--	PNRenderCam:getViewTarget():addMovingState(PN3DObject.STATE_T_FORWARD)
 		--end
 	end	
-
+	
+	OVERRIDE(OBJ, "onMoveBackward")
 	function OBJ:onMoveBackward(state)
-		self.__index:onMoveBackward(state)
+		self:PNCharacter_onMoveBackward(state)
 		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
 		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 		--if (state == ACTION_STATE.START) then
@@ -48,8 +52,9 @@ function PNPlayerClass(id)
 		--end	
 	end
 	
+	OVERRIDE(OBJ, "onMoveLeft")	
 	function OBJ:onMoveLeft(state)
-		self.__index:onMoveLeft(state)
+		self:PNCharacter_onMoveLeft(state)
 		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
 		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 		--if (state == ACTION_STATE.START) then
@@ -58,8 +63,9 @@ function PNPlayerClass(id)
 		--end	
 	end	
 
+	OVERRIDE(OBJ, "onMoveRight")
 	function OBJ:onMoveRight(state)
-		self.__index:onMoveRight(state)
+		self:PNCharacter_onMoveRight(state)
 		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
 		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 		--if (state == ACTION_STATE.START) then
@@ -68,26 +74,30 @@ function PNPlayerClass(id)
 		--end
 	end
 ------------------------- ROTATE -----------------------------
+	OVERRIDE(OBJ, "onRotateRight")
 	function OBJ:onRotateRight(state)
-		self.__index:onRotateRight(state)
+		self:PNCharacter_onRotateRight(state)
 		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
 		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 	end
-	
+
+	OVERRIDE(OBJ, "onRotateLeft")	
 	function OBJ:onRotateLeft(state)
-		self.__index:onRotateLeft(state)
+		self:PNCharacter_onRotateLeft(state)
 		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
 		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 	end
 	
+	OVERRIDE(OBJ, "onRotateUp")
 	function OBJ:onRotateUp(state)
-		self.__index:onRotateUp(state)
+		self:PNCharacter_onRotateUp(state)
 		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
 		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 	end
 	
+	OVERRIDE(OBJ, "onRotateDown")	
 	function OBJ:onRotateDown(state)
-		self.__index:onRotateDown(state)
+		self:PNCharacter_onRotateDown(state)
 		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
 		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 	end    
@@ -98,12 +108,13 @@ Do some recurent stuff
 
 @param deltaTime real
 	is the delTaTime since the last call of the function
-%--]]			
+%--]]
+	OVERRIDE(OBJ, "onUpdate")			
 	function OBJ:onUpdate(deltaTime)
 		--if (isInstanceOf(self, "PN3DObject"))then
 		--	pnprint("IAM PN3Dobject")
 		--end
-		self.__index:onUpdate(deltaTime)
+		self:PNCharacter_onUpdate(deltaTime)
 		--local RCVT= PNRenderCam:getViewTarget()
 		--if (self:getCoord():getDistance(RCVT:getCoord()) <= 5)then
 		--	RCVT:subMovingState(PN3DObject.STATE_T_FORWARD)
@@ -115,9 +126,10 @@ Do some recurent stuff
 --------------------------------------------------------
 --[[%
 Call at the start of a map
-%--]]		
+%--]]
+	OVERRIDE(OBJ, "onInit")		
 	function OBJ:onInit()
-        self.__index:onUpdate(deltaTime)
+        self:PNCharacter_onUpdate(deltaTime)
 		pnprint(self.id .. ":onInit()\n")
 	    --[[
 	     self.view = PNRenderCam

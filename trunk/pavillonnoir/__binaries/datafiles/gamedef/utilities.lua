@@ -1,6 +1,6 @@
 function inheritFrom(child, parent, c_instance)
-	child.__index = parent
-	setmetatable(child, child)
+	child.__parent = parent
+	setmetatable(child, {__index = parent})
 	if (c_instance ~= nil and c_instance == true)then
 		child.__instance = parent
 	end
@@ -8,6 +8,8 @@ function inheritFrom(child, parent, c_instance)
 	
 	return child
 end
+
+
 
 function isInstanceOf(obj, class)
 	if (obj ~= nil and obj.className ~= nil) then
@@ -17,9 +19,14 @@ function isInstanceOf(obj, class)
 			return true
 		else
 			--pnprint ("is insatnce of 3 \n")
-			return isInstanceOf(obj.__index, class)
+			return isInstanceOf(obj.__parent, class)
 		end
 	end
 	--pnprint ("is insatnce of 4 \n")
 	return false	
+end
+
+function OVERRIDE(last, functionName)
+	last[last.__parent.className.."_"..functionName] =  last[functionName]
+	last[functionName] = nil
 end
