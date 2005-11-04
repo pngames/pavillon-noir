@@ -374,43 +374,37 @@ void  PNLuaGame::onColision(pnEventType evt, PNObject* source, PNEventData* data
 
 void  PNLuaGame::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* data)
 {
-  PN3DObject*	  o1 = ((PNFrustrumEventData*)data)->obj;
-  PN3DObject*	  o2 = ((PN3DCamera*)source)->getPositionTarget();
+  PN3DObject*	  viewed = ((PNFrustrumEventData*)data)->obj;
+  PN3DObject*	  viewer = ((PN3DCamera*)source)->getPositionTarget();
   std::string	  luaOrder;
 
     pnerror(PN_LOGLVL_DEBUG, "frustrum in");
-    if (o2 != NULL)
+    if (viewer != NULL)
     {
-        PNCharacter*  s = (PNCharacter*)o2;
-        PN3DObject*  target = (PN3DObject*)o1;
-
         luaOrder = "gameMap:onFrustrumIn(\"";
-        luaOrder += s->getId().c_str();
+        luaOrder += viewer->getId().c_str();
         luaOrder += "\",\"";
-        luaOrder += target->getId().c_str();
+        luaOrder += viewed->getId().c_str();
         luaOrder += "\")";
-         manageLuaError(_LVM.execString(luaOrder));
+        manageLuaError(_LVM.execString(luaOrder));
     }
 }
 
 void  PNLuaGame::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* data)
 {
-  PN3DObject*	  o1 = ((PNFrustrumEventData*)data)->obj;
-  PN3DObject*	  o2 = ((PN3DCamera*)source)->getPositionTarget();
+  PN3DObject*	  viewed = ((PNFrustrumEventData*)data)->obj;
+  PN3DObject*	  viewer = ((PN3DCamera*)source)->getPositionTarget();
   std::string	  luaOrder;
 
     pnerror(PN_LOGLVL_DEBUG, "frustrum out");
-    if (o2 != NULL)
+    if (viewer != NULL)
     {
-        PNCharacter*  s = (PNCharacter*)o2;
-        PNCharacter*  target = (PNCharacter*)o1;
-
         luaOrder = "gameMap:onFrustrumOut(\"";
-        luaOrder += s->getId().c_str();
+        luaOrder += viewer->getId().c_str();
         luaOrder += "\",\"";
-        luaOrder += target->getId().c_str();
+        luaOrder += viewed->getId().c_str();
         luaOrder += "\")";
-         manageLuaError(_LVM.execString(luaOrder));
+        manageLuaError(_LVM.execString(luaOrder));
     }
 }
 
