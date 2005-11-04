@@ -96,8 +96,11 @@ PNConf::PNConf()
   /*
   * filling default configuration map
   */
-  _defaultHash["resolution_x"] = "1024";
-  _defaultHash["resolution_y"] = "768";
+  _defaultHash["Resolution"] = "1024x768";
+  _defaultHash["Fullscreen"] = "no";
+  _defaultHash["Key binding profile"] = "default";
+  _defaultHash["Music volume"] = "50";
+  _defaultHash["Game volume"] = "70";
 
   xmlKeepBlanksDefault(1);
 #ifdef WIN32

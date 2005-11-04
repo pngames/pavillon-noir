@@ -58,6 +58,8 @@ namespace PN
 */
 PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options",DECOR_TITLE|DECOR_BORDER|DECOR_RESIZE,0,0,500,300, 0,0,0,0, 4,4)
 {
+	PNConf* conf = PNConf::getInstance();
+
 	// General layout, buttons on the left, options on the right
 	FXVerticalFrame* vertical = new FXVerticalFrame(this,LAYOUT_SIDE_TOP|LAYOUT_FILL_X|LAYOUT_FILL_Y);
 	FXHorizontalFrame* horizontal = new FXHorizontalFrame(vertical,LAYOUT_FILL_X|LAYOUT_FILL_Y);
@@ -84,11 +86,9 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 	stringList resolutionsList;
 	resolutionsList.push_back("800x600");
 	resolutionsList.push_back("1024x768");
-	resolutionsList.push_back("1152x864");
+	resolutionsList.push_back("1280x960");
+	resolutionsList.push_back("1280x1024");
 	_graphicObj->addParam(new PNConfigurableParameter(_graphicObj, PN_PARAMTYPE_STRINGLIST, &resolutionsList, "Resolution", "Choose your resolution if you dare!", TRUE));
-//	PNFXStringListParameter* strlistGraphic = (PNFXStringListParameter*)_graphicObj->getParameter(_graphicObj->getNbParameters()-1);
-//	strlistGraphic->setNumVisibleItems(0);
-//	strlistGraphic->setLabelsNumChars(0);
 
 	//// Second Parameter : fullscreen
 	// TODO : hey! change my type to PN_PARAMTYPE_CHECKBOX, thx (needs a PNFXCheckbox class)
@@ -100,6 +100,7 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 	// Use a grid to display our parameters
 	_graphicGrid = new PNPropertiesGrid(graphicFrame, NULL);
 	_graphicGrid->setObject(_graphicObj);
+	loadGrid(_graphicGrid, conf);
 
 
 	// ** Audio Tab ** //
@@ -133,6 +134,7 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 	// Use a grid to display our parameters
 	_audioGrid = new PNPropertiesGrid(audioFrame, NULL);
 	_audioGrid->setObject(_audioObj);
+	loadGrid(_audioGrid, conf);
 
 
 	// ** Input Tab ** //
@@ -146,17 +148,17 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 	stringList inputConfList;
 	inputConfList.push_back("Default");
 	inputConfList.push_back("Emacs");
-	inputConfList.push_back("Killer Profile");
+	inputConfList.push_back("w4r70Rd");
 	_inputObj->addParam(new PNConfigurableParameter(_inputObj, PN_PARAMTYPE_STRINGLIST, &inputConfList, "Key binding profile", "Try it!", TRUE));
 	
-	// peut-etre pas tres utilisable
+	//// maybe bot very usable
 	// type=table
 	//_graphicObj->addParam(new PNConfigurableParameter(_inputObj, PN_PARAMTYPE_STRING , void*elem, "Input Configuration", "Key bindings", TRUE));
 
 	// Use a grid to display our parameters
 	_inputGrid = new PNPropertiesGrid(inputFrame, NULL);
 	_inputGrid->setObject(_inputObj);
-
+	loadGrid(_inputGrid, conf);
 
 	// Bottom part
 	new FXHorizontalSeparator(vertical,SEPARATOR_RIDGE|LAYOUT_FILL_X);
@@ -178,9 +180,39 @@ void  PNFoxOptionWindow::create()
 	FXDialogBox::create();
 }
 
+/*! \brief Loads the preferences using PNConf
+* For the given grid goes through the different parameters
+* and get a string value to load.
+*/
+void  PNFoxOptionWindow::loadGrid(PNPropertiesGrid* grid, PNConf* conf)
+{
+  std::list<PNPropertiesGridParameter*> gridParameters = grid->getParams();
+  for (std::list<PNPropertiesGridParameter*>::iterator it = gridParameters.begin(); 
+	it != gridParameters.end(); it++)
+  {
+	PNConfigurableParameter* configurableParameter  = (*it)->getParam();
+	PNPropertiesGridParameter* gridParameter;
+	std::string key;
+	pnbool ok = FALSE;
+	// first check the type of the GridParameters we're dealing with (float, string, stringlist ...)
+	// then call the appropriate method
+	switch (configurableParameter->getType())
+	{
+	case PN_PARAMTYPE_STRINGLIST:
+	  gridParameter = (PNFXStringListParameter*)(*it);
+	  key = gridParameter->getParam()->getLabel();
+	  ok = gridParameter->setStringValue(conf->getKey(key.c_str()));
+	  if (ok == FALSE)
+		pnerror(PN_LOGLVL_DEBUG, "Could not load values for key \"%s\"", key.c_str());
+	  break;
+	default:
+	  break;
+	}
+  }
+}
+
 /*! \brief Saves the preferences using PNConf
-* For each grid in the option window, goes through the different parameters
-* and get a string value to save.
+* Saves each grid in the option window.
 */
 long  PNFoxOptionWindow::onApply(FXObject* obj,FXSelector sel,void* ptr)
 {
@@ -201,6 +233,10 @@ long  PNFoxOptionWindow::onApply(FXObject* obj,FXSelector sel,void* ptr)
   return 1;
 }
 
+/*! \brief Saves the preferences using PNConf
+* For the given grid, goes through the different parameters
+* and get a string value to save.
+*/
 void  PNFoxOptionWindow::saveGrid(PNPropertiesGrid* grid, PNConf* conf)
 {
   std::list<PNPropertiesGridParameter*> gridParameters = grid->getParams();
