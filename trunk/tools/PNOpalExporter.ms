@@ -22,7 +22,7 @@ function checkScene =
 	)
 		
 	-- if saving is canceled return false
-	savePath = getSaveFileName caption:"Export Solid To..." filename:"untitled" types:"PNOpal Blueprint(*.pnp)|*.pnp|All|*.*"
+	savePath = getSaveFileName caption:"Export Solid To..." filename:"untitled" types:"Opal Blueprint(*.xml)|*.xml|All|*.*"
 	if savePath == undefined then return D_FALSE
 
 	return D_TRUE

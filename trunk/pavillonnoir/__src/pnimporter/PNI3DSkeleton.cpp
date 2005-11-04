@@ -90,6 +90,8 @@ void
 PNI3DSkeleton::render()
 {
   _robject->render();
+  // FIXME : ugly debug
+
 }
 
 pnbool

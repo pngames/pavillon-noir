@@ -173,10 +173,32 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
   if (_paused == true)
 	return;
 
+  for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
+  {
+	if (_break == true)
+	  return;
+	PN3DObject*	current_obj = it->second;
+	if (current_obj->getPhysicalObject())
+	{
+	  PNLOCK_BEGIN(current_obj);
+	  {
+		const PNPoint& coord = current_obj->getCoord();
+		const PNPoint& center = current_obj->get3DModel()->getCenter();
+		const PNQuatf& orient = current_obj->getOrient();
+
+		current_obj->getPhysicalObject()->setCoord(coord.x + center.x, coord.y + center.y, coord.z + center.z);
+		current_obj->getPhysicalObject()->setOrient(orient);
+	  }
+	  PNLOCK_END(current_obj);
+	}
+  }
+
+  // run simulation
   bool ret = _sim->simulate(elapsedTime);
   if (ret == false)
   	return;
-  
+
+  // apply simulation
   for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
   {
 	if (_break == true)

@@ -75,7 +75,7 @@ PN3DObject::PN3DObject()
   _rightDirection.setArray(PNVector3f::UNIT_X);
   _topDirection.setArray(PNVector3f::UNIT_Y);
 
-  _renderMode = RENDER_MODEL | RENDER_MATERIALS | RENDER_PHYSICAL;
+  _renderMode = RENDER_MODEL | RENDER_MATERIALS;
   _movingState = STATE_NONE;
 
   setTargetMode(TMODE_FREE);

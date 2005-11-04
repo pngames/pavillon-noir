@@ -42,6 +42,7 @@
 #include "PN3DModel.hpp"
 #include "PN3DSkeleton.hpp"
 #include "PN3DAnimation.hpp"
+#include "PNPhysicalObject.hpp"
 
 #include "pno_format.h"
 
@@ -235,6 +236,9 @@ PN3DSkeletonObject::render()
 	else
 	  _model->render(_skeleton);
   }
+
+  if (_physicalObject != NULL && _renderMode & RENDER_PHYSICAL)
+	_physicalObject->render();
 }
 
 PN3DSkeletonObject::VECTORANIMATION&

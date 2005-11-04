@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<OpalBlueprint>
+	<Solid>
+		<Name value="Sphere01"/>
+		<Offset>
+			<Transform type="translate" x="-0.13945" y="0.0" z="-0.139023"/>
+		</Offset>
+		<Shape type="sphere">
+			<Dimensions radius="35.0"/>
+		</Shape>
+	</Solid>
+</OpalBlueprint>
