@@ -9,8 +9,6 @@ function inheritFrom(child, parent, c_instance)
 	return child
 end
 
-
-
 function isInstanceOf(obj, class)
 	if (obj ~= nil and obj.className ~= nil) then
 		--pnprint (obj.className.. "is instance of 1" .. class .. "\n")
