@@ -78,22 +78,27 @@ PNPathFinding::moveTo(PNWayPoint *wp)
 PNWayPoint*
 PNPathFinding::closestWP(const PNPoint &p)
 {
-  bool							  begin = true;
-  pnfloat							  distance;
-  PNWayPoint						  *wp;
-  std::list<PNWayPoint*>			  ls;
-  std::list<PNWayPoint*>::iterator  i;
+  bool								begin = true;
+  pnfloat							distance = 0.0f;
+  PNWayPoint						*wp = NULL;
+  std::list<PNWayPoint*>			ls;
+  std::list<PNWayPoint*>::iterator	i;
 
   for (ls = getWayPoints(), i = ls.begin(); i != ls.end(); i++)
   {
 	PNPoint						  coord = (*i)->getCoord();
+	pnfloat						  dist = coord.getDistance(p);
+	pnfloat						  fdist = _pos.getFlatDistance(coord);
 
-	if (begin == true || coord.getDistance(p) < distance)
-	{
-	  wp = *i;
-	  distance = coord.getDistance(p);
-	}
-	begin = false;
+//	if (fdist > 50.0f)
+//	{
+	  if (begin == true || dist < distance)
+	  {
+		wp = *i;
+		distance = coord.getDistance(p);
+	  }
+	  begin = false;
+//	}
   }
   return (wp);
 }

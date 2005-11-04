@@ -28,6 +28,7 @@ Called at the update
 Calls a Behaviour Function depending on the state in which the character is
 %--]]		
 	function OBJ:beSmart()
+		--pnprint("I'm smart\n")
 		if (self.state == self.stateEnum.PN_IA_TRAVELLING) then
 			self:manageTravel()
 		
@@ -41,18 +42,26 @@ Behaviour Function
 Called during PathFinding to resolve the travel
 %--]]
 	function OBJ:manageTravel()
+--		pnprint("toReach        : " .. self.toReach:getCoord().x .. " " .. self.toReach:getCoord().y .. " " .. self.toReach:getCoord().z .. "\n")
+--		pnprint("player position: " .. self:getCoord().x .. " " .. self:getCoord().y .. " " .. self:getCoord().z .. "\n")
+--		pnprint("Target         : " .. self:getViewTarget():getCoord().x .. " " .. self:getViewTarget():getCoord().y .. " " .. self:getViewTarget():getCoord().z .. "\n")
+--		pnprint("player orient  : " .. self:getOrient().x .. " " .. self:getOrient().y .. " " .. self:getOrient().z .. " " .. self:getOrient().w .. "\n")
+--		pnprint("cam orient     : " .. self.view:getOrient().x .. " " .. self.view:getOrient().y .. " " .. self.view:getOrient().z .. " " .. self.view:getOrient().w .. "\n")
 		local distance = self:getCoord():getDistance(self.toReach:getCoord())
-			if (distance <= 50.0) then
-				self.pathFinding:moveNext(self.toReach)
-				local distance2 = self:getCoord():getDistance(self.toReach:getCoord())
-					if (distance2 <= 50.0) then
-						self:restoreState()
-						self:onMoveForward(ACTION_STATE.STOP)
-						return
-					end
-				self:setTarget(self.toReach)
-				self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
+		if (distance <= 10.0) then
+			self.pathFinding:moveNext(self.toReach)
+			pnprint("toReach        : " .. self.toReach:getCoord().x .. " " .. self.toReach:getCoord().y .. " " .. self.toReach:getCoord().z .. "\n")
+		pnprint("player orient  : " .. self:getOrient().x .. " " .. self:getOrient().y .. " " .. self:getOrient().z .. " " .. self:getOrient().w .. "\n")
+		pnprint("cam orient     : " .. self.view:getOrient().x .. " " .. self.view:getOrient().y .. " " .. self.view:getOrient().z .. " " .. self.view:getOrient().w .. "\n")
+			local distance2 = self:getCoord():getDistance(self.toReach:getCoord())
+			if (distance2 <= 50.0) then
+				self:restoreState()
+				self:onMoveForward(ACTION_STATE.STOP)
+				return
 			end
+			self:setTarget(self.toReach)
+			self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
+		end
 	end
 --------------------------------------------------------
 --[[%
@@ -66,9 +75,14 @@ Called on a MoveTo event
 Prepares the character to handle the PathFinding
 %--]]
 	function OBJ:moveTo(p)
+		pnprint("moveto: " .. p.x .. " " .. p.y .. " " .. p.z .. "\n")
 		self.state = self.stateEnum.PN_IA_TRAVELLING
 		self.pathFinding:moveTo(p)
 		self.pathFinding:moveNext(self.toReach)
+		local fdistance = self:getCoord():getFlatDistance(self.toReach:getCoord())
+		if (fdistance <= 10.0) then
+			self.pathFinding:moveNext(self.toReach)
+		end
 		-- setDirect and rotate
 		self:setTarget(self.toReach)
 		self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
@@ -88,13 +102,6 @@ No yet implemented
 %--]]	
 	function OBJ:hear()
 		--do something
-	end
---------------------------------------------------------
---[[%
-Returns the type of the character that is visible to others
-%--]]
-	function OBJ:getCharacType()
-		return self.shownCharacType
 	end
 --------------------------------------------------------
 --[[%
@@ -124,15 +131,18 @@ Sets the character's behaviour to the previous state on the stack
 --[[%
 Called at every loop
 %--]]
+	OVERRIDE(OBJ, "onUpdate")
 	function OBJ:onUpdate(deltaTime)
+		--pnprint(self.id .." updating\n")
 		self:beSmart()
-		self:update(deltaTime)
+		self:PNCharacter_onUpdate(deltaTime)
 	end
 --------------------------------------------------------
 --[[%
 Called on a collision event
 Not yet implemented
 %--]]
+	OVERRIDE(OBJ, "onCollision")
 	function OBJ:onCollision(target, direction)
 	-- Si target et direction et autre condition ok alors
 		-- lance premier script self.scripts.event.collision[0]		
@@ -142,14 +152,16 @@ Not yet implemented
 Called when an object enters the frustrum of the character
 If it is detected as an ennemy, the character switches to the fighting mode
 %--]]
+	OVERRIDE(OBJ, "onFrustrumIn")
 	function OBJ:onFrustrumIn(target)
-		self.__index:onFrustrumIn(target)
+		self:PNCharacter_onFrustrumIn(target)
 		pnprint(self.id .. " viewing " .. target:getId() .. "\n")
 		if ((target:getId() ~= self.id) and (isInstanceOf(target, "PNCharacter"))) then
 			pnprint("ennemy spotted\n")
 			self.ennemies[target:getId()] = 1
 			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= CHARACTER_TYPE.CIVILIAN)) then
 				self:setTarget(target)
+				self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
 				self:startFight()
 			end
 		end
@@ -158,7 +170,9 @@ If it is detected as an ennemy, the character switches to the fighting mode
 --[[%
 Called when an object enters the frustrum of the character
 %--]]
+	OVERRIDE(OBJ, "onFrustrumOut")
 	function OBJ:onFrustrumOut(target)
+		self:PNCharacter_onFrustrumOut(target)
 		if (target:getId() ~= self.id) then
 			if (self.ennemies[target:getId()] ~= NULL) then
 				self.ennemies[target:getId()] = NULL
@@ -170,14 +184,18 @@ Called when an object enters the frustrum of the character
 Called at init
 Not used yet
 %--]]
+	OVERRIDE(OBJ, "onInit")
   	function OBJ:onInit()
+		self:PNCharacter_onInit()
 	end
 --------------------------------------------------------
 --[[%
 Call at destruction
 Not used yet
 %--]]
+	OVERRIDE(OBJ, "onDestroy")
 	function OBJ:onDestroy()
+		self:PNCharacter_onDestroy()
 	end
 --------------------------------------------------------
 	return OBJ

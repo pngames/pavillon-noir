@@ -19,4 +19,5 @@ public:
   void			set(const float*);
   void			set(const PNPoint&);
   float			getDistance(const PNPoint&) const;
+  float			getFlatDistance(const PNPoint&) const;
 };

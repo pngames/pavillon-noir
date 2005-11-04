@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE listentities SYSTEM "../entities.dtd">
+<listentities>
+  <entity id="id:0" label="Ground" mdref="plane_10000x10000.pno" envtype="ground" objtype="object" class="PN3DObject" x="-1.000000" y="-1.000000" z="-1.000000" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
+    <object>
+      <model path="plane_10000x10000.pnm"/>
+      <listmaterials>
+        <material path="JiveImportPlan_04 - Par defaut.pnt"/>
+      </listmaterials>
+    </object>
+  </entity>
+  <entity id="id:2" label="Shmurtz" mdref="carre texture.pno" envtype="static" objtype="object" class="PN3DObject" x="-1000.000000" y="0.000000" z="-1000.000000" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
+    <object>
+      <model path="carre texture.pnm"/>
+      <listmaterials>
+        <material path="test dds_01 - Default.pnt"/>
+      </listmaterials>
+    </object>
+  </entity>
+  <entity id="id:1" label="pirate1" mdref="pirate.pno" envtype="dynamic" objtype="object" class="PNAICharacter" x="0.147307" y="41.230896" z="-0.329782" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
+  </entity>
+</listentities>

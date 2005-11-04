@@ -1122,7 +1122,7 @@ int PNEditor::_loadEntities(const fs::path& file)
   doc = xmlCtxtReadFile(ctxt, file.string().c_str(), NULL, XML_PARSE_DTDVALID); // parse the file, + DTD validation 
   xmlFreeParserCtxt(ctxt);							// free up the parser context
 
-  if (doc == NULL)									// check if parsing suceeded
+  if (doc == NULL)									// check if parsing succeeded
 	return PNEC_FAILED_TO_PARSE;
 
   xmlNodePtr  node = xmlDocGetRootElement(doc);
