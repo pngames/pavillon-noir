@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<physics>
+  <model type="opal" path="JiveImportCharPave.xml" />
+</physics>
+
