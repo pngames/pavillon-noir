@@ -356,6 +356,9 @@ Add the entity in the seen_entities list
 		self:launchGoodAnimation()
     end	
 --------------------------------------------------------------------------------
+--[[%
+Returns the type of the character that is visible to others
+%--]]
 	function OBJ:getCharacType()
 		return self.shownCharactType
 	end

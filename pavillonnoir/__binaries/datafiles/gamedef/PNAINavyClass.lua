@@ -14,6 +14,7 @@ function PNAINavyClass(id)
 --[[%
 Called while handling a fight
 %--]]
+	OVERRIDE(OBJ, "manageFight")
 	function OBJ:manageFight()
 		pnprint("LET'S FIGHT, BITCH !\n")
 		if (self:getCoord():getDistance(self.getViewTarget():getCoord()) > self.selected_weapon.range) then
@@ -27,6 +28,7 @@ Called while handling a fight
 Called when an ennemy enters the frustrum
 Prepares the Character to handle a fight
 %--]]
+	OVERRIDE(OBJ, "startFight")
 	function OBJ:startFight()
 		pnprint("fightnavy\n")
 		self:setState(self.stateEnum.PN_IA_FIGHTING)
@@ -39,14 +41,18 @@ Prepares the Character to handle a fight
 Called at init
 Not used yet
 %--]]
+	OVERRIDE(OBJ, "onInit")
   	function OBJ:onInit()
+  		self:PNAICharacter_onInit()
 	end
 --------------------------------------------------------
 --[[%
 Called at destruction
 Not used yet
 %--]]
+	OVERRIDE(OBJ, "manageFight")
 	function OBJ:onDestroy()
+		self:PNAICharacter_onDestroy()
 	end
 --------------------------------------------------------
 	return OBJ

@@ -127,6 +127,12 @@ PNPoint::getDistance(const PNPoint& p) const
 	+ (p.z -z)* (p.z -z)));
 }
 
+pnfloat
+PNPoint::getFlatDistance(const PNPoint& p) const
+{
+  return sqrtf(((p.x -x)* (p.x -x) + (p.z -z)* (p.z -z)));
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 /**

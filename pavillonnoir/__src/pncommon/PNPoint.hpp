@@ -70,6 +70,7 @@ public:
   void			set(const pnfloat* coord);
   void			set(const PNPoint& p);
   pnfloat		getDistance(const PNPoint& target) const;
+  pnfloat		getFlatDistance(const PNPoint& target) const;
   
 public:
   bool			isEquals(const PNPoint & point);  
