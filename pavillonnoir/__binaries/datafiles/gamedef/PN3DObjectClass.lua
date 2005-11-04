@@ -8,7 +8,7 @@ function PN3DObjectClass(id)
     OBJ.id = id
 
     function  OBJ:onUpdate(deltaTime)
-	  -- self.__index:update(deltaTime)
+	  -- self.__parent:update(deltaTime)
        self:update(deltaTime)
     end
 

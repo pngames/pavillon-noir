@@ -5,7 +5,7 @@ function PN3DSkeletonObjectClass(id)
     -------------------------
     local OBJ = inheritFrom({className = "PN3DSkeletonObject"}, PN3DSkeletonObject:new_local(), true)
     ------ tweak -- 
-    OBJ.__index.className = "PN3DObject"
+    OBJ.__parent.className = "PN3DObject"
     -------------------------
 
     OBJ:setId(id)
@@ -18,12 +18,14 @@ function PN3DSkeletonObjectClass(id)
 	end
 	    
     ---------------------move events-----------------------
-	function OBJ:onMoveForward(state)	
+	function OBJ:onMoveForward(state)
+    	pnprint("==>> PN3DSkeletonObject:onMoveForward()\n")	
 		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_T_FORWARD)
 		else
 			self:subMovingState(PN3DObject.STATE_T_FORWARD)
-		end 
+		end
+		pnprint("<<== PN3DSkeletonObject:onMoveForward()\n")	 
 	end	
 
 	function OBJ:onMoveBackward(state)
