@@ -13,7 +13,7 @@ function gameMap:spawn2(entity, id)
 	pnprint("[LUA enter function] gameMap:spawn2\n")
 	--self.entities[id] = entity
 	if (entity.id ~= "") then 
-		gameMap.entities.all[entity.id] = entity
+		self.entities.all[entity.id] = entity
 	end
 	if (self.entities.className[entity.className] ~= nil) then
 		self.entities.className[entity.className][id] = entity
@@ -28,8 +28,8 @@ end
 function gameMap:clear()
 	pnprint("[LUA enter function] gameMap:clear\n")
     pnprint("\n")
-	local id
-	local entity
+	--local id
+	--local entity
 	for id, entity in pairs(self.entities.all) do 
       pnprint(id)
       pnprint("\n")
@@ -50,8 +50,8 @@ end
 
 function gameMap:onUpdate(deltaTime)
 --	pnprint("=> LUA GameMap: onUpdate()")
-	local id
-	local entity
+	--local id
+	--local entity
 	
 	PNRenderCam:onUpdate(deltaTime)
 	for id, entity in pairs(self.entities.all) do 
@@ -62,8 +62,8 @@ end
 
 function gameMap:onInit()
 	pnprint("LUA GameMap: onInit()\n")
-	local id
-	local entity
+	--local id
+	--local entity
 	for id, entity in pairs(self.entities.all) do 
       pnprint(id)
       pnprint("\n")
@@ -128,8 +128,8 @@ end
 
 function gameMap:onMouseMove(xdelta, ydelta)
    -- pnprint("gameMap:onMouseMove()\n")
-	local id
-	local entity
+	--local id
+	--local entity
 	 
     PNRenderCam:onMouseLook(xdelta, ydelta) 
 	for id, entity in pairs(self.entities.all) do 
@@ -138,8 +138,9 @@ function gameMap:onMouseMove(xdelta, ydelta)
 end
 
 function gameMap:onRun(srcId, targId, state)
-    pnprint("LUA GameMap:onRun()\n")
+    pnprint("==>>GameMap:onRun()\n")
     self.entities.all[targId]:onRun(state)
+    pnprint("<<==GameMap:onRun()\n")
 end
 
 function gameMap:onCrouch(srcId, targId, state)
@@ -156,8 +157,8 @@ function gameMap:onFrustrumOut(sourceId, targetId)
 end 
 
 function gameMap:onAttack(sourceId, targetId)
-	local id
-	local entity
+	--local id
+	--local entity
 	for id, entity in pairs(self.entities.all) do
       self.entities.all[id]:onAttack(self.entities.all[sourceId], self.entities.all[targetId])
 	end	
