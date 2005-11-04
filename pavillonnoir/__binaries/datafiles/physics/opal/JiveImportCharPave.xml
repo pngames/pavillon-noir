@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<OpalBlueprint>
+	<Solid>
+		<Name value="Boite01"/>
+		<Offset>
+			<Transform type="translate" x="-2.03002" y="-35.0" z="-0.332632"/>
+		</Offset>
+		<Shape type="box">
+			<Dimensions x="30.0" y="70.0" z="30.0"/>
+		</Shape>
+	</Solid>
+</OpalBlueprint>
