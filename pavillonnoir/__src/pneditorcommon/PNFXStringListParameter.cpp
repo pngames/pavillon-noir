@@ -163,16 +163,13 @@ namespace PN {
   *  \param	val	  the string to select in _listBox
   *	 \return true on success, false if val is not part of _listBox
   */
-  bool				PNFXStringListParameter::setStringValue(const std::string& val)
+  pnbool				PNFXStringListParameter::setStringValue(const std::string& val)
   {
-	for (int i=0; i < _listBox->getNumItems(); i++)
+	int idx = _listBox->findItem(val.c_str());
+	if (idx != -1)
 	{
-	  FXString text = _listBox->getItem(i);
-	  if (text.text() == val.c_str())
-	  {
-		_listBox->setCurrentItem(i);
-		return TRUE;
-	  }
+	  _listBox->setCurrentItem(idx);
+	  return TRUE;
 	}
 	return FALSE;
   }
