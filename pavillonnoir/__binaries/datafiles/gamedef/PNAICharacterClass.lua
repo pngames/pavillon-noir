@@ -33,7 +33,7 @@ Calls a Behaviour Function depending on the state in which the character is
 			self:manageTravel()
 		
 		elseif (self.state == self.stateEnum.PN_IA_FIGHTING) then
-			self:manageFight()
+			OBJ:manageFight()
 		end
 	end
 --------------------------------------------------------
@@ -43,16 +43,14 @@ Called during PathFinding to resolve the travel
 %--]]
 	function OBJ:manageTravel()
 --		pnprint("toReach        : " .. self.toReach:getCoord().x .. " " .. self.toReach:getCoord().y .. " " .. self.toReach:getCoord().z .. "\n")
+--		pnprint("Target position: " .. self:getViewTarget():getCoord().x .. " " .. self:getViewTarget():getCoord().y .. " " .. self:getViewTarget():getCoord().z .. "\n")
 --		pnprint("player position: " .. self:getCoord().x .. " " .. self:getCoord().y .. " " .. self:getCoord().z .. "\n")
---		pnprint("Target         : " .. self:getViewTarget():getCoord().x .. " " .. self:getViewTarget():getCoord().y .. " " .. self:getViewTarget():getCoord().z .. "\n")
+--		pnprint("cam position   : " .. self.view:getCoord().x .. " " .. self.view:getCoord().y .. " " .. self.view:getCoord().z .. "\n")
 --		pnprint("player orient  : " .. self:getOrient().x .. " " .. self:getOrient().y .. " " .. self:getOrient().z .. " " .. self:getOrient().w .. "\n")
 --		pnprint("cam orient     : " .. self.view:getOrient().x .. " " .. self.view:getOrient().y .. " " .. self.view:getOrient().z .. " " .. self.view:getOrient().w .. "\n")
 		local distance = self:getCoord():getDistance(self.toReach:getCoord())
 		if (distance <= 10.0) then
 			self.pathFinding:moveNext(self.toReach)
-			pnprint("toReach        : " .. self.toReach:getCoord().x .. " " .. self.toReach:getCoord().y .. " " .. self.toReach:getCoord().z .. "\n")
-		pnprint("player orient  : " .. self:getOrient().x .. " " .. self:getOrient().y .. " " .. self:getOrient().z .. " " .. self:getOrient().w .. "\n")
-		pnprint("cam orient     : " .. self.view:getOrient().x .. " " .. self.view:getOrient().y .. " " .. self.view:getOrient().z .. " " .. self.view:getOrient().w .. "\n")
 			local distance2 = self:getCoord():getDistance(self.toReach:getCoord())
 			if (distance2 <= 50.0) then
 				self:restoreState()
@@ -68,6 +66,7 @@ Called during PathFinding to resolve the travel
 Called while handling a fight
 %--]]
 	function OBJ:manageFight()
+		pnprint("useless fight managing function\n")
 	end
 --------------------------------------------------------
 --[[%
@@ -94,6 +93,7 @@ Called when an ennemy enters the frustrum
 Prepares the Character to handle a fight
 %--]]
 	function OBJ:startFight()
+		pnprint("useless fight starting function\n")
 	end
 --------------------------------------------------------
 --[[%
@@ -157,9 +157,10 @@ If it is detected as an ennemy, the character switches to the fighting mode
 		self:PNCharacter_onFrustrumIn(target)
 		pnprint(self.id .. " viewing " .. target:getId() .. "\n")
 		if ((target:getId() ~= self.id) and (isInstanceOf(target, "PNCharacter"))) then
-			pnprint("ennemy spotted\n")
+			pnprint("J'ai cru voir un rominet !\n")
 			self.ennemies[target:getId()] = 1
 			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= CHARACTER_TYPE.CIVILIAN)) then
+				pnprint("Mais oui, j'ai bien vu un rominet !\n")
 				self:setTarget(target)
 				self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
 				self:startFight()
@@ -173,6 +174,7 @@ Called when an object enters the frustrum of the character
 	OVERRIDE(OBJ, "onFrustrumOut")
 	function OBJ:onFrustrumOut(target)
 		self:PNCharacter_onFrustrumOut(target)
+		pnprint(self.id .. " NOT viewing " .. target:getId() .. "\n")
 		if (target:getId() ~= self.id) then
 			if (self.ennemies[target:getId()] ~= NULL) then
 				self.ennemies[target:getId()] = NULL

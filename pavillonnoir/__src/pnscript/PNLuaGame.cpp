@@ -483,7 +483,7 @@ void  PNLuaGame::unloadMap()
     //TODO : capturer cet event pour debug
     this->_gameMap->clear();
     this->_mapLoaded = false;
-    this->_isUnloadingMap = false;    
+    this->_isUnloadingMap = false;
     if (this->_gameMap)
     {
         delete this->_gameMap;
