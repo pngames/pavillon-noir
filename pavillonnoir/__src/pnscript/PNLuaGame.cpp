@@ -68,7 +68,11 @@ using boost::filesystem::path;
 void		PNLuaGame::manageLuaError(int errorcode)
 {
 	if (errorcode != 0)
+    {
+        PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_END, NULL, NULL);
 		PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ERROR, NULL, NULL);
+        pnerror(PN_LOGLVL_ERROR, "Game Runtime Error");
+    }
 }
 
 pnerrorcode PNLuaGame::run(void)
@@ -498,5 +502,4 @@ void	PNLuaGame::sendGameActionEvent(std::string eventName, PN::PNGameActionEvent
 {
   eventData->action = eventName; 
   PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, eventData);
-
 }

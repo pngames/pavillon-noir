@@ -1,6 +1,7 @@
 function PNWeaponH2HClass(id)	
 	------INHERITANCE----------------------------
-	local OBJ= inheritFrom({className="PNWeaponH2H"}, PNWeaponClass(id))
+	local OBJ= inheritFrom(PNWeaponClass(id))
+	OBJ.className="PNWeaponH2H"
 	---------------------------------------------
 	OBJ.range = 10;
 	OBJ.reload = 0;

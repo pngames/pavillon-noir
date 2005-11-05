@@ -1,7 +1,8 @@
 function PNAIPirateClass(id)
 	pnprint("PNAIPirate creating\n")
 	-- make inheritance -----
-	local OBJ = inheritFrom({className = "PNAIPirate"}, PNAICharacterClass(id))
+	local OBJ = inheritFrom(PNAICharacterClass(id))
+	OBJ.className = "PNAIPirate" 
     -------------------------
     OBJ:setId(id)
     OBJ.id = id
@@ -16,12 +17,14 @@ Called while handling a fight
 %--]]
 	OVERRIDE(OBJ, "manageFight")
 	function OBJ:manageFight()
-		pnprint("pirate managing fight\n")
+	    print("==>> PNAIPirate:manageFight()")
+	    print(self)
 		if (self:getCoord():getDistance(self:getViewTarget():getCoord()) > self.selected_weapon.range) then
 			self:onMoveForward(ACTION_STATE.START)
 		else
 			self:onMoveForward(ACTION_STATE.STOP)
 		end
+		print("<<== PNAIPirate:manageFight()")
 		--pnprint("fight managed\n")
 	end
 --------------------------------------------------------

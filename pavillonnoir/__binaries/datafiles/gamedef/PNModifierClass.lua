@@ -1,4 +1,4 @@
-function PNModifierClass()
+function PNModifierClass(id)
 	local OBJ= {easiness=	{strength=0,
 									 address=0,
 									 adaptation=0,

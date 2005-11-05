@@ -1,7 +1,7 @@
 function PNPlayerClass(id)
 	-- make inheritance -----
-	local OBJ = inheritFrom({className = "PNPlayer"}, PNCharacterClass(id))
-	-------------------------
+	local OBJ = inheritFrom(PNCharacterClass(id))
+	OBJ.className = "PNPlayer" 
 	---------------setting camera behavior-----------------
 	
 --	local RCVT = PN3DObjectClass("RCVT")
