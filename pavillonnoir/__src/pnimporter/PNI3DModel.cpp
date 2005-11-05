@@ -81,7 +81,9 @@ PNI3DModel::render(std::vector<PN3DMaterial*>& mats, PN3DSkeleton* sk)
   }
 
   for (LIST_3DMESH::iterator it = _meshes.begin(); it != _meshes.end(); ++it)
+  {
 	(*it)->render(mats);
+  }
 }
 
 void
@@ -107,7 +109,9 @@ PNI3DModel::render(PN3DSkeleton* sk)
   }
 
   for (LIST_3DMESH::iterator it = _meshes.begin(); it != _meshes.end(); ++it)
+  {
 	(*it)->render();
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////

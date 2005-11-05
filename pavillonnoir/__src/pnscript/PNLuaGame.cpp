@@ -378,7 +378,8 @@ void  PNLuaGame::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* da
   PN3DObject*	  viewer = ((PN3DCamera*)source)->getPositionTarget();
   std::string	  luaOrder;
 
-    pnerror(PN_LOGLVL_DEBUG, "frustrum in");
+  pnerror(PN_LOGLVL_DEBUG, "frustrum in : %s view %s", viewer->getId().c_str(), viewed->getId().c_str());
+
     if (viewer != NULL)
     {
         luaOrder = "gameMap:onFrustrumIn(\"";
@@ -396,7 +397,8 @@ void  PNLuaGame::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* d
   PN3DObject*	  viewer = ((PN3DCamera*)source)->getPositionTarget();
   std::string	  luaOrder;
 
-    pnerror(PN_LOGLVL_DEBUG, "frustrum out");
+    pnerror(PN_LOGLVL_DEBUG, "frustrum out : %s doesn't view %s anymore", viewer->getId().c_str(), viewed->getId().c_str());
+
     if (viewer != NULL)
     {
         luaOrder = "gameMap:onFrustrumOut(\"";
@@ -450,20 +452,27 @@ void  PNLuaGame::loadMap()
         delete this->_gameMap;
         this->_gameMap = NULL;
     }
-    this->_gameMap = new PNLuaGameMap(this->_LVM);
-    this->run();
-    this->loadLuaScript("gameMap.lua", true);
-    error = this->_gameMap->unserializeFromFile(this->_mapToLoad.c_str());
-    this->_isLoadingMap = false;
-    if (error != PNEC_SUCCESS)
+
+    _gameMap = new PNLuaGameMap(this->_LVM);
+    run();
+    loadLuaScript("gameMap.lua", true);
+    
+	error = _gameMap->unserializeFromFile(fs::path(_mapToLoad.c_str(), fs::native));
+    _isLoadingMap = false;
+    
+	if (error != PNEC_SUCCESS)
     {
-        PNEventManager::getInstance()->sendEvent(PN_EVENT_MU_START, NULL, NULL);
-        return;
+	  PNEventManager::getInstance()->sendEvent(PN_EVENT_MU_START, NULL, NULL);
+
+      return;
     }
-    this->_mapLoaded = true;
-    PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_ENDED, NULL, NULL);
+    
+	_mapLoaded = true;
+    
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_ENDED, NULL, NULL);
     //TODO : capturer cet event pout debug
-    return;
+    
+	return;
 }
 
 void  PNLuaGame::unloadMap()

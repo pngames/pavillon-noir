@@ -370,11 +370,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PN3DCameraClass.lua"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__binaries\datafiles\gamedef\PN3DObjectClass.lua"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\__binaries\datafiles\gamedef\PN3DSkeletonObjectClass.lua"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNAICharacterClass.lua"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNAINavyClass.lua"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNAIPirateClass.lua"
 				>
 			</File>
 			<File
@@ -387,6 +403,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNItemClass.lua"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNModifier.lua"
 				>
 			</File>
 			<File
@@ -403,6 +423,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNWeaponClass.lua"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNWeaponH2HClass.lua"
 				>
 			</File>
 			<File
