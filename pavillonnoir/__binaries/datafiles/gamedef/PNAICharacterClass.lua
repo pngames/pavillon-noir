@@ -1,7 +1,8 @@
 function PNAICharacterClass(id)
 	pnprint("PNAICharacterClass creating\n")
 	-- make inheritance -----
-	local OBJ = inheritFrom({className = "PNAICharacter"}, PNCharacterClass(id))
+	local OBJ = inheritFrom(PNCharacterClass(id))
+	OBJ.className = "PNAICharacter" 
     -------------------------
     OBJ:setId(id)
     OBJ.id = id
@@ -28,13 +29,14 @@ Called at the update
 Calls a Behaviour Function depending on the state in which the character is
 %--]]		
 	function OBJ:beSmart()
-		--pnprint("I'm smart\n")
+		print("==>> PNAICharacter:beSmart()")
+	    print(self)
 		if (self.state == self.stateEnum.PN_IA_TRAVELLING) then
 			self:manageTravel()
-		
 		elseif (self.state == self.stateEnum.PN_IA_FIGHTING) then
-			OBJ:manageFight()
+			self:manageFight()
 		end
+	    print("<<== PNAICharacter:beSmart()")
 	end
 --------------------------------------------------------
 --[[%
@@ -66,7 +68,9 @@ Called during PathFinding to resolve the travel
 Called while handling a fight
 %--]]
 	function OBJ:manageFight()
-		pnprint("useless fight managing function\n")
+		print("==>> PNAICharacter:manageFight()")
+	    print(self)
+	    print("<<== PNAICharacter:manageFight()")
 	end
 --------------------------------------------------------
 --[[%
@@ -92,8 +96,10 @@ Prepares the character to handle the PathFinding
 Called when an ennemy enters the frustrum
 Prepares the Character to handle a fight
 %--]]
-	function OBJ:startFight()
-		pnprint("useless fight starting function\n")
+	function OBJ:startFight()	
+	    print("==>> PNAICharacter:startFight()")
+	    print(self)
+	    print("<<== PNAICharacter:startFight()")
 	end
 --------------------------------------------------------
 --[[%
@@ -133,9 +139,11 @@ Called at every loop
 %--]]
 	OVERRIDE(OBJ, "onUpdate")
 	function OBJ:onUpdate(deltaTime)
-		--pnprint(self.id .." updating\n")
+	    print("==>> PNAICharacter:onUpdate()")
+	    print(self)
 		self:beSmart()
 		self:PNCharacter_onUpdate(deltaTime)
+	    print("<<== PNAICharacter:onUpdate()")
 	end
 --------------------------------------------------------
 --[[%

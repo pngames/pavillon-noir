@@ -2,14 +2,13 @@
 function PN3DSkeletonObjectClass(id)
 	-- make inheritance -----
 	pnprint("PN3DSkeletonObjectClass creating\n")
-    -------------------------
-    local OBJ = inheritFrom({className = "PN3DSkeletonObject"}, PN3DSkeletonObject:new_local(), true)
-    ------ tweak -- 
-    OBJ.__parent.className = "PN3DObject"
-    -------------------------
-
+    local OBJ = inheritFrom(PN3DSkeletonObject:new_local())
+    OBJ.className = "PN3DSkeletonObject"
     OBJ:setId(id)
-    OBJ.id = id
+    OBJ.id = id 
+    ------ tweak -- 
+    OBJ.__parent = {className = "PN3DObject"}
+    -------------------------
     function  OBJ:onUpdate(deltaTime)
        self:update(deltaTime)
     end

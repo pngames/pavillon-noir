@@ -10,7 +10,8 @@ gameMap.entities.all = {}
 gameMap.entities.className = {}
 
 function gameMap:spawn2(entity, id)
-	pnprint("[LUA enter function] gameMap:spawn2\n")
+	pnprint("==>> gameMap:spawn2\n")
+	print(entity)
 	--self.entities[id] = entity
 	if (entity.id ~= "") then 
 		self.entities.all[entity.id] = entity
@@ -21,8 +22,9 @@ function gameMap:spawn2(entity, id)
 		self.entities.className[entity.className] = {}
 		self.entities.className[entity.className][id] = entity
 	end
-    self:addToMap2(entity.__instance, id)
-   pnprint("[LUA exit function] gameMap:spawn2\n")
+	self:addToMap2(entity, id)
+    pnprint("<<== gameMap:spawn2\n")
+    pnprint("[LUA exit function] gameMap:spawn2\n")
 end 
 
 function gameMap:clear()
@@ -54,9 +56,14 @@ function gameMap:onUpdate(deltaTime)
 	--local entity
 	
 	PNRenderCam:onUpdate(deltaTime)
-	for id, entity in pairs(self.entities.all) do 
-		entity:onUpdate(deltaTime)
+	for id, entity in pairs(self.entities.all) do
+	    --print("==>> gameMap:updateLua()")
+	    --print(entity)
+	    --print(entity.className)
+	    entity:onUpdate(deltaTime)
+		--print("<<== gameMap:updateLua()\n\n")
 	end
+	    --print("#######################################################\n")
 --	pnprint("<= LUA GameMap: onUpdate()")
 end
 

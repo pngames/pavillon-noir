@@ -1,14 +1,13 @@
 function PN3DCameraClass(myid, myisRenderCam)
-    local OBJ = 1
+    local OBJ = nil
     if (myisRenderCam ~= nil and myisRenderCam == true) then
-         pnprint("inherit from rendercam")
-        --OBJ = inheritFrom({className="PN3DCamera", id=myid}, PN3DCamera:getRenderCam(), true)
-         OBJ = PN3DCamera:getRenderCam()
-         OBJ.className="PN3DCamera"
-   else
-        OBJ = inheritFrom({className="PN3DCamera", id=myid}, PN3DCamera:new_local(), true)
+        pnprint("inherit from rendercam")
+        OBJ = inheritFrom(PN3DCamera:getRenderCam())
+    else
+        OBJ = inheritFrom(PN3DCamera:new_local())
     end
+    OBJ.className="PN3DCamera"
+    OBJ.id = myid
     OBJ.isRenderCam = myisRenderCam
-      
     return  OBJ
 end

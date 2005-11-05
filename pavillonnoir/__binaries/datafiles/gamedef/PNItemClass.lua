@@ -1,6 +1,7 @@
 function PNItemClass(id)
 	------INHERITANCE----------------------------
-	local OBJ = inheritFrom({className = "PNItem"}, PN3DObjectClass(id))
+	local OBJ = inheritFrom(PN3DObjectClass(id))
+	OBJ.className = "PNItem"
 	---------------------------------------------
 	------MODIFIERS LIST-------------------------
 	OBJ.modifier = PNModifierClass()
