@@ -63,8 +63,8 @@ protected:
   ///object identifier
   std::string						_id;
 public:
-  inline void						setId(std::string id){_id = id;}
-  inline std::string				getId(){return _id;}
+  void								setId(const std::string& id);
+  const std::string&				getId() const;
 
   ///////////////////////////////////////////////////////////////////////////
 

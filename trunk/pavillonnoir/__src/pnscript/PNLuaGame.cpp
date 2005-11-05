@@ -375,10 +375,11 @@ void  PNLuaGame::onColision(pnEventType evt, PNObject* source, PNEventData* data
 void  PNLuaGame::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* data)
 {
   PN3DObject*	  viewed = ((PNFrustrumEventData*)data)->obj;
-  PN3DObject*	  viewer = ((PN3DCamera*)source)->getPositionTarget();
+  PN3DCamera*	  viewerCamera = (PN3DCamera*)source;
+  PN3DObject*	  viewer = viewerCamera->getPositionTarget();
   std::string	  luaOrder;
 
-  pnerror(PN_LOGLVL_DEBUG, "frustrum in : %s view %s", viewer->getId().c_str(), viewed->getId().c_str());
+  pnerror(PN_LOGLVL_DEBUG, "frustrum in : %s view %s", viewerCamera->getId().c_str(), viewed->getId().c_str());
 
     if (viewer != NULL)
     {
@@ -394,10 +395,11 @@ void  PNLuaGame::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* da
 void  PNLuaGame::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* data)
 {
   PN3DObject*	  viewed = ((PNFrustrumEventData*)data)->obj;
-  PN3DObject*	  viewer = ((PN3DCamera*)source)->getPositionTarget();
+  PN3DCamera*	  viewerCamera = (PN3DCamera*)source;
+  PN3DObject*	  viewer = viewerCamera->getPositionTarget();
   std::string	  luaOrder;
 
-    pnerror(PN_LOGLVL_DEBUG, "frustrum out : %s doesn't view %s anymore", viewer->getId().c_str(), viewed->getId().c_str());
+    pnerror(PN_LOGLVL_DEBUG, "frustrum out : %s doesn't view %s anymore", viewerCamera->getId().c_str(), viewed->getId().c_str());
 
     if (viewer != NULL)
     {
