@@ -90,7 +90,7 @@ function PNCharacterClass(id)
 	--------------------------------------
 	OBJ.seen_entities = {}
 	--------------------------------------
-	OBJ.view = PN3DCameraClass(OBJ.id .. "cam", OBJ, false)
+	OBJ.view = PN3DCameraClass(OBJ.id .. "cam", false)
 	OBJ.view:addTargetMode(OBJ.TMODE_ORIENTATION_ABS_LOCKED)
 	OBJ.view:addTargetMode(OBJ.TMODE_POSITION_ABS_LOCKED)
 	OBJ.view:setTarget(OBJ);
@@ -360,7 +360,7 @@ Add the entity in the seen_entities list
 Returns the type of the character that is visible to others
 %--]]
 	function OBJ:getCharacType()
-		return self.shownCharactType
+		return self.shownCharacType
 	end
 --------------------------------------------------------------------------------
 	function OBJ:launchGoodAnimation()
