@@ -38,7 +38,7 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-PNGLRendererCamera::PNGLRendererCamera() : _cfCallback(this, &PNGLRendererCamera::_cleanFrustrum), _ufCallback(this, &PNGLRendererCamera::_updateGLFOV)
+PNGLRendererCamera::PNGLRendererCamera() : _ufCallback(this, &PNGLRendererCamera::_updateGLFOV)
 {
   _coord.set(0.0f, 0.0f, -150.0f);
 
@@ -52,7 +52,9 @@ PNGLRendererCamera::PNGLRendererCamera() : _cfCallback(this, &PNGLRendererCamera
 
   setUpdateGLFov(true);
 
-  PNEventManager::getInstance()->addCallback(PN_EVENT_MU_START, _cfCallback);
+  PNEventManager::getInstance()->addCallback(PN_EVENT_MU_START, EventCallback(this, &PNGLRendererCamera::_cleanFrustrum));
+
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_RU_ENDING, EventCallback(this, &PNGLRendererCamera::_onRUEnding));
 }
 
 PNGLRendererCamera::~PNGLRendererCamera()
