@@ -111,6 +111,20 @@ PN3DObject::~PN3DObject()
 
 //////////////////////////////////////////////////////////////////////////
 
+void
+PN3DObject::setId(const std::string& id)
+{
+  _id = id;
+}
+
+const std::string&
+PN3DObject::getId() const
+{
+  return _id;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 void*
 PN3DObject::lock()
 {
