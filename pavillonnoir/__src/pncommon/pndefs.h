@@ -172,22 +172,6 @@ namespace PN {
 
 	/**********************************  Macros ***********************************/
 
-
-	/// Return the maximum of a or b
-#define PNMAX(a,b) (((a)>(b))?(a):(b))
-
-	/// Return the minimum of a or b
-#define PNMIN(a,b) (((a)>(b))?(b):(a))
-
-	/// Return the minimum of x, y and z
-#define PNMIN3(x,y,z) ((x)<(y)?PNMIN(x,z):PNMIN(y,z))
-
-	/// Return the maximum of x, y and z
-#define PNMAX3(x,y,z) ((x)>(y)?PNMAX(x,z):PNMAX(y,z))
-
-	/// Return minimum and maximum of a, b
-#define PNMINMAX(lo,hi,a,b) ((a)<(b)?((lo)=(a),(hi)=(b)):((lo)=(b),(hi)=(a)))
-
 	/// Clamp value x to range [lo..hi]
 #define PNCLAMP(lo,x,hi) ((x)<(lo)?(lo):((x)>(hi)?(hi):(x)))
 
@@ -211,61 +195,6 @@ namespace PN {
 
 	/// Reverse bits in byte
 #define PNBITREVERSE(b) (((b&0x01)<<7)|((b&0x02)<<5)|((b&0x04)<<3)|((b&0x08)<<1)|((b&0x10)>>1)|((b&0x20)>>3)|((b&0x40)>>5)|((b&0x80)>>7))
-
-	// The order in memory is [R G B A] matches that in PNColor
-
-	// Definitions for big-endian machines
-#if PN_BIGENDIAN == 1
-
-	/// Make RGBA color
-#define PNRGBA(r,g,b,a)    (((pnuint)(pnuchar)(r)<<24) | ((pnuint)(pnuchar)(g)<<16) | ((pnuint)(pnuchar)(b)<<8) | ((pnuint)(pnuchar)(a)))
-
-	/// Make RGB color
-#define PNRGB(r,g,b)       (((pnuint)(pnuchar)(r)<<24) | ((pnuint)(pnuchar)(g)<<16) | ((pnuint)(pnuchar)(b)<<8) | 0x000000ff)
-
-	/// Get red value from RGBA color
-#define PNREDVAL(rgba)     ((pnuchar)(((rgba)>>24)&0xff))
-
-	/// Get green value from RGBA color
-#define PNGREENVAL(rgba)   ((pnuchar)(((rgba)>>16)&0xff))
-
-	/// Get blue value from RGBA color
-#define PNBLUEVAL(rgba)    ((pnuchar)(((rgba)>>8)&0xff))
-
-	/// Get alpha value from RGBA color
-#define PNALPHAVAL(rgba)   ((pnuchar)((rgba)&0xff))
-
-	/// Get component value of RGBA color
-#define PNRGBACOMPVAL(rgba,comp) ((pnuchar)(((rgba)>>((3-(comp))<<3))&0xff))
-
-#endif
-
-	// Definitions for little-endian machines
-#if PN_BIGENDIAN == 0
-
-	/// Make RGBA color
-#define PNRGBA(r,g,b,a)    (((pnuint)(pnuchar)(r)) | ((pnuint)(pnuchar)(g)<<8) | ((pnuint)(pnuchar)(b)<<16) | ((pnuint)(pnuchar)(a)<<24))
-
-	/// Make RGB color
-#define PNRGB(r,g,b)       (((pnuint)(pnuchar)(r)) | ((pnuint)(pnuchar)(g)<<8) | ((pnuint)(pnuchar)(b)<<16) | 0xff000000)
-
-	/// Get red value from RGBA color
-#define PNREDVAL(rgba)     ((pnuchar)((rgba)&0xff))
-
-	/// Get green value from RGBA color
-#define PNGREENVAL(rgba)   ((pnuchar)(((rgba)>>8)&0xff))
-
-	/// Get blue value from RGBA color
-#define PNBLUEVAL(rgba)    ((pnuchar)(((rgba)>>16)&0xff))
-
-	/// Get alpha value from RGBA color
-#define PNALPHAVAL(rgba)   ((pnuchar)(((rgba)>>24)&0xff))
-
-	/// Get component value of RGBA color
-#define PNRGBACOMPVAL(rgba,comp) ((pnuchar)(((rgba)>>((comp)<<3))&0xff))
-
-#endif
-
 }
 
 #ifdef WIN32
@@ -273,32 +202,7 @@ namespace PN {
 # define getcwd(buf, nb)	_getcwd(buf, nb)
 #endif
 
-	/**
-	* These are some of the ISO C99 standard single-precision transcendental functions.
-	* On LINUX, specify _GNU_SOURCE or _ISOC99_SOURCE to enable native implementation;
-	* otherwise, these macros will be used.  Apple OS-X implements fabsf(x), ceilf(x),
-	* floorf(x), and fmodf(x,y).
-	*/
-/*#ifndef __USE_ISOC99
-# ifndef __APPLE__
-#  define fabsf(x)    ((pnfloat)fabs((double)(x)))
-#  define ceilf(x)    ((pnfloat)ceil((double)(x)))
-#  define floorf(x)   ((pnfloat)floor((double)(x)))
-#  define fmodf(x,y)  ((pnfloat)fmod((double)(x),(double)(y)))
-# endif
-# define sqrtf(x)    ((pnfloat)sqrt((double)(x)))
-# define sinf(x)     ((pnfloat)sin((double)(x)))
-# define cosf(x)     ((pnfloat)cos((double)(x)))
-# define tanf(x)     ((pnfloat)tan((double)(x)))
-# define asinf(x)    ((pnfloat)asin((double)(x)))
-# define acosf(x)    ((pnfloat)acos((double)(x)))
-# define atanf(x)    ((pnfloat)atan((double)(x)))
-# define atan2f(y,x) ((pnfloat)atan2((double)(y),(double)(x)))
-# define powf(x,y)   ((pnfloat)pow((double)(x),(double)(y)))
-# define expf(x)     ((pnfloat)exp((double)(x)))
-# define logf(x)     ((pnfloat)log((double)(x)))
-# define log10f(x)   ((pnfloat)log10((double)(x)))
-#endif*/
+//////////////////////////////////////////////////////////////////////////
 
 #include "pnerror.h"
 

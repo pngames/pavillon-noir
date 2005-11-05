@@ -1,20 +1,13 @@
 class  					PN3DSkeletonObject: public PN3DObject
 {
 public:
+  /// Sub Objects to render
+  typedef enum
+  {
+	RENDER_SKELETON		= PN3DObject::RENDER_LAST,
+	RENDER_LAST			= RENDER_SKELETON << 1
+  }							rendermode;
+public:
   PN3DSkeletonObject();
   ~PN3DSkeletonObject();
-
-  //////////////////////////////////////////////////////////////////////////
-  
-   //const PNPoint&	getCoord();
-   //PNQuatf	getOrient();
-   //PNVector3f	getDirect();
-
-  //void				setCoord(PNPoint& coord);
-  //void				setCoord(float x, float y, float z);
-  //void				setOrient(PNQuatf orient);
-  //void				setOrient(float x, float y, float& z, float w);
-
-  //void				update(unsigned int deltaTime);
-
 };

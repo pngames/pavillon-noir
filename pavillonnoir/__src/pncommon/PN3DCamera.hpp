@@ -47,8 +47,6 @@ class PNAPI					PN3DCamera : public PN3DObject
 public:
   /// Default constructor for PN3DCamera.
   PN3DCamera();
-  /// Construct camera targeting 3d object
-  PN3DCamera(PN3DObject* object);
   /// Destructor for PN3DObject.
   ~PN3DCamera();
 
@@ -76,6 +74,11 @@ public:
   pnfloat					getNear() const;
 
   //////////////////////////////////////////////////////////////////////////
+  
+  /// Render object using PNRendererInterface
+  virtual void				render();
+
+  //////////////////////////////////////////////////////////////////////////
 protected:
   PN3DObjList				_list3DObj;
 
@@ -86,6 +89,8 @@ protected:
 
   void						_onMPStarted(pnEventType type, PNObject* source, PNEventData* ed);
   void						_onMPEnded(pnEventType type, PNObject* source, PNEventData* ed);
+
+  void						_onRUEnding(pnEventType type, PNObject* source, PNEventData* ed);
 
   //////////////////////////////////////////////////////////////////////////
 

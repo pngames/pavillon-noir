@@ -47,7 +47,8 @@ public:
   /// Sub Objects to render
   typedef enum
   {
-	RENDER_SKELETON			= RENDER_PHYSICAL << 1,
+	RENDER_SKELETON			= PN3DObject::RENDER_LAST,
+	RENDER_LAST				= RENDER_SKELETON << 1
   }							rendermode;
 
 protected:

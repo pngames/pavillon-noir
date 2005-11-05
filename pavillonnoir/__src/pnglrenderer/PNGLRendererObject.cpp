@@ -178,7 +178,9 @@ void	PNGLRendererObject::render()
   if (_indexArrays == NULL)
 	glDrawArrays(_renderer.convertFlag(_mode), 0, _nbIndex);
   else
+  {
 	glDrawElements(_renderer.convertFlag(_mode), _nbIndex, GL_UNSIGNED_INT, _indexArrays);
+  }
 
   //////////////////////////////////////////////////////////////////////////
 

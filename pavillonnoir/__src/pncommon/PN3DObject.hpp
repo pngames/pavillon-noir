@@ -98,9 +98,11 @@ public:
   /// Sub Objects to render
   typedef enum
   {
-	RENDER_MODEL					= 0x000001,			/// Render 3D object model
-	RENDER_MATERIALS				= 0x000001 << 1,	/// Render 3D object materials (need RENDER_MODEL)
-	RENDER_PHYSICAL					= 0x000001 << 2		/// Render 3D physical object
+	RENDER_DIRECTIONS				= 0x000001,			/// Render 3D physical object
+	RENDER_MODEL					= 0x000001 << 1,	/// Render 3D object model
+	RENDER_MATERIALS				= 0x000001 << 2,	/// Render 3D object materials (need RENDER_MODEL)
+	RENDER_PHYSICAL					= 0x000001 << 3,	/// Render 3D physical object
+	RENDER_LAST						= 0x000001 << 4
   }									rendermode;
 
   //////////////////////////////////////////////////////////////////////////

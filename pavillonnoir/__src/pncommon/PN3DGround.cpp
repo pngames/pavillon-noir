@@ -199,7 +199,7 @@ PN3DGround::collisionProcess(const PNBoundingSphere & bSphere, const PNVector3f 
 
   bSphere.getRadius(radius);
   bSphere.getPosition(pos);
-  _worldCollision.setAccuracy(PN_MIN(ABS(radius.z), PN_MIN(ABS(radius.x), ABS(radius.y))) - 1.0f);
+  _worldCollision.setAccuracy(PNMIN(ABS(radius.z), PNMIN(ABS(radius.x), ABS(radius.y))) - 1.0f);
   collisionOccurs = _worldCollision.translateSphere(bSphere, translation, posFinal);		
   trResult.setFromSegment(pos, posFinal);
 

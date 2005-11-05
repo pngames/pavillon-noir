@@ -1,7 +1,7 @@
 	--pnprint("PNRenderCam creating\n")
 	
 	-- make inheritance -----
-    PNRenderCam  = PN3DCameraClass("PNRenderCam", nil, true)
+    PNRenderCam  = PN3DCameraClass("PNRenderCam", true)
     --PNRenderCam  = PN3DCamera:getRenderCam()
 -------------------------
     -------------------------
@@ -20,7 +20,7 @@
     table.insert(PNRenderCam.lastYMouseValues, 1,0)
 ------------------------------ MOVE -----------------------
 	function PNRenderCam:onMoveForward(state)
-		pnprint("LUA PNRenderCam:onMoveForward()\n")	
+		-- pnprint("LUA PNRenderCam:onMoveForward()\n")	
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_FORWARD)
 		else
@@ -29,7 +29,7 @@
 	end	
 
 	function PNRenderCam:onMoveBackward(state)
-		pnprint("LUA PNRenderCam:onMoveBackward()\n")
+		-- pnprint("LUA PNRenderCam:onMoveBackward()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_BACKWARD)
 		else
@@ -38,7 +38,7 @@
 	end
 	
 	function PNRenderCam:onMoveLeft(state)
-		pnprint("LUA PNRenderCam:onMoveLeft()\n")	
+		-- pnprint("LUA PNRenderCam:onMoveLeft()\n")	
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_LEFT)
 		else
@@ -47,7 +47,7 @@
 	end	
 
 	function PNRenderCam:onMoveRight(state)
-		pnprint("LUA PNRenderCam:onMoveRight()\n")
+		-- pnprint("LUA PNRenderCam:onMoveRight()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_T_RIGHT)
 		else
@@ -56,7 +56,7 @@
 	end
 ------------------------- ROTATE -----------------------------
 	function PNRenderCam:onRotateRight(state)
-		pnprint("LUA PNRenderCam:onRotateRight()\n")
+		-- pnprint("LUA PNRenderCam:onRotateRight()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_R_RIGHT)
 		else
@@ -65,7 +65,7 @@
 	end
 	
 	function PNRenderCam:onRotateLeft(state)
-		pnprint("LUA PNRenderCam:onRotateLeft()\n")
+		-- pnprint("LUA PNRenderCam:onRotateLeft()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_R_LEFT)
 		else
@@ -74,7 +74,7 @@
 	end
 	
 	function PNRenderCam:onRotateUp(state)
-		pnprint("LUA PNRenderCam:onRotateUp()\n")
+		-- pnprint("LUA PNRenderCam:onRotateUp()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_R_TOP)
 		else
@@ -83,7 +83,7 @@
 	end
 	
 	function PNRenderCam:onRotateDown(state)
-		pnprint("LUA PNRenderCam:onRotateDown()\n")
+		-- pnprint("LUA PNRenderCam:onRotateDown()\n")
 		if (state == true) then
 			self:addMovingState(PN3DObject.STATE_R_BACK)
 		else
@@ -94,7 +94,7 @@
 	function PNRenderCam:onMouseLook(xdelta, ydelta)
 		
       if (isInstanceOf(self, "PN3DCamera") == true and self.isRenderCam == false) then 
-         pnprint("PNRenderCam:MouseLook\n")
+         -- pnprint("PNRenderCam:MouseLook\n")
       end
       	
     	--self:subTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
@@ -127,7 +127,7 @@
          --pnprint("player rotate\n")
 		--	obj:rotateYawRadians(math.rad(xd))
 		--end
-       pnprint("PNRenderCamera: rotate\n")
+        -- pnprint("PNRenderCamera: rotate\n")
 	    self:rotateYawRadians(math.rad(xd))
 	    
     	--self:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)

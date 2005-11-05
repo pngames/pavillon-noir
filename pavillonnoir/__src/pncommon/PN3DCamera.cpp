@@ -32,6 +32,7 @@
 #include "pndefs.h"
 #include "pnmath.h"
 #include "pnevent.h"
+#include "pnrender.h"
 
 #include "PNGameMap.hpp"
 #include "PNGameInterface.hpp"
@@ -63,15 +64,8 @@ PN3DCamera::PN3DCamera()
 
   PNEventManager::getInstance()->addCallback(PN_EVENT_MP_STARTED, EventCallback(this, &PN3DCamera::_onMPStarted));
   PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PN3DCamera::_onMPEnded));
-}
 
-PN3DCamera::PN3DCamera(PN3DObject* object)
-{
-  _objType = OBJTYPE_CAMERA;
-  _positionTarget = _viewTarget = object;
-
-  PNEventManager::getInstance()->addCallback(PN_EVENT_MP_STARTED, EventCallback(this, &PN3DCamera::_onMPStarted));
-  PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PN3DCamera::_onMPEnded));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_RU_ENDING, EventCallback(this, &PN3DCamera::_onRUEnding));
 }
 
 PN3DCamera::~PN3DCamera()
@@ -136,6 +130,25 @@ pnfloat
 PN3DCamera::getNear() const
 {
   return _viewNear;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void
+PN3DCamera::_onRUEnding(pnEventType type, PNObject* source, PNEventData* ed)
+{
+  if (this != getRenderCam())
+	render();
+}
+
+void
+PN3DCamera::render()
+{
+  PNRendererInterface* pnri = PNRendererInterface::getInstance();
+
+  pnfloat color[] = {1.0f, 0.0f, 0.0f, 1.0f};
+
+  pnri->renderSphere(15.0f, 20, 20, color, _coord);
 }
 
 //////////////////////////////////////////////////////////////////////////
