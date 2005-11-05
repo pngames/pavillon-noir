@@ -2,10 +2,11 @@
 function PN3DObjectClass(id)
 	-- make inheritance -----
 	pnprint("PN3DObjectClass creating\n")
-    local OBJ = inheritFrom({className = "PN3DObject"}, PN3DObject:new_local(), true)
-    -------------------------
+    local OBJ = inheritFrom(PN3DObject:new_local())
+    OBJ.className = "PN3DObject"
     OBJ:setId(id)
-    OBJ.id = id
+    OBJ.id = id 
+    -------------------------
 
     function  OBJ:onUpdate(deltaTime)
 	  -- self.__parent:update(deltaTime)
@@ -93,6 +94,9 @@ function PN3DObjectClass(id)
 	function OBJ:onDestroy()
 	end
 	-------------------------------------------------------
+	print("==>> PN3DObjectClass")
+	print(OBJ)
+	print("<<== PN3DObjectClass")
     return OBJ
 end
 

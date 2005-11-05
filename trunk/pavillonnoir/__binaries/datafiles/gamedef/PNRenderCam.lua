@@ -2,9 +2,7 @@
 	
 	-- make inheritance -----
     PNRenderCam  = PN3DCameraClass("PNRenderCam", true)
-    --PNRenderCam  = PN3DCamera:getRenderCam()
--------------------------
-    -------------------------
+----------------------------------------------------------
     PNRenderCam:setId("PNRenderCam")
     PNRenderCam.id = "PNRenderCam"
 

@@ -46,7 +46,8 @@ CHARACTER_DIR_LATE={NONE=0,
 				    }				  
 function PNCharacterClass(id)
 	----------inheritance-----------------
-	local OBJ = inheritFrom({className = "PNCharacter"}, PN3DSkeletonObjectClass(id))
+	local OBJ = inheritFrom(PN3DSkeletonObjectClass(id))
+	OBJ.className = "PNCharacter"
 	--------------------------------------
 	------- LIST OF STATS-----------------
 	OBJ.stats=	{strength=0,

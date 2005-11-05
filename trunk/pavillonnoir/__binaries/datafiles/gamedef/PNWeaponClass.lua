@@ -1,6 +1,7 @@
 function PNWeaponClass(id)	
 	------INHERITANCE----------------------------
-	local OBJ= inheritFrom({className="PNWeapon"}, PNItemClass(id))
+	local OBJ= inheritFrom(PNItemClass(id))
+	OBJ.className="PNWeapon"
 	---------------------------------------------
 	OBJ.range = 0;
 	OBJ.reload = 0;
