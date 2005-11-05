@@ -16,7 +16,7 @@ Called while handling a fight
 %--]]
 	OVERRIDE(OBJ, "manageFight")
 	function OBJ:manageFight()
-		--pnprint("managing fight\n")
+		pnprint("pirate managing fight\n")
 		if (self:getCoord():getDistance(self:getViewTarget():getCoord()) > self.selected_weapon.range) then
 			self:onMoveForward(ACTION_STATE.START)
 		else

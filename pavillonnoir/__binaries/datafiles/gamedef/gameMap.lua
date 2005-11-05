@@ -153,7 +153,7 @@ function gameMap:onFrustrumIn(sourceId, targetId)
 end 
 
 function gameMap:onFrustrumOut(sourceId, targetId)
-    self.entities.all[sourceId]:onFrustrumIn(self.entities.all[targetId])
+    self.entities.all[sourceId]:onFrustrumOut(self.entities.all[targetId])
 end 
 
 function gameMap:onAttack(sourceId, targetId)
@@ -163,6 +163,3 @@ function gameMap:onAttack(sourceId, targetId)
       self.entities.all[id]:onAttack(self.entities.all[sourceId], self.entities.all[targetId])
 	end	
 end
-	
---camera = PN3DCamera:getRenderCam()
---camera:setMovingSpeed(1.0)
