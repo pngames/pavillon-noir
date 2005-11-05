@@ -203,11 +203,11 @@ int	PNGameMap::unserializeFromXML(xmlNode* node)
 
 pnint PNGameMap::unserializeFromFile(const fs::path& dir)
 {
-  _wpFile = new fs::path(dir.string() + "/waypoints.xml");
+  _wpFile = new fs::path(dir.string() + "/waypoints.xml", fs::native);
 
   //////////////////////////////////////////////////////////////////////////
 
-  fs::path file(dir.string() + "/entities.xml");
+  fs::path file(dir.string() + "/entities.xml", fs::native);
 
   pnint error = IPNXMLSerializable::unserializeFromFile(file);
 

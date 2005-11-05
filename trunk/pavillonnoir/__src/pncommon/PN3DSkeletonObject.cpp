@@ -118,9 +118,7 @@ PN3DSkeletonObject::_parseSkeleton(xmlNode* node)
 pnint
 PN3DSkeletonObject::_unserializeNode(xmlNode* node)
 {
-  if (PNO_XMLNODE_LISTMATERIALS == (const char*)node->name)
-	_parseMaterials(node);
-  else if (PNO_XMLNODE_LISTANIMS == (const char*)node->name)
+  if (PNO_XMLNODE_LISTANIMS == (const char*)node->name)
 	_parseAnimations(node);
   else if (PNO_XMLNODE_SKELETON == (const char*)node->name)
 	_parseSkeleton(node);

@@ -72,7 +72,7 @@ public:
   /// Sub Objects to render
   typedef enum
   {
-	RENDER_CAMERA			= RENDER_PHYSICAL << 1,
+	RENDER_CAMERA			= PN3DSkeletonObject::RENDER_LAST,
   }							rendermode;
 public:
   PNCharacter();

@@ -71,10 +71,20 @@
 /// Epsilon
 #define	PN_EPSILON	10E-5 /* 10E-6 */
 
-/// Return largest number of a and b
-#define PN_MAX(a,b)	(((a) > (b)) ? (a) : (b))
-/// Return smallest number of a and b
-#define PN_MIN(a,b)	(((a) < (b)) ? (a) : (b))
+/// Return the maximum of a or b
+#define PNMAX(a,b) (((a)>(b))?(a):(b))
+
+/// Return the minimum of a or b
+#define PNMIN(a,b) (((a)>(b))?(b):(a))
+
+/// Return the minimum of x, y and z
+#define PNMIN3(x,y,z) ((x)<(y)?PNMIN(x,z):PNMIN(y,z))
+
+/// Return the maximum of x, y and z
+#define PNMAX3(x,y,z) ((x)>(y)?PNMAX(x,z):PNMAX(y,z))
+
+/// Return minimum and maximum of a, b
+#define PNMINMAX(lo,hi,a,b) ((a)<(b)?((lo)=(a),(hi)=(b)):((lo)=(b),(hi)=(a)))
 
 #ifndef ABS
 /// Return absolute value

@@ -239,21 +239,8 @@ PN3DObject::unserializeFromXML(xmlNode* root)
 
   //////////////////////////////////////////////////////////////////////////
 
-  //pnint	error = PNEC_SUCCESS;
-
-  /*//////////////////////////////////////////////////////////////////////////
-  // MODEL
-
-  if ((error = _parseModel(root)) != PNEC_SUCCESS)
-	return error;*/
-
-  //////////////////////////////////////////////////////////////////////////
-  // others
-
   for (root = root->children ; root != NULL; root = root->next)
-  {
 	_unserializeNode(root);
-  }
 
   return PNEC_SUCCESS;
 }
