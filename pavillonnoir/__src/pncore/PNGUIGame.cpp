@@ -280,7 +280,18 @@ void  PNGUIGame::_commandMoveTo(const std::string&, std::istream& i)
  // }
 }
 
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+void  PNGUIGame::_commandSkyBox(const std::string&, std::istream& i)
+{
+  bool	enable;
+
+  i >> enable;
+
+  PNRendererInterface::getInstance()->setSkyBoxEnabled(enable);
+}
+
+//////////////////////////////////////////////////////////////////////////
 
 void  PNGUIGame::_setPhysics(const std::string&, std::istream& i)
 {
@@ -424,11 +435,13 @@ void PNGUIGame::startGUI()
   PNConsole::addFonction("showwp", &PNGUIGame::_commandShowWP, "Show WayPoints");
   PNConsole::addFonction("hidewp", &PNGUIGame::_commandHideWP, "Hide WayPoints");
   PNConsole::addFonction("moveto", &PNGUIGame::_commandMoveTo, "Move selected character to given position");
+  //////////////////////////////////////////////////////////////////////////
+  PNConsole::addFonction("skybox", &PNGUIGame::_commandSkyBox, "Active/unactive skybox");
 
   PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_OFF, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
-   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
 
   show();
 }

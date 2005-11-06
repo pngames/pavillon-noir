@@ -132,7 +132,7 @@ PNGLSceneGraph::render(pnuint deltaTime)
 
   _renderCam.updateViewMatrix();
 
-  /*if (PNGLSkyBox::getInstance()->isEnabled())
+  if (PNGLSkyBox::getInstance()->isEnabled())
   {
 	glPushMatrix();
 	{
@@ -140,7 +140,7 @@ PNGLSceneGraph::render(pnuint deltaTime)
 	  PNGLSkyBox::getInstance()->render();
 	}
 	glPopMatrix();
-  }*/
+  }
 
   /////////////////////////////////
   // RENDER PNGROUND

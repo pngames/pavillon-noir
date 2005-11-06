@@ -55,7 +55,7 @@ public:
   void					setEnabled(pnbool enabled);
 
   /// Set the sky box properties
-  void					set(PNRendererObject* skyBox);
+  void					set(PNRendererObject* skyObj);
   /// Set the sky box properties
   void					set(pnfloat* textCoords, PNRenderMaterial* skyBox);
   /// Set the sky box properties
