@@ -100,7 +100,7 @@ namespace PN{
 	{
       PNGameActionEventData *eventData  = new PNGameActionEventData(eventName, targetId, sourceid, value);
       PNLuaGame* game = (PNLuaGame*) PNLuaGame::getInstance();
-      game->sendGameActionEvent(eventName, eventData);
+      ((PNLuaGameMap*)game->getGameMap())->sendGameActionEvent(eventName, eventData);
       delete eventData;
 	}
 
