@@ -1,3 +1,8 @@
+0.0.5 (2005/11/06):[stephane]
+	*modificaion de l'implémentation de l'héritage pour corriger un bug induit
+	 par une mauvaise conception.
+	*génération d'une fenetre de dialog pnerror quand une erreure fatale interviens
+	 dans le runtime lua.   
 0.0.4 (2005/05/04):
 * [Stephane] new :
 
