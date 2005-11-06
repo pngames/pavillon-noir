@@ -36,9 +36,12 @@ extern "C"
 }
 #include "tolua++.h"
 #include <string>
+#include <sstream>
 #include <map>
 #include "pndefs.h"
 #include "PNObject.hpp"
+#include "PN3DObject.hpp"
+#include "PN3DCamera.hpp"
 #include "PNLuaGameMap.hpp"
 #include "PNLuaGameUtil.h"
 #include "PNLuaGame.hpp"
@@ -47,7 +50,9 @@ using namespace PN;
 
 PNLuaGameMap::PNLuaGameMap(PNLuaVm &lvm): _LVM(lvm)
 {
-    //this->_LVM = lvm;
+    this->_mapStarted = false; 
+    PNEventManager::getInstance()->addCallback(PN_EVENT_MP_START,  EventCallback(this, &PNLuaGameMap::onPlayMapStart));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_MP_END,  EventCallback(this, &PNLuaGameMap::onPlayMapEnd));
     return;
 }
 
@@ -55,22 +60,10 @@ PNLuaGameMap::PNLuaGameMap(PNLuaVm &lvm): _LVM(lvm)
 
 PNLuaGameMap::~PNLuaGameMap(void)
 {
+    PNEventManager::getInstance()->deleteCallback(PN_EVENT_MP_START,  EventCallback(this, &PNLuaGameMap::onPlayMapStart));
+    PNEventManager::getInstance()->deleteCallback(PN_EVENT_MP_END,  EventCallback(this, &PNLuaGameMap::onPlayMapEnd));
 }
 
-//void  PNLuaGameMap::loadScript(const std::string& file, const std::string& id, const std::string& events)
-//{
-//	t_scripts_infos *new_elem = new t_scripts_infos();
-//
-//	new_elem->events = events;
-//	new_elem->file = file;
-//
-//	_entitiesActions[id] = new_elem;
-//}
-
-//void  PNLuaGameMap::unloadScript(const std::string& file, const std::string& id, const std::string& events)
-//{
-//	
-//}
 
 void  PNLuaGameMap::addToMap(const std::string& entityName, const std::string& id)
 {
@@ -109,4 +102,177 @@ void        PNLuaGameMap::clear()
 void PNLuaGameMap::executeScript(const std::string& ScriptName)
 {
 	((PNLuaGame*)PNLuaGame::getInstance())->loadLuaScript(ScriptName.c_str());
+}
+
+//Set the script to the RUNNING state and runthe script; 
+//return true if succeed, else return false
+void		PNLuaGameMap::manageLuaError(int errorcode)
+{
+	if (errorcode != 0)
+    {
+        PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_END, NULL, NULL);
+		PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ERROR, NULL, NULL);
+        pnerror(PN_LOGLVL_ERROR, "Game Runtime Error");
+    }
+}
+
+void  PNLuaGameMap::onUpdate(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_UPDATE_STARTED, 0, NULL);
+
+    float deltaTime = ((PNGameUpdateEventData*)data)->deltaTime;
+
+    if (this->_mapStarted == true)
+    {
+        std::stringstream luaOrder;
+        luaOrder << "gameMap:onUpdate(" << deltaTime << ")";
+         manageLuaError(this->_LVM.execString(luaOrder.str()));
+    }
+
+    PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_UPDATE_ENDED, 0, NULL);
+}
+void  PNLuaGameMap::onInit(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_INIT_STARTED, this, NULL);
+
+    std::string luaOrder;
+    luaOrder +=  "gameMap.onInit()";
+    manageLuaError(this->_LVM.execString(luaOrder));
+
+    PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_INIT_ENDED, this, NULL);
+}
+
+
+
+void  PNLuaGameMap::onReset(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    std::string luaOrder;
+    luaOrder +=  "gameMap.onReset()";
+     manageLuaError(this->_LVM.execString(luaOrder));
+}
+
+
+void  PNLuaGameMap::onPlayMapStart(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    this->_mapStarted = true;
+    registerInGameCallbacks();
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_STARTED, this, NULL);
+}
+
+void  PNLuaGameMap::onPlayMapPause(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_PAUSED, NULL, NULL);
+}
+
+void  PNLuaGameMap::onPlayMapEnd(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    this->_mapStarted = false;
+    unregisterInGameCallbacks();
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_ENDED, NULL, NULL);
+}
+
+
+
+void  PNLuaGameMap::onGameAction(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    std::stringstream luaOrder;
+
+    PNGameActionEventData* actionEvent= (PNGameActionEventData*) data;
+    luaOrder << "gameMap:on";
+	luaOrder << actionEvent->action;
+	luaOrder << "(\"" ;
+	luaOrder << actionEvent->sourceId;
+    luaOrder << "\", \"";
+    luaOrder << actionEvent->targetId;
+    luaOrder << "\", ";
+	luaOrder << (actionEvent->value);
+	luaOrder << ")";
+    luaOrder << std::ends;
+	 manageLuaError(this->_LVM.execString(luaOrder.str().c_str()));
+}
+
+void  PNLuaGameMap::onColision(pnEventType evt, PNObject* source, PNEventData* data)
+{
+}
+
+void  PNLuaGameMap::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* data)
+{
+  PN3DObject*	  viewed = ((PNFrustrumEventData*)data)->obj;
+  PN3DCamera*	  viewerCamera = (PN3DCamera*)source;
+  PN3DObject*	  viewer = viewerCamera->getPositionTarget();
+  std::string	  luaOrder;
+
+  pnerror(PN_LOGLVL_DEBUG, "frustrum in : %s view %s", viewerCamera->getId().c_str(), viewed->getId().c_str());
+
+    if (viewer != NULL)
+    {
+        luaOrder = "gameMap:onFrustrumIn(\"";
+        luaOrder += viewer->getId().c_str();
+        luaOrder += "\",\"";
+        luaOrder += viewed->getId().c_str();
+        luaOrder += "\")";
+        manageLuaError(_LVM.execString(luaOrder));
+    }
+}
+
+void  PNLuaGameMap::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* data)
+{
+  PN3DObject*	  viewed = ((PNFrustrumEventData*)data)->obj;
+  PN3DCamera*	  viewerCamera = (PN3DCamera*)source;
+  PN3DObject*	  viewer = viewerCamera->getPositionTarget();
+  std::string	  luaOrder;
+
+    pnerror(PN_LOGLVL_DEBUG, "frustrum out : %s doesn't view %s anymore", viewerCamera->getId().c_str(), viewed->getId().c_str());
+
+    if (viewer != NULL)
+    {
+        luaOrder = "gameMap:onFrustrumOut(\"";
+        luaOrder += viewer->getId().c_str();
+        luaOrder += "\",\"";
+        luaOrder += viewed->getId().c_str();
+        luaOrder += "\")";
+        manageLuaError(_LVM.execString(luaOrder));
+    }
+}
+
+
+void  PNLuaGameMap::onMouseMove(pnEventType evt, PNObject* source, PNEventData* data)
+{
+	PNGameMouseMoveEventData* mouseData = (PNGameMouseMoveEventData*) data;
+
+	std::stringstream luaOrder;
+	luaOrder << "gameMap:onMouseMove(" << mouseData->coords.x << " ," << mouseData->coords.y << ")" << std::endl;
+     manageLuaError(this->_LVM.execString(luaOrder.str().c_str()));
+}
+
+void  PNLuaGameMap::sendGameActionEvent(std::string eventName, PN::PNGameActionEventData *eventData)
+{
+  eventData->action = eventName; 
+  PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, eventData);
+}
+
+void  PNLuaGameMap::registerInGameCallbacks()
+{
+    PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGameMap::onGameAction));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_UPDATE, EventCallback(this, &PNLuaGameMap::onUpdate));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT, EventCallback(this, &PNLuaGameMap::onInit));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_F_IN, EventCallback(this, &PNLuaGameMap::onFrustrumIn));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_F_OUT, EventCallback(this, &PNLuaGameMap::onFrustrumOut));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_MOUSE_MOVE, EventCallback(this, &PNLuaGameMap::onMouseMove));
+    PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGameMap::onGameAction)); 
+    PNEventManager::getInstance()->addCallback(PN_EVENT_COLLISION, EventCallback(this, &PNLuaGameMap::onColision));
+    pnerror(PN_LOGLVL_DEBUG, "in game callbacks registered");
+}
+
+void  PNLuaGameMap::unregisterInGameCallbacks()
+{
+    PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGameMap::onGameAction));
+    PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_UPDATE, EventCallback(this, &PNLuaGameMap::onUpdate));
+    PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_INIT, EventCallback(this, &PNLuaGameMap::onInit));
+    PNEventManager::getInstance()->deleteCallback(PN_EVENT_F_IN, EventCallback(this, &PNLuaGameMap::onFrustrumIn));
+    PNEventManager::getInstance()->deleteCallback(PN_EVENT_F_OUT, EventCallback(this, &PNLuaGameMap::onFrustrumOut));
+    PNEventManager::getInstance()->deleteCallback(PN_EVENT_MOUSE_MOVE, EventCallback(this, &PNLuaGameMap::onMouseMove));
+    PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGameMap::onGameAction)); 
+    PNEventManager::getInstance()->deleteCallback(PN_EVENT_COLLISION, EventCallback(this, &PNLuaGameMap::onColision));
+    pnerror(PN_LOGLVL_DEBUG, "in game callbacks unregistered");
 }
