@@ -29,18 +29,19 @@
 
 #include <iostream>
 #include <list>
+#include <boost/filesystem/path.hpp>
 
 #include <SDL/SDL.h>
 
 #include "pndefs.h"
 #include "pnevent.h"
-#include "pnexception.h"
 #include "PNGameEventData.hpp"
 #include "pnresources.h"
 #include "PNConf.hpp"
 
 #include "PNVideoEventData.hpp"
 #include "PNGLRenderer.hpp"
+#include "PNGLSkyBox.hpp"
 
 #include "PNGLRendererObject.hpp"
 #include "PNSDLEvent.hpp"
@@ -175,6 +176,24 @@ PNGLRenderer::initRender(pnuint widht, pnuint height, pnuint bpp, pnchar* title,
 {
   initSDL(widht, height, bpp, title, fullscreen);
   initGL(widht, height);
+
+  //////////////////////////////////////////////////////////////////////////
+  // FIXME : TEST
+
+  PNRenderMaterial*		top = newMaterial();
+  top->setTexture(fs::path(DEF::texturesFilePath + "SB_TOP.BMP", fs::native));
+  PNRenderMaterial*		bottom = newMaterial();
+  bottom->setTexture(fs::path(DEF::texturesFilePath + "sb_bottom.bmp", fs::native));
+  PNRenderMaterial*		left = newMaterial();
+  left->setTexture(fs::path(DEF::texturesFilePath + "SB_LEFT.BMP", fs::native));
+  PNRenderMaterial*		right = newMaterial();
+  right->setTexture(fs::path(DEF::texturesFilePath + "SB_RIGHT.BMP", fs::native));
+  PNRenderMaterial*		front = newMaterial();
+  front->setTexture(fs::path(DEF::texturesFilePath + "SB_FRONT.BMP", fs::native));
+  PNRenderMaterial*		back = newMaterial();
+  back->setTexture(fs::path(DEF::texturesFilePath + "SB_BACK.BMP", fs::native));
+
+  PNGLSkyBox::getInstance()->set(top, bottom, left, right, front, back);
 }
 
 /*!
@@ -257,7 +276,7 @@ void
 PNGLRenderer::initGL(GLsizei width, GLsizei height)
 {
   std::cout << "--== OpenGL init start ==--" << std::endl;
-  
+
   // Initialize GL context
   glRenderMode(GL_RENDER);
 
@@ -447,28 +466,28 @@ PNGLRenderer::deleteObj(PNRendererObject* obj)
 void
 PNGLRenderer::setSkyBoxEnabled(pnbool enabled)
 {
-  throw PNException("Not implemented.");
+  PNGLSkyBox::getInstance()->setEnabled(enabled);
 }
 
 /// Set the sky box properties
 void
 PNGLRenderer::setSkyBox(PNRendererObject* skyBox)
 {
-  throw PNException("Not implemented.");
+  PNGLSkyBox::getInstance()->set(skyBox);
 }
 
 /// Set the sky box properties
 void
 PNGLRenderer::setSkyBox(pnfloat* textCoords, PNRenderMaterial* skyBox)
 {
-  throw PNException("Not implemented.");
+  PNGLSkyBox::getInstance()->set(textCoords, skyBox);
 }
 
 /// Set the sky box properties
 void
 PNGLRenderer::setSkyBox(PNRenderMaterial* top, PNRenderMaterial* bottom, PNRenderMaterial* left, PNRenderMaterial* right, PNRenderMaterial* front, PNRenderMaterial* back)
 {
-  throw PNException("Not implemented.");
+  PNGLSkyBox::getInstance()->set(top, bottom, left, right, front, back);
 }
 
 //////////////////////////////////////////////////////////////////////////

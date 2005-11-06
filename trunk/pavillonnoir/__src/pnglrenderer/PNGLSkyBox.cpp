@@ -29,6 +29,7 @@
 
 #include "pndefs.h"
 #include "pnrender.h"
+#include "pnexception.h"
 
 #include "PNGLRendererCamera.hpp"
 
@@ -87,28 +88,38 @@ PNGLSkyBox::isEnabled()
 void
 PNGLSkyBox::setEnabled(pnbool enabled)
 {
-  
+  _enabled = enabled;
 }
 
 /// Set the sky box properties
 void
-PNGLSkyBox::set(PNRendererObject* skyBox)
+PNGLSkyBox::set(PNRendererObject* skyObj)
 {
-  
+  throw PNException("Not implemented.");
+
+  _skyObj = skyObj;
 }
 
 /// Set the sky box properties
 void
 PNGLSkyBox::set(pnfloat* textCoords, PNRenderMaterial* skyBox)
 {
-  
+  throw PNException("Not implemented.");
+
+  _textCoords = textCoords;
+  _skyBox = skyBox;
 }
 
 /// Set the sky box properties
 void
 PNGLSkyBox::set(PNRenderMaterial* top, PNRenderMaterial* bottom, PNRenderMaterial* left, PNRenderMaterial* right, PNRenderMaterial* front, PNRenderMaterial* back)
 {
-  
+  _top = top;
+  _bottom = bottom;
+  _left = left;
+  _right = right;
+  _right = right;
+  _front = back;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -118,13 +129,15 @@ PNGLSkyBox::render()
 {
   glPushAttrib(GL_ALL_ATTRIB_BITS);
 
-  glDisable(GL_CULL_FACE);
+  glCullFace(GL_FRONT);
 
   PNGLRendererCamera*	camera = (PNGLRendererCamera*)PN3DCamera::getRenderCam();
 
   pnfloat	color[4] = {0.2f, 0.2f, 0.8f, 1.0f};
 
-  PNRendererInterface::getInstance()->renderBox((pnuint)camera->getFar(), (pnuint)camera->getFar(), (pnuint)camera->getFar(), color, PNPoint::ZERO, false);
+  pnfloat size = sqrtf((camera->getFar() * camera->getFar()) / 2);
+
+  PNRendererInterface::getInstance()->renderBox((pnuint)size, (pnuint)size, (pnuint)size, color, PNPoint::ZERO, false);
 
   glPopAttrib();
 }

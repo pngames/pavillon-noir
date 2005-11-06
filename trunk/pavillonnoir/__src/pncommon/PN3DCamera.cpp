@@ -72,6 +72,7 @@ PN3DCamera::~PN3DCamera()
 {
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_MP_STARTED, EventCallback(this, &PN3DCamera::_onMPStarted));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PN3DCamera::_onMPEnded));
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_RU_ENDING, EventCallback(this, &PN3DCamera::_onRUEnding));
 }
 
 //////////////////////////////////////////////////////////////////////////
