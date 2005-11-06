@@ -32,8 +32,7 @@
 
 #include <iostream>
 #include <stdio.h>
-#include <string>
-#include <sstream>
+
 #include <tolua++.h>
 
 #include "pndefs.h"
@@ -182,9 +181,6 @@ PNLuaGame::~PNLuaGame()
 
 PNLuaGame::PNLuaGame()
 {
-    //   this->L = NULL;
-    //    this->L = lua_open();
-    this->_mapStarted = false;
     this->_mapLoaded = false;
     this->_isLoadingMap = false;
     this->_isUnloadingMap = false;
@@ -227,43 +223,7 @@ PNGameMap* PNLuaGame::getGameMap()
     return _gameMap;
 }
 
-void  PNLuaGame::onUpdate(pnEventType evt, PNObject* source, PNEventData* data)
-{
-    PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_UPDATE_STARTED, 0, NULL);
 
-    float deltaTime = ((PNGameUpdateEventData*)data)->deltaTime;
-
-    if (this->_mapStarted == true)
-    {
-        std::stringstream luaOrder;
-        luaOrder << "gameMap:onUpdate(" << deltaTime << ")";
-         manageLuaError(this->_LVM.execString(luaOrder.str()));
-    }
-
-    PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_UPDATE_ENDED, 0, NULL);
-}
-void  PNLuaGame::onInit(pnEventType evt, PNObject* source, PNEventData* data)
-{
-    PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_INIT_STARTED, 0, NULL);
-
-    std::string luaOrder;
-    luaOrder +=  "gameMap.onInit()";
-     manageLuaError(this->_LVM.execString(luaOrder));
-
-    PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_INIT_ENDED, 0, NULL);
-}
-
-void  PNLuaGame::onInitEnded(pnEventType evt, PNObject* source, PNEventData* data)
-{
-    PNEventManager::getInstance()->addEvent(PN_EVENT_MP_START, 0, NULL); 
-}
-
-void  PNLuaGame::onReset(pnEventType evt, PNObject* source, PNEventData* data)
-{
-    std::string luaOrder;
-    luaOrder +=  "gameMap.onReset()";
-     manageLuaError(this->_LVM.execString(luaOrder));
-}
 
 void  PNLuaGame::onNewGame(pnEventType evt, PNObject* source, PNEventData* data)
 {
@@ -280,17 +240,16 @@ void  PNLuaGame::onLoadMapStart(pnEventType evt, PNObject* source, PNEventData* 
 {
     PN3DCamera* cam = PN3DCamera::getRenderCam();
     PNGameLoadMapEventData* loadMapData = (PNGameLoadMapEventData*)data;
-    this->_mapToLoad = loadMapData->mapName;
-    this->_isLoadingMap = true;
+    _mapToLoad = loadMapData->mapName;
+    _isLoadingMap = true;
     if (_mapLoaded == false) //if yhere is no map already loaded 
     {
         //boost::thread thrd(fastdelegate::FastDelegate0<void>(this, &PNLuaGame::loadMap));
-        this->loadMap();
+        loadMap();
     }
     else // if a map is already loaded, unload the map
     {
-        PNEventManager::getInstance()->addEvent(PN_EVENT_MU_START, 0,
-            NULL);
+        PNEventManager::getInstance()->addEvent(PN_EVENT_MU_START, 0,NULL);
     }
 }
 void  PNLuaGame::onLoadMapEnded(pnEventType evt, PNObject* source, PNEventData* data)
@@ -298,48 +257,9 @@ void  PNLuaGame::onLoadMapEnded(pnEventType evt, PNObject* source, PNEventData* 
     PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_INIT, NULL, NULL);
 }
 
-void  PNLuaGame::onUnloadMapStart(pnEventType evt, PNObject* source, PNEventData* data)
-{
-    this->_isUnloadingMap = true;
-
-    if (this->_mapStarted == true)
-    {
-        PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_END, NULL, NULL);
-    }
-    else
-    {
-        this->unloadMap();
-    }
-}
-void  PNLuaGame::onUnloadMapEnded(pnEventType evt, PNObject* source, PNEventData* data)
-{
-    if (this->_isLoadingMap == true)
-    {
-        //boost::thread thrd(fastdelegate::FastDelegate0<void>(this, &PNLuaGame::loadMap));
-        this->loadMap();
-    }
-}
-void  PNLuaGame::onPlayMapStart(pnEventType evt, PNObject* source, PNEventData* data)
-{
-    this->_mapStarted = true;
-
-    PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_STARTED, NULL, NULL);
-}
 void  PNLuaGame::onPlayMapStarted(pnEventType evt, PNObject* source, PNEventData* data)
 {
 
-}
-void  PNLuaGame::onPlayMapPause(pnEventType evt, PNObject* source, PNEventData* data)
-{
-}
-void  PNLuaGame::onPlayMapPaused(pnEventType evt, PNObject* source, PNEventData* data)
-{
-}
-
-void  PNLuaGame::onPlayMapEnd(pnEventType evt, PNObject* source, PNEventData* data)
-{
-    this->_mapStarted = false;
-    PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_ENDED, NULL, NULL);
 }
 
 void  PNLuaGame::onPlayMapEnded(pnEventType evt, PNObject* source, PNEventData* data)
@@ -351,97 +271,44 @@ void  PNLuaGame::onPlayMapEnded(pnEventType evt, PNObject* source, PNEventData* 
     }
 }
 
+void  PNLuaGame::onInitEnded(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    PNEventManager::getInstance()->addEvent(PN_EVENT_MP_START, 0, NULL); 
+}
+
+void  PNLuaGame::onUnloadMapStart(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    _isUnloadingMap = true;
+
+    if (_gameMap->isStarted() == true)
+    {
+        PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_END, NULL, NULL);
+    }
+    else
+    {
+        unloadMap();
+    }
+}
+void  PNLuaGame::onUnloadMapEnded(pnEventType evt, PNObject* source, PNEventData* data)
+{
+    if (_isLoadingMap == true)
+    {
+        //boost::thread thrd(fastdelegate::FastDelegate0<void>(this, &PNLuaGame::loadMap));
+        loadMap();
+    }
+}
+
 void  PNLuaGame::onLeaveGame(pnEventType evt, PNObject* source, PNEventData* data)
 {
 }
-void  PNLuaGame::onGameAction(pnEventType evt, PNObject* source, PNEventData* data)
-{
-    std::stringstream luaOrder;
-
-    PNGameActionEventData* actionEvent= (PNGameActionEventData*) data;
-    luaOrder << "gameMap:on";
-	luaOrder << actionEvent->action;
-	luaOrder << "(\"" ;
-	luaOrder << actionEvent->sourceId;
-    luaOrder << "\", \"";
-    luaOrder << actionEvent->targetId;
-    luaOrder << "\", ";
-	luaOrder << (actionEvent->value);
-	luaOrder << ")";
-    luaOrder << std::ends;
-	 manageLuaError(this->_LVM.execString(luaOrder.str().c_str()));
-}
-
-void  PNLuaGame::onColision(pnEventType evt, PNObject* source, PNEventData* data)
-{
-}
-
-void  PNLuaGame::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* data)
-{
-  PN3DObject*	  viewed = ((PNFrustrumEventData*)data)->obj;
-  PN3DCamera*	  viewerCamera = (PN3DCamera*)source;
-  PN3DObject*	  viewer = viewerCamera->getPositionTarget();
-  std::string	  luaOrder;
-
-  pnerror(PN_LOGLVL_DEBUG, "frustrum in : %s view %s", viewerCamera->getId().c_str(), viewed->getId().c_str());
-
-    if (viewer != NULL)
-    {
-        luaOrder = "gameMap:onFrustrumIn(\"";
-        luaOrder += viewer->getId().c_str();
-        luaOrder += "\",\"";
-        luaOrder += viewed->getId().c_str();
-        luaOrder += "\")";
-        manageLuaError(_LVM.execString(luaOrder));
-    }
-}
-
-void  PNLuaGame::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* data)
-{
-  PN3DObject*	  viewed = ((PNFrustrumEventData*)data)->obj;
-  PN3DCamera*	  viewerCamera = (PN3DCamera*)source;
-  PN3DObject*	  viewer = viewerCamera->getPositionTarget();
-  std::string	  luaOrder;
-
-    pnerror(PN_LOGLVL_DEBUG, "frustrum out : %s doesn't view %s anymore", viewerCamera->getId().c_str(), viewed->getId().c_str());
-
-    if (viewer != NULL)
-    {
-        luaOrder = "gameMap:onFrustrumOut(\"";
-        luaOrder += viewer->getId().c_str();
-        luaOrder += "\",\"";
-        luaOrder += viewed->getId().c_str();
-        luaOrder += "\")";
-        manageLuaError(_LVM.execString(luaOrder));
-    }
-}
 
 
-void  PNLuaGame::onMouseMove(pnEventType evt, PNObject* source, PNEventData* data)
-{
-	PNGameMouseMoveEventData* mouseData = (PNGameMouseMoveEventData*) data;
-
-	std::stringstream luaOrder;
-	luaOrder << "gameMap:onMouseMove(" << mouseData->coords.x << " ," << mouseData->coords.y << ")" << std::endl;
-     manageLuaError(this->_LVM.execString(luaOrder.str().c_str()));
-}
 void  PNLuaGame::registerCallbacks()
 {
     PNEventManager::getInstance()->addCallback(PN_EVENT_ML_START, EventCallback(this, &PNLuaGame::onLoadMapStart));
     //PNEventManager::getInstance()->addCallback(PN_EVENT_ML_ENDED, EventCallback(this, &PNLuaGame::onLoadMapEnded));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_MP_START,  EventCallback(this, &PNLuaGame::onPlayMapStart));
     PNEventManager::getInstance()->addCallback(PN_EVENT_MU_START, EventCallback(this, &PNLuaGame::onUnloadMapStart));
     //PNEventManager::getInstance()->addCallback(PN_EVENT_MU_ENDED, EventCallback(this, &PNLuaGame::onUnloadMapEnded));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_MP_END,  EventCallback(this, &PNLuaGame::onPlayMapEnd));
-    //PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED,  EventCallback(this, &PNLuaGame::onPlayMapEnded));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGame::onGameAction));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_UPDATE, EventCallback(this, &PNLuaGame::onUpdate));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT, EventCallback(this, &PNLuaGame::onInit));
-    //PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT_ENDED, EventCallback(this, &PNLuaGame::onInitEnded));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_F_IN, EventCallback(this, &PNLuaGame::onFrustrumIn));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_F_OUT, EventCallback(this, &PNLuaGame::onFrustrumOut));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_MOUSE_MOVE, EventCallback(this, &PNLuaGame::onMouseMove));
-    PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGame::onGameAction));
     pnerror(PN_LOGLVL_DEBUG, "callbacks registered");
 }
 
@@ -498,8 +365,3 @@ void  PNLuaGame::unloadMap()
     //TODO : capturer cet event pout debug
 }
 
-void	PNLuaGame::sendGameActionEvent(std::string eventName, PN::PNGameActionEventData *eventData)
-{
-  eventData->action = eventName; 
-  PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, eventData);
-}

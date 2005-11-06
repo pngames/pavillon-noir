@@ -31,6 +31,7 @@
 # define  _PNLUASANDBOX_HPP
 
 #include <boost/filesystem/path.hpp>
+#include <set>
 extern "C"
 {
 #include <lua.h>
@@ -41,7 +42,6 @@ extern "C"
 #include "PNLuaVm.hpp"
 #include "PNLuaGameMap.hpp"
 #include "PNGameEventData.hpp"
-#include <set>
 // Default lua debug log file
 #define DEF_LUA_LOG_FILE "pnScript.log"
 
@@ -62,9 +62,8 @@ namespace PN
     boost::filesystem::path	  _gameRootDirectory;
     PNLuaGameMap*             _gameMap;
     std::set<std::string>     _loadedScripts;
-    bool                      _mapStarted;
-    bool                      _mapLoaded;
     bool                      _isLoadingMap;
+    bool                      _mapLoaded;
     bool                      _isUnloadingMap;
     std::string               _mapToLoad;
 
@@ -88,6 +87,7 @@ namespace PN
 	//bool  getLuaDebugLogging();
     //Set the script to the RUNNING state and run the script; 
     //return true if succeed, else return false
+    
     pnerrorcode						run(void);
 
     //Set the script to the PAUSED state and pause the script
@@ -121,32 +121,17 @@ namespace PN
     void unloadMap();
 
     //////////////////////////////////--------  callbacks ---------////////////////////////////////////
-//	void onUpdate(pnuint deltaTime);
-   	void onUpdate(pnEventType evt, PNObject* source, PNEventData* data);
-	void onInit(pnEventType evt, PNObject* source, PNEventData* data);
-    void onInitEnded(pnEventType evt, PNObject* source, PNEventData* data);
-	void onReset(pnEventType evt, PNObject* source, PNEventData* data);
-	void onNewGame(pnEventType evt, PNObject* source, PNEventData* data);
-	void onSaveGame(pnEventType evt, PNObject* source, PNEventData* data);
-	void onLoadGame(pnEventType evt, PNObject* source, PNEventData* data);
+    void onNewGame(pnEventType evt, PNObject* source, PNEventData* data);
+    void onSaveGame(pnEventType evt, PNObject* source, PNEventData* data);
+    void onLoadGame(pnEventType evt, PNObject* source, PNEventData* data);
+    void onLeaveGame(pnEventType evt, PNObject* source, PNEventData* data);
 	void onLoadMapStart(pnEventType evt, PNObject* source, PNEventData* data);
     void onLoadMapEnded(pnEventType evt, PNObject* source, PNEventData* data);
     void onUnloadMapStart(pnEventType evt, PNObject* source, PNEventData* data);
     void onUnloadMapEnded(pnEventType evt, PNObject* source, PNEventData* data);
-    void onPlayMapEnd(pnEventType evt, PNObject* source, PNEventData* data);   
-    void onPlayMapEnded(pnEventType evt, PNObject* source, PNEventData* data);
-	void onPlayMapStart(pnEventType evt, PNObject* source, PNEventData* data);
     void onPlayMapStarted(pnEventType evt, PNObject* source, PNEventData* data);
-	void onPlayMapPause(pnEventType evt, PNObject* source, PNEventData* data);
-    void onPlayMapPaused(pnEventType evt, PNObject* source, PNEventData* data);
-	void onLeaveGame(pnEventType evt, PNObject* source, PNEventData* data);
-	void onGameAction(pnEventType evt, PNObject* source, PNEventData* data);
-	void onColision(pnEventType evt, PNObject* source, PNEventData* data);
-	void onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* data);
-	void onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* data);
-	void onMouseMove(pnEventType evt, PNObject* source, PNEventData* data);
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    void sendGameActionEvent(std::string eventName, PNGameActionEventData *eventData);
+    void onPlayMapEnded(pnEventType evt, PNObject* source, PNEventData* data);
+    void onInitEnded(pnEventType evt, PNObject* source, PNEventData* data);
     /*/////////////////////////////////////////////////////////////////////////////
     /                           Constructors / Destructor                         /
     /////////////////////////////////////////////////////////////////////////////*/
