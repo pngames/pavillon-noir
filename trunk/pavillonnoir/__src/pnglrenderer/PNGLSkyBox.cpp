@@ -32,6 +32,8 @@
 #include "pnexception.h"
 
 #include "PNGLRendererCamera.hpp"
+#include "PN3DMaterial.hpp"
+#include "PNTexture.hpp"
 
 #include "PNGLSkyBox.hpp"
 
@@ -118,11 +120,159 @@ PNGLSkyBox::set(PNRenderMaterial* top, PNRenderMaterial* bottom, PNRenderMateria
   _bottom = bottom;
   _left = left;
   _right = right;
-  _right = right;
-  _front = back;
+  _front = front;
+  _back = back;
 }
 
 //////////////////////////////////////////////////////////////////////////
+
+void
+PNGLSkyBox::_renderBox(pnfloat size)
+{
+  pnfloat	color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+
+  glColor4fv(color);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
+
+  pnfloat xmin =-0.5f * size;
+  pnfloat xmax = 0.5f * size;
+  pnfloat ymin =-0.5f * size;
+  pnfloat ymax = 0.5f * size;
+  pnfloat zmin =-0.5f * size;
+  pnfloat zmax = 0.5f * size;
+
+  if (_front != NULL)
+  {
+	_front->getTexture()->setRepeat(false);
+	_front->bind();
+  }
+
+  glBegin(GL_TRIANGLE_STRIP);
+  {
+	glNormal3f(0.0f, 0.0f, 1.0f);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(xmax, ymin, zmax);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(xmax, ymax, zmax);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(xmin, ymin, zmax);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(xmin, ymax, zmax);
+  }
+  glEnd();
+
+  if (_back != NULL)
+  {
+	_back->getTexture()->setRepeat(false);
+	_back->bind();
+  }
+
+  glBegin(GL_TRIANGLE_STRIP);
+  {
+	glNormal3f(0.0f, 0.0f, -1.0f);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(xmin, ymin, zmin);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(xmin, ymax, zmin);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(xmax, ymin, zmin);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(xmax, ymax, zmin);
+  }
+  glEnd();
+
+  if (_right != NULL)
+  {
+	_right->getTexture()->setRepeat(false);
+	_right->bind();
+  }
+
+  glBegin(GL_TRIANGLE_STRIP);
+  {
+	glNormal3f(1.0f, 0.0f, 0.0f);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(xmax, ymin, zmin);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(xmax, ymax, zmin);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(xmax, ymin, zmax);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(xmax, ymax, zmax);
+  }
+  glEnd();
+
+  if (_left != NULL)
+  {
+	_left->getTexture()->setRepeat(false);
+	_left->bind();
+  }
+
+  glBegin(GL_TRIANGLE_STRIP);
+  {
+	glNormal3f(-1.0f, 0.0f, 0.0f);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(xmin, ymin, zmax);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(xmin, ymax, zmax);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(xmin, ymin, zmin);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(xmin, ymax, zmin);
+  }
+  glEnd();
+
+  if (_top != NULL)
+  {
+	_top->getTexture()->setRepeat(false);
+	_top->bind();
+  }
+
+  glBegin(GL_TRIANGLE_STRIP);
+  {
+	glNormal3f(0.0f, 1.0f, 0.0f);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(xmin, ymax, zmin);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(xmin, ymax, zmax);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(xmax, ymax, zmin);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(xmax, ymax, zmax);
+  }
+  glEnd();
+
+  if (_bottom != NULL)
+  {
+	_bottom->getTexture()->setRepeat(false);
+	_bottom->bind();
+  }
+
+  glBegin(GL_TRIANGLE_STRIP);
+  {
+	glNormal3f(0.0f, -1.0f, 0.0f);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(xmin, ymin, zmax);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(xmin, ymin, zmin);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(xmax, ymin, zmax);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(xmax, ymin, zmin);
+  }
+  glEnd();
+}
+
+void
+PNGLSkyBox::_renderObj()
+{
+  
+}
 
 void
 PNGLSkyBox::render()
@@ -133,11 +283,11 @@ PNGLSkyBox::render()
 
   PNGLRendererCamera*	camera = (PNGLRendererCamera*)PN3DCamera::getRenderCam();
 
-  pnfloat	color[4] = {0.2f, 0.2f, 0.8f, 1.0f};
-
   pnfloat size = sqrtf((camera->getFar() * camera->getFar()) / 2);
 
-  PNRendererInterface::getInstance()->renderBox((pnuint)size, (pnuint)size, (pnuint)size, color, PNPoint::ZERO, false);
+  //////////////////////////////////////////////////////////////////////////
+
+  _renderBox(size);
 
   glPopAttrib();
 }
