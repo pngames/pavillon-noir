@@ -62,7 +62,10 @@ public:
   void					set(PNRenderMaterial* top, PNRenderMaterial* bottom, PNRenderMaterial* left, PNRenderMaterial* right, PNRenderMaterial* front, PNRenderMaterial* back);
 
   //////////////////////////////////////////////////////////////////////////
- 
+protected:
+  void					_renderBox(pnfloat size);
+  void					_renderObj();
+public:
   void					render();
 
   //////////////////////////////////////////////////////////////////////////
