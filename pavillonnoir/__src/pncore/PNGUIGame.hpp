@@ -124,6 +124,8 @@ namespace PN{
 	static void  _commandShowWP(const std::string&, std::istream& i);
 	static void  _commandHideWP(const std::string&, std::istream& i);
 	static void  _commandMoveTo(const std::string&, std::istream& i);
+	static void  _commandSkyBox(const std::string&, std::istream& i);
+	
 	static void  _setPhysics(const std::string&, std::istream& i);
 	static void  _renderPhysics(const std::string&, std::istream& i);
 	static void  _addForce(const std::string&, std::istream& i);
