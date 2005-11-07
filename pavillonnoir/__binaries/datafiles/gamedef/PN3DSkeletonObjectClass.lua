@@ -18,13 +18,13 @@ function PN3DSkeletonObjectClass(id)
 	    
     ---------------------move events-----------------------
 	function OBJ:onMoveForward(state)
-    	pnprint("==>> PN3DSkeletonObject:onMoveForward()\n")	
+    	--pnprint("==>> PN3DSkeletonObject:onMoveForward()\n")	
 		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_T_FORWARD)
 		else
 			self:subMovingState(PN3DObject.STATE_T_FORWARD)
 		end
-		pnprint("<<== PN3DSkeletonObject:onMoveForward()\n")	 
+		--pnprint("<<== PN3DSkeletonObject:onMoveForward()\n")	 
 	end	
 
 	function OBJ:onMoveBackward(state)

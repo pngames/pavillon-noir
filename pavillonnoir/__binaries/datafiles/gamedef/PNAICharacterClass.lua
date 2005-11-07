@@ -29,14 +29,14 @@ Called at the update
 Calls a Behaviour Function depending on the state in which the character is
 %--]]		
 	function OBJ:beSmart()
-		print("==>> PNAICharacter:beSmart()")
-	    print(self)
+		--print("==>> PNAICharacter:beSmart()")
+	    --print(self)
 		if (self.state == self.stateEnum.PN_IA_TRAVELLING) then
 			self:manageTravel()
 		elseif (self.state == self.stateEnum.PN_IA_FIGHTING) then
 			self:manageFight()
 		end
-	    print("<<== PNAICharacter:beSmart()")
+	    --print("<<== PNAICharacter:beSmart()")
 	end
 --------------------------------------------------------
 --[[%
@@ -139,11 +139,11 @@ Called at every loop
 %--]]
 	OVERRIDE(OBJ, "onUpdate")
 	function OBJ:onUpdate(deltaTime)
-	    print("==>> PNAICharacter:onUpdate()")
-	    print(self)
+	    --print("==>> PNAICharacter:onUpdate()")
+	    --print(self)
 		self:beSmart()
 		self:PNCharacter_onUpdate(deltaTime)
-	    print("<<== PNAICharacter:onUpdate()")
+	    --print("<<== PNAICharacter:onUpdate()")
 	end
 --------------------------------------------------------
 --[[%
@@ -169,9 +169,9 @@ If it is detected as an ennemy, the character switches to the fighting mode
 			self.ennemies[target:getId()] = 1
 			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= CHARACTER_TYPE.CIVILIAN)) then
 				pnprint("Mais oui, j'ai bien vu un rominet !\n")
-				self:setTarget(target)
-				self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
-				self:startFight()
+				--self:setTarget(target)
+				--self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
+				--self:startFight()
 			end
 		end
 	end
