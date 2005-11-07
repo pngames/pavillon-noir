@@ -32,7 +32,10 @@
 
 #include <string>
 #include <map>
+#include <sstream>
+#include <iostream>
 #include <boost/filesystem/path.hpp>
+#include "PNException.hpp"
 
 #define PNCONFFILE	"configuration.xml"
 #define PNCONFPATH	"pavillon-noir"
@@ -65,9 +68,31 @@ namespace PN
 	static void							initialize();
 	static PNConf*						getInstance();
 	void								setKey(const std::string& key, const std::string& value);
-	const std::string&					getKey(const std::string& key);
 	void								saveConf();
 	boost::filesystem::path				getConfPath();
+	
+	///////////////////////////////////////////////////////////////////
+	// Templates
+	///////////////////////////////////////////////////////////////////
+	
+	/**
+	* @brief get the matching value to the given key
+	* @param key string value representing an item key
+	* @param type a type constructor (like int(), string(), ...)
+	* @return value of the matching key or throw a PNException if key is not found.
+	* @sa setKey()
+	*/
+  	template <typename T>
+	T getKey(const std::string& key, const T& type)
+	{
+		T dest;
+		if (_confHash.find(key) == _confHash.end())
+			throw PNException("Key not found");
+		std::stringstream convert(_confHash[key]);
+		convert >> dest;
+		std::cout << dest << std::endl;
+		return dest;
+	}
   };
 }
 
