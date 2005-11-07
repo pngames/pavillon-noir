@@ -59,6 +59,7 @@ public:
 
   virtual const PNPoint&	getCoord()=0;
   virtual const PNQuatf&	getOrient()=0;
+  virtual const PNPoint&	getOffset()=0;
 
   //////////////////////////////////////////////////////////////////////////
 

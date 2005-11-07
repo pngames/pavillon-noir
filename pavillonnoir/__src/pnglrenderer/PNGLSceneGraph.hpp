@@ -65,7 +65,7 @@ public:
   void						initFrame();
   PNGLRendererCamera&		getRenderCamera();
 
-  pnuint					render(pnuint deltaTime);
+  pnuint					render(pnuint deltaTime, pnuint time);
 };
 
 //////////////////////////////////////////////////////////////////////////

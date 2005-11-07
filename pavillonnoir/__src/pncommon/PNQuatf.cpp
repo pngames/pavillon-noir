@@ -52,6 +52,11 @@ void		PNQuatf::loadIdentity()
   w = 1.0f;
 }
 
+bool		PNQuatf::isIdentity() const
+{
+  return x == 0.0f && y == 0.0f && z == 0.0f && w == 1.0f;
+}
+
 /////////////////////////////////////////////////////////////////////////
 
 void		PNQuatf::set(const PNMatrix4f& mat)

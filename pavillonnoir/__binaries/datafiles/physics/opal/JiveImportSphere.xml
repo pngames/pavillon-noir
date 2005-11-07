@@ -3,7 +3,7 @@
 	<Solid>
 		<Name value="Sphere01"/>
 		<Offset>
-			<Transform type="translate" x="-1.91867" y="0.0" z="10.8408"/>
+			<Transform type="translate" x="1.91867" y="0.0" z="-10.8408"/>
 		</Offset>
 		<Shape type="sphere">
 			<Dimensions radius="20.0"/>
