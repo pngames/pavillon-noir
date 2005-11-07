@@ -39,12 +39,14 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
   
-class PNGameUpdateEventData : public PNEventData
+class		PNGameUpdateEventData : public PNEventData
 {
 public:
-  float deltaTime;
+  float		deltaTime;
+  pnuint	time;
+
   PNGameUpdateEventData(){}
-  PNGameUpdateEventData(float deltatime): deltaTime(deltatime){}
+  PNGameUpdateEventData(float deltatime, pnuint time): deltaTime(deltatime), time(time) {}
 };
 
 class PNGameLoadMapEventData : public PNEventData

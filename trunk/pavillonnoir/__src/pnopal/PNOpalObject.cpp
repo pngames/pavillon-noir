@@ -144,6 +144,11 @@ const PNQuatf&	PNOpalObject::getOrient()
   return _orient;
 }
 
+const PNPoint&	PNOpalObject::getOffset()
+{
+  return _offset;
+}
+
 /** Return a pointer on the Opal physical object (opal::Solid)
 */ 
 
@@ -193,13 +198,21 @@ void			PNOpalObject::setCoord(pnfloat x, pnfloat y, pnfloat z)
 
 void			PNOpalObject::setOrient(const PNQuatf& orient)
 {
-  PNMatrixTR4f	  pntransform;
+  /*PNMatrixTR4f	  pntransform;
 
   pntransform.loadIdentity();
   pntransform.setTranslation(_solid->getPosition().getData());
-  pntransform.setRotationQuaternion(orient);
+  pntransform.setRotationQuaternion(orient);*/
 
-  opal::Matrix44r transform(pntransform.getMatrix());
+  opal::Matrix44r transform;
+  transform.makeIdentity();
+
+  opal::Point3r pos = _solid->getPosition();
+  transform.setPosition(pos[0], pos[1], pos[2]);
+
+  if (!orient.isIdentity())
+	transform.setRotation((opal::real)orient.w, (opal::real)orient.x, (opal::real)orient.y, (opal::real)orient.z);
+
   this->_solid->setTransform(transform);
 }
 
@@ -292,7 +305,7 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
 
   // get the solid translation (will allow the renderer to represent the AABB at the good coords)
   opal::real* translation = _solid->getTransform().getTranslation().getData();
-  _offset.set(translation[0] * -1, translation[1] * -1, translation[2] * -1);
+  _offset.set(translation[0], translation[1], translation[2]);
 
   return PNEC_SUCCESS;
 }

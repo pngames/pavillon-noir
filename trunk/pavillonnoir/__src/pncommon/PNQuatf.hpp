@@ -61,6 +61,7 @@ public:
   ~PNQuatf();
 
   void					loadIdentity();
+  pnbool				isIdentity() const;
 
   void					invert();
   PNQuatf				getInvert() const;

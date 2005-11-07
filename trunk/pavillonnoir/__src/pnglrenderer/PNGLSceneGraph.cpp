@@ -106,14 +106,14 @@ PNGLSceneGraph::getRenderCamera()
 //////////////////////////////////////////////////////////////////////////
 
 pnuint
-PNGLSceneGraph::render(pnuint deltaTime)
+PNGLSceneGraph::render(pnuint deltaTime, pnuint time)
 {
   if (!_inGame)
 	return PNEC_SUCCESS;
 
-  PNGameUpdateEventData gameUpdateData((pnfloat)deltaTime);
+  PNGameUpdateEventData gameUpdateData((pnfloat)deltaTime, time);
   PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_UPDATE, 0, &gameUpdateData);
-
+  PNEventManager::getInstance()->sendEvent(PN_EVENT_PU_START, 0, &gameUpdateData);
   ////////////////////////////////
   // Initialise le buffer de rendu
 
@@ -172,16 +172,16 @@ PNGLSceneGraph::render(pnuint deltaTime)
 		PNLOCK_BEGIN(obj);
 		{
 		  const PNPoint&  pos = obj->getCoord();
-		  const PNPoint&  center = obj->getCenter();
+		  const PNPoint&  offset = obj->getPhysicalObject() == NULL ? PNPoint::ZERO : obj->getPhysicalObject()->getOffset();
 		  const PNQuatf&  orient = obj->getOrient();
 
 		  transMatrix.setRotationQuaternion(orient);
 		  transMatrix.setTranslation(pos);
-		  transMatrix.addTranslation(center);
+		  transMatrix.addTranslation(offset);
 
 		  glMultMatrixf(transMatrix.getMatrix());
 
-		  glTranslatef(-center.x, -center.y, -center.z);
+		  glTranslatef(-offset.x, -offset.y, -offset.z);
 		  obj->render();
 		}
 		PNLOCK_END(obj);
