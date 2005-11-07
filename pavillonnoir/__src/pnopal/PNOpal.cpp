@@ -36,6 +36,7 @@
 #include "PNGameInterface.hpp"
 #include "PNConsole.hpp"
 #include "PNGameMap.hpp"
+#include "PNGameEventData.hpp"
 
 #include "PNOpal.hpp"
 #include "PNOpalObject.hpp"
@@ -69,7 +70,8 @@ PNOpal::~PNOpal()
 void  PNOpal::init()
 {
   pnerror(PN_LOGLVL_DEBUG, "%s", "PNOpal (PNPhysicsInterface implementation) initialization");
-  PNEventManager::getInstance()->addCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PNOpal::frameStarted));
+
+  PNEventManager::getInstance()->addCallback(PN_EVENT_PU_START, EventCallback(this, &PNOpal::frameStarted));
   PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PNOpal::mapEnded));
   
   setPause(true);
@@ -137,34 +139,15 @@ void PNOpal::mapEnded(pnEventType type, PNObject* source, PNEventData* data)
   this->destroySimulation();
 }
 
-/** Returns the elapsed time (in seconds) since the last frame
-*/
-
-pnfloat PNOpal::getElapsedTime()
-{
-  pnfloat currentTicks;
-  pnfloat elapsedTicks;
-  
-  if (!_lastTicks)
-	_lastTicks = (pnfloat)PNRendererInterface::getInstance()->getTicks();
-
-  currentTicks = (pnfloat)PNRendererInterface::getInstance()->getTicks();
-  if (currentTicks < _lastTicks)
-  	elapsedTicks = 0;
-  else
-	elapsedTicks = (currentTicks - _lastTicks) / 100; // FIXME UGLY FIXED VALUE
-  _lastTicks = currentTicks;
-
-  return elapsedTicks;
-}
-
 /** Called at the start of each frame : calculate dt since the last frame,
 * update physics then update all PN3DObjects coordinates and orientations.
 */
 
 void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 {
-  pnfloat elapsedTime = getElapsedTime();
+  static int i = 0;
+
+  pnfloat elapsedTime = ((PNGameUpdateEventData*)data)->deltaTime / 100;
 
   if (_sim == NULL)
 	return;
@@ -172,6 +155,8 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 	return;
   if (_paused == true)
 	return;
+  
+  i++;
 
   for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
   {
@@ -183,11 +168,13 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 	  PNLOCK_BEGIN(current_obj);
 	  {
 		const PNPoint& coord = current_obj->getCoord();
-		const PNPoint& center = current_obj->get3DModel()->getCenter();
+		const PNPoint& offset = current_obj->getPhysicalObject()->getOffset();
 		const PNQuatf& orient = current_obj->getOrient();
 
-		current_obj->getPhysicalObject()->setCoord(coord.x + center.x, coord.y + center.y, coord.z + center.z);
+		current_obj->getPhysicalObject()->setCoord(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z);
 		current_obj->getPhysicalObject()->setOrient(orient);
+		if (i == 400  && orient.x != 0)
+		  pnerror(PN_LOGLVL_DEBUG, "in-orient : %i, %i, %i, %i", orient.x, orient.y, orient.z, orient.w);
 	  }
 	  PNLOCK_END(current_obj);
 	}
@@ -209,15 +196,22 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 	  PNLOCK_BEGIN(current_obj);
 	  {
 		const PNPoint& coord = current_obj->getPhysicalObject()->getCoord();
-		const PNPoint& center = current_obj->get3DModel()->getCenter();
+		const PNPoint& offset = current_obj->getPhysicalObject()->getOffset();
 		const PNQuatf& orient = current_obj->getPhysicalObject()->getOrient();
 
-		current_obj->setCoord(coord.x - center.x, coord.y - center.y, coord.z - center.z);
+		current_obj->setCoord(coord.x, coord.y, coord.z);
+		current_obj->setCoord(coord.x - offset.x, coord.y - offset.y, coord.z - offset.z);
 		current_obj->setOrient(orient);
+		if (i == 400 && orient.x != 0)
+		  pnerror(PN_LOGLVL_DEBUG, "out-orient : %i, %i, %i, %i", orient.x, orient.y, orient.z, orient.w);
 	  }
 	  PNLOCK_END(current_obj);
 	}
   }
+
+  if (i == 400)
+	i = 0;
+
 }
 
 //////////////////////////////////////////////////////////////////////////

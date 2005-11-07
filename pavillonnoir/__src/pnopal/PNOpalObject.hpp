@@ -103,6 +103,7 @@ namespace PN {
 
   	const PNPoint&		getCoord();
 	const PNQuatf&		getOrient();
+	const PNPoint&		getOffset();
 	opal::Solid*		getOpalSolid();
 	
 	void				setStatic(bool state);

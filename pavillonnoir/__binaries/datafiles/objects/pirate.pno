@@ -35,5 +35,5 @@
     <anim path="pirate_die.pna" />
     <anim path="pirate_shoot.pna" />
   </listanims>
-  <!-- physics path="JiveImportCharPave.pnp" / -->
+  <physics path="JiveImportCharPave.pnp"/>
 </object>
