@@ -2,11 +2,23 @@
 
 Import('env')
 import os
+import os.path
+import time
 
-if not os.path.exists(env.File("#./__src/pnscript/pnbind.cpp").abspath) or not os.path.exists(env.File("#./__src/pnscript/pnbind.h").abspath):
+cachefile=env['CACHEDIR']+'pnscript.cache.py'
+opts = Options(cachefile)
+opts.AddOptions(
+		( 'GENBIND', 'GenBinding timestamp' ),
+	)
+opts.Update(env)
+
+gentime = os.path.getmtime(env.File("#./__src/pnscript/pnbind.pkg").abspath)
+if not env.has_key('GENBIND') or env['GENBIND'] < gentime or not os.path.exists(env.File("#./__src/pnscript/pnbind.cpp").abspath) or not os.path.exists(env.File("#./__src/pnscript/pnbind.h").abspath):
 	os.chdir(env.Dir("#./__src/pnscript").abspath)
 	os.system("sh GenBinding.sh")
+	env['GENBIND'] = gentime
 	os.chdir(env.Dir("#./").abspath)
+opts.Save(cachefile, env)
 
 obj = env.genobj('shlib', env)
 obj.src = """PNLuaGame.cpp
