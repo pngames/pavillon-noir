@@ -11,20 +11,21 @@ function PNAINavyClass(id)
 	OBJ.realCharacType = CHARACTER_TYPE.NAVY
 	OBJ.shownCharacType = CHARACTER_TYPE.NAVY
 	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
+	OBJ:setMovingState(PN3DObject.STATE_R_RIGHT)
 --------------------------------------------------------
 --[[%
 Called while handling a fight
 %--]]
 	OVERRIDE(OBJ, "manageFight")
 	function OBJ:manageFight()
-		print("==>> PNAINavy:manageFight()")
-		print(self)
+		--print("==>> PNAINavy:manageFight()")
+		--print(self)
 		if (self:getCoord():getDistance(self:getViewTarget():getCoord()) > self.selected_weapon.range) then
 			self:onMoveForward(ACTION_STATE.START)
 		else
 			self:onMoveForward(ACTION_STATE.STOP)
 		end	
-	    print("<<== PNAINavy:manageFight()")
+	    --print("<<== PNAINavy:manageFight()")
 	end
 --------------------------------------------------------
 --[[%
