@@ -127,10 +127,10 @@ Call when someone tell the object to go backward
 %--]]
 	OVERRIDE(OBJ, "onMoveForward")	
 	function OBJ:onMoveForward(state)
-    	pnprint("==>> PNCharacter:onMoveForward()\n")
-		pnprint("speed: " .. self.actualSpeed .."\n")
-		pnprint("attitude: " .. self.attitude.."\n")
-		pnprint(self.id .. ":onMoveForward=" .. state .. "\n")
+    	--pnprint("==>> PNCharacter:onMoveForward()\n")
+		--pnprint("speed: " .. self.actualSpeed .."\n")
+		--pnprint("attitude: " .. self.attitude.."\n")
+		--pnprint(self.id .. ":onMoveForward=" .. state .. "\n")
 		--OBJ:setMovingSpeed(self.actualSpeed)
 		self:PN3DSkeletonObject_onMoveForward(state)	
 		if (state == ACTION_STATE.START) then
@@ -139,9 +139,9 @@ Call when someone tell the object to go backward
 			self.dirLong = self.dirLong - CHARACTER_DIR_LONG.FORWARD
 		end 
 		self:launchGoodAnimation()
-		pnprint("speed: " .. self.actualSpeed .."\n")
-		pnprint("attitude: " .. self.attitude.."\n")
-		pnprint("<<== PNCharacter:onMoveForward()\n")
+		--pnprint("speed: " .. self.actualSpeed .."\n")
+		--pnprint("attitude: " .. self.attitude.."\n")
+		--pnprint("<<== PNCharacter:onMoveForward()\n")
 	end
 -------------------------------------------------------------------------------
 --[[%
@@ -367,7 +367,7 @@ Returns the type of the character that is visible to others
 	function OBJ:launchGoodAnimation()
 		self:setEnableLoop(true)
 		if (self.attitude == CHARACTER_ATTITUDE.WALKING) then
-			pnprint ("walk\n")
+			--pnprint ("walk\n")
 			if (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.NONE)then
 				self:startAnimation(CHARACTER_ANIM.IDLE, 0)
 				self.idleTime = 0

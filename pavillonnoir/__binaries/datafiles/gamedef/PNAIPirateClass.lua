@@ -17,14 +17,14 @@ Called while handling a fight
 %--]]
 	OVERRIDE(OBJ, "manageFight")
 	function OBJ:manageFight()
-	    print("==>> PNAIPirate:manageFight()")
-	    print(self)
+	    --print("==>> PNAIPirate:manageFight()")
+	    --print(self)
 		if (self:getCoord():getDistance(self:getViewTarget():getCoord()) > self.selected_weapon.range) then
 			self:onMoveForward(ACTION_STATE.START)
 		else
 			self:onMoveForward(ACTION_STATE.STOP)
 		end
-		print("<<== PNAIPirate:manageFight()")
+		--print("<<== PNAIPirate:manageFight()")
 		--pnprint("fight managed\n")
 	end
 --------------------------------------------------------
