@@ -33,7 +33,6 @@
 #include <libxml/tree.h>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/fstream.hpp>
-#include <iostream>
 
 #ifdef WIN32
 # include <Windows.h>
@@ -41,20 +40,13 @@
 #endif
 
 #include "pndefs.h"
-
 #include "PNConf.hpp"
-#include "PNException.hpp"
 
 using namespace PN;
 namespace fs = boost::filesystem;
 
 namespace PN
 {
-//////////////////////////////////////////////////////////////////////////
-
-const std::string	  NULLKEY;
-
-//////////////////////////////////////////////////////////////////////////
 
 PNConf* PNConf::_instance = NULL;
 
@@ -149,26 +141,11 @@ PNConf::saveConf()
   for (pos = _confHash.begin(); pos != _confHash.end(); ++pos)
   {
 	xmlNodePtr node = xmlNewTextChild(root, NULL, (const xmlChar *)"item", NULL);
-	xmlAttrPtr key = xmlNewProp(node, (const xmlChar *)"key", (const xmlChar *)pos->first.c_str());
-	xmlAttrPtr value = xmlNewProp(node, (const xmlChar *)"value", (const xmlChar *)pos->second.c_str());
+	xmlNewProp(node, (const xmlChar *)"key", (const xmlChar *)pos->first.c_str());
+	xmlNewProp(node, (const xmlChar *)"value", (const xmlChar *)pos->second.c_str());
   }
   xmlSaveFormatFile(_confFilePath.native_file_string().c_str(), doc, 1);
   xmlFreeDoc(doc);
-}
-
-/**
-* @brief get the matching value to the given key
-* @param key string value representing an item key
-* @return value of the matching key or an empty string if key isn't found
-* @sa setKey()
-*/
-const std::string&
-PNConf::getKey(const std::string& key)
-{
-  if (_confHash.find(key) != _confHash.end())
-	return _confHash[key];
-  else
-	return NULLKEY;
 }
 
 /**

@@ -201,7 +201,7 @@ void  PNFoxOptionWindow::loadGrid(PNPropertiesGrid* grid, PNConf* conf)
 	case PN_PARAMTYPE_STRINGLIST:
 	  gridParameter = (PNFXStringListParameter*)(*it);
 	  key = gridParameter->getParam()->getLabel();
-	  ok = gridParameter->setStringValue(conf->getKey(key.c_str()));
+	  ok = gridParameter->setStringValue(conf->getKey(key, std::string()));
 	  if (ok == FALSE)
 		pnerror(PN_LOGLVL_DEBUG, "Could not load values for key \"%s\"", key.c_str());
 	  break;
