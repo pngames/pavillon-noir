@@ -30,6 +30,7 @@
 #ifndef _PNCONSOLE_HPP_
 # define _PNCONSOLE_HPP_
 
+#include <fstream>
 #include <map>
 #include <vector>
 #include <sstream>
@@ -42,9 +43,9 @@ namespace PN
 //////////////////////////////////////////////////////////////////////////
 
 /**
- * \breaf Pseudo terminal for ingame tests
+ * \breaf Pseudo terminal for in-game tests
  *
- * The commad system take delegates:
+ * The command system take delegates:
  *
  * void staticFunction(const std::string&, std::istream&)
  * {}
@@ -66,7 +67,7 @@ namespace PN
  *  //same thing for delFonction
  * }
  */
-class PNAPI PNConsole : public PNObject
+class PNAPI					PNConsole : public PNObject
 {
   /*/////////////////////////////////////////////////////////////////////////////
   /                                   Properties                                /
@@ -75,53 +76,51 @@ public:
   typedef fastdelegate::FastDelegate2<const std::string&, std::istream&> Callback;
 protected:
   static PNConsole*			_instance;
-  static std::FILE*			_consoleLogFile;
+
+  static std::ofstream		_logFile;
 private:
-  typedef struct		s_fctConsole
+  typedef struct			s_fctConsole
   {
-	Callback			f;
-	std::string		desc;
-  }					t_fctConsole;
+	Callback				f;
+	std::string				desc;
+  }							t_fctConsole;
 
   typedef std::map<std::string, t_fctConsole>	MapFonction;
-  static MapFonction	_fonctionMap;
+  static MapFonction		_fonctionMap;
 
   /*/////////////////////////////////////////////////////////////////////////////
   /                                    Methods                                  /
   /////////////////////////////////////////////////////////////////////////////*/
 public:
-  static	void	init();
+  static	void			init();
 
-  static	pnbool  addFonction(const std::string& command, const Callback& fonction, const std::string& desc = "");
-  static	pnbool  delFonction(const std::string& command);
+  static	pnbool			addFonction(const std::string& command, const Callback& fonction, const std::string& desc = "");
+  static	pnbool			delFonction(const std::string& command);
 
-  static	void	writeLine(const pnchar* format, ...);
-  static	void	writeError(pnloglevel lvl, const pnchar* format, ...);
-  static	void	writePerror(pnloglevel lvl, const pnchar* format, ...);
-  static	void	callFonction(const std::string& command, std::istream &paramet);
+  static	void			writeLine(const pnchar* format, ...);
+  static	void			writeError(pnloglevel lvl, const pnchar* format, ...);
+  static	void			writePerror(pnloglevel lvl, const pnchar* format, ...);
+  static	void			callFonction(const std::string& command, std::istream &paramet);
 protected:
-  virtual void		_addFonction(const std::string& command, const Callback& fonction, const std::string& desc);
-  virtual void		_delFonction(const std::string& command);
-  virtual void		_callFonction(const std::string& command, std::istream &paramet);
-  virtual void		_writeLine(const pnchar* message)=0;
+  virtual void				_addFonction(const std::string& command, const Callback& fonction, const std::string& desc);
+  virtual void				_delFonction(const std::string& command);
+  virtual void				_callFonction(const std::string& command, std::istream &paramet);
+  virtual void				_writeLine(const pnchar* message)=0;
 
-  virtual void		_writeError(pnloglevel lvl, const pnchar* message)=0;
-  virtual void		_writePerror(pnloglevel lvl, const pnchar* message)=0;
+  virtual void				_writeError(pnloglevel lvl, const pnchar* message)=0;
   
-  static  std::string	getTime();
-  static  int			getFonctionCompletion(const std::string& cmd, std::vector< std::string >& candidates);
+  static std::string		getTime();
+  static int				getFonctionCompletion(const std::string& cmd, std::vector<std::string>& candidates);
 protected:
-  void				_cmdHelp(const std::string&, std::istream& i);
+  void						_cmdHelp(const std::string&, std::istream& i);
 private:
 
   /*/////////////////////////////////////////////////////////////////////////////
   /                           Constructors / Destructor                         /
   /////////////////////////////////////////////////////////////////////////////*/
-public:
+protected:
   PNConsole();
   virtual ~PNConsole();
-private:
-
 };
 
 //////////////////////////////////////////////////////////////////////////

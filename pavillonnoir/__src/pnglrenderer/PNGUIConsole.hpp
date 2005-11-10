@@ -34,69 +34,71 @@
 #include <list>
 #include <stdio.h>
 #include <boost/thread/recursive_mutex.hpp>
-//#include <fstream.h>
 
 #include "pndefs.h"
 #include "pnevent.h"
 #include "PNConsole.hpp"
 
-namespace PN{
-  class PNGUIConsole : public PNConsole
-  {
-	/*/////////////////////////////////////////////////////////////////////////////
-	/                                   Properties                                /
-	/////////////////////////////////////////////////////////////////////////////*/
-  public:
-	boost::recursive_mutex	_mutex;
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
 
-  private:
-	CEGUI::Window*		  	  	  		  _pnConsole;
-	CEGUI::Editbox*						  _editBox;
-	CEGUI::Listbox*						  _listBox;
-	typedef std::list<CEGUI::ListboxItem*> ConsoleListboxItem;
-	ConsoleListboxItem					  _ConsoleListboxItem;
-	typedef std::list<std::string>		  ConsoleHistory;
-	ConsoleHistory						  _ConsoleHistory;
-	ConsoleHistory::iterator			  ite;
-	int									  _historyLimit;
-	int									  _historyCount;
-	pnuint								  _listboxItemSize;
-	std::string							  _currentHistoryLine;
-	bool								  _consoleVisibility;
-	bool								  _fadeIn;
-	bool								  _fadeOut;
+class								PNGUIConsole : public PNConsole
+{
+  /*/////////////////////////////////////////////////////////////////////////////
+  /                                   Properties                                /
+  /////////////////////////////////////////////////////////////////////////////*/
+public:
+  boost::recursive_mutex			_mutex;
 
-	/*/////////////////////////////////////////////////////////////////////////////
-	/                                    Methods                                  /
-	/////////////////////////////////////////////////////////////////////////////*/
-  public:
-	static	PNGUIConsole* getInstance();
+private:
+  CEGUI::Window*		  	  		_pnConsole;
+  CEGUI::Editbox*					_editBox;
+  CEGUI::Listbox*					_listBox;
+  typedef std::list<CEGUI::ListboxItem*> ConsoleListboxItem;
+  ConsoleListboxItem				_ConsoleListboxItem;
+  typedef std::list<std::string>	ConsoleHistory;
+  ConsoleHistory					_ConsoleHistory;
+  ConsoleHistory::iterator			ite;
+  int								_historyLimit;
+  int								_historyCount;
+  pnuint							_listboxItemSize;
+  std::string						_currentHistoryLine;
+  bool								_consoleVisibility;
+  bool								_fadeIn;
+  bool								_fadeOut;
 
-  private:
-	void  _writeLine(const pnchar* message);
-	void  _writeError(pnloglevel lvl, const pnchar* message);
-	void  _writePerror(pnloglevel lvl, const pnchar* message);
+  /*/////////////////////////////////////////////////////////////////////////////
+  /                                    Methods                                  /
+  /////////////////////////////////////////////////////////////////////////////*/
+public:
+  static PNGUIConsole*				getInstance();
 
-	void  setlistboxItemSize(int size);
+private:
+  void								_writeLine(const pnchar* message);
+  void								_writeError(pnloglevel lvl, const pnchar* message);
 
-	bool  textAccepteddHandler(/*const CEGUI::EventArgs& e*/);
-	bool  eventKeyPressedHandler(const CEGUI::EventArgs& e);
-	bool  textChangedHandler(const CEGUI::EventArgs& e);
-	void  consoleVisibility(pnEventType type, PNObject* source, PNEventData* data);
-	void  addItemToListBox(CEGUI::ListboxTextItem* item);
-	static void  changeAlpha(const std::string& command, std::istream &parameters);
-	static void	 quitGame(const std::string& command, std::istream &parameters);
+  void								setlistboxItemSize(int size);
 
-	void  fadeInOut(pnEventType type, PNObject* source, PNEventData* data);
+  bool								textAccepteddHandler(/*const CEGUI::EventArgs& e*/);
+  bool								eventKeyPressedHandler(const CEGUI::EventArgs& e);
+  bool								textChangedHandler(const CEGUI::EventArgs& e);
+  void								consoleVisibility(pnEventType type, PNObject* source, PNEventData* data);
+  void								addItemToListBox(CEGUI::ListboxTextItem* item);
+  static void						changeAlpha(const std::string& command, std::istream &parameters);
+  static void						quitGame(const std::string& command, std::istream &parameters);
 
-	/*/////////////////////////////////////////////////////////////////////////////
-	/                           Constructors / Destructor                         /
-	/////////////////////////////////////////////////////////////////////////////*/
-  public:
-  private:
-	PNGUIConsole();
-	~PNGUIConsole();
+  void								fadeInOut(pnEventType type, PNObject* source, PNEventData* data);
 
-  };
-}
+  /*/////////////////////////////////////////////////////////////////////////////
+  /                           Constructors / Destructor                         /
+  /////////////////////////////////////////////////////////////////////////////*/
+public:
+private:
+  PNGUIConsole();
+  ~PNGUIConsole();
+};
+
+//////////////////////////////////////////////////////////////////////////
+};
+
 #endif /*_PNGUICONSOLE_HPP_*/

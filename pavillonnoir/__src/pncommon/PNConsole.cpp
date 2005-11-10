@@ -33,8 +33,13 @@
 
 #ifdef WIN32
 # include <Windows.h>
-//#include <sys/timeb.h>
-# define vsnprintf		_vsnprintf
+
+# if _MSC_VER >= 1400
+#  define vsnprintf(buffer, count, format, argptr)	vsnprintf_s(buffer, sizeof(buffer), count, format, argptr)
+# else
+#  define vsnprintf		_vsnprintf
+# endif
+
 #else
 # include <errno.h>
 #endif
@@ -50,7 +55,7 @@ namespace PN {
 
 PNConsole*				PNConsole::_instance = NULL;
 PNConsole::MapFonction	PNConsole::_fonctionMap;
-std::FILE*				PNConsole::_consoleLogFile = NULL;
+std::ofstream			PNConsole::_logFile;
 
 PNConsole::PNConsole()
 {
@@ -59,7 +64,6 @@ PNConsole::PNConsole()
 
 PNConsole::~PNConsole()
 {
-  fclose(_consoleLogFile);
 }
 
 void	PNConsole::init()
@@ -68,12 +72,12 @@ void	PNConsole::init()
   tmpFile += PATHSEPSTRING;
   tmpFile += "pnConsole.log";
 
-  _consoleLogFile = fopen(tmpFile.c_str(), "w");
+  _logFile.open(tmpFile.c_str());
 }
 
 void	PNConsole::_addFonction(const std::string& command, const Callback& fonction, const std::string& desc)
 {
-  
+
 }
 
 pnbool	PNConsole::addFonction(const std::string& command, const Callback& fonction, const std::string& desc)
@@ -102,22 +106,20 @@ pnbool	PNConsole::addFonction(const std::string& command, const Callback& foncti
 
 void	PNConsole::_delFonction(const std::string& command)
 {
-    MapFonction::const_iterator iter = _fonctionMap.find(command);
+  MapFonction::const_iterator iter = _fonctionMap.find(command);
 
-	if (iter == _fonctionMap.end())
-	{
-	  writeLine("\"%s\" is an invalid command to erase", command.c_str());
-	}
-	else
-	{ 
-	  _fonctionMap.erase(_fonctionMap.find(command));
-	}
+  if (iter == _fonctionMap.end())
+  {
+	writeLine("\"%s\" is an invalid command to erase", command.c_str());
+  }
+  else
+  { 
+	_fonctionMap.erase(_fonctionMap.find(command));
+  }
 }
 
 pnbool	PNConsole::delFonction(const std::string& command)
 {
- // writeLine("not yet implemented");
-  
   if (_instance != NULL)
 	_instance->_delFonction(command);
 
@@ -159,13 +161,16 @@ void	PNConsole::writeLine(const pnchar* format, ...)
 	_instance->_writeLine(buffer);
   else
   {
-	 std::string tmp = buffer;
-	 tmp += "\n";
-	if (_consoleLogFile != NULL)
+	std::string tmp = buffer;
+	tmp += "\n";
+
+	if (_logFile.is_open())
 	{
 	  tmp = _instance->getTime() + tmp;
-	  fwrite( tmp.c_str(), sizeof( char ), tmp.length(), _consoleLogFile);
+
+	  _logFile << _instance->getTime() << tmp;
 	}
+
 	std::cout << tmp;
   }
 }
@@ -215,18 +220,19 @@ void	PNConsole::writeError(pnloglevel lvl, const pnchar* format, ...)
 	default:
 	  break ;
 	}
-	if (_consoleLogFile != NULL)
+
+	if (_logFile.is_open())
 	{
-	 tmp = _instance->getTime() + tmp;
-	 fwrite( tmp.c_str(), sizeof( char ), tmp.length(), _consoleLogFile);
+	  tmp = _instance->getTime() + tmp;
+	  _logFile << _instance->getTime() << tmp;
 	}
   }
 }
 
-void	PNConsole::writePerror(pnloglevel lvl, const pnchar* format, ...)
+void			PNConsole::writePerror(pnloglevel lvl, const pnchar* format, ...)
 {
-  bool isInstance = true;
-  std::string		tmp;
+   pnchar*		str;
+
 #ifdef WIN32
   va_list		ap;
   DWORD			err;
@@ -244,74 +250,41 @@ void	PNConsole::writePerror(pnloglevel lvl, const pnchar* format, ...)
   }
   va_end(ap);
 
-  if (_instance != NULL)
-	_instance->_writePerror(lvl, (const pnchar*)lpMsgBuf);
-  else
-  {
-	isInstance = false;
-	tmp = format;
-  }
-  LocalFree(lpMsgBuf);
+  str = (pnchar*)lpMsgBuf;
 #else
-  if (_instance != NULL)
-	_instance->_writePerror(lvl, strerror(errno));
-  else
-  {
-	isInstance = false;
-	tmp = strerror(errno);
-	//perror(format);
-  }
+  str = strerror(errno);
 #endif
 
-  if (isInstance == false)
-  {
-	switch (lvl)
-	{
-	case PN_LOGLVL_INFO:
-	  tmp = "[Info: " + tmp + "]\n";
-	  std::cout << tmp;
-	  break ;
-#ifdef DEBUG
-	case PN_LOGLVL_DEBUG:
-	  tmp = "[Info: " + tmp + "]\n";
-	  std::cout << tmp;
-	  break ;
+  writeError(lvl, str);
+
+#ifdef WIN32
+  LocalFree(lpMsgBuf);
 #endif
-	case PN_LOGLVL_TODO:
-	  tmp = "[Todo: " + tmp + "]\n";
-	  std::cout << tmp;
-	  break ;
-	case PN_LOGLVL_WARNING:
-	  tmp = "[Warning: " + tmp + "]\n";
-	  std::cout << tmp;
-	  break ;
-	case PN_LOGLVL_ERROR:
-	  tmp = "[Error: " + tmp + "]\n";
-	  std::cout << tmp;
-	  break ;
-	case PN_LOGLVL_CRITICAL:
-	  tmp = "[Critical: " + tmp + "]\n";
-	  std::cout << tmp;
-	  break ;
-	default:
-	  break ;
-	}
-	if (_consoleLogFile != NULL)
-	{
-	  tmp = _instance->getTime() + tmp;
-	  fwrite( tmp.c_str(), sizeof( char ), tmp.length(), _consoleLogFile);
-  	}
-  }
 }
 
 std::string	PNConsole::getTime()
 {
-  std::string tmp;
   time_t t;
 
   time(&t);
-  /// TODO: corriger fuite de memoire ici : ctime fait un malloc donc il faut le liberer
-  tmp = ctime(&t);
+
+#if WIN32 && _MSC_VER >= 1400
+  char	str[256];
+
+  if (ctime_s(str, 256, &t) != 0)
+	return "";
+
+  std::string tmp = str;
+#else
+  char* str = ctime(&t);
+
+  if (str == NULL)
+	return "";
+
+  std::string tmp = str;
+  delete str;
+#endif
+
   tmp.replace(tmp.length()-1, 1, " ");
 
   return tmp;
@@ -332,6 +305,7 @@ int		PNConsole::getFonctionCompletion(const std::string& cmd, std::vector<std::s
 	  matchfound++;
 	}
   }
+
   return matchfound;
 }
 

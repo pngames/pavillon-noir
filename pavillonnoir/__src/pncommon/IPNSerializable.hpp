@@ -54,12 +54,16 @@ public:
 
   /// Load object from file
   virtual pnint						unserializeFromFile(const boost::filesystem::path& file);
+  /// Load object from path
+  virtual pnint						unserializeFromFile(const std::string& file);
   /// Load object from stream
   virtual pnint						unserializeFromStream(std::istream& i);
   /// Load object
   virtual pnint						unserialize();
   /// Save object to file
   virtual pnint						serializeInFile(const boost::filesystem::path& file);
+  /// Save object to path
+  virtual pnint						serializeInFile(const std::string& file);
   /// Save object to stream
   virtual pnint						serializeInStream(std::ostream& o);
   /// Save object

@@ -30,8 +30,6 @@
 #include "pndefs.h"
 #include "pnevent.h"
 
-#include "PNConsole.hpp"
-
 #include "PNEventManager.hpp"
 
 namespace fs = boost::filesystem;

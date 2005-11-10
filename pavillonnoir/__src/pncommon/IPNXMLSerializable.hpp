@@ -64,6 +64,8 @@ public:
 
   /// Save object to file
   virtual pnint		serializeInXMLFile(const boost::filesystem::path& file);
+  /// Save object to file
+  virtual pnint		serializeInXMLFile(const std::string& file);
 
   /// Save object into XML file
   virtual pnint		serializeInXML(xmlNode* node, pnbool root = false);

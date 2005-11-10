@@ -33,7 +33,13 @@
 
 #ifdef WIN32
 # include <Windows.h>
-# define vsnprintf		_vsnprintf
+
+# if _MSC_VER >= 1400
+#  define vsnprintf(buffer, count, format, argptr)	vsnprintf_s(buffer, sizeof(buffer), count, format, argptr)
+# else
+#  define vsnprintf		_vsnprintf
+# endif
+
 #endif
 
 #include "pndefs.h"

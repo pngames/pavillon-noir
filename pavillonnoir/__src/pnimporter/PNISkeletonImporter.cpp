@@ -27,7 +27,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#include <iostream>
+#include <fstream>
+#include <boost/filesystem/operations.hpp>
 
 #include "pndefs.h"
 #include "pnplugins.h"
@@ -36,6 +37,7 @@
 #include "PNI3DSkeleton.hpp"
 
 namespace fs = boost::filesystem;
+using namespace std;
 using namespace PN;
 
 namespace PN {
@@ -43,7 +45,8 @@ namespace PN {
 
 PNISkeletonImporter::PNISkeletonImporter(void)
 {
-
+  _magic = PNS_MAGIC;
+  _magicSize = PNS_MAGIC_SIZE;
 }
 
 PNISkeletonImporter::~PNISkeletonImporter(void)
@@ -52,21 +55,6 @@ PNISkeletonImporter::~PNISkeletonImporter(void)
 }
 
 //////////////////////////////////////////////////////////////////////////
-
-pnbool  	PNISkeletonImporter::isManaged(const fs::path& path)
-{
-  FILE*		file = fopen(path.native_file_string().c_str(), "r");
-
-  if (file == NULL)
-	return false;
-
-  pnsHeader_t	header;
-  fread(&header, sizeof(header), 1, file);
-
-  fclose(file);
-
-  return strncmp(header.magic, PNS_MAGIC, PNS_MAGIC_SIZE) == 0;
-}
 
 PNObject*	PNISkeletonImporter::doImport(const fs::path& path)
 {
@@ -92,5 +80,4 @@ importtype	PNISkeletonImporter::getImportType()
 }
 
 //////////////////////////////////////////////////////////////////////////
-
 };
