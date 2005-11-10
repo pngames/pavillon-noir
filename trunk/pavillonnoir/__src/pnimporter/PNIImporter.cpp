@@ -27,10 +27,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+#include <fstream>
+#include <boost/filesystem/operations.hpp>
+
 #include "pndefs.h"
 #include "pnplugins.h"
 
 #include "PNIImporter.hpp"
+
+namespace fs = boost::filesystem;
+using namespace std;
 
 namespace PN
 {
@@ -42,6 +48,26 @@ PNIImporter::PNIImporter()
 
 PNIImporter::~PNIImporter()
 {
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+pnbool
+PNIImporter::isManaged(const fs::path& path)
+{
+  if (!fs::exists(path))
+	return false;
+
+  if (fs::is_directory(path))
+	return false;
+
+  ifstream	file(path.string().c_str(), ifstream::binary);
+
+  char	buff[256];
+
+  file.read(buff, _magicSize);
+
+  return strncmp(buff, _magic, _magicSize) == 0;
 }
 
 //////////////////////////////////////////////////////////////////////////

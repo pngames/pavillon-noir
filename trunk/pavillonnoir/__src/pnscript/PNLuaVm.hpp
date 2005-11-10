@@ -28,48 +28,52 @@
 */
 
 
-#ifndef _PNLUAVM_HPP
-#define _PNLUAVM_HPP
+#ifndef _PNLUAVM_HPP_
+# define _PNLUAVM_HPP_
 
+#include <fstream>
 #include <boost/thread/recursive_mutex.hpp>
+
 #include "PNObject.hpp"
 
 typedef int (*lua_library_register)(lua_State *lvm);
 
 namespace PN
 {
-    class PNObject;
-    class PNLuaVm: public PNObject
-    {
-    protected:
-        lua_State*				  _luaVm;
-        FILE*					  _debug_log;
-        bool					  _debug;
-    public:
-        boost::recursive_mutex	  _mutex;
+//////////////////////////////////////////////////////////////////////////
 
-    //----------------------------CONSTRUCTORS/DESTRUCTOR----------------------
-    public:
-        PNLuaVm();
-        ~PNLuaVm();
-    //-------------------------------------------------------------------------
-    public:
-	//----------------------------DEBUG RELATED METHODS------------------------
-		//Returns file handle to debug log file
-		//FILE*	getDebugLogHandle(){ return this->_debug_log;}
-		//Sets debug logging (true or false)
-		void	setDebug(bool b);
-		bool	getLuaDebugLogging();
-		/* Debug Hooks */
-		static void	luaDebugLineHook(lua_State *S, lua_Debug *ar);
-		
-    //-------------------------------MANIPULATION METHODS---------------------------------
-        int    execFile(const boost::filesystem::path &path);
-        int    execString(const std::string &orders);
-        int    registerLuaLibrary(lua_library_register);
-        void		   setDebugLogPath(boost::filesystem::path path);
-		void   reset();
-    };
-}
-#endif
+class						PNLuaVm: public PNObject
+{
+protected:
+  lua_State*				_luaVm;
+  bool						_debug;
+public:
+  boost::recursive_mutex	_mutex;
 
+  //----------------------------CONSTRUCTORS/DESTRUCTOR----------------------
+public:
+  PNLuaVm();
+  ~PNLuaVm();
+  //-------------------------------------------------------------------------
+public:
+  //----------------------------DEBUG RELATED METHODS------------------------
+  //Returns file handle to debug log file
+  //FILE*	getDebugLogHandle(){ return this->_debug_log;}
+  //Sets debug logging (true or false)
+  void						setDebug(bool b);
+  bool						getLuaDebugLogging();
+  /* Debug Hooks */
+  static void				luaDebugLineHook(lua_State *S, lua_Debug *ar);
+
+  //-------------------------------MANIPULATION METHODS---------------------------------
+  int						execFile(const boost::filesystem::path &path);
+  int						execString(const std::string &orders);
+  int						registerLuaLibrary(lua_library_register);
+  void						setDebugLogPath(boost::filesystem::path path);
+  void						reset();
+};
+
+//////////////////////////////////////////////////////////////////////////
+};
+
+#endif /*_PNLUAVM_HPP_*/

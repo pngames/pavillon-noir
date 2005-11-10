@@ -562,7 +562,7 @@ PNGLRenderer::renderCylinder(pndouble baseRadius, pndouble topRadius, pndouble h
 }
 
 void
-PNGLRenderer::renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat* color, const PNPoint& coord/* = PNPoint::ZERO*/, pnbool outside/* = true*/)
+PNGLRenderer::renderBox(pnfloat width, pnfloat height, pnfloat depth, const pnfloat* color, const PNPoint& coord/* = PNPoint::ZERO*/, pnbool outside/* = true*/)
 {
   glPushMatrix();
   {

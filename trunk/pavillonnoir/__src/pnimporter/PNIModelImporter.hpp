@@ -45,7 +45,6 @@ public:
   
   //////////////////////////////////////////////////////////////////////////
   
-  pnbool  		isManaged(const boost::filesystem::path& path);
   PNObject*		doImport(const boost::filesystem::path& path);
   importtype	getImportType();
 };

@@ -97,17 +97,17 @@ void PNOpalObject::render()
 	PNRendererInterface::getInstance()->renderBox(aabb[1] - aabb[0], aabb[3] - aabb[2], aabb[5] - aabb[4], color);	
   }
   */
-  pnfloat					  color[4] = {1.0f, 1.0f, 1.0f, 0.3f};
+  pnfloat color[4] = {1.0f, 1.0f, 1.0f, 0.3f};
 
-  switch (_type) 
+  switch (_type)
   {
-  case OPALBOX : 
+  case OPALBOX :
 	PNRendererInterface::getInstance()->renderBox(_aabb[1] - _aabb[0], _aabb[3] - _aabb[2], _aabb[5] - _aabb[4], color, _offset);
 	break;
   case OPALSPHERE :
 	PNRendererInterface::getInstance()->renderSphere(_radius, 20, 20, color, _offset);
 	break;
-  }	
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -48,14 +48,8 @@ public:
   //////////////////////////////////////////////////////////////////////////
   // PNIImporter
 
-  bool  		isManaged(const boost::filesystem::path& file);
   PNObject*		doImport(const boost::filesystem::path& file);
   importtype	getImportType();
-private:
-  /*pntHeader_t	_header;
-  std::string	_texture;*/
-
-  //int			_parse(std::istream& istm);
 };
 
 //////////////////////////////////////////////////////////////////////////

@@ -43,7 +43,6 @@ using namespace std;
 #include "PN3DCamera.hpp"
 #include "PN3DGround.hpp"
 #include "PNException.hpp"
-#include "PNConsole.hpp"
 #include "PNFace.hpp"
 
 #include "PN3DModel.hpp"

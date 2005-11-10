@@ -52,7 +52,7 @@ PNGUIConsole::PNGUIConsole()
   _pnConsole->hide();
   _consoleVisibility = false;
 
-  _editBox =  (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().getWindow("PNConsole/EditBox");
+  _editBox = (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().getWindow("PNConsole/EditBox");
   
   _listBox = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNConsole/ListBox");
 
@@ -85,7 +85,8 @@ PNGUIConsole::~PNGUIConsole()
 \brief
 To get the PNGUIConsole instance
 */
-PNGUIConsole* PNGUIConsole::getInstance()
+PNGUIConsole*
+PNGUIConsole::getInstance()
 {
   if (_instance == NULL)
 	_instance = new PNGUIConsole();
@@ -101,17 +102,10 @@ Function called to write a line into the console and writes the sentence into th
 \param format
 Char* contains the sentence to write
 */
-void	PNGUIConsole::_writeLine(const pnchar* format)
+void
+PNGUIConsole::_writeLine(const pnchar* format)
 { 
   PNLOCK(this);
-
-  if (PNConsole::_consoleLogFile != NULL)
-  {
-	std::string tmp = format;
-	tmp += "\n";
-	tmp = PNConsole::getTime() + tmp;
-	fwrite( tmp.c_str(), sizeof( char ), tmp.length(), PNConsole::_consoleLogFile);
-  }
 
   CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(format); 
   addItemToListBox(item);
@@ -126,7 +120,8 @@ Enum of informations levels
 \param format
 Char* contains the sentence to write
 */
-void	PNGUIConsole::_writeError(pnloglevel lvl, const pnchar* format)
+void
+PNGUIConsole::_writeError(pnloglevel lvl, const pnchar* format)
 { 
   PNLOCK(this);
 
@@ -177,23 +172,12 @@ void	PNGUIConsole::_writeError(pnloglevel lvl, const pnchar* format)
   default:
 	break ;
   }
-
-  if (PNConsole::_consoleLogFile != NULL)
-  {
-	tmp += "\n";
-	tmp = PNConsole::getTime() + tmp;
-	fwrite( tmp.c_str(), sizeof( char ), tmp.length(), PNConsole::_consoleLogFile);
-  }
-}
-
-void	PNGUIConsole::_writePerror(pnloglevel lvl, const pnchar* format)
-{ 
-  _writeError(lvl, format);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
 
-bool  PNGUIConsole::eventKeyPressedHandler(const CEGUI::EventArgs& e)
+bool
+PNGUIConsole::eventKeyPressedHandler(const CEGUI::EventArgs& e)
 {
   //CEGUI::KeyEventArgs* me = (CEGUI::KeyEventArgs*)&e;
 
@@ -214,10 +198,10 @@ Add an item to console's list box.
 \param item
 CEGUI item to add into the list box
 */
-void  PNGUIConsole::addItemToListBox(CEGUI::ListboxTextItem* item)
+void
+PNGUIConsole::addItemToListBox(CEGUI::ListboxTextItem* item)
 {
   PNLOCK(this);
-
   
   _ConsoleListboxItem.push_back(item);
   if (_ConsoleListboxItem.size() > _listboxItemSize)
@@ -237,11 +221,11 @@ void  PNGUIConsole::addItemToListBox(CEGUI::ListboxTextItem* item)
 Called when the return key is pressed in the input box and calls the right registered function.
 Save the command for the history.
 */
-bool  PNGUIConsole::textAccepteddHandler(/*const CEGUI::EventArgs& e*/)
+bool
+PNGUIConsole::textAccepteddHandler(/*const CEGUI::EventArgs& e*/)
 {
   CEGUI::String line;
 
- 
   line = _editBox->getText();
 
   if (line.empty() == false)
@@ -278,7 +262,8 @@ bool  PNGUIConsole::textAccepteddHandler(/*const CEGUI::EventArgs& e*/)
 \brief
 Called when a key is pressed in the input box, only check the up and down keys for the history
 */
-bool  PNGUIConsole::textChangedHandler(const CEGUI::EventArgs& e)
+bool
+PNGUIConsole::textChangedHandler(const CEGUI::EventArgs& e)
 {
   CEGUI::KeyEventArgs* me = (CEGUI::KeyEventArgs*)&e;
 
@@ -296,6 +281,7 @@ bool  PNGUIConsole::textChangedHandler(const CEGUI::EventArgs& e)
 	  _editBox->setCaratIndex((CEGUI::uint)tmp.length());
 	}
   }
+
   if (me->scancode == CEGUI::Key::ArrowDown)
   {
 	if (ite != _ConsoleHistory.end())
@@ -309,6 +295,7 @@ bool  PNGUIConsole::textChangedHandler(const CEGUI::EventArgs& e)
 	  _editBox->setCaratIndex((CEGUI::uint)tmp.length());
 	}
   }
+
   if (me->scancode == CEGUI::Key::Tab)
   {
 	std::string cmd = _editBox->getText().c_str();
@@ -380,7 +367,8 @@ bool  PNGUIConsole::textChangedHandler(const CEGUI::EventArgs& e)
 Called to hide or show the console, when it shows the console it gives the focus to
 the input box
 */
-void  PNGUIConsole::consoleVisibility(pnEventType type, PNObject* source, PNEventData* data)
+void
+PNGUIConsole::consoleVisibility(pnEventType type, PNObject* source, PNEventData* data)
 {
   static bool cursor = false;
 
@@ -427,7 +415,8 @@ void  PNGUIConsole::consoleVisibility(pnEventType type, PNObject* source, PNEven
 \brief
 Console command to change the alpha of the console
 */
-void  PNGUIConsole::changeAlpha(const std::string& command, std::istream& parameters)
+void
+PNGUIConsole::changeAlpha(const std::string& command, std::istream& parameters)
 {
   bool tmp;  
   parameters >> tmp;
@@ -444,7 +433,8 @@ void  PNGUIConsole::changeAlpha(const std::string& command, std::istream& parame
 \brief
 Console command to quit the game
 */
-void  PNGUIConsole::quitGame(const std::string& command, std::istream& parameters)
+void
+PNGUIConsole::quitGame(const std::string& command, std::istream& parameters)
 {
   PNRendererInterface::getInstance()->endRendering();
 }
@@ -455,12 +445,14 @@ Function to change the line numbers of the list box
 \param size
 Int for the new size
 */
-void  PNGUIConsole::setlistboxItemSize(int size)
+void
+PNGUIConsole::setlistboxItemSize(int size)
 {
   _listboxItemSize = size;
 }
 
-void  PNGUIConsole::fadeInOut(pnEventType type, PNObject* source, PNEventData* data)
+void
+PNGUIConsole::fadeInOut(pnEventType type, PNObject* source, PNEventData* data)
 {
   if (_fadeIn == true)
   {
@@ -487,4 +479,4 @@ void  PNGUIConsole::fadeInOut(pnEventType type, PNObject* source, PNEventData* d
 }
 
 //////////////////////////////////////////////////////////////////////////
-}
+};

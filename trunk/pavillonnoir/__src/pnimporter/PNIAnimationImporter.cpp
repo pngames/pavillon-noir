@@ -27,7 +27,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#include <iostream>
+#include <fstream>
+#include <boost/filesystem/operations.hpp>
 
 #include "pndefs.h"
 #include "pnplugins.h"
@@ -36,6 +37,7 @@
 #include "PNI3DAnimation.hpp"
 
 namespace fs = boost::filesystem;
+using namespace std;
 using namespace PN;
 
 namespace PN {
@@ -43,7 +45,8 @@ namespace PN {
 
 PNIAnimationImporter::PNIAnimationImporter()
 {
-
+  _magic = PNA_MAGIC;
+  _magicSize = PNA_MAGIC_SIZE;
 }
 
 PNIAnimationImporter::~PNIAnimationImporter()
@@ -52,21 +55,6 @@ PNIAnimationImporter::~PNIAnimationImporter()
 }
 
 //////////////////////////////////////////////////////////////////////////
-
-pnbool  	PNIAnimationImporter::isManaged(const fs::path& path)
-{
-  FILE*		file = fopen(path.native_file_string().c_str(), "r");
-
-  if (file == NULL)
-	return false;
-
-  pnaHeader_t	header;
-  fread(&header, sizeof(header), 1, file);
-
-  fclose(file);
-
-  return strncmp(header.magic, PNA_MAGIC, PNA_MAGIC_SIZE) == 0;
-}
 
 PNObject*	PNIAnimationImporter::doImport(const fs::path& path)
 {
@@ -92,4 +80,4 @@ importtype	PNIAnimationImporter::getImportType()
 }
 
 //////////////////////////////////////////////////////////////////////////
-}
+};

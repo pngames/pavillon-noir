@@ -166,18 +166,10 @@ public:
   ~PN3DObject();
 
   //////////////////////////////////////////////////////////////////////////
-  
-  /// Get 3DObject associated file for serialize/unserialize system
-   boost::filesystem::path*	getFile();
-
-  /// Modify 3DObject associated file for serialize/unserialize system
-   void						setFile(const boost::filesystem::path& file);
-
-  //////////////////////////////////////////////////////////////////////////
   // PNObject
 
   /// Load 3DObject from xml file
-   int						unserializeFromFile(const boost::filesystem::path& file);
+   int						unserializeFromFile(const std::string& file);
   /// Load 3DObject from xml file
    int						unserialize();
 

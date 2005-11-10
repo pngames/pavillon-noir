@@ -152,7 +152,7 @@ public:
   
   void						renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord = PNPoint::ZERO, pnbool outside = true);
   void						renderCylinder(pndouble baseRadius, pndouble topRadius, pndouble height, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord = PNPoint::ZERO, pnbool outside = true);
-  void						renderBox(pnuint width, pnuint height, pnuint depth, const pnfloat* color, const PNPoint& coord = PNPoint::ZERO, pnbool outside = true);
+  void						renderBox(pnfloat width, pnfloat height, pnfloat depth, const pnfloat* color, const PNPoint& coord = PNPoint::ZERO, pnbool outside = true);
 
   void						renderLink(const PNPoint& p1, const PNPoint& p2, const pnfloat* color, pnuint direction = 0, pnfloat thickness = 1.0f);
 

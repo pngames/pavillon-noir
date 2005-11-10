@@ -27,7 +27,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#include <iostream>
+#include <fstream>
+#include <boost/filesystem/operations.hpp>
 
 #include "pndefs.h"
 #include "pnplugins.h"
@@ -36,6 +37,7 @@
 #include "PNI3DModel.hpp"
 
 namespace fs = boost::filesystem;
+using namespace std;
 using namespace PN;
 
 namespace PN {
@@ -43,7 +45,8 @@ namespace PN {
 
 PNIModelImporter::PNIModelImporter()
 {
-  
+  _magic = PNM_MAGIC;
+  _magicSize = PNM_MAGIC_SIZE;
 }
 
 PNIModelImporter::~PNIModelImporter()
@@ -52,21 +55,6 @@ PNIModelImporter::~PNIModelImporter()
 }
 
 //////////////////////////////////////////////////////////////////////////
-
-pnbool  	PNIModelImporter::isManaged(const fs::path& path)
-{
-  FILE*		file = fopen(path.native_file_string().c_str(), "r");
-
-  if (file == NULL)
-	return false;
-
-  pnmHeader_t	header;
-  fread(&header, sizeof(header), 1, file);
-
-  fclose(file);
-
-  return strncmp(header.magic, PNM_MAGIC, PNM_MAGIC_SIZE) == 0;
-}
 
 PNObject*	PNIModelImporter::doImport(const fs::path& path)
 {
@@ -92,4 +80,4 @@ importtype	PNIModelImporter::getImportType()
 }
 
 //////////////////////////////////////////////////////////////////////////
-}
+};
