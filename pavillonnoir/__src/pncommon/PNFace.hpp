@@ -40,6 +40,7 @@ class PN3DMaterial;
 class PNAPI		PNFace : public PNObject
 {
   PN3DMaterial*	_mat;
+  pnbool		_textureRepeat;
 public:
   pnuint		v0;
   pnuint		v1;
@@ -52,6 +53,9 @@ public:
 
   void			setMaterial(PN3DMaterial* mat);
   PN3DMaterial*	getMaterial();
+
+  void			setTextureRepeat(pnbool repeat);
+  pnbool		getTextureRepeat();
 };
 
 //////////////////////////////////////////////////////////////////////////

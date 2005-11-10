@@ -88,6 +88,7 @@ public:
   // Material
 
   void			setMaterial(PNRenderMaterial* mat);
+  void			setTextureRepeat(pnbool repeat);
 
   //////////////////////////////////////////////////////////////////////////
   // Render
@@ -97,6 +98,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
 private:
   PNRenderMaterial*	_material;
+  pnbool			_textureRepeat;
 
   pncolor_t		_color;
 

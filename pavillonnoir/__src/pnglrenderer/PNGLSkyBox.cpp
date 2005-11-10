@@ -143,7 +143,7 @@ PNGLSkyBox::_renderBox(pnfloat size)
 
   if (_front != NULL)
   {
-	_front->getTexture()->setRepeat(false);
+	_front->setTextureRepeat(false);
 	_front->bind();
   }
 
@@ -164,7 +164,7 @@ PNGLSkyBox::_renderBox(pnfloat size)
 
   if (_back != NULL)
   {
-	_back->getTexture()->setRepeat(false);
+	_back->setTextureRepeat(false);
 	_back->bind();
   }
 
@@ -185,7 +185,7 @@ PNGLSkyBox::_renderBox(pnfloat size)
 
   if (_right != NULL)
   {
-	_right->getTexture()->setRepeat(false);
+	_right->setTextureRepeat(false);
 	_right->bind();
   }
 
@@ -206,7 +206,7 @@ PNGLSkyBox::_renderBox(pnfloat size)
 
   if (_left != NULL)
   {
-	_left->getTexture()->setRepeat(false);
+	_left->setTextureRepeat(false);
 	_left->bind();
   }
 
@@ -227,7 +227,7 @@ PNGLSkyBox::_renderBox(pnfloat size)
 
   if (_top != NULL)
   {
-	_top->getTexture()->setRepeat(false);
+	_top->setTextureRepeat(false);
 	_top->bind();
   }
 
@@ -248,7 +248,7 @@ PNGLSkyBox::_renderBox(pnfloat size)
 
   if (_bottom != NULL)
   {
-	_bottom->getTexture()->setRepeat(false);
+	_bottom->setTextureRepeat(false);
 	_bottom->bind();
   }
 

@@ -64,6 +64,7 @@ public:
   void				setSpecular(const pnfloat* color);
 
   pnint				setTexture(const boost::filesystem::path& file, void* lightMap = NULL);
+  void				setTextureRepeat(pnbool repeat);
 
   //////////////////////////////////////////////////////////////////////////
 

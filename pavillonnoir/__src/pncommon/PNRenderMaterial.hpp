@@ -57,6 +57,7 @@ public:
 
   virtual pnint			setTexture(const boost::filesystem::path& file, void* lightMap = NULL)=0;
   virtual PNTexture*	getTexture()=0;
+  virtual void			setTextureRepeat(pnbool repeat)=0;
 
   virtual pnint	bind()=0;
 };
