@@ -139,6 +139,11 @@ void	PNGLRendererObject::setMaterial(PNRenderMaterial* mat)
   _material = mat;
 }
 
+void	PNGLRendererObject::setTextureRepeat(pnbool repeat)
+{
+  _textureRepeat = repeat;
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 void	PNGLRendererObject::_initAttrib()
@@ -165,7 +170,10 @@ void	PNGLRendererObject::render()
   _setBuffers();
 
   if (_material != NULL)
+  {
+	_material->setTextureRepeat(_textureRepeat);
 	_material->bind();
+  }
   else
   {
 	glDisable(GL_TEXTURE_2D);
@@ -230,6 +238,7 @@ PNGLRendererObject::renderAllFaces(pnbool clear)
 		glMaterialfv(GL_FRONT,  GL_EMISSION, mat->getEmissive());
 		glMaterialf (GL_FRONT,  GL_SHININESS, mat->getGlossiness());
 
+		mat->setTextureRepeat(face->getTextureRepeat());
 		PNGLTexture*  tex = (PNGLTexture*)mat->getTexture();
 
 		if (tex == NULL)

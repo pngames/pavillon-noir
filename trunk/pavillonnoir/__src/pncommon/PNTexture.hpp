@@ -50,8 +50,6 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  virtual void		setRepeat(pnbool repeat) = 0;
-
   virtual void		bind() = 0;
 };
 
