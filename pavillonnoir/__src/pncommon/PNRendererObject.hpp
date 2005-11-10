@@ -80,6 +80,7 @@ public:
 
   /** set the Material to bind before object render */
   virtual void		setMaterial(PNRenderMaterial* mat)=0;
+  virtual void		setTextureRepeat(pnbool repeat)=0;
 
   //////////////////////////////////////////////////////////////////////////
 

@@ -65,5 +65,17 @@ PNFace::getMaterial()
   return _mat;
 }
 
+void
+PNFace::setTextureRepeat(pnbool repeat)
+{
+  _textureRepeat = repeat;
+}
+
+pnbool
+PNFace::getTextureRepeat()
+{
+  return _textureRepeat;
+}
+
 //////////////////////////////////////////////////////////////////////////
 }

@@ -63,7 +63,8 @@ PNGLMaterial::~PNGLMaterial()
 
 //////////////////////////////////////////////////////////////////////////
 
-void			PNGLMaterial::setOpacity(pnfloat opac)
+void
+PNGLMaterial::setOpacity(pnfloat opac)
 {
   _ambient[3] = opac;
   _diffuse[3] = opac;
@@ -71,12 +72,14 @@ void			PNGLMaterial::setOpacity(pnfloat opac)
   _specular[3] = opac;
 }
 
-void			PNGLMaterial::setGlossiness(pnfloat glossi)
+void
+PNGLMaterial::setGlossiness(pnfloat glossi)
 {
   _glossiness = glossi;
 }
 
-void			PNGLMaterial::setAmbient(const pnfloat* color)
+void
+PNGLMaterial::setAmbient(const pnfloat* color)
 {
   _ambient[0] = color[0];
   _ambient[1] = color[1];
@@ -84,7 +87,8 @@ void			PNGLMaterial::setAmbient(const pnfloat* color)
   _ambient[3] = color[3];
 }
 
-void			PNGLMaterial::setDiffuse(const pnfloat* color)
+void
+PNGLMaterial::setDiffuse(const pnfloat* color)
 {
   _diffuse[0] = color[0];
   _diffuse[1] = color[1];
@@ -92,7 +96,8 @@ void			PNGLMaterial::setDiffuse(const pnfloat* color)
   _diffuse[3] = color[3];
 }
 
-void			PNGLMaterial::setEmissive(const pnfloat* color)
+void
+PNGLMaterial::setEmissive(const pnfloat* color)
 {
   _emissive[0] = color[0];
   _emissive[1] = color[1];
@@ -100,7 +105,8 @@ void			PNGLMaterial::setEmissive(const pnfloat* color)
   _emissive[3] = color[3];
 }
 
-void			PNGLMaterial::setSpecular(const pnfloat* color)
+void
+PNGLMaterial::setSpecular(const pnfloat* color)
 {
   _specular[0] = color[0];
   _specular[1] = color[1];
@@ -108,7 +114,8 @@ void			PNGLMaterial::setSpecular(const pnfloat* color)
   _specular[3] = color[3];
 }
 
-pnint			PNGLMaterial::setTexture(const boost::filesystem::path& file, void* lightMap)
+pnint
+PNGLMaterial::setTexture(const boost::filesystem::path& file, void* lightMap)
 {
   _texture = PNGLTextureManager::getInstance()->getTexture(file, lightMap);
 
@@ -116,6 +123,13 @@ pnint			PNGLMaterial::setTexture(const boost::filesystem::path& file, void* ligh
 	return PNEC_ERROR;
 
   return PNEC_SUCCESS;
+}
+
+void
+PNGLMaterial::setTextureRepeat(pnbool repeat)
+{
+  if (_texture != NULL)
+	_texture->setRepeat(repeat);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -162,7 +176,8 @@ PNGLMaterial::getTexture()
   return _texture;
 }
 
-pnint			PNGLMaterial::bind()
+pnint
+PNGLMaterial::bind()
 {
   glMaterialfv(GL_FRONT,  GL_AMBIENT,	_ambient);
   glMaterialfv(GL_FRONT,  GL_DIFFUSE,	_diffuse);
