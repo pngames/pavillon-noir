@@ -87,10 +87,7 @@ protected:
 
   void			  		  	_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed);
 
-  void						_onMPStarted(pnEventType type, PNObject* source, PNEventData* ed);
-  void						_onMPEnded(pnEventType type, PNObject* source, PNEventData* ed);
-
-  void						_onRUEnding(pnEventType type, PNObject* source, PNEventData* ed);
+  void						_onRSUEnding(pnEventType type, PNObject* source, PNEventData* ed);
 
   //////////////////////////////////////////////////////////////////////////
 

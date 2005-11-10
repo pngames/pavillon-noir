@@ -112,8 +112,10 @@ PNGLSceneGraph::render(pnuint deltaTime, pnuint time)
 	return PNEC_SUCCESS;
 
   PNGameUpdateEventData gameUpdateData((pnfloat)deltaTime, time);
+  
   PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_UPDATE, 0, &gameUpdateData);
   PNEventManager::getInstance()->sendEvent(PN_EVENT_PU_START, 0, &gameUpdateData);
+
   ////////////////////////////////
   // Initialise le buffer de rendu
 
@@ -131,6 +133,12 @@ PNGLSceneGraph::render(pnuint deltaTime, pnuint time)
   // PLACE RENDER CAMERA
 
   _renderCam.updateViewMatrix();
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  PNEventManager::getInstance()->sendEvent(PN_EVENT_RSU_STARTING, this, NULL);
+
+  //////////////////////////////////////////////////////////////////////////
 
   if (PNGLSkyBox::getInstance()->isEnabled())
   {
@@ -218,6 +226,8 @@ PNGLSceneGraph::render(pnuint deltaTime, pnuint time)
 #endif
 
   //////////////////////////////////////////////////////////////////////////
+
+  PNEventManager::getInstance()->sendEvent(PN_EVENT_RSU_ENDING, this, NULL);
 
   return PNEC_SUCCESS;
 }

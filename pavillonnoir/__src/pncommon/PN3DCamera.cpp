@@ -62,17 +62,14 @@ PN3DCamera::PN3DCamera()
 
   _model = PN3DCameraModel::getInstance();
 
-  PNEventManager::getInstance()->addCallback(PN_EVENT_MP_STARTED, EventCallback(this, &PN3DCamera::_onMPStarted));
-  PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PN3DCamera::_onMPEnded));
-
-  PNEventManager::getInstance()->addCallback(PN_EVENT_RU_ENDING, EventCallback(this, &PN3DCamera::_onRUEnding));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_RSU_STARTING, EventCallback(this, &PN3DCamera::_updateFrustrum));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_RSU_ENDING, EventCallback(this, &PN3DCamera::_onRSUEnding));
 }
 
 PN3DCamera::~PN3DCamera()
 {
-  PNEventManager::getInstance()->deleteCallback(PN_EVENT_MP_STARTED, EventCallback(this, &PN3DCamera::_onMPStarted));
-  PNEventManager::getInstance()->deleteCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PN3DCamera::_onMPEnded));
-  PNEventManager::getInstance()->deleteCallback(PN_EVENT_RU_ENDING, EventCallback(this, &PN3DCamera::_onRUEnding));
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_RSU_STARTING, EventCallback(this, &PN3DCamera::_updateFrustrum));
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_RSU_ENDING, EventCallback(this, &PN3DCamera::_onRSUEnding));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -136,7 +133,7 @@ PN3DCamera::getNear() const
 //////////////////////////////////////////////////////////////////////////
 
 void
-PN3DCamera::_onRUEnding(pnEventType type, PNObject* source, PNEventData* ed)
+PN3DCamera::_onRSUEnding(pnEventType type, PNObject* source, PNEventData* ed)
 {
   if (this != getRenderCam())
 	render();
@@ -153,18 +150,6 @@ PN3DCamera::render()
 }
 
 //////////////////////////////////////////////////////////////////////////
-
-void
-PN3DCamera::_onMPStarted(pnEventType type, PNObject* source, PNEventData* ed)
-{
-  PNEventManager::getInstance()->addCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PN3DCamera::_updateFrustrum));
-}
-
-void
-PN3DCamera::_onMPEnded(pnEventType type, PNObject* source, PNEventData* ed)
-{
-  PNEventManager::getInstance()->deleteCallback(PN_EVENT_RU_STARTING, EventCallback(this, &PN3DCamera::_updateFrustrum));
-}
 
 /*pnbool
 PN3DCamera::_is3DObjVisible(PN3DObject* obj)
@@ -355,16 +340,26 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   return (inFov && inNearFar);
 }*/
 
-pnbool
 #define SUB_FOV_TEST(targetV, vFov1, vFov2)  \
   ( \
     ( \
-      ((inTest1 = vFov1.scalarProduct(targetV) < 0) == inTest1 && (inTest2 = vFov2.scalarProduct(targetV) < 0) == inTest1) \
-      && inTest1 && inTest2 \
+      ((_inTest1 = vFov1.scalarProduct(targetV) < 0) == _inTest1 && (_inTest2 = vFov2.scalarProduct(targetV) < 0) == _inTest1) \
+      && _inTest1 && _inTest2 \
 	) \
-  || inTest1 != firstInTest1 || inTest2 != firstInTest2 \
+  || _inTest1 != _firstInTest1 || _inTest2 != _firstInTest2 \
   )
 
+static pnbool	_inTest1, _inTest2, _firstInTest1, _firstInTest2;
+
+pnbool	_isPointVisile(const PNVector3f& targetV, const PNVector3f& vFov1, const PNVector3f& vFov2)
+{
+  _inTest1 = vFov1.scalarProduct(targetV) < 0;
+  _inTest2 = vFov2.scalarProduct(targetV) < 0;
+
+  return (_inTest1 && _inTest2) || _inTest1 != _firstInTest1 || _inTest2 != _firstInTest2;
+}
+
+bool
 PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
 {
   PNLOCK(obj);
@@ -451,39 +446,45 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
   targetVector7 /= norm7;
   targetVector8 /= norm8;
 
-  pnbool	inTest1, inTest2, firstInTest1, firstInTest2;
+  //pnbool	inTest1, inTest2, firstInTest1, firstInTest2;
 
   //////////////////////////////////////////////////////////////////////////
 
-  firstInTest1 = rightFov.scalarProduct(targetVector1) < 0;
-  firstInTest2 = leftFov.scalarProduct(targetVector1) < 0;
+  _firstInTest1 = rightFov.scalarProduct(targetVector1) < 0;
+  _firstInTest2 = leftFov.scalarProduct(targetVector1) < 0;
 
   pnbool	inHFoV = 
-	SUB_FOV_TEST(targetVector1, rightFov, leftFov) ||
-	SUB_FOV_TEST(targetVector2, rightFov, leftFov) ||
-	SUB_FOV_TEST(targetVector3, rightFov, leftFov) ||
-	SUB_FOV_TEST(targetVector4, rightFov, leftFov) ||
-	SUB_FOV_TEST(targetVector5, rightFov, leftFov) ||
-	SUB_FOV_TEST(targetVector6, rightFov, leftFov) ||
-	SUB_FOV_TEST(targetVector7, rightFov, leftFov) ||
-	SUB_FOV_TEST(targetVector8, rightFov, leftFov);
+	_isPointVisile(targetVector1, rightFov, leftFov) ||
+	_isPointVisile(targetVector2, rightFov, leftFov) ||
+	_isPointVisile(targetVector3, rightFov, leftFov) ||
+	_isPointVisile(targetVector4, rightFov, leftFov) ||
+	_isPointVisile(targetVector5, rightFov, leftFov) ||
+	_isPointVisile(targetVector6, rightFov, leftFov) ||
+	_isPointVisile(targetVector7, rightFov, leftFov) ||
+	_isPointVisile(targetVector8, rightFov, leftFov);
+
+  if (!inHFoV)
+	return false;
 
   //////////////////////////////////////////////////////////////////////////
 
-  firstInTest1 = topFov.scalarProduct(targetVector1) < 0;
-  firstInTest2 = backFov.scalarProduct(targetVector1) < 0;
+  _firstInTest1 = topFov.scalarProduct(targetVector1) < 0;
+  _firstInTest2 = backFov.scalarProduct(targetVector1) < 0;
 
   pnbool	inVFoV = 
-	SUB_FOV_TEST(targetVector1, topFov, backFov) ||
-	SUB_FOV_TEST(targetVector2, topFov, backFov) ||
-	SUB_FOV_TEST(targetVector3, topFov, backFov) ||
-	SUB_FOV_TEST(targetVector4, topFov, backFov) ||
-	SUB_FOV_TEST(targetVector5, topFov, backFov) ||
-	SUB_FOV_TEST(targetVector6, topFov, backFov) ||
-	SUB_FOV_TEST(targetVector7, topFov, backFov) ||
-	SUB_FOV_TEST(targetVector8, topFov, backFov);
+	_isPointVisile(targetVector1, topFov, backFov) ||
+	_isPointVisile(targetVector2, topFov, backFov) ||
+	_isPointVisile(targetVector3, topFov, backFov) ||
+	_isPointVisile(targetVector4, topFov, backFov) ||
+	_isPointVisile(targetVector5, topFov, backFov) ||
+	_isPointVisile(targetVector6, topFov, backFov) ||
+	_isPointVisile(targetVector7, topFov, backFov) ||
+	_isPointVisile(targetVector8, topFov, backFov);
 
   pnbool	inFov = inHFoV && inVFoV;
+
+  if (!inFov)
+	return inFov;
 
   //////////////////////////////////////////////////////////////////////////
   // NEAR-FAR
@@ -492,8 +493,20 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
   // TODO : check Neer/Far
   pnbool	  inNearFar = true;
 
-  return inFov && inNearFar;
+  return 
+	frontDirection.scalarProduct(targetVector1) > 0 ||
+	frontDirection.scalarProduct(targetVector2) > 0 ||
+	frontDirection.scalarProduct(targetVector3) > 0 ||
+	frontDirection.scalarProduct(targetVector4) > 0 ||
+	frontDirection.scalarProduct(targetVector5) > 0 ||
+	frontDirection.scalarProduct(targetVector6) > 0 ||
+	frontDirection.scalarProduct(targetVector7) > 0 ||
+	frontDirection.scalarProduct(targetVector8) > 0;
+
+  return inNearFar;
 }
+
+//////////////////////////////////////////////////////////////////////////
 
 void
 PN3DCamera::_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed)
