@@ -9,7 +9,7 @@
       </listmaterials>
     </object>
   </entity>
-  <entity id="id:1" label="Pirate" mdref="pirate.pno" envtype="dynamic" objtype="object" class="PNAIPirate" x="-1200" y="40" z="-1000" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
+  <entity id="id:1" label="Pirate" mdref="pirate.pno" envtype="dynamic" objtype="object" class="PNAIPirate" x="-1200.000000" y="40.000000" z="-1000.000000" xx="0.000000" yy="0.694658" zz="0.000000" ww="-0.719339">
     <object>
       <model path="pirate.pnm"/>
       <listmaterials>
@@ -25,28 +25,9 @@
         <material path="pirate_sleeve.tga.pnt"/>
         <material path="pirate_shirt.tga.pnt"/>
       </listmaterials>
-      <listanims>
-        <anim path="pirate_idle.pna"/>
-        <anim path="pirate_walk.pna"/>
-        <anim path="pirate_walk.pna"/>
-        <anim path="pirate_walk.pna"/>
-        <anim path="pirate_walk.pna"/>
-        <anim path="pirate_run.pna"/>
-        <anim path="pirate_run.pna"/>
-        <anim path="pirate_run.pna"/>
-        <anim path="pirate_run.pna"/>
-        <anim path="pirate_crouch.pna"/>
-        <anim path="pirate_walk_crouch.pna"/>
-        <anim path="pirate_walk_crouch.pna"/>
-        <anim path="pirate_walk_crouch.pna"/>
-        <anim path="pirate_walk_crouch.pna"/>
-        <anim path="pirate_jump.pna"/>
-        <anim path="pirate_die.pna"/>
-        <anim path="pirate_shoot.pna"/>
-      </listanims>
     </object>
   </entity>
-  <entity id="id:2" label="Navy" mdref="pirate.pno" envtype="dynamic" objtype="character" class="PNAINavy" x="-1000.000000" y="40.000000" z="-1000.000000" xx="0.000000" yy="0.700909" zz="0.000000" ww="0.713250">
+  <entity id="id:2" label="Navy" mdref="pirate.pno" envtype="dynamic" objtype="character" class="PNAINavy" x="1000.000000" y="40.000000" z="-1000.000000" xx="0.000000" yy="0.700909" zz="0.000000" ww="0.713250">
     <object>
       <model path="pirate.pnm"/>
       <listmaterials>
