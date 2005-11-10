@@ -49,124 +49,126 @@ namespace fs = boost::filesystem;
 //----------------------------CONSTRUCTORS/DESTRUCTOR----------------------
 PNLuaVm::PNLuaVm()
 {
-    this->_luaVm = lua_open();
-    this->_debug = false;
-    this->_debug_log = NULL;//fopen(debugLogPath.native_file_string().c_str(), "w+");
-	//setDebug(true);
+  _luaVm = lua_open();
+  _debug = false;
 }
 
 PNLuaVm::~PNLuaVm()
 {
-	lua_close(this->_luaVm);
+  lua_close(_luaVm);
 }
 //-------------------------------------------------------------------------
 
 //-------------------------------MANIPULATION METHODS----------------------
 int    PNLuaVm::execFile(const boost::filesystem::path &path)
 {
-    PNLOCK(this);
+  PNLOCK(this);
 
-    pnerrorcode myret;
-    int lret = lua_dofile(this->_luaVm, path.native_file_string().c_str());
-    //switch (lret)
-    //{
-    //case LUA_ERRSYNTAX:
-    //    myret = PNEC_FAILED_TO_PARSE;
-    //    break;
-    //case LUA_ERRMEM:
-    //    myret = PNEC_ERROR;
-    //    break;
-    //case LUA_ERRRUN:
-    //    myret = PNEC_ERROR;
-    //    break;
-    //case LUA_ERRFILE:
-    //    myret = PNEC_ERROR;
-    //    break;
-    //case 0:
-    //    myret = PNEC_SUCCES;
-    //    break;
-    //default:
-    //    myret = PNEC_ERROR;
-    //}
-    //assert(myret == PNEC_SUCCES);
-    //return myret;
-	return lret;
+  pnerrorcode myret;
+  int lret = lua_dofile(_luaVm, path.native_file_string().c_str());
+  //switch (lret)
+  //{
+  //case LUA_ERRSYNTAX:
+  //    myret = PNEC_FAILED_TO_PARSE;
+  //    break;
+  //case LUA_ERRMEM:
+  //    myret = PNEC_ERROR;
+  //    break;
+  //case LUA_ERRRUN:
+  //    myret = PNEC_ERROR;
+  //    break;
+  //case LUA_ERRFILE:
+  //    myret = PNEC_ERROR;
+  //    break;
+  //case 0:
+  //    myret = PNEC_SUCCES;
+  //    break;
+  //default:
+  //    myret = PNEC_ERROR;
+  //}
+  //assert(myret == PNEC_SUCCES);
+  //return myret;
+  return lret;
 }
 
 int    PNLuaVm::execString(const std::string &orders)
 {   
-    PNLOCK(this);
+  PNLOCK(this);
 
-    pnerrorcode myret;
-    int lret = lua_dostring(this->_luaVm, orders.c_str());
-    //switch (lret)
-    //{
-    //case LUA_ERRSYNTAX:
-    //    myret = PNEC_FAILED_TO_PARSE;
-    //    break;
-    //case LUA_ERRMEM:
-    //    myret = PNEC_ERROR;
-    //    break;
-    //case LUA_ERRRUN:
-    //    myret = PNEC_ERROR;
-    //    break;
-    //case 0:
-    //    myret = PNEC_SUCCES;
-    //    break;
-    //default:
-    //    myret = PNEC_ERROR;
-    //}
-    //assert(myret == PNEC_SUCCES);
-    //return myret;
-	return lret;
+  pnerrorcode myret;
+  int lret = lua_dostring(_luaVm, orders.c_str());
+  //switch (lret)
+  //{
+  //case LUA_ERRSYNTAX:
+  //    myret = PNEC_FAILED_TO_PARSE;
+  //    break;
+  //case LUA_ERRMEM:
+  //    myret = PNEC_ERROR;
+  //    break;
+  //case LUA_ERRRUN:
+  //    myret = PNEC_ERROR;
+  //    break;
+  //case 0:
+  //    myret = PNEC_SUCCES;
+  //    break;
+  //default:
+  //    myret = PNEC_ERROR;
+  //}
+  //assert(myret == PNEC_SUCCES);
+  //return myret;
+  return lret;
 }
 
 int    PNLuaVm::registerLuaLibrary(lua_library_register f)
 {
-    PNLOCK(this);
+  PNLOCK(this);
 
-    return f(this->_luaVm);
-    
+  return f(_luaVm);
+
 }
 
 void       PNLuaVm::setDebugLogPath(boost::filesystem::path path)
 {
-    PNLOCK(this);
-    this->_debug_log = fopen(path.native_file_string().c_str(), "w+");
+  PNLOCK(this);
 }
 
 void	PNLuaVm::luaDebugLineHook(lua_State *S, lua_Debug *ar)
 {
-	static FILE* _lua_debug_file = fopen("./pnScript.log", "w+");
+  static std::ofstream		logFile("./pnScript.log");
 
-	lua_getinfo(S, "Snl", ar);
-	fprintf(_lua_debug_file, "##Line: File \"%s\" -- function \"%s\" -- line : \"%d\"\n", ar->source, ar->name, ar->currentline);
+  lua_getinfo(S, "Snl", ar);
+
+  logFile <<
+	"##Line: File \"" << ar->source <<
+	"\" -- function \"" << ar->name <<
+	"\" -- line : \"" << ar->currentline <<
+	"\"\n";
 }
 
 
 void PNLuaVm::setDebug(bool b)
 {
-	this->_debug = b;
+  _debug = b;
 
-	if (b == true)
-	{
-		// Line hook activated - function called every time a line is interpreted
-	   lua_sethook(this->_luaVm, (lua_Hook) luaDebugLineHook, LUA_MASKLINE, 0);
-	}
-	else
-	{
-		// Line hook deactivated
-	   lua_sethook(this->_luaVm, (lua_Hook) luaDebugLineHook, 0, 0);
-	}
+  if (b == true)
+  {
+	// Line hook activated - function called every time a line is interpreted
+	lua_sethook(_luaVm, (lua_Hook) luaDebugLineHook, LUA_MASKLINE, 0);
+  }
+  else
+  {
+	// Line hook deactivated
+	lua_sethook(_luaVm, (lua_Hook) luaDebugLineHook, 0, 0);
+  }
 }
 
 bool	PNLuaVm::getLuaDebugLogging()
 {
-	return(this->_debug);
+  return(_debug);
 }
 
 void	PNLuaVm::reset()
 {
-	lua_close(_luaVm);
-	_luaVm = lua_open();
+  lua_close(_luaVm);
+  _luaVm = lua_open();
 }

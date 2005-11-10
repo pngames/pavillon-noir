@@ -91,6 +91,12 @@ IPNSerializable::unserializeFromFile(const boost::filesystem::path& file)
   return unserializeFromStream(i);
 }
 
+pnint
+IPNSerializable::unserializeFromFile(const std::string& file)
+{
+  return unserializeFromFile(fs::path(file, fs::native));
+}
+
 /**
  * @brief		Load object from stream
  *
@@ -139,6 +145,12 @@ IPNSerializable::serializeInFile(const boost::filesystem::path& file)
   ofstream	o(file.string().c_str(), ofstream::binary);
 
   return serializeInStream(o);
+}
+
+pnint
+IPNSerializable::serializeInFile(const std::string& file)
+{
+  return serializeInFile(fs::path(file, fs::native));
 }
 
 /**

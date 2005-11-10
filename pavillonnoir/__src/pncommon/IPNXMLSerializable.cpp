@@ -184,6 +184,13 @@ IPNXMLSerializable::serializeInXMLFile(const boost::filesystem::path& file)
   return PNEC_SUCCESS;
 }
 
+/// Save object to file
+pnint
+IPNXMLSerializable::serializeInXMLFile(const std::string& file)
+{
+  return serializeInXMLFile(fs::path(file, fs::native));
+}
+
 /**
  * @brief		Save object to stream
  *

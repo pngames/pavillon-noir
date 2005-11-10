@@ -40,15 +40,16 @@
 #include "PNIException.hpp"
 
 namespace fs = boost::filesystem;
-using namespace PN;
 using namespace std;
+using namespace PN;
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 PNIMaterialImporter::PNIMaterialImporter()
 {
-
+  _magic = PNT_MAGIC;
+  _magicSize = PNT_MAGIC_SIZE;
 }
 
 PNIMaterialImporter::~PNIMaterialImporter()
@@ -57,21 +58,6 @@ PNIMaterialImporter::~PNIMaterialImporter()
 }
 
 //////////////////////////////////////////////////////////////////////////
-
-pnbool  		PNIMaterialImporter::isManaged(const fs::path& path)
-{
-  FILE *file = fopen(path.native_file_string().c_str(), "r");
-
-  if (file == NULL)
-	return false;
-
-  pntHeader_t	header;
-  fread(&header, sizeof(header), 1, file);
-
-  fclose(file);
-
-  return strncmp(header.magic, PNT_MAGIC, PNT_MAGIC_SIZE) == 0;
-}
 
 PNObject*	PNIMaterialImporter::doImport(const fs::path& path)
 {
