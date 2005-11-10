@@ -11,6 +11,14 @@ function PNAIPirateClass(id)
 	OBJ.realCharacType = CHARACTER_TYPE.PIRATE
 	OBJ.shownCharacType = CHARACTER_TYPE.PIRATE
 	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
+	OBJ.ennemyJustReached = true
+	OBJ.elapsedTurns = 0
+	OBJ.stats=	{strength=5,
+						 address=3,
+						 adaptation=6,
+						 awareness=6,
+						 resistance=6
+						}
 --------------------------------------------------------
 --[[%
 Called while handling a fight
@@ -20,12 +28,26 @@ Called while handling a fight
 	    --print("==>> PNAIPirate:manageFight()")
 	    --print(self)
 		if (self:getCoord():getDistance(self:getViewTarget():getCoord()) > self.selected_weapon.range) then
-			self:onMoveForward(ACTION_STATE.START)
+			if (self.elapsedTurns == 0) then
+				self:onMoveForward(ACTION_STATE.START)
+			end
+			self.ennemyJustReached = false
+			self.elapsedTurns = 0
 		else
-			self:onMoveForward(ACTION_STATE.STOP)
+			if (self.elapsedTurns == 0) then
+				self:onMoveForward(ACTION_STATE.STOP)
+				self.ennemyJustReached = true
+			end
+			if ((self.ennemyJustReached == true) or ((self.elapsedTurns) == (self.stats.awareness * 50))) then
+				pnprint(self.id .. " attacking " .. self:getViewTarget():getId() .. "\n")
+				--attack
+				self.elapsedTurns = 1
+				self.ennemyJustReached = false
+			else
+				self.elapsedTurns = self.elapsedTurns + 1
+			end
 		end
 		--print("<<== PNAIPirate:manageFight()")
-		--pnprint("fight managed\n")
 	end
 --------------------------------------------------------
 --[[%

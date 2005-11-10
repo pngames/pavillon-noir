@@ -136,7 +136,7 @@ Call when someone tell the object to go backward
 		if (state == ACTION_STATE.START) then
 			self.dirLong = self.dirLong + CHARACTER_DIR_LONG.FORWARD
 		else
-			self.dirLong = self.dirLong - CHARACTER_DIR_LONG.FORWARD
+			self.dirLong = CHARACTER_DIR_LONG.NONE
 		end 
 		self:launchGoodAnimation()
 		--pnprint("speed: " .. self.actualSpeed .."\n")
@@ -158,7 +158,7 @@ Call when someone tell the object to go backward and start apropriate annimation
 		if (state == ACTION_STATE.START) then
 			self.dirLong = self.dirLong + CHARACTER_DIR_LONG.BACKWARD
 		else
-			self.dirLong = self.dirLong - CHARACTER_DIR_LONG.BACKWARD
+			self.dirLong = CHARACTER_DIR_LONG.NONE
 		end 
 		self:launchGoodAnimation()
 	end
@@ -176,7 +176,7 @@ Call when someone tell the object to go Left
 		if (state == ACTION_STATE.START) then
 			self.dirLate = self.dirLate + CHARACTER_DIR_LATE.LEFT
 		else
-			self.dirLate = self.dirLate - CHARACTER_DIR_LATE.LEFT
+			self.dirLate = CHARACTER_DIR_LATE.NONE
 		end 
 		self:launchGoodAnimation()
 	end
@@ -195,7 +195,7 @@ Call when someone tell the object to left and start apropriate animation
 		if (state == ACTION_STATE.START) then
 			self.dirLate = self.dirLate + CHARACTER_DIR_LATE.RIGHT
 		else
-			self.dirLate = self.dirLate - CHARACTER_DIR_LATE.RIGHT
+			self.dirLate = CHARACTER_DIR_LATE.NONE
 		end 
 		self:launchGoodAnimation()
 	end
@@ -371,6 +371,7 @@ Returns the type of the character that is visible to others
 			if (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.NONE)then
 				self:startAnimation(CHARACTER_ANIM.IDLE, 0)
 				self.idleTime = 0
+				print("toto")
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
 				self:startAnimation(CHARACTER_ANIM.WALK_L, 0)

@@ -10,59 +10,7 @@
     </object>
   </entity>
   <entity id="id:1" label="Pirate" mdref="pirate.pno" envtype="dynamic" objtype="object" class="PNAIPirate" x="0.147307" y="41.230896" z="-0.329782" xx="0.000000" yy="0.008727" zz="0.000000" ww="-0.999960">
-    <object>
-      <model path="pirate.pnm"/>
-      <listmaterials>
-        <material path="pirate_foot.tga.pnt"/>
-        <material path="pirate_leg.tga.pnt"/>
-        <material path="pirate_pants.tga.pnt"/>
-        <material path="pirate_handback.tga.pnt"/>
-        <material path="pirate_handfront2.tga.pnt"/>
-        <material path="pirate_hankerchief.tga.pnt"/>
-        <material path="pirate_matt.tga.pnt"/>
-        <material path="pirate_chest.tga.pnt"/>
-        <material path="pirate_arm.tga.pnt"/>
-        <material path="pirate_sleeve.tga.pnt"/>
-        <material path="pirate_shirt.tga.pnt"/>
-      </listmaterials>
-    </object>
   </entity>
   <entity id="id:2" label="Navy" mdref="pirate.pno" envtype="dynamic" objtype="character" class="PNAINavy" x="-1000.000000" y="40.000000" z="-1000.000000" xx="0.000000" yy="-0.008726" zz="0.000000" ww="0.999961">
-    <object>
-      <model path="pirate.pnm"/>
-      <listmaterials>
-        <material path="pirate_foot.tga.pnt"/>
-        <material path="pirate_leg.tga.pnt"/>
-        <material path="pirate_pants.tga.pnt"/>
-        <material path="pirate_handback.tga.pnt"/>
-        <material path="pirate_handfront2.tga.pnt"/>
-        <material path="pirate_hankerchief.tga.pnt"/>
-        <material path="pirate_matt.tga.pnt"/>
-        <material path="pirate_chest.tga.pnt"/>
-        <material path="pirate_arm.tga.pnt"/>
-        <material path="pirate_sleeve.tga.pnt"/>
-        <material path="pirate_shirt.tga.pnt"/>
-      </listmaterials>
-      <skeleton path="pirate.pns"/>
-      <listanims>
-        <anim path="pirate_idle.pna"/>
-        <anim path="pirate_walk.pna"/>
-        <anim path="pirate_walk.pna"/>
-        <anim path="pirate_walk.pna"/>
-        <anim path="pirate_walk.pna"/>
-        <anim path="pirate_run.pna"/>
-        <anim path="pirate_run.pna"/>
-        <anim path="pirate_run.pna"/>
-        <anim path="pirate_run.pna"/>
-        <anim path="pirate_crouch.pna"/>
-        <anim path="pirate_walk_crouch.pna"/>
-        <anim path="pirate_walk_crouch.pna"/>
-        <anim path="pirate_walk_crouch.pna"/>
-        <anim path="pirate_walk_crouch.pna"/>
-        <anim path="pirate_jump.pna"/>
-        <anim path="pirate_die.pna"/>
-        <anim path="pirate_shoot.pna"/>
-      </listanims>
-    </object>
   </entity>
 </listentities>
