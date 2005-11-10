@@ -52,16 +52,14 @@ PNGLRendererCamera::PNGLRendererCamera() : _ufCallback(this, &PNGLRendererCamera
 
   setUpdateGLFov(true);
 
-  PNEventManager::getInstance()->addCallback(PN_EVENT_MU_START, EventCallback(this, &PNGLRendererCamera::_cleanFrustrum));
-
-  PNEventManager::getInstance()->deleteCallback(PN_EVENT_RU_ENDING, EventCallback(this, &PNGLRendererCamera::_onRUEnding));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PNGLRendererCamera::_cleanFrustrum));
 }
 
 PNGLRendererCamera::~PNGLRendererCamera()
 {
-  _cleanFrustrum(PN_EVENT_MU_START, NULL, NULL);
-
   setUpdateGLFov(false);
+
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PNGLRendererCamera::_cleanFrustrum));
 }
 
 //////////////////////////////////////////////////////////////////////////
