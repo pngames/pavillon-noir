@@ -3,7 +3,7 @@ function PNWeaponH2HClass(id)
 	local OBJ= inheritFrom(PNWeaponClass(id))
 	OBJ.className="PNWeaponH2H"
 	---------------------------------------------
-	OBJ.range = 10;
+	OBJ.range = 20;
 	OBJ.reload = 0;
 	OBJ.handling = 0;
 	--------------------------------------------- 

@@ -169,9 +169,9 @@ If it is detected as an ennemy, the character switches to the fighting mode
 			self.ennemies[target:getId()] = 1
 			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= CHARACTER_TYPE.CIVILIAN)) then
 				pnprint("Mais oui, j'ai bien vu un rominet !\n")
-				--self:setTarget(target)
-				--self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
-				--self:startFight()
+				self:setTarget(target)
+				self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
+				self:startFight()
 			end
 		end
 	end

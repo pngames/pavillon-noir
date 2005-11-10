@@ -11,7 +11,14 @@ function PNAINavyClass(id)
 	OBJ.realCharacType = CHARACTER_TYPE.NAVY
 	OBJ.shownCharacType = CHARACTER_TYPE.NAVY
 	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
-	OBJ:setMovingState(PN3DObject.STATE_R_RIGHT)
+	OBJ.ennemyJustReached = false
+	OBJ.elapsedTurns = 0
+	OBJ.stats=	{strength=4,
+						 address=7,
+						 adaptation=6,
+						 awareness=5,
+						 resistance=5
+						}
 --------------------------------------------------------
 --[[%
 Called while handling a fight
@@ -21,10 +28,27 @@ Called while handling a fight
 		--print("==>> PNAINavy:manageFight()")
 		--print(self)
 		if (self:getCoord():getDistance(self:getViewTarget():getCoord()) > self.selected_weapon.range) then
-			self:onMoveForward(ACTION_STATE.START)
+			self.combat_state = COMBAT_STATE.DEFENSE
+			if (self.elapsedTurns == 0) then
+				self:onMoveForward(ACTION_STATE.START)
+			end
+			self.ennemyJustReached = false
+			self.elapsedTurns = 0
 		else
-			self:onMoveForward(ACTION_STATE.STOP)
-		end	
+			self.combat_state = COMBAT_STATE.ATTACK
+			if (self.elapsedTurns == 0) then
+				self:onMoveForward(ACTION_STATE.STOP)
+				self.ennemyJustReached = true
+			end
+			if ((self.ennemyJustReached == true) or ((self.elapsedTurns) == (self.stats.awareness * 50))) then
+				pnprint(self.id .. " attacking " .. self:getViewTarget():getId() .. "\n")
+				--attack
+				self.elapsedTurns = 1
+				self.ennemyJustReached = false
+			else
+				self.elapsedTurns = self.elapsedTurns + 1
+			end
+		end
 	    --print("<<== PNAINavy:manageFight()")
 	end
 --------------------------------------------------------
