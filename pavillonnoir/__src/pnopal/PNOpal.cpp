@@ -236,5 +236,4 @@ void PNOpal::setAllPhysicalObjectsStatic(bool state)
   }
 }
 
-
-}
+};

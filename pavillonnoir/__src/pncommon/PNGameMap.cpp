@@ -102,7 +102,6 @@ PNGameMap::_unserializeEntity(xmlNode* node)
   //////////////////////////////////////////////////////////////////////////
 
   pnint		error = -1;
-  pnbool	objLoaded = false;
 
   for (xmlNodePtr n = node->children; n != NULL; n = n->next)
   {

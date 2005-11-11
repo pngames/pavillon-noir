@@ -270,7 +270,7 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
   opal::loadFile(_blueprint, _file);
   _sim->instantiateBlueprint(_blueprintInstance, _blueprint);
 
-  if (_solid = _blueprintInstance.getSolid("Boite01"))
+  if (_solid == _blueprintInstance.getSolid("Boite01"))
   {
 	// store the shape type
 	_type = OPALBOX;
