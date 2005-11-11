@@ -30,20 +30,14 @@
 #ifndef _PNPHYSICALOBJECT_HPP_
 # define _PNPHYSICALOBJECT_HPP_
 
-#include <boost/filesystem/path.hpp>
-#include <libxml/xmlreader.h>
-
-#include "pndefs.h"
-#include "pnmath.h"
-
 #include "PNObject.hpp"
 #include "IPNXMLSerializable.hpp"
 
-#include "PNPoint.hpp"
-#include "PNQuatf.hpp"
-
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
+
+class PNPoint;
+class PNQuatf;
 
 class PNPhysicalObject: public PNObject, public IPNXMLSerializable
 {
