@@ -239,7 +239,7 @@ PNI3DMesh::unserializeFromStream(std::istream& i)
   {
 	_robject->setTextureRepeat(false);
 
-	for (int i = 0; i <  _header.nbVerts; ++i)
+	for (pnuint i = 0; i <  _header.nbVerts; ++i)
 	{
 	  if (_texCoordBuffer[i].x > 1.0f || _texCoordBuffer[i].y > 1.0f)
 	  {

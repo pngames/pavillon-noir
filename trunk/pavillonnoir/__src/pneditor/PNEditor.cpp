@@ -538,7 +538,7 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 	  xmlNodePtr node = xmlNewChild(root_node, NULL, PNXML_ENTITY_MKP, NULL);
 	  {
 		//sprintf(tmpBuff, "%d\0", shape->getId());
-		sprintf(tmpBuff, "%s%d\0", PNXML_IDBASE_VAL, shape->getId());
+		sprintf(tmpBuff, "%s%d", PNXML_IDBASE_VAL, shape->getId());
 		xmlNewProp(node, PNXML_ID_ATTR, BAD_CAST tmpBuff);
 		xmlNewProp(node, PNXML_LABEL_ATTR, BAD_CAST shape->getLabel().c_str());
 		xmlNewProp(node, PNXML_MODELREFERENCE_ATTR,BAD_CAST DEF::convertPath(DEF::objectFilePath, obj->getFile()->string()).c_str());
@@ -567,20 +567,20 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 
 		xmlNewProp(node, PNXML_CLASS_ATTR, BAD_CAST shape->getClassStr().c_str());
 
-		sprintf(tmpBuff, "%f\0", p.x);
+		sprintf(tmpBuff, "%f", p.x);
 		xmlNewProp(node, PNXML_COORDX_ATTR, BAD_CAST tmpBuff);
-		sprintf(tmpBuff, "%f\0", p.y);
+		sprintf(tmpBuff, "%f", p.y);
 		xmlNewProp(node, PNXML_COORDY_ATTR, BAD_CAST tmpBuff);
-		sprintf(tmpBuff, "%f\0", p.z);
+		sprintf(tmpBuff, "%f", p.z);
 		xmlNewProp(node, PNXML_COORDZ_ATTR, BAD_CAST tmpBuff);
 
-		sprintf(tmpBuff, "%f\0", q.x);
+		sprintf(tmpBuff, "%f", q.x);
 		xmlNewProp(node, PNXML_ROTX_ATTR, BAD_CAST tmpBuff);
-		sprintf(tmpBuff, "%f\0", q.y);
+		sprintf(tmpBuff, "%f", q.y);
 		xmlNewProp(node, PNXML_ROTY_ATTR, BAD_CAST tmpBuff);
-		sprintf(tmpBuff, "%f\0", q.z);
+		sprintf(tmpBuff, "%f", q.z);
 		xmlNewProp(node, PNXML_ROTZ_ATTR, BAD_CAST tmpBuff);
-		sprintf(tmpBuff, "%f\0", q.w);
+		sprintf(tmpBuff, "%f", q.w);
 		xmlNewProp(node, PNXML_ROTW_ATTR, BAD_CAST tmpBuff);
 	  }
 
@@ -596,7 +596,7 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 		  std::string str = (*j)->string().substr(PN::DEF::gamedefFilePath.size(),
 			(*j)->string().size() - PN::DEF::gamedefFilePath.size());
 
-		  xmlNodePtr node3 = xmlNewChild(node2, NULL, PNXML_SCRIPT_MKP, NULL);
+		  xmlNewChild(node2, NULL, PNXML_SCRIPT_MKP, NULL);
 		  xmlNewProp(node2, PNXML_REFERENCE_ATTR, BAD_CAST str.c_str());
 		}
 	  }
