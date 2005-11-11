@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../__library/win32/include/CEGUI;../../../__library/win32/include/sdl;../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/"
+				AdditionalIncludeDirectories="../../../__library/win32/include/CEGUI;../../../__library/win32/include/sdl;../../../__library/win32/include;../../../__library/common/;../../../__src/pncommon"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PNGLRENDERER_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
