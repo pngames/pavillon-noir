@@ -135,6 +135,8 @@
 
 #include "resource.h"
 
+#define BAD_CAST
+
 #include <afxdtctl.h>		// Prise en charge des MFC pour les contr�es communs Internet Explorer 4
 #ifndef _AFX_NO_AFXCMN_SUPPORT
 #include <afxcmn.h>			// Prise en charge des MFC pour les contr�es communs Windows

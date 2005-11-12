@@ -9,7 +9,6 @@ name		| current version
 * boost	: 1.33
 * openal	: 1.1
 		- Installeur dans le rep "install", obligatoire sous windows.
-* opal	: 
 * vorbis	: 
 * ogg		: 
 * lua		: 5.0.2

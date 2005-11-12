@@ -28,11 +28,11 @@
 
 #ifdef _DEBUG
 # define PNMATERIALEXPORTER_CLASS_ID	Class_ID(0x64b3832, 0x17841e1)
-# define PNT_LONGDESC					"Material exporter for Pavillon Noir 3D models (debug)"
+# define PNT_LONGDESC					"Material exporter for Pavillon Noir 3D objects (debug)"
 # define PNT_SHORTDESC					"Pavillon Noir Material export (debug)"
 #else
 # define PNMATERIALEXPORTER_CLASS_ID	Class_ID(0x360a1c1e, 0x727c35c2)
-# define PNT_LONGDESC					"Material exporter for Pavillon Noir 3D models"
+# define PNT_LONGDESC					"Material exporter for Pavillon Noir 3D objects"
 # define PNT_SHORTDESC					"Pavillon Noir Material export"
 #endif
 
