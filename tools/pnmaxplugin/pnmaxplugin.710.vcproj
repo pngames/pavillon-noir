@@ -4,6 +4,7 @@
 	Version="7.10"
 	Name="pnmaxplugin"
 	ProjectGUID="{FBE8C34C-1861-41C3-87AF-BECA84744864}"
+	RootNamespace="pnmaxplugin"
 	Keyword="MFCProj">
 	<Platforms>
 		<Platform
@@ -20,7 +21,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="C:\3dsmax7\maxsdk\include;../pavillonnoir/__src/pncommon"
+				AdditionalIncludeDirectories="C:\3dsmax7\maxsdk\include;../../pavillonnoir/__src/pncommon"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="FALSE"
 				BasicRuntimeChecks="3"
@@ -83,7 +84,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="C:\3dsmax7\maxsdk\include;../pavillonnoir/__src/pncommon"
+				AdditionalIncludeDirectories="C:\3dsmax7\maxsdk\include;../../pavillonnoir/__src/pncommon"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				MinimalRebuild="FALSE"
 				RuntimeLibrary="2"
@@ -205,7 +206,7 @@
 				RelativePath=".\a_exportHeader.cpp">
 			</File>
 			<File
-				RelativePath="..\pavillonnoir\__src\pncommon\pna_format.h">
+				RelativePath="..\..\pavillonnoir\__src\pncommon\pna_format.h">
 			</File>
 			<File
 				RelativePath=".\PNAnimationExporter.cpp">
@@ -230,7 +231,7 @@
 				RelativePath=".\m_exportHeader.cpp">
 			</File>
 			<File
-				RelativePath="..\pavillonnoir\__src\pncommon\pnm_format.h">
+				RelativePath="..\..\pavillonnoir\__src\pncommon\pnm_format.h">
 			</File>
 			<File
 				RelativePath=".\PNModelExporter.cpp">
@@ -255,7 +256,7 @@
 				RelativePath=".\PNMaterialWin.hpp">
 			</File>
 			<File
-				RelativePath="..\pavillonnoir\__src\pncommon\pnt_format.h">
+				RelativePath="..\..\pavillonnoir\__src\pncommon\pnt_format.h">
 			</File>
 			<File
 				RelativePath=".\t_export.cpp">
@@ -271,7 +272,7 @@
 			Name="skeleton"
 			Filter="">
 			<File
-				RelativePath="..\pavillonnoir\__src\pncommon\pns_format.h">
+				RelativePath="..\..\pavillonnoir\__src\pncommon\pns_format.h">
 			</File>
 			<File
 				RelativePath=".\PNSBone.cpp">
@@ -308,13 +309,26 @@
 				RelativePath=".\PN3DObjectExporter.hpp">
 			</File>
 			<File
-				RelativePath="..\pavillonnoir\__src\pncommon\pno_format.h">
+				RelativePath="..\..\pavillonnoir\__src\pncommon\pno_format.h">
 			</File>
 			<File
 				RelativePath=".\PNObjectWindow.cpp">
 			</File>
 			<File
 				RelativePath=".\PNObjectWindow.hpp">
+			</File>
+		</Filter>
+		<Filter
+			Name="physical"
+			Filter="">
+			<File
+				RelativePath="..\..\pavillonnoir\__src\pncommon\pnp_format.h">
+			</File>
+			<File
+				RelativePath=".\PNPhysicalExporter.cpp">
+			</File>
+			<File
+				RelativePath=".\PNPhysicalExporter.hpp">
 			</File>
 		</Filter>
 		<File
