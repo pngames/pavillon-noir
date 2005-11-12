@@ -28,11 +28,11 @@
 
 #ifdef _DEBUG
 # define PNMODELEXPORTER_CLASS_ID	Class_ID(0x4b476fba, 0x3a2821be)
-# define PNM_LONGDESC				"Model exporter for Pavillon Noir 3D models (debug)"
+# define PNM_LONGDESC				"Model exporter for Pavillon Noir 3D objects (debug)"
 # define PNM_SHORTDESC				"Pavillon Noir Model export (debug)"
 #else
 # define PNMODELEXPORTER_CLASS_ID	Class_ID(0x2b094ba8, 0x6fc673ab)
-# define PNM_LONGDESC				"Model exporter for Pavillon Noir 3D models"
+# define PNM_LONGDESC				"Model exporter for Pavillon Noir 3D objects"
 # define PNM_SHORTDESC				"Pavillon Noir Model export"
 #endif
 
