@@ -168,7 +168,7 @@ BOOL PNExporter::SupportsOptions(int ext, DWORD options)
 
 CString  PNExporter::transformToSystem(CString str)
 {
-  PNMainWin::WriteLine("transformToUTF8 in : %s", str);
+  PNMainWin::WriteLine("transformToSystem in : %s", str);
 
   str = transformToUTF8(str);
 
@@ -179,9 +179,9 @@ CString  PNExporter::transformToSystem(CString str)
 	  !(str[i] >= 'a' && str[i] <= 'z') &&
 	  !(str[i] >= '#' && str[i] <= '.') &&
 	  str[i] != ' ')
-	  str.SetAt(i, '&');
+	  str.SetAt(i, '_');
 
-  PNMainWin::WriteLine("transformToUTF8 out : %s", str);
+  PNMainWin::WriteLine("transformToSystem out : %s", str);
 
   return str;
 }
@@ -191,9 +191,13 @@ CString  PNExporter::transformToUTF8(CString str)
   PNMainWin::WriteLine("transformToUTF8 in : %s", str);
 
   for (int i = 0; i < str.GetLength(); ++i)
-	if (!(str[i] >= 0 && str[i] <= 128))
+  {
+	unsigned char b = (unsigned char)str[i];
+	if (!(b >= 0 && b <= 128))
 	{
-	  switch (str[i])
+	  PNMainWin::WriteLine("transformToUTF8 in : %i", b);
+
+	  switch (b)
 	  {
 	  case 0xC8:	// `
 	  case 0xC9:	// '
@@ -247,6 +251,7 @@ CString  PNExporter::transformToUTF8(CString str)
 		str.SetAt(i, '_');
 	  }
 	}
+  }
 
   PNMainWin::WriteLine("transformToUTF8 out : %s", str);
 
