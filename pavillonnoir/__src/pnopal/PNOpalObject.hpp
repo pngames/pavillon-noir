@@ -107,6 +107,7 @@ namespace PN {
 	opal::Solid*		getOpalSolid();
 	
 	void				setStatic(bool state);
+	bool				isStatic();
 	void				setCoord(const PNPoint& coord);
 	void				setCoord(pnfloat x, pnfloat y, pnfloat z);
 	void				setOrient(const PNQuatf& orient);
