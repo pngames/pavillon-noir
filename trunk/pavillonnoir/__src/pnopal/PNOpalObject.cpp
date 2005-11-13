@@ -107,6 +107,8 @@ void PNOpalObject::render()
   case OPALSPHERE :
 	PNRendererInterface::getInstance()->renderSphere(_radius, 20, 20, color, _offset);
 	break;
+  default:
+	break;
   }
 }
 
@@ -169,6 +171,11 @@ void			PNOpalObject::setStatic(bool state)
   _solid->setStatic(state);
 }
 
+bool			PNOpalObject::isStatic()
+{
+  return _solid->isStatic();
+}
+
 /** Set the coordinates of the physical object
 *
 * /param  coord  point object
@@ -198,22 +205,14 @@ void			PNOpalObject::setCoord(pnfloat x, pnfloat y, pnfloat z)
 
 void			PNOpalObject::setOrient(const PNQuatf& orient)
 {
-  /*PNMatrixTR4f	  pntransform;
-
-  pntransform.loadIdentity();
-  pntransform.setTranslation(_solid->getPosition().getData());
-  pntransform.setRotationQuaternion(orient);*/
-
   opal::Matrix44r transform;
-  transform.makeIdentity();
-
   opal::Point3r pos = _solid->getPosition();
-  transform.setPosition(pos[0], pos[1], pos[2]);
 
+  transform.makeIdentity();
+  transform.setPosition(pos[0], pos[1], pos[2]);
   if (!orient.isIdentity())
 	transform.setRotation((opal::real)orient.w, (opal::real)orient.x, (opal::real)orient.y, (opal::real)orient.z);
-
-  this->_solid->setTransform(transform);
+  _solid->setTransform(transform);
 }
 
 /** Set the orientation of the physical object
@@ -270,7 +269,8 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
   opal::loadFile(_blueprint, _file);
   _sim->instantiateBlueprint(_blueprintInstance, _blueprint);
 
-  if (_solid == _blueprintInstance.getSolid("Boite01"))
+  _solid = _blueprintInstance.getSolid("Boite01");
+  if (_solid != NULL)
   {
 	// store the shape type
 	_type = OPALBOX;

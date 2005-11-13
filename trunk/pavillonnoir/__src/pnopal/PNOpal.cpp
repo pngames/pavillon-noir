@@ -171,10 +171,15 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 		const PNPoint& offset = current_obj->getPhysicalObject()->getOffset();
 		const PNQuatf& orient = current_obj->getOrient();
 
-		current_obj->getPhysicalObject()->setCoord(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z);
-		current_obj->getPhysicalObject()->setOrient(orient);
-		if (i == 400  && orient.x != 0)
-		  pnerror(PN_LOGLVL_DEBUG, "in-orient : %i, %i, %i, %i", orient.x, orient.y, orient.z, orient.w);
+		//if (!current_obj->getPhysicalObject()->isStatic())
+		//{
+		  //current_obj->getPhysicalObject()->setStatic(true);
+		  current_obj->getPhysicalObject()->setCoord(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z);
+		  current_obj->getPhysicalObject()->setOrient(orient);
+		  if (i == 400  && orient.x != 0)
+			pnerror(PN_LOGLVL_DEBUG, "in-orient : %f, %f, %f, %f", orient.x, orient.y, orient.z, orient.w);
+		  //current_obj->getPhysicalObject()->setStatic(false);
+		//}
 	  }
 	  PNLOCK_END(current_obj);
 	}
@@ -203,7 +208,7 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 		current_obj->setCoord(coord.x - offset.x, coord.y - offset.y, coord.z - offset.z);
 		current_obj->setOrient(orient);
 		if (i == 400 && orient.x != 0)
-		  pnerror(PN_LOGLVL_DEBUG, "out-orient : %i, %i, %i, %i", orient.x, orient.y, orient.z, orient.w);
+		  pnerror(PN_LOGLVL_DEBUG, "out-orient : %f, %f, %f, %f", orient.x, orient.y, orient.z, orient.w);
 	  }
 	  PNLOCK_END(current_obj);
 	}
