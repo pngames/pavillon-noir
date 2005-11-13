@@ -58,6 +58,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
   virtual void			setStatic(bool state)=0;
+  virtual bool			isStatic()=0;
   virtual void			setCoord(const PNPoint& coord)=0;
   virtual void			setCoord(pnfloat x, pnfloat y, pnfloat z)=0;
   virtual void			setOrient(const PNQuatf& orient)=0;
