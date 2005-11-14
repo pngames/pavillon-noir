@@ -369,6 +369,20 @@ PNQuatf::operator=(const pnfloat* q)
 
 //////////////////////////////////////////////////////////////////////////
 
+pnbool
+PNQuatf::operator==(const PNQuatf& quat) const
+{
+  return x == quat.x && y == quat.y && z == quat.z && w == quat.w;
+}
+
+pnbool
+PNQuatf::operator!=(const PNQuatf& quat) const
+{
+  return !operator==(quat);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 std::ostream&	operator<<(std::ostream& o, const PNQuatf& p)
 {
   o << "[x=" << p.x << " y=" << p.y << " z=" << p.z << " w=" << p.w << "]";

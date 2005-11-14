@@ -79,6 +79,9 @@ namespace PN {
 	opal::BlueprintInstance	  _blueprintInstance;
 	opal::Solid*			  _solid;
 	opal::Simulator*		  _sim;
+	opal::Force				  _force;
+	opal::SpringMotor*		  _graspingMotor;
+	opal::SpringMotorData	  _springMotorData;
 
 	/* deprecated trimeshes data (or not at all) */
 	pnpoint3f*				  _vertBuffer;
@@ -113,7 +116,9 @@ namespace PN {
 	void				setOrient(const PNQuatf& orient);
 	void				setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w);
 
-	void				addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration); // previously deprecated
+	void				addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration);
+	void				setSpringMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf orient);
+	void				destroySpringMotor();
 
 	///////////////////////////////////////////////////////////////////////////
 	// IPNXMLSerializable
