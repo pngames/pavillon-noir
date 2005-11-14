@@ -45,7 +45,7 @@ public:
   virtual PNConfigurableParameter* getParam() {return NULL; }
 
   virtual const std::string&	getStringValue() { return NULL; }
-  virtual pnbool				setStringValue(const std::string& val) { return FALSE; }
+  virtual pnbool				setStringValue(const std::string& val) { return false; }
 };
 
 //////////////////////////////////////////////////////////////////////////

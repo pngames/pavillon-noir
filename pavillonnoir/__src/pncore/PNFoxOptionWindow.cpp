@@ -37,6 +37,8 @@
 #include "PNConfigurableParameter.hpp"
 #include "PNFXStringListParameter.hpp"
 #include "PNPropertiesGrid.hpp"
+#include "pnconfkeys.h"
+#include "pnplugins.h"
 
 namespace PN
 {
@@ -56,24 +58,66 @@ FXIMPLEMENT(PNFoxOptionWindow,FXDialogBox,PNFoxOptionWindowMap,ARRAYNUMBER(PNFox
 /*
 * Ctor
 */
-PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options",DECOR_TITLE|DECOR_BORDER|DECOR_RESIZE,0,0,500,300, 0,0,0,0, 4,4)
+PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options",DECOR_TITLE|DECOR_BORDER|DECOR_RESIZE,0,0,600,400, 0,0,0,0, 4,4)
 {
   PNConf* conf = PNConf::getInstance();
+  PNPluginManager* plist = PNPluginManager::getInstance();
 
   // General layout, buttons on the left, options on the right
   FXVerticalFrame* vertical = new FXVerticalFrame(this,LAYOUT_SIDE_TOP|LAYOUT_FILL_X|LAYOUT_FILL_Y);
   FXHorizontalFrame* horizontal = new FXHorizontalFrame(vertical,LAYOUT_FILL_X|LAYOUT_FILL_Y);
   FXVerticalFrame* buttons = new FXVerticalFrame(horizontal,LAYOUT_LEFT|LAYOUT_FILL_Y|FRAME_SUNKEN|PACK_UNIFORM_WIDTH|PACK_UNIFORM_HEIGHT,0,0,0,0, 0,0,0,0, 0,0);
   FXSwitcher* switcher = new FXSwitcher(horizontal,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0);
-
+	
   // probably dirty but the app crashes if we don't do that, eat some fox documentation!
   owner->create();
   this->create();
   vertical->create();
   horizontal->create();
+  buttons->create();
   switcher->create();
 
+// --
 
+  // for each plugin, read configuration informations and display them first in switcher (desc) then in tabs (interfaces)
+  int switcherID = FXSwitcher::ID_OPEN_FIRST;
+  for (PNPluginManager::iterator it = plist->begin(); it != plist->end(); it++, switcherID++)
+  {
+    PNPlugin* pl = (*it);
+    PNPlugDesc*	desc = pl->getPlugDesc();
+  
+	// adds a button to the switcher and a tabbook to display the infos, plugdesc name as button label
+    new FXButton(buttons,desc->getName(),NULL,switcher,switcherID,FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y);
+    FXTabBook*  tabbook = new FXTabBook(switcher, NULL, 0, LAYOUT_FILL_Y, 0, 0, 0, 0, 0, 0, 0, 0);
+    tabbook->create();
+
+	pnerror(PN_LOGLVL_DEBUG, "[PNFoxOptionWindow] adding switcher section %s (version=%i, nb interfaces=%i)", 
+		desc->getName(), desc->getVersion(), desc->getNbInterface()); 
+
+    // creates a tab for each Interface, return if there's no interface
+    for (pnuint i = 0; i < desc->getNbInterface(); i++)
+    {
+	  PNInterface*	interf = desc->getInterface(i);
+  	  if (interf == NULL)
+	  {
+	    pnerror(PN_LOGLVL_ERROR, "[PNFoxOptionWindow] could not load interface configuration for plugin %s", 
+			pl->getPath().native_file_string()); 
+		return;
+	  }
+
+	  // sets the interface's label as the tab name/title
+	  pnerror(PN_LOGLVL_DEBUG, "[PNFoxOptionWindow] adding tab for interface %s", interf->getLabel());
+	  new FXTabItem(tabbook, interf->getLabel().c_str());
+
+	  // ConfigurableParameters are displayed in a PropertiesGird
+	  PNPropertiesGrid* grid = new PNPropertiesGrid(tabbook, NULL);
+	  grid->setObject(interf);
+	  loadGrid(grid, conf);
+	}
+  }
+
+// --
+/*
   // ** Graphic Tab ** //
   _graphicObj  = new PNFoxOptionsObject("Graphic settings");
   FXVerticalFrame* graphicFrame = new FXVerticalFrame(switcher,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0, 0,0);
@@ -88,14 +132,14 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
   resolutionsList.push_back("1024x768");
   resolutionsList.push_back("1280x960");
   resolutionsList.push_back("1280x1024");
-  _graphicObj->addParam(new PNConfigurableParameter(_graphicObj, PN_PARAMTYPE_STRINGLIST, &resolutionsList, "Resolution", "Choose your resolution if you dare!", TRUE));
+  _graphicObj->addParam(new PNConfigurableParameter(_graphicObj, PN_PARAMTYPE_STRINGLIST, &resolutionsList, PNCONFKEYS_RESOLUTION, "Choose your resolution if you dare!", TRUE));
 
   //// Second Parameter : fullscreen
   // TODO : hey! change my type to PN_PARAMTYPE_CHECKBOX, thx (needs a PNFXCheckbox class)
   stringList fullscreenYesNo;
   fullscreenYesNo.push_back("yes");
   fullscreenYesNo.push_back("no");
-  _graphicObj->addParam(new PNConfigurableParameter(_graphicObj, PN_PARAMTYPE_STRINGLIST, &fullscreenYesNo, "Fullscreen", "Do you want to play fullscreen ?", TRUE));
+  _graphicObj->addParam(new PNConfigurableParameter(_graphicObj, PN_PARAMTYPE_STRINGLIST, &fullscreenYesNo, PNCONFKEYS_FULLSCREEN, "Do you want to play fullscreen ?", TRUE));
 
   // Use a grid to display our parameters
   _graphicGrid = new PNPropertiesGrid(graphicFrame, NULL);
@@ -129,7 +173,7 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 
   //// Second Parameter : game volume
   // TODO : hey! change my type to PN_PARAMTYPE_DIAL_something..., thx (needs a something class)
-  _audioObj->addParam(new PNConfigurableParameter(_audioObj, PN_PARAMTYPE_STRINGLIST, &volumeGraduation, "Game volume", "Don't mute me!", TRUE));
+  _audioObj->addParam(new PNConfigurableParameter(_audioObj, PN_PARAMTYPE_STRINGLIST, &volumeGraduation, PNCONFKEYS_GAME_VOLUME, "Don't mute me!", TRUE));
 
   // Use a grid to display our parameters
   _audioGrid = new PNPropertiesGrid(audioFrame, NULL);
@@ -159,6 +203,8 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
   _inputGrid = new PNPropertiesGrid(inputFrame, NULL);
   _inputGrid->setObject(_inputObj);
   loadGrid(_inputGrid, conf);
+*/
+// --
 
   // Bottom part
   new FXHorizontalSeparator(vertical,SEPARATOR_RIDGE|LAYOUT_FILL_X);
@@ -193,7 +239,7 @@ void  PNFoxOptionWindow::loadGrid(PNPropertiesGrid* grid, PNConf* conf)
 	PNConfigurableParameter* configurableParameter  = (*it)->getParam();
 	PNPropertiesGridParameter* gridParameter;
 	std::string key;
-	pnbool ok = FALSE;
+	pnbool ok = false;
 	// first check the type of the GridParameters we're dealing with (float, string, stringlist ...)
 	// then call the appropriate method
 	switch (configurableParameter->getType())
@@ -202,7 +248,7 @@ void  PNFoxOptionWindow::loadGrid(PNPropertiesGrid* grid, PNConf* conf)
 	  gridParameter = (PNFXStringListParameter*)(*it);
 	  key = gridParameter->getParam()->getLabel();
 	  ok = gridParameter->setStringValue(conf->getKey(key, std::string()));
-	  if (ok == FALSE)
+	  if (ok == false)
 		pnerror(PN_LOGLVL_DEBUG, "Could not load values for key \"%s\"", key.c_str());
 	  break;
 	default:
