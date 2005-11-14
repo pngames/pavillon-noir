@@ -100,6 +100,11 @@ namespace PN {
 	pnerror(PN_LOGLVL_DEBUG, "PNFXStringListParameter::buildList");
 	_listBox->clearItems();
 
+	if (l->size() == 0)
+	{
+	  return;
+	}
+
 	for (std::list<std::string>::iterator it = l->begin(); it != l->end(); it++)
 	{
 		std::string s = (*it);
@@ -169,9 +174,9 @@ namespace PN {
 	if (idx != -1)
 	{
 	  _listBox->setCurrentItem(idx);
-	  return TRUE;
+	  return true;
 	}
-	return FALSE;
+	return false;
   }
 
   //////////////////////////////////////////////////////////////////////////

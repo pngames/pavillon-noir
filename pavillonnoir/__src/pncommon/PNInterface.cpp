@@ -81,5 +81,11 @@ PNInterface::getLabel()
   return _label;
 }
 
+void
+PNInterface::addParam(PNConfigurableParameter* p)
+{
+  _vectorParameters.push_back(p);
+}
+
 //////////////////////////////////////////////////////////////////////////
 };
