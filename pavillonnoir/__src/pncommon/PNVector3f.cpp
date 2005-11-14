@@ -223,15 +223,6 @@ PNVector3f::isOrthogonal(pnfloat vX, pnfloat vY, pnfloat vZ)
 }
 
 /**
- * \return true if the vector is null or lesser than EPSILON false otherwise
- */
-bool
-PNVector3f::isNull()
-{
-  return (sqrtf(x * x + y * y + z * z) < PN_EPSILON);
-}
-
-/**
  * \brief Substracts v's coordinates from the current instance.
  * \return void
  */

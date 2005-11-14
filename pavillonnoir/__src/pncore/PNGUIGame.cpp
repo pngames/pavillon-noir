@@ -48,6 +48,7 @@
 
 #include "PNSoundInterface.hpp"
 #include "PNPhysicsInterface.hpp"
+#include "PNPhysicalObject.hpp"
 #include "PNGameEventData.hpp"
 #include "PNGameInterface.hpp"
 #include "PNGameMap.hpp"
@@ -332,7 +333,42 @@ void  PNGUIGame::_renderPhysics(const std::string&, std::istream& i)
   }
 }
 
-void  PNGUIGame::_setAlldynamic(const std::string&, std::istream& i)
+void  PNGUIGame::_addForce(const std::string&, std::istream& i)
+{
+  std::string objectid;
+  pnfloat x = 0.0f;
+  pnfloat y = 0.0f;
+  pnfloat z = 0.0f;
+  pnfloat duration = 0.0f;
+
+  i >> objectid;
+  i >> x;
+  i >> y;
+  i >> z;
+  i >> duration;
+
+  if (!(x == 0.0f && y == 0.0f && z == 0.0f && duration == 0.0f))
+  {
+	PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().find(objectid.c_str());
+	  
+	if (it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end())
+	{
+	  PN3DObject* current_obj = it->second;
+	  current_obj->getPhysicalObject()->addForce(x, y, z, duration);
+	}
+	else
+	  PNConsole::writeLine("object %s does not exist", objectid);
+  }
+  else
+	PNConsole::writeLine("Syntax : addforce objectid x y z duration");
+}
+
+void  PNGUIGame::_listPhysicalObjects(const std::string&, std::istream& i)
+{
+  // TODO
+}
+
+void  PNGUIGame::_setPhysicalObjectsDynamic(const std::string&, std::istream& i)
 {
   bool	b;
   i >> b;
@@ -345,11 +381,6 @@ void  PNGUIGame::_setAlldynamic(const std::string&, std::istream& i)
   {
 	PNPhysicsInterface::getInstance()->setAllPhysicalObjectsStatic(true);
   }
-}
-
-void  PNGUIGame::_addForce(const std::string&, std::istream& i)
-{
- // FIXME, deprecated
 }
 
 void  PNGUIGame::_setScriptingDebug(const std::string&, std::istream& i)
@@ -414,6 +445,8 @@ void PNGUIGame::startGUI()
   PNGUIStateManager::getInstance()->setMainState(PNGUIStateManager::INGAME);
   PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::NONE);
 
+  // do not forget to delete your functions in resetGUI
+
   //////////////////////////////////////////////////////////////////////////
   PNConsole::addFonction("loadmap", &PNGUIGame::_commandLoadMap, "Load game map, parameter : string MapFileName");
   //////////////////////////////////////////////////////////////////////////
@@ -426,9 +459,10 @@ void PNGUIGame::startGUI()
   PNConsole::addFonction("rcspeed", &PNGUIGame::_commandRenderCameraMovingSpeed, "Set render camera moving speed, 1.0=normal");
   //////////////////////////////////////////////////////////////////////////
   PNConsole::addFonction("physics", &PNGUIGame::_setPhysics, "Physical simulation, 0=false or 1=true");
-  PNConsole::addFonction("renderphysics", &PNGUIGame::_renderPhysics, "Display object's AABB, 0=false or 1=true");
-  PNConsole::addFonction("addforce", &PNGUIGame::_addForce, "Add force to a physical object, addforce object_number x y z duration");
-  PNConsole::addFonction("setdyn", &PNGUIGame::_setAlldynamic, "Set all physical objects dynamic, 0=false or 1=true");
+  PNConsole::addFonction("renderphysics", &PNGUIGame::_renderPhysics, "Display object's physical entities, 0=false or 1=true");
+  PNConsole::addFonction("addforce", &PNGUIGame::_addForce, "Add force to a physical object, addforce objectid x y z duration");
+  PNConsole::addFonction("listphysics", &PNGUIGame::_listPhysicalObjects, "List physical objects");
+  PNConsole::addFonction("setdyn", &PNGUIGame::_setPhysicalObjectsDynamic, "Set all physical objects dynamic, 0=false or 1=true");
   //////////////////////////////////////////////////////////////////////////
   PNConsole::addFonction("setscriptingdebug", &PNGUIGame::_setScriptingDebug, "Activates or deactivates the scripting's debug logging to file \"pnscript.log\", 0=false or 1=true");
   //////////////////////////////////////////////////////////////////////////
@@ -468,6 +502,7 @@ void PNGUIGame::resetGUI()
   PNConsole::delFonction("physics");
   PNConsole::delFonction("renderphysics");
   PNConsole::delFonction("addforce");
+  PNConsole::delFonction("listphysics");
   PNConsole::delFonction("setdyn");
   /////////////////////////////////////////////
   PNConsole::delFonction("setscriptingdebug");
