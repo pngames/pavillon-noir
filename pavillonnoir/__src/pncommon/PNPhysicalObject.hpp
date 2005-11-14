@@ -63,6 +63,7 @@ public:
   virtual void			setCoord(pnfloat x, pnfloat y, pnfloat z)=0;
   virtual void			setOrient(const PNQuatf& orient)=0;
   virtual void			setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w)=0;
+  virtual void			setTransform(const PNPoint& coord, const PNQuatf& orient)=0;
 
   //////////////////////////////////////////////////////////////////////////
 
