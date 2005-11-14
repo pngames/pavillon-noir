@@ -65,6 +65,7 @@ public:
   ~PNPoint(void);
 
   void			setNull();
+  virtual bool	isNull() const;
 
   void			set(const pnfloat& x, const pnfloat& y, const pnfloat& z);
   void			set(const pnfloat* coord);

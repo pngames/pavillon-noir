@@ -74,7 +74,6 @@ public:
   virtual bool						isColinear(pnfloat vX, pnfloat vY, pnfloat vZ);
   virtual bool						isOrthogonal(const PNVector3f & v);
   virtual bool						isOrthogonal(pnfloat vX, pnfloat vY, pnfloat vZ);
-  virtual bool						isNull();
 
 public:
   virtual void						substract(const PNPoint & v);

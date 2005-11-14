@@ -90,6 +90,12 @@ PNPoint::setNull()
   z = 0.0f;
 }
 
+bool
+PNPoint::isNull() const
+{
+  return ABS(x) < PN_EPSILON && ABS(y) < PN_EPSILON && ABS(z) < PN_EPSILON;
+}
+
 void
 PNPoint::set(const pnfloat& px, const pnfloat& py, const pnfloat& pz)
 {

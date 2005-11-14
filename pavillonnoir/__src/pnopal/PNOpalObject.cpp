@@ -57,6 +57,7 @@ namespace PN {
 PNOpalObject::PNOpalObject(opal::Simulator* sim) : _blueprint(), _blueprintInstance()
 {
   _sim = sim;
+  _graspingMotor = _sim->createSpringMotor();
 }
 
 /** PNOpalObject destructor
@@ -225,23 +226,61 @@ void			PNOpalObject::setOrient(const PNQuatf& orient)
 
 void			PNOpalObject::setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w)
 {
-  // FIXME
+  opal::Matrix44r transform;
+  transform.makeIdentity();
+  opal::Point3r pos = _solid->getPosition();
+  transform.setPosition(pos[0], pos[1], pos[2]);
 
-  //opal::Matrix44r transform;
-  //transform.rotate((opal::real)w, (opal::real)x, (opal::real)y, (opal::real)z);
-  //this->_solid->setTransform(transform);
+  if (!(x == 0.0f && y == 0.0f && z == 0.0f && w == 1.0f))
+	transform.rotate((opal::real)w, (opal::real)x, (opal::real)y, (opal::real)z);
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 void		PNOpalObject::addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration)
 {
-  /*opal::Force f;
-  f.type = opal::GLOBAL_FORCE;
-  f.vec = opal::Vec3r(x, y, z);
-  f.duration = duration;
-  //PNConsole::writeLine("Adding force - x : %f, y : %f, z : %f, duration : %f", x, y, z, duration);
-  _solid->addForce(f);*/
+  _force.type = opal::LOCAL_FORCE;
+  _force.vec = opal::Vec3r((opal::real)x, (opal::real)y, (opal::real)z);
+  _force.duration = (opal::real)duration;
+  _solid->addForce(_force);
+
+#ifdef DEBUG
+  PNConsole::writeLine("Adding force - x : %f, y : %f, z : %f, duration : %f", x, y, z, duration);
+#endif
+}
+
+void		PNOpalObject::setSpringMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf orient)
+{
+  /* motor data */
+  _springMotorData.solid = _solid;
+  _springMotorData.mode = opal::LINEAR_AND_ANGULAR_MODE;
+
+  /* coordinates */
+  _springMotorData.desiredPos = opal::Point3r((opal::real)x, (opal::real)y, (opal::real)z);
+  
+  /* orientation */
+  opal::Matrix44r transform;
+  transform.makeIdentity();
+  if (!orient.isIdentity())
+	transform.setRotation((opal::real)orient.w, (opal::real)orient.x, (opal::real)orient.y, (opal::real)orient.z);
+  _springMotorData.desiredForward = transform.getForward();
+  _springMotorData.desiredUp = transform.getUp();
+  _springMotorData.desiredRight = transform.getRight();
+
+  /* optional motor data */
+  _springMotorData.linearKd = 2.0;
+  _springMotorData.linearKs = 20.0;
+  _springMotorData.angularKd = 0.2;
+  _springMotorData.angularKs = 0.6;
+
+  /* motor init */
+  _graspingMotor->init(_springMotorData);
+}
+
+void		PNOpalObject::destroySpringMotor()
+{
+  _springMotorData.solid = NULL;
+  _graspingMotor->init(_springMotorData);
 }
 
 //////////////////////////////////////////////////////////////////////////

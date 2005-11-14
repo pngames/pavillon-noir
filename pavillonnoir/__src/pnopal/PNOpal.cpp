@@ -168,18 +168,21 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 	  PNLOCK_BEGIN(current_obj);
 	  {
 		const PNPoint& coord = current_obj->getCoord();
-		const PNPoint& offset = current_obj->getPhysicalObject()->getOffset();
 		const PNQuatf& orient = current_obj->getOrient();
-
-		//if (!current_obj->getPhysicalObject()->isStatic())
-		//{
-		  //current_obj->getPhysicalObject()->setStatic(true);
-		  current_obj->getPhysicalObject()->setCoord(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z);
-		  current_obj->getPhysicalObject()->setOrient(orient);
-		  if (i == 400  && orient.x != 0)
-			pnerror(PN_LOGLVL_DEBUG, "in-orient : %f, %f, %f, %f", orient.x, orient.y, orient.z, orient.w);
-		  //current_obj->getPhysicalObject()->setStatic(false);
-		//}
+		
+		if (!current_obj->getUpdateTranslation().isNull() || (orient != current_obj->getPhysicalObject()->getOrient()))
+		{
+		  //const PNQuatf& test = current_obj->getPhysicalObject()->getOrient();
+		  const PNPoint& offset = current_obj->getPhysicalObject()->getOffset();
+		  //current_obj->getPhysicalObject()->setCoord(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z);
+		  ((PNOpalObject*)current_obj->getPhysicalObject())->setSpringMotor(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z, orient);
+		  if (0)
+			;
+		}
+		//current_obj->getPhysicalObject()->setOrient(orient);
+		//if (i == 400  && orient.x != 0)
+		  //pnerror(PN_LOGLVL_DEBUG, "in-orient : %i, %i, %i, %i", orient.x, orient.y, orient.z, orient.w);
+		
 	  }
 	  PNLOCK_END(current_obj);
 	}
@@ -190,7 +193,7 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
   if (ret == false)
   	return;
 
-  // apply simulation
+  // apply simulation into rendering
   for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
   {
 	if (_break == true)
@@ -207,8 +210,12 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 		current_obj->setCoord(coord.x, coord.y, coord.z);
 		current_obj->setCoord(coord.x - offset.x, coord.y - offset.y, coord.z - offset.z);
 		current_obj->setOrient(orient);
-		if (i == 400 && orient.x != 0)
-		  pnerror(PN_LOGLVL_DEBUG, "out-orient : %f, %f, %f, %f", orient.x, orient.y, orient.z, orient.w);
+
+		if (!current_obj->getUpdateTranslation().isNull())
+		  current_obj->getPhysicalObject();
+		  //((PNOpalObject*)current_obj->getPhysicalObject())->destroySpringMotor();
+		//if (i == 400 && orient.x != 0)
+		  //pnerror(PN_LOGLVL_DEBUG, "out-orient : %i, %i, %i, %i", orient.x, orient.y, orient.z, orient.w);
 	  }
 	  PNLOCK_END(current_obj);
 	}
