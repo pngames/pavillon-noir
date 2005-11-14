@@ -54,10 +54,9 @@ namespace PN {
 * \param  sim  a pointer on the opal simulation
 */ 
 
-PNOpalObject::PNOpalObject(opal::Simulator* sim) : _blueprint(), _blueprintInstance()
+PNOpalObject::PNOpalObject(opal::Simulator* sim) : _blueprint(), _blueprintInstance(), _accelSensorData()
 {
   _sim = sim;
-  _graspingMotor = _sim->createSpringMotor();
 }
 
 /** PNOpalObject destructor
@@ -147,17 +146,30 @@ const PNQuatf&	PNOpalObject::getOrient()
   return _orient;
 }
 
+/** Return the physical object's offset between its rendering center and its center of mass
+*
+* \return offset
+*/ 
+
 const PNPoint&	PNOpalObject::getOffset()
 {
   return _offset;
 }
 
-/** Return a pointer on the Opal physical object (opal::Solid)
+/** Return the Opal physical object (opal::Solid)
 */ 
 
 opal::Solid* PNOpalObject::getOpalSolid()
 {
   return _solid;
+}
+
+/** Return the Opal acceleration sensor (opal::AccelerationSensor)
+*/ 
+
+opal::AccelerationSensor* PNOpalObject::getAccelSensor()
+{
+  return _accelSensor;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -171,6 +183,11 @@ void			PNOpalObject::setStatic(bool state)
 {
   _solid->setStatic(state);
 }
+
+/** Get the state of the physical object (static/dynamic)
+*
+* \return true if static, false if dynamic
+*/
 
 bool			PNOpalObject::isStatic()
 {
@@ -233,9 +250,34 @@ void			PNOpalObject::setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w)
 
   if (!(x == 0.0f && y == 0.0f && z == 0.0f && w == 1.0f))
 	transform.rotate((opal::real)w, (opal::real)x, (opal::real)y, (opal::real)z);
+  _solid->setTransform(transform);
+}
+
+/** Set the coordinates and orientation of the physical object
+*
+* /param  coord  coordinates
+* /param  orient  orientation
+*/ 
+
+void			PNOpalObject::setTransform(const PNPoint& coord, const PNQuatf& orient)
+{
+  opal::Matrix44r transform;
+  transform.makeIdentity();
+  transform.setPosition((opal::real)coord.x, (opal::real)coord.y, (opal::real)coord.z);
+  if (!orient.isIdentity())
+	transform.setRotation((opal::real)orient.w, (opal::real)orient.x, (opal::real)orient.y, (opal::real)orient.z);
+  _solid->setTransform(transform);
 }
 
 //////////////////////////////////////////////////////////////////////////
+
+/** Add a force to the solid
+*
+* /param  x force axis (global x axis)
+* /param  y force axis (global y axis)
+* /param  z force axis (global z axis)
+* /param  duration Specifies how long to apply to force. (in millisecond) 
+*/
 
 void		PNOpalObject::addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration)
 {
@@ -249,38 +291,49 @@ void		PNOpalObject::addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration)
 #endif
 }
 
-void		PNOpalObject::setSpringMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf orient)
+/** Enable the movementMotor attached to the solid
+*
+* /param  x desired x coordinate
+* /param  y desired y coordinate
+* /param  z desired z coordinate
+* /param  orient desired orientation quaternion
+*/
+
+void		PNOpalObject::setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf orient)
 {
   /* motor data */
-  _springMotorData.solid = _solid;
-  _springMotorData.mode = opal::LINEAR_AND_ANGULAR_MODE;
+  _movementMotorData.solid = _solid;
+  _movementMotorData.mode = opal::LINEAR_AND_ANGULAR_MODE;
 
   /* coordinates */
-  _springMotorData.desiredPos = opal::Point3r((opal::real)x, (opal::real)y, (opal::real)z);
-  
+  _movementMotorData.desiredPos = opal::Point3r((opal::real)x, (opal::real)y, (opal::real)z);
+
   /* orientation */
   opal::Matrix44r transform;
   transform.makeIdentity();
   if (!orient.isIdentity())
 	transform.setRotation((opal::real)orient.w, (opal::real)orient.x, (opal::real)orient.y, (opal::real)orient.z);
-  _springMotorData.desiredForward = transform.getForward();
-  _springMotorData.desiredUp = transform.getUp();
-  _springMotorData.desiredRight = transform.getRight();
+  _movementMotorData.desiredForward = transform.getForward();
+  _movementMotorData.desiredUp = transform.getUp();
+  _movementMotorData.desiredRight = transform.getRight();
 
   /* optional motor data */
-  _springMotorData.linearKd = 2.0;
-  _springMotorData.linearKs = 20.0;
-  _springMotorData.angularKd = 0.2;
-  _springMotorData.angularKs = 0.6;
+  _movementMotorData.linearKd = 2.0;
+  _movementMotorData.linearKs = 20.0;
+  _movementMotorData.angularKd = 0.2;
+  _movementMotorData.angularKs = 0.6;
 
   /* motor init */
-  _graspingMotor->init(_springMotorData);
+  _movementMotor->init(_movementMotorData);
 }
 
-void		PNOpalObject::destroySpringMotor()
+/** Disable the movementMotor attached to the solid
+*/
+
+void		PNOpalObject::destroyMovementMotor()
 {
-  _springMotorData.solid = NULL;
-  _graspingMotor->init(_springMotorData);
+  _movementMotorData.solid = NULL;
+  _movementMotor->init(_movementMotorData);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -345,6 +398,14 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
   // get the solid translation (will allow the renderer to represent the AABB at the good coords)
   opal::real* translation = _solid->getTransform().getTranslation().getData();
   _offset.set(translation[0], translation[1], translation[2]);
+
+  // create a motor
+  _movementMotor = _sim->createSpringMotor();
+
+  // create an acceleration sensor
+  _accelSensorData.solid = _solid;
+  _accelSensor = _sim->createAccelerationSensor();
+  _accelSensor->init(_accelSensorData);
 
   return PNEC_SUCCESS;
 }

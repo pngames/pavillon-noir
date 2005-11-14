@@ -66,15 +66,24 @@ public:
   void				destroySimulation();
   void*				getSimulation();
 
+ //////////////////////////////////////////////////////////////////////////
+
   void				setAllPhysicalObjectsStatic(bool state);
+
+  //////////////////////////////////////////////////////////////////////////
+  // Events
+
+  void*				getEventHandler();
+  void				mapEnded(pnEventType type, PNObject* source, PNEventData* data);
+  void				frameStarted(pnEventType type, PNObject* source, PNEventData* data);
 
   //////////////////////////////////////////////////////////////////////////
   // Internal
 
-  void*				getEventHandler();
+protected:
   pnfloat			getElapsedTime();
-  void				mapEnded(pnEventType type, PNObject* source, PNEventData* data);
-  void				frameStarted(pnEventType type, PNObject* source, PNEventData* data);
+  void				opal2pn();
+  void				pn2opal();
 };
 
 //////////////////////////////////////////////////////////////////////////

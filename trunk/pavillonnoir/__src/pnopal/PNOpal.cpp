@@ -85,6 +85,9 @@ void  PNOpal::init()
 void  PNOpal::setPause(bool state)
 {
   _paused = state;
+
+  if (_paused == false)
+	pn2opal();
 }
 
 /** Create the physical simulation (opal::Simulator)
@@ -93,7 +96,7 @@ void  PNOpal::setPause(bool state)
 void PNOpal::createSimulation()
 {
   _sim = opal::createSimulator();
-  pnerror(PN_LOGLVL_DEBUG, "%s", "PNOpal::_sim created");
+  pnerror(PN_LOGLVL_DEBUG, "%s", "PNOpal : physical simulation created");
   _sim->setGravity(opal::Vec3r(0, (opal::real)GRAVITY, 0));
   _sim->setStepSize((opal::real)STEPSIZE);
 
@@ -172,59 +175,36 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 		
 		if (!current_obj->getUpdateTranslation().isNull() || (orient != current_obj->getPhysicalObject()->getOrient()))
 		{
-		  //const PNQuatf& test = current_obj->getPhysicalObject()->getOrient();
+		  const PNPoint& test = current_obj->getPhysicalObject()->getCoord();
 		  const PNPoint& offset = current_obj->getPhysicalObject()->getOffset();
-		  //current_obj->getPhysicalObject()->setCoord(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z);
-		  ((PNOpalObject*)current_obj->getPhysicalObject())->setSpringMotor(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z, orient);
-		  if (0)
-			;
+		  ((PNOpalObject*)current_obj->getPhysicalObject())->setMovementMotor(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z, orient);
+		  
+		  // DEBUG
+		  opal::Vec3r print;
+		  print = ((PNOpalObject*)current_obj->getPhysicalObject())->getAccelSensor()->getLocalLinearAccel();
+		  pnerror(PN_LOGLVL_DEBUG, "Solid %s acceleration sensor", ((PNOpalObject*)current_obj->getPhysicalObject())->getOpalSolid()->getName()); 
+		  pnerror(PN_LOGLVL_DEBUG, "Local  linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
+		  print = ((PNOpalObject*)current_obj->getPhysicalObject())->getAccelSensor()->getGlobalLinearAccel();
+		  pnerror(PN_LOGLVL_DEBUG, "Global linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
+		  print = ((PNOpalObject*)current_obj->getPhysicalObject())->getAccelSensor()->getLocalAngularAccel();
+		  pnerror(PN_LOGLVL_DEBUG, "Local angular - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
+		  print = ((PNOpalObject*)current_obj->getPhysicalObject())->getAccelSensor()->getGlobalAngularAccel();
+		  pnerror(PN_LOGLVL_DEBUG, "Global angular - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
 		}
-		//current_obj->getPhysicalObject()->setOrient(orient);
-		//if (i == 400  && orient.x != 0)
-		  //pnerror(PN_LOGLVL_DEBUG, "in-orient : %i, %i, %i, %i", orient.x, orient.y, orient.z, orient.w);
-		
 	  }
 	  PNLOCK_END(current_obj);
 	}
   }
 
   // run simulation
-  bool ret = _sim->simulate(elapsedTime);
-  if (ret == false)
-  	return;
+  if ((_sim->simulate(elapsedTime)) != true)
+	return;
 
   // apply simulation into rendering
-  for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
-  {
-	if (_break == true)
-	  return;
-	PN3DObject*	current_obj = it->second;
-	if (current_obj->getPhysicalObject())
-	{
-	  PNLOCK_BEGIN(current_obj);
-	  {
-		const PNPoint& coord = current_obj->getPhysicalObject()->getCoord();
-		const PNPoint& offset = current_obj->getPhysicalObject()->getOffset();
-		const PNQuatf& orient = current_obj->getPhysicalObject()->getOrient();
-
-		current_obj->setCoord(coord.x, coord.y, coord.z);
-		current_obj->setCoord(coord.x - offset.x, coord.y - offset.y, coord.z - offset.z);
-		current_obj->setOrient(orient);
-
-		if (!current_obj->getUpdateTranslation().isNull())
-		  current_obj->getPhysicalObject();
-		  //((PNOpalObject*)current_obj->getPhysicalObject())->destroySpringMotor();
-		//if (i == 400 && orient.x != 0)
-		  //pnerror(PN_LOGLVL_DEBUG, "out-orient : %i, %i, %i, %i", orient.x, orient.y, orient.z, orient.w);
-	  }
-	  PNLOCK_END(current_obj);
-	}
-  }
-
-  if (i == 400)
-	i = 0;
-
+  opal2pn();
 }
+
+
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -233,7 +213,7 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 *  \param	state			true to make them static / false to make them dynamic
 */
 
-void PNOpal::setAllPhysicalObjectsStatic(bool state)
+void	PNOpal::setAllPhysicalObjectsStatic(bool state)
 {
   PN3DObject* currentObject = NULL;
 
@@ -245,6 +225,72 @@ void PNOpal::setAllPhysicalObjectsStatic(bool state)
 	currentObject = it->second;
 	if (currentObject->getPhysicalObject())
 	  currentObject->getPhysicalObject()->setStatic(state);
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+/** Set opal objects coordinates and orientation from PN3DObjects's data
+*/
+
+void	PNOpal::pn2opal()
+{
+  for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
+  {
+	if (_break == true)
+	  return;
+	PN3DObject*	current_obj = it->second;
+	if (current_obj->getPhysicalObject())
+	{
+	  PNLOCK_BEGIN(current_obj);
+	  {
+		const PNPoint& coord = current_obj->getCoord();
+		const PNQuatf& orient = current_obj->getOrient();
+		const PNPoint& offset = current_obj->getPhysicalObject()->getOffset();
+		current_obj->getPhysicalObject()->setCoord(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z);
+		current_obj->getPhysicalObject()->setOrient(orient);
+	  }
+	  PNLOCK_END(current_obj);
+	}
+  }
+}
+
+/** Set PN3DObjects coordinates and orientation from opal simulation's data
+*/
+
+void	PNOpal::opal2pn()
+{
+  for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
+  {
+	if (_break == true)
+	  return;
+
+	PN3DObject*	current_obj = it->second;
+	if (current_obj->getPhysicalObject())
+	{
+	  PNLOCK_BEGIN(current_obj);
+	  {
+		const PNPoint& coord = current_obj->getPhysicalObject()->getCoord();
+		const PNPoint& offset = current_obj->getPhysicalObject()->getOffset();
+		const PNQuatf& orient = current_obj->getPhysicalObject()->getOrient();
+
+		if (!current_obj->getUpdateTranslation().isNull() || (orient != current_obj->getPhysicalObject()->getOrient()))
+		{
+		  //opal::Vec3r print;
+		  //print = ((PNOpalObject*)current_obj->getPhysicalObject())->getAccelSensor()->getLocalLinearAccel();
+		  //pnerror(PN_LOGLVL_DEBUG, "Solid %s acceleration sensor", ((PNOpalObject*)current_obj->getPhysicalObject())->getOpalSolid()->getName()); 
+		  //pnerror(PN_LOGLVL_DEBUG, "Local  linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
+		  //print = ((PNOpalObject*)current_obj->getPhysicalObject())->getAccelSensor()->getGlobalLinearAccel();
+		  //pnerror(PN_LOGLVL_DEBUG, "Global linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
+		  ((PNOpalObject*)current_obj->getPhysicalObject())->destroyMovementMotor();
+		}
+
+		current_obj->setCoord(coord.x, coord.y, coord.z);
+		current_obj->setCoord(coord.x - offset.x, coord.y - offset.y, coord.z - offset.z);
+		current_obj->setOrient(orient);
+	  }
+	  PNLOCK_END(current_obj);
+	}
   }
 }
 

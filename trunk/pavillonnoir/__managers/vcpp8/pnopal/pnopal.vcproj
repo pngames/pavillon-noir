@@ -207,6 +207,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pnopal\PNOpalPLayerObject.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pnopal\PNOpalPlugDesc.cpp"
 				>
 			</File>
@@ -230,6 +234,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pnopal\PNOpalObject.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pnopal\PNOpalPlayerObject.hpp"
 				>
 			</File>
 			<File

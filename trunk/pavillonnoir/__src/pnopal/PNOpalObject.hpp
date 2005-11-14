@@ -75,13 +75,15 @@ namespace PN {
 	PNQuatf					  _orient;
 
 	/* opal */
-	opal::Blueprint			  _blueprint;
-	opal::BlueprintInstance	  _blueprintInstance;
-	opal::Solid*			  _solid;
-	opal::Simulator*		  _sim;
-	opal::Force				  _force;
-	opal::SpringMotor*		  _graspingMotor;
-	opal::SpringMotorData	  _springMotorData;
+	opal::Blueprint				  _blueprint;
+	opal::BlueprintInstance		  _blueprintInstance;
+	opal::Solid*				  _solid;
+	opal::Simulator*			  _sim;
+	opal::Force					  _force;
+	opal::SpringMotor*		  	  _movementMotor;
+	opal::SpringMotorData		  _movementMotorData;
+	opal::AccelerationSensor*	  _accelSensor;
+	opal::AccelerationSensorData  _accelSensorData;
 
 	/* deprecated trimeshes data (or not at all) */
 	pnpoint3f*				  _vertBuffer;
@@ -108,6 +110,7 @@ namespace PN {
 	const PNQuatf&		getOrient();
 	const PNPoint&		getOffset();
 	opal::Solid*		getOpalSolid();
+	opal::AccelerationSensor* getAccelSensor();
 	
 	void				setStatic(bool state);
 	bool				isStatic();
@@ -115,10 +118,11 @@ namespace PN {
 	void				setCoord(pnfloat x, pnfloat y, pnfloat z);
 	void				setOrient(const PNQuatf& orient);
 	void				setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w);
+	void				setTransform(const PNPoint& coord, const PNQuatf& orient);
 
 	void				addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration);
-	void				setSpringMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf orient);
-	void				destroySpringMotor();
+	void				setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf orient);
+	void				destroyMovementMotor();
 
 	///////////////////////////////////////////////////////////////////////////
 	// IPNXMLSerializable
