@@ -53,6 +53,8 @@ public:
   virtual bool						modified() { return FALSE; }
   virtual void						setModified() { }
   virtual void						setUnmodified() { }
+
+  void						addParam(PNConfigurableParameter* p);
 };
 
 //////////////////////////////////////////////////////////////////////////

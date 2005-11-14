@@ -78,6 +78,8 @@ public:
 
   const std::string&				getLabel();
 
+  void								addParam(PNConfigurableParameter* p);
+
 private:
   std::string						_label;
 
