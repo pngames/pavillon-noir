@@ -51,13 +51,13 @@ def generate(env):
 		if env.has_key('OPAL_FLAGS'): env.__delitem__('OPAL_FLAGS')
 		if env.has_key('OPAL_LDFLAGS'): env.__delitem__('OPAL_LDFLAGS')
 	
-		fd_path = env.Dir('#./__library/linux/include/opal').abspath
+		fd_path = env.Dir('#./__library/common/opal').abspath
 		hasfd = os.path.exists(fd_path)
 		if hasfd != True:
 			env.pprint('RED','[failed] include not found !')
 			env.Exit(1)
 
-		env['OPAL_FLAGS'] = '-I'+env.Dir('#./__library/linux/include').path
+		env['OPAL_FLAGS'] = '-I'+env.Dir('#./__library/common').path
 		
 		fd_path = env.File('#./__library/linux/lib/opal/libopal-ode.so').abspath
 		hasfd = os.path.exists(fd_path)
