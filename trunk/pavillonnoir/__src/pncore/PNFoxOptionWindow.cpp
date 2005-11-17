@@ -247,7 +247,7 @@ void  PNFoxOptionWindow::loadGrid(PNPropertiesGrid* grid, PNConf* conf)
 	case PN_PARAMTYPE_STRINGLIST:
 	  gridParameter = (PNFXStringListParameter*)(*it);
 	  key = gridParameter->getParam()->getLabel();
-	  ok = gridParameter->setStringValue(conf->getKey(key, std::string()));
+	  ok = gridParameter->setStringValue(conf->getKey(key, "video", std::string()));
 	  if (ok == false)
 		pnerror(PN_LOGLVL_DEBUG, "Could not load values for key \"%s\"", key.c_str());
 	  break;
@@ -297,7 +297,7 @@ void  PNFoxOptionWindow::saveGrid(PNPropertiesGrid* grid, PNConf* conf)
 	{
 	case PN_PARAMTYPE_STRINGLIST:
 	  gridParameter = (PNFXStringListParameter*)(*it);
-	  conf->setKey(gridParameter->getParam()->getLabel().c_str(), gridParameter->getStringValue().c_str());
+	  conf->setKey(gridParameter->getParam()->getLabel().c_str(), gridParameter->getStringValue().c_str(), "video");
 	  break;
 	default:
 	  break;
