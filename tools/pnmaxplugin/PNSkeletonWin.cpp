@@ -30,11 +30,12 @@
 #include "PNSBone.hpp"
 #include "PNMainWin.hpp"
 #include "PNSkeletonExporter.hpp"
+#include ".\pnskeletonwin.hpp"
 
 #define UNCHECK 1
 #define CHECK 2
 
-// Bo�e de dialogue PNSkeletonWin
+// Boite de dialogue PNSkeletonWin
 
 IMPLEMENT_DYNAMIC(PNSkeletonWin, CDialog)
 PNSkeletonWin::PNSkeletonWin(PNSkeletonExporter *skeleton, UINT nIDTemplate /*= IDD*/, CWnd* pParent /*=NULL*/)
@@ -55,6 +56,7 @@ void PNSkeletonWin::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(PNSkeletonWin, CDialog)
   ON_BN_CLICKED(IDOK, OnBnClickedOk)
+  ON_NOTIFY(NM_CLICK, IDC_TREE_SQUELETOR, OnNMClickTreeSqueletor)
 END_MESSAGE_MAP()
 
 void  PNSkeletonWin::_parseBone(HTREEITEM parent, PNSBone* bone)
@@ -92,15 +94,23 @@ BOOL  PNSkeletonWin::OnInitDialog()
 
 void  PNSkeletonWin::_updateBone(HTREEITEM hItem)
 {
+  PNMainWin::WriteLine("**********************************");
+
   PNSBone* bone = (PNSBone*)_treeSkeletor.GetItemData(hItem);
 
-  bone->setExported((_treeSkeletor.GetItemState(hItem, TVIS_STATEIMAGEMASK) & INDEXTOSTATEIMAGEMASK(2)) != 0);
+  bone->setExported(_treeSkeletor.GetCheck(hItem) == TRUE);
+  PNMainWin::WriteLine("   : %i", bone->isExported());
 
   if (!_treeSkeletor.ItemHasChildren(hItem))
 	return ;
 
   for (hItem = _treeSkeletor.GetChildItem(hItem); hItem != 0; hItem = _treeSkeletor.GetNextSiblingItem(hItem))
   {
+	if (!bone->isExported())
+	{
+	  _treeSkeletor.SetCheck(hItem, FALSE);
+	}
+
 	_updateBone(hItem);
   }
 }
@@ -110,4 +120,9 @@ void PNSkeletonWin::OnBnClickedOk()
   _updateBone(_treeSkeletor.GetRootItem());
 
   OnOK();
+}
+
+void PNSkeletonWin::OnNMClickTreeSqueletor(NMHDR *pNMHDR, LRESULT *pResult)
+{
+  _updateBone(_treeSkeletor.GetRootItem());
 }

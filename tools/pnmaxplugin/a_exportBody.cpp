@@ -139,7 +139,7 @@ int		PNAnimationExporter::exportBone(PNSBone* bone)
 
 	bool  biped = false;
 
-	if (control == NULL)
+	if (control == NULL || !bone->isExported())
 	{
 	  boneToExport.nbRot = 0;
 	  boneToExport.nbPos = 0;

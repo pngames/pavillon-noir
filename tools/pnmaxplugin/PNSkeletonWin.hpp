@@ -40,14 +40,14 @@ public:
 	PNSkeletonWin(PNSkeletonExporter *skeleton, UINT nIDTemplate = IDD, CWnd* pParent = NULL);   // constructeur standard
 	virtual ~PNSkeletonWin();
 
-// Donn�s de bo�e de dialogue
+// Donnees de boite de dialogue
 	enum { IDD = IDD_S_CONFIG };
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // Prise en charge DDX/DDV
 
 	DECLARE_MESSAGE_MAP()
-private:
+protected:
   void		_parseBone(HTREEITEM parent, PNSBone* bone);
   void		_updateBone(HTREEITEM hItem);
 
@@ -58,4 +58,5 @@ public:
 
   CTreeCtrl _treeSkeletor;
   afx_msg void OnBnClickedOk();
+  afx_msg void OnNMClickTreeSqueletor(NMHDR *pNMHDR, LRESULT *pResult);
 };
