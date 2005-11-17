@@ -88,11 +88,11 @@ PNConf::PNConf()
   /*
   * filling default configuration map
   */
-  _defaultHash["Resolution"] = "1024x768";
-  _defaultHash["Fullscreen"] = "no";
-  _defaultHash["Key binding profile"] = "default";
-  _defaultHash["Music volume"] = "50";
-  _defaultHash["Game volume"] = "70";
+  _defaultHash["video"]["Resolution"] = "1024x768";
+  _defaultHash["video"]["Fullscreen"] = "no";
+  _defaultHash["game"]["Key binding profile"] = "default";
+  _defaultHash["sound"]["Music volume"] = "50";
+  _defaultHash["sound"]["Game volume"] = "70";
 
   xmlKeepBlanksDefault(1);
 #ifdef WIN32
@@ -137,28 +137,36 @@ PNConf::saveConf()
   xmlNodePtr root = xmlNewNode(NULL, (const xmlChar *)"configuration");
   xmlDocSetRootElement(doc, root);
 
-  std::map<std::string, std::string>::iterator pos;
-  for (pos = _confHash.begin(); pos != _confHash.end(); ++pos)
+  std::map<std::string, std::map<std::string, std::string> >::iterator section;
+  for (section = _confHash.begin(); section != _confHash.end(); ++section)
   {
-	xmlNodePtr node = xmlNewTextChild(root, NULL, (const xmlChar *)"item", NULL);
-	xmlNewProp(node, (const xmlChar *)"key", (const xmlChar *)pos->first.c_str());
-	xmlNewProp(node, (const xmlChar *)"value", (const xmlChar *)pos->second.c_str());
+  	xmlNodePtr node = xmlNewTextChild(root, NULL, (const xmlChar *)"section", NULL);
+  	xmlNewProp(node, (const xmlChar *)"name", (const xmlChar *)section->first.c_str());
+  	
+  	std::map<std::string, std::string>::iterator key;
+  	for (key = section->second.begin(); key != section->second.end(); ++key)
+  	{
+		xmlNodePtr item = xmlNewTextChild(node, NULL, (const xmlChar *)"item", NULL);
+		xmlNewProp(item, (const xmlChar *)"key", (const xmlChar *)key->first.c_str());
+		xmlNewProp(item, (const xmlChar *)"value", (const xmlChar *)key->second.c_str());
+  	}
   }
   xmlSaveFormatFile(_confFilePath.native_file_string().c_str(), doc, 1);
   xmlFreeDoc(doc);
 }
 
 /**
-* @brief set a key and its value
+* @brief set a key for a section and its value
 * @param key string value representing an item key
 * @param value string value representing an item value
+* @param section string value of the section
 * @return nothing
 * @sa getKey()
 */
 void
-PNConf::setKey(const std::string& key, const std::string& value)
+PNConf::setKey(const std::string& key, const std::string& value, const std::string& section)
 {
-  _confHash[key] = value;
+  _confHash[section][key] = value;
 }
 
 /**
@@ -188,13 +196,18 @@ PNConf::_loadConfFile()
 	throw PNException("Configuration file corrupted !");
   }
 
-  xmlNode = xmlNode->xmlChildrenNode;
-  while (xmlNode != NULL)
+  xmlNodePtr Section = xmlNode->xmlChildrenNode;
+  while (Section != NULL)
   {
-	if ((!xmlStrcmp(xmlNode->name, (const xmlChar *)"item")))
-	  _confHash[(char*)xmlGetProp(xmlNode, (const xmlChar *)"key")] = (char*)xmlGetProp(xmlNode, (const xmlChar *)"value");
+  	if ((!xmlStrcmp(Section->name, (const xmlChar *)"section")))
+  	{
+		xmlNode = Section->xmlChildrenNode;
+		if ((!xmlStrcmp(xmlNode->name, (const xmlChar *)"item")))
+			_confHash[(char*)xmlGetProp(Section, (const xmlChar *)"name")][(char*)xmlGetProp(xmlNode, (const xmlChar *)"key")] = (char*)xmlGetProp(xmlNode, (const xmlChar *)"value");
 
-	xmlNode = xmlNode->next;
+		xmlNode = xmlNode->next;
+  	}
+  	Section = Section->next;  	
   }
   xmlFreeDoc(xmlDoc);
 }
@@ -207,15 +220,14 @@ PNConf::_loadConfFile()
 void
 PNConf::_createDefaultConf()
 {
-  xmlDocPtr doc = xmlNewDoc((const xmlChar *)"1.0");
-  xmlNodePtr root = xmlNewNode(NULL, (const xmlChar *)"configuration");
-  xmlDocSetRootElement(doc, root);
-
-  std::map<std::string, std::string>::iterator pos;
-  for (pos = _defaultHash.begin(); pos != _defaultHash.end(); ++pos)
-	_confHash[pos->first] = pos->second;
-
-  saveConf();
+	std::map<std::string, std::map<std::string, std::string> >::iterator section;
+	for (section = _defaultHash.begin(); section != _defaultHash.end(); ++section)
+	{
+		std::map<std::string, std::string>::iterator pos;
+		for (pos = section->second.begin(); pos != section->second.end(); ++pos)
+			_confHash[section->first][pos->first] = pos->second;
+	}
+	this->saveConf();
 }
 
 }
