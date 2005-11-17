@@ -28,6 +28,7 @@
 #include "pnmaxplugin.h"
 #include "PNAnimationWin.hpp"
 #include "PNAnimationExporter.hpp"
+#include ".\pnanimationwin.hpp"
 
 
 // Bo�e de dialogue PNAnimationWin
@@ -51,6 +52,7 @@ void PNAnimationWin::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(PNAnimationWin, CDialog)
+  ON_NOTIFY(NM_CLICK, IDC_TREE_SQUELETOR, OnNMClickTreeSqueletor)
 END_MESSAGE_MAP()
 
 BOOL  PNAnimationWin::OnInitDialog()
@@ -68,3 +70,8 @@ BOOL  PNAnimationWin::OnInitDialog()
 }
 
 // Gestionnaires de messages PNAnimationWin
+
+void PNAnimationWin::OnNMClickTreeSqueletor(NMHDR *pNMHDR, LRESULT *pResult)
+{
+  _updateBone(_treeSkeletor.GetRootItem());
+}
