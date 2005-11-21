@@ -40,7 +40,7 @@ Section /o "Sources" SecSrc
   File /r /x .svn /x html "..\__doc"
   File /r /x .svn /x *.exe /x *.rar "..\__releases"
   SetOutPath "$INSTDIR"
-  File /r /x .svn /x *.scb /x *.suo /x Debug /x Release "..\..\pnmaxplugin"
+  File /r /x .svn /x *.scb /x *.suo /x Debug /x Release "..\..\tools"
 SectionEnd
 
 Section /o "Dépendances" SecDep
