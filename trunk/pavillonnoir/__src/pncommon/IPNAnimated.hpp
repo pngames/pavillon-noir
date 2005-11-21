@@ -47,9 +47,10 @@ public:
 	
   /// Set animation to play and the time used to make the transition between last animation and this
   virtual pnuint		startAnimation(pnint animation, pnuint transTime);
+  /// Set animation to play
   virtual pnuint		startAnimation(pnint animation);
-  virtual pnuint		startAnimation(pnuint transTime);
-  /// Starting animation
+
+  /// Start animation
   virtual pnuint		startAnimation();
   /// Stop current animation and reset position
   virtual void			stopAnimation();
@@ -57,10 +58,14 @@ public:
   /// Pause current animation
   virtual void			pause();
 
+  /// Set the time used to make the transition between last animation and this
+  virtual void			setAnimTransTime(pnuint transTime);
   /// Set speed for	current animation, ex: 2.0f = 2 times normal speed
   virtual void			setAnimSpeed(pndouble speed);
   /// Set the automatic looping of animation enable or disable
   virtual void			setEnableLoop(pnbool enabled);
+
+  virtual void			update(pnuint deltaTime);
 	
 protected:
   pnint					_startedEventType;

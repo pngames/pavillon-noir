@@ -94,7 +94,7 @@ PNI3DSkeleton::render()
   _robject->render();
 }
 
-pnbool
+void
 PNI3DSkeleton::update(const AnimationSet& anims)
 {
   for (BoneList::iterator it = _bones.begin(); it != _bones.end(); ++it)
@@ -102,11 +102,9 @@ PNI3DSkeleton::update(const AnimationSet& anims)
 	it->update(anims);
 	memcpy(_vertBuffer[it->getId()], it->getCourse().getMatrix() + 12, sizeof(pnpoint3f));
   }
-
-  return true;
 }
 
-pnbool
+void
 PNI3DSkeleton::update(pndouble rtime, const AnimationSet& anims)
 {
   for (BoneList::iterator it = _bones.begin(); it != _bones.end(); ++it)
@@ -114,8 +112,6 @@ PNI3DSkeleton::update(pndouble rtime, const AnimationSet& anims)
 	it->update(rtime, anims);
 	memcpy(_vertBuffer[it->getId()], it->getCourse().getMatrix() + 12, sizeof(pnpoint3f));
   }
-
-  return true;
 }
 
 void

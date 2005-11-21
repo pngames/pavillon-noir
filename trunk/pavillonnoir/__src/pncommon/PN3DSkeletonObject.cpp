@@ -199,7 +199,7 @@ PN3DSkeletonObject::update(pnuint deltaTime)
 
   if (_running)
   {
-	_animTimeCurrent += (pnuint)(_animSpeed * deltaTime);
+	IPNAnimated::update(deltaTime);
 
 	for (AnimationSet::iterator it = _animsToPlay.begin(); it != _animsToPlay.end(); ++it)
 	{
@@ -220,17 +220,7 @@ PN3DSkeletonObject::update(pnuint deltaTime)
 	  if (_animTransTime > 0)
 		_skeleton->update(_animTimeCurrent / (double)_animTransTime, _animsToPlay);
 	  else
-		if (!_skeleton->update(_animsToPlay))
-		{
-		  if (_looping)
-		  {
-			_animTimeCurrent = 0;
-
-			PNEventManager::getInstance()->addEvent(PN_EVENT_OA_LOOPED, this, NULL);
-		  }
-		  else
-			stopAnimation();
-		}
+		_skeleton->update(_animsToPlay);
 	}
   }
   else
@@ -272,20 +262,65 @@ PN3DSkeletonObject::getSkeleton()
 //////////////////////////////////////////////////////////////////////////
 
 void
-PN3DSkeletonObject::animSetSpeed(pnfloat speed)
+PN3DSkeletonObject::stopAnimation()
 {
-  PNLOCK(this);
-
-  _animSpeed = speed;
-
-  for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
-  {
-	it->speed = speed;
-  }
+  IPNAnimated::stopAnimation();
 }
 
 void
-PN3DSkeletonObject::animSetSpeed(pnint animId, pnfloat speed)
+PN3DSkeletonObject::stopAnimation(pnuint animId)
+{
+  PNLOCK(this);
+
+  assert(animId < _anims.size()	&& "This animation does not exist.");
+
+  //////////////////////////////////////////////////////////////////////////
+
+  _animsToPlay.erase(&_anims[_animId]);
+}
+
+pnuint
+PN3DSkeletonObject::startAnimation()
+{
+  for (AnimationSet::iterator it = _animsToPlay.begin(); it != _animsToPlay.end(); ++it)
+	((PN3DSkeletonAnimation*)*it)->step = 0;
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  return IPNAnimated::startAnimation();
+}
+
+pnuint
+PN3DSkeletonObject::startAnimation(pnuint animId)
+{
+  PNLOCK(this);
+
+  assert((pnuint)animId < _anims.size() && "This animation does not exist.");
+
+  //////////////////////////////////////////////////////////////////////////
+
+  _anims[animId].step = 0;
+
+  _animsToPlay.insert(&_anims[animId]);
+
+  return PNEC_SUCCESS;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void
+PN3DSkeletonObject::setAnimSpeed(pnfloat speed)
+{
+  PNLOCK(this);
+
+  for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
+	it->speed = speed;
+
+  IPNAnimated::setAnimSpeed(speed);
+}
+
+void
+PN3DSkeletonObject::setAnimSpeed(pnint animId, pnfloat speed)
 {
   PNLOCK(this);
 
@@ -295,48 +330,48 @@ PN3DSkeletonObject::animSetSpeed(pnint animId, pnfloat speed)
   _anims[animId].speed = speed;
 }
 
+void
+PN3DSkeletonObject::setAnimWeight(pnfloat weight)
+{
+  PNLOCK(this);
+
+  for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
+	it->weight = weight;
+}
+
+void
+PN3DSkeletonObject::setAnimWeight(pnint animId, pnfloat weight)
+{
+  PNLOCK(this);
+
+  assert(animId >= 0 && (pnuint)animId < _anims.size()
+	&& "This animation does not exist.");
+
+  _anims[animId].weight = weight;
+}
+
 //////////////////////////////////////////////////////////////////////////
+
+/// Set animation to play and the time used to make the transition between last animation and this
+pnuint
+PN3DSkeletonObject::startAnimation(pnint animation, pnuint transTime)
+{
+  PNLOCK(this);
+
+  clearAnimationIds();
+
+  if (animation >= 0)
+	startAnimation(animation);
+
+  return IPNAnimated::startAnimation(animation, transTime);
+}
 
 void
 PN3DSkeletonObject::clearAnimationIds()
 {
   PNLOCK(this);
 
-  IPNMultiAnimated::clearAnimationIds();
-
   _animsToPlay.clear();
-}
-
-void
-PN3DSkeletonObject::addAnimationId(pnint animId)
-{
-  PNLOCK(this);
-
-  assert(animId >= 0 && (pnuint)animId < _anims.size()
-	&& "This animation does not exist.");
-
-  //////////////////////////////////////////////////////////////////////////
-
-  IPNMultiAnimated::addAnimationId(animId);
-
-  _anims[animId].step = 0;
-
-  _animsToPlay.insert(&_anims[animId]);
-}
-
-void
-PN3DSkeletonObject::delAnimationId(pnint animId)
-{
-  PNLOCK(this);
-
-  assert(animId >= 0 && (pnuint)animId < _anims.size()
-	&& "This animation does not exist.");
-
-  //////////////////////////////////////////////////////////////////////////
-
-  IPNMultiAnimated::delAnimationId(animId);
-
-  _animsToPlay.erase(&_anims[_animId]);
 }
 
 //////////////////////////////////////////////////////////////////////////

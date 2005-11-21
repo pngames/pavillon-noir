@@ -55,9 +55,9 @@ public:
   virtual void					render()=0;
 
   /// Update skeleton bones according to animation list
-  virtual pnbool				update(const AnimationSet& anims)=0;
+  virtual void					update(const AnimationSet& anims)=0;
   /// Update skeleton bones according to animation list
-  virtual pnbool				update(pndouble rtime, const AnimationSet& anims)=0;
+  virtual void					update(pndouble rtime, const AnimationSet& anims)=0;
 
   virtual void					reinit()=0;
 

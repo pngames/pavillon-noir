@@ -6,29 +6,22 @@ public:
   {
 	RENDER_SKELETON		= PN3DObject::RENDER_LAST,
 	RENDER_LAST			= RENDER_SKELETON << 1
-  }							rendermode;
+  }						rendermode;
 
 //////////////////////////////////////////////////////////////////////////
   
-  /// Empty animation list to play
-  void						clearAnimationIds();
-  /// Add animation to play by id
-  void						addAnimationId(int animId);
-  /// Delete animation to play by id
-  void						delAnimationId(int animId);
-  
   /// Set animation to play and the time used to make the transition between last animation and this
-   unsigned int				startAnimation(int animation, unsigned int transTime);
+   unsigned int			startAnimation(int animation, unsigned int transTime);
   /// Stop current animation and reset position
-   void						stopAnimation();
+   void					stopAnimation();
 
   /// Pause current animation
-   void						pause();
+   void					pause();
 
   /// Set speed for current animation, ex: 2.0f = 2 times normal speed
-   void						animSetSpeed(double speed);
+   void					setAnimSpeed(double speed);
   /// Set the automatic looping of animation enable or disable
-   void						setEnableLoop(bool enabled);
+   void					setEnableLoop(bool enabled);
 
 //////////////////////////////////////////////////////////////////////////
 

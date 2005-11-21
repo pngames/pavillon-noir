@@ -64,8 +64,9 @@ IPNAnimated::startAnimation(pnint animation, pnuint transTime)
   PNLOCKP(this);
 
   _animId = animation;
-  
-  return startAnimation(transTime);
+  setAnimTransTime(transTime);
+
+  return startAnimation();
 }
 
 pnuint
@@ -74,16 +75,7 @@ IPNAnimated::startAnimation(pnint animation)
   PNLOCKP(this);
 
   _animId = animation;
-
-  return startAnimation(0);
-}
-
-pnuint
-IPNAnimated::startAnimation(pnuint transTime)
-{
-  PNLOCKP(this);
-
-  _animTransTime = transTime;
+  setAnimTransTime(0);
 
   return startAnimation();
 }
@@ -131,6 +123,22 @@ IPNAnimated::pause()
   }
   else
 	_paused = true;
+}
+
+void
+IPNAnimated::update(pnuint deltaTime)
+{
+  _animTimeCurrent += (pnuint)(_animSpeed * deltaTime);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void
+IPNAnimated::setAnimTransTime(pnuint transTime)
+{
+  PNLOCKP(this);
+
+  _animTransTime = transTime;
 }
 
 void
