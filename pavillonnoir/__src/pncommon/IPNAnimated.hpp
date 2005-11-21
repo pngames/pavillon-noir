@@ -30,55 +30,58 @@
 #ifndef _IPNANIMATED_HPP_
 # define _IPNANIMATED_HPP_
 
+namespace boost
+{
+  class recursive_mutex;
+}
+
 namespace PN
 {
-
-class PNAPI			IPNAnimated
+class PNAPI				IPNAnimated
 {
+protected:
+  boost::recursive_mutex*	_pmutex;
 public:
   IPNAnimated();
   virtual ~IPNAnimated();
 	
   /// Set animation to play and the time used to make the transition between last animation and this
-  virtual pnuint	startAnimation(pnint animation, pnuint transTime);
+  virtual pnuint		startAnimation(pnint animation, pnuint transTime);
+  virtual pnuint		startAnimation(pnint animation);
+  virtual pnuint		startAnimation(pnuint transTime);
   /// Starting animation
-  virtual pnuint	startAnimation();
+  virtual pnuint		startAnimation();
   /// Stop current animation and reset position
-  virtual void		stopAnimation();
+  virtual void			stopAnimation();
 
   /// Pause current animation
-  virtual void		pause();
+  virtual void			pause();
 
-  /// Set speed for current animation, ex: 2.0f = 2 times normal speed
-  virtual void		setAnimSpeed(pndouble speed);
+  /// Set speed for	current animation, ex: 2.0f = 2 times normal speed
+  virtual void			setAnimSpeed(pndouble speed);
   /// Set the automatic looping of animation enable or disable
-  virtual void		setEnableLoop(pnbool enabled);
+  virtual void			setEnableLoop(pnbool enabled);
 	
 protected:
-  pnint				_startedEventType;
-  pnint				_stopedEventType;
-  pnint				_pausedEventType;
+  pnint					_startedEventType;
+  pnint					_stopedEventType;
+  pnint					_pausedEventType;
 
   /// Id of playing local animation
-  pnint				_animId;
+  pnint					_animId;
 
   /// Indicate if animation running
-  pnbool			_running;
+  pnbool				_running;
   /// Indicate if animation paused
-  pnbool			_paused;
+  pnbool				_paused;
   /// Indicate if animation loop
-  pnbool			_looping;
+  pnbool				_looping;
 
-  /// Current time in animation
-  pnuint			_animTimeCurrent;
-  /// System time when animation started
-  pnuint			_animTimeStart;
+  pnuint				_animTimeCurrent;
   /// Transition time between two animations
-  pnuint			_animTransTime;
-  /// System time when animation paused
-  pnuint			_animTimePause;
+  pnuint				_animTransTime;
   /// Animation speed
-  pndouble			_animSpeed;
+  pndouble				_animSpeed;
 };
 
 }

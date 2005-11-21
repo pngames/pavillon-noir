@@ -43,8 +43,6 @@ class			PNGLRendererCamera : public PN3DCamera
   friend class PNGLRenderer;
   friend class PNGLSceneGraph;
 
-  EventCallback	_ufCallback;
-
 public:
   void			updateViewMatrix();
 

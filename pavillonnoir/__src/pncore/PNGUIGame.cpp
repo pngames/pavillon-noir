@@ -176,11 +176,11 @@ void  PNGUIGame::_commandLooping(const std::string&, std::istream& i)
 
   PN3DObject *obj = *PN3DCamera::getRenderCam()->getListObj().begin();
 
-  if (obj != NULL)
+  if (obj != NULL && obj->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ)
   {
-	PNLOCK(obj);
+	PN3DSkeletonObject*	sk = (PN3DSkeletonObject*)obj;
 
-	obj->setEnableLoop(b);
+	sk->setEnableLoop(b);
 
 	PNConsole::writeLine("EnableLoop : %s", b ? "true" : "false");
   }
@@ -201,11 +201,11 @@ void  PNGUIGame::_commandAnimSpeed(const std::string&, std::istream& i)
 
   PN3DObject *obj = *PN3DCamera::getRenderCam()->getListObj().begin();
 
-  if (obj != NULL)
+  if (obj != NULL && obj->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ)
   {
-	PNLOCK(obj);
+	PN3DSkeletonObject*	sk = (PN3DSkeletonObject*)obj;
 
-	obj->setAnimSpeed(speed);
+	sk->setAnimSpeed(speed);
 
 	PNConsole::writeLine("Speed changed : %f", speed);
   }
@@ -711,8 +711,11 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
 
   case CEGUI::Key::Return : // key Return start animation
 	std::cout << "Return";
-	if (obj != NULL)
-	  obj->startAnimation(0, 0);
+	if (obj != NULL && obj->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ)
+	{
+	  PN3DSkeletonObject*	sk = (PN3DSkeletonObject*)obj;
+	  sk->startAnimation(0, 0);
+	}
 	break;
 
   default:

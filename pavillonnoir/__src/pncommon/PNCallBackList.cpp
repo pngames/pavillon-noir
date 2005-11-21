@@ -48,9 +48,6 @@ void	PNCallBackList::deleteCallback(const EventCallback& callback)
 {
   PNLOCK(this);
 
-  /*for (CallbackSet::iterator it = _callbacks.begin(); it != _callbacks.end(); ++it)
-	if (*it == callback)
-	  _callbacks.erase(callback);*/
   _callbacks.erase(callback);
 }
 
