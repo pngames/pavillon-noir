@@ -366,14 +366,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\__src\pncommon\IPNMultiAnimated.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\IPNMultiAnimated.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\__src\pncommon\PNBoundingBox.cpp"
 					>
 				</File>

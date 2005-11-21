@@ -79,8 +79,8 @@ public:
   //////////////////////////////////////////////////////////////////////////
   
   void								render();
-  pnbool							update(const AnimationSet& anims);
-  pnbool							update(pndouble rtime, const AnimationSet& anims);
+  void								update(const AnimationSet& anims);
+  void								update(pndouble rtime, const AnimationSet& anims);
 
   void								reinit();
 

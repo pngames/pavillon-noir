@@ -33,7 +33,7 @@
 #include <vector>
 
 #include "PN3DObject.hpp"
-#include "IPNMultiAnimated.hpp"
+#include "IPNAnimated.hpp"
 #include "PN3DSkeletonAnimation.hpp"
 
 namespace PN {
@@ -43,7 +43,7 @@ class PN3DSkeleton;
 class PN3DAnimation;
 
 /// 3D object containing skeleton and animation to work with
-class PNAPI					PN3DSkeletonObject : public PN3DObject, public IPNMultiAnimated
+class PNAPI					PN3DSkeletonObject : public PN3DObject, public IPNAnimated
 {
 public:
   /// Sub Objects to render
@@ -97,24 +97,25 @@ public:
   //////////////////////////////////////////////////////////////////////////
   
 public:
-  void						animStop();
-  void						animStop(pnint animId);
+  void						stopAnimation();
+  void						stopAnimation(pnuint animId);
 
-  void						animStart();
-  void						animStart(pnint animId);
+  pnuint					startAnimation();
+  pnuint					startAnimation(pnuint animId);
 
-  void						animSetSpeed(pnfloat speed);
-  void						animSetSpeed(pnint animId, pnfloat speed);
+  void						setAnimSpeed(pnfloat speed);
+  void						setAnimSpeed(pnint animId, pnfloat speed);
 
-  void						animSetWeight(pnfloat speed);
-  void						animSetWeight(pnint animId, pnfloat speed);
+  void						setAnimWeight(pnfloat weight);
+  void						setAnimWeight(pnint animId, pnfloat weight);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  /// Set animation to play and the time used to make the transition between last animation and this
+  virtual pnuint			startAnimation(pnint animation, pnuint transTime);
 
   /// Empty animation list to play
   void						clearAnimationIds();
-  /// Add animation to play by id
-  void						addAnimationId(pnint animId);
-  /// Delete animation to play by id
-  void						delAnimationId(pnint animId);
 
   //////////////////////////////////////////////////////////////////////////
   
