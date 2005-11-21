@@ -36,7 +36,6 @@
 #include "pnmath.h"
 
 #include "PNObject.hpp"
-#include "IPNAnimated.hpp"
 #include "IPNXMLSerializable.hpp"
 
 #include "PNPoint.hpp"
@@ -54,7 +53,7 @@ class PNFace;
 class PNPhysicalObject;
 
 /// Base object for all object evolving in the scene
-class PNAPI							PN3DObject : public PNObject, public IPNAnimated, public IPNXMLSerializable
+class PNAPI							PN3DObject : public PNObject, public IPNXMLSerializable
 {
 public:
   boost::recursive_mutex			_mutex;

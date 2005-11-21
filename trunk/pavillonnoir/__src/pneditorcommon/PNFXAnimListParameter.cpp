@@ -55,151 +55,145 @@ using namespace std;
 namespace fs = boost::filesystem;
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  // Map
-  FXDEFMAP(PNFXAnimListParameter) PNFXAnimListParameterMap[]={
-	FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_DELETE,PNFXAnimListParameter::onDelete),
-	FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_ADD,PNFXAnimListParameter::onAdd)
-  };
+// Map
+FXDEFMAP(PNFXAnimListParameter) PNFXAnimListParameterMap[]={
+  FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_DELETE,PNFXAnimListParameter::onDelete),
+  FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_ADD,PNFXAnimListParameter::onAdd)
+};
 
-  //////////////////////////////////////////////////////////////////////////
-  FXIMPLEMENT(PNFXAnimListParameter,FXHorizontalFrame,PNFXAnimListParameterMap,ARRAYNUMBER(PNFXAnimListParameterMap))
+//////////////////////////////////////////////////////////////////////////
+FXIMPLEMENT(PNFXAnimListParameter,FXHorizontalFrame,PNFXAnimListParameterMap,ARRAYNUMBER(PNFXAnimListParameterMap))
 
-  PNFXAnimListParameter::PNFXAnimListParameter(FXComposite* p, PNConfigurableParameter* param)
-	: FXHorizontalFrame(p)
+PNFXAnimListParameter::PNFXAnimListParameter(FXComposite* p, PNConfigurableParameter* param)
+: FXHorizontalFrame(p)
+{
+  pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::PNFXAnimListParameter(FXComposite* p, PNConfigurableParameter* param)");
+  _parent = p;
+  _param = param;
+  _listBox =  new FXListBox(this, NULL, 0, LAYOUT_FILL_X | FRAME_SUNKEN | FRAME_THICK, 0,0,50,0);
+  _buttonAdd = new FXButton(this, "Add", NULL, this, ID_ADD,FRAME_RAISED|FRAME_THICK);
+  _buttonDelete = new FXButton(this, "Delete", NULL, this, ID_DELETE,FRAME_RAISED|FRAME_THICK);
+  buildList();
+}
+
+PNFXAnimListParameter::~PNFXAnimListParameter()
+{
+  delete _buttonAdd;
+  delete _buttonDelete;
+  delete _listBox;
+}
+//////////////////////////////////////////////////////////////////////////
+
+void	PNFXAnimListParameter::create()
+{
+  FXHorizontalFrame::create();
+  _buttonDelete->create();
+  _buttonAdd->create();
+  _listBox->create();
+  return;
+}
+
+/*
+*	Builds AnimList list for current parameter.
+*/
+void	PNFXAnimListParameter::buildList(void)
+{
+  PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem();
+
+  pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::buildList");
+  _listBox->clearItems();
+
+  for (PN3DSkeletonObject::AnimationVector::size_type i = 0; i < v->size(); i++)
   {
-	pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::PNFXAnimListParameter(FXComposite* p, PNConfigurableParameter* param)");
-	_parent = p;
-	_param = param;
-	_listBox =  new FXListBox(this, NULL, 0, LAYOUT_FILL_X | FRAME_SUNKEN | FRAME_THICK, 0,0,50,0);
-	_buttonAdd = new FXButton(this, "Add", NULL, this, ID_ADD,FRAME_RAISED|FRAME_THICK);
-	_buttonDelete = new FXButton(this, "Delete", NULL, this, ID_DELETE,FRAME_RAISED|FRAME_THICK);
-	buildList();
+	std::string s = v->at(i).anim->getFile()->string();
+
+	if (s.size() > 29)
+	  s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
+
+	_listBox->appendItem(s.c_str(), NULL, v->at(i).anim);
   }
 
-  PNFXAnimListParameter::~PNFXAnimListParameter()
+  _listBox->setNumVisible(_listBox->getNumItems()< 5 ? _listBox->getNumItems() : 5);
+  pnerror(PN_LOGLVL_DEBUG, "End of PNFXAnimListParameter::buildList");
+}
+
+/*
+*	Deletes selected link.
+*/
+long	PNFXAnimListParameter::onDelete(FXObject* obj,FXSelector sel,void* ptr)
+{
+  pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::onDelete");
+  if (_listBox->getNumItems() != 0)
   {
-	delete _buttonAdd;
-	delete _buttonDelete;
-	delete _listBox;
+	PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem(); 
+
+	v->erase(v->begin() + _listBox->getCurrentItem());
+
+	update();
   }
-  //////////////////////////////////////////////////////////////////////////
 
-  void	PNFXAnimListParameter::create()
+  return 1;
+}
+
+long	PNFXAnimListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
+{
+  pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::onAdd");
+  FXFileDialog fd(this, "Choose animation file");
+
+  if (fd.execute())
   {
-	FXHorizontalFrame::create();
-	_buttonDelete->create();
-	_buttonAdd->create();
-	_listBox->create();
-	return;
-  }
+	PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem(); 
+	pnint i = (pnint)v->size();
+	FXString	str = fd.getFilename().substitute('\\', '/');;
 
-  /*
-  *	Builds AnimList list for current parameter.
-  */
-  void	PNFXAnimListParameter::buildList(void)
-  {
-	PN3DSkeletonObject::VECTORANIMATION* v = (PN3DSkeletonObject::VECTORANIMATION*)_param->getElem();
+	char buf[512] = "";
+	getcwd(buf, 512);
+	FXString cwd(buf);
 
-	pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::buildList");
-	_listBox->clearItems();
-
-	for (PN3DSkeletonObject::VECTORANIMATION::size_type i = 0; i < v->size(); i++)
+	if (str.find(cwd.substitute('\\', '/')) == -1)
 	{
-	  std::string s = v->at(i)->getFile()->string();
-	  if (s.size() > 29)
-		s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
-	  _listBox->appendItem(s.c_str(), NULL, v->at(i));
+	  FXMessageBox::error(this, MBOX_OK, "Path Error", "An error occured. Please check file path.");	  	
 	}
-	_listBox->setNumVisible(_listBox->getNumItems()< 5 ? _listBox->getNumItems() : 5);
-	pnerror(PN_LOGLVL_DEBUG, "End of PNFXAnimListParameter::buildList");
-	return;
-  }
-
-  /*
-  *	Deletes selected link.
-  */
-  long	PNFXAnimListParameter::onDelete(FXObject* obj,FXSelector sel,void* ptr)
-  {
-	pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::onDelete");
-	if (_listBox->getNumItems() != 0)
+	else
 	{
-	  PN3DSkeletonObject::VECTORANIMATION* v = (PN3DSkeletonObject::VECTORANIMATION*)_param->getElem(); 
-	  FXint i = 0;
+	  fs::path p(str.replace(0, strlen(buf) + 1, "").text(), fs::no_check);
+	  PN3DAnimation* anim = (PN3DAnimation*)PNImportManager::getInstance()->import(p, PN_IMPORT_3DANIMATION);
 
-	  for (PN3DSkeletonObject::VECTORANIMATION::iterator it = v->begin(); it != v->end(); it++)
+	  if (anim != NULL)
 	  {
-		if (i == _listBox->getCurrentItem())
-		{
-		  v->erase(it);
-		  break;
-		}
-		i++;
-	  }
-	  update();
-	}
+		v->push_back(PN3DSkeletonAnimation(anim, v->size()));
 
-	return 1;
-  }
-
-  long	PNFXAnimListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
-  {
-	pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::onAdd");
-	FXFileDialog fd(this, "Choose animation file");
-
-	if (fd.execute())
-	{
-	  PN3DSkeletonObject::VECTORANIMATION* v = (PN3DSkeletonObject::VECTORANIMATION*)_param->getElem(); 
-	  pnint i = (pnint)v->size();
-	  FXString	str = fd.getFilename().substitute('\\', '/');;
-
-	  char buf[512] = "";
-	  getcwd(buf, 512);
-	  FXString cwd(buf);
-
-	  if (str.find(cwd.substitute('\\', '/')) == -1)
-	  {
-			FXMessageBox::error(this, MBOX_OK, "Path Error", "An error occured. Please check file path.");	  	
+		std::string s = v->at(i).anim->getFile()->string();
+		if (s.size() > 29)
+		  s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
+		_listBox->appendItem(s.c_str(), NULL, v->at(i).anim);
+		_listBox->setNumVisible(_listBox->getNumItems()<5 ? _listBox->getNumItems() : 5);
 	  }
 	  else
 	  {
-		fs::path p(str.replace(0, strlen(buf) + 1, "").text(), fs::no_check);
-		PN3DAnimation* anim = (PN3DAnimation*)PNImportManager::getInstance()->import(p, PN_IMPORT_3DANIMATION);
-
-		if (anim != NULL)
-		{
-		  v->push_back(anim);
-
-		  std::string s = v->at(i)->getFile()->string();
-		  if (s.size() > 29)
-			s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
-		  _listBox->appendItem(s.c_str(), NULL, v->at(i));
-		  _listBox->setNumVisible(_listBox->getNumItems()<5 ? _listBox->getNumItems() : 5);
-		}
-		else
-		{
-			FXMessageBox::error(this, MBOX_OK, "File Error", "An error occured. Please check file format.");
-		}
+		FXMessageBox::error(this, MBOX_OK, "File Error", "An error occured. Please check file format.");
 	  }
 	}
-	return 1;
   }
+  return 1;
+}
 
-  /*
-  *	Updates AnimList
-  */
-  void	PNFXAnimListParameter::update(void)
-  {
-	pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::update");
-	PNConfigurableObject* co = _param->getConfigurableObject();
-	buildList();
-	co->update(_param);
-	co->setModified();
-	_listBox->sortItems();
+/*
+*	Updates AnimList
+*/
+void	PNFXAnimListParameter::update(void)
+{
+  pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::update");
+  PNConfigurableObject* co = _param->getConfigurableObject();
+  buildList();
+  co->update(_param);
+  co->setModified();
+  _listBox->sortItems();
 
-	return;
-  }
+  return;
+}
 
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 };

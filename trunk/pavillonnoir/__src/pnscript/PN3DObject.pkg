@@ -240,21 +240,6 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   
-  /// Set animation to play and the time used to make the transition between last animation and this
-   unsigned int				startAnimation(int animation, unsigned int transTime);
-  /// Stop current animation and reset position
-   void						stopAnimation();
-
-  /// Pause current animation
-   void						pause();
-
-  /// Set speed for current animation, ex: 2.0f = 2 times normal speed
-   void						setAnimSpeed(double speed);
-  /// Set the automatic looping of animation enable or disable
-   void						setEnableLoop(bool enabled);
-
-  //////////////////////////////////////////////////////////////////////////
-  
   /// Retrieve number of vertex owned by 3d object
   // unsigned int			getNbVertexComputed();
 

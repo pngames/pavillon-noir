@@ -33,8 +33,10 @@
 #include "pnmath.h"
 #include "pnrender.h"
 
-#include "PNI3DSkeleton.hpp"
+#include "PN3DSkeletonAnimation.hpp"
 #include "PN3DAnimation.hpp"
+
+#include "PNI3DSkeleton.hpp"
 
 namespace fs = boost::filesystem;
 using namespace PN;
@@ -90,35 +92,40 @@ void
 PNI3DSkeleton::render()
 {
   _robject->render();
-  // FIXME : ugly debug
-
 }
 
 pnbool
-PNI3DSkeleton::update(pnuint time, PN3DAnimation* anim)
+PNI3DSkeleton::update(const AnimationSet& anims)
 {
-  if (anim != NULL && anim->getTotalTime() < time)
-	return false;
-
   for (BoneList::iterator it = _bones.begin(); it != _bones.end(); ++it)
   {
-	it->update(time, anim);
-	memcpy (_vertBuffer[it->getId()], it->getCourse().getMatrix() + 12, sizeof(pnpoint3f));
+	it->update(anims);
+	memcpy(_vertBuffer[it->getId()], it->getCourse().getMatrix() + 12, sizeof(pnpoint3f));
   }
 
   return true;
 }
 
 pnbool
-PNI3DSkeleton::update(pndouble rtime, PN3DAnimation* anim)
+PNI3DSkeleton::update(pndouble rtime, const AnimationSet& anims)
 {
   for (BoneList::iterator it = _bones.begin(); it != _bones.end(); ++it)
   {
-	it->update(rtime, anim);
-	memcpy (_vertBuffer[it->getId()], it->getCourse().getMatrix() + 12, sizeof(pnpoint3f));
+	it->update(rtime, anims);
+	memcpy(_vertBuffer[it->getId()], it->getCourse().getMatrix() + 12, sizeof(pnpoint3f));
   }
 
   return true;
+}
+
+void
+PNI3DSkeleton::reinit()
+{
+  for (BoneList::iterator it = _bones.begin(); it != _bones.end(); ++it)
+  {
+	it->reinit();
+	memcpy(_vertBuffer[it->getId()], it->getCourse().getMatrix() + 12, sizeof(pnpoint3f));
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////

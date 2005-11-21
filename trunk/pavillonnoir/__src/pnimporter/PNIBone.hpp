@@ -30,7 +30,9 @@
 #ifndef _PNIBONE_HPP_
 # define _PNIBONE_HPP_
 
-#include "PNObject.hpp"
+#include <set>
+
+#include "PN3DSkeletonAnimation.hpp"
 
 #include "PNMatrixTR4f.hpp"
 #include "PNQuatf.hpp"
@@ -38,16 +40,16 @@
 
 #include "pns_format.h"
 
+#include "PNObject.hpp"
+
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 class PN3DAnimation;
-class PNQuatf;
-class PNPoint;
-class PNMatrixTR4f;
 
 class					PNIBone : public PNObject
 {
+public:
   pnuint				_id;
   std::string			_name;
 
@@ -81,8 +83,9 @@ private:
 public:
   const PNQuatf&		getOrientation();
 public:
-  void					update(pnuint time, PN3DAnimation* anim);
-  void					update(pndouble rtime, PN3DAnimation* anim);
+  void					update(const AnimationSet& anims);
+  void					update(pndouble rtime, const AnimationSet& anims);
+  void					reinit();
 };
 
 //////////////////////////////////////////////////////////////////////////

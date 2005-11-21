@@ -47,13 +47,13 @@ static const std::string	PNO_XMLNODE_LISTMATERIALS	= "listmaterials";
 static const std::string	PNO_XMLNODE_MATERIAL		= "material";
 static const std::string	PNO_XMLNODE_SKELETON		= "skeleton";
 static const std::string	PNO_XMLNODE_LISTANIMS		= "listanims";
-static const std::string	PNO_XMLNODE_ANIM			= "anim";
 static const std::string	PNO_XMLNODE_PHYSICS			= "physics";
 
 #define						PNO_XMLPROP_PATH			(BAD_CAST "path")
 
+//////////////////////////////////////////////////////////////////////////
 
-//const string	PN3DObject::_modelNode = "model";
-//const string	PN3DObject::_materialsNode = "listmaterials";
+static const std::string	PNOA_XMLNODE_ROOT			= "anim";
+
 
 #endif /*_PNO_FORMAT_H_*/

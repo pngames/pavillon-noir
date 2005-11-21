@@ -30,6 +30,8 @@
 #ifndef _PN3DSKELETON_HPP_
 # define _PN3DSKELETON_HPP_
 
+#include "PN3DSkeletonAnimation.hpp"
+
 #include "PNObject.hpp"
 #include "IPNSerializable.hpp"
 
@@ -52,10 +54,12 @@ public:
   /// Render skeleton in wire
   virtual void					render()=0;
 
-  /// Update skeleton bones according to animation
-  virtual pnbool				update(pnuint time, PN3DAnimation* anim)=0;
-  /// Update skeleton bones according to animation
-  virtual pnbool				update(pndouble rtime, PN3DAnimation* anim)=0;
+  /// Update skeleton bones according to animation list
+  virtual pnbool				update(const AnimationSet& anims)=0;
+  /// Update skeleton bones according to animation list
+  virtual pnbool				update(pndouble rtime, const AnimationSet& anims)=0;
+
+  virtual void					reinit()=0;
 
   //////////////////////////////////////////////////////////////////////////
   

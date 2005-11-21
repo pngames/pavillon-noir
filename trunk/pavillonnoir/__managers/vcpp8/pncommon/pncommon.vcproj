@@ -307,6 +307,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncommon\PN3DSkeletonAnimation.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PN3DSkeletonAnimation.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\PN3DSkeletonObject.cpp"
 				>
 			</File>
@@ -355,6 +363,14 @@
 				</File>
 				<File
 					RelativePath="..\..\..\__src\pncommon\IPNAnimated.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\IPNMultiAnimated.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\IPNMultiAnimated.hpp"
 					>
 				</File>
 				<File

@@ -83,7 +83,8 @@ public:
   void					fromAxisDegrees(const PNVector3f& axis, pnfloat phi);
   void					fromAxisRadians(const PNVector3f& axis, pnfloat phi);
   
-  void					slerp(const PNQuatf& q1, PNQuatf& q2, pnfloat interp);
+  void					slerp(const PNQuatf& src, const PNQuatf& dest, pnfloat interp);
+  void					slerp(const PNQuatf& dest, pnfloat interp);
 
   PNPoint				multiply(const pnfloat *point) const;
   PNPoint	  			multiply(const PNPoint& point) const;
@@ -107,10 +108,12 @@ public:
 
 //////////////////////////////////////////////////////////////////////////
 
-inline					PNQuatf::PNQuatf()
+inline
+PNQuatf::PNQuatf()
 {}
 
-inline					PNQuatf::PNQuatf(const PNQuatf& quat)
+inline
+PNQuatf::PNQuatf(const PNQuatf& quat)
 {
   x = quat.x;
   y = quat.y;
@@ -118,7 +121,8 @@ inline					PNQuatf::PNQuatf(const PNQuatf& quat)
   w = quat.w;
 }
 
-inline					PNQuatf::PNQuatf(const pnfloat* quat)
+inline
+PNQuatf::PNQuatf(const pnfloat* quat)
 {
   x = quat[0];
   y = quat[1];
@@ -126,7 +130,8 @@ inline					PNQuatf::PNQuatf(const pnfloat* quat)
   w = quat[3];
 }
 
-inline					PNQuatf::PNQuatf(pnfloat r1, pnfloat r2, pnfloat r3, pnfloat r4)
+inline
+PNQuatf::PNQuatf(pnfloat r1, pnfloat r2, pnfloat r3, pnfloat r4)
 {
   x = r1;
   y = r2;
@@ -134,22 +139,26 @@ inline					PNQuatf::PNQuatf(pnfloat r1, pnfloat r2, pnfloat r3, pnfloat r4)
   w = r4;
 }
 
-inline					PNQuatf::PNQuatf(const PNQuatf& q1, PNQuatf& q2, pnfloat interp)
+inline
+PNQuatf::PNQuatf(const PNQuatf& q1, PNQuatf& q2, pnfloat interp)
 {
   slerp(q1, q2, interp);
 }
 
-inline					PNQuatf::PNQuatf(const PNVector3f& axis, pnfloat phi)
+inline
+PNQuatf::PNQuatf(const PNVector3f& axis, pnfloat phi)
 {
   fromAxisRadians(axis, phi);
 }
 
-inline					PNQuatf::~PNQuatf()
+inline
+PNQuatf::~PNQuatf()
 {}
 
 //////////////////////////////////////////////////////////////////////////
 
-inline void				PNQuatf::invert()
+inline void
+PNQuatf::invert()
 {
   x = -x;
   y = -y;
@@ -157,7 +166,8 @@ inline void				PNQuatf::invert()
   w = -w;
 }
 
-inline void				PNQuatf::set(pnfloat r1, pnfloat r2, pnfloat r3, pnfloat r4)
+inline void
+PNQuatf::set(pnfloat r1, pnfloat r2, pnfloat r3, pnfloat r4)
 {
   x = r1;
   y = r2;
@@ -165,7 +175,8 @@ inline void				PNQuatf::set(pnfloat r1, pnfloat r2, pnfloat r3, pnfloat r4)
   w = r4;
 }
 
-inline void				PNQuatf::set(const pnfloat* quat)
+inline void
+PNQuatf::set(const pnfloat* quat)
 {
   x = quat[0];
   y = quat[1];
@@ -176,4 +187,4 @@ inline void				PNQuatf::set(const pnfloat* quat)
 //////////////////////////////////////////////////////////////////////////
 };
 
-#endif /*_PNQUATF_H_*/
+#endif /*_PNQUATF_HPP_*/
