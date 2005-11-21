@@ -66,6 +66,9 @@ private:
   bool								_consoleVisibility;
   bool								_fadeIn;
   bool								_fadeOut;
+ CEGUI::ListboxTextItem*			_hackItem1;
+ CEGUI::ListboxTextItem*			_hackItem2; 
+
 
   /*/////////////////////////////////////////////////////////////////////////////
   /                                    Methods                                  /
