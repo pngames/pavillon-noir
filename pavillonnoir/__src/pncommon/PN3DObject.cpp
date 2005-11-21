@@ -92,10 +92,6 @@ PN3DObject::PN3DObject()
   _rotatingRollSpeed = 1.0f;
 
   _objType = OBJTYPE_3DOBJ;
-
-  _startedEventType = PN_EVENT_OA_STARTED;
-  _stopedEventType = PN_EVENT_OA_ENDED;
-  _pausedEventType = PN_EVENT_OA_PAUSED;
 }
 
 /*!
@@ -1023,9 +1019,11 @@ PN3DObject::updateRotation(pnfloat deltaTime)
 {
   PNLOCK(this);
 
-  pnfloat	xphi = (pnfloat)DEGREE_TO_RADIAN((_rotatingPitchSpeed));
-  pnfloat	yphi = (pnfloat)DEGREE_TO_RADIAN((_rotatingYawSpeed));
-  pnfloat	zphi = (pnfloat)DEGREE_TO_RADIAN((_rotatingRollSpeed));
+  pnfloat	d10 = deltaTime / 10.0f;
+
+  pnfloat	xphi = DEGREE_TO_RADIAN_F(d10 * _rotatingPitchSpeed);
+  pnfloat	yphi = DEGREE_TO_RADIAN_F(d10 * _rotatingYawSpeed);
+  pnfloat	zphi = DEGREE_TO_RADIAN_F(d10 * _rotatingRollSpeed);
 
   if (_targetMode & (TMODE_ORIENTATION_ABS_LOCKED | TMODE_ORIENTATION_LOCKED))
   {
@@ -1120,11 +1118,6 @@ void
 PN3DObject::update(pnuint deltaTime)
 {
   PNLOCK(this);
-
-  pnuint  tick = PNRendererInterface::getInstance()->getTicks();
-
-  //pnfloat  step = deltaTime * _movingSpeed;
-  _animTimeCurrent = tick;
 
   updateTranslation((pnfloat)deltaTime);
 

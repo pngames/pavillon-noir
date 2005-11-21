@@ -33,6 +33,8 @@
 #include <vector>
 
 #include "PN3DObject.hpp"
+#include "IPNMultiAnimated.hpp"
+#include "PN3DSkeletonAnimation.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -41,7 +43,7 @@ class PN3DSkeleton;
 class PN3DAnimation;
 
 /// 3D object containing skeleton and animation to work with
-class PNAPI					PN3DSkeletonObject : public PN3DObject
+class PNAPI					PN3DSkeletonObject : public PN3DObject, public IPNMultiAnimated
 {
 public:
   /// Sub Objects to render
@@ -63,12 +65,13 @@ protected:
   virtual pnint				_serializeContent(xmlNode* node);
 public:
   /// List of animations associated with 3d object
-  typedef std::vector<PN3DAnimation*>	VECTORANIMATION;
+  typedef std::vector<PN3DSkeletonAnimation>	AnimationVector;
 private:
   /// Skeleton of this 3d object
   PN3DSkeleton*				_skeleton;
   /// Animations list associated with this object
-  VECTORANIMATION			_animations;
+  AnimationVector			_anims;
+  AnimationSet				_animsToPlay;
 public:
   /// Default constructor for PN3DSkeletonObject.
   PN3DSkeletonObject();
@@ -86,10 +89,32 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
   /// Retrieve animation list of skeleton object
-  VECTORANIMATION&			getAnimations();
+  AnimationVector&			getAnimations();
 
   /// Retrieve skeleton of skeleton object
   PN3DSkeleton*				getSkeleton();
+
+  //////////////////////////////////////////////////////////////////////////
+  
+public:
+  void						animStop();
+  void						animStop(pnint animId);
+
+  void						animStart();
+  void						animStart(pnint animId);
+
+  void						animSetSpeed(pnfloat speed);
+  void						animSetSpeed(pnint animId, pnfloat speed);
+
+  void						animSetWeight(pnfloat speed);
+  void						animSetWeight(pnint animId, pnfloat speed);
+
+  /// Empty animation list to play
+  void						clearAnimationIds();
+  /// Add animation to play by id
+  void						addAnimationId(pnint animId);
+  /// Delete animation to play by id
+  void						delAnimationId(pnint animId);
 
   //////////////////////////////////////////////////////////////////////////
   

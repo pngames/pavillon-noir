@@ -214,9 +214,7 @@ pnbool		PNIAnimationBone::setRotation(pndouble rtime, const PNQuatf& lastRot, PN
   if (_rotations.size() <= 0)
 	return false;
 
-  PNQuatf	qFinal(lastRot, _rotations.begin()->rot, (pnfloat)rtime);
-
-  rot = qFinal;
+  rot.slerp(lastRot, _rotations.begin()->rot, (pnfloat)rtime);
 
   return true;
 }

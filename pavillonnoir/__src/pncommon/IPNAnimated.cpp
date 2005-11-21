@@ -36,9 +36,12 @@
 
 namespace PN
 {
+//////////////////////////////////////////////////////////////////////////
 
 IPNAnimated::IPNAnimated()
 {
+  _pmutex = NULL;
+
   _animId = -1;
   _running = false;
   _paused = false;
@@ -58,24 +61,47 @@ IPNAnimated::~IPNAnimated()
 pnuint
 IPNAnimated::startAnimation(pnint animation, pnuint transTime)
 {
+  PNLOCKP(this);
+
   _animId = animation;
-  _animTimeStart = PNRendererInterface::getInstance()->getTicks();
   
+  return startAnimation(transTime);
+}
+
+pnuint
+IPNAnimated::startAnimation(pnint animation)
+{
+  PNLOCKP(this);
+
+  _animId = animation;
+
+  return startAnimation(0);
+}
+
+pnuint
+IPNAnimated::startAnimation(pnuint transTime)
+{
+  PNLOCKP(this);
+
+  _animTransTime = transTime;
+
   return startAnimation();
 }
 
 pnuint
 IPNAnimated::startAnimation()
 {
+  PNLOCKP(this);
+
   _running = true;
   _paused = false;
   
+  _animTimeCurrent = 0;
+
   printf("IPNAnimated::startAnimation()\n");
   
   if (_startedEventType > -1)
     PNEventManager::getInstance()->addEvent((pnEventType)_startedEventType, (PNObject* )this, NULL);
-  
-  printf("IPNAnimated::startAnimation()\n");
   
   return PNEC_SUCCESS;
 }
@@ -83,6 +109,8 @@ IPNAnimated::startAnimation()
 void
 IPNAnimated::stopAnimation()
 {
+  PNLOCKP(this);
+
   _running = false;
 
   if (_stopedEventType > -1)
@@ -92,31 +120,34 @@ IPNAnimated::stopAnimation()
 void
 IPNAnimated::pause()
 {
+  PNLOCKP(this);
+
   if (_paused)
   {
 	_paused = false;
-	_animTimeStart += PNRendererInterface::getInstance()->getTicks() - _animTimePause;
 
     if (_pausedEventType > -1)
 	  PNEventManager::getInstance()->addEvent((pnEventType)_pausedEventType, (PNObject* )this, NULL);
   }
   else
-  {
 	_paused = true;
-	_animTimePause = PNRendererInterface::getInstance()->getTicks();
-  }
 }
 
 void
 IPNAnimated::setAnimSpeed(pndouble speed)
 {
+  PNLOCKP(this);
+
   _animSpeed = speed;
 }
 
 void
 IPNAnimated::setEnableLoop(pnbool enabled)
 {
+  PNLOCKP(this);
+
   _looping = enabled;
 }
 
-}
+//////////////////////////////////////////////////////////////////////////
+};

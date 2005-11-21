@@ -44,7 +44,8 @@ using namespace PN;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
   
-void		PNQuatf::loadIdentity()
+void
+PNQuatf::loadIdentity()
 {
   x = 0.0f;
   y = 0.0f;
@@ -52,14 +53,16 @@ void		PNQuatf::loadIdentity()
   w = 1.0f;
 }
 
-bool		PNQuatf::isIdentity() const
+bool
+PNQuatf::isIdentity() const
 {
   return x == 0.0f && y == 0.0f && z == 0.0f && w == 1.0f;
 }
 
 /////////////////////////////////////////////////////////////////////////
 
-void		PNQuatf::set(const PNMatrix4f& mat)
+void
+PNQuatf::set(const PNMatrix4f& mat)
 {
   register pnfloat trace = mat[0] + mat[5] + mat[10];
   register pnfloat scale;
@@ -101,22 +104,26 @@ void		PNQuatf::set(const PNMatrix4f& mat)
 
 /////////////////////////////////////////////////////////////////////////
 
-void		PNQuatf::fromDegrees(const pnfloat* angles)
+void
+PNQuatf::fromDegrees(const pnfloat* angles)
 {
   fromRadians((pnfloat)DEGREE_TO_RADIAN(angles[0]), (pnfloat)DEGREE_TO_RADIAN(angles[1]), (pnfloat)DEGREE_TO_RADIAN(angles[2]));
 }
 
-void		PNQuatf::fromDegrees(pnfloat x, pnfloat y, pnfloat z)
+void
+PNQuatf::fromDegrees(pnfloat x, pnfloat y, pnfloat z)
 {
   fromRadians((pnfloat)DEGREE_TO_RADIAN(x), (pnfloat)DEGREE_TO_RADIAN(y), (pnfloat)DEGREE_TO_RADIAN(z));
 }
 
-void		PNQuatf::fromRadians(const pnfloat* angles)
+void
+PNQuatf::fromRadians(const pnfloat* angles)
 {
   fromRadians(angles[0], angles[1], angles[2]);
 }
 
-void		PNQuatf::fromRadians(pnfloat rx, pnfloat ry, pnfloat rz)
+void
+PNQuatf::fromRadians(pnfloat rx, pnfloat ry, pnfloat rz)
 {
   register pnfloat	sx, sy, sz, cx, cy, cz;
 
@@ -139,12 +146,14 @@ void		PNQuatf::fromRadians(pnfloat rx, pnfloat ry, pnfloat rz)
   w = cx * cy * cz + sx * sy * sz;
 }
 
-void		PNQuatf::fromAxisDegrees(const PNVector3f& axis, pnfloat phi)
+void
+PNQuatf::fromAxisDegrees(const PNVector3f& axis, pnfloat phi)
 {
   fromAxisRadians(axis, (pnfloat)DEGREE_TO_RADIAN(phi));
 }
 
-void		PNQuatf::fromAxisRadians(const PNVector3f& axis, pnfloat phi)
+void
+PNQuatf::fromAxisRadians(const PNVector3f& axis, pnfloat phi)
 {
   register pnfloat a = 0.5f * phi;
   register pnfloat s = sinf(a) / axis.getNorm();
@@ -155,12 +164,14 @@ void		PNQuatf::fromAxisRadians(const PNVector3f& axis, pnfloat phi)
   w = cosf(a);
 }
 
-void		PNQuatf::getDegrees(pnfloat* angles) const
+void
+PNQuatf::getDegrees(pnfloat* angles) const
 {
   getDegrees(angles[0], angles[1], angles[2]);
 }
 
-void		PNQuatf::getDegrees(pnfloat& x, pnfloat& y, pnfloat& z) const
+void
+PNQuatf::getDegrees(pnfloat& x, pnfloat& y, pnfloat& z) const
 {
   getRadians(x, y, z);
 
@@ -169,12 +180,14 @@ void		PNQuatf::getDegrees(pnfloat& x, pnfloat& y, pnfloat& z) const
   z = (pnfloat)RADIAN_TO_DEGREE(z);
 }
 
-void		PNQuatf::getRadians(pnfloat* angles) const
+void
+PNQuatf::getRadians(pnfloat* angles) const
 {
   getRadians(angles[0], angles[1], angles[2]);
 }
 
-void		PNQuatf::getRadians(pnfloat& roll, pnfloat& pitch, pnfloat& yaw) const
+void
+PNQuatf::getRadians(pnfloat& roll, pnfloat& pitch, pnfloat& yaw) const
 {
   register pnfloat s = -2.0f * (x * z - w * y);
 
@@ -203,66 +216,105 @@ void		PNQuatf::getRadians(pnfloat& roll, pnfloat& pitch, pnfloat& yaw) const
 
 //////////////////////////////////////////////////////////////////////////
 
-void		PNQuatf::slerp(const PNQuatf& q1, PNQuatf& q2, pnfloat interp)
+void
+PNQuatf::slerp(const PNQuatf& src, const PNQuatf& dest, pnfloat interp)
 {
   register pnfloat	a, b;
 
-  a = (q1.x - q2.x) * (q1.x - q2.x);
-  b = (q1.x + q2.x) * (q1.x + q2.x);
+  a = (src.x - dest.x) * (src.x - dest.x);
+  b = (src.x + dest.x) * (src.x + dest.x);
 
-  a += (q1.y - q2.y) * (q1.y - q2.y);
-  b += (q1.y + q2.y) * (q1.y + q2.y);
+  a += (src.y - dest.y) * (src.y - dest.y);
+  b += (src.y + dest.y) * (src.y + dest.y);
 
-  a += (q1.z - q2.z) * (q1.z - q2.z);
-  b += (q1.z + q2.z) * (q1.z + q2.z);
+  a += (src.z - dest.z) * (src.z - dest.z);
+  b += (src.z + dest.z) * (src.z + dest.z);
 
-  a += (q1.w - q2.w) * (q1.w - q2.w);
-  b += (q1.w + q2.w) * (q1.w + q2.w);
-  
+  a += (src.w - dest.w) * (src.w - dest.w);
+  b += (src.w + dest.w) * (src.w + dest.w);
+
   if (a > b)
-	q2.invert();
-
-  pnfloat	cosom = q1.x * q2.x + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w;
-  pndouble  sclq1, sclq2;
-
-  if ((1.0 + cosom) > 0.00000001)
   {
-	if ((1.0 - cosom) > 0.00000001)
+	pnfloat	cosom = src.x * -dest.x + src.y * -dest.y + src.z * -dest.z + src.w * -dest.w;
+	pndouble  sclsrc, scldest;
+
+	if ((1.0 + cosom) > 0.00000001)
 	{
-	  pndouble  omega = acos(cosom);
-	  pndouble  sinom = sin(omega);
-	  sclq1 = sin((1.0 - interp) * omega) / sinom;
-	  sclq2 = sin(interp * omega) / sinom;
+	  if ((1.0 - cosom) > 0.00000001)
+	  {
+		pndouble  omega = acos(cosom);
+		pndouble  sinom = sin(omega);
+		sclsrc = sin((1.0 - interp) * omega) / sinom;
+		scldest = sin(interp * omega) / sinom;
+	  }
+	  else
+	  {
+		sclsrc = 1.0 - interp;
+		scldest = interp;
+	  }
+
+	  x = (pnfloat) (sclsrc * src.x + scldest * -dest.x);
+	  y = (pnfloat) (sclsrc * src.y + scldest * -dest.y);
+	  z = (pnfloat) (sclsrc * src.z + scldest * -dest.z);
+	  w = (pnfloat) (sclsrc * src.w + scldest * -dest.w);
 	}
 	else
 	{
-	  sclq1 = 1.0 - interp;
-	  sclq2 = interp;
-	}
+	  sclsrc = sin((1.0 - interp)* 0.5 * PI);
+	  scldest = sin(interp * 0.5 * PI);
 
-	x = (pnfloat) (sclq1 * q1.x + sclq2 * q2.x);
-	y = (pnfloat) (sclq1 * q1.y + sclq2 * q2.y);
-	z = (pnfloat) (sclq1 * q1.z + sclq2 * q2.z);
-	w = (pnfloat) (sclq1 * q1.w + sclq2 * q2.w);
+	  x = (pnfloat) (sclsrc * src.x + scldest * -src.y);
+	  y = (pnfloat) (sclsrc * src.y + scldest * src.x);
+	  z = (pnfloat) (sclsrc * src.z + scldest * -src.w);
+	  w = (pnfloat) (sclsrc * src.w + scldest * src.z);
+	}
   }
   else
   {
-	x = -q1.y;
-	y = q1.x;
-	z = -q1.w;
-	w = q1.z;
+	pnfloat	cosom = src.x * dest.x + src.y * dest.y + src.z * dest.z + src.w * dest.w;
+	pndouble  sclsrc, scldest;
 
-	sclq1 = sin((1.0 - interp)* 0.5 * PI);
-	sclq2 = sin(interp * 0.5 * PI);
+	if ((1.0 + cosom) > 0.00000001)
+	{
+	  if ((1.0 - cosom) > 0.00000001)
+	  {
+		pndouble  omega = acos(cosom);
+		pndouble  sinom = sin(omega);
+		sclsrc = sin((1.0 - interp) * omega) / sinom;
+		scldest = sin(interp * omega) / sinom;
+	  }
+	  else
+	  {
+		sclsrc = 1.0 - interp;
+		scldest = interp;
+	  }
 
-	x = (pnfloat) (sclq1 * q1.x + sclq2 * x);
-	y = (pnfloat) (sclq1 * q1.y + sclq2 * y);
-	z = (pnfloat) (sclq1 * q1.z + sclq2 * z);
-	w = (pnfloat) (sclq1 * q1.w + sclq2 * w);
+	  x = (pnfloat) (sclsrc * src.x + scldest * dest.x);
+	  y = (pnfloat) (sclsrc * src.y + scldest * dest.y);
+	  z = (pnfloat) (sclsrc * src.z + scldest * dest.z);
+	  w = (pnfloat) (sclsrc * src.w + scldest * dest.w);
+	}
+	else
+	{
+	  sclsrc = sin((1.0 - interp)* 0.5 * PI);
+	  scldest = sin(interp * 0.5 * PI);
+
+	  x = (pnfloat) (sclsrc * src.x + scldest * -src.y);
+	  y = (pnfloat) (sclsrc * src.y + scldest * src.x);
+	  z = (pnfloat) (sclsrc * src.z + scldest * -src.w);
+	  w = (pnfloat) (sclsrc * src.w + scldest * src.z);
+	}
   }
 }
 
-PNQuatf			PNQuatf::getInvert() const
+void
+PNQuatf::slerp(const PNQuatf& dest, pnfloat interp)
+{
+  slerp(*this, dest, interp);
+}
+
+PNQuatf
+PNQuatf::getInvert() const
 {
   register pnfloat n = x * x + y * y + z * z + w * w;
 
@@ -271,7 +323,8 @@ PNQuatf			PNQuatf::getInvert() const
 
 //////////////////////////////////////////////////////////////////////////
 
-PNPoint			PNQuatf::multiply(const pnfloat *point) const
+PNPoint
+PNQuatf::multiply(const pnfloat *point) const
 {
   register pnfloat tx = 2.0f * x;
   register pnfloat ty = 2.0f * y;
@@ -292,7 +345,8 @@ PNPoint			PNQuatf::multiply(const pnfloat *point) const
 	point[0] * (txz - twy) + point[1] * (tyz + twx) + point[2] * (1.0f - txx - tyy));
 }
 
-PNPoint			PNQuatf::multiply(const PNPoint& point) const
+PNPoint
+PNQuatf::multiply(const PNPoint& point) const
 {
   register pnfloat tx = 2.0f * x;
   register pnfloat ty = 2.0f * y;
@@ -315,7 +369,8 @@ PNPoint			PNQuatf::multiply(const PNPoint& point) const
 
 //////////////////////////////////////////////////////////////////////////
 
-PNPoint			PNQuatf::operator*(const PNPoint& vec) const
+PNPoint
+PNQuatf::operator*(const PNPoint& vec) const
 {
   register pnfloat tx = 2.0f * x;
   register pnfloat ty = 2.0f * y;
@@ -336,7 +391,8 @@ PNPoint			PNQuatf::operator*(const PNPoint& vec) const
 	vec.x * (txz - twy) + vec.y * (tyz + twx) + vec.z * (1.0f - txx - tyy));
 }
 
-PNQuatf			PNQuatf::operator*(const PNQuatf& quat) const
+PNQuatf
+PNQuatf::operator*(const PNQuatf& quat) const
 {
   PNQuatf	qr(*this);
 
@@ -345,7 +401,8 @@ PNQuatf			PNQuatf::operator*(const PNQuatf& quat) const
   return qr;
 }
 
-PNQuatf&		PNQuatf::operator*=(const PNQuatf& quat)
+PNQuatf&
+PNQuatf::operator*=(const PNQuatf& quat)
 {
   set(
 	w * quat.x + x * quat.w + y * quat.z - z * quat.y,
@@ -383,7 +440,8 @@ PNQuatf::operator!=(const PNQuatf& quat) const
 
 //////////////////////////////////////////////////////////////////////////
 
-std::ostream&	operator<<(std::ostream& o, const PNQuatf& p)
+std::ostream&
+operator<<(std::ostream& o, const PNQuatf& p)
 {
   o << "[x=" << p.x << " y=" << p.y << " z=" << p.z << " w=" << p.w << "]";
 

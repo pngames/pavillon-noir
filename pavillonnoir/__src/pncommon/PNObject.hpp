@@ -42,6 +42,10 @@ class PNAPI PNObject
 #define PNLOCK_BEGIN(obj)	{ PNLOCK(obj)
 #define PNLOCK_END(obj)		}
 
+#define PNLOCKP(obj)		if ((obj)->_pmutex != NULL) boost::recursive_mutex::scoped_lock  sl(*((obj)->_pmutex))
+#define PNLOCKP_BEGIN(obj)	{ PNLOCKP(obj)
+#define PNLOCKP_END(obj)	}
+
   //////////////////////////////////////////////////////////////////////////
 
 public:

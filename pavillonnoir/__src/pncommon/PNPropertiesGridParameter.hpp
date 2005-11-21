@@ -34,12 +34,12 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
-class PNPropertiesGridParameter
+class							PNPropertiesGridParameter
 {
 public:
-  virtual		  ~PNPropertiesGridParameter() {};
+  virtual ~PNPropertiesGridParameter() {};
 
-  virtual void  update() = 0;
+  virtual void					update() = 0;
 
   // TOOD : remove all NULL references
   virtual PNConfigurableParameter* getParam() {return NULL; }

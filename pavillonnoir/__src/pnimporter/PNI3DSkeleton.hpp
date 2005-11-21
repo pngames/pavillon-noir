@@ -79,8 +79,10 @@ public:
   //////////////////////////////////////////////////////////////////////////
   
   void								render();
-  pnbool							update(pnuint time, PN3DAnimation* anim);
-  pnbool							update(pndouble rtime, PN3DAnimation* anim);
+  pnbool							update(const AnimationSet& anims);
+  pnbool							update(pndouble rtime, const AnimationSet& anims);
+
+  void								reinit();
 
   //////////////////////////////////////////////////////////////////////////
   // MAIN

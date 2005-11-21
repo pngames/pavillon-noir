@@ -118,6 +118,8 @@ int			PNPhysicalExporter::export(CString path)
   //GUP * gp = (GUP*)CreateInstance(GUP_CLASS_ID,Class_ID(470000002,0);
   // gp->ExecuteStringScript("toto=$path\n" + filestring);
 
+  LZOpenFile
+
 
   return TRUE;
 }

@@ -116,7 +116,7 @@ function PNCharacterClass(id)
 	------------------- Jump Parameter ------------------------
 	OBJ.JumpHight= 0;
 	--------------- Animation parameters ---------------------- 
-	OBJ:setAnimSpeed(4.0)
+	OBJ:animSetSpeed(4.0)
 	OBJ.idleTime = 0
 -------------------------------------------------------------------------------
 ---------------------move order callback-----------------------

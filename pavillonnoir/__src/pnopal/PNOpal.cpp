@@ -182,7 +182,7 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 		  // DEBUG
 		  opal::Vec3r print;
 		  print = ((PNOpalObject*)current_obj->getPhysicalObject())->getAccelSensor()->getLocalLinearAccel();
-		  pnerror(PN_LOGLVL_DEBUG, "Solid %s acceleration sensor", ((PNOpalObject*)current_obj->getPhysicalObject())->getOpalSolid()->getName()); 
+		  pnerror(PN_LOGLVL_DEBUG, "Solid %s acceleration sensor", ((PNOpalObject*)current_obj->getPhysicalObject())->getOpalSolid()->getName().c_str()); 
 		  pnerror(PN_LOGLVL_DEBUG, "Local  linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
 		  print = ((PNOpalObject*)current_obj->getPhysicalObject())->getAccelSensor()->getGlobalLinearAccel();
 		  pnerror(PN_LOGLVL_DEBUG, "Global linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);

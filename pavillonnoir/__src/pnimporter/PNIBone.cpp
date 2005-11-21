@@ -30,10 +30,12 @@
 #include "pndefs.h"
 #include "pnmath.h"
 
-#include "PNIBone.hpp"
+#include "PN3DSkeletonAnimation.hpp"
 #include "PN3DAnimation.hpp"
 
 #include "pns_format.h"
+
+#include "PNIBone.hpp"
 
 using namespace std;
 
@@ -98,17 +100,63 @@ PNIBone::getOrientation()
 //////////////////////////////////////////////////////////////////////////
 
 void
-PNIBone::update(pnuint time, PN3DAnimation* anim)
+PNIBone::update(const AnimationSet& anims)
 {
   PNMatrixTR4f	transform(_mRelativ);
 
-  if (anim != NULL)
+  pnbool	rotUpdated = false;
+  pnbool	posUpdated = false;
+
+  pnfloat	weight = 0.0f;
+
+  PNQuatf	lastRot;
+  PNPoint	lastPos;
+
+  for (AnimationSet::const_iterator  it = anims.begin(); it != anims.end(); ++it)
   {
-	if (anim->setRotation(_id, time, _lastRot))
-	  transform.setRotationQuaternion(_lastRot);
-	if (anim->setPosition(_id, time, _lastPos))
-	  transform.setTranslation(_lastPos);
+	PN3DSkeletonAnimation*  anim = *it;
+
+	//////////////////////////////////////////////////////////////////////////
+
+	PNQuatf		rot;
+	PNPoint		pos;
+
+	if (anim != NULL && anim->anim != NULL)
+	{
+	  if (anim->anim->setRotation(_id, anim->step, rot))
+	  {
+		if (rotUpdated)
+		  lastRot.slerp(lastRot, PNQuatf(rot), anim->weight / (weight + anim->weight));
+		else
+		  lastRot = rot;
+
+		weight += anim->weight;
+		rotUpdated = true;
+	  }
+	  if (anim->anim->setPosition(_id, anim->step, pos))
+	  {
+		if (posUpdated)
+		{
+		  lastPos.x = (lastPos.x * weight + pos.x * anim->weight) / (weight + anim->weight);
+		  lastPos.y = (lastPos.y * weight + pos.y * anim->weight) / (weight + anim->weight);
+		  lastPos.z = (lastPos.z * weight + pos.z * anim->weight) / (weight + anim->weight);
+		}
+		else
+		  lastPos = pos;
+		
+		weight += anim->weight;
+		posUpdated = true;
+	  }
+	}
   }
+
+  _lastRot = lastRot;
+  _lastPos = lastPos;
+
+  if (rotUpdated)
+	transform.setRotationQuaternion(_lastRot);
+  if (posUpdated)
+	transform.setTranslation(_lastPos);
 
   if (_parent == NULL)
 	_mCourse = transform;
@@ -124,17 +172,64 @@ PNIBone::update(pnuint time, PN3DAnimation* anim)
 }
 
 void
-PNIBone::update(pndouble rtime, PN3DAnimation* anim)
+PNIBone::update(pndouble rtime, const AnimationSet& anims)
 {
   PNMatrixTR4f	transform(_mRelativ);
 
-  if (anim != NULL)
+  pnbool	rotUpdated = false;
+  pnbool	posUpdated = false;
+
+  pnfloat	weight = 0.0f;
+
+  PNQuatf	lastRot;
+  PNPoint	lastPos;
+
+  for (AnimationSet::const_iterator  it = anims.begin(); it != anims.end(); ++it)
   {
-	if (anim->setRotation(_id, rtime, _lastRot, _lastRot))
-	  transform.setRotationQuaternion(_lastRot);
-	if (anim->setPosition(_id, rtime, _lastPos, _lastPos))
-	  transform.setTranslation(_lastPos);
+	PN3DSkeletonAnimation*  anim = *it;
+
+	//////////////////////////////////////////////////////////////////////////
+
+	PNQuatf		rot;
+	PNPoint		pos;
+
+	if (anim != NULL && anim->anim != NULL)
+	{
+	  if (anim->anim->setRotation(_id, rtime, lastRot, rot))
+	  {
+		if (rotUpdated)
+		  lastRot.slerp(lastRot, PNQuatf(rot), anim->weight / (weight + anim->weight));
+		else
+		  lastRot = rot;
+
+		weight += anim->weight;
+		rotUpdated = true;
+	  }
+
+	  if (anim->anim->setPosition(_id, rtime, lastPos, pos))
+	  {
+		if (posUpdated)
+		{
+		  lastPos.x = (lastPos.x * weight + pos.x * anim->weight) / (weight + anim->weight);
+		  lastPos.y = (lastPos.y * weight + pos.y * anim->weight) / (weight + anim->weight);
+		  lastPos.z = (lastPos.z * weight + pos.z * anim->weight) / (weight + anim->weight);
+		}
+		else
+		  lastPos = pos;
+
+		weight += anim->weight;
+		posUpdated = true;
+	  }
+	}
   }
+
+  _lastRot = lastRot;
+  _lastPos = lastPos;
+
+  if (rotUpdated)
+	transform.setRotationQuaternion(_lastRot);
+  if (posUpdated)
+	transform.setTranslation(_lastPos);
 
   if (_parent == NULL)
 	_mCourse = transform;
@@ -142,6 +237,21 @@ PNIBone::update(pndouble rtime, PN3DAnimation* anim)
   {
 	_mCourse = _parent->_mCourse;
 	_mCourse.postMultiply(transform);
+  }
+
+  _mFinal = _mCourse;
+  _mFinal.postMultiply(_mICourse);
+}
+
+void
+PNIBone::reinit()
+{
+  if (_parent == NULL)
+	_mCourse = _mRelativ;
+  else
+  {
+	_mCourse = _parent->_mCourse;
+	_mCourse.postMultiply(_mRelativ);
   }
 
   _mFinal = _mCourse;
