@@ -123,6 +123,9 @@ public:
 	STATE_R_BACK					= 0x000001 << 9,	/// Rotate to the back
 	STATE_R_FORWARD					= 0x000001 << 10,	/// Rotate to the forward
 	STATE_R_BACKWARD				= 0x000001 << 11,	/// Rotate to the backward
+
+	STATE_ALL_T						= STATE_T_RIGHT | STATE_T_LEFT | STATE_T_TOP | STATE_T_BACK | STATE_T_FORWARD | STATE_T_BACKWARD,
+	STATE_ALL_R						= STATE_R_RIGHT | STATE_R_LEFT | STATE_R_TOP | STATE_R_BACK | STATE_R_FORWARD | STATE_R_BACKWARD
   }									movingState;
 
   /// Return bit mask indicate in witch moving states is the 3D object

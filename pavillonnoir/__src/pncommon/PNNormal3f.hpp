@@ -52,43 +52,43 @@ class PNAPI							PNNormal3f : private PNVector3f
 public:
   PNNormal3f();
   PNNormal3f(pnfloat nX, pnfloat nY, pnfloat nZ);
-  PNNormal3f(const PNNormal3f & source);
+  PNNormal3f(const PNPoint& source);
 
 public:
   virtual ~PNNormal3f();
 
 public:
-  virtual inline void				setCrd(pnfloat nX, pnfloat nY, pnfloat nZ)	{ PNVector3f::setCrd(nX, nY, nZ); setNorm(1.0f); return; }
-  virtual inline void				setArray(const pnfloat * array)				{ PNVector3f::setArray(array); setNorm(1.0f);}
+  virtual inline void				setCrd(pnfloat nX, pnfloat nY, pnfloat nZ) { PNVector3f::setCrd(nX, nY, nZ); setNorm(1.0f); }
+  virtual inline void				setArray(const pnfloat * array) { PNVector3f::setArray(array); setNorm(1.0f); }
    
 public:
-  virtual inline pnfloat			getX()	const											{ return (x); }
-  virtual inline pnfloat			getY()	const											{ return (y); }
-  virtual inline pnfloat			getZ()	const 											{ return (z); }  
+  virtual inline pnfloat			getX() const { return (x); }
+  virtual inline pnfloat			getY() const { return (y); }
+  virtual inline pnfloat			getZ() const { return (z); }  
   virtual inline void				get(pnfloat & nX, pnfloat & nY, pnfloat & nZ)	 const	{ nX = x; nY = y; nZ = z; return; }
-  virtual inline void				get(pnfloat * array)							 const 	{ assert(array!=NULL); array[0]=x;array[1]=y;array[2]=z;}
+  virtual inline void				get(pnfloat* array) const { assert(array!=NULL); array[0]=x; array[1]=y; array[2]=z;}
 public:
-  virtual inline const PNVector3f&	getVector() const {return *this;};
+  virtual inline const PNVector3f&	getVector() const {return *this;}
 
 public:
-  virtual void						setFromSegment(const PNPoint & origin, const PNPoint & extremity);
+  virtual void						setFromSegment(const PNPoint& origin, const PNPoint& extremity);
   
 public:
-  virtual bool						isColinear(PNNormal3f & v);
+  virtual bool						isColinear(const PNNormal3f& v);
   virtual bool						isColinear(pnfloat nX, pnfloat nY, pnfloat nZ);
-  virtual bool						isOrthogonal(PNNormal3f & v);
+  virtual bool						isOrthogonal(const PNNormal3f& v);
   virtual bool						isOrthogonal(pnfloat nX, pnfloat nY, pnfloat nZ);
   virtual bool						isNull();
   
 public:
-  virtual pnfloat					radianRangePi(PNNormal3f & n);
-  virtual pnfloat					radianRange2Pi(PNNormal3f & cosinusReferentiel, PNNormal3f & sinusReferentiel);
-  virtual pnfloat					degreeRangePi(PNNormal3f & n);
-  virtual pnfloat					degreeRange2Pi(PNNormal3f & cosinusReferentiel, PNNormal3f & sinusReferentiel);
+  virtual pnfloat					radianRangePi(const PNNormal3f& n);
+  virtual pnfloat					radianRange2Pi(const PNNormal3f& cosinusReferentiel, const PNNormal3f& sinusReferentiel);
+  virtual pnfloat					degreeRangePi(const PNNormal3f& n);
+  virtual pnfloat					degreeRange2Pi(const PNNormal3f& cosinusReferentiel, const PNNormal3f& sinusReferentiel);
   
 public:
-  virtual void						crossProduct(PNPoint & u, PNPoint & v);
-  virtual void						crossProduct(PNNormal3f & u, PNNormal3f & v);
+  virtual void						crossProduct(const PNPoint& u, const PNPoint& v);
+  virtual void						crossProduct(const PNNormal3f& u, const PNNormal3f& v);
   
 public:  
   virtual pnfloat					scalarProduct(const PNNormal3f & n) const;
@@ -96,7 +96,7 @@ public:
   virtual pnfloat					scalarProduct(pnfloat nX, pnfloat nY, pnfloat nZ) const;
   
 public:
-  virtual pnfloat getNorm			();
+  virtual pnfloat					getNorm() const;
 };
 
 /////////////////////////////////////

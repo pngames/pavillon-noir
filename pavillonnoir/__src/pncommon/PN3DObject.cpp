@@ -960,21 +960,24 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
   _updateTranslation.setNull();
 
   //////////////////////////////////////////////////////////////////////////
-  // targetPosition
+  // targetPositionABS
 
-  if (_targetMode & (TMODE_POSITION_ABS_LOCKED | TMODE_POSITION_ABS_LOCKED))
+  if (_targetMode & (TMODE_POSITION_LOCKED || TMODE_POSITION_ABS_LOCKED))
   {
+	_movingState &= !STATE_ALL_T;
+
 	_updateTranslation = getPositionTargetCoord();
 	_updateTranslation += getPositionTargetOrient() * _targetPosition;
 	_updateTranslation -= getCoord();
 
-	return ;
+	if (_targetMode & TMODE_POSITION_ABS_LOCKED)
+	  return;
   }
 
   //////////////////////////////////////////////////////////////////////////
   // NORMAL
 
-  if (_movingState != 0)
+  if (_movingState & STATE_ALL_T)
   {
 	if (_movingState & STATE_T_RIGHT)
 	  _updateTranslation += getRightDirection().getVector();
@@ -989,15 +992,42 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
 	if (_movingState & STATE_T_BACKWARD)
 	  _updateTranslation -= getFrontDirection().getVector();
 
-	_updateTranslation *= step;
+	_updateTranslation = _orient * _updateTranslation;
   }
 
-  //std::cout << _translation << " --> ";
+  if (!_updateTranslation.isNull())
+  {
+	_updateTranslation.setNorm(step);
 
-  _updateTranslation = _orient * _updateTranslation;
+	//////////////////////////////////////////////////////////////////////////
+	// targetPosition
+
+	if (_targetMode & TMODE_POSITION_LOCKED)
+	{
+	  PNNormal3f  vec(_orient.getInvert() * _updateTranslation);
+
+	  pnfloat sp = getFrontDirection().scalarProduct(vec);
+	  if (sp > PN_EPSILON)
+		addMovingState(STATE_T_FORWARD);
+	  else if (sp < PN_EPSILON)
+		addMovingState(STATE_T_BACKWARD);
+
+	  sp = getRightDirection().scalarProduct(vec);
+	  if (sp > PN_EPSILON)
+		addMovingState(STATE_T_RIGHT);
+	  else if (sp < PN_EPSILON)
+		addMovingState(STATE_T_LEFT);
+
+	  sp = getTopDirection().scalarProduct(vec);
+	  if (sp > PN_EPSILON)
+		addMovingState(STATE_T_TOP);
+	  else if (sp < PN_EPSILON)
+		addMovingState(STATE_T_BACK);
+	}
+  }
 
   //////////////////////////////////////////////////////////////////////////
-  // targetDistance
+  // targetDistance&ABS
 
   if (_targetDistance > 0.0f &&
 	(_targetMode & (TMODE_DISTANCE_ABS_LOCKED | TMODE_DISTANCE_LOCKED)))

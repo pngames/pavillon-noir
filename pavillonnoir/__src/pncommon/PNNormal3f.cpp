@@ -55,8 +55,6 @@ PNNormal3f::PNNormal3f()
   x = 0;
   y = 0;
   z = 0;
-
-  return;
 }
 
 /**
@@ -66,19 +64,14 @@ PNNormal3f::PNNormal3f()
 PNNormal3f::PNNormal3f(pnfloat nX, pnfloat nY, pnfloat nZ)
 {
   setCrd(nX, nY, nZ);
-  return;
 }
 
 /**
  * \brief copy constructor. Assigns the specified normalized vector to the current instance.
  */
-PNNormal3f::PNNormal3f(const PNNormal3f & source)
+PNNormal3f::PNNormal3f(const PNPoint & source)
 {
-  x = source.x;
-  y = source.y;
-  z = source.z;
-
-  return;
+  setCrd(source.x, source.y, source.z);
 }
 
 /**
@@ -86,7 +79,6 @@ PNNormal3f::PNNormal3f(const PNNormal3f & source)
  */
 PNNormal3f::~PNNormal3f()
 {
-  return;
 }
 
 /**
@@ -102,9 +94,8 @@ PNNormal3f::~PNNormal3f()
 void
 PNNormal3f::setFromSegment(const PNPoint & origin, const PNPoint & extremity)
 {
-	PNVector3f::setFromSegment(origin, extremity);
-	setNorm(1.0f);
-	return;
+  PNVector3f::setFromSegment(origin, extremity);
+  setNorm(1.0f);
 }
 
 /**
@@ -115,50 +106,49 @@ PNNormal3f::setFromSegment(const PNPoint & origin, const PNPoint & extremity)
  * \return true	if colinear, false otherwise.
  */
 bool
-PNNormal3f::isColinear(PNNormal3f & v)
+PNNormal3f::isColinear(const PNNormal3f & v)
 {
-  pnfloat	ps;
+  pnfloat	ps = x * v.x + y * v.y + z * v.z;
 
-  ps = x * v.x + y * v.y + z * v.z;
   return (ps >= 1 - PN_EPSILON);
 }
 
 /**
- * \brief Returns true if current vector and the one specified are colinear, ie: if both vectors are parallel
+ * \brief Returns true if current vector and the one specified are collinear, ie: if both vectors are parallel
  * and have the same direction.
  *
  * Note: it is an error to call this method in passing a null vector as parameter. In DEBUG version an assertion
  * will be broken, In RELEASE version this may lead to an undefined behavior.
  *
  * \param v	normal we want to test
- * \return true	if colinear, false otherwise.
+ * \return true	if collinear, false otherwise.
  */
 bool
 PNNormal3f::isColinear(pnfloat nX, pnfloat nY, pnfloat nZ)
 {
   PNNormal3f	n(nX, nY, nZ);
-  return (this->isColinear(n));
+
+  return isColinear(n);
 }
 
 /**
  * \brief Returns true if both the current instance and the specified normal are orthogonal. False
- * Otherwhise.
+ * Otherwise.
  *
  * \param	v	the specified normal we want to test the orthogonality
- * \return	true	if they are orthogonal, false otherwhise.
+ * \return	true	if they are orthogonal, false otherwise.
  */
 bool
-PNNormal3f::isOrthogonal(PNNormal3f & v)
+PNNormal3f::isOrthogonal(const PNNormal3f& v)
 {
-  pnfloat	ps;
+  pnfloat	ps = x * v.x + y * v.y + z * v.z;
 
-  ps = x * v.x + y * v.y + z * v.z;
   return (ABS(ps) < PN_EPSILON);
 }
 
 /**
  * \brief Returns true if both the current instance and the specified normal are orthogonal. False
- * Otherwhise.
+ * Otherwise.
  *
  * Note: it is an error to call this method in passing a null vector as parameter. In DEBUG version an assertion
  * will be broken, In RELEASE version this may lead to an undefined behavior.
@@ -170,7 +160,8 @@ bool
 PNNormal3f::isOrthogonal(pnfloat nX, pnfloat nY, pnfloat nZ)
 {
   PNNormal3f	n(nX, nY, nZ);
-  return (this->isOrthogonal(n));
+
+  return isOrthogonal(n);
 }
 
 /**
@@ -191,7 +182,7 @@ PNNormal3f::isNull()
  * \return	an angle in radian belonging to the range [0 - PI]
  */
 pnfloat
-PNNormal3f::radianRangePi(PNNormal3f & n)
+PNNormal3f::radianRangePi(const PNNormal3f& n)
 {
   pnfloat	ps;
 
@@ -215,7 +206,7 @@ PNNormal3f::radianRangePi(PNNormal3f & n)
  * \return	an angle in radian belonging to the range [0 - 2*PI]
  */
 pnfloat
-PNNormal3f::radianRange2Pi(PNNormal3f & cosinusReferentiel, PNNormal3f & sinusReferentiel)
+PNNormal3f::radianRange2Pi(const PNNormal3f& cosinusReferentiel, const PNNormal3f& sinusReferentiel)
 {
   pnfloat	ps_cs;
   pnfloat	ps_sn;
@@ -247,7 +238,7 @@ PNNormal3f::radianRange2Pi(PNNormal3f & cosinusReferentiel, PNNormal3f & sinusRe
  * \return	an angle in degree belonging to the range [0 - 180]
  */
 pnfloat
-PNNormal3f::degreeRangePi(PNNormal3f & n)
+PNNormal3f::degreeRangePi(const PNNormal3f& n)
 {
   return (pnfloat)RADIAN_TO_DEGREE(radianRangePi(n));
 }
@@ -262,7 +253,7 @@ PNNormal3f::degreeRangePi(PNNormal3f & n)
  * \return	an angle in degree belonging to the range [0 - 360]
  */
 pnfloat
-PNNormal3f::degreeRange2Pi(PNNormal3f & cosinusReferentiel, PNNormal3f & sinusReferentiel)
+PNNormal3f::degreeRange2Pi(const PNNormal3f& cosinusReferentiel, const PNNormal3f& sinusReferentiel)
 {
   return (pnfloat)RADIAN_TO_DEGREE(radianRange2Pi(cosinusReferentiel, sinusReferentiel));
 }
@@ -271,9 +262,9 @@ PNNormal3f::degreeRange2Pi(PNNormal3f & cosinusReferentiel, PNNormal3f & sinusRe
  * \return the norms of the current normal
  */
 pnfloat
-PNNormal3f::getNorm()
+PNNormal3f::getNorm() const
 {
-  return (sqrtf(x * x + y * y + z * z));
+  return PNVector3f::getNorm();
 }
 
 /**
@@ -287,7 +278,7 @@ PNNormal3f::getNorm()
  * \return	void
  */
 void
-PNNormal3f::crossProduct(PNPoint & u, PNPoint & v)
+PNNormal3f::crossProduct(const PNPoint& u, const PNPoint& v)
 {
 	PNNormal3f	normalizedU(u.x, u.y, u.z);
 	PNNormal3f	normalizedV(v.x, v.y, v.z);
@@ -301,9 +292,9 @@ PNNormal3f::crossProduct(PNPoint & u, PNPoint & v)
 }
 
 void
-PNNormal3f::crossProduct(PNNormal3f & u, PNNormal3f & v)
+PNNormal3f::crossProduct(const PNNormal3f& u, const PNNormal3f& v)
 {
-	PNVector3f::crossProduct((PNVector3f &) u, (PNVector3f &) v);
+	PNVector3f::crossProduct((const PNVector3f &) u, (const PNVector3f &) v);
 	setNorm(1.0f);
 	
 	return;
