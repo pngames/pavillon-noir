@@ -53,7 +53,6 @@ PNVector3f::PNVector3f()
   x = 0.0f;
   y = 0.0f;
   z = 0.0f;
-  return;
 }
 
 /**
@@ -65,7 +64,6 @@ PNVector3f::PNVector3f(pnfloat vX, pnfloat vY, pnfloat vZ)
   x = vX;
   y = vY;
   z = vZ;
-  return;
 }
 
 /**
@@ -75,8 +73,7 @@ PNVector3f::PNVector3f(const PNPoint & source)
 {
   x = source.x;
   y = source.y;
-  z = source.z;  
-  return;
+  z = source.z;
 }
 
 /**
@@ -87,8 +84,7 @@ PNVector3f::PNVector3f(const PNPoint & source)
  */
 PNVector3f::PNVector3f(const PNPoint & origin, const PNPoint & destination)
 {
-  this->setFromSegment(origin, destination);
-  return;
+  setFromSegment(origin, destination);
 }
 
 /////////////////////////////////////
@@ -98,7 +94,6 @@ PNVector3f::PNVector3f(const PNPoint & origin, const PNPoint & destination)
  */
 PNVector3f::~PNVector3f()
 {
-  return;
 }
 
 /////////////////////////////////////
@@ -106,22 +101,19 @@ PNVector3f::~PNVector3f()
 void
 PNVector3f::get(pnfloat & vX, pnfloat & vY, pnfloat & vZ)
 {
-	vX = x;
-	vY = y;
-	vZ = z;
-	return;
+  vX = x;
+  vY = y;
+  vZ = z;
 }
 
 void
 PNVector3f::get(pnfloat * array)
 {
-	assert(array != NULL);
-	
-	array[0] = x;
-	array[1] = y;
-	array[2] = z;
-	
-	return;
+  assert(array != NULL);
+
+  array[0] = x;
+  array[1] = y;
+  array[2] = z;
 }
 
 /**
@@ -138,8 +130,6 @@ PNVector3f::setFromSegment(const PNPoint & origin, const PNPoint & extremity)
   x = extremity.x - origin.x;
   y = extremity.y - origin.y;
   z = extremity.z - origin.z;
-
-  return;
 }
 
 /**
@@ -182,15 +172,15 @@ PNVector3f::isColinear(pnfloat vX, pnfloat vY, pnfloat vZ)
 {
   PNVector3f	u(vX, vY, vZ);
 
-  return (this->isColinear(u));
+  return isColinear(u);
 }
 
 /**
  * \brief Returns true if both the current instance and the specified vector are orthogonal. False
- * Otherwhise.
+ * Otherwise.
  *
  * \param	v	the specified vector we want to test the orthogonality
- * \return	true	if they are orthogonal, false otherwhise.
+ * \return	true	if they are orthogonal, false otherwise.
  */
 bool
 PNVector3f::isOrthogonal(const PNVector3f & v)
@@ -206,20 +196,20 @@ PNVector3f::isOrthogonal(const PNVector3f & v)
 
 /**
  * \brief Returns true if both the current instance and the specified vector are orthogonal. False
- * Otherwhise.
+ * Otherwise.
  *
  * \param	vX	x-coordinate of the specified vector
  * \param	vY	y-coordinate of the specified vector
  * \param	vZ	z-coordinate of the specified vector
  *
- * \return	true	if they are orthogonal, false otherwhise.
+ * \return	true	if they are orthogonal, false otherwise.
  */
 bool
 PNVector3f::isOrthogonal(pnfloat vX, pnfloat vY, pnfloat vZ)
 {
   PNVector3f	a(vX, vY, vZ);
 
-  return (this->isOrthogonal(a));
+  return isOrthogonal(a);
 }
 
 /**
@@ -232,8 +222,6 @@ PNVector3f::substract(const PNPoint & v)
   x -= v.x;
   y -= v.y;
   z -= v.z;
-
-  return;
 }
 
 /**
@@ -251,8 +239,6 @@ PNVector3f::substract(pnfloat vX, pnfloat vY, pnfloat vZ)
   x -= vX;
   y -= vY;
   z -= vZ;
-
-  return;
 }
 
 /**
@@ -270,8 +256,6 @@ PNVector3f::substract(const PNPoint & v, const PNPoint & u)
   x = v.x - u.x;
   y = v.y - u.y;
   z = v.z - u.z;
-
-  return;
 }
 
 /**
@@ -286,8 +270,6 @@ PNVector3f::add(const PNPoint & v)
   x += v.x;
   y += v.y;
   z += v.z;
-
-  return;
 }
 
 /**
@@ -299,8 +281,6 @@ PNVector3f::add(pnfloat vX, pnfloat vY, pnfloat vZ)
   x += vX;
   y += vY;
   z += vZ;
-
-  return;
 }
 
 /**
@@ -312,8 +292,6 @@ PNVector3f::add(const PNPoint & u, const PNPoint & v)
   x = u.x + v.x;
   y = u.y + v.y;
   z = u.z + v.z;
-
-  return;
 }
 
 /**
@@ -328,8 +306,6 @@ PNVector3f::multiply(pnfloat constant)
   x *= constant;
   y *= constant;
   z *= constant;
-
-  return;
 }
 
 /**
@@ -367,8 +343,6 @@ PNVector3f::setNorm(pnfloat newNorm)
   x *= factor;
   y *= factor;
   z *= factor;
-
-  return;
 }
 
 void
@@ -380,8 +354,6 @@ PNVector3f::setNorm(pnfloat* v, pnfloat newNorm)
   v[0] *= factor;
   v[1] *= factor;
   v[2] *= factor;
-
-  return;
 }
 
 /**
@@ -424,8 +396,6 @@ PNVector3f::crossProduct(const PNVector3f &u, const PNVector3f &v)
   x = r_x;
   y = r_y;
   z = r_z;
-
-  return;
 }
 
 /**
