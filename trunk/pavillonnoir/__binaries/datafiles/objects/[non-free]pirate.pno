@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE object SYSTEM "object.dtd">
 <object>
-  <model path="pirate.pnm" />
+  <model path="[non-free]pirate.pnm" />
   <listmaterials>
     <material path="pirate_foot.tga.pnt" />
     <material path="pirate_leg.tga.pnt" />
