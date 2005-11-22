@@ -960,7 +960,7 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
   _updateTranslation.setNull();
 
   //////////////////////////////////////////////////////////////////////////
-  // targetPositionABS
+  // targetPosition
 
   if (_targetMode & (TMODE_POSITION_LOCKED || TMODE_POSITION_ABS_LOCKED))
   {
@@ -995,14 +995,31 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
 	_updateTranslation = _orient * _updateTranslation;
   }
 
+  //////////////////////////////////////////////////////////////////////////
+  // targetDistance
+
+  if (_targetDistance > 0.0f &&	(_targetMode & (TMODE_DISTANCE_ABS_LOCKED | TMODE_DISTANCE_LOCKED)))
+  {
+	PNVector3f	targetVector = _positionTarget->getCoord();
+	targetVector -= _coord;
+
+	pnfloat norm = targetVector.getNorm();
+	targetVector.setNorm(norm - _targetDistance);
+
+	_updateTranslation += targetVector;
+
+	if (_targetMode & TMODE_DISTANCE_ABS_LOCKED)
+	  return ;
+  }
+
   if (!_updateTranslation.isNull())
   {
 	_updateTranslation.setNorm(step);
 
 	//////////////////////////////////////////////////////////////////////////
-	// targetPosition
+	// targetPosition & targetDistance
 
-	if (_targetMode & TMODE_POSITION_LOCKED)
+	if (_targetMode & (TMODE_POSITION_LOCKED | TMODE_DISTANCE_LOCKED))
 	{
 	  PNNormal3f  vec(_orient.getInvert() * _updateTranslation);
 
@@ -1024,21 +1041,6 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
 	  else if (sp < PN_EPSILON)
 		addMovingState(STATE_T_BACK);
 	}
-  }
-
-  //////////////////////////////////////////////////////////////////////////
-  // targetDistance&ABS
-
-  if (_targetDistance > 0.0f &&
-	(_targetMode & (TMODE_DISTANCE_ABS_LOCKED | TMODE_DISTANCE_LOCKED)))
-  {
-	PNVector3f	targetVector = _positionTarget->getCoord();
-	targetVector -= _coord;
-
-	pnfloat norm = targetVector.getNorm();
-	targetVector.setNorm(norm - _targetDistance);
-
-	_updateTranslation += targetVector;
   }
 
   return;
