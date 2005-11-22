@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE object SYSTEM "object.dtd">
 <object>
-  <model path="island.pnm" />
+  <model path="[non-free]island.pnm" />
   <listmaterials>
     <material path="island_a_-3rock01.pnt" />
     <material path="island_rottingwood01.pnt" />

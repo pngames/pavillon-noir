@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE object SYSTEM "object.dtd">
 <object>
-  <model path="pirate_flag.pnm" />
+  <model path="[non-free]pirate_flag.pnm" />
   <listmaterials>
     <material path="pirate_flag_marker.tga.pnt" />
   </listmaterials>
