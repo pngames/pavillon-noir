@@ -13,8 +13,8 @@
     <object>
       <model path="[non-free]boat.pnm"/>
       <listmaterials>
-        <material path="boat_sails.tga.pnt"/>
-        <material path="boat_ship.tga.pnt"/>
+        <material path="[non-free]boat_sails.tga.pnt"/>
+        <material path="[non-free]boat_ship.tga.pnt"/>
       </listmaterials>
     </object>
   </entity>
