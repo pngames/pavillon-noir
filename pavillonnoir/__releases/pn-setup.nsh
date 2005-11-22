@@ -131,7 +131,7 @@ SectionEnd
 
 Section "Données" SecData
   SetOutPath "$INSTDIR\pavillonnoir\__binaries"
-  File /r /x .svn /x Thumbs.db /x __JUNK "..\__binaries\datafiles"
+  File /r /x .svn /x Thumbs.db /x [non-free] /x __JUNK "..\__binaries\datafiles"
 SectionEnd
 SectionGroupEnd
 
