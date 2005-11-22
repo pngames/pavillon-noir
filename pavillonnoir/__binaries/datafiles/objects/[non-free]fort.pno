@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE object SYSTEM "object.dtd">
 <object>
-  <model path="fort.pnm" />
+  <model path="[non-free]fort.pnm" />
   <listmaterials>
     <material path="fort_cobblestone03.pnt" />
     <material path="fort_wall04.pnt" />

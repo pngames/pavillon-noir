@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE object SYSTEM "object.dtd">
 <object>
-  <model path="lighthouse.pnm" />
+  <model path="[non-free]lighthouse.pnm" />
   <listmaterials>
     <material path="lighthouse_c0wcrete01.pnt" />
     <material path="lighthouse_hd_mainrockz01.pnt" />

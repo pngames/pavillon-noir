@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE object SYSTEM "object.dtd">
 <object>
-  <model path="harbor.pnm" />
+  <model path="[non-free]harbor.pnm" />
   <listmaterials>
     <material path="harbor_brick_light01.pnt" />
     <material path="harbor_a_-0tnnl_rck01.pnt" />
