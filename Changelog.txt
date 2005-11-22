@@ -12,9 +12,9 @@ Big improvement of game framework and game desing start
 		- Add animation/displacement link for characters
 	* INSTALLER/PACKAGES:
 		- Add OpenAl installer into win32 installer
-		- Add scons script for linux package
+		- Add Scons script for linux source package
 	* GUI:
-		- New desing based on new CEGUI falagard system
+		- New design based on new CEGUI falagard system
 		- Add map loading panel
 		- Add loading panel
 		- Console improvement:
@@ -27,13 +27,13 @@ Big improvement of game framework and game desing start
 
 	Bug Fixes:
 	----------
-	* Fix release shortcut problem in win32 installer : it was override by web site shortcut
+	* Fix release shortcut problem in win32 installer : it was overriden by web site shortcut
 	* version update:
-		- Fix CEGUI problems with win32 release mode, somes linux distribs
+		- Fix CEGUI problems with win32 release mode, some linux distribs
 		- Fix Opal/Ode problems under linux
-	* Fix a lot of bug hard to details
+	* Fix a lot of bugs hard to detail
 
-	Commons Lib:
+	Common Libs:
 	------------
 	* Adding target modes for PN3DObjects:
 		- distance management
@@ -55,7 +55,7 @@ Big improvement of game framework and game desing start
 	
 	Know issues:
 	----------
-	* Not a bug but physics not activated for now then objects pass through ground and dont fall
+	* Not a bug but physics not activated for now then objects pass	through ground and don't fall
 
 version 0.0.1 (29/07/2005):
-	* First Release ! Technical demonstartion of Pavillon Noir engine (3D rendering, physics, scripting...)
+	* First Release ! Technical demonstration of Pavillon Noir engine (3D rendering, physics, scripting...)
