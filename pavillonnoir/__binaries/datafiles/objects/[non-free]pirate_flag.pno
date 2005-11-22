@@ -3,10 +3,10 @@
 <object>
   <model path="[non-free]pirate_flag.pnm" />
   <listmaterials>
-    <material path="pirate_flag_marker.tga.pnt" />
+    <material path="[non-free]pirate_flag_marker.tga.pnt" />
   </listmaterials>
-  <skeleton path="pirate_flag.pns" />
+  <skeleton path="[non-free]pirate_flag.pns" />
   <listanims>
-    <anim path="pirate_flag.pna" />
+    <anim path="[non-free]pirate_flag.pna" />
   </listanims>
 </object>
