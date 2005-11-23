@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE model SYSTEM "object-1.0.dtd">
-<model path="plane_3000x3000.pnm">
-  <listmaterials>
-    <material path="plane_3000x3000_02 - Par defaut.pnt" />
-  </listmaterials>
-</model>

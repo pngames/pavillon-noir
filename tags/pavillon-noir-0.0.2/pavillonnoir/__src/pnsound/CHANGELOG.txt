@@ -1,4 +1,0 @@
-0.0.1 (2005/03/01):
-* [thomas] modif : delete stlport support under Linux
-0.0.1 (2004/02/14):
-* [thomas] new : add CHANGELOG.txt

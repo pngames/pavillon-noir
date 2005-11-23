@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE model SYSTEM "object-1.0.dtd">
-<model path="animation test.pnm">
-  <skeleton path="animation test.pns" />
-  <listanims>
-    <anim path="animation test.pna" />
-  </listanims>
-</model>

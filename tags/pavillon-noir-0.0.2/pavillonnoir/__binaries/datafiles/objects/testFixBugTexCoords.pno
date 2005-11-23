@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE model SYSTEM "object-1.0.dtd">
-<model path="testFixBugTexCoords.pnm">
-  <listmaterials>
-    <material path="testComputeMultiMesh_01 - Default.pnt" />
-    <material path="testComputeMultiMesh_Material #37.pnt" />
-    <material path="testComputeMultiMesh_Material #36.pnt" />
-  </listmaterials>
-</model>

@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE model SYSTEM "object-1.0.dtd">
-<model path="cube_60x60x140.pnm">
-  <listmaterials>
-    <material path="cube_60x60x140_03 - Par defaut.pnt" />
-  </listmaterials>
-</model>

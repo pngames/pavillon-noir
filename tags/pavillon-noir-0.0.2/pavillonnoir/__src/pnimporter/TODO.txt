@@ -1,1 +1,0 @@
-* le rendu c bon maintenant faire des tes de charges sur des objet de plus en plus complexes
