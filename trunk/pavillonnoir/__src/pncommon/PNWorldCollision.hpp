@@ -76,9 +76,9 @@ public:
 	bool			translateSphere			(const PNBoundingSphere & sphere, const PNVector3f & translation, PNVector3f & resultingPos) const;
 	
 private:
-	void			_fillCollidersList		(const PNBoundingSphere & sphere, const PNPoint & startPosition, std::list<int> & colliders) const;	
+	void			_fillCollidersList		(const PNBoundingSphere & sphere, const PNPoint3f& startPosition, std::list<int> & colliders) const;	
 	int				_getBestColliderOfList	(const PNBoundingSphere & sphere, const PNNormal3f & force, std::list<int> & colliders) const;	
-	bool			_computeStepCollision	(const PNBoundingSphere & sphere, const PNNormal3f & force, const PNPoint & posAtPreviousStep, PNVector3f & correction) const;
+	bool			_computeStepCollision	(const PNBoundingSphere & sphere, const PNNormal3f & force, const PNPoint3f& posAtPreviousStep, PNVector3f & correction) const;
  	
 private:
 	PNTriangle *	_triangles;	

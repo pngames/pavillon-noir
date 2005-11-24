@@ -310,10 +310,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pnscript\PNGameEventData.pkg"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pnscript\PNGameMap.pkg"
 				>
 			</File>
@@ -330,7 +326,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pnscript\PNPoint.pkg"
+				RelativePath="..\..\..\__src\pnscript\PNPoint3f.pkg"
 				>
 			</File>
 			<File
@@ -395,10 +391,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNCharacterClass.lua"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNIACharacterClass.lua"
 				>
 			</File>
 			<File

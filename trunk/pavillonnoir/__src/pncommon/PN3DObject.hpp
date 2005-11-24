@@ -38,7 +38,7 @@
 #include "PNObject.hpp"
 #include "IPNXMLSerializable.hpp"
 
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 #include "PNQuatf.hpp"
 #include "PNMatrixTR4f.hpp"
 #include "PNVector3f.hpp"
@@ -202,7 +202,7 @@ protected:
   std::string						_viewBoneTarget;
 
   /// _positionTarget relative position
-  PNPoint							_targetPosition;
+  PNPoint3f							_targetPosition;
   /// _positionTarget relative distance
   pnfloat							_targetDistance;
   /// _viewTarget relative orientation
@@ -223,7 +223,7 @@ public:
   /// Retrieve 3d object position target bone
   const std::string&				getPositionBoneTarget() const;
   /// Retrieve 3d object position coordinate
-  PNPoint							getPositionTargetCoord() const;
+  PNPoint3f							getPositionTargetCoord() const;
   /// Retrieve 3d object position orientation
   PNQuatf							getPositionTargetOrient() const;
 
@@ -237,7 +237,7 @@ public:
   /// Retrieve 3d object view target bone
   const std::string&				getViewBoneTarget() const;
   /// Retrieve 3d object position coordinate
-  virtual PNPoint					getViewTargetCoord() const;
+  virtual PNPoint3f					getViewTargetCoord() const;
   /// Retrieve 3d object position orientation
   virtual PNQuatf					getViewTargetOrient() const;
 
@@ -314,7 +314,7 @@ protected:
   PNPhysicalObject*				_physicalObject;
 
   /// Object position in 3D world
-  PNPoint						_coord;
+  PNPoint3f						_coord;
   /// Define object orientation
   PNQuatf						_orient;
 
@@ -358,7 +358,7 @@ public:
   
 public:
   /// Return 3D object coordinate in 3D scene
-  virtual const PNPoint&		getCoord() const;
+  virtual const PNPoint3f&		getCoord() const;
   /// Return 3D object x coordinate in 3D scene
   virtual pnfloat				getX() const;
   /// Return 3D object y coordinate in 3D scene
@@ -367,15 +367,15 @@ public:
   virtual pnfloat				getZ() const;
 
   /// Set 3D object coordinate in 3D scene
-  virtual void					setCoord(const PNPoint& coord);
+  virtual void					setCoord(const PNPoint3f& coord);
   /// Set 3D object coordinate in 3D scene
   virtual void					setCoord(pnfloat x, pnfloat y, pnfloat z);
 
   /// Return 3D object center coordinate relive to his coordinate
-  virtual const PNPoint&		getCenter() const;
+  virtual const PNPoint3f&		getCenter() const;
 
   /// Translate relative to object coordinate
-  virtual void					move(PNPoint& coord);
+  virtual void					move(PNPoint3f& coord);
   /// Translate on x relative to object coordinate
   virtual void					moveX(pnfloat x);
   /// Translate on y relative to object coordinate
@@ -442,9 +442,9 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   /// Get minimum x y z coordinate
-  const PNPoint&	getMin() const;
+  const PNPoint3f&	getMin() const;
   /// Get maximum x y z coordinate
-  const PNPoint&	getMax() const;
+  const PNPoint3f&	getMax() const;
   //////////////////////////////////////////////////////////////////////////
 
   /// Retrieve model of 3d object

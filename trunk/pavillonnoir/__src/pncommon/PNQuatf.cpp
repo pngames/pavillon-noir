@@ -32,7 +32,7 @@
 #include "pndefs.h"
 #include "pnmath.h"
 
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 #include "PNVector3f.hpp"
 #include "PNMatrix4f.hpp"
 
@@ -323,7 +323,7 @@ PNQuatf::getInvert() const
 
 //////////////////////////////////////////////////////////////////////////
 
-PNPoint
+PNPoint3f
 PNQuatf::multiply(const pnfloat *point) const
 {
   register pnfloat tx = 2.0f * x;
@@ -339,14 +339,14 @@ PNQuatf::multiply(const pnfloat *point) const
   register pnfloat tyz = tz * y;
   register pnfloat tzz = tz * z;
 
-  return PNPoint(
+  return PNPoint3f(
 	point[0] * (1.0f - tyy - tzz) + point[1] * (txy - twz) + point[2] * (txz + twy),
 	point[0] * (txy + twz) + point[1] * (1.0f - txx - tzz) + point[2] * (tyz - twx),
 	point[0] * (txz - twy) + point[1] * (tyz + twx) + point[2] * (1.0f - txx - tyy));
 }
 
-PNPoint
-PNQuatf::multiply(const PNPoint& point) const
+PNPoint3f
+PNQuatf::multiply(const PNPoint3f& point) const
 {
   register pnfloat tx = 2.0f * x;
   register pnfloat ty = 2.0f * y;
@@ -361,7 +361,7 @@ PNQuatf::multiply(const PNPoint& point) const
   register pnfloat tyz = tz * y;
   register pnfloat tzz = tz * z;
 
-  return PNPoint(
+  return PNPoint3f(
 	point.x * (1.0f - tyy - tzz) + point.y * (txy - twz) + point.z * (txz + twy),
 	point.x * (txy + twz) + point.y * (1.0f - txx - tzz) + point.z * (tyz - twx),
 	point.x * (txz - twy) + point.y * (tyz + twx) + point.z * (1.0f - txx - tyy));
@@ -369,8 +369,8 @@ PNQuatf::multiply(const PNPoint& point) const
 
 //////////////////////////////////////////////////////////////////////////
 
-PNPoint
-PNQuatf::operator*(const PNPoint& vec) const
+PNPoint3f
+PNQuatf::operator*(const PNPoint3f& vec) const
 {
   register pnfloat tx = 2.0f * x;
   register pnfloat ty = 2.0f * y;
@@ -385,7 +385,7 @@ PNQuatf::operator*(const PNPoint& vec) const
   register pnfloat tyz = tz * y;
   register pnfloat tzz = tz * z;
 
-  return PNPoint(
+  return PNPoint3f(
 	vec.x * (1.0f - tyy - tzz) + vec.y * (txy - twz) + vec.z * (txz + twy),
 	vec.x * (txy + twz) + vec.y * (1.0f - txx - tzz) + vec.z * (tyz - twx),
 	vec.x * (txz - twy) + vec.y * (tyz + twx) + vec.z * (1.0f - txx - tyy));

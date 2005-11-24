@@ -31,7 +31,7 @@
 # define _PNBOUNDINGBOX_H_
 
 #include "PNObject.hpp"
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -49,26 +49,26 @@ namespace PN {
 class PNAPI			PNBoundingBox : public PNObject
 {
 protected:
-  PNPoint			mMinimum;
-  PNPoint			mMaximum;
+  PNPoint3f			mMinimum;
+  PNPoint3f			mMaximum;
   bool				mNull;
 
-  PNPoint			mCorners[8];
+  PNPoint3f			mCorners[8];
 
   void				_updateCorners(void);
 public:
   PNBoundingBox(void);
-  PNBoundingBox(const PNPoint& min, const PNPoint& max);
+  PNBoundingBox(const PNPoint3f& min, const PNPoint3f& max);
   PNBoundingBox(pnfloat mx, pnfloat my, pnfloat mz, pnfloat Mx, pnfloat My, pnfloat Mz);
   ~PNBoundingBox(void);
 
-  const	PNPoint&	getMinimum(void) const;
-  const	PNPoint&	getMaximum(void) const;
-  void				setMinimum(const PNPoint& vec);
+  const	PNPoint3f&	getMinimum(void) const;
+  const	PNPoint3f&	getMaximum(void) const;
+  void				setMinimum(const PNPoint3f& vec);
   void				setMinimum(pnfloat x, pnfloat y, pnfloat z);
-  void				setMaximum(const PNPoint& vec);
+  void				setMaximum(const PNPoint3f& vec);
   void				setMaximum(pnfloat x, pnfloat y, pnfloat z);
-  void				setExtents(const PNPoint& min, const PNPoint& max);
+  void				setExtents(const PNPoint3f& min, const PNPoint3f& max);
   void				setExtents(pnfloat mx, pnfloat my, pnfloat mz, pnfloat Mx, pnfloat My, pnfloat Mz);
 };
 

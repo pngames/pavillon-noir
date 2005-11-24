@@ -49,7 +49,7 @@ PNBoundingBox::~PNBoundingBox(void)
 {
 }
 
-PNBoundingBox::PNBoundingBox(const PNPoint& min, const PNPoint& max)
+PNBoundingBox::PNBoundingBox(const PNPoint3f& min, const PNPoint3f& max)
 {
   setExtents(min, max);
 }
@@ -61,21 +61,21 @@ PNBoundingBox::PNBoundingBox(pnfloat mx, pnfloat my, pnfloat mz, pnfloat Mx, pnf
 
 /** Gets the minimum corner of the box.
 */
-const PNPoint& PNBoundingBox::getMinimum(void) const
+const PNPoint3f& PNBoundingBox::getMinimum(void) const
 { 
   return mMinimum; 
 }
 
 /** Gets the maximum corner of the box.
 */
-const	PNPoint& PNBoundingBox::getMaximum(void) const
+const	PNPoint3f& PNBoundingBox::getMaximum(void) const
 { 
   return mMaximum;
 }
 
 /** Sets the minimum corner of the box.
 */
-void	PNBoundingBox::setMinimum(const PNPoint& vec)
+void	PNBoundingBox::setMinimum(const PNPoint3f& vec)
 {
   mNull = false;
   mMinimum = vec;
@@ -93,7 +93,7 @@ void	PNBoundingBox::setMinimum(pnfloat x, pnfloat y, pnfloat z)
 
 /** Sets the maximum corner of the box.
 */
-void	PNBoundingBox::setMaximum(const PNPoint& vec)
+void	PNBoundingBox::setMaximum(const PNPoint3f& vec)
 {
   mNull = false;
   mMaximum = vec;
@@ -111,7 +111,7 @@ void	PNBoundingBox::setMaximum(pnfloat x, pnfloat y, pnfloat z)
 
 /** Sets both minimum and maximum extents at once.
 */
-void	PNBoundingBox::setExtents(const PNPoint& min, const PNPoint& max)
+void	PNBoundingBox::setExtents(const PNPoint3f& min, const PNPoint3f& max)
 {
   mNull = false;
   mMinimum = min;

@@ -34,9 +34,20 @@ using namespace PN;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-PNSoundInterface* PNSoundInterface::_instance = NULL;
+PNSoundInterface::PNSoundInterface()
+{
+  _instance = this;
 
-PNSoundInterface*  PNSoundInterface::getInstance() 
+  _label = "Sound";
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+PNSoundInterface*
+PNSoundInterface::_instance = NULL;
+
+PNSoundInterface*
+PNSoundInterface::getInstance() 
 {
   return _instance;
 }

@@ -78,11 +78,12 @@ public:
 
   const std::string&				getLabel();
 
+protected:
   void								addParam(PNConfigurableParameter* p);
 
-private:
   std::string						_label;
 
+private:
   typedef std::vector<PNConfigurableParameter*>	VECTOR_PARAMETERS;
 
   VECTOR_PARAMETERS					_vectorParameters;

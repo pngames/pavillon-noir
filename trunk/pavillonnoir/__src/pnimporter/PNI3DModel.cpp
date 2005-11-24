@@ -142,19 +142,19 @@ PNI3DModel::getNbFaces() const
 
 //////////////////////////////////////////////////////////////////////////
 
-const PNPoint&
+const PNPoint3f&
 PNI3DModel::getMin() const
 {
   return _min;
 }
 
-const PNPoint&
+const PNPoint3f&
 PNI3DModel::getMax() const
 {
   return _max;
 }
 
-const PNPoint&
+const PNPoint3f&
 PNI3DModel::getCenter() const
 {
   return _center;

@@ -41,7 +41,7 @@ using namespace PN;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-PNIVertex::PNIVertex(pnmVertex_t& vert, pnmBoneID_t* bonesId) : PNPoint(vert.coord)
+PNIVertex::PNIVertex(pnmVertex_t& vert, pnmBoneID_t* bonesId) : PNPoint3f(vert.coord)
 {
   initVert(vert, bonesId);
 }

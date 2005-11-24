@@ -179,8 +179,8 @@ PNGLSceneGraph::render(pnuint deltaTime, pnuint time)
 
 		PNLOCK_BEGIN(obj);
 		{
-		  const PNPoint&  pos = obj->getCoord();
-		  const PNPoint&  offset = obj->getPhysicalObject() == NULL ? PNPoint::ZERO : obj->getPhysicalObject()->getOffset();
+		  const PNPoint3f&  pos = obj->getCoord();
+		  const PNPoint3f&  offset = obj->getPhysicalObject() == NULL ? PNPoint3f::ZERO : obj->getPhysicalObject()->getOffset();
 		  const PNQuatf&  orient = obj->getOrient();
 
 		  transMatrix.setRotationQuaternion(orient);
@@ -202,25 +202,25 @@ PNGLSceneGraph::render(pnuint deltaTime, pnuint time)
   //////////////////////////////////////////////////////////////////////////
 
 #ifdef DEBUG
-  PNPoint	ax(PNPoint::ZERO);
+  PNPoint3f	ax(PNPoint3f::ZERO);
   pnfloat	color[4] = {0.0f, 0.0f, 0.0f, 1.0f};
 
   ax.x = 100.0f;
   color[0] = 1.0f;
 
-  PNRendererInterface::getInstance()->renderLink(PNPoint::ZERO, ax, color);
+  PNRendererInterface::getInstance()->renderLink(PNPoint3f::ZERO, ax, color);
   ax.x = 0.0f;
   color[0] = 0.0f;
 
   ax.y = 100.0f;
   color[1] = 1.0f;
-  PNRendererInterface::getInstance()->renderLink(PNPoint::ZERO, ax, color);
+  PNRendererInterface::getInstance()->renderLink(PNPoint3f::ZERO, ax, color);
   ax.y = 0.0f;
   color[1] = 0.0f;
 
   ax.z = 100.0f;
   color[2] = 1.0f;
-  PNRendererInterface::getInstance()->renderLink(PNPoint::ZERO, ax, color);
+  PNRendererInterface::getInstance()->renderLink(PNPoint3f::ZERO, ax, color);
   ax.z = 0.0f;
   color[2] = 0.0f;
 #endif

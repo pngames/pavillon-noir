@@ -55,9 +55,14 @@ plugintypes		PNPhysicsInterface::getType()
 PNPhysicsInterface::PNPhysicsInterface()
 {
   _instance = this;
+
+  _label = "Physics";
 }
 
-PNPhysicsInterface::~PNPhysicsInterface() {}
+PNPhysicsInterface::~PNPhysicsInterface()
+{
+
+}
 
 //////////////////////////////////////////////////////////////////////////
 };

@@ -1,8 +1,8 @@
 /*
- * PNPoint.cpp
+ * PNPoint3f.cpp
  * 
  * Description :
- * PNPoint definition
+ * PNPoint3fdefinition
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -32,7 +32,7 @@
 
 #include "pndefs.h"
 #include "pnmath.h"
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 
 #define	DIST_EPSILON	10E-5
 
@@ -41,7 +41,7 @@ using namespace PN;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
   
-PNPoint::PNPoint(void)
+PNPoint3f::PNPoint3f(void)
 {
   x = 0.0f;
   y = 0.0f;
@@ -50,7 +50,7 @@ PNPoint::PNPoint(void)
   return ;
 }
 
-PNPoint::PNPoint(const pnfloat& px, const pnfloat& py, const pnfloat& pz)
+PNPoint3f::PNPoint3f(const pnfloat& px, const pnfloat& py, const pnfloat& pz)
 {
   x = px;
   y = py;
@@ -59,14 +59,14 @@ PNPoint::PNPoint(const pnfloat& px, const pnfloat& py, const pnfloat& pz)
   return ;
 }
 
-PNPoint::PNPoint(const pnfloat* coord)
+PNPoint3f::PNPoint3f(const pnfloat* coord)
 {
   x = coord[0];
   y = coord[1];
   z = coord[1];
 }
 
-PNPoint::PNPoint(const PNPoint& p)
+PNPoint3f::PNPoint3f(const PNPoint3f& p)
 {
   x = p.x;
   y = p.y;
@@ -75,7 +75,7 @@ PNPoint::PNPoint(const PNPoint& p)
   return ;
 }
 
-PNPoint::~PNPoint(void)
+PNPoint3f::~PNPoint3f(void)
 {
   return ;
 }
@@ -83,7 +83,7 @@ PNPoint::~PNPoint(void)
 //////////////////////////////////////////////////////////////////////////
 
 void
-PNPoint::setNull()
+PNPoint3f::setNull()
 {
   x = 0.0f;
   y = 0.0f;
@@ -91,13 +91,13 @@ PNPoint::setNull()
 }
 
 bool
-PNPoint::isNull() const
+PNPoint3f::isNull() const
 {
   return ABS(x) < PN_EPSILON && ABS(y) < PN_EPSILON && ABS(z) < PN_EPSILON;
 }
 
 void
-PNPoint::set(const pnfloat& px, const pnfloat& py, const pnfloat& pz)
+PNPoint3f::set(const pnfloat& px, const pnfloat& py, const pnfloat& pz)
 {
   x = px;
   y = py;
@@ -107,7 +107,7 @@ PNPoint::set(const pnfloat& px, const pnfloat& py, const pnfloat& pz)
 }
 
 void
-PNPoint::set(const pnfloat* coord)
+PNPoint3f::set(const pnfloat* coord)
 {
   x = coord[0];
   y = coord[1];
@@ -115,7 +115,7 @@ PNPoint::set(const pnfloat* coord)
 }
 
 void
-PNPoint::set(const PNPoint& p)
+PNPoint3f::set(const PNPoint3f& p)
 {
   x = p.x;
   y = p.y;
@@ -127,14 +127,14 @@ PNPoint::set(const PNPoint& p)
 //////////////////////////////////////////////////////////////////////////
 
 pnfloat
-PNPoint::getDistance(const PNPoint& p) const
+PNPoint3f::getDistance(const PNPoint3f& p) const
 {
   return sqrtf(((p.x -x)* (p.x -x) + (p.y -y)* (p.y -y)
 	+ (p.z -z)* (p.z -z)));
 }
 
 pnfloat
-PNPoint::getFlatDistance(const PNPoint& p) const
+PNPoint3f::getFlatDistance(const PNPoint3f& p) const
 {
   return sqrtf(((p.x -x)* (p.x -x) + (p.z -z)* (p.z -z)));
 }
@@ -149,28 +149,28 @@ PNPoint::getFlatDistance(const PNPoint& p) const
  * \return	true	if both instance are equal, false otherwise.
  */
 bool
-PNPoint::isEquals(const PNPoint& point)
+PNPoint3f::isEquals(const PNPoint3f& point)
 {
 	return (getDistance(point) <= PN_EPSILON);
 }
 
 bool
-PNPoint::isEquals(pnfloat x, pnfloat y, pnfloat z)
+PNPoint3f::isEquals(pnfloat x, pnfloat y, pnfloat z)
 {
-	PNPoint	u(x, y, z);
+	PNPoint3f	u(x, y, z);
 	return (isEquals(u));
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 
-PNPoint::operator const pnfloat*() const
+PNPoint3f::operator const pnfloat*() const
 {
   return &x;
 }
 
-PNPoint&
-PNPoint::operator=(const pnfloat* p)
+PNPoint3f&
+PNPoint3f::operator=(const pnfloat* p)
 {
   set(p);
 
@@ -184,8 +184,8 @@ PNPoint::operator=(const pnfloat* p)
 /**
  * DEPRECATED use PNVector3f instead
  */
-PNPoint&
-PNPoint::operator+=(const PNPoint& p)
+PNPoint3f&
+PNPoint3f::operator+=(const PNPoint3f& p)
 {
   x += p.x;
   y += p.y;
@@ -197,8 +197,8 @@ PNPoint::operator+=(const PNPoint& p)
 /**
  * DEPRECATED use PNVector3f instead
  */
-PNPoint&
-PNPoint::operator+=(const pnfloat k)
+PNPoint3f&
+PNPoint3f::operator+=(const pnfloat k)
 {
   x += k;
   y += k;
@@ -210,8 +210,8 @@ PNPoint::operator+=(const pnfloat k)
 /**
  * DEPRECATED use PNVector3f instead
  */
-PNPoint&
-PNPoint::operator-=(const PNPoint& p)
+PNPoint3f&
+PNPoint3f::operator-=(const PNPoint3f& p)
 {
   x -= p.x;
   y -= p.y;
@@ -223,8 +223,8 @@ PNPoint::operator-=(const PNPoint& p)
 /**
  * DEPRECATED use PNVector3f instead
  */
-PNPoint&
-PNPoint::operator-=(const pnfloat k)
+PNPoint3f&
+PNPoint3f::operator-=(const pnfloat k)
 {
   x -= k;
   y -= k;
@@ -236,8 +236,8 @@ PNPoint::operator-=(const pnfloat k)
 /**
  * DEPRECATED use PNVector3f instead
  */
-PNPoint&
-PNPoint::operator*=(const PNPoint& p)
+PNPoint3f&
+PNPoint3f::operator*=(const PNPoint3f& p)
 {
   x *= p.x;
   y *= p.y;
@@ -249,8 +249,8 @@ PNPoint::operator*=(const PNPoint& p)
 /**
  * DEPRECATED use PNVector3f instead
  */
-PNPoint&
-PNPoint::operator*=(const pnfloat k)
+PNPoint3f&
+PNPoint3f::operator*=(const pnfloat k)
 {
   x *= k;
   y *= k;
@@ -259,8 +259,8 @@ PNPoint::operator*=(const pnfloat k)
   return (*this);
 }
 
-PNPoint&
-PNPoint::operator/=(const PNPoint& p)
+PNPoint3f&
+PNPoint3f::operator/=(const PNPoint3f& p)
 {
   x /= p.x;
   y /= p.y;
@@ -269,8 +269,8 @@ PNPoint::operator/=(const PNPoint& p)
   return (*this);
 }
 
-PNPoint&
-PNPoint::operator/=(const pnfloat k)
+PNPoint3f&
+PNPoint3f::operator/=(const pnfloat k)
 {
   x /= k;
   y /= k;
@@ -281,48 +281,48 @@ PNPoint::operator/=(const pnfloat k)
 
 //////////////////////////////////////////////////////////////////////////
 
-PNPoint
-PNPoint::operator-()
+PNPoint3f
+PNPoint3f::operator-()
 {
-  return PNPoint(-x, -y, -z);
+  return PNPoint3f(-x, -y, -z);
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-PNAPI PNPoint
-operator+(const PNPoint& p1, const PNPoint& p2)
+PNAPI PNPoint3f
+operator+(const PNPoint3f& p1, const PNPoint3f& p2)
 {
-  PNPoint	res(p1);
+  PNPoint3f	res(p1);
 
   return (res += p2);
 }
 
-PNAPI PNPoint
-operator-(const PNPoint& p1, const PNPoint& p2)
+PNAPI PNPoint3f
+operator-(const PNPoint3f& p1, const PNPoint3f& p2)
 {
-  PNPoint	res(p1);
+  PNPoint3f	res(p1);
 
   return (res -= p2);
 }
 
-PNAPI PNPoint
-operator*(const PNPoint& p1, const PNPoint& p2)
+PNAPI PNPoint3f
+operator*(const PNPoint3f& p1, const PNPoint3f& p2)
 {
-  PNPoint	res(p1);
+  PNPoint3f	res(p1);
 
   return (res *= p2);
 }
 
-PNAPI PNPoint
-operator/(const PNPoint& p1, const PNPoint& p2)
+PNAPI PNPoint3f
+operator/(const PNPoint3f& p1, const PNPoint3f& p2)
 {
-  PNPoint	res(p1);
+  PNPoint3f	res(p1);
 
   return (res /= p2);
 }
 
 PNAPI pnbool
-operator==(const PNPoint& p1, const PNPoint& p2)
+operator==(const PNPoint3f& p1, const PNPoint3f& p2)
 {
   if ((fabs(p1.x - p2.x) < DIST_EPSILON) 
 	&& (fabs(p1.y - p2.y) < DIST_EPSILON) 
@@ -333,7 +333,7 @@ operator==(const PNPoint& p1, const PNPoint& p2)
 }
 
 PNAPI pnbool
-operator!=(const PNPoint& p1, const PNPoint& p2)
+operator!=(const PNPoint3f& p1, const PNPoint3f& p2)
 {
   if ((fabs(p1.x - p2.x) < DIST_EPSILON) 
 	&& (fabs(p1.y - p2.y) < DIST_EPSILON) 
@@ -346,7 +346,7 @@ operator!=(const PNPoint& p1, const PNPoint& p2)
 //////////////////////////////////////////////////////////////////////////
 
 PNAPI std::ostream&
-operator<<(std::ostream& o, const PNPoint& p)
+operator<<(std::ostream& o, const PNPoint3f& p)
 {
   o << "x=" << p.x << " y=" << p.y << " z=" << p.z;
 
@@ -355,7 +355,7 @@ operator<<(std::ostream& o, const PNPoint& p)
 
 //////////////////////////////////////////////////////////////////////////
 
-const PNPoint PNPoint::ZERO( 0, 0, 0 );
+const PNPoint3f	PNPoint3f::ZERO( 0, 0, 0 );
 
 //////////////////////////////////////////////////////////////////////////
 };

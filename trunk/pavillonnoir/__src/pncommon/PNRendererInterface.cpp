@@ -45,6 +45,20 @@ PNRendererInterface*  PNRendererInterface::getInstance()
 {
   return _instance;
 }
+
+//////////////////////////////////////////////////////////////////////////
+
+PNRendererInterface::PNRendererInterface()
+{
+  _instance = this;
+
+  _label = "Renderer";
+}
+
+PNRendererInterface::~PNRendererInterface()
+{
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 plugintypes		PNRendererInterface::getType()
@@ -53,15 +67,4 @@ plugintypes		PNRendererInterface::getType()
 }
 
 //////////////////////////////////////////////////////////////////////////
-
-PNRendererInterface::~PNRendererInterface()
-{
-  
-}
-PNRendererInterface::PNRendererInterface()
-{
-  _instance = this;
-}
-
-//////////////////////////////////////////////////////////////////////////
-}
+};

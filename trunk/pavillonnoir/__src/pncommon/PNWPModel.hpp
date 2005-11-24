@@ -35,7 +35,7 @@
 #include "PN3DModel.hpp"
 #include "pnmath.h"
 
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 
 namespace PN
 {
@@ -50,9 +50,9 @@ private:
   pnpoint4f				  _dflcolor;
   pnfloat*				  _color;
 
-  PNPoint				  _min;
-  PNPoint				  _max;
-  PNPoint				  _center;
+  PNPoint3f				  _min;
+  PNPoint3f				  _max;
+  PNPoint3f				  _center;
 
   PNWPModel(void);
   ~PNWPModel(void);
@@ -62,7 +62,7 @@ public:
 
   void				render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk = NULL);
   void				render(PN3DSkeleton* sk = NULL);
-  void				renderLink(const PNPoint &p1, const PNPoint &p2, const pnfloat* color,
+  void				renderLink(const PNPoint3f&p1, const PNPoint3f&p2, const pnfloat* color,
 								pnuint direction = 0, pnfloat thickness = 1);
 
   void				setSlctColor();
@@ -91,9 +91,9 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  const PNPoint&	getMin() const {return _min;}
-  const PNPoint&	getMax() const {return _max;}
-  const PNPoint&	getCenter() const {return _center;}
+  const PNPoint3f&	getMin() const {return _min;}
+  const PNPoint3f&	getMax() const {return _max;}
+  const PNPoint3f&	getCenter() const {return _center;}
 };
 
 //////////////////////////////////////////////////////////////////////////

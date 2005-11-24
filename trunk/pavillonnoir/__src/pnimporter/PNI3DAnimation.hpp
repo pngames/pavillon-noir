@@ -69,8 +69,8 @@ public:
 
   pnbool					setRotation(pnint id, pnuint time, PNQuatf& rot);
   pnbool					setRotation(pnint id, pndouble rtime, const PNQuatf& lastRot, PNQuatf& rot);
-  pnbool					setPosition(pnint id, pnuint time, PNPoint& pos);
-  pnbool					setPosition(pnint id, pndouble rtime, const PNPoint& lastPos, PNPoint& pos);
+  pnbool					setPosition(pnint id, pnuint time, PNPoint3f& pos);
+  pnbool					setPosition(pnint id, pndouble rtime, const PNPoint3f& lastPos, PNPoint3f& pos);
 
   //////////////////////////////////////////////////////////////////////////
 

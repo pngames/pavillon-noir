@@ -16,7 +16,7 @@ function PNPlayerClass(id)
     PNRenderCam:setTargetPosition(0, 50 , 150)
     PNRenderCam:setTargetDistance(150)
     PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-    PNRenderCam:addTargetMode(PN3DObject.TMODE_DISTANCE_LOCKED)
+    PNRenderCam:addTargetMode(PN3DObject.TMODE_DISTANCE_ABS_LOCKED)
     PNRenderCam:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
     --PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_ABS_LOCKED)
     

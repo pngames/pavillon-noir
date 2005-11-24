@@ -33,7 +33,7 @@
 #include "pndefs.h"
 #include "pnevent.h"
 #include "PNEventData.hpp"
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 
 namespace PN
 {
@@ -89,9 +89,9 @@ public:
 class PNGameMouseMoveEventData : public PNEventData
 {
 public:
-	PNPoint coords;
+	PNPoint3f coords;
 
-	PNGameMouseMoveEventData(PNPoint someCoords): coords(someCoords) {}
+	PNGameMouseMoveEventData(PNPoint3f someCoords): coords(someCoords) {}
 };
 
 class PNGameAIEventData : public PNGameActionEventData
@@ -101,7 +101,7 @@ public:
 
   PNGameAIEventData
         (std::string anAction, std::string atargetId, std::string aSourceId ,double aValue, std::string anAITarget):
-           PNGameActionEventData(anAction, atargetId, aSourceId,aValue),
+           PNGameActionEventData(anAction, atargetId, aSourceId, aValue),
            AITarget(anAITarget){}
 
 };

@@ -34,7 +34,7 @@
 
 #include "PNMatrixTR4f.hpp"
 #include "PNQuatf.hpp"
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 #include "PNVector3f.hpp"
 
 using namespace PN;
@@ -178,9 +178,9 @@ pnfloat			*PNMatrixTR4f::transform3(pnfloat* vec) const
 
 //////////////////////////////////////////////////////////////////////////
 
-PNPoint			PNMatrixTR4f::operator*(const PNPoint& vec) const
+PNPoint3f			PNMatrixTR4f::operator*(const PNPoint3f& vec) const
 {
-  return PNPoint(
+  return PNPoint3f(
 	vec.x * _matrix[0] + vec.y * _matrix[4] + vec.z * _matrix[8] + _matrix[12],
 	vec.x * _matrix[1] + vec.y * _matrix[5] + vec.z * _matrix[9] + _matrix[13],
 	vec.x * _matrix[2] + vec.y * _matrix[6] + vec.z * _matrix[10] + _matrix[14]

@@ -37,7 +37,7 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNPoint;
+class PNPoint3f;
 class PNVector3f;
 
 /**
@@ -73,7 +73,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   
-  PNPoint		operator*(const PNPoint& vec) const;
+  PNPoint3f		operator*(const PNPoint3f& vec) const;
   PNVector3f	operator*(const PNVector3f& vec) const;
 };
 

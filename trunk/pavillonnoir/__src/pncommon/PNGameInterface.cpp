@@ -44,19 +44,17 @@ PNGameInterface*  PNGameInterface::getInstance()
  return _instance;
 }
 
-/*void			  PNGameInterface::init()
-{
-
-}*/
+//////////////////////////////////////////////////////////////////////////
 
 PNGameInterface::PNGameInterface()
 {
+  _label = "Game";
+
   _instance = this;
 }
 
 PNGameInterface::~PNGameInterface()
 {
-
 }
 
 //////////////////////////////////////////////////////////////////////////

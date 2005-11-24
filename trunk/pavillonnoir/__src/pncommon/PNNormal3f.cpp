@@ -69,7 +69,7 @@ PNNormal3f::PNNormal3f(pnfloat nX, pnfloat nY, pnfloat nZ)
 /**
  * \brief copy constructor. Assigns the specified normalized vector to the current instance.
  */
-PNNormal3f::PNNormal3f(const PNPoint & source)
+PNNormal3f::PNNormal3f(const PNPoint3f& source)
 {
   setCrd(source.x, source.y, source.z);
 }
@@ -92,7 +92,7 @@ PNNormal3f::~PNNormal3f()
  * \return void
  */
 void
-PNNormal3f::setFromSegment(const PNPoint & origin, const PNPoint & extremity)
+PNNormal3f::setFromSegment(const PNPoint3f& origin, const PNPoint3f& extremity)
 {
   PNVector3f::setFromSegment(origin, extremity);
   setNorm(1.0f);
@@ -278,7 +278,7 @@ PNNormal3f::getNorm() const
  * \return	void
  */
 void
-PNNormal3f::crossProduct(const PNPoint& u, const PNPoint& v)
+PNNormal3f::crossProduct(const PNPoint3f& u, const PNPoint3f& v)
 {
 	PNNormal3f	normalizedU(u.x, u.y, u.z);
 	PNNormal3f	normalizedV(v.x, v.y, v.z);
@@ -307,7 +307,7 @@ PNNormal3f::scalarProduct(const PNNormal3f & n) const
 }
 
 pnfloat
-PNNormal3f::scalarProduct(const PNPoint & u) const
+PNNormal3f::scalarProduct(const PNPoint3f& u) const
 {
 	PNNormal3f	uNormalized(u.x, u.y, u.z);
 	return (PNVector3f::scalarProduct(uNormalized)); 

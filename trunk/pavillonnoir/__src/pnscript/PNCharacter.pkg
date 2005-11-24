@@ -25,7 +25,7 @@ public:
 
   void									beSmart();
 
-  void									moveTo(PNPoint &p);
+  void									moveTo(PNPoint3f&p);
   void									moveTo(PNWayPoint *wp);
 
   void									hear();

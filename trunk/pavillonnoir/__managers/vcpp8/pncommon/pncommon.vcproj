@@ -763,11 +763,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncommon\PNPoint.cpp"
+				RelativePath="..\..\..\__src\pncommon\PNPoint3f.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncommon\PNPoint.hpp"
+				RelativePath="..\..\..\__src\pncommon\PNPoint3f.hpp"
 				>
 			</File>
 			<File

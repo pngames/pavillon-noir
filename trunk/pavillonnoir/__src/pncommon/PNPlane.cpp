@@ -71,7 +71,7 @@ PNPlane::PNPlane(pnfloat x, pnfloat y, pnfloat z, pnfloat d)
  * \brief Initialized the current instance with the specified position and orientation.
  * For further details please read the documentation corresponding to the setPlane() method.
  */
-PNPlane::PNPlane(const PNPoint & position, const PNNormal3f & normal)
+PNPlane::PNPlane(const PNPoint3f& position, const PNNormal3f & normal)
 {
   this->setPlane(position, normal);
   return;
@@ -130,7 +130,7 @@ PNPlane::setEquation(pnfloat x, pnfloat y, pnfloat z, pnfloat d)
  * \return	void
  */
 void
-PNPlane::setPosition(const PNPoint & position)
+PNPlane::setPosition(const PNPoint3f& position)
 {
 	PNVector3f	pos(position);		
   	_d = pos.scalarProduct(_x, _y, _z);
@@ -165,7 +165,7 @@ PNPlane::setOrientation(const PNNormal3f & orientation)
  * \return	void
  */
 void
-PNPlane::setPlane(const PNPoint & position, const PNNormal3f & orientation)
+PNPlane::setPlane(const PNPoint3f& position, const PNNormal3f & orientation)
 {
   this->setOrientation(orientation);
   this->setPosition(position);
@@ -184,8 +184,8 @@ PNPlane::setPlane(const PNPoint & position, const PNNormal3f & orientation)
  * \param	position	the location where to store the position of the current plane.
  * \return	position
  */
-PNPoint &
-PNPlane::getPosition(PNPoint & position) const
+PNPoint3f&
+PNPlane::getPosition(PNPoint3f& position) const
 {
   PNVector3f	result;
   
@@ -275,8 +275,8 @@ PNPlane::getDistanceFromOrigin() const
  * 
  * \return	the resulting projection
  */
-PNPoint &
-PNPlane::projectionOnPlane(const PNPoint & point, PNPoint & result) const
+PNPoint3f&
+PNPlane::projectionOnPlane(const PNPoint3f& point, PNPoint3f& result) const
 {
 	pnfloat		dist;	
 	PNVector3f	orientation;
@@ -305,7 +305,7 @@ PNPlane::projectionOnPlane(const PNPoint & point, PNPoint & result) const
  *              with the computed coordinates. Returns false otherwise.
  */
 bool
-PNPlane::isSegmentIntersectPlane(const PNPoint & segOrigin, const PNPoint & segDestination, PNPoint & intersection)
+PNPlane::isSegmentIntersectPlane(const PNPoint3f& segOrigin, const PNPoint3f& segDestination, PNPoint3f& intersection)
 {
   planeSide_t	side[2];
 
@@ -367,7 +367,7 @@ PNPlane::isSegmentIntersectPlane(const PNPoint & segOrigin, const PNPoint & segD
  *              with the computed coordinates. Otherwise the method returns false and intersection is left untouched.
  */
 bool
-PNPlane::isRayIntersectPlane(const PNPoint & rayOrigin,const PNNormal3f & rayDirection, PNPoint & intersection)
+PNPlane::isRayIntersectPlane(const PNPoint3f& rayOrigin,const PNNormal3f & rayDirection, PNPoint3f& intersection)
 {
   PNVector3f	plane_vertex;
   PNVector3f	rayOriginToPlane;
@@ -436,7 +436,7 @@ PNPlane::isEquals(const PNPlane & plane)
  * \return	One of the following value: BehindPlane, OnPlane, InFrontOfPlane.
  */
 planeSide_t
-PNPlane::classifyVertex(const PNPoint & position) const
+PNPlane::classifyVertex(const PNPoint3f& position) const
 {
   pnfloat	distance;
 
@@ -461,7 +461,7 @@ PNPlane::classifyVertex(const PNPoint & position) const
  * \return	One of the following value: BehindPlane, ClippedByPlane, InFrontOfPlane, OnPlane
  */
 planeSide_t
-PNPlane::classifyTriangle(const PNPoint & a, const PNPoint & b, const PNPoint & c)
+PNPlane::classifyTriangle(const PNPoint3f& a, const PNPoint3f& b, const PNPoint3f& c)
 {
 	planeSide_t	sides[3];
 	
@@ -489,7 +489,7 @@ PNPlane::classifyTriangle(const PNPoint & a, const PNPoint & b, const PNPoint & 
  *		if the point is on the plane and a negative value if the point is behind the plane.
  */
 pnfloat
-PNPlane::getDistanceFromPlane(const PNPoint & position) const
+PNPlane::getDistanceFromPlane(const PNPoint3f& position) const
 {  
   return (position.x * _x + position.y * _y + position.z * _z - _d);
 }

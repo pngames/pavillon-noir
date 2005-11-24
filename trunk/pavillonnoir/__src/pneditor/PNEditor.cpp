@@ -530,7 +530,7 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 	{
 	  PNGLShape		*shape = (PNGLShape *)ol2[j];
 	  PN3DObject	*obj = shape->getObj();
-	  PNPoint		p = obj->getCoord();
+	  PNPoint3f		p = obj->getCoord();
 	  PNQuatf		q = obj->getOrient();
 
 	  //obj->serialize();

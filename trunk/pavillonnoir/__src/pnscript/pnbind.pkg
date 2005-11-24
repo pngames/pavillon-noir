@@ -2,7 +2,7 @@ $ifile "includes.pkg"
 //
 $ifile "PNLuaGameUtils.pkg"
 //
-$ifile "PNPoint.pkg"
+$ifile "PNPoint3f.pkg"
 //
 $ifile "PNVector3f.pkg"
 //

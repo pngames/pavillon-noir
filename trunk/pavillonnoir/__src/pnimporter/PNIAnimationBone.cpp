@@ -141,7 +141,7 @@ pnuint		PNIAnimationBone::setTransformation(pnuint time, PNMatrixTR4f& transform
 
 	for (pit = _positions.begin(); pit != _positions.end() && pit->time < time; ++pit);
 
-	PNPoint		transPos;
+	PNPoint3f		transPos;
 
 	if (pit == _positions.begin())
 	  transPos = pit->pos;
@@ -219,7 +219,7 @@ pnbool		PNIAnimationBone::setRotation(pndouble rtime, const PNQuatf& lastRot, PN
   return true;
 }
 
-pnbool		PNIAnimationBone::setPosition(pnuint time, PNPoint& pos)
+pnbool		PNIAnimationBone::setPosition(pnuint time, PNPoint3f& pos)
 {
   if (_positions.size() <= 0)
 	return false;
@@ -252,7 +252,7 @@ pnbool		PNIAnimationBone::setPosition(pnuint time, PNPoint& pos)
   return true;
 }
 
-pnbool		PNIAnimationBone::setPosition(pndouble rtime, const PNPoint& lastPos, PNPoint& pos)
+pnbool		PNIAnimationBone::setPosition(pndouble rtime, const PNPoint3f& lastPos, PNPoint3f& pos)
 {
   if (_positions.size() <= 0)
 	return false;

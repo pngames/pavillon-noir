@@ -42,7 +42,7 @@ class PNAPI				PNSoundInterface : public PNInterface
 {
 protected:
   static PNSoundInterface*  _instance;
-  PNSoundInterface() {_instance = this;}
+  PNSoundInterface();
 public:
   static PNSoundInterface*  getInstance();
 
