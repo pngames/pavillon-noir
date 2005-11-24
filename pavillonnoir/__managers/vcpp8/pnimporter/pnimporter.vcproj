@@ -68,7 +68,7 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/pnimporter.pdb"
 				SubSystem="2"
-				ImportLibrary="$(OutDir)/pnimporter.lib"
+				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -102,6 +102,7 @@
 			IntermediateDirectory="Release"
 			ConfigurationType="2"
 			CharacterSet="2"
+			WholeProgramOptimization="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -143,11 +144,11 @@
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
 				GenerateManifest="false"
-				GenerateDebugInformation="true"
+				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				ImportLibrary="$(OutDir)/pnimporter.lib"
+				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool
