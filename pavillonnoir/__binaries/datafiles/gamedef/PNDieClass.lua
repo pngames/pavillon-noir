@@ -1,7 +1,7 @@
-function PNDiceClass()
-	pnprint("PNDice creating\n")
+function PNDieClass()
+	pnprint("PNDieClass creating\n")
     local OBJ = nil
-    OBJ.className="PNDiceClass"
+    OBJ.className="PNDieClass"
 	-- Seed init based on system's time
 	math.randomseed( os.time() )
     
