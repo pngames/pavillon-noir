@@ -36,7 +36,7 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNPoint;
+class PNPoint3f;
 class PNQuatf;
 
 class PNPhysicalObject: public PNObject, public IPNXMLSerializable
@@ -51,19 +51,19 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  virtual const PNPoint&	getCoord()=0;
+  virtual const PNPoint3f&	getCoord()=0;
   virtual const PNQuatf&	getOrient()=0;
-  virtual const PNPoint&	getOffset()=0;
+  virtual const PNPoint3f&	getOffset()=0;
 
   //////////////////////////////////////////////////////////////////////////
 
   virtual void			setStatic(bool state)=0;
   virtual bool			isStatic()=0;
-  virtual void			setCoord(const PNPoint& coord)=0;
+  virtual void			setCoord(const PNPoint3f& coord)=0;
   virtual void			setCoord(pnfloat x, pnfloat y, pnfloat z)=0;
   virtual void			setOrient(const PNQuatf& orient)=0;
   virtual void			setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w)=0;
-  virtual void			setTransform(const PNPoint& coord, const PNQuatf& orient)=0;
+  virtual void			setTransform(const PNPoint3f& coord, const PNQuatf& orient)=0;
 
   //////////////////////////////////////////////////////////////////////////
 

@@ -52,7 +52,7 @@ class PNAPI							PNNormal3f : private PNVector3f
 public:
   PNNormal3f();
   PNNormal3f(pnfloat nX, pnfloat nY, pnfloat nZ);
-  PNNormal3f(const PNPoint& source);
+  PNNormal3f(const PNPoint3f& source);
 
 public:
   virtual ~PNNormal3f();
@@ -71,7 +71,7 @@ public:
   virtual inline const PNVector3f&	getVector() const {return *this;}
 
 public:
-  virtual void						setFromSegment(const PNPoint& origin, const PNPoint& extremity);
+  virtual void						setFromSegment(const PNPoint3f& origin, const PNPoint3f& extremity);
   
 public:
   virtual bool						isColinear(const PNNormal3f& v);
@@ -87,12 +87,12 @@ public:
   virtual pnfloat					degreeRange2Pi(const PNNormal3f& cosinusReferentiel, const PNNormal3f& sinusReferentiel);
   
 public:
-  virtual void						crossProduct(const PNPoint& u, const PNPoint& v);
+  virtual void						crossProduct(const PNPoint3f& u, const PNPoint3f& v);
   virtual void						crossProduct(const PNNormal3f& u, const PNNormal3f& v);
   
 public:  
   virtual pnfloat					scalarProduct(const PNNormal3f & n) const;
-  virtual pnfloat					scalarProduct(const PNPoint & u) const;
+  virtual pnfloat					scalarProduct(const PNPoint3f& u) const;
   virtual pnfloat					scalarProduct(pnfloat nX, pnfloat nY, pnfloat nZ) const;
   
 public:

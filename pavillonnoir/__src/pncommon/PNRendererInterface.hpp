@@ -47,7 +47,7 @@ typedef enum
 
 class PNRendererObject;
 class PNRenderMaterial;
-class PNPoint;
+class PNPoint3f;
 
 class PNAPI					PNRendererInterface : public PNInterface
 {
@@ -119,13 +119,13 @@ public:
   //////////////////////////////////////////////////////////////////////////
   
   /// Render sphere
-  virtual void				renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord = PNPoint::ZERO, pnbool outside = true)=0;
+  virtual void				renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color, const PNPoint3f& coord = PNPoint3f::ZERO, pnbool outside = true)=0;
 
   /// Render cylinder
-  virtual void				renderCylinder(pndouble baseRadius, pndouble topRadius, pndouble height, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord = PNPoint::ZERO, pnbool outside = true)=0;
+  virtual void				renderCylinder(pndouble baseRadius, pndouble topRadius, pndouble height, pnint slices, pnint stacks, const pnfloat* color, const PNPoint3f& coord = PNPoint3f::ZERO, pnbool outside = true)=0;
 
   /// Render box
-  virtual void				renderBox(pnfloat width, pnfloat height, pnfloat depth, const pnfloat* color, const PNPoint& coord = PNPoint::ZERO, pnbool outside = true)=0;
+  virtual void				renderBox(pnfloat width, pnfloat height, pnfloat depth, const pnfloat* color, const PNPoint3f& coord = PNPoint3f::ZERO, pnbool outside = true)=0;
 
   typedef enum
   {
@@ -133,7 +133,7 @@ public:
 	PN_LINK_LEFT = 0x000001 < 1,
   } linkDirection;
 
-  virtual void				renderLink(const PNPoint& p1, const PNPoint& p2, const pnfloat* color, pnuint direction = 0, pnfloat thickness = 1.0f)=0;
+  virtual void				renderLink(const PNPoint3f& p1, const PNPoint3f& p2, const pnfloat* color, pnuint direction = 0, pnfloat thickness = 1.0f)=0;
 
   //////////////////////////////////////////////////////////////////////////
   // CEGUI

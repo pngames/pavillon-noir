@@ -58,7 +58,7 @@ private:
 	WPIDMAP					_wpidmap;
 	pnint					_idMax;
 
-	pnbool					addWayPoint(pnint id, PNPoint &pos);			
+	pnbool					addWayPoint(pnint id, PNPoint3f&pos);			
 	pnbool					addWayPoint(pnint id, pnfloat x, pnfloat y, pnfloat z);
 	pnbool					addWayPoint(PNWayPoint* wp);
 public:
@@ -66,7 +66,7 @@ public:
 	virtual ~PNIAGraph();
 
 	/* adds a WP at specified position and gives it an id number */
-	pnint						addWayPoint(PNPoint &pos);
+	pnint						addWayPoint(PNPoint3f&pos);
 	pnint						addWayPoint(pnfloat x, pnfloat y, pnfloat z);
 	
 	/* functions to delete WP by id or ptr. delete links to it too */

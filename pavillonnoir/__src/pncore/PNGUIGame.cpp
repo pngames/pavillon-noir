@@ -266,7 +266,7 @@ void  PNGUIGame::_commandHideWP(const std::string&, std::istream& i)
 void  PNGUIGame::_commandMoveTo(const std::string&, std::istream& i)
 {
   PN3DObjList::iterator it;
-  PNPoint				p(4900.0, 0.0, 4900.0);
+  PNPoint3f				p(4900.0, 0.0, 4900.0);
 
   PNGameInterface::getInstance()->getGameMap()->executeScript("temp/ia_tests.lua");
  // for (it = PN3DCamera::getRenderCam()->_list3DObj.begin(); it != PN3DCamera::getRenderCam()->_list3DObj.end(); it++)
@@ -558,7 +558,7 @@ bool PNGUIGame::eventMouseMoveHandler(const CEGUI::EventArgs& e)
   //rot.fromAxisDegrees(PNVector3f::UNIT_Y, 90.0f);
 
   //cam->setOrient(rot);
-  PNGameMouseMoveEventData mouseData(PNPoint(-me->moveDelta.d_x, -me->moveDelta.d_y, 0.0));
+  PNGameMouseMoveEventData mouseData(PNPoint3f(-me->moveDelta.d_x, -me->moveDelta.d_y, 0.0));
   //////////////////////////////////////////////////////////////////////////
   PNEventManager::getInstance()->sendEvent(PN_EVENT_MOUSE_MOVE, NULL, &mouseData);
   //cam->rotatePitchRadians((pnfloat)DEGREE_TO_RADIAN(-me->moveDelta.d_y));

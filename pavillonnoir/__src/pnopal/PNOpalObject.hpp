@@ -38,7 +38,7 @@
 #include "pnmath.h"
 #include "pnrender.h"
 
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 #include "PNQuatf.hpp"
 #include "PNPhysicalObject.hpp"
 
@@ -71,7 +71,7 @@ namespace PN {
   private:
 	/* pnengine */
 	std::string				  _file;
-	PNPoint					  _coord;
+	PNPoint3f					  _coord;
 	PNQuatf					  _orient;
 
 	/* opal */
@@ -93,7 +93,7 @@ namespace PN {
 	/* rendering previously deprecated */
 	pnfloat					  _aabb[6];
 	pndouble				  _radius;
-	PNPoint					  _offset;
+	PNPoint3f					  _offset;
 	opaltypes			  _type;
 
   public:
@@ -106,19 +106,19 @@ namespace PN {
 	void				update(pnuint elapsed_time);
 	void				render();
 
-  	const PNPoint&		getCoord();
+  	const PNPoint3f&		getCoord();
 	const PNQuatf&		getOrient();
-	const PNPoint&		getOffset();
+	const PNPoint3f&		getOffset();
 	opal::Solid*		getOpalSolid();
 	opal::AccelerationSensor* getAccelSensor();
 	
 	void				setStatic(bool state);
 	bool				isStatic();
-	void				setCoord(const PNPoint& coord);
+	void				setCoord(const PNPoint3f& coord);
 	void				setCoord(pnfloat x, pnfloat y, pnfloat z);
 	void				setOrient(const PNQuatf& orient);
 	void				setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w);
-	void				setTransform(const PNPoint& coord, const PNQuatf& orient);
+	void				setTransform(const PNPoint3f& coord, const PNQuatf& orient);
 
 	//////////////////////////////////////////////////////////////////////////
 	// PNOpalObject specific

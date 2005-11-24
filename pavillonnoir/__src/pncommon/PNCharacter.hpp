@@ -103,7 +103,7 @@ public:
   * functions to be accessed by callbacks to make character move via
   * the PNPathFinding class. Set _state to TRAVELLING
   */
-  void									moveTo(PNPoint &p);
+  void									moveTo(PNPoint3f&p);
   void									moveTo(PNWayPoint *wp);
 
   /// react to a sound event

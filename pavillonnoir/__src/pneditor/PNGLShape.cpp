@@ -113,8 +113,8 @@ void
 PNGLShape::setMinMax()
 {
   PN::PN3DModel*		m = _obj->get3DModel();
-  const PN::PNPoint&	min = m->getMin();
-  const PN::PNPoint&	max = m->getMax();
+  const PN::PNPoint3f&	min = m->getMin();
+  const PN::PNPoint3f&	max = m->getMax();
   _temppath = *(m->getFile());
 
   range.lower.x = min.x;

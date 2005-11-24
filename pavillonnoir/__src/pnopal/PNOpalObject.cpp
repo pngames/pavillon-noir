@@ -119,7 +119,7 @@ void PNOpalObject::render()
 * \return point coordinates
 */ 
 
-const PNPoint&	PNOpalObject::getCoord()
+const PNPoint3f&	PNOpalObject::getCoord()
 {
   opal::Point3r pos = _solid->getPosition();
   _coord.x = pos[0];
@@ -151,7 +151,7 @@ const PNQuatf&	PNOpalObject::getOrient()
 * \return offset
 */ 
 
-const PNPoint&	PNOpalObject::getOffset()
+const PNPoint3f&	PNOpalObject::getOffset()
 {
   return _offset;
 }
@@ -199,7 +199,7 @@ bool			PNOpalObject::isStatic()
 * /param  coord  point object
 */ 
 
-void			PNOpalObject::setCoord(const PNPoint& coord)
+void			PNOpalObject::setCoord(const PNPoint3f& coord)
 {
   _solid->setPosition(coord.x, coord.y, coord.z);
 }
@@ -259,7 +259,7 @@ void			PNOpalObject::setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w)
 * /param  orient  orientation
 */ 
 
-void			PNOpalObject::setTransform(const PNPoint& coord, const PNQuatf& orient)
+void			PNOpalObject::setTransform(const PNPoint3f& coord, const PNQuatf& orient)
 {
   opal::Matrix44r transform;
   transform.makeIdentity();

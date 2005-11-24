@@ -52,19 +52,19 @@ namespace PN {
 /**
  * private usage, used for clipping
  */
-class PtClipper : public PNPoint
+class PtClipper : public PNPoint3f
 {
 public:
 	PtClipper	()											{ _origin = NULL; _extremity = NULL; x = 0; y = 0; z = 0; return; }
-	PtClipper	(PNPoint & pt)								{ _origin = NULL; _extremity = NULL; x = pt.x; y = pt.y; z = pt.z; }	
+	PtClipper	(PNPoint3f& pt)								{ _origin = NULL; _extremity = NULL; x = pt.x; y = pt.y; z = pt.z; }	
 public:
-	void	setSide(PNPoint & origin, PNPoint & extremity)	{ _origin = &origin; _extremity = &extremity; return; }
+	void	setSide(PNPoint3f& origin, PNPoint3f& extremity)	{ _origin = &origin; _extremity = &extremity; return; }
 	pnfloat	getInterpolationValue()							{ assert(isClipped() == true); return (getDistance(*_origin) / _origin->getDistance(*_extremity)); }
 	bool	isClipped()										{ return (_origin != NULL && _extremity != NULL); }
 	
 private:
-	PNPoint * _origin;
-	PNPoint	* _extremity;
+	PNPoint3f* _origin;
+	PNPoint3f	* _extremity;
 };
 
 ///////////////////////////////////////////////////
@@ -122,7 +122,7 @@ PNTriangle::PNTriangle(const PNTriangle & src)
  * \param	b	second point
  * \param	c	third point
  */
-PNTriangle::PNTriangle(const PNPoint & a, const PNPoint & b, const PNPoint & c)
+PNTriangle::PNTriangle(const PNPoint3f& a, const PNPoint3f& b, const PNPoint3f& c)
 {
 	setPoints(a, b, c);
 	return;
@@ -137,7 +137,7 @@ PNTriangle::PNTriangle(const PNPoint & a, const PNPoint & b, const PNPoint & c)
  * \param	array	an array of 3 consecutives PNVector3f object
 
  */
-PNTriangle::PNTriangle(const PNPoint * array)
+PNTriangle::PNTriangle(const PNPoint3f* array)
 {
 	setPoints(array[0], array[1], array[2]);	
 	return;
@@ -180,8 +180,8 @@ PNTriangle::getPoint(int id, PNVector3f & pt) const
  * 
  * \return	the point to retrieve
  */
-PNPoint &
-PNTriangle::getPoint(int id, PNPoint & pt) const
+PNPoint3f&
+PNTriangle::getPoint(int id, PNPoint3f& pt) const
 {
 	PNVector3f	v;
 	
@@ -271,8 +271,8 @@ PNTriangle::getExtrusionPlane(pnint id, PNPlane & plane) const
  * 
  * \return	the resulting coordinates
  */
-PNPoint &
-PNTriangle::getClosestPointOnSide(const PNPoint & origin, const PNPoint & destination, const PNPoint & point, PNPoint & result) const
+PNPoint3f&
+PNTriangle::getClosestPointOnSide(const PNPoint3f& origin, const PNPoint3f& destination, const PNPoint3f& point, PNPoint3f& result) const
 {
 	PNVector3f	dir(origin, destination);
 	PNVector3f	v(origin, point);
@@ -305,11 +305,11 @@ PNTriangle::getClosestPointOnSide(const PNPoint & origin, const PNPoint & destin
  * 
  * \return	the resulting closest coordinates
  */
-PNPoint &
-PNTriangle::getClosestPoint(const PNPoint & from, PNPoint & result) const
+PNPoint3f&
+PNTriangle::getClosestPoint(const PNPoint3f& from, PNPoint3f& result) const
 {
-	PNPoint	closest;
-	PNPoint	projection;
+	PNPoint3f	closest;
+	PNPoint3f	projection;
 	
 	projection = projectionOnPlane(from, projection);	
 	if (isInsideBoundTriangle(projection))
@@ -340,7 +340,7 @@ PNTriangle::getClosestPoint(const PNPoint & from, PNPoint & result) const
  * \return	void
  */
 void
-PNTriangle::setPoints(const PNPoint & a, const PNPoint & b, const PNPoint & c)
+PNTriangle::setPoints(const PNPoint3f& a, const PNPoint3f& b, const PNPoint3f& c)
 {
 	PNVector3f	ab(a, b);
 	PNVector3f	ac(a, c);
@@ -360,7 +360,7 @@ PNTriangle::setPoints(const PNPoint & a, const PNPoint & b, const PNPoint & c)
  * \brief Returns true if the specifed points are defining a flat triangle. Returns false otherwise.
  */
 bool
-PNTriangle::isFlat(PNPoint & a, PNPoint & b, PNPoint & c)
+PNTriangle::isFlat(PNPoint3f& a, PNPoint3f& b, PNPoint3f& c)
 {
 	PNVector3f	ab(a, b);
 	PNVector3f	ac(a, c);
@@ -402,7 +402,7 @@ PNTriangle::isFlat(PNPoint & a, PNPoint & b, PNPoint & c)
  * \return	true	if the point is inside and false otherwise.
  */
 bool
-PNTriangle::isInsideBoundTriangle(const PNPoint & point) const
+PNTriangle::isInsideBoundTriangle(const PNPoint3f& point) const
 {
 	PNPlane	plane;
 	
@@ -423,7 +423,7 @@ PNTriangle::isInsideBoundTriangle(const PNPoint & point) const
  * \return	true if it is inside, false otherwise.
  */
 bool
-PNTriangle::isInsideTriangle(const PNPoint & point) const
+PNTriangle::isInsideTriangle(const PNPoint3f& point) const
 {
 	PNPlane	plane;
 	
@@ -448,7 +448,7 @@ PNTriangle::isInsideTriangle(const PNPoint & point) const
 bool
 PNTriangle::isEquals(const PNTriangle & triangle, bool exactOrdering) const
 {
-	PNPoint	v;
+	PNPoint3f	v;
 	int		i;
 	
 	for (i = 0; i < 3; i++)

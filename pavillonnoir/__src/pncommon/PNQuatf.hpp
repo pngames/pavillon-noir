@@ -37,7 +37,7 @@
 
 namespace PN {
 
-class PNPoint;
+class PNPoint3f;
 class PNVector3f;
 class PNMatrix4f;
 
@@ -86,12 +86,12 @@ public:
   void					slerp(const PNQuatf& src, const PNQuatf& dest, pnfloat interp);
   void					slerp(const PNQuatf& dest, pnfloat interp);
 
-  PNPoint				multiply(const pnfloat *point) const;
-  PNPoint	  			multiply(const PNPoint& point) const;
+  PNPoint3f				multiply(const pnfloat *point) const;
+  PNPoint3f	  			multiply(const PNPoint3f& point) const;
 
   //////////////////////////////////////////////////////////////////////////
 
-  PNPoint				operator*(const PNPoint& vec) const;
+  PNPoint3f				operator*(const PNPoint3f& vec) const;
   PNQuatf				operator*(const PNQuatf& quat) const;
 
   PNQuatf&				operator*=(const PNQuatf& quat);

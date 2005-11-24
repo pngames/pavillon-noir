@@ -45,6 +45,8 @@ namespace PN {
 
 PNIAnimationImporter::PNIAnimationImporter()
 {
+  _label = "PNA Importer";
+
   _magic = PNA_MAGIC;
   _magicSize = PNA_MAGIC_SIZE;
 }

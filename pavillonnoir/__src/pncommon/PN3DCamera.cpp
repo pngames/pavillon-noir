@@ -177,14 +177,14 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 
   //////////////////////////////////////////////////////////////////////////
 
-  PNPoint coord = _coord - obj->getCoord();
+  PNPoint3fcoord = _coord - obj->getCoord();
   coord = obj->getOrient().getInvert() * coord;
   frontDirection = obj->getOrient().getInvert() * frontDirection;
 
-  PNVector3f	targetVector = PNPoint::ZERO - coord;
+  PNVector3f	targetVector = PNPoint3f::ZERO - coord;
 
-  const PNPoint&  minCoords = obj->get3DModel()->getMin();
-  const PNPoint&  maxCoords = obj->get3DModel()->getMax();
+  const PNPoint3f&  minCoords = obj->get3DModel()->getMin();
+  const PNPoint3f&  maxCoords = obj->get3DModel()->getMax();
 
   PNVector3f	targetVector1(minCoords);
   targetVector1 += targetVector;
@@ -386,17 +386,17 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
 
   //////////////////////////////////////////////////////////////////////////
 
-  PNPoint coord = _coord - obj->getCoord();
+  PNPoint3f coord = _coord - obj->getCoord();
   coord = obj->getOrient().getInvert() * coord;
 
   frontDirection = obj->getOrient().getInvert() * frontDirection;
   rightDirection = obj->getOrient().getInvert() * rightDirection;
   topDirection = obj->getOrient().getInvert() * topDirection;
 
-  PNVector3f	targetVector = PNPoint::ZERO - coord;
+  PNVector3f	targetVector = PNPoint3f::ZERO - coord;
 
-  const PNPoint&  minCoords = obj->get3DModel()->getMin();
-  const PNPoint&  maxCoords = obj->get3DModel()->getMax();
+  const PNPoint3f&  minCoords = obj->get3DModel()->getMin();
+  const PNPoint3f&  maxCoords = obj->get3DModel()->getMax();
 
   PNVector3f	targetVector1(minCoords);
   targetVector1 += targetVector;

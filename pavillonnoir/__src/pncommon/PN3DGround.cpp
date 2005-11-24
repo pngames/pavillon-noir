@@ -118,7 +118,7 @@ PN3DGround::_convertIntoGroundRepresentation (PN3DObject & groundModel)
   pnpoint3f *		normals;
   pncolor_t *		colors;
   pnpoint2f *		texcoords;
-  PNPoint			points[3];
+  PNPoint3f			points[3];
   unsigned int	i;
 
   _nbFace = groundModel.getNbFacesComputed();
@@ -191,8 +191,8 @@ PN3DGround::setConfig()
 bool
 PN3DGround::collisionProcess(const PNBoundingSphere & bSphere, const PNVector3f & translation, PNVector3f & trResult)
 {
-  PNPoint				pos;
-  PNPoint				radius;
+  PNPoint3f				pos;
+  PNPoint3f				radius;
   PNVector3f			posFinal;
   bool					collisionOccurs;
 
@@ -208,8 +208,8 @@ PN3DGround::collisionProcess(const PNBoundingSphere & bSphere, const PNVector3f 
 void
 PN3DGround::handleStaticCollision(PN3DObject & object, pnfloat rX, pnfloat rY, pnfloat rZ)
 {
-  PNPoint				posObject = object.getCoord();
-  PNPoint				radius(rX, rY, rZ);
+  PNPoint3f				posObject = object.getCoord();
+  PNPoint3f				radius(rX, rY, rZ);
   PNVector3f			translation = object.getUpdateTranslation();
   PNVector3f			trResult;
   PNBoundingSphere		camSphere(radius, posObject);

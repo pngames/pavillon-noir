@@ -36,16 +36,21 @@ using namespace PN;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-void
-PNExportInterface::init()
+PNExportInterface::PNExportInterface()
 {
-  PNExportManager::getInstance()->addExporter(this);
+  _label = "Exporter";
+}
+
+PNExportInterface::~PNExportInterface()
+{
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-PNExportInterface::~PNExportInterface()
+void
+PNExportInterface::init()
 {
+  PNExportManager::getInstance()->addExporter(this);
 }
 
 //////////////////////////////////////////////////////////////////////////

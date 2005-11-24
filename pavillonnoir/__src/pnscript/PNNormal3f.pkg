@@ -23,7 +23,7 @@ public:
   virtual const PNVector3f&	getVector() const {return *this;};
 
 public:
- void						setFromSegment(const PNPoint & origin, const PNPoint & extremity);
+ void						setFromSegment(const PNPoint3f& origin, const PNPoint3f& extremity);
   
 public:
  bool						isColinear(PNNormal3f & v);
@@ -39,12 +39,12 @@ public:
  float						degreeRange2Pi(PNNormal3f & cosinusReferentiel, PNNormal3f & sinusReferentiel);
   
 public:
- void						crossProduct(PNPoint & u, PNPoint & v);
+ void						crossProduct(PNPoint3f& u, PNPoint3f& v);
  void						crossProduct(PNNormal3f & u, PNNormal3f & v);
   
 public:  
  float						scalarProduct(const PNNormal3f & n) const;
- float						scalarProduct(const PNPoint & u) const;
+ float						scalarProduct(const PNPoint3f& u) const;
  float						scalarProduct(float nX, float nY, float nZ) const;
   
 public:

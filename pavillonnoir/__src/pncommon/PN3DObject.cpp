@@ -323,16 +323,16 @@ PN3DObject::getTopDirection() const
 
 //////////////////////////////////////////////////////////////////////////
 
-const PNPoint&
+const PNPoint3f&
 PN3DObject::getCoord() const
 {
   return _coord;
 }
 
-const PNPoint&
+const PNPoint3f&
 PN3DObject::getCenter() const
 {
-  return _model != NULL ? _model->getCenter() : PNPoint::ZERO;
+  return _model != NULL ? _model->getCenter() : PNPoint3f::ZERO;
 }
 
 const PNQuatf&
@@ -380,7 +380,7 @@ PN3DObject::getObjType() const
 }
 
 void
-PN3DObject::setCoord(const PNPoint& coord)
+PN3DObject::setCoord(const PNPoint3f& coord)
 {
   PNLOCK(this);
 
@@ -417,7 +417,7 @@ PN3DObject::setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w)
 }
 
 void
-PN3DObject::move(PNPoint& coord)
+PN3DObject::move(PNPoint3f& coord)
 {
   PNLOCK(this);
 
@@ -714,10 +714,10 @@ PN3DObject::getPositionBoneTarget() const
 }
 
 /// Retrieve 3d object position coordinate
-PNPoint
+PNPoint3f
 PN3DObject::getPositionTargetCoord() const
 {
-  PNPoint coord  = _positionTarget->getCoord();
+  PNPoint3f coord  = _positionTarget->getCoord();
 
   if (_positionBoneTarget.empty())
 	return coord;
@@ -790,10 +790,10 @@ PN3DObject::getViewBoneTarget() const
 }
 
 /// Retrieve 3d object position coordinate
-PNPoint
+PNPoint3f
 PN3DObject::getViewTargetCoord() const
 {
-  PNPoint coord  = _viewTarget->getCoord();
+  PNPoint3f	coord  = _viewTarget->getCoord();
 
   if (_viewBoneTarget.empty())
 	return coord;
@@ -895,12 +895,12 @@ PN3DObject::setTargetOrientation(const PNQuatf& quat)
 }
 //////////////////////////////////////////////////////////////////////////
 /// Get minimum x y z coordinate
-const PNPoint&	PN3DObject::getMin() const 
+const PNPoint3f&	PN3DObject::getMin() const 
 {
   return _model->getMin();
 }
 /// Get maximum x y z coordinate
-const PNPoint&	PN3DObject::getMax() const
+const PNPoint3f&	PN3DObject::getMax() const
 {
   return  _model->getMax();
 }

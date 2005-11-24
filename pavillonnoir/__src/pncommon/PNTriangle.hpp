@@ -48,25 +48,25 @@ namespace PN {
 public:
 	PNTriangle		();
 	PNTriangle		(const PNTriangle & src);
-	PNTriangle		(const PNPoint & a, const PNPoint & b, const PNPoint & c);
-	PNTriangle		(const PNPoint * array);
+	PNTriangle		(const PNPoint3f& a, const PNPoint3f& b, const PNPoint3f& c);
+	PNTriangle		(const PNPoint3f* array);
 	~PNTriangle		();
 	
 public:
-	PNPoint &		getPoint				(int id, PNPoint & pt) const;
+	PNPoint3f&		getPoint				(int id, PNPoint3f& pt) const;
 	PNVector3f &	getPoint				(int id, PNVector3f & pt) const;
 	pnfloat			getArea					() const;
 	PNPlane &		getExtrusionPlane		(int id, PNPlane & plane) const;
-	PNPoint &		getClosestPoint			(const PNPoint & from, PNPoint & result) const;
-	PNPoint &		getClosestPointOnSide	(const PNPoint & origin, const PNPoint & destination, const PNPoint & point, PNPoint & result) const;
+	PNPoint3f&		getClosestPoint			(const PNPoint3f& from, PNPoint3f& result) const;
+	PNPoint3f&		getClosestPointOnSide	(const PNPoint3f& origin, const PNPoint3f& destination, const PNPoint3f& point, PNPoint3f& result) const;
 	
 public:
-	void			setPoints				(const PNPoint & a, const PNPoint & b, const PNPoint & c);
+	void			setPoints				(const PNPoint3f& a, const PNPoint3f& b, const PNPoint3f& c);
 		
 public:
-	static bool		isFlat					(PNPoint & a, PNPoint & b, PNPoint & c);
-	bool			isInsideTriangle		(const PNPoint & point) const;
-	bool			isInsideBoundTriangle	(const PNPoint & point) const;
+	static bool		isFlat					(PNPoint3f& a, PNPoint3f& b, PNPoint3f& c);
+	bool			isInsideTriangle		(const PNPoint3f& point) const;
+	bool			isInsideBoundTriangle	(const PNPoint3f& point) const;
 	bool			isEquals				(const PNTriangle & triangle, bool exactOrdering) const;
 	static bool		areEqual				(PNTriangle * arrayOne, PNTriangle * arrayTwo, int sizeOne, int sizeTwo, bool exactOrdering);
 	
@@ -79,7 +79,7 @@ private:
 	
 
 private:
-	PNPoint		_pt[3];
+	PNPoint3f		_pt[3];
  };
  
  ///////////////////////////////////////////////////
