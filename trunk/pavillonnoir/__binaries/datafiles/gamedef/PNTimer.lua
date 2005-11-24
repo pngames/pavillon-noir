@@ -4,12 +4,12 @@ function PNTimerClass
     OBJ.time = 0;
     OBJ.scheduledTasks = {}
     
-    function onUpdate(deltaTime)
+    function OBJ:onUpdate(deltaTime)
         self.time = self.time + deltaTime
         local id = 1;
-        while id < table.getn(self.scheduledTasks) do
+        while (id <= table.getn(self.scheduledTasks)) do
             local task = self.scheduledTasks[id]
-            if (task.s+task.r >= self.time) then
+            if (task.s + task.r >= self.time) then
                 task.f(task.e)
                 if task.l == true then 
                     task.s = self.time
@@ -23,7 +23,7 @@ function PNTimerClass
         
     end
 
-    function addTask(entity, func, remainTime, loop)
+    function OBJ:addTask(entity, func, remainTime, loop)
         table.insert(self.scheduledTasks, {e=entity, f=func, s=self.time, r=remainTime, l=loop})
     end
 end
