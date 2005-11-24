@@ -1,5 +1,5 @@
 ## Thomas Nagy, 2005
-## modified by Loic Guitaut, 2005
+## Updated by Loic Guitaut for the Pavillon Noir project, 2005
 """ Run scons -h to display the associated help, or look below """
 
 import os, re, types, sys, string, shutil, stat, glob
@@ -277,6 +277,7 @@ def generate(env):
 		p('BOLD','* debug        ','debug=1 (-g) or debug=full (-g3, slower) else use environment CXXFLAGS, or -O2 by default')
 		p('BOLD','* prefix       ','the installation path')
 		p('BOLD','* extraincludes','a list of paths separated by ":"')
+		p('BOLD','* static       ','static=1 to build the project statically')
 		p('BOLD','* scons configure debug=full prefix=/usr/local extraincludes=/tmp/include:/usr/local\n')
 		return
 	
@@ -339,6 +340,7 @@ def generate(env):
 		( 'EXTRAINCLUDES', 'extra include paths for the project' ),
 		( 'ISCONFIGURED', 'is the project configured' ),
 		( 'DEBUG','is the project in debug mode'),
+		( 'STATIC', 'is the project statically compiled'),
 	)
 	opts.Update(env)
 	
@@ -372,7 +374,16 @@ def generate(env):
 				env['GENCXXFLAGS'] = SCons.Util.CLVar( os.environ['CXXFLAGS'] )
 				env.Append( GENCXXFLAGS = [''] )
 			else:
-				env.Append(GENCXXFLAGS = ['-O3', '-pthread', '-Wall', '-fmessage-length=0', '-pthread'])
+				env.Append(GENCXXFLAGS = ['-O3', '-pthread', '-Wall', '-fmessage-length=0'])
+
+		if env['ARGS'].get('static', None):
+			env['STATIC'] = env['ARGS'].get('static', None)
+			if (env['STATIC'] == 0):
+				env.pprint('CYAN','** Explicit dynamic compilation for the project **')
+			else:
+				env.pprint('CYAN','** Enabling static compilation for the project **')
+				env.Append(GENCXXFLAGS = ['-static'])
+				env.Append(GENLINKFLAGS = ['-static'])
 
 		if os.environ.has_key('CFLAGS'): env['GENCCFLAGS'] = SCons.Util.CLVar( os.environ['CFLAGS'] )
 
@@ -397,7 +408,7 @@ def generate(env):
 		if env['ARGS'].has_key('prefix'):
 			env['PREFIX'] = os.path.abspath(os.path.expanduser(env['ARGS'].get('prefix', '')))
 			env.pprint('CYAN','** installation prefix for the project set to:',env['PREFIX'])
-
+		
 		# User-specified include paths
 		env['EXTRAINCLUDES'] = env['ARGS'].get('extraincludes', None)
 		if env['EXTRAINCLUDES']:
