@@ -1,4 +1,4 @@
-function PNTimerClass
+function PNTimerClass()
     local OBJ = {}
 
     OBJ.time = 0
