@@ -285,9 +285,10 @@ long  PNFoxOptionWindow::onApply(FXObject* obj,FXSelector sel,void* ptr)
 */
 void  PNFoxOptionWindow::saveGrid(PNPropertiesGrid* grid, PNConf* conf)
 {
-  std::list<PNPropertiesGridParameter*> gridParameters = grid->getParams();
+  std::list<PNPropertiesGridParameter*>& gridParameters = grid->getParams();
+
   for (std::list<PNPropertiesGridParameter*>::iterator it = gridParameters.begin(); 
-	it != gridParameters.end(); it++)
+	it != gridParameters.end(); ++it)
   {
 	PNConfigurableParameter* configurableParameter  = (*it)->getParam();
 	PNPropertiesGridParameter* gridParameter;
