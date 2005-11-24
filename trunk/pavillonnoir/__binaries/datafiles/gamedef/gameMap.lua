@@ -8,6 +8,7 @@ tolua:takeownership(gameMap)
 gameMap.entities = {}	
 gameMap.entities.all = {}
 gameMap.entities.className = {}
+gameMap.timer = PNTimerClass()
 
 function gameMap:spawn2(entity, id)
 	pnprint("==>> gameMap:spawn2\n")
@@ -54,7 +55,7 @@ function gameMap:onUpdate(deltaTime)
 --	pnprint("=> LUA GameMap: onUpdate()")
 	--local id
 	--local entity
-	
+	self.Timer:onUpdate(deltaTime);
 	PNRenderCam:onUpdate(deltaTime)
 	for id, entity in pairs(self.entities.all) do
 	    --print("==>> gameMap:updateLua()")
