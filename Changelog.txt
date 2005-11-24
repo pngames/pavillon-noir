@@ -34,7 +34,7 @@ Big improvement of game framework. Starting game desing.
 		- Add OpenAl installer into win32 installer
 		- Add Scons script for linux source package (see INSTALL file
 		for howto use it)
-		- Updates to breezy packages
+		- Updated Ubuntu Breezy and Debian Sid packages
 		- No more non free resources in the trunk
 
 	Bug Fixes:
