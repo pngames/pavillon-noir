@@ -27,6 +27,6 @@ function PNTimerClass
         table.insert(self.scheduledTasks, {e=entity, f=func, s=self.time, r=remainTime, l=loop})
     end
     
-    return time
+    return OBJ
 end
 
