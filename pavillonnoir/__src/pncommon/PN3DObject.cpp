@@ -1014,7 +1014,8 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
 
   if (!_updateTranslation.isNull())
   {
-	_updateTranslation.setNorm(step);
+	if (_updateTranslation.getNorm() > step)
+	  _updateTranslation.setNorm(step);
 
 	//////////////////////////////////////////////////////////////////////////
 	// targetPosition & targetDistance
