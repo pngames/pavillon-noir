@@ -32,7 +32,10 @@ Big improvement of game framework. Starting game desing.
 		- Add physical exporter max script (based on Opal one) in /tools
 	* INSTALLER/PACKAGES:
 		- Add OpenAl installer into win32 installer
-		- Add Scons script for linux source package
+		- Add Scons script for linux source package (see INSTALL file
+		for howto use it)
+		- Updates to breezy packages
+		- No more non free resources in the trunk
 
 	Bug Fixes:
 	----------
@@ -67,13 +70,13 @@ Big improvement of game framework. Starting game desing.
 	* Updates:
 		- CEGUI: 0.4
 		- boost: 1.33
-		- Opal: CVS version
+		- Opal: CVS version (provided)
 		- tolua++: 1.0.6
 
 	SRC:
 	----
-	* Update to CDT 3.0 project configuration files
-	* Update to vc8 project configuration files for Windows
+	* Update to CDT 3.0 project configuration files for Eclipse 3.x
+	* Update to Visual Studio 2005 project configuration files for Windows
 	
 	Know issues:
 	----------
