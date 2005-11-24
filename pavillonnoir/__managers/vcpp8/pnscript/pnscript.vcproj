@@ -394,6 +394,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNDiceClass.lua"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNItemClass.lua"
 				>
 			</File>
