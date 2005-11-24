@@ -34,6 +34,7 @@
 #include "PNFoxMainWindow.hpp"
 #include "top_image2.h"
 #include "pnresources.h"
+#include "PNConf.hpp"
 
 namespace PN
 {
@@ -67,7 +68,8 @@ FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|
   new FXLabel(_contentMain,"Choose your map :",NULL,JUSTIFY_NORMAL);
   _mapSelector = new FXComboBox(_contentMain,10,NULL,0,COMBOBOX_STATIC|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FIX_WIDTH,0,0,312,45);
 
-  std::FILE*	file = fopen("config.cfg", "a");
+  std::string	conffilepath = PNConf::getInstance()->getConfPath().native_directory_string() + PATHSEPSTRING + "config.cfg";
+  std::FILE*	file = fopen(conffilepath.c_str(), "a");
   char		buffer[1024];
 
   memset(buffer, 0, sizeof(buffer));
@@ -135,7 +137,7 @@ FXIMPLEMENT(PNFoxMainWindow,FXMainWindow,MainConfigWindowMap,ARRAYNUMBER(MainCon
 
 /*!
 \brief
-Called when "New Game" is pushed and write the chosen map in cconfig.cfg file.
+Called when "New Game" is pushed and write the chosen map in config.cfg file.
 Close the main Fox window.
 */
 long	PNFoxMainWindow::onCmdLauchGame(FXObject*,FXSelector,void*)
@@ -146,7 +148,8 @@ long	PNFoxMainWindow::onCmdLauchGame(FXObject*,FXSelector,void*)
   mapPath = _mapSelector->getItemText(_mapSelector->getCurrentItem()).text();
   //mapPath += "/entities.xml";
 
-  std::FILE* configFile = fopen("config.cfg", "w");
+  std::string conffilepath = PNConf::getInstance()->getConfPath().native_directory_string() + PATHSEPSTRING + "config.cfg";
+  std::FILE* configFile = fopen(conffilepath.c_str(), "w");
   fwrite( mapPath.c_str(), sizeof( char ), mapPath.length(), configFile);
   fclose(configFile);
 
