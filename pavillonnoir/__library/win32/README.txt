@@ -9,8 +9,7 @@ name		| current version
 * boost	: 1.33
 * openal	: 1.1
 		- Installeur dans le rep "install", obligatoire sous windows.
-* vorbis	: 
-* ogg		: 
+* ogg-vorbis: 1.0.1
 * lua		: 5.0.2
 * tolua++	: 1.0.6
 		- Installeur dans /__dev/tolua++
@@ -24,4 +23,3 @@ Sub dependents
 * iconv 	: 1.9.1
 * zlib 	: 1.2.2.0
 * xerces	: 2.7.0.0
-* ode		: 
