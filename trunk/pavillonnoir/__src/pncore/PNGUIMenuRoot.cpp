@@ -54,6 +54,7 @@
 #include "PNGameMap.hpp"
 #include "PNPhysicsInterface.hpp"
 #include "PNConsole.hpp"
+#include "PNConf.hpp"
 
 ////Changes music volume (specific for the demo, please delete later)
 #include "PNSoundInterface.hpp"
@@ -79,8 +80,7 @@ namespace PN
 
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 
-	setupEventHandlers();	
-	
+	setupEventHandlers();
 
 	//////////////////////////////////////////////////////////////////////////
 	// Sound loading for menu
@@ -178,7 +178,8 @@ namespace PN
 	// FIXME -> PNGameMap cree par le script
 	// FIXME -> lancer l'evenement START
 
-	FILE* file = fopen("config.cfg", "r");
+	std::string conffilepath = PNConf::getInstance()->getConfPath().string() + PATHSEPSTRING + "config.cfg";
+	FILE* file = fopen(conffilepath.c_str(), "r");
 	char  buffer[1024];
 	memset(buffer, 0, sizeof(buffer));
 	fread(buffer, 1, 1023, file);

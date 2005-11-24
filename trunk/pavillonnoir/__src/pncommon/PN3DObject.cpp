@@ -962,7 +962,7 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
   //////////////////////////////////////////////////////////////////////////
   // targetPosition
 
-  if (_targetMode & (TMODE_POSITION_LOCKED || TMODE_POSITION_ABS_LOCKED))
+  if (_targetMode & (TMODE_POSITION_LOCKED | TMODE_POSITION_ABS_LOCKED))
   {
 	_movingState &= !STATE_ALL_T;
 
