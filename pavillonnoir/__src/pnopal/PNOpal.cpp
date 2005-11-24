@@ -178,18 +178,7 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 		  const PNPoint& test = current_obj->getPhysicalObject()->getCoord();
 		  const PNPoint& offset = current_obj->getPhysicalObject()->getOffset();
 		  ((PNOpalObject*)current_obj->getPhysicalObject())->setMovementMotor(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z, orient);
-		  
-		  // DEBUG
-		  opal::Vec3r print;
-		  print = ((PNOpalObject*)current_obj->getPhysicalObject())->getAccelSensor()->getLocalLinearAccel();
-		  pnerror(PN_LOGLVL_DEBUG, "Solid %s acceleration sensor", ((PNOpalObject*)current_obj->getPhysicalObject())->getOpalSolid()->getName().c_str()); 
-		  pnerror(PN_LOGLVL_DEBUG, "Local  linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
-		  print = ((PNOpalObject*)current_obj->getPhysicalObject())->getAccelSensor()->getGlobalLinearAccel();
-		  pnerror(PN_LOGLVL_DEBUG, "Global linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
-		  print = ((PNOpalObject*)current_obj->getPhysicalObject())->getAccelSensor()->getLocalAngularAccel();
-		  pnerror(PN_LOGLVL_DEBUG, "Local angular - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
-		  print = ((PNOpalObject*)current_obj->getPhysicalObject())->getAccelSensor()->getGlobalAngularAccel();
-		  pnerror(PN_LOGLVL_DEBUG, "Global angular - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
+		  ((PNOpalObject*)current_obj->getPhysicalObject())->printAccel();
 		}
 	  }
 	  PNLOCK_END(current_obj);
@@ -274,15 +263,10 @@ void	PNOpal::opal2pn()
 		const PNPoint& offset = current_obj->getPhysicalObject()->getOffset();
 		const PNQuatf& orient = current_obj->getPhysicalObject()->getOrient();
 
-		if (!current_obj->getUpdateTranslation().isNull() || (orient != current_obj->getPhysicalObject()->getOrient()))
+		if (((PNOpalObject*)current_obj->getPhysicalObject())->linearAccel)
 		{
-		  //opal::Vec3r print;
-		  //print = ((PNOpalObject*)current_obj->getPhysicalObject())->getAccelSensor()->getLocalLinearAccel();
-		  //pnerror(PN_LOGLVL_DEBUG, "Solid %s acceleration sensor", ((PNOpalObject*)current_obj->getPhysicalObject())->getOpalSolid()->getName()); 
-		  //pnerror(PN_LOGLVL_DEBUG, "Local  linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
-		  //print = ((PNOpalObject*)current_obj->getPhysicalObject())->getAccelSensor()->getGlobalLinearAccel();
-		  //pnerror(PN_LOGLVL_DEBUG, "Global linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
 		  ((PNOpalObject*)current_obj->getPhysicalObject())->destroyMovementMotor();
+		  ((PNOpalObject*)current_obj->getPhysicalObject())->linearAccel = false;
 		}
 
 		current_obj->setCoord(coord.x, coord.y, coord.z);
