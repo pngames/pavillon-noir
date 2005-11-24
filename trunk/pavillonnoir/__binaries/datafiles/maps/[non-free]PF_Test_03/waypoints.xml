@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE graph SYSTEM "../waypoints.dtd">
+<graph>
+<listwp>
+<wp id="id:1" x="1" y="40" z="50"/>
+<wp id="id:2" x="0" y="40" z="500"/>
+<wp id="id:3" x="-1000" y="40" z="500"/>
+<wp id="id:4" x="-1000" y="40" z="-1500"/>
+</listwp>
+<listlnk>
+<lnk from="1" to="2" coef="1"/>
+<lnk from="2" to="1" coef="1"/>
+<lnk from="2" to="3" coef="1"/>
+<lnk from="3" to="2" coef="1"/>
+<lnk from="3" to="4" coef="1"/>
+<lnk from="4" to="3" coef="1"/>
+</listlnk>
+</graph>
