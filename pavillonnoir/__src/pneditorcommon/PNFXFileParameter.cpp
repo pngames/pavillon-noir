@@ -105,7 +105,7 @@ namespace PN {
 	  }
 	  else
 	  {
-		_field->setText(str.replace(0, strlen(buf) + 1, "").substitute('\\', '/').text());
+		_field->setText(str.replace(0, (FXint)strlen(buf) + 1, "").substitute('\\', '/').text());
 		boost::filesystem::path* p = (boost::filesystem::path*)_param->getElem();
 		//delete p;
 		boost::filesystem::path* fsp = new boost::filesystem::path(_field->getText().text(), boost::filesystem::no_check);

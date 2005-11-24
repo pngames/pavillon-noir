@@ -102,7 +102,7 @@ namespace PN {
   long  PNFXDialXYZParameter::onUpdate(FXObject* sender, FXSelector sel, void *ptr)
   {
 	FXHorizontalFrame::onUpdate(sender,sel,ptr);
-	pnfloat pos = _dial->getValue();
+	pnfloat pos = (pnfloat)_dial->getValue();
 
 	if (pos != _oldValue)
 	{
@@ -115,15 +115,15 @@ namespace PN {
 	  switch (_param->getType())
 	  {
 	  case PN_PARAMTYPE_DIALX:
-		o->rotatePitchRadians(DEGREE_TO_RADIAN(pos - _oldValue));
+		o->rotatePitchRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
 		sprintf(str, "%f", x);
 		break;
 	  case PN_PARAMTYPE_DIALY:
-		o->rotateYawRadians(DEGREE_TO_RADIAN(pos - _oldValue));
+		o->rotateYawRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
 		sprintf(str, "%f", y);
 		break;
 	  case PN_PARAMTYPE_DIALZ:
-		o->rotateRollRadians(DEGREE_TO_RADIAN(pos - _oldValue));
+		o->rotateRollRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
 		sprintf(str, "%f", z);
 		break;
 	  default:

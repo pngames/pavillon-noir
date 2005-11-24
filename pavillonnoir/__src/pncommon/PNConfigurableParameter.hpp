@@ -39,26 +39,26 @@ namespace PN
 
 typedef enum
 {
-  PN_PARAMTYPE_INT,
-  PN_PARAMTYPE_REAL,
-  PN_PARAMTYPE_STRING,
-  PN_PARAMTYPE_ACTIVESTRING,
-  PN_PARAMTYPE_FILE,
-  PN_PARAMTYPE_DIR,
+  PN_PARAMTYPE_INT,				// based on int
+  PN_PARAMTYPE_REAL,			// based on float
+  PN_PARAMTYPE_STRING,			// based on std::string
+  PN_PARAMTYPE_ACTIVESTRING,	
+  PN_PARAMTYPE_FILE,			// based on boost:filesystem:path
+  PN_PARAMTYPE_DIR,				// based on boost:filesystem:path
   PN_PARAMTYPE_LINK,
   PN_PARAMTYPE_DIALX,
   PN_PARAMTYPE_DIALY,
   PN_PARAMTYPE_DIALZ,
-  PN_PARAMTYPE_CHECKBOX,
+  PN_PARAMTYPE_BOOLEAN,			// based on bool
 
-  PN_PARAMTYPE_INTLIST,
-  PN_PARAMTYPE_REALLIST,
-  PN_PARAMTYPE_STRINGLIST,
-  PN_PARAMTYPE_FILELIST,
-  PN_PARAMTYPE_DIRLIST,
+  PN_PARAMTYPE_INTLIST,			// based on std:list<int>
+  PN_PARAMTYPE_REALLIST,		// based on std:list<float>
+  PN_PARAMTYPE_STRINGLIST,		// based on std:list<std::string>
+  PN_PARAMTYPE_FILELIST,		// based on std:list<boost:filesystem:path>
+  PN_PARAMTYPE_DIRLIST,			// based on std:list<boost:filesystem:path>
   PN_PARAMTYPE_LINKLIST,
-  PN_PARAMTYPE_MATERIALLIST,
-  PN_PARAMTYPE_ANIMLIST,
+  PN_PARAMTYPE_MATERIALLIST,	// based on PN3DObject:VectorMaterial
+  PN_PARAMTYPE_ANIMLIST,		// based on PN3DSkeletonObject:AnimationVector
   PN_PARAMTYPE_SCRIPTLIST
 } pnparamtype;
 
