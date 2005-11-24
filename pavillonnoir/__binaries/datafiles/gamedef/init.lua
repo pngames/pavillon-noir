@@ -3,6 +3,9 @@ pnprint("[LUA] load Init file\n")
 loadLuaScript("utilities.lua", true)
    pnprint("utilies.lua loaded\n")
 
+loadLuaScript("PNTimerClass.lua", true)
+   pnprint("PNTimerClass.lua loaded\n")
+   
 loadLuaScript("PN3DObjectClass.lua", true)
    pnprint("PN3DObjectClass.lua loaded\n")
      
