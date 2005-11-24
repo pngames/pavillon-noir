@@ -325,17 +325,20 @@ void		PNOpalObject::setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf or
   _movementMotorData.desiredPos.set((opal::real)x, (opal::real)y, (opal::real)z);
 
   /* creation of the orientation matrix */
+  
   opal::Matrix44r transform;
   transform.makeIdentity();
   if (!orient.isIdentity())
   {
 	transform.setRotation((opal::real)orient.w, (opal::real)orient.x, (opal::real)orient.y, (opal::real)orient.z);
-
-	/* setting of the motor matrix */
-	_movementMotorData.desiredForward.set(transform.getForward().getData());
-	_movementMotorData.desiredUp.set(transform.getUp().getData());
-	_movementMotorData.desiredRight.set(transform.getRight().getData());
   }
+  /* optional motor data */
+  
+  _movementMotorData.linearKd = 2.0;
+  _movementMotorData.linearKs = 20.0;
+  _movementMotorData.angularKd = 0.2;
+  _movementMotorData.angularKs = 0.6;
+  
 
   /* motor options */
   //_movementMotorData.linearKd = (opal::real)2.0;
@@ -347,6 +350,7 @@ void		PNOpalObject::setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf or
 
   /* motor init */
   _movementMotor->init(_movementMotorData);
+  //_movementMotor->setEnabled(true);
 }
 
 
@@ -355,8 +359,10 @@ void		PNOpalObject::setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf or
 
 void		PNOpalObject::destroyMovementMotor()
 {
+  //_movementMotorData.solid = opal::defaults::solid::angularDamping;
   _movementMotorData.solid = NULL;
-  _movementMotor->init(_movementMotorData);
+  //_movementMotor->init(_movementMotorData);
+  //_movementMotor->setEnabled(false);
 }
 
 //////////////////////////////////////////////////////////////////////////
