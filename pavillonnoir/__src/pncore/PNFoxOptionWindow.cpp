@@ -121,7 +121,7 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
   	  if (interf == NULL)
 	  {
 	    pnerror(PN_LOGLVL_ERROR, "[PNFoxOptionWindow] could not load interface configuration for plugin %s", 
-			pl->getPath().native_file_string()); 
+			pl->getPath().native_file_string().c_str()); 
 		return;
 	  }
 
