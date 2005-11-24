@@ -86,7 +86,8 @@ PNFXAnimListParameter::~PNFXAnimListParameter()
 }
 //////////////////////////////////////////////////////////////////////////
 
-void	PNFXAnimListParameter::create()
+void
+PNFXAnimListParameter::create()
 {
   FXHorizontalFrame::create();
   _buttonDelete->create();
@@ -98,21 +99,24 @@ void	PNFXAnimListParameter::create()
 /*
 *	Builds AnimList list for current parameter.
 */
-void	PNFXAnimListParameter::buildList(void)
+void
+PNFXAnimListParameter::buildList(void)
 {
   PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem();
 
   pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::buildList");
   _listBox->clearItems();
 
-  for (PN3DSkeletonObject::AnimationVector::size_type i = 0; i < v->size(); i++)
+  for (PN3DSkeletonObject::AnimationVector::iterator it = v->begin(); it != v->end(); ++it)
   {
-	std::string s = v->at(i).anim->getFile()->string();
+	PN3DSkeletonAnimation&	skanim = *it;
+
+	std::string s = skanim.anim->getFile()->string();
 
 	if (s.size() > 29)
 	  s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
 
-	_listBox->appendItem(s.c_str(), NULL, v->at(i).anim);
+	_listBox->appendItem(s.c_str(), NULL, skanim.anim);
   }
 
   _listBox->setNumVisible(_listBox->getNumItems()< 5 ? _listBox->getNumItems() : 5);
@@ -122,7 +126,8 @@ void	PNFXAnimListParameter::buildList(void)
 /*
 *	Deletes selected link.
 */
-long	PNFXAnimListParameter::onDelete(FXObject* obj,FXSelector sel,void* ptr)
+long
+PNFXAnimListParameter::onDelete(FXObject* obj,FXSelector sel,void* ptr)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::onDelete");
   if (_listBox->getNumItems() != 0)
@@ -137,7 +142,8 @@ long	PNFXAnimListParameter::onDelete(FXObject* obj,FXSelector sel,void* ptr)
   return 1;
 }
 
-long	PNFXAnimListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
+long
+PNFXAnimListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::onAdd");
   FXFileDialog fd(this, "Choose animation file");
@@ -158,12 +164,12 @@ long	PNFXAnimListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
 	}
 	else
 	{
-	  fs::path p(str.replace(0, strlen(buf) + 1, "").text(), fs::no_check);
+	  fs::path p(str.replace(0, (FXint)strlen(buf) + 1, "").text(), fs::no_check);
 	  PN3DAnimation* anim = (PN3DAnimation*)PNImportManager::getInstance()->import(p, PN_IMPORT_3DANIMATION);
 
 	  if (anim != NULL)
 	  {
-		v->push_back(PN3DSkeletonAnimation(anim, v->size()));
+		v->push_back(PN3DSkeletonAnimation(anim, (pnint)v->size()));
 
 		std::string s = v->at(i).anim->getFile()->string();
 		if (s.size() > 29)
@@ -183,7 +189,8 @@ long	PNFXAnimListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
 /*
 *	Updates AnimList
 */
-void	PNFXAnimListParameter::update(void)
+void
+PNFXAnimListParameter::update(void)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::update");
   PNConfigurableObject* co = _param->getConfigurableObject();
@@ -191,8 +198,6 @@ void	PNFXAnimListParameter::update(void)
   co->update(_param);
   co->setModified();
   _listBox->sortItems();
-
-  return;
 }
 
 //////////////////////////////////////////////////////////////////////////

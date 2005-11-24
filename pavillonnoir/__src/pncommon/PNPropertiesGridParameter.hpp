@@ -44,7 +44,7 @@ public:
   // TOOD : remove all NULL references
   virtual PNConfigurableParameter* getParam() {return NULL; }
 
-  virtual const std::string&	getStringValue() { return NULL; }
+  virtual std::string			getStringValue() { return ""; }
   virtual pnbool				setStringValue(const std::string& val) { return false; }
 };
 

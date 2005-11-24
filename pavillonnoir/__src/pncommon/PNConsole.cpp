@@ -66,7 +66,8 @@ PNConsole::~PNConsole()
 {
 }
 
-void	PNConsole::init()
+void
+PNConsole::init()
 {
   std::string tmpFile = PNConf::getInstance()->getConfPath().native_directory_string();
   tmpFile += PATHSEPSTRING;
@@ -75,12 +76,14 @@ void	PNConsole::init()
   _logFile.open(tmpFile.c_str());
 }
 
-void	PNConsole::_addFonction(const std::string& command, const Callback& fonction, const std::string& desc)
+void
+PNConsole::_addFonction(const std::string& command, const Callback& fonction, const std::string& desc)
 {
 
 }
 
-pnbool	PNConsole::addFonction(const std::string& command, const Callback& fonction, const std::string& desc)
+pnbool
+PNConsole::addFonction(const std::string& command, const Callback& fonction, const std::string& desc)
 {
   MapFonction::const_iterator iter = _fonctionMap.find(command);
 
@@ -104,7 +107,8 @@ pnbool	PNConsole::addFonction(const std::string& command, const Callback& foncti
   return true;
 }
 
-void	PNConsole::_delFonction(const std::string& command)
+void
+PNConsole::_delFonction(const std::string& command)
 {
   MapFonction::const_iterator iter = _fonctionMap.find(command);
 
@@ -118,7 +122,8 @@ void	PNConsole::_delFonction(const std::string& command)
   }
 }
 
-pnbool	PNConsole::delFonction(const std::string& command)
+pnbool
+PNConsole::delFonction(const std::string& command)
 {
   if (_instance != NULL)
 	_instance->_delFonction(command);
@@ -126,7 +131,8 @@ pnbool	PNConsole::delFonction(const std::string& command)
   return true;
 }
 
-void	PNConsole::_callFonction(const std::string& command, std::istream &paramet)
+void
+PNConsole::_callFonction(const std::string& command, std::istream &paramet)
 {
   //parcours la map et appelle la fonction
   MapFonction::const_iterator iter = _fonctionMap.find(command);
@@ -142,13 +148,15 @@ void	PNConsole::_callFonction(const std::string& command, std::istream &paramet)
   }
 }
 
-void	PNConsole::callFonction(const std::string& command, std::istream &paramet)
+void
+PNConsole::callFonction(const std::string& command, std::istream &paramet)
 {
   if (_instance != NULL)
 	_instance->_callFonction(command, paramet);
 }
 
-void	PNConsole::writeLine(const pnchar* format, ...)
+void
+PNConsole::writeLine(const pnchar* format, ...)
 {
   va_list	args;
   pnchar	buffer[1024];
@@ -175,7 +183,8 @@ void	PNConsole::writeLine(const pnchar* format, ...)
   }
 }
 
-void	PNConsole::writeError(pnloglevel lvl, const pnchar* format, ...)
+void
+PNConsole::writeError(pnloglevel lvl, const pnchar* format, ...)
 {
   va_list	args;
   pnchar	buffer[1024];
@@ -197,7 +206,7 @@ void	PNConsole::writeError(pnloglevel lvl, const pnchar* format, ...)
 	  break ;
 #ifdef DEBUG
 	case PN_LOGLVL_DEBUG:
-	  tmp = "[Info: " + tmp + "]\n";
+	  tmp = "[Debug: " + tmp + "]\n";
 	  std::cout << tmp;
 	  break ;
 #endif
@@ -229,7 +238,8 @@ void	PNConsole::writeError(pnloglevel lvl, const pnchar* format, ...)
   }
 }
 
-void			PNConsole::writePerror(pnloglevel lvl, const pnchar* format, ...)
+void
+PNConsole::writePerror(pnloglevel lvl, const pnchar* format, ...)
 {
    pnchar*		str;
 
@@ -262,7 +272,8 @@ void			PNConsole::writePerror(pnloglevel lvl, const pnchar* format, ...)
 #endif
 }
 
-std::string	PNConsole::getTime()
+std::string
+PNConsole::getTime()
 {
   time_t t;
 
@@ -290,7 +301,8 @@ std::string	PNConsole::getTime()
   return tmp;
 }
 
-int		PNConsole::getFonctionCompletion(const std::string& cmd, std::vector<std::string>& candidates)
+int
+PNConsole::getFonctionCompletion(const std::string& cmd, std::vector<std::string>& candidates)
 {
   unsigned int matchfound = 0;
 
@@ -311,7 +323,8 @@ int		PNConsole::getFonctionCompletion(const std::string& cmd, std::vector<std::s
 
 //////////////////////////////////////////////////////////////////////////
 
-void	PNConsole::_cmdHelp(const std::string&, std::istream& i)
+void
+PNConsole::_cmdHelp(const std::string&, std::istream& i)
 {
   std::string param;
 

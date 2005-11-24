@@ -32,6 +32,7 @@
 
 namespace PN
 {
+//////////////////////////////////////////////////////////////////////////
 
 PNFoxOptionsObject::PNFoxOptionsObject(void)
 {
@@ -39,30 +40,35 @@ PNFoxOptionsObject::PNFoxOptionsObject(void)
 
 PNFoxOptionsObject::PNFoxOptionsObject(std::string label) 
 {
-	_label = label;
+  _label = label;
 }
 
 PNFoxOptionsObject::~PNFoxOptionsObject(void)
 {
 }
 
-void	PNFoxOptionsObject::addParam(PNConfigurableParameter* p)
+void
+PNFoxOptionsObject::addParam(PNConfigurableParameter* p)
 {
-	_params.push_back(p);
+  _params.push_back(p);
 }
 
-void	PNFoxOptionsObject::update(PNConfigurableParameter* p)
+void
+PNFoxOptionsObject::update(PNConfigurableParameter* p)
 {
 }
 
-int		PNFoxOptionsObject::getNbParameters()
+pnint
+PNFoxOptionsObject::getNbParameters()
 {
-	return _params.size();
+  return (pnint)_params.size();
 }
 
-PNConfigurableParameter*	PNFoxOptionsObject::getParameter(int idx)
+PNConfigurableParameter*
+PNFoxOptionsObject::getParameter(pnint idx)
 {
-	return _params[idx];
+  return _params[idx];
 }
 
+//////////////////////////////////////////////////////////////////////////
 };

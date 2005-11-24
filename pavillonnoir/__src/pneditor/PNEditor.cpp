@@ -996,15 +996,15 @@ int	  PNEditor::_parseEntity(void* node)
   } 
 
 
-  x = atof((const char *)xmlGetProp(current, PNXML_COORDX_ATTR));
-  y = atof((const char *)xmlGetProp(current, PNXML_COORDY_ATTR));
-  z = atof((const char *)xmlGetProp(current, PNXML_COORDZ_ATTR));
+  x = (pnfloat)atof((const char *)xmlGetProp(current, PNXML_COORDX_ATTR));
+  y = (pnfloat)atof((const char *)xmlGetProp(current, PNXML_COORDY_ATTR));
+  z = (pnfloat)atof((const char *)xmlGetProp(current, PNXML_COORDZ_ATTR));
   object->setCoord(x, y, z);
 
-  xx = atof((const char *)xmlGetProp(current, PNXML_ROTX_ATTR));
-  yy = atof((const char *)xmlGetProp(current, PNXML_ROTY_ATTR));
-  zz = atof((const char *)xmlGetProp(current, PNXML_ROTZ_ATTR));
-  ww = atof((const char *)xmlGetProp(current, PNXML_ROTW_ATTR));
+  xx = (pnfloat)atof((const char *)xmlGetProp(current, PNXML_ROTX_ATTR));
+  yy = (pnfloat)atof((const char *)xmlGetProp(current, PNXML_ROTY_ATTR));
+  zz = (pnfloat)atof((const char *)xmlGetProp(current, PNXML_ROTZ_ATTR));
+  ww = (pnfloat)atof((const char *)xmlGetProp(current, PNXML_ROTW_ATTR));
   object->setOrient(xx, yy, zz, ww);
 
   // build PMGLShape in genScene

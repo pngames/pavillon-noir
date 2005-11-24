@@ -48,59 +48,60 @@
 /////////////////////////////////////
 
 namespace PN {
+//////////////////////////////////////////////////////////////////////////
 
-  typedef std::list<std::string> stringList;
+typedef std::list<std::string> stringList;
 
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  class PNEDAPI PNFXStringListParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
-  {
-	FXDECLARE(PNFXStringListParameter);
+class PNEDAPI PNFXStringListParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+{
+  FXDECLARE(PNFXStringListParameter);
 
-	FXComposite*				_parent;
-	PNConfigurableParameter*	_param;
+  FXComposite*				_parent;
+  PNConfigurableParameter*	_param;
 
-	FXListBox*					_listBox;
-	FXButton*					_buttonDelete;
-	FXButton*					_buttonAdd;
+  FXListBox*				_listBox;
+  FXButton*					_buttonDelete;
+  FXButton*					_buttonAdd;
 
-	int							_labelsNumChars;
-	int							_numVisibleItems;
+  int						_labelsNumChars;
+  int						_numVisibleItems;
 
-  protected:
-	PNFXStringListParameter() {}
-	PNFXStringListParameter(PNFXStringListParameter&) {}
-  public:
-	PNFXStringListParameter(FXComposite* p, PNConfigurableParameter* param);
-	~PNFXStringListParameter();
+protected:
+  PNFXStringListParameter() {}
+  PNFXStringListParameter(PNFXStringListParameter&) {}
+public:
+  PNFXStringListParameter(FXComposite* p, PNConfigurableParameter* param);
+  ~PNFXStringListParameter();
 
-	void	create();
+  void						create();
 
-  public:
-	long	onCmdListBox(FXObject*,FXSelector,void*);
-	void	buildList(void);
-	void	update(void);
+public:
+  long						onCmdListBox(FXObject*,FXSelector,void*);
+  void						buildList(void);
+  void						update(void);
 
-	int		getNumVisibleItems() { return _numVisibleItems; }
-	int		getLabelsNumChars() { return _labelsNumChars; }
+  int						getNumVisibleItems() { return _numVisibleItems; }
+  int						getLabelsNumChars() { return _labelsNumChars; }
 
-	void	setNumVisibleItems(int numItems);
-	void	setLabelsNumChars(int numChars);
+  void						setNumVisibleItems(int numItems);
+  void						setLabelsNumChars(int numChars);
 
-	PNConfigurableParameter* getParam() { return _param; }
+  PNConfigurableParameter* getParam() { return _param; }
 
-	const std::string&	getStringValue();
-	pnbool				setStringValue(const std::string& val);
-	
-  public:
-	  enum {
-		// _objectsListBox selection changed
-		ID_LISTBOX_SEL = FXComposite::ID_LAST,
-		ID_LAST
-	  };
+  std::string				getStringValue();
+  pnbool					setStringValue(const std::string& val);
+
+public:
+  enum {
+	// _objectsListBox selection changed
+	ID_LISTBOX_SEL = FXComposite::ID_LAST,
+	ID_LAST
   };
+};
 
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PNFXSTRINGLISTPARAMETER_HPP_*/

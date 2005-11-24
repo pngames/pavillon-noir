@@ -243,7 +243,7 @@ namespace PN {
 	  }
 	  else
 	  {
-		fs::path* p =  new fs::path(str.replace(0, strlen(buf) + 1, "").text(), fs::no_check);
+		fs::path* p =  new fs::path(str.replace(0, (FXint)strlen(buf) + 1, "").text(), fs::no_check);
 
 		slist->push_back(p);
 
