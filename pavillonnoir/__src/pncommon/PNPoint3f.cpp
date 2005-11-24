@@ -43,11 +43,7 @@ namespace PN {
   
 PNPoint3f::PNPoint3f(void)
 {
-  x = 0.0f;
-  y = 0.0f;
-  z = 0.0f;
-
-  return ;
+  setNull();
 }
 
 PNPoint3f::PNPoint3f(const pnfloat& px, const pnfloat& py, const pnfloat& pz)
@@ -55,15 +51,13 @@ PNPoint3f::PNPoint3f(const pnfloat& px, const pnfloat& py, const pnfloat& pz)
   x = px;
   y = py;
   z = pz;
-
-  return ;
 }
 
 PNPoint3f::PNPoint3f(const pnfloat* coord)
 {
   x = coord[0];
   y = coord[1];
-  z = coord[1];
+  z = coord[2];
 }
 
 PNPoint3f::PNPoint3f(const PNPoint3f& p)
@@ -71,13 +65,10 @@ PNPoint3f::PNPoint3f(const PNPoint3f& p)
   x = p.x;
   y = p.y;
   z = p.z;
-
-  return ;
 }
 
 PNPoint3f::~PNPoint3f(void)
 {
-  return ;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -102,8 +93,6 @@ PNPoint3f::set(const pnfloat& px, const pnfloat& py, const pnfloat& pz)
   x = px;
   y = py;
   z = pz;
-
-  return ;
 }
 
 void
@@ -120,8 +109,6 @@ PNPoint3f::set(const PNPoint3f& p)
   x = p.x;
   y = p.y;
   z = p.z;
-
-  return ;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -142,23 +129,23 @@ PNPoint3f::getFlatDistance(const PNPoint3f& p) const
 //////////////////////////////////////////////////////////////////////////
 
 /**
- * \brief returns true if the specified point is equals to the current instance
- * in taking into account an EPSILON error. Returns false otherwise.
- * 
- * \param	point	the point used to do the comparison
- * \return	true	if both instance are equal, false otherwise.
- */
+* \brief returns true if the specified point is equals to the current instance
+* in taking into account an EPSILON error. Returns false otherwise.
+* 
+* \param	point	the point used to do the comparison
+* \return	true	if both instance are equal, false otherwise.
+*/
 bool
 PNPoint3f::isEquals(const PNPoint3f& point)
 {
-	return (getDistance(point) <= PN_EPSILON);
+  return (getDistance(point) <= PN_EPSILON);
 }
 
 bool
 PNPoint3f::isEquals(pnfloat x, pnfloat y, pnfloat z)
 {
-	PNPoint3f	u(x, y, z);
-	return (isEquals(u));
+  PNPoint3f	u(x, y, z);
+  return (isEquals(u));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -181,9 +168,6 @@ PNPoint3f::operator=(const pnfloat* p)
 
 // Operators
 
-/**
- * DEPRECATED use PNVector3f instead
- */
 PNPoint3f&
 PNPoint3f::operator+=(const PNPoint3f& p)
 {
@@ -194,9 +178,6 @@ PNPoint3f::operator+=(const PNPoint3f& p)
   return (*this);
 }
 
-/**
- * DEPRECATED use PNVector3f instead
- */
 PNPoint3f&
 PNPoint3f::operator+=(const pnfloat k)
 {
@@ -207,9 +188,6 @@ PNPoint3f::operator+=(const pnfloat k)
   return (*this);
 }
 
-/**
- * DEPRECATED use PNVector3f instead
- */
 PNPoint3f&
 PNPoint3f::operator-=(const PNPoint3f& p)
 {
@@ -220,9 +198,6 @@ PNPoint3f::operator-=(const PNPoint3f& p)
   return (*this);
 }
 
-/**
- * DEPRECATED use PNVector3f instead
- */
 PNPoint3f&
 PNPoint3f::operator-=(const pnfloat k)
 {
@@ -233,9 +208,6 @@ PNPoint3f::operator-=(const pnfloat k)
   return (*this);
 }
 
-/**
- * DEPRECATED use PNVector3f instead
- */
 PNPoint3f&
 PNPoint3f::operator*=(const PNPoint3f& p)
 {
@@ -246,9 +218,6 @@ PNPoint3f::operator*=(const PNPoint3f& p)
   return (*this);
 }
 
-/**
- * DEPRECATED use PNVector3f instead
- */
 PNPoint3f&
 PNPoint3f::operator*=(const pnfloat k)
 {
@@ -355,7 +324,7 @@ operator<<(std::ostream& o, const PNPoint3f& p)
 
 //////////////////////////////////////////////////////////////////////////
 
-const PNPoint3f	PNPoint3f::ZERO( 0, 0, 0 );
+const PNPoint3f	PNPoint3f::ZERO(0, 0, 0);
 
 //////////////////////////////////////////////////////////////////////////
 };
