@@ -58,8 +58,8 @@ public:
 
 	void						update(PNConfigurableParameter* p);
 
-	int							getNbParameters();
-	PNConfigurableParameter*	getParameter(int idx);
+	pnint						getNbParameters();
+	PNConfigurableParameter*	getParameter(pnint idx);
 
 	const std::string&			getLabel() {return _label;}
 	

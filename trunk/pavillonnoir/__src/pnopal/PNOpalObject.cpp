@@ -320,8 +320,8 @@ void		PNOpalObject::setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf or
   /* optional motor data */
   _movementMotorData.linearKd = 2.0;
   _movementMotorData.linearKs = 20.0;
-  _movementMotorData.angularKd = 0.2;
-  _movementMotorData.angularKs = 0.6;
+  _movementMotorData.angularKd = 0.2f;
+  _movementMotorData.angularKs = 0.6f;
 
   /* motor init */
   _movementMotor->init(_movementMotorData);

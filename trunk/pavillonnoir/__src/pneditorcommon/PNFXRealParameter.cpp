@@ -89,7 +89,7 @@ namespace PN {
 	  case KEY_KP_Enter:
 	  {
 		pnfloat* f = (pnfloat*)_param->getElem();
-		*f = atof(getText().text());
+		*f = (pnfloat)atof(getText().text());
 		_param->getConfigurableObject()->update(_param);
 		setTextColor(0x000000);
 		return 1;

@@ -56,32 +56,38 @@ PNConfigurableParameter::~PNConfigurableParameter()
 
 //////////////////////////////////////////////////////////////////////////
 
-pnparamtype   PNConfigurableParameter::getType()
+pnparamtype
+PNConfigurableParameter::getType()
 {
   return _type;
 }
 
-void*         PNConfigurableParameter::getElem()
+void*
+PNConfigurableParameter::getElem()
 {
   return _elem;
 }
 
-const string&      PNConfigurableParameter::getLabel()
+const string&
+PNConfigurableParameter::getLabel()
 {
   return _label;
 }
 
-const string&		PNConfigurableParameter::getAltText()
+const string&
+PNConfigurableParameter::getAltText()
 {
   return _altText;
 }
 
-bool				PNConfigurableParameter::isEditable()
+bool
+PNConfigurableParameter::isEditable()
 {
   return _editable;
 }
 
-PNConfigurableObject*	PNConfigurableParameter::getConfigurableObject()
+PNConfigurableObject*
+PNConfigurableParameter::getConfigurableObject()
 {
   return _p;
 }
@@ -89,7 +95,8 @@ PNConfigurableObject*	PNConfigurableParameter::getConfigurableObject()
 
 //////////////////////////////////////////////////////////////////////////
 
-void          PNConfigurableParameter::dump()
+void
+PNConfigurableParameter::dump()
 {
 /*  std::cout << "_type=" << _type << std::endl;
   if (_elem != NULL) 

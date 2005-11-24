@@ -68,7 +68,7 @@ pnerror(pnloglevel lvl, const pnchar* format, ...)
 	break ;
 #ifdef DEBUG
   case PN_LOGLVL_DEBUG:
-	fprintf(stdout, "[Info: %s]\n", buffer);
+	fprintf(stdout, "[Debug: %s]\n", buffer);
 	break ;
 #endif
   case PN_LOGLVL_TODO:
@@ -92,8 +92,8 @@ pnerror(pnloglevel lvl, const pnchar* format, ...)
 	MessageBox(NULL, (LPCTSTR)buffer, "Critical", MB_OK | MB_ICONSTOP);
 	break ;
 #endif
-	default:
-		;
+  default:
+	break;
   }
 }
 
