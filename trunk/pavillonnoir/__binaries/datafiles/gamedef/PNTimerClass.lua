@@ -1,12 +1,12 @@
 function PNTimerClass
     local OBJ = {}
 
-    OBJ.time = 0;
+    OBJ.time = 0
     OBJ.scheduledTasks = {}
     
     function OBJ:onUpdate(deltaTime)
         self.time = self.time + deltaTime
-        local id = 1;
+        local id = 1
         while id < table.getn(self.scheduledTasks) do
             local task = self.scheduledTasks[id]
             if (task.s+task.r >= self.time) then
@@ -15,7 +15,7 @@ function PNTimerClass
                     task.s = self.time
                 else
                     table.remove(self.scheduledTasks, id)
-                    id = id-1;
+                    id = id-1
                 end
             end
             id = id + 1
