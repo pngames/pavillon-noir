@@ -55,7 +55,7 @@ function gameMap:onUpdate(deltaTime)
 --	pnprint("=> LUA GameMap: onUpdate()")
 	--local id
 	--local entity
-	self.Timer:onUpdate(deltaTime);
+	self.timer:onUpdate(deltaTime);
 	PNRenderCam:onUpdate(deltaTime)
 	for id, entity in pairs(self.entities.all) do
 	    --print("==>> gameMap:updateLua()")
