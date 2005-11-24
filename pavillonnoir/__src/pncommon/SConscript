@@ -36,6 +36,7 @@ PNPhysicsInterface.cpp
 PNPlane.cpp
 PNPlugin.cpp
 PNPluginManager.cpp
+PNPoint2f.cpp
 PNPoint3f.cpp
 PNQuatf.cpp
 PNRendererInterface.cpp
