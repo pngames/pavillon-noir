@@ -16,14 +16,11 @@ Big improvement of game framework. Starting game desing.
 		- Start fight handling (terminal prints only)
 	* GUI:
 		- Add auto generated plugins configuration panel base on PNConfigurable systeme created for editor
-		- New design based on new CEGUI falagard system
+		- New design based on CEGUI falagard system
 		- Add map loading panel
-		- Add loading panel
 		- Console improvement:
 			- fade in / fade out
 			- add completion
-	* Sound:
-		- Updated OpenAl to version 1.1
 	* EDITOR:
 		- Add local modification for objects in map
 	* 3DS MAX Exporter:
@@ -32,8 +29,7 @@ Big improvement of game framework. Starting game desing.
 		- Add physical exporter max script (based on Opal one) in /tools
 	* INSTALLER/PACKAGES:
 		- Add OpenAl installer into win32 installer
-		- Add Scons script for linux source package (see INSTALL file
-		for howto use it)
+		- Add Scons script for linux source package (see INSTALL file for howto use it)
 		- Updated Ubuntu Breezy and Debian Sid packages
 		- No more non free resources in the trunk
 
@@ -72,6 +68,7 @@ Big improvement of game framework. Starting game desing.
 		- boost: 1.33
 		- Opal: CVS version (provided)
 		- tolua++: 1.0.6
+		- OpenAl: 1.1
 
 	SRC:
 	----
