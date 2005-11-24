@@ -27,8 +27,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#ifndef _PNPOINT3F_H_
-# define _PNPOINT3F_H_
+#ifndef _PNPOINT3F_HPP_
+# define _PNPOINT3F_HPP_
 
 #include <iostream>
 
@@ -103,4 +103,4 @@ public:
 //////////////////////////////////////////////////////////////////////////
 }
 
-#endif /*_PNPOINT3F_H_*/
+#endif /*_PNPOINT3F_HPP_*/
