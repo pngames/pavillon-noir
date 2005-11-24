@@ -1014,7 +1014,7 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
 
   if (!_updateTranslation.isNull())
   {
-	if (_updateTranslation.getNorm() > step)
+	if (_movingState & STATE_ALL_T || _updateTranslation.getNorm() > step)
 	  _updateTranslation.setNorm(step);
 
 	//////////////////////////////////////////////////////////////////////////

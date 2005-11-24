@@ -69,7 +69,7 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/pnglrenderer.pdb"
 				SubSystem="2"
-				ImportLibrary="$(OutDir)/pnglrenderer.lib"
+				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -104,6 +104,7 @@
 			IntermediateDirectory="Release"
 			ConfigurationType="2"
 			CharacterSet="2"
+			WholeProgramOptimization="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -123,7 +124,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="../../../__library/win32/include/CEGUI;../../../__library/win32/include/sdl;../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/"
+				AdditionalIncludeDirectories="../../../__library/win32/include/CEGUI;../../../__library/win32/include/sdl;../../../__library/win32/include;../../../__library/common/;../../../__src/pncommon"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PNGLRENDERER_EXPORTS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -147,11 +148,11 @@
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
 				GenerateManifest="false"
-				GenerateDebugInformation="true"
+				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				ImportLibrary="$(OutDir)/pnglrenderer.lib"
+				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool

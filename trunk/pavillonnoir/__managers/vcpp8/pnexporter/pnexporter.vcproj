@@ -68,7 +68,7 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/pnexporter.pdb"
 				SubSystem="2"
-				ImportLibrary="$(OutDir)/pnexporter.lib"
+				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -143,11 +143,11 @@
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
 				GenerateManifest="false"
-				GenerateDebugInformation="true"
+				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				ImportLibrary="$(OutDir)/pnexporter.lib"
+				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool
