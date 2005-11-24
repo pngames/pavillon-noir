@@ -65,6 +65,28 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 
   // General layout, buttons on the left, options on the right
   FXVerticalFrame* vertical = new FXVerticalFrame(this,LAYOUT_SIDE_TOP|LAYOUT_FILL_X|LAYOUT_FILL_Y);
+  
+// --
+/*
+  std::string* tmpstr = new std::string("tmpstr");
+  PNFoxOptionsObject* confobject = new PNFoxOptionsObject();
+  PNConfigurableParameter* confparam = new PNConfigurableParameter(confobject, PN_PARAMTYPE_EVENTBOX, tmpstr, "Event", "Event?", FALSE);
+  confobject->addParam(confparam);
+  pnerror(PN_LOGLVL_DEBUG, "PNFoxOptionWindow::PNFoxOptionWindow() : confobject->getNbParameters()=%i", confobject->getNbParameters());
+
+  owner->create();
+  this->create();
+  vertical->create();
+
+  new FXLabel(vertical, "LABEL1");
+  PNPropertiesGrid* grid = new PNPropertiesGrid(vertical, NULL);
+  grid->setObject(confobject);
+  grid->update();
+  new FXLabel(vertical, "LABEL2");
+*/
+
+/* -- - -- - -- - -- */
+
   FXHorizontalFrame* horizontal = new FXHorizontalFrame(vertical,LAYOUT_FILL_X|LAYOUT_FILL_Y);
   FXVerticalFrame* buttons = new FXVerticalFrame(horizontal,LAYOUT_LEFT|LAYOUT_FILL_Y|FRAME_SUNKEN|PACK_UNIFORM_WIDTH|PACK_UNIFORM_HEIGHT,0,0,0,0, 0,0,0,0, 0,0);
   FXSwitcher* switcher = new FXSwitcher(horizontal,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0);
@@ -76,8 +98,6 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
   horizontal->create();
   buttons->create();
   switcher->create();
-
-// --
 
   // for each plugin, read configuration informations and display them first in switcher (desc) then in tabs (interfaces)
   int switcherID = FXSwitcher::ID_OPEN_FIRST;
@@ -115,97 +135,7 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 	  loadGrid(grid, conf);
 	}
   }
-
-// --
-/*
-  // ** Graphic Tab ** //
-  _graphicObj  = new PNFoxOptionsObject("Graphic settings");
-  FXVerticalFrame* graphicFrame = new FXVerticalFrame(switcher,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0, 0,0);
-  graphicFrame->create();
-  new FXLabel(graphicFrame,_graphicObj->getLabel().c_str(),NULL,LAYOUT_LEFT);
-  new FXHorizontalSeparator(graphicFrame,SEPARATOR_LINE|LAYOUT_FILL_X);
-  new FXButton(buttons,"GRAPHIC",NULL,switcher,FXSwitcher::ID_OPEN_FIRST,FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y);
-
-  //// First Parameter : resolutions list
-  stringList resolutionsList;
-  resolutionsList.push_back("800x600");
-  resolutionsList.push_back("1024x768");
-  resolutionsList.push_back("1280x960");
-  resolutionsList.push_back("1280x1024");
-  _graphicObj->addParam(new PNConfigurableParameter(_graphicObj, PN_PARAMTYPE_STRINGLIST, &resolutionsList, PNCONFKEYS_RESOLUTION, "Choose your resolution if you dare!", TRUE));
-
-  //// Second Parameter : fullscreen
-  // TODO : hey! change my type to PN_PARAMTYPE_CHECKBOX, thx (needs a PNFXCheckbox class)
-  stringList fullscreenYesNo;
-  fullscreenYesNo.push_back("yes");
-  fullscreenYesNo.push_back("no");
-  _graphicObj->addParam(new PNConfigurableParameter(_graphicObj, PN_PARAMTYPE_STRINGLIST, &fullscreenYesNo, PNCONFKEYS_FULLSCREEN, "Do you want to play fullscreen ?", TRUE));
-
-  // Use a grid to display our parameters
-  _graphicGrid = new PNPropertiesGrid(graphicFrame, NULL);
-  _graphicGrid->setObject(_graphicObj);
-  loadGrid(_graphicGrid, conf);
-
-
-  // ** Audio Tab ** //
-  _audioObj  = new PNFoxOptionsObject("Audio settings");
-  FXVerticalFrame* audioFrame=new FXVerticalFrame(switcher,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0, 0,0);
-  audioFrame->create();
-  new FXLabel(audioFrame,_audioObj->getLabel().c_str(),NULL,LAYOUT_LEFT);
-  new FXHorizontalSeparator(audioFrame,SEPARATOR_LINE|LAYOUT_FILL_X);
-  new FXButton(buttons,"AUDIO",NULL,switcher,FXSwitcher::ID_OPEN_SECOND,FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y);
-
-  //// First Parameter : music volume
-  // TODO : hey! change my type to PN_PARAMTYPE_DIAL_something..., thx (needs a something class)
-  stringList volumeGraduation;
-  volumeGraduation.push_back("Mute");
-  volumeGraduation.push_back("10");
-  volumeGraduation.push_back("20");
-  volumeGraduation.push_back("30");
-  volumeGraduation.push_back("40");
-  volumeGraduation.push_back("50");
-  volumeGraduation.push_back("60");
-  volumeGraduation.push_back("70");
-  volumeGraduation.push_back("80");
-  volumeGraduation.push_back("90");
-  volumeGraduation.push_back("100");
-  _audioObj->addParam(new PNConfigurableParameter(_audioObj, PN_PARAMTYPE_STRINGLIST, &volumeGraduation, "Music volume", "Don't mute me!", TRUE));
-
-  //// Second Parameter : game volume
-  // TODO : hey! change my type to PN_PARAMTYPE_DIAL_something..., thx (needs a something class)
-  _audioObj->addParam(new PNConfigurableParameter(_audioObj, PN_PARAMTYPE_STRINGLIST, &volumeGraduation, PNCONFKEYS_GAME_VOLUME, "Don't mute me!", TRUE));
-
-  // Use a grid to display our parameters
-  _audioGrid = new PNPropertiesGrid(audioFrame, NULL);
-  _audioGrid->setObject(_audioObj);
-  loadGrid(_audioGrid, conf);
-
-
-  // ** Input Tab ** //
-  _inputObj  = new PNFoxOptionsObject("Input settings");
-  FXVerticalFrame* inputFrame=new FXVerticalFrame(switcher,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0, 0,0);
-  inputFrame->create();
-  new FXLabel(inputFrame,_inputObj->getLabel().c_str(),NULL,LAYOUT_LEFT);
-  new FXHorizontalSeparator(inputFrame,SEPARATOR_LINE|LAYOUT_FILL_X);
-  new FXButton(buttons,"INPUT",NULL,switcher,FXSwitcher::ID_OPEN_THIRD,FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y);
-
-  stringList inputConfList;
-  inputConfList.push_back("Default");
-  inputConfList.push_back("Emacs");
-  inputConfList.push_back("w4r70Rd");
-  _inputObj->addParam(new PNConfigurableParameter(_inputObj, PN_PARAMTYPE_STRINGLIST, &inputConfList, "Key binding profile", "Try it!", TRUE));
-
-  //// maybe bot very usable
-  // type=table
-  //_graphicObj->addParam(new PNConfigurableParameter(_inputObj, PN_PARAMTYPE_STRING , void*elem, "Input Configuration", "Key bindings", TRUE));
-
-  // Use a grid to display our parameters
-  _inputGrid = new PNPropertiesGrid(inputFrame, NULL);
-  _inputGrid->setObject(_inputObj);
-  loadGrid(_inputGrid, conf);
-*/
-// --
-
+/**/
   // Bottom part
   new FXHorizontalSeparator(vertical,SEPARATOR_RIDGE|LAYOUT_FILL_X);
   FXHorizontalFrame *closebox=new FXHorizontalFrame(vertical,LAYOUT_BOTTOM|LAYOUT_FILL_X|PACK_UNIFORM_WIDTH);
@@ -262,19 +192,19 @@ void  PNFoxOptionWindow::loadGrid(PNPropertiesGrid* grid, PNConf* conf)
 */
 long  PNFoxOptionWindow::onApply(FXObject* obj,FXSelector sel,void* ptr)
 {
-  // TODO : FACTORIZE
+  // TODO : implement options saving
   pnerror(PN_LOGLVL_DEBUG, "PNFoxOptionWindow::onApply");
-  PNConf* conf = PNConf::getInstance();
+  //PNConf* conf = PNConf::getInstance();
 
   // first the graphical options
   // conf->setComment("First the graphical options")
-  saveGrid(_graphicGrid, conf);
+  //saveGrid(_graphicGrid, conf);
   // AUDIO
-  saveGrid(_audioGrid, conf);
+  //saveGrid(_audioGrid, conf);
   // INPUT
-  saveGrid(_inputGrid, conf);
+  //saveGrid(_inputGrid, conf);
 
-  conf->saveConf();
+  //conf->saveConf();
 
   return 1;
 }
