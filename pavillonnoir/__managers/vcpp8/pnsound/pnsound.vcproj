@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OpenAL32.lib ogg_static.lib vorbis_static.lib vorbisfile_static.lib vorbisenc.lib ALut.lib"
+				AdditionalDependencies="OpenAL32.lib ogg_static.lib vorbis_static.lib vorbisfile_static.lib ALut.lib"
 				OutputFile="../../../__binaries/win32/plugins/Debug/pnsound-dbg.pnp"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
@@ -69,7 +69,7 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/pnsound.pdb"
 				SubSystem="2"
-				ImportLibrary="$(OutDir)/pnsound.lib"
+				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -103,6 +103,7 @@
 			IntermediateDirectory="Release"
 			ConfigurationType="2"
 			CharacterSet="2"
+			WholeProgramOptimization="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -140,16 +141,16 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OpenAL32.lib ogg_static.lib vorbis_static.lib vorbisfile_static.lib vorbisenc.lib ALut.lib"
+				AdditionalDependencies="OpenAL32.lib ogg_static.lib vorbis_static.lib vorbisfile_static.lib ALut.lib"
 				OutputFile="../../../__binaries/win32/plugins/pnsound.pnp"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
 				GenerateManifest="false"
-				GenerateDebugInformation="true"
+				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				ImportLibrary="$(OutDir)/pnsound.lib"
+				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool

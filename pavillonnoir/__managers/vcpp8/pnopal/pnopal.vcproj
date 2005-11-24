@@ -69,7 +69,7 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/pnopal.pdb"
 				SubSystem="2"
-				ImportLibrary="$(OutDir)/pnopal.lib"
+				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -103,6 +103,7 @@
 			IntermediateDirectory="Release"
 			ConfigurationType="2"
 			CharacterSet="2"
+			WholeProgramOptimization="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -140,16 +141,16 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies=" opal-ode.lib"
+				AdditionalDependencies=" opal-ode.lib libxml2.lib"
 				OutputFile="../../../__binaries/win32/plugins/pnopal.pnp"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
 				GenerateManifest="false"
-				GenerateDebugInformation="true"
+				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				ImportLibrary="$(OutDir)/pnopal.lib"
+				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool
