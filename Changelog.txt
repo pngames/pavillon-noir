@@ -1,19 +1,21 @@
 Pavillon Noir, Le Jeu: 
 
-version 0.0.2 ()
-Big improvement of game framework and game desing start
+version 0.0.2 (2005/11/24)
+Big improvement of game framework. Starting game desing.
 
 	New Features:
 	-------------
+	* this Changelog
 	* GAME:
 		- Adding first version of first scene video (pavillonnoir/__binaries/datafiles/videos)
 		- [Temporary] Adding button in main menu ("scene 1") to lauch video
 	* GAMEPLAY:
 		- Add animation/displacement link for characters
-	* INSTALLER/PACKAGES:
-		- Add OpenAl installer into win32 installer
-		- Add Scons script for linux source package
+	* IA:
+		- Adding Path Finding system based on waypoints
+		- Start fight handling (terminal prints only)
 	* GUI:
+		- Add auto generated plugins configuration panel base on PNConfigurable systeme created for editor
 		- New design based on new CEGUI falagard system
 		- Add map loading panel
 		- Add loading panel
@@ -24,10 +26,18 @@ Big improvement of game framework and game desing start
 		- Updated OpenAl to version 1.1
 	* EDITOR:
 		- Add local modification for objects in map
+	* 3DS MAX Exporter:
+		- Add physical exporter (do nothing yet)
+		- Can now create skeleton limited animation (for multi-animations management)
+		- Add physical exporter max script (based on Opal one) in /tools
+	* INSTALLER/PACKAGES:
+		- Add OpenAl installer into win32 installer
+		- Add Scons script for linux source package
 
 	Bug Fixes:
 	----------
 	* Fix release shortcut problem in win32 installer : it was overriden by web site shortcut
+	* Fix rendering deth tests that makes some times objects transparent or switch them
 	* version update:
 		- Fix CEGUI problems with win32 release mode, some linux distribs
 		- Fix Opal/Ode problems under linux
@@ -35,27 +45,39 @@ Big improvement of game framework and game desing start
 
 	Common Libs:
 	------------
-	* Adding target modes for PN3DObjects:
-		- distance management
-		- position management
-		- orientation management
-	* Adding bone targeting for all for modes
-	* Adding Path Finding system based on waypoints
-	* Add frustrum test for characters cameras and render cameras to filter viewed objects and generate IN/OUT frustrum events
 	* Separate target system in two target: view target and position target
+	* Adding target modes for PN3DObjects:
+		- distance management (absolute and non-absolute)
+		- position management (absolute and non-absolute)
+		- orientation management
+	* Adding bone targeting for all modes
+	* Add frustrum test for characters cameras and render cameras to filter viewed objects and generate IN/OUT frustrum events
 	* Modif pno xml format to have "objet" node in root with a "modele" node in same level than materials, skeletton, etc...
-	* Adding physical object in 3dobjects based on xml definition object of Opal 
+	* Adding physical object in 3dobjects based on xml definition object of Opal
+	* Add Skybox management in RendererInterface
+	* Add various functions in maths class
+	* Add new option in PNTExtures: can now choise to bing enlarged or repeated textures
+	* Importer auto-determine the textures binding repeat options
+	* Add multi-animations support
+
+	Dependencies:
+	-------------
+	* Add glew for opengl extensions management
+	* Remove stlport support
+	* Updates:
+		- CEGUI: 0.4
+		- boost: 1.33
+		- Opal: CVS version
+		- tolua++: 1.0.6
 
 	SRC:
 	----
-	* Remove stlport support
-	* update boost to 1.33
-	* Update to CDT 3.0
-	* Update to vc8 under Windows
+	* Update to CDT 3.0 project configuration files
+	* Update to vc8 project configuration files for Windows
 	
 	Know issues:
 	----------
-	* Not a bug but physics not activated for now then objects pass	through ground and don't fall
+	* Not a bug but physics not activated for now then objects pass through ground and don't fall
 
-version 0.0.1 (29/07/2005):
+version 0.0.1 (2005/07/29):
 	* First Release ! Technical demonstration of Pavillon Noir engine (3D rendering, physics, scripting...)
