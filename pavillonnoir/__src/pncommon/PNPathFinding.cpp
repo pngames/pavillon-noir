@@ -39,10 +39,10 @@ namespace PN
 
 /*  PNPathFinding::PNPathFinding()
 {
-  _pos = PNPoint(0,0,0);
+  _pos = PNPoint3f(0,0,0);
 }*/
 
-  PNPathFinding::PNPathFinding(const PNPoint &pos) : _pos(pos)
+  PNPathFinding::PNPathFinding(const PNPoint3f&pos) : _pos(pos)
 {
 //  _pos = pos;
 }
@@ -52,7 +52,7 @@ PNPathFinding::~PNPathFinding()
 }
 
 void
-PNPathFinding::moveTo(const PNPoint &p)
+PNPathFinding::moveTo(const PNPoint3f&p)
 {
 
   _dest.set(p);
@@ -63,7 +63,7 @@ PNPathFinding::moveTo(const PNPoint &p)
 void
 PNPathFinding::moveTo(PNWayPoint *wp)
 {
-  PNPoint				p = wp->getCoord();
+  PNPoint3f				p = wp->getCoord();
 
   _goal = wp;
   _dest.set(p.x, p.y, p.z);
@@ -76,7 +76,7 @@ PNPathFinding::moveTo(PNWayPoint *wp)
 */
 
 PNWayPoint*
-PNPathFinding::closestWP(const PNPoint &p)
+PNPathFinding::closestWP(const PNPoint3f&p)
 {
   bool								begin = true;
   pnfloat							distance = 0.0f;
@@ -86,7 +86,7 @@ PNPathFinding::closestWP(const PNPoint &p)
 
   for (ls = getWayPoints(), i = ls.begin(); i != ls.end(); i++)
   {
-	PNPoint						  coord = (*i)->getCoord();
+	PNPoint3f						  coord = (*i)->getCoord();
 	pnfloat						  dist = coord.getDistance(p);
 	pnfloat						  fdist = _pos.getFlatDistance(coord);
 
@@ -152,13 +152,13 @@ PNPathFinding::moveNext(PN3DObject& o)
 	  {
 		wp = (*i)->next;
 		fulldistance = (*i)->weight * (*i)->coef +
-		  _dest.getDistance((PNPoint &)wp->getCoord());
+		  _dest.getDistance((PNPoint3f&)wp->getCoord());
 		begin = false;
 	  }	
 	  else
 	  {
 		temp = (*i)->weight * (*i)->coef +
-		  _dest.getDistance((PNPoint &)(*i)->next->getCoord());
+		  _dest.getDistance((PNPoint3f&)(*i)->next->getCoord());
 		if (fulldistance > temp)
 		{
 		  fulldistance = temp;

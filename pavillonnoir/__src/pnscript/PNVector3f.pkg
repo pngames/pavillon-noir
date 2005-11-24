@@ -1,10 +1,10 @@
-class 	PNVector3f : public PNPoint
+class 	PNVector3f : public PNPoint3f
 {
 public:
   PNVector3f	();
   PNVector3f	(float x, float y, float z);
-  PNVector3f	(const PNPoint & source);
-  PNVector3f	(const PNPoint & origin, const PNPoint & destination);
+  PNVector3f	(const PNPoint3f& source);
+  PNVector3f	(const PNPoint3f& origin, const PNPoint3f& destination);
 
 public:
    ~PNVector3f	();
@@ -18,7 +18,7 @@ public:
    void	 get	(float * array);
 
 public:
-   void setFromSegment		(const PNPoint & origin, const PNPoint & extremity);
+   void setFromSegment		(const PNPoint3f& origin, const PNPoint3f& extremity);
   
 public:
    bool	isColinear			(const PNVector3f & v);
@@ -28,11 +28,11 @@ public:
    bool	isNull				();
 
 public:
-   void	substract			(const PNPoint & v);
+   void	substract			(const PNPoint3f& v);
    void	substract			(float vX, float vY, float vZ);
-   void	substract			(const PNPoint & v, const PNPoint & u);
-   void	add					(const PNPoint & v);
-   void	add					(const PNPoint & u, const PNPoint & v);  
+   void	substract			(const PNPoint3f& v, const PNPoint3f& u);
+   void	add					(const PNPoint3f& v);
+   void	add					(const PNPoint3f& u, const PNPoint3f& v);  
    void	add					(float vX, float vY, float vZ);
    void	multiply			(float constant);
   
@@ -46,8 +46,8 @@ public:
    void	  crossProduct		(const PNVector3f & u, const PNVector3f & v);
 
 public:
-   bool	isBelongToSegment	(const PNPoint & origin, const PNPoint & extremity);
-   bool	intersection		(const PNPoint & originOne, const PNPoint & extremityOne, const PNPoint & originTwo, const PNPoint & extremityTwo);
+   bool	isBelongToSegment	(const PNPoint3f& origin, const PNPoint3f& extremity);
+   bool	intersection		(const PNPoint3f& originOne, const PNPoint3f& extremityOne, const PNPoint3f& originTwo, const PNPoint3f& extremityTwo);
 
 public: /* special points */
   static const PNVector3f ZERO;

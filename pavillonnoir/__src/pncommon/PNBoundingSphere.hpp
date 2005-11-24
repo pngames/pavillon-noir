@@ -34,7 +34,7 @@
 #include <vector>
 
 #include "PNObject.hpp"
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 #include "PNVector3f.hpp"
 #include "PNNormal3f.hpp"
 #include "PNPlane.hpp"
@@ -47,29 +47,29 @@ class PNAPI PNBoundingSphere : public PNObject
 {
 public:
   PNBoundingSphere		(void);
-  PNBoundingSphere		(const PNPoint & radius, const PNPoint & position);  
+  PNBoundingSphere		(const PNPoint3f& radius, const PNPoint3f& position);  
   PNBoundingSphere		(const PNBoundingSphere & source);    
   ~PNBoundingSphere		(void);
 
 public:
   void	setRadius	(pnfloat x, pnfloat y, pnfloat z)							{ _radius.setCrd(x, y, z); _sqrRadius.setCrd(x*x, y*y, z*z); }
-  void	setRadius	(const PNPoint & radius)									{ setRadius(radius.x, radius.y, radius.z); }
+  void	setRadius	(const PNPoint3f& radius)									{ setRadius(radius.x, radius.y, radius.z); }
   void	setPosition	(pnfloat x, pnfloat y, pnfloat z)							{ _position.x = x; _position.y = y; _position.z = z; }
-  void	setPosition	(const PNPoint & position)									{ _position = position; }
+  void	setPosition	(const PNPoint3f& position)									{ _position = position; }
   
 public:
   void	translate	(pnfloat x, pnfloat y, pnfloat z)							{ _position.x += x; _position.y += y; _position.z += z; }
   void	translate	(PNVector3f & t)											{ _position.x += t.x; _position.y += t.y; _position.z += t.z; }
 
 public:
-  PNPoint & 	getRadius	(PNPoint & result)					const			{ result = _radius; return (result); }
-  PNPoint &		getPosition	(PNPoint & result)						const		{ result = _position; return (result); }
+  PNPoint3f& 	getRadius	(PNPoint3f& result)					const			{ result = _radius; return (result); }
+  PNPoint3f&		getPosition	(PNPoint3f& result)						const		{ result = _position; return (result); }
   
-  const PNPoint &	getPosition	(void) const									{ return (_position); }
-  const PNPoint &	getRadius	(void) const									{ return (_radius); }
+  const PNPoint3f&	getPosition	(void) const									{ return (_position); }
+  const PNPoint3f&	getRadius	(void) const									{ return (_radius); }
   
 public:
-	pnfloat			computeDistanceFromCenterToSurface (PNPoint & direction);
+	pnfloat			computeDistanceFromCenterToSurface (PNPoint3f& direction);
 
 public:  
   bool  	testCollisionWithTriangle	(const PNTriangle & triangle, PNVector3f & correction) const;
@@ -77,7 +77,7 @@ public:
 private:
   PNVector3f	_radius;
   PNVector3f	_sqrRadius;
-  PNPoint		_position;	
+  PNPoint3f		_position;	
 };
 
 //////////////////////////////////////////////////////////////////////////

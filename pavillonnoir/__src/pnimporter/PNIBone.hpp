@@ -36,7 +36,7 @@
 
 #include "PNMatrixTR4f.hpp"
 #include "PNQuatf.hpp"
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 
 #include "pns_format.h"
 
@@ -77,7 +77,7 @@ public:
 
 private:
   PNQuatf				_lastRot;
-  PNPoint				_lastPos;
+  PNPoint3f				_lastPos;
 
   PNQuatf				_totalLastRot;
 public:

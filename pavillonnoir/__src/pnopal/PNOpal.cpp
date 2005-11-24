@@ -170,13 +170,13 @@ void PNOpal::frameStarted(pnEventType type, PNObject* source, PNEventData* data)
 	{
 	  PNLOCK_BEGIN(current_obj);
 	  {
-		const PNPoint& coord = current_obj->getCoord();
+		const PNPoint3f& coord = current_obj->getCoord();
 		const PNQuatf& orient = current_obj->getOrient();
 		
 		if (!current_obj->getUpdateTranslation().isNull() || (orient != current_obj->getPhysicalObject()->getOrient()))
 		{
-		  const PNPoint& test = current_obj->getPhysicalObject()->getCoord();
-		  const PNPoint& offset = current_obj->getPhysicalObject()->getOffset();
+		  const PNPoint3f& test = current_obj->getPhysicalObject()->getCoord();
+		  const PNPoint3f& offset = current_obj->getPhysicalObject()->getOffset();
 		  ((PNOpalObject*)current_obj->getPhysicalObject())->setMovementMotor(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z, orient);
 		  ((PNOpalObject*)current_obj->getPhysicalObject())->printAccel();
 		}
@@ -233,9 +233,9 @@ void	PNOpal::pn2opal()
 	{
 	  PNLOCK_BEGIN(current_obj);
 	  {
-		const PNPoint& coord = current_obj->getCoord();
+		const PNPoint3f& coord = current_obj->getCoord();
 		const PNQuatf& orient = current_obj->getOrient();
-		const PNPoint& offset = current_obj->getPhysicalObject()->getOffset();
+		const PNPoint3f& offset = current_obj->getPhysicalObject()->getOffset();
 		current_obj->getPhysicalObject()->setCoord(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z);
 		current_obj->getPhysicalObject()->setOrient(orient);
 	  }
@@ -259,8 +259,8 @@ void	PNOpal::opal2pn()
 	{
 	  PNLOCK_BEGIN(current_obj);
 	  {
-		const PNPoint& coord = current_obj->getPhysicalObject()->getCoord();
-		const PNPoint& offset = current_obj->getPhysicalObject()->getOffset();
+		const PNPoint3f& coord = current_obj->getPhysicalObject()->getCoord();
+		const PNPoint3f& offset = current_obj->getPhysicalObject()->getOffset();
 		const PNQuatf& orient = current_obj->getPhysicalObject()->getOrient();
 
 		if (((PNOpalObject*)current_obj->getPhysicalObject())->linearAccel)

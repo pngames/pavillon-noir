@@ -92,13 +92,13 @@ PNI3DAnimation::setRotation(pnint id, pndouble rtime, const PNQuatf& lastRot, PN
 }
 
 pnbool
-PNI3DAnimation::setPosition(pnint id, pnuint time, PNPoint& pos)
+PNI3DAnimation::setPosition(pnint id, pnuint time, PNPoint3f& pos)
 {
   return _bones[id].setPosition(time, pos);
 }
 
 pnbool
-PNI3DAnimation::setPosition(pnint id, pndouble rtime, const PNPoint& lastPos, PNPoint& pos)
+PNI3DAnimation::setPosition(pnint id, pndouble rtime, const PNPoint3f& lastPos, PNPoint3f& pos)
 {
   return _bones[id].setPosition(rtime, lastPos, pos);
 }

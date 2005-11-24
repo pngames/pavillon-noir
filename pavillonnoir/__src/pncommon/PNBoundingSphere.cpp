@@ -42,8 +42,8 @@ namespace PN {
 
 PNBoundingSphere::PNBoundingSphere(void)
 {
-  PNPoint	position(0, 0, 0);
-  PNPoint	radius(1, 1, 1);
+  PNPoint3f	position(0, 0, 0);
+  PNPoint3f	radius(1, 1, 1);
 
   setPosition(position);
   setRadius(radius);
@@ -56,7 +56,7 @@ PNBoundingSphere::~PNBoundingSphere(void)
   return;
 }
 
-PNBoundingSphere::PNBoundingSphere(const PNPoint & radius, const PNPoint & position)
+PNBoundingSphere::PNBoundingSphere(const PNPoint3f& radius, const PNPoint3f& position)
 {
   setPosition(position);
   setRadius(radius);
@@ -89,9 +89,9 @@ PNBoundingSphere::testCollisionWithTriangle(const PNTriangle & triangle, PNVecto
 {
 	static PNVector3f	v;
 	static pnfloat		k;
-	static PNPoint		impactTriangle;
-	static PNPoint		impactBBox;
-	static PNPoint 		projectedCenter;
+	static PNPoint3f		impactTriangle;
+	static PNPoint3f		impactBBox;
+	static PNPoint3f		projectedCenter;
 	static PNVector3f	eep;
 	pnfloat				eqtResult;
 		
@@ -130,7 +130,7 @@ PNBoundingSphere::testCollisionWithTriangle(const PNTriangle & triangle, PNVecto
  * \return Computes the distance from the center to the surface along the given direction.
  */
 pnfloat
-PNBoundingSphere::computeDistanceFromCenterToSurface (PNPoint & direction)
+PNBoundingSphere::computeDistanceFromCenterToSurface (PNPoint3f& direction)
 {
 	return (sqrtf(1.0f / (((direction.x*direction.x) / _sqrRadius.x) + 
 				((direction.y*direction.y) / _sqrRadius.y) + 

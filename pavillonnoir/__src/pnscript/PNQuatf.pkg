@@ -38,7 +38,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  //friend PNAPI PNPoint	operator*(const PNQuatf& p, const PNPoint& vec);
+  //friend PNAPI PNPoint3f	operator*(const PNQuatf& p, const PNPoint3f& vec);
   //friend PNAPI PNQuatf	operator*(const PNQuatf& p, const PNQuatf& quat);
 
   //////////////////////////////////////////////////////////////////////////

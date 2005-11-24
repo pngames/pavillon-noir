@@ -57,7 +57,7 @@ class PNAPI PNPlane
 public:
   PNPlane	();
   PNPlane	(pnfloat x, pnfloat y, pnfloat z, pnfloat d);
-  PNPlane	(const PNPoint & position, const PNNormal3f & orientation);
+  PNPlane	(const PNPoint3f& position, const PNNormal3f & orientation);
   PNPlane	(const PNPlane & source);
 
 public:
@@ -65,31 +65,31 @@ public:
 
 public:
   virtual void		setEquation					(pnfloat x, pnfloat y, pnfloat z, pnfloat d);
-  virtual void		setPosition					(const PNPoint & position);
+  virtual void		setPosition					(const PNPoint3f& position);
   virtual void		setOrientation				(const PNNormal3f & orientation);
-  virtual void		setPlane					(const PNPoint & position, const PNNormal3f & orientation);
+  virtual void		setPlane					(const PNPoint3f& position, const PNNormal3f & orientation);
 
 public:
-  virtual PNPoint &	   getPosition				(PNPoint & position)	const;
+  virtual PNPoint3f&	   getPosition				(PNPoint3f& position)	const;
   virtual PNVector3f & getPosition				(PNVector3f & position) const;
   virtual PNNormal3f & 	getOrientation			(PNNormal3f & orientation) const;
   virtual pnfloat		getOrientationX			() const;
   virtual pnfloat		getOrientationY			() const;
   virtual pnfloat		getOrientationZ			() const;
   virtual pnfloat		getDistanceFromOrigin	() const;
-  virtual pnfloat 		getDistanceFromPlane	(const PNPoint & position) const;
+  virtual pnfloat 		getDistanceFromPlane	(const PNPoint3f& position) const;
   
 public:
-  virtual PNPoint &	projectionOnPlane			(const PNPoint & point, PNPoint & result) const;
+  virtual PNPoint3f&	projectionOnPlane			(const PNPoint3f& point, PNPoint3f& result) const;
 
 public:
-  virtual bool isSegmentIntersectPlane			(const PNPoint & segOrigin, const PNPoint & segDestination, PNPoint & intersection);
-  virtual bool isRayIntersectPlane				(const PNPoint & rayOrigin, const PNNormal3f & rayDirection, PNPoint & intersection);
+  virtual bool isSegmentIntersectPlane			(const PNPoint3f& segOrigin, const PNPoint3f& segDestination, PNPoint3f& intersection);
+  virtual bool isRayIntersectPlane				(const PNPoint3f& rayOrigin, const PNNormal3f & rayDirection, PNPoint3f& intersection);
   virtual bool isEquals							(const PNPlane & plane);
 
 public:
-  virtual planeSide_t classifyVertex			(const PNPoint & position) const;
-  virtual planeSide_t classifyTriangle			(const PNPoint & a, const PNPoint & b, const PNPoint & c);  
+  virtual planeSide_t classifyVertex			(const PNPoint3f& position) const;
+  virtual planeSide_t classifyTriangle			(const PNPoint3f& a, const PNPoint3f& b, const PNPoint3f& c);  
 
 private:
   pnfloat		_x;

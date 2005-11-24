@@ -39,7 +39,7 @@
 #include "pndefs.h"
 #include "pnmath.h"
 #include "IAutoTestable.hpp"
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 
 /////////////////////////////////////
 
@@ -47,13 +47,13 @@ namespace PN {
 
 /////////////////////////////////////
 
-class PNAPI							PNVector3f : public PNPoint
+class PNAPI							PNVector3f : public PNPoint3f
 {
 public:
   PNVector3f();
   PNVector3f(pnfloat x, pnfloat y, pnfloat z);
-  PNVector3f(const PNPoint & source);
-  PNVector3f(const PNPoint & origin, const PNPoint & destination);
+  PNVector3f(const PNPoint3f& source);
+  PNVector3f(const PNPoint3f& origin, const PNPoint3f& destination);
 
 public:
   virtual ~PNVector3f();
@@ -67,7 +67,7 @@ public:
   virtual void						get(pnfloat* array);
 
 public:
-  virtual void						setFromSegment(const PNPoint& origin, const PNPoint& extremity);
+  virtual void						setFromSegment(const PNPoint3f& origin, const PNPoint3f& extremity);
   
 public:
   virtual bool						isColinear(const PNVector3f& v);
@@ -76,11 +76,11 @@ public:
   virtual bool						isOrthogonal(pnfloat vX, pnfloat vY, pnfloat vZ);
 
 public:
-  virtual void						substract(const PNPoint& v);
+  virtual void						substract(const PNPoint3f& v);
   virtual void						substract(pnfloat vX, pnfloat vY, pnfloat vZ);
-  virtual void						substract(const PNPoint& v, const PNPoint& u);
-  virtual void						add(const PNPoint& v);
-  virtual void						add(const PNPoint& u, const PNPoint& v);  
+  virtual void						substract(const PNPoint3f& v, const PNPoint3f& u);
+  virtual void						add(const PNPoint3f& v);
+  virtual void						add(const PNPoint3f& u, const PNPoint3f& v);  
   virtual void						add(pnfloat vX, pnfloat vY, pnfloat vZ);
   virtual void						multiply(pnfloat constant);
   
@@ -96,8 +96,8 @@ public:
   virtual void						crossProduct(const PNVector3f& u, const PNVector3f& v);
 
 public:
-  virtual bool						isBelongToSegment(const PNPoint& origin, const PNPoint& extremity);
-  virtual bool						intersection(const PNPoint& originOne, const PNPoint& extremityOne, const PNPoint & originTwo, const PNPoint& extremityTwo);
+  virtual bool						isBelongToSegment(const PNPoint3f& origin, const PNPoint3f& extremity);
+  virtual bool						intersection(const PNPoint3f& originOne, const PNPoint3f& extremityOne, const PNPoint3f& originTwo, const PNPoint3f& extremityTwo);
 
 public: /* special points */
   static const PNVector3f			ZERO;

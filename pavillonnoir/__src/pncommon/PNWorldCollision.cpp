@@ -94,7 +94,7 @@ PNWorldCollision::loadWorld(pnfloat * vertices, pnuint nbVertex, pnuint * triang
 	
 	for (i = 0; i < nbTriangle; i++)
 	{
-		PNPoint	vertex[3];
+		PNPoint3f	vertex[3];
 			
 		vertex[0].set(vertices[triangles[i * 3] * 3], vertices[triangles[i * 3] * 3 + 1], vertices[triangles[i * 3] * 3 + 2]);
 		vertex[1].set(vertices[triangles[i * 3 + 1] * 3], vertices[triangles[i * 3 + 1] * 3 + 1], vertices[triangles[i * 3 + 1] * 3 + 2]);
@@ -287,7 +287,7 @@ PNWorldCollision::translateSphere(const PNBoundingSphere & sphere, const PNVecto
  * \return	void
  */
 void
-PNWorldCollision::_fillCollidersList(const PNBoundingSphere & sphere, const PNPoint & startPosition, std::list<int> & colliders) const
+PNWorldCollision::_fillCollidersList(const PNBoundingSphere & sphere, const PNPoint3f& startPosition, std::list<int> & colliders) const
 {
 	int			i;
 	PNVector3f	correction;
@@ -364,7 +364,7 @@ PNWorldCollision::_getBestColliderOfList(const PNBoundingSphere & sphere, const 
  * has been detected the method returns false.
  */
 bool
-PNWorldCollision::_computeStepCollision(const PNBoundingSphere & sphere, const PNNormal3f & force, const PNPoint & startPosition, PNVector3f & correction) const
+PNWorldCollision::_computeStepCollision(const PNBoundingSphere & sphere, const PNNormal3f & force, const PNPoint3f& startPosition, PNVector3f & correction) const
 {
 	PNVector3f			correctionLocal;
 	PNBoundingSphere	sph(sphere);

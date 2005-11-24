@@ -61,9 +61,9 @@ private:
   typedef std::vector<PNIVertex>	VECTOR_VERTEX;
   VECTOR_VERTEX		_vertex;
 private:
-  PNPoint			_min;
-  PNPoint			_max;
-  PNPoint			_center;
+  PNPoint3f			_min;
+  PNPoint3f			_max;
+  PNPoint3f			_center;
 public:
   PNI3DModel();
   ~PNI3DModel();
@@ -87,9 +87,9 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  const PNPoint&	getMin() const;
-  const PNPoint&	getMax() const;
-  const PNPoint&	getCenter() const;
+  const PNPoint3f&	getMin() const;
+  const PNPoint3f&	getMax() const;
+  const PNPoint3f&	getCenter() const;
 
   //////////////////////////////////////////////////////////////////////////
   

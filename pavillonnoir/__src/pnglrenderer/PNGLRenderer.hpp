@@ -150,11 +150,11 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   
-  void						renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord = PNPoint::ZERO, pnbool outside = true);
-  void						renderCylinder(pndouble baseRadius, pndouble topRadius, pndouble height, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord = PNPoint::ZERO, pnbool outside = true);
-  void						renderBox(pnfloat width, pnfloat height, pnfloat depth, const pnfloat* color, const PNPoint& coord = PNPoint::ZERO, pnbool outside = true);
+  void						renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color, const PNPoint3f& coord = PNPoint3f::ZERO, pnbool outside = true);
+  void						renderCylinder(pndouble baseRadius, pndouble topRadius, pndouble height, pnint slices, pnint stacks, const pnfloat* color, const PNPoint3f& coord = PNPoint3f::ZERO, pnbool outside = true);
+  void						renderBox(pnfloat width, pnfloat height, pnfloat depth, const pnfloat* color, const PNPoint3f& coord = PNPoint3f::ZERO, pnbool outside = true);
 
-  void						renderLink(const PNPoint& p1, const PNPoint& p2, const pnfloat* color, pnuint direction = 0, pnfloat thickness = 1.0f);
+  void						renderLink(const PNPoint3f& p1, const PNPoint3f& p2, const pnfloat* color, pnuint direction = 0, pnfloat thickness = 1.0f);
 
   //////////////////////////////////////////////////////////////////////////
   // CEGUI

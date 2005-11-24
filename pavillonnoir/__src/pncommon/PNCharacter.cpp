@@ -87,7 +87,7 @@ PNCharacter::beSmart()
 }
 
 void
-PNCharacter::moveTo(PNPoint &p)
+PNCharacter::moveTo(PNPoint3f&p)
 {
   PNLOCK(this);
 

@@ -51,7 +51,7 @@
 #include "PNGUIConsole.hpp"
 
 #include "PNMatrix4f.hpp"
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 #include "PNQuatf.hpp"
 #include "PN3DModel.hpp"
 #include "PNGLMaterial.hpp"
@@ -98,10 +98,6 @@ PNGLRenderer::PNGLRenderer()
 
   _converter[PN_T2F_N3F_V3F] = GL_T2F_N3F_V3F;
   _converter[PN_T2F_C4F_N3F_V3F] = GL_T2F_C4F_N3F_V3F;
-
-  //////////////////////////////////////////////////////////////////////////
-  
-  PNEventManager::getInstance()->addCallback(PN_EVENT_VIDEO_START, EventCallback(this, &PNGLRenderer::_onPlayVideo));
 }
 
 PNGLRenderer::~PNGLRenderer()
@@ -169,6 +165,10 @@ PNGLRenderer::init()
   ilutInit();
   ilutRenderer(ILUT_OPENGL);
   ilutEnable(ILUT_OPENGL_CONV);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  PNEventManager::getInstance()->addCallback(PN_EVENT_VIDEO_START, EventCallback(this, &PNGLRenderer::_onPlayVideo));
 }
 
 void
@@ -284,7 +284,8 @@ PNGLRenderer::initGL(GLsizei width, GLsizei height)
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
   glEnable(GL_DEPTH_TEST);
-  glDepthFunc(GL_LESS);
+  glDepthMask(GL_TRUE);
+  glDepthFunc(GL_LEQUAL);
   glDepthRange(0.0,1.0);
   glClearDepth(1.0);
 
@@ -514,7 +515,7 @@ PNGLRenderer::cleanSceneTextures()
 //////////////////////////////////////////////////////////////////////////
 
 void
-PNGLRenderer::renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord/* = PNPoint::ZERO*/, pnbool outside/* = true*/)
+PNGLRenderer::renderSphere(pndouble radius, pnint slices, pnint stacks, const pnfloat* color, const PNPoint3f& coord/* = PNPoint3f::ZERO*/, pnbool outside/* = true*/)
 {
   glPushMatrix();
   {
@@ -538,7 +539,7 @@ PNGLRenderer::renderSphere(pndouble radius, pnint slices, pnint stacks, const pn
 }
 
 void
-PNGLRenderer::renderCylinder(pndouble baseRadius, pndouble topRadius, pndouble height, pnint slices, pnint stacks, const pnfloat* color, const PNPoint& coord/* = PNPoint::ZERO*/, pnbool outside/* = true*/)
+PNGLRenderer::renderCylinder(pndouble baseRadius, pndouble topRadius, pndouble height, pnint slices, pnint stacks, const pnfloat* color, const PNPoint3f& coord/* = PNPoint3f::ZERO*/, pnbool outside/* = true*/)
 {
   glPushMatrix();
   {
@@ -562,7 +563,7 @@ PNGLRenderer::renderCylinder(pndouble baseRadius, pndouble topRadius, pndouble h
 }
 
 void
-PNGLRenderer::renderBox(pnfloat width, pnfloat height, pnfloat depth, const pnfloat* color, const PNPoint& coord/* = PNPoint::ZERO*/, pnbool outside/* = true*/)
+PNGLRenderer::renderBox(pnfloat width, pnfloat height, pnfloat depth, const pnfloat* color, const PNPoint3f& coord/* = PNPoint3f::ZERO*/, pnbool outside/* = true*/)
 {
   glPushMatrix();
   {
@@ -646,7 +647,7 @@ PNGLRenderer::renderBox(pnfloat width, pnfloat height, pnfloat depth, const pnfl
 }
 
 void
-PNGLRenderer::renderLink(const PNPoint& p1, const PNPoint& p2, const pnfloat* color, pnuint direction, pnfloat thickness)
+PNGLRenderer::renderLink(const PNPoint3f& p1, const PNPoint3f& p2, const pnfloat* color, pnuint direction, pnfloat thickness)
 {
   glPushAttrib(GL_CURRENT_BIT|GL_ENABLE_BIT|GL_LINE_BIT|GL_LIGHTING);
   glDisable(GL_LIGHTING);

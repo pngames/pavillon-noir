@@ -106,7 +106,7 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 	  }
 
 	  // sets the interface's label as the tab name/title
-	  pnerror(PN_LOGLVL_DEBUG, "[PNFoxOptionWindow] adding tab for interface %s", interf->getLabel());
+	  pnerror(PN_LOGLVL_DEBUG, "[PNFoxOptionWindow] adding tab for interface %s", interf->getLabel().c_str());
 	  new FXTabItem(tabbook, interf->getLabel().c_str());
 
 	  // ConfigurableParameters are displayed in a PropertiesGird

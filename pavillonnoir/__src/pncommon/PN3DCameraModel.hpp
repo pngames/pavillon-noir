@@ -34,7 +34,7 @@
 
 #include "PN3DModel.hpp"
 #include "pnmath.h"
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 
 namespace PN
 {
@@ -47,9 +47,9 @@ private:
 
   pnpoint4f					_color;
 
-  PNPoint					_min;
-  PNPoint					_max;
-  PNPoint					_center;
+  PNPoint3f					_min;
+  PNPoint3f					_max;
+  PNPoint3f					_center;
 
   PN3DCameraModel(void);
   ~PN3DCameraModel(void);
@@ -83,9 +83,9 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  const PNPoint&			getMin() const {return _min;}
-  const PNPoint&			getMax() const {return _max;}
-  const PNPoint&			getCenter() const {return _center;}
+  const PNPoint3f&			getMin() const {return _min;}
+  const PNPoint3f&			getMax() const {return _max;}
+  const PNPoint3f&			getCenter() const {return _center;}
 };
 
 //////////////////////////////////////////////////////////////////////////

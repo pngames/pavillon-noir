@@ -69,7 +69,7 @@ PNVector3f::PNVector3f(pnfloat vX, pnfloat vY, pnfloat vZ)
 /**
  * \brief copy constructor. Assigns the specified value to the current instance.
  */
-PNVector3f::PNVector3f(const PNPoint & source)
+PNVector3f::PNVector3f(const PNPoint3f& source)
 {
   x = source.x;
   y = source.y;
@@ -82,7 +82,7 @@ PNVector3f::PNVector3f(const PNPoint & source)
  * \param	source		origin of the segment
  * \param	destination	destination of the segment.
  */
-PNVector3f::PNVector3f(const PNPoint & origin, const PNPoint & destination)
+PNVector3f::PNVector3f(const PNPoint3f& origin, const PNPoint3f& destination)
 {
   setFromSegment(origin, destination);
 }
@@ -125,7 +125,7 @@ PNVector3f::get(pnfloat * array)
  * \return void
  */
 void
-PNVector3f::setFromSegment(const PNPoint & origin, const PNPoint & extremity)
+PNVector3f::setFromSegment(const PNPoint3f& origin, const PNPoint3f& extremity)
 {
   x = extremity.x - origin.x;
   y = extremity.y - origin.y;
@@ -217,7 +217,7 @@ PNVector3f::isOrthogonal(pnfloat vX, pnfloat vY, pnfloat vZ)
  * \return void
  */
 void
-PNVector3f::substract(const PNPoint & v)
+PNVector3f::substract(const PNPoint3f& v)
 {
   x -= v.x;
   y -= v.y;
@@ -251,7 +251,7 @@ PNVector3f::substract(pnfloat vX, pnfloat vY, pnfloat vZ)
  * \return	void
  */
 void
-PNVector3f::substract(const PNPoint & v, const PNPoint & u)
+PNVector3f::substract(const PNPoint3f& v, const PNPoint3f& u)
 {
   x = v.x - u.x;
   y = v.y - u.y;
@@ -265,7 +265,7 @@ PNVector3f::substract(const PNPoint & v, const PNPoint & u)
  * \return		void
  */
 void
-PNVector3f::add(const PNPoint & v)
+PNVector3f::add(const PNPoint3f& v)
 {
   x += v.x;
   y += v.y;
@@ -287,7 +287,7 @@ PNVector3f::add(pnfloat vX, pnfloat vY, pnfloat vZ)
  * \brief Adds both point and stores the corresponding result into the current instance.
  */
 void
-PNVector3f::add(const PNPoint & u, const PNPoint & v)
+PNVector3f::add(const PNPoint3f& u, const PNPoint3f& v)
 {
   x = u.x + v.x;
   y = u.y + v.y;
@@ -407,7 +407,7 @@ PNVector3f::crossProduct(const PNVector3f &u, const PNVector3f &v)
  * \return	true if the current vector belongs to the specified segment, false otherwise.
  */
 bool
-PNVector3f::isBelongToSegment(const PNPoint & origin, const PNPoint & extremity)
+PNVector3f::isBelongToSegment(const PNPoint3f& origin, const PNPoint3f& extremity)
 {
   PNVector3f	u;
   PNVector3f	v;
@@ -440,7 +440,7 @@ PNVector3f::isBelongToSegment(const PNPoint & origin, const PNPoint & extremity)
  * \return	true if an intersection has been found, false otherwise.
  */
 bool
-PNVector3f::intersection(const PNPoint & originOne, const PNPoint & extremityOne, const PNPoint & originTwo, const PNPoint & extremityTwo)
+PNVector3f::intersection(const PNPoint3f& originOne, const PNPoint3f& extremityOne, const PNPoint3f& originTwo, const PNPoint3f& extremityTwo)
 {
   PNVector3f	u1;
   PNVector3f	u2;

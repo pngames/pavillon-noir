@@ -57,7 +57,7 @@ PNWayPoint::PNWayPoint(PNIAGraph* g)
   _graph = g;
 }
 
-PNWayPoint::PNWayPoint(pnint id, PNPoint &pos, PNIAGraph* g)
+PNWayPoint::PNWayPoint(pnint id, PNPoint3f&pos, PNIAGraph* g)
 {
   _model = PNWPModel::getInstance();
   _id = id;
@@ -99,7 +99,7 @@ PNWayPoint::addLink(PNWayPoint *p, pnfloat coef)
 	  return false;
   }
   link->next = p;
-  link->weight = _coord.getDistance((PNPoint &)p->getCoord());
+  link->weight = _coord.getDistance((PNPoint3f&)p->getCoord());
   link->coef = coef;
   _links.push_back(link);
 
@@ -249,8 +249,8 @@ PNWayPoint::renderLinks()
   {
 	PNWPModel*	m = (PNWPModel*)_model;
 
-	static PNPoint	p1(0.0f, 0.0f, 0.0f);
-	PNPoint			p2 = (*i)->next->getCoord();
+	static PNPoint3f	p1(0.0f, 0.0f, 0.0f);
+	PNPoint3f			p2 = (*i)->next->getCoord();
 	pnpoint4f		slctColor = {1.0f, 1.0f, 1.0f, 0.0f};
 	pnpoint4f		dflColor = {0.0f, 0.0f, 0.0f, 0.0f};
 

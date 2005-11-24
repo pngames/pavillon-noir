@@ -36,7 +36,7 @@
 #include "PNConsole.hpp"
 
 #include "PNOpalEvents.hpp"
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 
 #define SENSITIVITY 1.0f
 
@@ -44,7 +44,7 @@ namespace PN {
 
 void OPAL_CALL PNOpalCommonEventHandler::handleCollisionEvent(const opal::CollisionEvent& e)
 {
-  //PNPoint collisionPoint;
+  //PNPoint3fcollisionPoint;
   //collisionPoint.set(e.pos[0], e.pos[1], e.pos[2]);
   
   

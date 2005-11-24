@@ -40,7 +40,7 @@ namespace PN {
 
 class PN3DMaterial;
 class PN3DSkeleton;
-class PNPoint;
+class PNPoint3f;
 class PNFace;
 
 /// Model
@@ -92,11 +92,11 @@ public:
   //////////////////////////////////////////////////////////////////////////
   
   /// Get minimum x y z coordinate
-  virtual const PNPoint&	getMin() const=0;
+  virtual const PNPoint3f&	getMin() const=0;
   /// Get maximum x y z coordinate
-  virtual const PNPoint&	getMax() const=0;
+  virtual const PNPoint3f&	getMax() const=0;
   /// Get center scene coordinate used for rotations
-  virtual const PNPoint&	getCenter() const=0;
+  virtual const PNPoint3f&	getCenter() const=0;
 };
 
 //////////////////////////////////////////////////////////////////////////

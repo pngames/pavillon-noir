@@ -36,7 +36,7 @@
 #include "PNObject.hpp"
 #include "IPNSerializable.hpp"
 
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 #include "PNQuatf.hpp"
 
 #include "pna_format.h"
@@ -53,12 +53,12 @@ typedef struct		pniRotationKey_s
 typedef struct		pniPositionKey_s
 {
   pnuint			time;
-  PNPoint			pos;
+  PNPoint3f			pos;
 }					pniPositionKey_t;
 
 class PNMatrixTR4f;
 class PNQuatf;
-class PNPoint;
+class PNPoint3f;
 
 class				PNIAnimationBone : public PNObject, public IPNSerializable
 {
@@ -83,8 +83,8 @@ public:
 
   pnbool			setRotation(pnuint time, PNQuatf& rot);
   pnbool			setRotation(pndouble rtime, const PNQuatf& lastRot, PNQuatf& rot);
-  pnbool			setPosition(pnuint time, PNPoint& pos);
-  pnbool			setPosition(pndouble rtime, const PNPoint& lastPos, PNPoint& pos);
+  pnbool			setPosition(pnuint time, PNPoint3f& pos);
+  pnbool			setPosition(pndouble rtime, const PNPoint3f& lastPos, PNPoint3f& pos);
 };
 
 //////////////////////////////////////////////////////////////////////////

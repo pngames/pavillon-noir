@@ -1,0 +1,23 @@
+///////////////////////////////////////////////////////////////////////////////
+class 					PNPoint3f: public PNObject
+{
+public:
+  pnfloat		x;
+  pnfloat		y;
+  pnfloat		z;
+public:
+  PNPoint3f(void);
+  PNPoint3f(const float& , const float& , const float& );
+  PNPoint3f(const float * );
+  PNPoint3f(const PNPoint3f& );
+  ~PNPoint3f(void);
+/*
+  pnint			deserialize(const path& );
+  pnint			serialize(const path& );
+*/
+  void			set(const float&, const float&, const float&);
+  void			set(const float*);
+  void			set(const PNPoint3f&);
+  float			getDistance(const PNPoint3f&) const;
+  float			getFlatDistance(const PNPoint3f&) const;
+};

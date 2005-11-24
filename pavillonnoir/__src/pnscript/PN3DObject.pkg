@@ -96,7 +96,7 @@ public:
   /// Retrieve 3d object position target bone
   const std::string&		getPositionBoneTarget();
   /// Retrieve 3d object position coordinate
-  PNPoint					getPositionTargetCoord() const;
+  PNPoint3f					getPositionTargetCoord() const;
   /// Retrieve 3d object position orientation
   PNQuatf					getPositionTargetOrient() const;
 
@@ -110,7 +110,7 @@ public:
   /// Retrieve 3d object view target bone
   const std::string&		getViewBoneTarget();
   /// Retrieve 3d object position coordinate
-  virtual PNPoint			getViewTargetCoord() const;
+  virtual PNPoint3f			getViewTargetCoord() const;
   /// Retrieve 3d object position orientation
   virtual PNQuatf			getViewTargetOrient() const;
 
@@ -182,7 +182,7 @@ public:
   
 public:
   /// Return 3D object coordinate in 3D scene
-   const PNPoint&			getCoord() const;
+   const PNPoint3f&			getCoord() const;
   /// Return 3D object x coordinate in 3D scene
    float					getX() const;
   /// Return 3D object y coordinate in 3D scene
@@ -191,14 +191,14 @@ public:
    float					getZ() const;
 
   /// Set 3D object coordinate in 3D scene
-   void						setCoord(const PNPoint& coord);
+   void						setCoord(const PNPoint3f& coord);
   /// Set 3D object coordinate in 3D scene
    void						setCoord(float x, float y, float z);
 
   /// Return 3D object center coordinate relive to his coordinate
-   const PNPoint&			getCenter() const;
+   const PNPoint3f&			getCenter() const;
 
-   void						move(PNPoint& coord);
+   void						move(PNPoint3f& coord);
    void						moveX(float x);
    void						moveY(float y);
    void						moveZ(float z);
@@ -259,9 +259,9 @@ public:
   // unsigned int			computeFaces(PNFace* faces, unsigned int step = 0);
   //////////////////////////////////////////////////////////////////////////
   /// Get minimum x y z coordinate
-  const PNPoint&	getMin() const;
+  const PNPoint3f&	getMin() const;
   /// Get maximum x y z coordinate
-  const PNPoint&	getMax() const;
+  const PNPoint3f&	getMax() const;
   //////////////////////////////////////////////////////////////////////////
 
   /// Retrieve model of 3d object

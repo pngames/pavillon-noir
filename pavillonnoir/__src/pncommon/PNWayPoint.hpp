@@ -65,7 +65,7 @@ class PNAPI PNWayPoint : public PN3DObject
 public:
   PNWayPoint();
   PNWayPoint(PNIAGraph* g);
-  PNWayPoint(pnint id, PNPoint &pos, PNIAGraph* g);
+  PNWayPoint(pnint id, PNPoint3f&pos, PNIAGraph* g);
   PNWayPoint(pnint id, pnfloat x, pnfloat y, pnfloat z, PNIAGraph* g);
   virtual ~PNWayPoint();
 

@@ -4,7 +4,7 @@ $#include <list>
 $#include "PNObject.hpp"
 $#include "PN3DObject.hpp"
 $#include "PN3DSkeletonObject.hpp"
-$#include "PNPoint.hpp"
+$#include "PNPoint3f.hpp"
 $#include "PNLuaGameUtil.h"
 $#include "PNQuatf.hpp"
 $#include "PNVector3f.hpp"

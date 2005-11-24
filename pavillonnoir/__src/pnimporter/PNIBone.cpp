@@ -110,7 +110,7 @@ PNIBone::update(const AnimationSet& anims)
   pnfloat	weight = 0.0f;
 
   PNQuatf	lastRot;
-  PNPoint	lastPos;
+  PNPoint3f	lastPos;
 
   for (AnimationSet::const_iterator  it = anims.begin(); it != anims.end(); ++it)
   {
@@ -119,7 +119,7 @@ PNIBone::update(const AnimationSet& anims)
 	//////////////////////////////////////////////////////////////////////////
 
 	PNQuatf		rot;
-	PNPoint		pos;
+	PNPoint3f		pos;
 
 	if (anim != NULL && anim->anim != NULL)
 	{
@@ -182,7 +182,7 @@ PNIBone::update(pndouble rtime, const AnimationSet& anims)
   pnfloat	weight = 0.0f;
 
   PNQuatf	lastRot;
-  PNPoint	lastPos;
+  PNPoint3f	lastPos;
 
   for (AnimationSet::const_iterator  it = anims.begin(); it != anims.end(); ++it)
   {
@@ -191,7 +191,7 @@ PNIBone::update(pndouble rtime, const AnimationSet& anims)
 	//////////////////////////////////////////////////////////////////////////
 
 	PNQuatf		rot;
-	PNPoint		pos;
+	PNPoint3f		pos;
 
 	if (anim != NULL && anim->anim != NULL)
 	{

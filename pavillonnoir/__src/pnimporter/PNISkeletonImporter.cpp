@@ -45,6 +45,8 @@ namespace PN {
 
 PNISkeletonImporter::PNISkeletonImporter(void)
 {
+  _label = "PNS Importer";
+
   _magic = PNS_MAGIC;
   _magicSize = PNS_MAGIC_SIZE;
 }

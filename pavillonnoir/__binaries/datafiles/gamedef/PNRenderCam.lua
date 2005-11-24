@@ -96,7 +96,7 @@
       end
       	
     	--self:subTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-    	--PNRenderCam:addTargetMode(PN3DObject.TMODE_DISTANCE_LOCKED)
+    	--PNRenderCam:addTargetMode(PN3DObject.TMODE_DISTANCE_ABS_LOCKED)
     	--PNRenderCam:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 		local obj = self:getPositionTarget()		
 		yd = 0.0
@@ -129,7 +129,7 @@
 	    self:rotateYawRadians(math.rad(xd))
 	    
     	--self:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-    	--PNRenderCam:addTargetMode(PN3DObject.TMODE_DISTANCE_LOCKED)
+    	--PNRenderCam:addTargetMode(PN3DObject.TMODE_DISTANCE_ABS_LOCKED)
     	--PNRenderCam:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 		--self.lastYdelta = yd
 		--self.lastXdelta = xd

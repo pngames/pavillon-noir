@@ -48,14 +48,14 @@ PNIAGraph::~PNIAGraph()
 }
 
 pnbool
-PNIAGraph::addWayPoint(int id, PNPoint &pos)
+PNIAGraph::addWayPoint(int id, PNPoint3f&pos)
 {
   PNWayPoint						*wp = new PNWayPoint(id, pos, this);	
   std::list<PNWayPoint*>::iterator  i;
 
   for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
   {
-	PNPoint							coord = (*i)->getCoord();
+	PNPoint3f							coord = (*i)->getCoord();
 
 	if (((*i)->getId() == id) || (coord.x == pos.x && coord.y == pos.y && coord.z == pos.z))
 	{
@@ -79,7 +79,7 @@ PNIAGraph::addWayPoint(pnint id, pnfloat x, pnfloat y, pnfloat z)
 
   for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
   {
-	PNPoint							coord = (*i)->getCoord();
+	PNPoint3f							coord = (*i)->getCoord();
 
 	if (((*i)->getId() == id) || (coord.x == x && coord.y == y && coord.z == z))
 	{
@@ -102,7 +102,7 @@ PNIAGraph::addWayPoint(PNWayPoint* wp)
 
   for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
   {
-	PNPoint							coord = (*i)->getCoord();
+	PNPoint3f							coord = (*i)->getCoord();
 
 	if (((*i)->getId() == wp->getId()) || (coord.x == wp->getX() && coord.y == wp->getY() && coord.z == wp->getZ()))
 	{
@@ -119,14 +119,14 @@ PNIAGraph::addWayPoint(PNWayPoint* wp)
 }
 
 pnint
-PNIAGraph::addWayPoint(PNPoint &pos)
+PNIAGraph::addWayPoint(PNPoint3f&pos)
 {
 	PNWayPoint							*wp = new PNWayPoint(_idMax + 1, pos, this);	
 	std::list<PNWayPoint *>::iterator	i;
 	
 	for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
 	{
-		PNPoint						coord = (*i)->getCoord();
+		PNPoint3f						coord = (*i)->getCoord();
 
 		if (coord.x == pos.x && coord.y == pos.y && coord.z == pos.z)
 			return false;
@@ -146,7 +146,7 @@ PNIAGraph::addWayPoint(pnfloat x, pnfloat y, pnfloat z)
 
   for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
   {
-	PNPoint						coord = (*i)->getCoord();
+	PNPoint3f						coord = (*i)->getCoord();
 
 	if (coord.x == x && coord.y == y && coord.z == z)
 	  return false;

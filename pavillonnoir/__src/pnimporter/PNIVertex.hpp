@@ -34,7 +34,7 @@
 
 #include "pnm_format.h"
 
-#include "PNPoint.hpp"
+#include "PNPoint3f.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ namespace PN {
 class PNI3DMesh;
 class PN3DSkeleton;
 
-class			PNIVertex : public PNPoint
+class			PNIVertex : public PNPoint3f
 {
 public:
   typedef std::list<pnmBoneID_t>	LIST_BONES;
