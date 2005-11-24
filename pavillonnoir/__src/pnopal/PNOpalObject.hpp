@@ -120,9 +120,19 @@ namespace PN {
 	void				setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w);
 	void				setTransform(const PNPoint& coord, const PNQuatf& orient);
 
+	//////////////////////////////////////////////////////////////////////////
+	// PNOpalObject specific
+
 	void				addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration);
 	void				setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf orient);
 	void				destroyMovementMotor();
+
+	//////////////////////////////////////////////////////////////////////////
+	// PNOpalObject specific (debug)
+
+	pnbool				linearAccel;
+	pnbool				angularAccel;
+	void				printAccel();
 
 	///////////////////////////////////////////////////////////////////////////
 	// IPNXMLSerializable
