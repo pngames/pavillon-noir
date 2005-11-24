@@ -271,6 +271,22 @@ void			PNOpalObject::setTransform(const PNPoint& coord, const PNQuatf& orient)
 
 //////////////////////////////////////////////////////////////////////////
 
+void	  PNOpalObject::printAccel()
+{
+  opal::Vec3r print;
+  print = getAccelSensor()->getLocalLinearAccel();
+  pnerror(PN_LOGLVL_DEBUG, "Solid %s acceleration sensor", _solid->getName()); 
+  pnerror(PN_LOGLVL_DEBUG, "Local  linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
+  print = getAccelSensor()->getGlobalLinearAccel();
+  pnerror(PN_LOGLVL_DEBUG, "Global linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
+  print = getAccelSensor()->getLocalAngularAccel();
+  pnerror(PN_LOGLVL_DEBUG, "Local angular - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
+  print = getAccelSensor()->getGlobalAngularAccel();
+  pnerror(PN_LOGLVL_DEBUG, "Global angular - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 /** Add a force to the solid
 *
 * /param  x force axis (global x axis)
@@ -306,26 +322,33 @@ void		PNOpalObject::setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf or
   _movementMotorData.mode = opal::LINEAR_AND_ANGULAR_MODE;
 
   /* coordinates */
-  _movementMotorData.desiredPos = opal::Point3r((opal::real)x, (opal::real)y, (opal::real)z);
+  _movementMotorData.desiredPos.set((opal::real)x, (opal::real)y, (opal::real)z);
 
-  /* orientation */
+  /* creation of the orientation matrix */
   opal::Matrix44r transform;
   transform.makeIdentity();
   if (!orient.isIdentity())
+  {
 	transform.setRotation((opal::real)orient.w, (opal::real)orient.x, (opal::real)orient.y, (opal::real)orient.z);
-  _movementMotorData.desiredForward = transform.getForward();
-  _movementMotorData.desiredUp = transform.getUp();
-  _movementMotorData.desiredRight = transform.getRight();
 
-  /* optional motor data */
-  _movementMotorData.linearKd = 2.0;
-  _movementMotorData.linearKs = 20.0;
-  _movementMotorData.angularKd = 0.2f;
-  _movementMotorData.angularKs = 0.6f;
+	/* setting of the motor matrix */
+	_movementMotorData.desiredForward.set(transform.getForward().getData());
+	_movementMotorData.desiredUp.set(transform.getUp().getData());
+	_movementMotorData.desiredRight.set(transform.getRight().getData());
+  }
+
+  /* motor options */
+  //_movementMotorData.linearKd = (opal::real)2.0;
+  //_movementMotorData.linearKs = (opal::real)20.0;
+  //_movementMotorData.angularKd = (opal::real)0.2;
+  //_movementMotorData.angularKs = (opal::real)0.6;
+
+  linearAccel = true;
 
   /* motor init */
   _movementMotor->init(_movementMotorData);
 }
+
 
 /** Disable the movementMotor attached to the solid
 */
