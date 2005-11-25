@@ -83,9 +83,7 @@ PNPropertiesPanel
 
 namespace fs = boost::filesystem;
 
-namespace PN
-{
-  namespace EDITOR
+namespace PN { namespace EDITOR
 {
 
 // Message Map PNEditor class
