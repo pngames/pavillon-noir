@@ -266,9 +266,10 @@ namespace PN
 
 	PNGUIGame*		guigame = new PNGUIGame();*/
 
-	if (PNSoundInterface::getInstance() != NULL)
-	  PNSoundInterface::getInstance()->changeSoundVolume("theme", 0.0);
-
+	// Theme volume is set to 0.0
+	// PNSoundEventData *data4 = new PNSoundEventData("theme", 0.0f);
+	// PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_VOLUME, 0 ,data4)
+	
 	PNVideoEventData* videoEventData = new PNVideoEventData(DEF::videosFilePath + "scene1.avi");
 	PNEventManager::getInstance()->addEvent(PN_EVENT_VIDEO_START, NULL, videoEventData);
 
