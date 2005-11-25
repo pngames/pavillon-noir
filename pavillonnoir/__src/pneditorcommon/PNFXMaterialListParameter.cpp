@@ -145,6 +145,8 @@ long	PNFXMaterialListParameter::onDelete(FXObject* obj,FXSelector sel,void* ptr)
 
 	v->erase(v->begin() + _listBox->getCurrentItem());
 
+	PNConfigurableObject* co = _param->getConfigurableObject();
+	co->setModified();
 	update();
   }
 
@@ -185,6 +187,8 @@ long	PNFXMaterialListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
 		  s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
 		_listBox->appendItem(s.c_str(), NULL, v->at(i));
 		_listBox->setNumVisible(_listBox->getNumItems() < 5 ? _listBox->getNumItems() : 5 );
+		PNConfigurableObject* co = _param->getConfigurableObject();
+		co->setModified();
 	  }
 	  else
 	  {
@@ -212,7 +216,6 @@ void	PNFXMaterialListParameter::update(void)
   PNConfigurableObject* co = _param->getConfigurableObject();
   buildList();
   co->update(_param);
-  co->setModified();
   _listBox->sortItems();
   return;
 }
