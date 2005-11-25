@@ -59,12 +59,10 @@ using namespace std;
 
 PNGameMap::PNGameMap()
 {
-  PNPhysicsInterface::getInstance()->createSimulation();
 }
 
 PNGameMap::~PNGameMap()
-{
-  PNPhysicsInterface::getInstance()->destroySimulation();
+{ 
 }
 
 const PNGameMap::ObjMap&
@@ -186,11 +184,6 @@ int	PNGameMap::unserializeFromXML(xmlNode* node)
 
 	  if (error != PNEC_SUCCESS)
 		break ;
-
-	  /*//if (current->type != XML_ELEMENT_NODE)
-	  //continue;
-	  if ((error = _parseListEntities(current)) != PNEC_SUCCESS)
-		return error;*/
 	}
   }
 
@@ -208,24 +201,7 @@ pnint PNGameMap::unserializeFromFile(const fs::path& dir)
 
   fs::path file(dir.string() + "/entities.xml", fs::native);
 
-  pnint error = IPNXMLSerializable::unserializeFromFile(file);
-
-  //////////////////////////////////////////////////////////////////////////
-  /*
-  map<std::string, PNObject *>& my_list = this->getEntityList();
-  map<std::string, PNObject *>::iterator it = my_list.begin();
-
-  for (;it != my_list.end(); it++) 
-  {
-  pnerror(PN_LOGLVL_DEBUG, "EntityList : %s", it->first);
-  }
-
-  char c;
-  std::cout << "Appuyez sur une touche pour continuer" << std::endl;
-  fread(&c, 1, 1, stdin);
-  */
-
-  return error;
+  return IPNXMLSerializable::unserializeFromFile(file);
 }
 
 void PNGameMap::addToMap(const std::string& entityName,const std::string& id)
@@ -237,7 +213,6 @@ void PNGameMap::clear()
 {
   _entityList.clear();
   PNImportManager::getInstance()->clean(); //fixeMe
-  //PNPhysicsInterface::clean();
 }
 
 const std::string&	PNGameMap::getWpFile()
