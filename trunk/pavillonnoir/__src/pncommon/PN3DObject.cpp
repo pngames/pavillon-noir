@@ -171,7 +171,7 @@ PN3DObject::_parseModel(xmlNode* node)
 
   _model = NULL;
 
-  if ((attr = xmlGetProp(node, (const xmlChar *)PNO_XMLPROP_PATH)) != NULL)
+  if ((attr = xmlGetProp(node, PNO_XMLPROP_PATH)) != NULL)
   {
 	fs::path p(DEF::modelFilePath + (const char*)attr, fs::native);
 
@@ -192,7 +192,7 @@ PN3DObject::_parsePhysics(xmlNode* node)
 
   _physicalObject = NULL;
 
-  if ((attr = xmlGetProp(node, (const xmlChar *)PNO_XMLPROP_PATH)) != NULL)
+  if ((attr = xmlGetProp(node, PNO_XMLPROP_PATH)) != NULL)
   {
 	fs::path p(DEF::physicsFilePath + (const char*)attr, fs::native);
 
@@ -247,6 +247,19 @@ PN3DObject::unserializeFromXML(xmlNode* root)
   _model = NULL;
   _materials.clear();
 
+  //////////////////////////////////////////////////////////////////////////
+
+  xmlChar*	  attr = NULL;
+
+  if ((attr = xmlGetProp(root, PNO_XMLPROP_FRONT)) != NULL)
+	_frontDirection.setArray(PNPoint3f((const char*)attr));
+
+  if ((attr = xmlGetProp(root, PNO_XMLPROP_RIGHT)) != NULL)
+	_rightDirection.setArray(PNPoint3f((const char*)attr));
+
+  if ((attr = xmlGetProp(root, PNO_XMLPROP_TOP)) != NULL)
+	_topDirection.setArray(PNPoint3f((const char*)attr));
+	
   //////////////////////////////////////////////////////////////////////////
 
   for (root = root->children ; root != NULL; root = root->next)
