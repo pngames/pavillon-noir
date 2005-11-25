@@ -208,7 +208,7 @@ namespace PN
 	  updateGrid(co);
 	  updateView(co);
 	}
-	
+
 	return;
   }
 
@@ -252,6 +252,10 @@ namespace PN
 	{
 	  PNConfigurableObject* co = (PNConfigurableObject*)_objectsListBox->getItemData(_objectsListBox->getCurrentItem());
 	  updateView(co);
+	}
+	else 
+	{
+	  _ed->redraw();
 	}
     return;
   }
