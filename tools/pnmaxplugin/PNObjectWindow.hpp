@@ -108,4 +108,5 @@ public:
   afx_msg void OnBnClickedBoAnimation();
   afx_msg void OnEnChangeTMaterials();
   afx_msg void OnBnClickedOk();
+  afx_msg void OnBnClickedBoGeneral();
 };

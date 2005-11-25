@@ -62,6 +62,7 @@ public:
   PNPoint3f(const pnfloat& x, const pnfloat& y, const pnfloat& z);
   PNPoint3f(const pnfloat* coord);
   PNPoint3f(const PNPoint3f& p);
+  PNPoint3f(const std::string& str);
   ~PNPoint3f(void);
 
   void						setNull();
@@ -77,6 +78,12 @@ public:
   bool						isEquals(const PNPoint3f& point);  
   bool						isEquals(pnfloat x, pnfloat y, pnfloat z);
   
+  //////////////////////////////////////////////////////////////////////////
+public:
+  std::string				serialize();
+  void						unserialize(const std::string& str);
+  void						unserialize(std::istream& istr);
+
   //////////////////////////////////////////////////////////////////////////
 public:
 

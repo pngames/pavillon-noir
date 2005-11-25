@@ -28,6 +28,7 @@
  */
 
 #include <iostream>
+#include <sstream>
 #include <math.h>
 
 #include "pndefs.h"
@@ -37,6 +38,7 @@
 #define	DIST_EPSILON	10E-5
 
 using namespace PN;
+using namespace std;
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -65,6 +67,11 @@ PNPoint3f::PNPoint3f(const PNPoint3f& p)
   x = p.x;
   y = p.y;
   z = p.z;
+}
+
+PNPoint3f::PNPoint3f(const std::string& str)
+{
+  unserialize(str);
 }
 
 PNPoint3f::~PNPoint3f(void)
@@ -146,6 +153,32 @@ PNPoint3f::isEquals(pnfloat x, pnfloat y, pnfloat z)
 {
   PNPoint3f	u(x, y, z);
   return (isEquals(u));
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+std::string
+PNPoint3f::serialize()
+{
+  std::ostringstream os;
+  os << x << " " << y << " " << z;
+
+  return os.str();
+}
+
+void
+PNPoint3f::unserialize(const std::string& str)
+{
+  std::stringstream os;
+  os << str;
+
+  unserialize(os);
+}
+
+void
+PNPoint3f::unserialize(std::istream& is)
+{
+  is >> x >> y >> z;
 }
 
 //////////////////////////////////////////////////////////////////////////
