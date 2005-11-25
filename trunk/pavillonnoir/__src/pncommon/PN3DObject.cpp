@@ -1052,6 +1052,12 @@ PN3DObject::updateRotation(pnfloat deltaTime)
 {
   PNLOCK(this);
 
+  //////////////////////////////////////////////////////////////////////////
+
+  PNPoint3f	coord = _coord + _updateTranslation;
+
+  //////////////////////////////////////////////////////////////////////////
+
   pnfloat	d10 = deltaTime / 10.0f;
 
   pnfloat	xphi = DEGREE_TO_RADIAN_F(d10 * _rotatingPitchSpeed);
@@ -1065,7 +1071,7 @@ PN3DObject::updateRotation(pnfloat deltaTime)
   else if (_targetMode & (TMODE_VIEW_ABS_LOCKED | TMODE_VIEW_LOCKED))
   {
 	PNVector3f	targetVector = getViewTargetCoord();
-	targetVector -= _coord;
+	targetVector -= coord;
 
 	pnfloat	norm = sqrtf(SQNBR(targetVector.x) + SQNBR(targetVector.z));
 	double	ps = (_targetDirection.getX() * targetVector.x / norm) + (_targetDirection.getZ() * targetVector.z / norm);
@@ -1096,7 +1102,7 @@ PN3DObject::updateRotation(pnfloat deltaTime)
   else if (_targetMode & TMODE_VIEW_LOCKED)
   {
 	/*PNVector3f	targetVector = _target->getCoord();
-	targetVector -= _coord;
+	targetVector -= coord;
 
 	pnfloat	norm = sqrtf(SQNBR(targetVector.x) + SQNBR(targetVector.z));
 	double	ps = (_targetDirection.x * targetVector.x / norm) + (_targetDirection.z * targetVector.z / norm);
@@ -1152,11 +1158,30 @@ PN3DObject::update(pnuint deltaTime)
 {
   PNLOCK(this);
 
+  bool	moving = !_updateTranslation.isNull();
+
+  //////////////////////////////////////////////////////////////////////////
+
   updateTranslation((pnfloat)deltaTime);
+
+  updateRotation((pnfloat)deltaTime);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  bool	moved = !_updateTranslation.isNull();
+
+  //////////////////////////////////////////////////////////////////////////
 
   _coord += _updateTranslation;
 
-  updateRotation((pnfloat)deltaTime);
+  if (moved)
+  {
+	PNEventManager::getInstance()->addEvent(PN_EVENT_OM, this, NULL);
+	if (!moving)
+	  PNEventManager::getInstance()->addEvent(PN_EVENT_OM_ENDED, this, NULL);
+  }
+  else if (moving)
+	PNEventManager::getInstance()->addEvent(PN_EVENT_OM_STARTED, this, NULL);
 }
 
 //////////////////////////////////////////////////////////////////////////

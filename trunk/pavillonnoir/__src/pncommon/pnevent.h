@@ -107,12 +107,11 @@ typedef enum
   PN_EVENT_MP_PAUSED,           /// say the map is paused
   PN_EVENT_MP_UNPAUSE,          /// pause the map
   PN_EVENT_MP_UNPAUSED,         /// say the map is paused
+
   //////////////////////////////////////////////////////////////////////////
   // OBJECTS DISPLACEMENT
 
-  PN_EVENT_OM_START,			/// start moving object
   PN_EVENT_OM_STARTED,			/// object started moving
-  PN_EVENT_OM_END,				/// end moving object
   PN_EVENT_OM_ENDED,			/// object ended moving
   PN_EVENT_OM,					/// object moved
 

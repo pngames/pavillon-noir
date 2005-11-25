@@ -159,12 +159,8 @@ PNEventManager::PNEventManager()
   //////////////////////////////////////////////////////////////////////////
   // OBJECTS DISPLACEMENT
 
-  _eventEnums["PN_EVENT_OM_START"] = PN_EVENT_OM_START;
-  _eventNames[PN_EVENT_OM_START] = "PN_EVENT_OM_START";
   _eventEnums["PN_EVENT_OM_STARTED"] = PN_EVENT_OM_STARTED;
   _eventNames[PN_EVENT_OM_STARTED] = "PN_EVENT_OM_STARTED";
-  _eventEnums["PN_EVENT_OM_END"] = PN_EVENT_OM_END;
-  _eventNames[PN_EVENT_OM_END] = "PN_EVENT_OM_END";
   _eventEnums["PN_EVENT_OM_ENDED"] = PN_EVENT_OM_ENDED;
   _eventNames[PN_EVENT_OM_ENDED] = "PN_EVENT_OM_ENDED";
   _eventEnums["PN_EVENT_OM"] = PN_EVENT_OM;

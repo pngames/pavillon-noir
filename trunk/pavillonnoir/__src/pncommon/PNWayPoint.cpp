@@ -46,6 +46,8 @@ PNWayPoint::PNWayPoint()
 {
   _model = PNWPModel::getInstance();
   _selected = false;
+  _serializeInXML = false;
+
   _objType = OBJTYPE_WAYPOINT;
 }
 
