@@ -8,5 +8,6 @@
   <skeleton path="bonhomme.pns" />
   <listanims>
     <anim path="bonhomme-walk.pna" />
+    <anim path="bonhomme-run.pna" />
   </listanims>
 </object>
