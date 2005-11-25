@@ -103,6 +103,9 @@ PNEventManager::PNEventManager()
 
   
 
+	_eventEnums["PN_EVENT_CONFPANEL"] = PN_EVENT_CONFPANEL;
+  _eventNames[PN_EVENT_CONFPANEL] = "PN_EVENT_CONFPANEL";
+
   _eventEnums["PN_EVENT_CONSOLE"] = PN_EVENT_CONSOLE;
   _eventNames[PN_EVENT_CONSOLE] = "PN_EVENT_CONSOLE";
   _eventEnums["PN_EVENT_SDL_GRAB_OFF"] = PN_EVENT_SDL_GRAB_OFF;	

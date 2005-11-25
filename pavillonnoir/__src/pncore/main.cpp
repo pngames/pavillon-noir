@@ -54,6 +54,7 @@
 #include "PNLoadPlugins.hpp"
 
 #include "PNConsole.hpp"
+#include "PNGUIConfPanel.hpp"
 
 #include "PNGUIMenuRootManager.hpp"
 #include "PNGUIGameManager.hpp"
@@ -141,7 +142,9 @@ int	  main(int argc, char* argv[])
 
 	new CEGUI::System((CEGUI::Renderer*)ri->getGUIRenderer());
 	ri->initGUI();
-
+	
+	PNGUIConfPanel::getInstance();
+	
 	PNGUIStateManager::getInstance();
 	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::NONE && PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
 	{
