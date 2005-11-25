@@ -76,6 +76,7 @@ typedef enum
   PN_EVENT_GUI_QUIT_MENU_ROOT,
 
   PN_EVENT_CONSOLE,
+  PN_EVENT_CONFPANEL,
 
   PN_EVENT_SDL_GRAB_OFF,		/// When SDL mouse is visible
   PN_EVENT_SDL_GRAB_ON,			/// When SDL mouse is not visible
