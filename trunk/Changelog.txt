@@ -32,6 +32,9 @@ Big improvement of game framework. Starting game desing.
 		- Add Scons script for linux source package (see INSTALL file for howto use it)
 		- Updated Ubuntu Breezy and Debian Sid packages
 		- No more non free resources in the trunk
+	* SCRIPTING :
+		- Rewrite  module to work better with events
+		- Externalize the virtual machine from the map
 
 	Bug Fixes:
 	----------
