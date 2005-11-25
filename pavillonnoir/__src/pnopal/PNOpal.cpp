@@ -72,6 +72,8 @@ void  PNOpal::init()
   pnerror(PN_LOGLVL_DEBUG, "%s", "PNOpal (PNPhysicsInterface implementation) initialization");
 
   PNEventManager::getInstance()->addCallback(PN_EVENT_PU_START, EventCallback(this, &PNOpal::frameStarted));
+
+  PNEventManager::getInstance()->addCallback(PN_EVENT_MP_START, EventCallback(this, &PNOpal::mapStart));
   PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PNOpal::mapEnded));
   
   setPause(true);
@@ -118,7 +120,6 @@ void PNOpal::destroySimulation()
 
 /** Return a pointer to the OPAL simulation (opal::Simulator*)
 */
-
 void* PNOpal::getSimulation()
 {
   return _sim;
@@ -126,19 +127,26 @@ void* PNOpal::getSimulation()
 
 /** Return a pointer to the PNOPAL event class (PNOpalCommonEventHandler*)
 */
-
 void* PNOpal::getEventHandler()
 {
   return _eventHandler;
 }
 
+/** invoked by PN_EVENT_MP_START (level construction)
+*/
+void
+PNOpal::mapStart(pnEventType type, PNObject* source, PNEventData* data)
+{
+  this->createSimulation();
+}
+
 /** invoked by PN_EVENT_MP_ENDED (level destruction)
 */
-
 void PNOpal::mapEnded(pnEventType type, PNObject* source, PNEventData* data)
 {
   _lastTicks = 0;
   _break = true; // make the running loops stop
+
   this->destroySimulation();
 }
 

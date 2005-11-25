@@ -74,8 +74,11 @@ public:
   // Events
 
   void*				getEventHandler();
-  void				mapEnded(pnEventType type, PNObject* source, PNEventData* data);
+
   void				frameStarted(pnEventType type, PNObject* source, PNEventData* data);
+
+  void				mapStart(pnEventType type, PNObject* source, PNEventData* data);
+  void				mapEnded(pnEventType type, PNObject* source, PNEventData* data);
 
   //////////////////////////////////////////////////////////////////////////
   // Internal

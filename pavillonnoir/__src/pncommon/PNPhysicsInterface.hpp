@@ -41,35 +41,29 @@ namespace PN
 class PN3DObject;
 class PNPhysicalObject;
 
-class PNAPI					PNPhysicsInterface : public PNInterface
+class PNAPI						PNPhysicsInterface : public PNInterface
 {
 protected:
-  bool						_paused;
-  static PNPhysicsInterface*  _instance;
+  bool							_paused;
+  static PNPhysicsInterface*	_instance;
 
 public:
-  static PNPhysicsInterface*  getInstance();
+  static PNPhysicsInterface*	getInstance();
 
 protected:
   PNPhysicsInterface();
   virtual ~PNPhysicsInterface();
 
   //////////////////////////////////////////////////////////////////////////
-
+  // PNInterface
 public:
-  plugintypes				getType();
-  virtual void				init(void)=0;
-  virtual void				setPause(bool state)=0;
+  plugintypes					getType();
 
   //////////////////////////////////////////////////////////////////////////
+  
+  virtual void					setPause(bool state)=0;
 
-  virtual void				createSimulation()=0;
-  virtual void				destroySimulation()=0;
-  virtual void*				getSimulation()=0;
-
-  //////////////////////////////////////////////////////////////////////////
-
-  virtual void		  		setAllPhysicalObjectsStatic(bool state)=0;
+  virtual void		  			setAllPhysicalObjectsStatic(bool state)=0;
 
 };
 
