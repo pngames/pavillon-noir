@@ -29,6 +29,7 @@
  
 #include <fstream>
 #include <stdio.h>
+#include <sstream>
 #include <boost/filesystem/operations.hpp>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
@@ -71,7 +72,7 @@ IPNXMLSerializable::getRootNodeName() const
 
 IPNXMLSerializable::IPNXMLSerializable()
 {
-  
+  _serializeInXML = true;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -134,10 +135,14 @@ IPNXMLSerializable::unserializeFromFile(const boost::filesystem::path& file)
   return error;
 }
 
-/// Save object to file
+//////////////////////////////////////////////////////////////////////////
+
 pnint
-IPNXMLSerializable::serializeInXMLFile(const boost::filesystem::path& file)
+IPNXMLSerializable::serializeInFile(const boost::filesystem::path& file)
 {
+  if (!_serializeInXML)
+	return IPNXMLSerializable::serializeInFile(file);
+
   xmlDocPtr doc = NULL;       /* document pointer */
   xmlNodePtr root_node = NULL;/* node pointers */
 
@@ -184,47 +189,52 @@ IPNXMLSerializable::serializeInXMLFile(const boost::filesystem::path& file)
   return PNEC_SUCCESS;
 }
 
-/// Save object to file
-pnint
-IPNXMLSerializable::serializeInXMLFile(const std::string& file)
-{
-  return serializeInXMLFile(fs::path(file, fs::native));
-}
-
-/**
- * @brief		Save object to stream
- *
- * @param o		Stream to load from
- *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCESS if succeed
- *
- * @see			pnGetErrorString
- */
-/*pnint
-IPNXMLSerializable::serializeInStream(ostream& o)
-{
-  return serializeInXML(o, true);
-}*/
-
-/**
- * @brief		Save object to stream
- *
- * @param o		Stream to load from
- *
- * @return		One of \c PN::pnerrorcode, \c PN::PNEC_SUCCESS if succeed
- *
- * @see			pnGetErrorString
- */
-/*pnint
-IPNXMLSerializable::serializeInXML(ostream& o, pnbool header)
-{
-  return PNEC_NOT_IMPLEMENTED;
-}*/
-
 pnint
 IPNXMLSerializable::serializeInXML(xmlNode* node, pnbool root /*=false*/)
 {
   return PNEC_NOT_IMPLEMENTED;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+
+namespace XMLUtils
+{
+//////////////////////////////////////////////////////////////////////////
+
+static std::ostringstream os;
+
+PNAPI xmlAttr*
+xmlNewProp(xmlNode* node, const xmlChar *name, pnint value)
+{  
+  os.clear();
+  os << value;
+
+  return xmlNewProp(node, name, BAD_CAST os.str().c_str());
+}
+
+PNAPI xmlAttr*
+xmlNewProp(xmlNode* node, const char *name, pnint value)
+{
+  return xmlNewProp(node, BAD_CAST name, value);
+}
+
+PNAPI xmlAttr*
+xmlNewProp(xmlNode* node, const pnuchar *name, pnfloat value)
+{
+  os.clear();
+  os << value;
+
+  return xmlNewProp(node, name, BAD_CAST os.str().c_str());
+}
+
+PNAPI xmlAttr*
+xmlNewProp(xmlNode* node, const char *name, pnfloat value)
+{
+  return xmlNewProp(node, BAD_CAST name, value);
+}
+
+//////////////////////////////////////////////////////////////////////////
 }
 
 //////////////////////////////////////////////////////////////////////////
