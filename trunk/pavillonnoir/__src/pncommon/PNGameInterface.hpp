@@ -42,59 +42,44 @@ namespace PN
 
 class PNGameMap;
 
-class PNAPI PNGameInterface: public PNInterface
+class PNAPI									PNGameInterface: public PNInterface
 {
   static PNGameInterface* _instance; 
 
 public:
-  // fonction statique qui renvoye une instance unique de l'objet; 
-  static PNGameInterface* getInstance();
+  static PNGameInterface*					getInstance();
 
-  //Set the script to the RUNNING state and runthe script; 
+  //Set the script to the RUNNING state and run the script; 
   //return true if succeed, else return false
-  virtual pnerrorcode run(void)=0;
+  virtual pnerrorcode						run(void)=0;
 
   //Set the script to the PAUSED state and pause the script
   //return true if succeed, else return false
-  virtual pnerrorcode pause(void) =0;
+  virtual pnerrorcode						pause(void) =0;
 
   //set the script into STOPED state and jump to the 1st instruction; 
   //return true if succeed, else return false
-  virtual pnerrorcode stop(void)=0;
+  virtual pnerrorcode						stop(void)=0;
 
   //Return the state of the script. It could be RUNNING | PAUSED | STOPED | OVER 
-  virtual void getState(void)=0;
+  virtual void								getState(void)=0;
 
   //Return the Script id
-  virtual const pnchar* getId(void)=0;
+  virtual const pnchar*						getId(void)=0;
 
   //defini le repertoir principal ou se trouve le script
-  virtual pnerrorcode setGameRoot(const pnchar *name)=0;
+  virtual pnerrorcode						setGameRoot(const pnchar *name)=0;
 
   //recupere le chemin racine du jeu 
-  virtual const boost::filesystem::path& getGameRoot()=0;
+  virtual const boost::filesystem::path&	getGameRoot()=0;
 
-  //init the plugin
-  virtual void init(void)=0;
-  
   //return the gameMap
-  virtual PNGameMap* getGameMap()=0;
+  virtual PNGameMap*						getGameMap()=0;
 
-  //Event CallBack
-  virtual void onUpdate(pnuint deltaTime){};
-  virtual void onInit(pnEventType evt, PNObject* source, PNEventData* data){};
-  virtual void onReset(pnEventType evt, PNObject* source, PNEventData* data){};
-  virtual void onNewGame(pnEventType evt, PNObject* source, PNEventData* data){};
-  virtual void onSaveGame(pnEventType evt, PNObject* source, PNEventData* data){};
-  virtual void onLoadGame(pnEventType evt, PNObject* source, PNEventData* data){};
-  virtual void onLoadMap(pnEventType evt, PNObject* source, PNEventData* data){};
-  virtual void onStartGame(pnEventType evt, PNObject* source, PNEventData* data){};
-  virtual void onPauseGame(pnEventType evt, PNObject* source, PNEventData* data){};
-  virtual void onLeaveGame(pnEventType evt, PNObject* source, PNEventData* data){};
-  virtual void onGameAction(pnEventType evt, PNObject* source, PNEventData* data){};
-  virtual void onColision(pnEventType evt, PNObject* source, PNEventData* data){};
+  //////////////////////////////////////////////////////////////////////////
+  // PNInterface
 
-  plugintypes	getType() {return PN_PLUGIN_GAME;}
+  plugintypes								getType() {return PN_PLUGIN_GAME;}
 
 protected:
   PNGameInterface();

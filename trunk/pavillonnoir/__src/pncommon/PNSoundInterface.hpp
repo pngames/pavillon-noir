@@ -47,8 +47,11 @@ public:
   static PNSoundInterface*  getInstance();
 
   //////////////////////////////////////////////////////////////////////////
+  // PNInterface
 public:
   plugintypes			getType() const {return PN_PLUGIN_SOUND;}
+
+  //////////////////////////////////////////////////////////////////////////
 
 public:
   virtual void			setListenerPosition(pnfloat x, pnfloat y, pnfloat z)=0;
@@ -63,26 +66,10 @@ public:
 
   virtual pnint			createNewSound(const std::string &name, const char* file, char looping, pnfloat x, pnfloat y, pnfloat z)=0;
   virtual bool			loadSound(const std::string &name, const pnchar *fname, char looping)=0;
-  virtual void			playSound(const std::string &name)=0;
-  virtual void			stopSound(const std::string &name)=0;
-  virtual void			pauseSound(const std::string &name)=0;
-  virtual void			changeSoundVolume(const std::string &name, float value)=0;
   virtual void			destroySound(const std::string &name)=0;
-
-  virtual void			disableSound()=0;
-  virtual void  		enableSound()=0;
   
   virtual void			showLoadedSounds()=0;
   virtual void			clearSoundMap()=0;
-
-  /// Events
-  virtual void			onPlaySound(pnEventType evt, PNObject* source, PNEventData* data)=0;
-  virtual void			onStopSound(pnEventType evt, PNObject* source, PNEventData* data)=0;
-  virtual void			onPauseSound(pnEventType evt, PNObject* source, PNEventData* data)=0;
-  virtual void			onCreateSound(pnEventType evt, PNObject* source, PNEventData* data)=0;
-  virtual void			onVolumeSound(pnEventType evt, PNObject* source, PNEventData* data)=0;
-  virtual void			onEnableSound(pnEventType evt, PNObject* source, PNEventData* data)=0;
-  virtual void			onDisableSound(pnEventType evt, PNObject* source, PNEventData* data)=0;
 };
 
 //////////////////////////////////////////////////////////////////////////
