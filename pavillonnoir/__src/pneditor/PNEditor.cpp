@@ -534,7 +534,11 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 
 	  xmlNodePtr node = xmlNewChild(root_node, NULL, PNXML_ENTITY_MKP, NULL);
 	  {
-		XMLUtils::xmlNewProp(node, PNXML_ID_ATTR, shape->getId());
+		std::ostringstream os;
+		os << PNXML_IDBASE_VAL << shape->getId();
+
+		xmlNewProp(node, PNXML_ID_ATTR, BAD_CAST os.str().c_str());
+	  
 		xmlNewProp(node, PNXML_LABEL_ATTR, BAD_CAST shape->getLabel().c_str());
 		xmlNewProp(node, PNXML_MODELREFERENCE_ATTR,BAD_CAST DEF::convertPath(DEF::objectFilePath, obj->getFile()->string()).c_str());
 
