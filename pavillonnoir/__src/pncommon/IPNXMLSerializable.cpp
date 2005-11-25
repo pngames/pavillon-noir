@@ -202,12 +202,10 @@ namespace XMLUtils
 {
 //////////////////////////////////////////////////////////////////////////
 
-static std::ostringstream os;
-
 PNAPI xmlAttr*
 xmlNewProp(xmlNode* node, const xmlChar *name, pnint value)
 {  
-  os.clear();
+  std::ostringstream os;
   os << value;
 
   return xmlNewProp(node, name, BAD_CAST os.str().c_str());
@@ -222,7 +220,7 @@ xmlNewProp(xmlNode* node, const char *name, pnint value)
 PNAPI xmlAttr*
 xmlNewProp(xmlNode* node, const pnuchar *name, pnfloat value)
 {
-  os.clear();
+  std::ostringstream os;
   os << value;
 
   return xmlNewProp(node, name, BAD_CAST os.str().c_str());
