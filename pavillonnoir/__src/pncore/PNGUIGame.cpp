@@ -357,7 +357,7 @@ void  PNGUIGame::_addForce(const std::string&, std::istream& i)
 	  current_obj->getPhysicalObject()->addForce(x, y, z, duration);
 	}
 	else
-	  PNConsole::writeLine("object %s does not exist", objectid);
+	  PNConsole::writeLine("object %s does not exist", objectid.c_str());
   }
   else
 	PNConsole::writeLine("Syntax : addforce objectid x y z duration");

@@ -101,7 +101,7 @@ Section "!Binaires" SecBin
   File "..\..\README"
   
   SetOutPath "$INSTDIR\pavillonnoir\__binaries"
-  File    /x .svn /x *.log "..\__binaries\*.*"
+  File /nonfatal /x .svn /x *.log "..\__binaries\*.*"
 
   SetOutPath "$INSTDIR\pavillonnoir\__binaries\win32"
   File /r /x .svn /x *.ilk /x *.exp /x *.log "..\__binaries\win32\*.*"

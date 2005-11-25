@@ -279,22 +279,18 @@ PNConsole::getTime()
 
   time(&t);
 
-#if WIN32 && _MSC_VER >= 1400
   char	str[256];
+  
+#if WIN32 && _MSC_VER >= 1400
 
   if (ctime_s(str, 256, &t) != 0)
 	return "";
-
-  std::string tmp = str;
 #else
-  char* str = ctime(&t);
-
-  if (str == NULL)
+  if (ctime_r(&t, str) == NULL)
 	return "";
+#endif
 
   std::string tmp = str;
-  delete str;
-#endif
 
   tmp.replace(tmp.length()-1, 1, " ");
 
