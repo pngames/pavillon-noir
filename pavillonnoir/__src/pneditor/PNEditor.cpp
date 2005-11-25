@@ -1190,6 +1190,7 @@ PNEditor::removeShape(FXGLShape* s)
 	staticGroup->remove(s);
   else if (((PNGLShape*)s)->getEnvType() == PN_DYNAMIC)
 	dynGroup->remove(s);
+  viewer->setSelection(NULL);
 }
 
 void
