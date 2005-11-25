@@ -356,6 +356,9 @@ void	PNSDLEvent::handleKeyPress(SDL_keysym*	keysym, bool state)
 	 // std::cout << "sdl F1" << std::endl;
 	  PNEventManager::getInstance()->sendEvent(PN_EVENT_CONSOLE, NULL, NULL);
 	  break ;
+	case SDLK_F2:
+	  PNEventManager::getInstance()->sendEvent(PN_EVENT_CONFPANEL, NULL, NULL);
+	  break;
 	case SDLK_F11:
 	  // std::cout << "sdl F1" << std::endl;
 	  PNEventManager::getInstance()->sendEvent(PN_EVENT_INFO_PANEL, NULL, NULL);
