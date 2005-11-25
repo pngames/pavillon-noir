@@ -275,7 +275,7 @@ void	  PNOpalObject::printAccel()
 {
   opal::Vec3r print;
   print = getAccelSensor()->getLocalLinearAccel();
-  pnerror(PN_LOGLVL_DEBUG, "Solid %s acceleration sensor", _solid->getName()); 
+  pnerror(PN_LOGLVL_DEBUG, "Solid %s acceleration sensor", _solid->getName().c_str()); 
   pnerror(PN_LOGLVL_DEBUG, "Local  linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
   print = getAccelSensor()->getGlobalLinearAccel();
   pnerror(PN_LOGLVL_DEBUG, "Global linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
