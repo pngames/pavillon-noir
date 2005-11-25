@@ -36,6 +36,7 @@
 
 #include "PNPhysicsInterface.hpp"
 #include "PNOpalObject.hpp"
+#include "PNOpal.hpp"
 
 namespace fs = boost::filesystem;
 using namespace PN;
@@ -65,7 +66,7 @@ PNObject*	PNOpalImporter::doImport(const fs::path& path)
 {
   pnerror(PN_LOGLVL_INFO, "Import %s", path.string().c_str());
 
-  PNPhysicalObject* physicalObject = new PNOpalObject((opal::Simulator*)PNPhysicsInterface::getInstance()->getSimulation());
+  PNPhysicalObject* physicalObject = new PNOpalObject((opal::Simulator*)((PNOpal*)PNPhysicsInterface::getInstance())->getSimulation());
 
   pnuint error = physicalObject->unserializeFromFile(path);
 
