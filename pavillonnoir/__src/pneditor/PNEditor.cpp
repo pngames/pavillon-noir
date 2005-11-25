@@ -70,7 +70,6 @@ PNPropertiesPanel
 
 #include "PNGLShape.hpp"
 #include "PNGLViewer.hpp"
-//#include "FXGLViewer.h"
 #include "PNPropertiesPanel.hpp"
 #include "PNConfigurableObject.hpp"
 #include "PN3DSkeletonObject.hpp"
@@ -520,8 +519,6 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
   _staticshown = true;
   _dynamicshown = true;
 
-  char	tmpBuff[256];
-
   FXObjectList&	ol1 = genScene->getList();
   for (int i= 0; i < ol1.no(); i++)
   {
@@ -537,9 +534,7 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 
 	  xmlNodePtr node = xmlNewChild(root_node, NULL, PNXML_ENTITY_MKP, NULL);
 	  {
-		//sprintf(tmpBuff, "%d\0", shape->getId());
-		sprintf(tmpBuff, "%s%d", PNXML_IDBASE_VAL, shape->getId());
-		xmlNewProp(node, PNXML_ID_ATTR, BAD_CAST tmpBuff);
+		XMLUtils::xmlNewProp(node, PNXML_ID_ATTR, shape->getId());
 		xmlNewProp(node, PNXML_LABEL_ATTR, BAD_CAST shape->getLabel().c_str());
 		xmlNewProp(node, PNXML_MODELREFERENCE_ATTR,BAD_CAST DEF::convertPath(DEF::objectFilePath, obj->getFile()->string()).c_str());
 
@@ -567,21 +562,14 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 
 		xmlNewProp(node, PNXML_CLASS_ATTR, BAD_CAST shape->getClassStr().c_str());
 
-		sprintf(tmpBuff, "%f", p.x);
-		xmlNewProp(node, PNXML_COORDX_ATTR, BAD_CAST tmpBuff);
-		sprintf(tmpBuff, "%f", p.y);
-		xmlNewProp(node, PNXML_COORDY_ATTR, BAD_CAST tmpBuff);
-		sprintf(tmpBuff, "%f", p.z);
-		xmlNewProp(node, PNXML_COORDZ_ATTR, BAD_CAST tmpBuff);
+		XMLUtils::xmlNewProp(node, PNXML_COORDX_ATTR, p.x);
+		XMLUtils::xmlNewProp(node, PNXML_COORDY_ATTR, p.y);
+		XMLUtils::xmlNewProp(node, PNXML_COORDZ_ATTR, p.z);
 
-		sprintf(tmpBuff, "%f", q.x);
-		xmlNewProp(node, PNXML_ROTX_ATTR, BAD_CAST tmpBuff);
-		sprintf(tmpBuff, "%f", q.y);
-		xmlNewProp(node, PNXML_ROTY_ATTR, BAD_CAST tmpBuff);
-		sprintf(tmpBuff, "%f", q.z);
-		xmlNewProp(node, PNXML_ROTZ_ATTR, BAD_CAST tmpBuff);
-		sprintf(tmpBuff, "%f", q.w);
-		xmlNewProp(node, PNXML_ROTW_ATTR, BAD_CAST tmpBuff);
+		XMLUtils::xmlNewProp(node, PNXML_ROTX_ATTR, q.x);
+		XMLUtils::xmlNewProp(node, PNXML_ROTY_ATTR, q.y);
+		XMLUtils::xmlNewProp(node, PNXML_ROTZ_ATTR, q.z);
+		XMLUtils::xmlNewProp(node, PNXML_ROTW_ATTR, q.w);
 	  }
 
 	  // actions

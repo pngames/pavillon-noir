@@ -235,22 +235,6 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\..\__src\pncommon\IPNSerializable.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\IPNSerializable.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\IPNXMLSerializable.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\IPNXMLSerializable.hpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pncommon\pndefs.h"
 				>
 			</File>
@@ -800,6 +784,26 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNVector3f.hpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="serialization"
+			>
+			<File
+				RelativePath="..\..\..\__src\pncommon\IPNSerializable.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\IPNSerializable.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\IPNXMLSerializable.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\IPNXMLSerializable.hpp"
 				>
 			</File>
 		</Filter>
