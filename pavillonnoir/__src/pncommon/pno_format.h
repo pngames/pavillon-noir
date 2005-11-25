@@ -51,6 +51,10 @@ static const std::string	PNO_XMLNODE_PHYSICS			= "physics";
 
 #define						PNO_XMLPROP_PATH			(BAD_CAST "path")
 
+#define						PNO_XMLPROP_FRONT			(BAD_CAST "front")
+#define						PNO_XMLPROP_RIGHT			(BAD_CAST "right")
+#define						PNO_XMLPROP_TOP				(BAD_CAST "top")
+
 //////////////////////////////////////////////////////////////////////////
 
 static const std::string	PNOA_XMLNODE_ROOT			= "anim";

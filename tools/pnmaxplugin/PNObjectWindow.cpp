@@ -28,6 +28,7 @@
 #include "pnresources.h"
 
 #include "PNObjectWindow.hpp"
+#include ".\pnobjectwindow.hpp"
 
 // Bo�e de dialogue PNObjectWindow
 
@@ -136,6 +137,7 @@ BEGIN_MESSAGE_MAP(PNObjectWindow, CDialog)
   ON_BN_CLICKED(IDC_BO_ANIMATION, OnBnClickedBoAnimation)
   ON_EN_CHANGE(IDC_T_MATERIALS, OnEnChangeTMaterials)
   ON_BN_CLICKED(IDOK, OnBnClickedOk)
+  ON_BN_CLICKED(IDC_BO_GENERAL, OnBnClickedBoGeneral)
 END_MESSAGE_MAP()
 
 // Gestionnaires de messages PNObjectWindow
@@ -405,6 +407,11 @@ void PNObjectWindow::OnEnChangeTMaterials()
 {
   _exporter->_materialsExporter.initFiles(
 	makePathFromDir(t_materials, PNT_EXT, PN::DEF::materialFilePath.c_str()));
+}
+
+void PNObjectWindow::OnBnClickedBoGeneral()
+{
+  
 }
 
 void PNObjectWindow::OnBnClickedOk()
