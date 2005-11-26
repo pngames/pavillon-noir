@@ -75,6 +75,7 @@ namespace PN{
 	CEGUI::Window*			_testTab;
 	static PNGUIConfPanel*	_instance;
 	int						_nbTAB;
+	std::vector<std::string> _vectTabNames;
 
 	typedef std::map<std::string, PNConfigurableParameter*>	confPanelMap;
 	 confPanelMap		_confPanelMap;
@@ -85,13 +86,15 @@ namespace PN{
 	static PNGUIConfPanel* getInstance();
   protected:
   private:
-	void  addItem(CEGUI::Window* curTab,  PNConfigurableParameter* current_param, int idx);
-	void  confPanelVisibility(pnEventType type, PNObject* source, PNEventData* data);
-	void  addConfigurableObject(PNConfigurableObject* pncobj);
-	std::string removeWhitespace(const std::string& str);
-	std::string itemNameGenerator(const std::string& tabName, const std::string& itemName);
-	CEGUI::Window*  addTab(std::string tabName);
-	bool  mainEventHandler(const CEGUI::EventArgs& e);
+	void			addItem(CEGUI::Window* curTab,  PNConfigurableParameter* current_param, int idx);
+	void			confPanelVisibility(pnEventType type, PNObject* source, PNEventData* data);
+	void			addConfigurableObject(PNConfigurableObject* pncobj);
+	std::string		removeWhitespace(const std::string& str);
+	std::string		itemNameGenerator(const std::string& tabName, const std::string& itemName);
+	CEGUI::Window*	addTab(std::string tabName);
+	bool			mainEventHandler(const CEGUI::EventArgs& e);
+	std::string		getStringByType(PNConfigurableParameter* current_param);
+	std::string		isWinPresent(const std::string& name, const std::string& chartoadd);
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
