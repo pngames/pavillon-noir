@@ -12,10 +12,10 @@
       <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
       <Property Name="Font" Value="VeraSe-8" />
       
-      <Window Type="DefaultWindow" Name="PNConfPanel/tabControl/testTab" >
+      <!--<Window Type="DefaultWindow" Name="PNConfPanel/tabControl/testTab" >
         <Property Name="Text" Value="test" />
         
-      </Window>
+      </Window>-->
       
     </Window>
     
