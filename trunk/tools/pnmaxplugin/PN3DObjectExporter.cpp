@@ -99,6 +99,11 @@ PN3DObjectExporter::PN3DObjectExporter()
   _hasAnimation = true;
 
   _owin = NULL;
+
+  DefaultDirection = true;
+  Front.Set(0.0f, 1.0f, 0.0f);
+  Right.Set(1.0f, 0.0f, 0.0f);
+  Top.Set(0.0f, 0.0f, 1.0f);
 }
 
 PN3DObjectExporter::~PN3DObjectExporter() 
@@ -175,9 +180,19 @@ int PN3DObjectExporter::exportBody()
 {
   PNMainWin::WriteLine("PN3DObjectExporter::exportBody()");
 
-  std::stringstream	objString;
+  std::ostringstream	objString;
 
-  objString << "<" << PNO_XMLNODE_ROOT << ">\n";
+  objString << "<" << PNO_XMLNODE_ROOT;
+
+  if (!DefaultDirection)
+  {
+	objString
+	  << " " << PNO_XMLPROP_FRONT << "=\"" << Front.x << " " << Front.y << " " << Front.z << "\""
+	  << " " << PNO_XMLPROP_RIGHT << "=\"" << Right.x << " " << Right.y << " " << Right.z << "\""
+	  << " " << PNO_XMLPROP_TOP << "=\"" << Top.x << " " << Top.y << " " << Top.z << "\"";
+  }
+
+  objString << ">\n";
 
   if (_owin->hasModel())
   {
@@ -212,7 +227,7 @@ int PN3DObjectExporter::exportBody()
 	_animationExporter.export(_owin->getAnimationFullPath());
 
 	objString << "  " << "<" << PNO_XMLNODE_LISTANIMS << ">\n";
-	objString << "    " << "<" << PNO_XMLNODE_ANIM << " " << PNO_XMLPROP_PATH << "=\"" << _owin->getAnimationFile().GetString() << "\" />\n";
+	objString << "    " << "<" << PNOA_XMLNODE_ROOT << " " << PNO_XMLPROP_PATH << "=\"" << _owin->getAnimationFile().GetString() << "\" />\n";
 	objString << "  " << "</" << PNO_XMLNODE_LISTANIMS << ">\n";
   }
 
