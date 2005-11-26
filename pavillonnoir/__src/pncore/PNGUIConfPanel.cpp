@@ -37,7 +37,10 @@ namespace PN
   confPanelTEST::confPanelTEST(std::string label)
   {
 	_label = label;
-
+	_aReal = 0.00;
+	_aBool = true;
+	_aInt = 0;
+	_aString = "rien";
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL,	  &_aReal, "position x", "position x"));
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_BOOLEAN, &_aBool, "position y", "position y"));
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_INT,	  &_aInt, "position z", "position z"));
@@ -62,16 +65,16 @@ namespace PN
 	_tabControl->setTabTextPadding(0.00f);
 	//_testTab = CEGUI::WindowManager::getSingleton().getWindow("PNConfPanel/tabControl/testTab");
 
-	 //PNEventManager::getInstance()->addCallback(PN_EVENT_CONFPANEL, EventCallback(this, &PNGUIConfPanel::confPanelVisibility));
-	 
+	//PNEventManager::getInstance()->addCallback(PN_EVENT_CONFPANEL, EventCallback(this, &PNGUIConfPanel::confPanelVisibility));
+
 	confPanelTEST* testobj = new confPanelTEST("123456789abcde");
 
-	 /*addConfigurableObject(testobj);
-	 addConfigurableObject(testobj);
-	 addConfigurableObject(testobj);
-	 addConfigurableObject(testobj);
-	  addConfigurableObject(testobj);
-	   addConfigurableObject(testobj);*/
+	/*addConfigurableObject(testobj);
+	addConfigurableObject(testobj);
+	addConfigurableObject(testobj);*/
+	/*addConfigurableObject(testobj);
+	addConfigurableObject(testobj);
+	addConfigurableObject(testobj);*/
   }
 
   PNGUIConfPanel::~PNGUIConfPanel()
@@ -158,6 +161,51 @@ namespace PN
 	}
   }
 
+/************************************************************************/
+/* TODO ajouter une fonction d'UPDATE de val
+(overload avec soit qui prend un PNConfigurableObject soit rien soit un PNConfigurableParameter)*/
+/************************************************************************/
+
+  std::string PNGUIConfPanel::getWinNameByConfParam(PNConfigurableParameter* current_param)
+  {
+	confPanelMap::iterator iter;
+	for (iter = _confPanelMap.begin(); iter != _confPanelMap.end(); iter++)
+	  if ( (PNConfigurableParameter*)iter->second == current_param)
+		return (std::string)iter->first; 
+	return "";
+  }
+
+  void  PNGUIConfPanel::update()
+  {
+	confPanelMap::iterator iter;
+	for (iter = _confPanelMap.begin(); iter != _confPanelMap.end(); iter++)
+	  update((std::string)iter->first, (PNConfigurableParameter*)iter->second);
+  }
+
+ 
+
+  void	PNGUIConfPanel::update(PNConfigurableParameter* current_param)
+  {
+	update(getWinNameByConfParam(current_param), current_param);
+  }
+
+  void	PNGUIConfPanel::update(std::string winName, PNConfigurableParameter* current_param)
+  {
+	//switch (current_param->getType()) 
+	//{
+	//case PN_PARAMTYPE_BOOLEAN:
+	//	break;
+	//default:
+	//}
+
+	//if (*((bool*)current_param->getElem()) == true)
+	//cb->setSelected(true);
+	//else if (*((bool*)current_param->getElem()) == false)
+	//cb->setSelected(false);
+	//else
+	//cb->setSelected(false);
+  }
+
   void  PNGUIConfPanel::addItem(CEGUI::Window* curTab,  PNConfigurableParameter* current_param, int idx)
   {
 	CEGUI::DefaultWindow* win = NULL;
@@ -185,6 +233,8 @@ namespace PN
 	win->setPosition(CEGUI::Point(0.0f, incVal));
 	curTab->addChildWindow(win);
 
+
+
 	if (current_param->getType() == PN_PARAMTYPE_BOOLEAN)
 	{
 	  tmpName = isWinPresent(CBname, "_");
@@ -203,9 +253,13 @@ namespace PN
 	  eb->setPosition(CEGUI::Point(0.0f, 0.00f));
 	  eb->setFont("VeraSe-8");
 	  eb->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIConfPanel::mainEventHandler, this));
+
+
 	  win->addChildWindow(eb);
 	  _confPanelMap[EBname]  = current_param;
 	}
+
+
 	tmpName = isWinPresent(STname, "_");
 	st = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"Vanilla/StaticText", tmpName.c_str());
 	st->setSize(CEGUI::Size(0.70f, 1.00f));
@@ -216,8 +270,7 @@ namespace PN
 	st->setTooltipText(tooltip.c_str());
 	win->addChildWindow(st);
 
-	//TODO controle d'erreur sur le nom du controle
-
+	/*update this PNConfigurableParameter*/
   }
 
   CEGUI::Window*  PNGUIConfPanel::addTab(std::string tabName)
