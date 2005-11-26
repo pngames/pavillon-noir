@@ -84,6 +84,8 @@ namespace PN{
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
 	static PNGUIConfPanel* getInstance();
+	void  update();
+	void  update(PNConfigurableParameter* current_param);
   protected:
   private:
 	void			addItem(CEGUI::Window* curTab,  PNConfigurableParameter* current_param, int idx);
@@ -95,6 +97,9 @@ namespace PN{
 	bool			mainEventHandler(const CEGUI::EventArgs& e);
 	std::string		getStringByType(PNConfigurableParameter* current_param);
 	std::string		isWinPresent(const std::string& name, const std::string& chartoadd);
+
+	 std::string getWinNameByConfParam(PNConfigurableParameter* current_param);
+	 void	update(std::string winName, PNConfigurableParameter* current_param);
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
