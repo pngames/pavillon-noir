@@ -71,6 +71,11 @@ private:
 
   CFile					_initFile;
 public:
+  bool					DefaultDirection;
+  Point3				Front;
+  Point3				Right;
+  Point3				Top;
+public:
   static HWND	hParams;
 
   void			ShowAbout(HWND hWnd);		// Show DLL's "About..." box
