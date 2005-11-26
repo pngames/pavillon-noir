@@ -484,9 +484,8 @@ namespace PN
 	  else if (_objTypesListBox->getItemText(_objTypesListBox->getCurrentItem()) == (char *)PNXML_CHARACTER_VAL)
 		obj = new PNCharacter;
 
-	  boost::filesystem::path p(_path->getText().text(), boost::filesystem::no_check);
 	  _ed->makeViewerCurrent();
-	  obj->unserializeFromFile(p);
+	  obj->unserializeFromPath(_path->getText().text());
 	  _ed->makeViewerNonCurrent();
 
 	  obj->setCoord(x, y, z);

@@ -35,74 +35,73 @@
 #include "PNLuaGameUtil.h"
 #include "PNGameEventData.hpp"
 namespace PN{
-	//load a lua script file
-	void loadLuaScript(const pnchar* file, bool reload/*=0*/)
-	{
-        ((PNLuaGame*)PNLuaGame::getInstance())->loadLuaScript(file, reload);
-	}
+//load a lua script file
 
-	pnint pnprint(const pnchar* format, int where)
-	{
-		// writes in the console
-	  	if (where == 0)
-			printf("[LUA] %s", format);
-		// writes in the GUI console
-		if (where == 1)
-		  PNConsole::writeLine("[LUA] %s", format);
-		/// writes in the Lua debug log file
-		if (where == 2)
-		{
-		  PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
-//		  fprintf(vm->getDebugLogHandle(), "\n----\n[LUA] %s\n-----\n", format);
-		}
-		 return 0;
-	}
+void loadLuaScript(const pnchar* file, bool reload/*=0*/)
+{
+  ((PNLuaGame*)PNLuaGame::getInstance())->loadLuaScript(file, reload);
+}
+
+pnint pnprint(const pnchar* format, int where)
+{
+  // writes in the console
+  if (where == 0)
+	printf("[LUA] %s", format);
+  // writes in the GUI console
+  if (where == 1)
+	PNConsole::writeLine("[LUA] %s", format);
+  /// writes in the Lua debug log file
+  if (where == 2)
+  {
+	PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
+	//		  fprintf(vm->getDebugLogHandle(), "\n----\n[LUA] %s\n-----\n", format);
+  }
+  return 0;
+}
 
 
-	PNLuaGameMap* getGameMap()
-	{
-		PNLuaGameMap* gm = (PNLuaGameMap*) PNLuaGame::getInstance()->getGameMap();
-		return gm;
-	}
+PNLuaGameMap* getGameMap()
+{
+  PNLuaGameMap* gm = (PNLuaGameMap*) PNLuaGame::getInstance()->getGameMap();
+  return gm;
+}
 
-	void  newGame()
-	{
-		PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
-		//    vm->newGame();
-	}
+void  newGame()
+{
+  PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
+  //    vm->newGame();
+}
 
-	void  continueGame()
-	{
-		PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
-		//    vm->continueGame();
-	}
+void  continueGame()
+{
+  PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
+  //    vm->continueGame();
+}
 
-	void  loadGame(std::string saveName)
-	{
-		PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
-		//    vm->loadGame(saveName);
-
-	}
-
-	void  saveGame(std::string saveName)
-	{
-		PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
-		//    vm->saveGame(saveName);
-	}
-
-	void  loadMap(std::string mapName)
-	{
-		PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
-		//  vm->loadMap(mapName);
-	}
-
-    void	sendGameActionEvent(std::string eventName, std::string sourceid, std::string targetId, double value)
-	{
-      PNGameActionEventData *eventData  = new PNGameActionEventData(eventName, targetId, sourceid, value);
-      PNLuaGame* game = (PNLuaGame*) PNLuaGame::getInstance();
-      ((PNLuaGameMap*)game->getGameMap())->sendGameActionEvent(eventName, eventData);
-      delete eventData;
-	}
-
+void  loadGame(std::string saveName)
+{
+  PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
+  //    vm->loadGame(saveName);
 
 }
+
+void  saveGame(std::string saveName)
+{
+  PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
+  //    vm->saveGame(saveName);
+}
+
+void  loadMap(std::string mapName)
+{
+  PNLuaGame* vm = (PNLuaGame*) PNLuaGame::getInstance();
+  //  vm->loadMap(mapName);
+}
+
+void	sendGameActionEvent(std::string eventName, std::string sourceid, std::string targetId, double value)
+{
+  PNGameActionEventData *eventData  = new PNGameActionEventData(eventName, targetId, sourceid, value);
+  PNLuaGame* game = (PNLuaGame*) PNLuaGame::getInstance();
+  ((PNLuaGameMap*)game->getGameMap())->sendGameActionEvent(eventName, eventData);
+  delete eventData;
+}
+};

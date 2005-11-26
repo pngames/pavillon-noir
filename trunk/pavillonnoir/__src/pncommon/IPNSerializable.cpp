@@ -92,7 +92,7 @@ IPNSerializable::unserializeFromFile(const boost::filesystem::path& file)
 }
 
 pnint
-IPNSerializable::unserializeFromFile(const std::string& file)
+IPNSerializable::unserializeFromPath(const std::string& file)
 {
   return unserializeFromFile(fs::path(file, fs::native));
 }
