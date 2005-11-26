@@ -27,8 +27,9 @@
 #include "pnmaxplugin.h"
 #include "pnresources.h"
 
+#include "PNOConfig.hpp"
+
 #include "PNObjectWindow.hpp"
-#include ".\pnobjectwindow.hpp"
 
 // Bo�e de dialogue PNObjectWindow
 
@@ -411,7 +412,9 @@ void PNObjectWindow::OnEnChangeTMaterials()
 
 void PNObjectWindow::OnBnClickedBoGeneral()
 {
-  
+  PNOConfig	config(_exporter, this);
+
+  config.DoModal();
 }
 
 void PNObjectWindow::OnBnClickedOk()
