@@ -169,7 +169,7 @@ public:
   // PNObject
 
   /// Load 3DObject from xml file
-   int						unserializeFromFile(const std::string& file);
+   int						unserializeFromPath(const std::string& file);
   /// Load 3DObject from xml file
    int						unserialize();
 

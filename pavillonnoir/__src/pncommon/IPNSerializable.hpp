@@ -55,7 +55,7 @@ public:
   /// Load object from file
   virtual pnint						unserializeFromFile(const boost::filesystem::path& file);
   /// Load object from path
-  virtual pnint						unserializeFromFile(const std::string& file);
+  virtual pnint						unserializeFromPath(const std::string& file);
   /// Load object from stream
   virtual pnint						unserializeFromStream(std::istream& i);
   /// Load object

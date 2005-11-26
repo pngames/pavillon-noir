@@ -38,11 +38,10 @@ using namespace PN;
 
 PNInterface*	PNScriptPlugDesc::getInterface(pnuint id)
 {
-  if (this->_gameInterface == NULL)
-  {
-	this->_gameInterface = new PNLuaGame();
-  } 
-  return ((PNInterface*)this->_gameInterface); 
+  if (_gameInterface == NULL)
+	_gameInterface = new PNLuaGame();
+
+  return ((PNInterface*)_gameInterface); 
 }
 
 pnuint			PNScriptPlugDesc::getNbInterface()
@@ -50,20 +49,17 @@ pnuint			PNScriptPlugDesc::getNbInterface()
   return 1;
 }
 
-// initialise le module
 void			init()
 {
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-// nom du plugin
 const pnchar*	PNScriptPlugDesc::getName()
 {
   return "script";
 }
 
-// version du plugin
 pnuint			PNScriptPlugDesc::getVersion()
 {
   return 001;
