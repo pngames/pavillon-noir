@@ -59,13 +59,19 @@ namespace PN
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnConfPanel);
 	_pnConfPanel->hide();
 	_tabControl = (CEGUI::TabControl*)CEGUI::WindowManager::getSingleton().getWindow("PNConfPanel/tabControl");
-	_testTab = CEGUI::WindowManager::getSingleton().getWindow("PNConfPanel/tabControl/testTab");
+	_tabControl->setTabTextPadding(0.00f);
+	//_testTab = CEGUI::WindowManager::getSingleton().getWindow("PNConfPanel/tabControl/testTab");
 
-	// PNEventManager::getInstance()->addCallback(PN_EVENT_CONFPANEL, EventCallback(this, &PNGUIConfPanel::confPanelVisibility));
+	 //PNEventManager::getInstance()->addCallback(PN_EVENT_CONFPANEL, EventCallback(this, &PNGUIConfPanel::confPanelVisibility));
 	 
-	confPanelTEST* testobj = new confPanelTEST();
+	confPanelTEST* testobj = new confPanelTEST("123456789abcde");
 
+	 /*addConfigurableObject(testobj);
 	 addConfigurableObject(testobj);
+	 addConfigurableObject(testobj);
+	 addConfigurableObject(testobj);
+	  addConfigurableObject(testobj);
+	   addConfigurableObject(testobj);*/
   }
 
   PNGUIConfPanel::~PNGUIConfPanel()
@@ -119,6 +125,38 @@ namespace PN
 	return tmp;
   }
 
+  std::string PNGUIConfPanel::isWinPresent(const std::string& name, const std::string& chartoadd)
+  {
+	bool tabExsist = false;
+	tabExsist = CEGUI::WindowManager::getSingleton().isWindowPresent(name.c_str());
+	std::string tmpName = name;
+
+	while (tabExsist == true) 
+	{
+	  tmpName += chartoadd;
+	  tabExsist = CEGUI::WindowManager::getSingleton().isWindowPresent(tmpName.c_str());
+	}
+
+	return tmpName;
+  }
+
+  std::string PNGUIConfPanel::getStringByType(PNConfigurableParameter* current_param)
+  {
+	switch(current_param->getType()) 
+	{
+	case PN_PARAMTYPE_STRING:
+	case PN_PARAMTYPE_ACTIVESTRING:
+	  return " (string)";
+	case PN_PARAMTYPE_INT:
+	 return " (int)";
+	case PN_PARAMTYPE_REAL:
+	 return " (float)";
+	case PN_PARAMTYPE_BOOLEAN:
+		return " (bool)";
+	default:
+	  return " (none)";
+	}
+  }
 
   void  PNGUIConfPanel::addItem(CEGUI::Window* curTab,  PNConfigurableParameter* current_param, int idx)
   {
@@ -131,51 +169,51 @@ namespace PN
 
 	std::string itemName = itemNameGenerator(curTab->getText().c_str(), current_param->getLabel());
 
-	std::string DWname = "DefaultWin_" + itemName;
-	std::string EBname = "Editbox_" + itemName;
-	std::string CBname = "Editbox_" + itemName;
-	std::string STname = "Statictext_" + itemName;
+	std::string DWname = "PNConfPanel/DefaultWin_" + itemName;
+	std::string EBname = "PNConfPanel/Editbox_" + itemName;
+	std::string CBname = "PNConfPanel/Editbox_" + itemName;
+	std::string STname = "PNConfPanel/Statictext_" + itemName;
+	std::string tmpName = "";
 
+	tmpName = isWinPresent(DWname, "_");
 
-	win = (CEGUI::DefaultWindow*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"DefaultWindow", DWname.c_str());
+	win = (CEGUI::DefaultWindow*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"DefaultWindow", tmpName.c_str());
 	win->setFont("VeraSe-8");
 	//largeur hauteur
 	win->setSize(CEGUI::Size(1.00f, 0.05f));
 	// x y
 	win->setPosition(CEGUI::Point(0.0f, incVal));
-
 	curTab->addChildWindow(win);
 
 	if (current_param->getType() == PN_PARAMTYPE_BOOLEAN)
 	{
-	  cb =  (CEGUI::Checkbox*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/Checkbox", CBname.c_str());
+	  tmpName = isWinPresent(CBname, "_");
+	  cb =  (CEGUI::Checkbox*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/Checkbox", tmpName.c_str());
 	  cb->setSize(CEGUI::Size(0.30f, 1.00f));
 	  cb->setPosition(CEGUI::Point(0.10f, 0.00f));
-
 	  cb->subscribeEvent(CEGUI::Checkbox::EventCheckStateChanged, CEGUI::Event::Subscriber(&PNGUIConfPanel::mainEventHandler, this));
-
-	  //cb->setFont("VeraSe-8");
 	  win->addChildWindow(cb);
 	  _confPanelMap[CBname]  = current_param;
 	}
 	else
 	{
-	  eb =  (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"Vanilla/Editbox", EBname.c_str());
+	  tmpName = isWinPresent(EBname, "_");
+	  eb =  (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"Vanilla/Editbox", tmpName.c_str());
 	  eb->setSize(CEGUI::Size(0.30f, 1.00f));
 	  eb->setPosition(CEGUI::Point(0.0f, 0.00f));
 	  eb->setFont("VeraSe-8");
-
 	  eb->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIConfPanel::mainEventHandler, this));
 	  win->addChildWindow(eb);
 	  _confPanelMap[EBname]  = current_param;
 	}
-
-	st = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"Vanilla/StaticText", STname.c_str());
+	tmpName = isWinPresent(STname, "_");
+	st = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"Vanilla/StaticText", tmpName.c_str());
 	st->setSize(CEGUI::Size(0.70f, 1.00f));
 	st->setPosition(CEGUI::Point(0.30f, 0.00f));
 	st->setFont("VeraSe-8");
 	st->setText(current_param->getLabel().c_str());
-	st->setTooltipText(current_param->getAltText().c_str());
+	std::string tooltip = current_param->getAltText() + getStringByType(current_param);
+	st->setTooltipText(tooltip.c_str());
 	win->addChildWindow(st);
 
 	//TODO controle d'erreur sur le nom du controle
@@ -185,14 +223,32 @@ namespace PN
   CEGUI::Window*  PNGUIConfPanel::addTab(std::string tabName)
   {
 	//TODO ajouter des controles de taille en largeur et sur le nom
-	return _testTab;
+
+	
+	std::string name = "PNConfPanel/Tab/" + removeWhitespace(tabName);
+	std::string tmpName = isWinPresent(name, "_");
+	
+	
+	CEGUI::DefaultWindow* win = (CEGUI::DefaultWindow*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"DefaultWindow", tmpName.c_str());
+	if (tabName.length() > 8)
+	  tabName = tabName.substr(0,8);
+	win->setText(tabName.c_str());
+	_tabControl->addChildWindow(win);
+	_nbTAB++;
+
+	// on doit augmenter la largeur
+	/*if (_nbTAB > 5)
+	{
+	  _tabControl->setPosition(CEGUI::Point(0.10f, 0.00f))
+	   _tabControl->setSize(CEGUI::Size(0.55f, 0.99f));
+	}*/
+	return win;
   }
 
   void	PNGUIConfPanel::addConfigurableObject(PNConfigurableObject* pncobj)
   {
 	CEGUI::Window* tmpTab = addTab(pncobj->getLabel());
-	_nbTAB++;
-
+	
 	//LIMIT DU TAB 20 elements
 	if (pncobj->getNbParameters() > 20)
 	  return;
