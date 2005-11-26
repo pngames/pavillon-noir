@@ -66,7 +66,6 @@ public:
   virtual pnint					unserializeFromXML(xmlNode* node);
   /// Load object from XML file
   virtual pnint					unserializeFromFile(const boost::filesystem::path& file);
-
   /// Save object to file
   virtual pnint					serializeInFile(const boost::filesystem::path& file);
   /// Save object into XML file

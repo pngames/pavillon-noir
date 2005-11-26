@@ -46,7 +46,7 @@ end
 
 function gameMap:spwan(entity, id, position, orientation, model)
 	entity:setCoord(position)
-	entity:unserializeFromFile(model)
+	entity:unserializeFromPath(model)
 	self:spawn2(entity, id)
 	return entity
 end 

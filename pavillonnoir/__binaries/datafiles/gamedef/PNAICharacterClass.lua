@@ -16,7 +16,7 @@ function PNAICharacterClass(id)
 	OBJ.pathFinding = PNPathFinding:new_local(OBJ:getCoord())
 --	pnprint("pathFinding created\n")
 --	pnprint("create pathFinding\n")
-	OBJ.pathFinding:unserializeFromFile(gameMap:getWpFile())
+	OBJ.pathFinding:unserializeFromPath(gameMap:getWpFile())
 --	pnprint("pathFinding created\n")
 	OBJ.toReach = PN3DObject:new_local()
 	OBJ.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2}

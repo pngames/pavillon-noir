@@ -95,7 +95,7 @@ PNGameMap::_unserializeEntity(xmlNode* node)
   //////////////////////////////////////////////////////////////////////////
   
   // create boost path
-  fs::path  file(DEF::objectFilePath + (const char*)xmlGetProp(node, PNXML_MODELREFERENCE_ATTR), fs::native);
+  //fs::path  file(DEF::objectFilePath + (const char*)xmlGetProp(node, PNXML_MODELREFERENCE_ATTR), fs::native);
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -111,7 +111,7 @@ PNGameMap::_unserializeEntity(xmlNode* node)
   }
 
   if (error == -1)
-	error = object->unserializeFromFile(file);
+	error = object->unserializeFromPath(DEF::objectFilePath + (const char*)xmlGetProp(node, PNXML_MODELREFERENCE_ATTR));
 
   // check for errors
   if (error != PNEC_SUCCESS)

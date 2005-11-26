@@ -964,8 +964,7 @@ int	  PNEditor::_parseEntity(void* node)
   if (!current->last || !current->last->prev)
   //if (!current->children)
   {
-    fs::path  file(DEF::objectFilePath + mdref, fs::native);
-    pnint obj_error = object->unserializeFromFile(file);
+    pnint obj_error = object->unserializeFromPath(DEF::objectFilePath + mdref);
     if (obj_error != PNEC_SUCCESS)
     {
 	  pnerror(PN_LOGLVL_ERROR, "%s%s : %s", DEF::objectFilePath.c_str(), mdref.c_str(), pnGetErrorString(obj_error));
@@ -980,6 +979,7 @@ int	  PNEditor::_parseEntity(void* node)
 	  pnerror(PN_LOGLVL_ERROR, "%s%s : %s", DEF::objectFilePath.c_str(), mdref.c_str(), pnGetErrorString(obj_error));
 	  return obj_error;
     }
+
 	fs::path  file(DEF::objectFilePath + mdref, fs::native);
 	object->setFile(file);
 	fromFile = FALSE;
