@@ -51,7 +51,7 @@ namespace PN{
 	ParametersVector			_params;
   public:
 	confPanelTEST(std::string label = "No label");
-	void						update(PNConfigurableParameter* p) {}
+	void						update(PNConfigurableParameter* p);
 	int							getNbParameters() { return _params.size(); }
 	PNConfigurableParameter*	getParameter(int idx) { return _params[idx]; }
 
@@ -85,7 +85,8 @@ namespace PN{
   public:
 	static PNGUIConfPanel* getInstance();
 	void  update();
-	void  update(PNConfigurableParameter* current_param);
+	//void  update(PNConfigurableParameter* current_param);
+	//void  update(PNConfigurableObject* pncobj);
   protected:
   private:
 	void			addItem(CEGUI::Window* curTab,  PNConfigurableParameter* current_param, int idx);
@@ -98,7 +99,7 @@ namespace PN{
 	std::string		getStringByType(PNConfigurableParameter* current_param);
 	std::string		isWinPresent(const std::string& name, const std::string& chartoadd);
 
-	 std::string getWinNameByConfParam(PNConfigurableParameter* current_param);
+	// std::string getWinNameByConfParam(PNConfigurableParameter* current_param);
 	 void	update(std::string winName, PNConfigurableParameter* current_param);
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /

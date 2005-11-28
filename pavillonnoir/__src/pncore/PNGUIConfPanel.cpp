@@ -33,6 +33,7 @@ using namespace PN;
 
 namespace PN
 {
+  #define RGBA(R,G,B,A) (B+(G<<8)+(R<<16)+(A<<24))
 
   confPanelTEST::confPanelTEST(std::string label)
   {
@@ -47,7 +48,10 @@ namespace PN
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_STRING,  &_aString, "class", "class"));
   }
 
-
+  void						confPanelTEST::update(PNConfigurableParameter* p)
+  {
+	std::cout << *(float*)p->getElem() << std::endl;
+  }
   /**************************************************************************************/
   
   PNGUIConfPanel* PNGUIConfPanel::_instance = NULL;
@@ -71,9 +75,9 @@ namespace PN
 
 	/*addConfigurableObject(testobj);
 	addConfigurableObject(testobj);
+	addConfigurableObject(testobj);
 	addConfigurableObject(testobj);*/
 	/*addConfigurableObject(testobj);
-	addConfigurableObject(testobj);
 	addConfigurableObject(testobj);*/
   }
 
@@ -109,14 +113,52 @@ namespace PN
 
   bool  PNGUIConfPanel::mainEventHandler(const CEGUI::EventArgs& e)
   {
-	CEGUI::WindowEventArgs* KeyEv = (CEGUI::WindowEventArgs*)&e;
-	CEGUI::Window* tmp = KeyEv->window;
-	std::string name = tmp->getName().c_str();
-	
+	CEGUI::WindowEventArgs* WinEv = (CEGUI::WindowEventArgs*)&e;
+	CEGUI::KeyEventArgs* KeyEv = (CEGUI::KeyEventArgs*)&e;
+	CEGUI::Window* tmpWin = WinEv->window;
+	std::string name = tmpWin->getName().c_str();
+
 	PNConfigurableParameter* obj = _confPanelMap[name]; 
 	
-	//TODO regarder le type du PNCP 
-	
+	if (obj->getType() == PN_PARAMTYPE_BOOLEAN)
+	{
+	}
+	else
+	{
+	  CEGUI::Editbox* tmpEB = (CEGUI::Editbox*)tmpWin;
+	  if ( KeyEv->scancode == CEGUI::Key::NumpadEnter || KeyEv->scancode == CEGUI::Key::Return)
+	  {
+		switch(obj->getType())
+		{
+		case PN_PARAMTYPE_INT:
+		  {
+			int* i = (int*)obj->getElem();
+			*i = atoi(tmpWin->getText().c_str());
+			obj->getConfigurableObject()->update(obj);
+		  }
+		case PN_PARAMTYPE_STRING:
+		case PN_PARAMTYPE_ACTIVESTRING:
+		  {
+			std::string* s = (std::string*)obj->getElem();
+			s->clear();
+			s->append(tmpWin->getText().c_str());
+			obj->getConfigurableObject()->update(obj);
+		  }
+		case PN_PARAMTYPE_REAL:
+		  {
+			float* f = (float*)obj->getElem();
+			*f = (float)atof(tmpWin->getText().c_str());
+			obj->getConfigurableObject()->update(obj);
+		  }
+		default:
+		  break;
+		}
+	  }
+	  else if (tmpEB->isTextValid() == true)
+	  {
+		  tmpEB->setNormalTextColour(CEGUI::colour(RGBA(255,0,0,255)));
+	  }
+	}
 	return true;
   }
 
@@ -166,14 +208,19 @@ namespace PN
 (overload avec soit qui prend un PNConfigurableObject soit rien soit un PNConfigurableParameter)*/
 /************************************************************************/
 
-  std::string PNGUIConfPanel::getWinNameByConfParam(PNConfigurableParameter* current_param)
+ /* std::string PNGUIConfPanel::getWinNameByConfParam(PNConfigurableParameter* current_param)
   {
 	confPanelMap::iterator iter;
 	for (iter = _confPanelMap.begin(); iter != _confPanelMap.end(); iter++)
-	  if ( (PNConfigurableParameter*)iter->second == current_param)
-		return (std::string)iter->first; 
+	{
+	  if ( (&iter->second) == &current_param)
+	  {
+		std::string tmp = (std::string)iter->first;
+		return tmp; 
+	  }
+	}
 	return "";
-  }
+  }*/
 
   void  PNGUIConfPanel::update()
   {
@@ -182,28 +229,56 @@ namespace PN
 	  update((std::string)iter->first, (PNConfigurableParameter*)iter->second);
   }
 
- 
+ /* void  PNGUIConfPanel::update(PNConfigurableObject* pncobj)
+  {
+	for (int idx = 0; idx < pncobj->getNbParameters(); idx++)
+	{
+	  PNConfigurableParameter* current_param = pncobj->getParameter(idx);
+	  update(current_param);
+	}
+  }*/
 
-  void	PNGUIConfPanel::update(PNConfigurableParameter* current_param)
+/*  void	PNGUIConfPanel::update(PNConfigurableParameter* current_param)
   {
 	update(getWinNameByConfParam(current_param), current_param);
-  }
+  }*/
 
   void	PNGUIConfPanel::update(std::string winName, PNConfigurableParameter* current_param)
   {
-	//switch (current_param->getType()) 
-	//{
-	//case PN_PARAMTYPE_BOOLEAN:
-	//	break;
-	//default:
-	//}
+	CEGUI::Editbox* eb = NULL;
+	CEGUI::Checkbox* cb = NULL;
+	std::stringstream convert_tmp;
 
-	//if (*((bool*)current_param->getElem()) == true)
-	//cb->setSelected(true);
-	//else if (*((bool*)current_param->getElem()) == false)
-	//cb->setSelected(false);
-	//else
-	//cb->setSelected(false);
+	switch (current_param->getType()) 
+	{
+	case PN_PARAMTYPE_BOOLEAN:
+	  cb = (CEGUI::Checkbox*)CEGUI::WindowManager::getSingleton().getWindow(winName.c_str());
+	  if (*((bool*)current_param->getElem()) == true)
+		cb->setSelected(true);
+	  else if (*((bool*)current_param->getElem()) == false)
+		cb->setSelected(false);
+	  else
+		cb->setSelected(false);
+	  break;
+	case PN_PARAMTYPE_ACTIVESTRING:
+	case PN_PARAMTYPE_STRING:
+	  eb = (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().getWindow(winName.c_str());
+	  convert_tmp << (*(std::string*)current_param->getElem());
+	  eb->setText(convert_tmp.str());
+	  break;
+	case PN_PARAMTYPE_REAL:
+	  eb = (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().getWindow(winName.c_str());
+	  convert_tmp << (*(float*)current_param->getElem());
+	  eb->setText(convert_tmp.str());
+	  break;
+	case PN_PARAMTYPE_INT:
+	  eb = (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().getWindow(winName.c_str());
+	  convert_tmp << (*(int*)current_param->getElem());
+	  eb->setText(convert_tmp.str());
+	  break;
+	default:
+	  break;
+	}
   }
 
   void  PNGUIConfPanel::addItem(CEGUI::Window* curTab,  PNConfigurableParameter* current_param, int idx)
@@ -233,8 +308,6 @@ namespace PN
 	win->setPosition(CEGUI::Point(0.0f, incVal));
 	curTab->addChildWindow(win);
 
-
-
 	if (current_param->getType() == PN_PARAMTYPE_BOOLEAN)
 	{
 	  tmpName = isWinPresent(CBname, "_");
@@ -243,7 +316,7 @@ namespace PN
 	  cb->setPosition(CEGUI::Point(0.10f, 0.00f));
 	  cb->subscribeEvent(CEGUI::Checkbox::EventCheckStateChanged, CEGUI::Event::Subscriber(&PNGUIConfPanel::mainEventHandler, this));
 	  win->addChildWindow(cb);
-	  _confPanelMap[CBname]  = current_param;
+	  _confPanelMap[tmpName]  = current_param;
 	}
 	else
 	{
@@ -253,12 +326,24 @@ namespace PN
 	  eb->setPosition(CEGUI::Point(0.0f, 0.00f));
 	  eb->setFont("VeraSe-8");
 	  eb->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIConfPanel::mainEventHandler, this));
-
+	
+	  switch(current_param->getType())
+	  {
+	  case PN_PARAMTYPE_INT:
+		eb->setValidationString("\\d*");
+		break;
+	  case PN_PARAMTYPE_REAL:
+		eb->setValidationString("[0-9.]*");
+		break;
+	  default:
+		break;
+	  }
 
 	  win->addChildWindow(eb);
-	  _confPanelMap[EBname]  = current_param;
+	  _confPanelMap[tmpName]  = current_param;
 	}
 
+	update(tmpName,current_param);
 
 	tmpName = isWinPresent(STname, "_");
 	st = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"Vanilla/StaticText", tmpName.c_str());
@@ -269,20 +354,16 @@ namespace PN
 	std::string tooltip = current_param->getAltText() + getStringByType(current_param);
 	st->setTooltipText(tooltip.c_str());
 	win->addChildWindow(st);
-
-	/*update this PNConfigurableParameter*/
   }
 
   CEGUI::Window*  PNGUIConfPanel::addTab(std::string tabName)
   {
 	//TODO ajouter des controles de taille en largeur et sur le nom
-
-	
 	std::string name = "PNConfPanel/Tab/" + removeWhitespace(tabName);
 	std::string tmpName = isWinPresent(name, "_");
 	
-	
 	CEGUI::DefaultWindow* win = (CEGUI::DefaultWindow*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"DefaultWindow", tmpName.c_str());
+	win->setTooltipText(tabName.c_str());
 	if (tabName.length() > 8)
 	  tabName = tabName.substr(0,8);
 	win->setText(tabName.c_str());
