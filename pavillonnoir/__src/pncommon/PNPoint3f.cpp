@@ -169,7 +169,9 @@ PNPoint3f::serialize()
 void
 PNPoint3f::unserialize(const std::string& str)
 {
-  unserialize(std::istringstream(str));
+  std::istringstream	is(str);
+	
+  unserialize(is);
 }
 
 void

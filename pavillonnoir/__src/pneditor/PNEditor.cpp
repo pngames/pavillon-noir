@@ -1164,6 +1164,8 @@ void	PNEditor::fitToBounds()
 	viewer->setScene(&_objScene);
 	_objScene.bounds(b);
 	break;
+  default:
+    break;
   }
 
   viewer->fitToBounds(b);
