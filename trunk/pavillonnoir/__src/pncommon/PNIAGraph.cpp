@@ -40,7 +40,7 @@ namespace PN
 
 PNIAGraph::PNIAGraph()
 {
-	_idMax = 0;
+  _idMax = 0;
 }
 
 PNIAGraph::~PNIAGraph()
@@ -121,21 +121,21 @@ PNIAGraph::addWayPoint(PNWayPoint* wp)
 pnint
 PNIAGraph::addWayPoint(PNPoint3f&pos)
 {
-	PNWayPoint							*wp = new PNWayPoint(_idMax + 1, pos, this);	
-	std::list<PNWayPoint *>::iterator	i;
-	
-	for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
-	{
-		PNPoint3f						coord = (*i)->getCoord();
+  PNWayPoint							*wp = new PNWayPoint(_idMax + 1, pos, this);	
+  std::list<PNWayPoint *>::iterator	i;
 
-		if (coord.x == pos.x && coord.y == pos.y && coord.z == pos.z)
-			return false;
-	}
-	
-	_wayPoints.push_back(wp);
-	_wpidmap[wp->getId()] = wp;
-	_idMax++;
-	return _idMax;
+  for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
+  {
+	PNPoint3f						coord = (*i)->getCoord();
+
+	if (coord.x == pos.x && coord.y == pos.y && coord.z == pos.z)
+	  return false;
+  }
+
+  _wayPoints.push_back(wp);
+  _wpidmap[wp->getId()] = wp;
+  _idMax++;
+  return _idMax;
 }
 
 pnint
@@ -161,100 +161,100 @@ PNIAGraph::addWayPoint(pnfloat x, pnfloat y, pnfloat z)
 std::list<int>
 PNIAGraph::deleteWayPoint(int id)
 {
-	pnbool							  erase = false;
-	PNWayPoint						  *wp;
-	std::list<PNWayPoint*>::iterator  i;
-	std::list<pnint>					  ls;
+  pnbool							  erase = false;
+  PNWayPoint						  *wp;
+  std::list<PNWayPoint*>::iterator  i;
+  std::list<pnint>					  ls;
 
-	for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
+  for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
+  {
+	if ((*i)->getId() == id)
 	{
-		if ((*i)->getId() == id)
-		{
-			wp = (*i);
-			_wpidmap.erase(wp->getId());
-			_wayPoints.erase(i);
-			erase = true;
-			break;
-		}
+	  wp = (*i);
+	  _wpidmap.erase(wp->getId());
+	  _wayPoints.erase(i);
+	  erase = true;
+	  break;
 	}
+  }
 
-	if (erase == true)
-	  for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
-		if ((*i)->deleteLink(wp) == true)
-		  ls.push_back((*i)->getId());
+  if (erase == true)
+	for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
+	  if ((*i)->deleteLink(wp) == true)
+		ls.push_back((*i)->getId());
 
-	delete wp;
-	return ls;
+  delete wp;
+  return ls;
 }
 
 std::list<pnint>
 PNIAGraph::deleteWayPoint(PNWayPoint *wp)
 {
-	std::list<PNWayPoint*>::iterator  i;
-	std::list<pnint>				  ls;
-	
-	_wayPoints.remove(wp);
-	_wpidmap.erase(wp->getId());
-	for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
-	  if ((*i)->deleteLink(wp) == true)
-		ls.push_back((*i)->getId());
+  std::list<PNWayPoint*>::iterator  i;
+  std::list<pnint>				  ls;
 
-	delete wp;
-	return ls;
+  _wayPoints.remove(wp);
+  _wpidmap.erase(wp->getId());
+  for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
+	if ((*i)->deleteLink(wp) == true)
+	  ls.push_back((*i)->getId());
+
+  delete wp;
+  return ls;
 }
 
 pnbool	
 PNIAGraph::makeLink(PNWayPoint &wp1, PNWayPoint &wp2, pnbool type, pnfloat coef)
 {
-	if (wp1.getId() == wp2.getId())
-	  return false;
+  if (wp1.getId() == wp2.getId())
+	return false;
 
-	wp1.addLink(&wp2, coef);
-	if (type == DOUBLE)
-		wp2.addLink(&wp1, coef);
-	return true;
+  wp1.addLink(&wp2, coef);
+  if (type == DOUBLE)
+	wp2.addLink(&wp1, coef);
+  return true;
 }
 
 pnbool
 PNIAGraph::makeLink(PNWayPoint &wp1, pnint id, pnbool type, pnfloat coef)
 {
-	std::list<PNWayPoint*>::iterator	i;
-	
-	for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
+  std::list<PNWayPoint*>::iterator	i;
+
+  for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
+  {
+	if ((*i)->getId() == id)
 	{
-		if ((*i)->getId() == id)
-		{
-			wp1.addLink(*i, coef);
-			if (type == DOUBLE)
-				(*i)->addLink(&wp1, coef);
-			return true;
-		}
+	  wp1.addLink(*i, coef);
+	  if (type == DOUBLE)
+		(*i)->addLink(&wp1, coef);
+	  return true;
 	}
-	return false;
+  }
+  return false;
 }
 
 pnbool
 PNIAGraph::makeLink(pnint id1, pnint id2, pnbool type, pnfloat coef)
 {
-	PNWayPoint							*wp1 = NULL;
-	PNWayPoint							*wp2 = NULL;
-	std::list<PNWayPoint*>::iterator	i;
-	
-	for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
-	{
-		if ((*i)->getId() == id1)
-			wp1 = *i;
-		if ((*i)->getId() == id2)
-			wp2 = *i;
-	}
+  PNWayPoint							*wp1 = NULL;
+  PNWayPoint							*wp2 = NULL;
+  std::list<PNWayPoint*>::iterator	i;
 
-	if (wp1 == NULL || wp2 == NULL)
-		return false;
+  for (i = _wayPoints.begin(); i != _wayPoints.end(); i++)
+  {
+	if ((*i)->getId() == id1)
+	  wp1 = *i;
+	if ((*i)->getId() == id2)
+	  wp2 = *i;
+  }
 
-	wp1->addLink(wp2, coef);
-	if (type == DOUBLE)
-	  wp2->addLink(wp1, coef);
-	return true;
+  if (wp1 == NULL || wp2 == NULL)
+	return false;
+
+  wp1->addLink(wp2, coef);
+  if (type == DOUBLE)
+	wp2->addLink(wp1, coef);
+  return true;
 }
 
 WPLIST&
@@ -295,7 +295,7 @@ PNIAGraph::serializeInStream(std::ostream& o)
 
 	for (LINKLIST::iterator i2 = l.begin(); i2 != l.end(); i2++)
 	  o << "<lnk from=\"" << (*i)->getId() << "\" to=\"" << (*i2)->next->getId()
-		<< "\" coef=\"" << (*i2)->coef << "\"/>" << std::endl;
+	  << "\" coef=\"" << (*i2)->coef << "\"/>" << std::endl;
   }
   o << "</listlnk>" << std::endl;
   o << "</graph>" << std::endl;
@@ -363,7 +363,7 @@ PNIAGraph::processChild(xmlTextReader* _reader)
   }
 
   if (name != NULL)
-  xmlFree(name);
+	xmlFree(name);
   if (value != NULL)
 	xmlFree(value);
 

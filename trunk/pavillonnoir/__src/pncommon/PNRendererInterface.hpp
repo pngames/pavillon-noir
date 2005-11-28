@@ -113,7 +113,7 @@ public:
 
   /// Make a new material
   virtual PNRenderMaterial*	newMaterial()=0;
-  /// Delee a material
+  /// Delete a material
   virtual void				deleteMaterial(PNRenderMaterial* material)=0;
 
   //////////////////////////////////////////////////////////////////////////

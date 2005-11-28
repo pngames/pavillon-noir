@@ -121,14 +121,8 @@ PNEditor::PNEditor(FXApp* a)
   _graph = NULL;
   wpGroup = NULL;
   soundGroup = NULL;
-  groundGroup = NULL;
-  staticGroup = NULL;
-  dynGroup = NULL;
   _state = VIEW_GENERAL;
   _wpenabled = false;
-  _groundshown = true;
-  _staticshown = true;
-  _dynamicshown = true;
   appicon = new FXPNGIcon(getApp(), pnicon16);
   setIcon(appicon);
 
@@ -323,13 +317,18 @@ PNEditor::PNEditor(FXApp* a)
   statusbar->getStatusLine()->setTarget(this);
   statusbar->getStatusLine()->setSelector(ID_QUERY_MODE);
 
-  genScene = new FXGLGroup;
-  objScene = new FXGLGroup;
-  groundGroup = new FXGLGroup;
-  staticGroup = new FXGLGroup;
-  dynGroup = new FXGLGroup;
-  viewer->setScene(genScene);
+  /*groundGroup = new FXGLGroup();
+  staticGroup = new FXGLGroup();
+  dynGroup = new FXGLGroup();*/
+  viewer->setScene(&_genScene);
   viewer->setFieldOfView(120.0f);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  _genScene.setOptionView(PNGLGroup::VIEW_ALL);
+
+  _genScene.setPropertiesPanel(objPanel);
+  _genScene.setEditor(this);
 }
 
 // Destructor
@@ -351,7 +350,6 @@ PNEditor::~PNEditor()
   delete dragshell2;
   delete dragshell3;
   delete viewer;
-  delete genScene;
 }
 
 // Create and initialize
@@ -394,16 +392,7 @@ long PNEditor::onCmdOpen(FXObject*, FXSelector, void*)
   
   if (open.execute())
   {
-	if (genScene != NULL)
-	  genScene->clear();
-	if (groundGroup != NULL)
-	  groundGroup->clear();
-	if (staticGroup != NULL)
-	  staticGroup->clear();
-	if (dynGroup != NULL)
-	  dynGroup->clear();
-	if (objPanel != NULL)
-	  objPanel->clear();
+    _genScene.clear();
 	if (wpPanel != NULL)
 	  wpPanel->clear();
 
@@ -413,22 +402,18 @@ long PNEditor::onCmdOpen(FXObject*, FXSelector, void*)
 
 	boost::filesystem::path entpath(_dir + "entities.xml", boost::filesystem::no_check);
 
-	_loadEntities(entpath);
+	viewer->makeCurrent();
+	_genScene.unserializeFromFile(entpath);
+	viewer->makeNonCurrent();
 
-	if (_state == VIEW_GENERAL)
-	{
-	  FXRangef	b;
-	  viewer->setScene(genScene);
-	  genScene->bounds(b);
-	  viewer->fitToBounds(b);
-	} // if (_state == VIEW_GENERAL)
+	fitToBounds();
 
 	// Waypoints
 	if (_graph != NULL)
 	{
 	  delete _graph;
 	  delete wpGroup;
-	} // if (_graph != NULL)
+	}
 
 	wpGroup = new FXGLGroup;
 	_graph = new PNIAGraph;
@@ -437,7 +422,7 @@ long PNEditor::onCmdOpen(FXObject*, FXSelector, void*)
 	fxmessage("%d Waypoints in %s\n", _graph->getNbWayPoints(), wppath.string().c_str());
 	buildWPGroup();
 	if (_wpenabled)
-	  genScene->append(wpGroup);
+	  _genScene.append(wpGroup);
   }
 
   return 1;
@@ -485,39 +470,24 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 	}
   }
 
-  //////////////////////////////////////////////////////////////////////////
+  /*//////////////////////////////////////////////////////////////////////////
   // CREATE XML DOCUMENT
   //////////////////////////////////////////////////////////////////////////
 
-  xmlDocPtr doc = NULL;       /* document pointer */
-  xmlNodePtr root_node = NULL;/* node pointers */
+  xmlDocPtr doc = NULL;      
+  xmlNodePtr root_node = NULL;
 
   LIBXML_TEST_VERSION;
 
-  /* 
-  * Creates a new document, a node and set it as a root node
-  */
   doc = xmlNewDoc(BAD_CAST "1.0");
   root_node = xmlNewNode(NULL, PNXML_LISTENTITIES_MKP);
   xmlDocSetRootElement(doc, root_node);
 
-  /*
-  * Creates a DTD declaration. Isn't mandatory. 
-  */
   xmlCreateIntSubset(doc, PNXML_LISTENTITIES_MKP, NULL, PNXML_ENTITIES_DTD);
 
   //////////////////////////////////////////////////////////////////////////
 
-  genScene->clear();
-  genScene->append(groundGroup);
-  genScene->append(staticGroup);
-  genScene->append(dynGroup);
-  _wpenabled = false;
-  _groundshown = true;
-  _staticshown = true;
-  _dynamicshown = true;
-
-  FXObjectList&	ol1 = genScene->getList();
+  FXObjectList&	ol1 = _genScene.getList();
   for (int i= 0; i < ol1.no(); i++)
   {
 	FXObjectList&	ol2 = ((FXGLGroup*)ol1[i])->getList();
@@ -527,8 +497,6 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 	  PN3DObject	*obj = shape->getObj();
 	  PNPoint3f		p = obj->getCoord();
 	  PNQuatf		q = obj->getOrient();
-
-	  //obj->serialize();
 
 	  xmlNodePtr node = xmlNewChild(root_node, NULL, PNXML_ENTITY_MKP, NULL);
 	  {
@@ -605,7 +573,9 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 
   xmlFreeDoc(doc);
   xmlCleanupParser();
-  xmlMemoryDump();
+  xmlMemoryDump();*/
+  
+  _genScene.serializeInFile(fs::path((_dir + "entities.xml").c_str(), fs::native));
 
   //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
@@ -616,23 +586,32 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
   pnerror(PN_LOGLVL_DEBUG, "Saving waypoints in %s", wppath.string().c_str());
   _graph->serializeInFile(wppath);
 
+  //////////////////////////////////////////////////////////////////////////
+  
+  _genScene.clear();
+  _genScene.setOptionView(PNGLGroup::VIEW_ALL);
+  _wpenabled = false;
+
   return 1;
 }
 
 long PNEditor::onCmdSaveAs(FXObject* sender, FXSelector sel, void* param)
 {
   FXDirDialog open(this, "Choose level directory to save your work");
+
   if (open.execute())
   {
-  	if (_graph == NULL)
-		{
-			wpGroup = new FXGLGroup;
-			_graph = new PNIAGraph;
-		}
+	if (_graph == NULL)
+	{
+	  wpGroup = new FXGLGroup;
+	  _graph = new PNIAGraph;
+	}
+
 	_dir = open.getDirectory().text();
 	_dir += PATHSEP;
 	onCmdSave(sender, sel, param);
   }
+
   return 1;
 }
 
@@ -654,14 +633,14 @@ long PNEditor::onCmdGenView(FXObject* sender, FXSelector, void*)
 
   if (_state == VIEW_OBJECTS)
   {
-	s = (PNGLShape*)objScene->getList()[0];
+	s = (PNGLShape*)_objScene.getList()[0];
 	s->setPosFromObj();
 	s->setDragable();
 	viewer->setOrientation(camOrient);
   }
 
-  viewer->setScene(genScene);
-  genScene->bounds(b);
+  viewer->setScene(&_genScene);
+  _genScene.bounds(b);
   viewer->fitToBounds(b);
   _state = VIEW_GENERAL;
   return 1;
@@ -680,11 +659,11 @@ long PNEditor::onCmdObjView(FXObject*, FXSelector, void*)
 	s->setUndragable();
 	s->setPosNull();
 
-	objScene->clear();
-	objScene->append(s);
+	_objScene.clear();
+	_objScene.append(s);
 	camOrient = tmp;
 	viewer->setOrientation(nullCam);
-	viewer->setScene(objScene);
+	viewer->setScene(&_objScene);
 
 	s->bounds(b);
 	viewer->fitToBounds(b);
@@ -696,91 +675,28 @@ long PNEditor::onCmdObjView(FXObject*, FXSelector, void*)
 
 long PNEditor::onCmdGroundView(FXObject* sender, FXSelector, void*)
 {
-  if (groundGroup != NULL)
-  {
-    if (!_groundshown)
-	{
-	  genScene->append(groundGroup);
-	  _groundshown = true;
-    }
-    else
-    {
-	  genScene->remove(groundGroup);
-	  _groundshown = false;
-	}
-	if (_state == VIEW_GENERAL)
-	{
-	  FXRangef	b;
-	  viewer->setScene(genScene);
-	  genScene->bounds(b);
-	  viewer->fitToBounds(b);
-	}
-  }
-  else
-  {
-	FXToggleButton* b = (FXToggleButton*)sender;
-	b->setState(FALSE);
-  }
+  _genScene.enableOptionView(PNGLGroup::VIEW_GROUND, _genScene.contains(PNGLGroup::VIEW_GROUND));
+
+  fitToBounds();
+
   return 1;
 }
 
 long PNEditor::onCmdStaticView(FXObject* sender, FXSelector, void*)
 {
-  if (staticGroup != NULL)
-  {
-	if (!_staticshown)
-	{
-	  genScene->append(staticGroup);
-	  _staticshown = true;
-	}
-	else
-	{
-	  genScene->remove(staticGroup);
-	  _staticshown = false;
-	}
-	if (_state == VIEW_GENERAL)
-	{
-	  FXRangef	b;
-	  viewer->setScene(genScene);
-	  genScene->bounds(b);
-	  viewer->fitToBounds(b);
-	}
-  }
-  else
-  {
-	FXToggleButton* b = (FXToggleButton*)sender;
-	b->setState(FALSE);
-  }
+  _genScene.enableOptionView(PNGLGroup::VIEW_STATIC, _genScene.contains(PNGLGroup::VIEW_STATIC));
+
+  fitToBounds();
+
   return 1;
 }
 
 long PNEditor::onCmdDynView(FXObject* sender, FXSelector, void*)
 {
-  if (dynGroup != NULL)
-  {
-	if (!_dynamicshown)
-	{
-	  genScene->append(dynGroup);
-	  _dynamicshown = true;
-	}
-	else
-	{
-	  genScene->remove(dynGroup);
-	  _dynamicshown = false;
-	}
-	if (_state == VIEW_GENERAL)
-	{
-	  FXRangef	b;
-	  viewer->setScene(genScene);
-	  genScene->bounds(b);
-	  viewer->fitToBounds(b);
-	}
-  }
-  else
-  {
-	FXToggleButton* b = (FXToggleButton*)sender;
-	b->setState(FALSE);
-  }
+  _genScene.enableOptionView(PNGLGroup::VIEW_DYNAMIC, _genScene.contains(PNGLGroup::VIEW_DYNAMIC));
+
+  fitToBounds();
+
   return 1;
 }
 
@@ -790,19 +706,19 @@ long PNEditor::onCmdWPView(FXObject* sender, FXSelector, void*)
   {
 	if (!_wpenabled)
 	{
-	  genScene->append(wpGroup);
+	  _genScene.append(wpGroup);
 	  _wpenabled = true;
 	}
 	else
 	{
-	  genScene->remove(wpGroup);
+	  _genScene.remove(wpGroup);
 	  _wpenabled = false;
 	}
 	if (_state == VIEW_GENERAL)
 	{
 	  FXRangef	b;
-	  viewer->setScene(genScene);
-	  genScene->bounds(b);
+	  viewer->setScene(&_genScene);
+	  _genScene.bounds(b);
 	  viewer->fitToBounds(b);
 	}
   }
@@ -895,6 +811,7 @@ long PNEditor::onQueryMenu(FXObject* sender, FXSelector, void* ptr)
 
 // Loading
 
+/*/// DEPRECATED
 int	  PNEditor::_parseActions(void* node, PNGLShape* shape)
 {
   xmlNodePtr	current = (xmlNodePtr)node;
@@ -915,6 +832,7 @@ int	  PNEditor::_parseActions(void* node, PNGLShape* shape)
   return 1;
 }
 
+/// DEPRECATED
 int	  PNEditor::_parseID(std::string id)
 {
   std::string idstr((const char *)PNXML_IDBASE_VAL);
@@ -926,6 +844,7 @@ int	  PNEditor::_parseID(std::string id)
   return atoi(id.c_str() + index + idstr.size());
 }
 
+/// DEPRECATED
 int	  PNEditor::_parseEntity(void* node)
 {
   xmlNodePtr  current = (xmlNodePtr)node;
@@ -997,7 +916,7 @@ int	  PNEditor::_parseEntity(void* node)
   ww = (pnfloat)atof((const char *)xmlGetProp(current, PNXML_ROTW_ATTR));
   object->setOrient(xx, yy, zz, ww);
 
-  // build PMGLShape in genScene
+  // build PMGLShape in _genScene
   PNGLShape* shape = new PNGLShape(object, objPanel, this, envType, classStr, id, label);
   if (fromFile == FALSE)
 	  shape->setModified();
@@ -1033,6 +952,7 @@ int	  PNEditor::_parseEntity(void* node)
   return PNEC_SUCCESS;
 }
 
+/// DEPRECATED
 int	  PNEditor::_parseListEntities(void* node)
 {
   xmlChar*	  attr = NULL;
@@ -1050,15 +970,16 @@ int	  PNEditor::_parseListEntities(void* node)
   }
 
   if (_groundshown)
-	genScene->append(groundGroup);
+	_genScene.append(groundGroup);
   if (_staticshown)
-	genScene->append(staticGroup);
+	_genScene.append(staticGroup);
   if (_dynamicshown)
-	genScene->append(dynGroup);
+	_genScene.append(dynGroup);
   return error;
 }
 
 
+/// DEPRECATED
 int	PNEditor::_parse(void* node)
 {
   //////////////////////////////////////////////////////////////////////////
@@ -1090,7 +1011,7 @@ int	PNEditor::_parse(void* node)
   return error;
 }
 
-
+/// DEPRECATED
 int PNEditor::_loadEntities(const fs::path& file)
 {
   pnerror(PN_LOGLVL_INFO, "Loading GameMap: %s ...", file.native_file_string().c_str());
@@ -1133,7 +1054,7 @@ int PNEditor::_loadEntities(const fs::path& file)
   xmlFreeDoc(doc);									// free the document
 
   return error;
-}
+}*/
 
 void
 PNEditor::setInObjView(FXGLObject* obj)
@@ -1144,21 +1065,21 @@ PNEditor::setInObjView(FXGLObject* obj)
 	PNGLShape	*s;
 	FXQuatf nullCam(0.0f, 0.0f, 0.0f, 1.0f);
 
-	s = (PNGLShape*)objScene->getList()[0];
+	s = (PNGLShape*)_objScene.getList()[0];
     s->setPosFromObj();
     s->setDragable();
 
 	s = (PNGLShape*)obj;
     s->setUndragable();
     s->setPosNull();
-    objScene->clear();
-    objScene->append(s);
+    _objScene.clear();
+    _objScene.append(s);
 	viewer->setOrientation(nullCam);
-	viewer->setScene(objScene);
+	viewer->setScene(&_objScene);
 
-    s->bounds(b);
-    viewer->fitToBounds(b);
+	fitToBounds();
   }
+
   viewer->setSelection(obj);
 }
 
@@ -1166,9 +1087,9 @@ void
 PNEditor::redraw()
 {
   if (_state == VIEW_OBJECTS)
-	viewer->setScene(objScene);
+	viewer->setScene(&_objScene);
   else
-	viewer->setScene(genScene);
+	viewer->setScene(&_genScene);
 }
 
 void
@@ -1181,16 +1102,14 @@ PNEditor::deleteWP(PNWayPoint* wp)
 void
 PNEditor::removeShape(FXGLShape* s)
 {
-  genScene->remove(s);
+  _genScene.remove(s);
+
   if (((PNGLShape*)s)->getObj()->getObjType() == PN3DObject::OBJTYPE_WAYPOINT)
 	wpGroup->remove(s);
-  else if (((PNGLShape*)s)->getEnvType() == PN_GROUND)
-	groundGroup->remove(s);
-  else if (((PNGLShape*)s)->getEnvType() == PN_STATIC)
-	staticGroup->remove(s);
-  else if (((PNGLShape*)s)->getEnvType() == PN_DYNAMIC)
-	dynGroup->remove(s);
+
   viewer->setSelection(NULL);
+
+  fitToBounds();
 }
 
 void
@@ -1202,50 +1121,23 @@ PNEditor::addWayPoint(pnfloat x, pnfloat y, pnfloat z)
   if (_wpenabled == true)
   {
 	buildWPGroup();
-	genScene->remove(wpGroup);
+	_genScene.remove(wpGroup);
 	_wpenabled = false;
 	onCmdWPView(NULL, 0, NULL);
   }
   else
 	buildWPGroup();
-  return;
 }
 
 void	  PNEditor::add3DObject(PN3DObject* o, PNPropertiesPanel* p, pnint id, PNEnvType t, std::string classStr, std::string label)
 {
   PNGLShape*  s = new PNGLShape(o, p, this, t, classStr, id, label);
   
-  if (t == PN_GROUND)
-  {
-	groundGroup->append(s);
-	if (_groundshown)
-	{
-	  genScene->remove(groundGroup);
-	  _groundshown = false;
-	  onCmdGroundView(NULL, 0, NULL);
-	}
-  }
-  else if (t == PN_STATIC)
-  {
-	staticGroup->append(s);
-	if (_staticshown)
-	{
-	  genScene->remove(staticGroup);
-	  _staticshown = false;
-	  onCmdStaticView(NULL, 0, NULL);
-	}
-  }
-  if (t == PN_DYNAMIC)
-  {
-	dynGroup->append(s);
-	if (_dynamicshown)
-	{
-	  genScene->remove(dynGroup);
-	  _dynamicshown = false;
-	  onCmdDynView(NULL, 0, NULL);
-	}
-  }
+  _genScene.append(s);
+
   objPanel->setObject((PNConfigurableObject*)s);
+
+  fitToBounds();
 }
 
 void PNEditor::makeViewerCurrent()
@@ -1258,6 +1150,26 @@ void PNEditor::makeViewerNonCurrent()
   viewer->makeNonCurrent();
 }
 
+void	PNEditor::fitToBounds()
+{
+  FXRangef	b;
+
+  switch (_state)
+  {
+  case VIEW_GENERAL:
+	viewer->setScene(&_genScene);
+	_genScene.bounds(b);
+  	break;
+  case VIEW_OBJECTS:
+	viewer->setScene(&_objScene);
+	_objScene.bounds(b);
+	break;
+  }
+
+  viewer->fitToBounds(b);
+}
+
+//////////////////////////////////////////////////////////////////////////
 }
 };
 

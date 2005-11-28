@@ -29,16 +29,16 @@
 
 
 #ifndef _PNEDITOR_HPP_
-#define _PNEDITOR_HPP_
+# define _PNEDITOR_HPP_
 
 #include <string>
 #include <boost/filesystem/path.hpp>
 
 #include "pneditoricons.hpp"
 #include "pndefs.h"
+
 #include "PNGLShape.hpp"
-
-
+#include "PNGLGroup.hpp"
 
 namespace PN 
 {
@@ -98,27 +98,25 @@ public:
 
   FXDECLARE(PNEditor)
 private:
-  FXMenuBar*        menubar;                 // Menu bar
-  FXToolBar*        toolbar1;                // Tool bar
-  FXDockBar*        dockbar;                 // Dock bar
-  FXToolBarShell*   dragshell1;              // Shell for floating menubar
-  FXToolBarShell*   dragshell2;              // Shell for floating toolbar
-  FXToolBarShell*   dragshell3;              // Shell for floating toolbar
+  FXMenuBar*        menubar;				// Menu bar
+  FXToolBar*        toolbar1;				// Tool bar
+  FXDockBar*        dockbar;				// Dock bar
+  FXToolBarShell*   dragshell1;				// Shell for floating menubar
+  FXToolBarShell*   dragshell2;				// Shell for floating toolbar
+  FXToolBarShell*   dragshell3;				// Shell for floating toolbar
   FXDockSite*       topdock;
   FXDockSite*       bottomdock;
   FXDockSite*       leftdock;
   FXDockSite*       rightdock;
-  FXMDIClient*      mdiclient;               // MDI Client area
-  FXStatusBar*      statusbar;               // Status bar
-  FXGLGroup*        genScene;                // General Scene with all the objects
-  FXGLGroup*        objScene;                // Show a particular object
-  FXGLGroup*        soundGroup;				 // Show sounds
-  FXGLGroup*        groundGroup;			 // Ground type objects
-  FXGLGroup*        staticGroup;			 // Static type objects
-  FXGLGroup*        dynGroup;				 // Dynamic type objects
-  FXGLGroup*        wpGroup;				 // WayPoints objects
-  FXMenuPane*       mdimenu;				 // MDI Window Menu
-  FXGLVisual*       glvisual;				 // Visual for OpenGL
+  FXMDIClient*      mdiclient;				// MDI Client area
+  FXStatusBar*      statusbar;				// Status bar
+
+  PNGLGroup			_genScene;				// General Scene with all the objects
+  FXGLGroup			_objScene;				// Show a particular object
+  FXGLGroup*		soundGroup;				// Show sounds
+  FXGLGroup*        wpGroup;				// WayPoints objects
+  FXMenuPane*       mdimenu;				// MDI Window Menu
+  FXGLVisual*       glvisual;				// Visual for OpenGL
   FXMenuPane*       filemenu;
   FXMenuPane*       helpmenu;
   FXGLViewer*		viewer;
@@ -147,9 +145,6 @@ private:
   pneditorState_t	_state;
   std::string		_dir;
   bool				_wpenabled;
-  bool				_groundshown;
-  bool				_staticshown;
-  bool				_dynamicshown;
 
   // PN Objects
   PNIAGraph*		_graph;
@@ -186,12 +181,12 @@ public:
   void					  setCurrentTab(int idx) { if(_panels->getCurrent()!=idx)_panels->setCurrent(idx); }
 
   // Loading
-  int	  _loadEntities(const boost::filesystem::path& file);
+  /*int	  _loadEntities(const boost::filesystem::path& file);
   int	  _parse(void* node);
   int	  _parseListEntities(void* node);
   int	  _parseEntity(void* node);
   int	  _parseActions(void* node, PNGLShape* shape);
-  int	  _parseID(std::string id);
+  int	  _parseID(std::string id);*/
 
   // Builds WPGroup whith _graph contents
   void	  buildWPGroup();
@@ -220,8 +215,10 @@ public:
   // Unsets OpenGL context
   void	  makeViewerNonCurrent();
 
+  void	  fitToBounds();
+
   // access to ground elements for space partitionning
-  FXGLGroup*        getGroundGroup() { return groundGroup; }
+  //FXGLGroup*        getGroundGroup() { return groundGroup; }
 
 
   // PNEditor constructor
