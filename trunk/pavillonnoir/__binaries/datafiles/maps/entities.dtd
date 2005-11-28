@@ -3,6 +3,12 @@
 	XML DTD for 3D models and scripts (entities.xml)
 -->
 
+<!-- HEADER -->
+
+<!ENTITY % object.dtd SYSTEM "../objects/object.dtd">
+
+<!-- BODY -->
+
 <!ELEMENT listentities (entity*, skybox?)>
 <!ELEMENT entity (action*, object?)>
   <!ELEMENT action (script+)>
@@ -27,7 +33,9 @@
 
 <!ATTLIST skybox enabled (ture|false) #IMPLIED>
 
-<!-- imported from object.dtd -->
+%object.dtd;
+
+<!-- imported from object.dtd 
 
 <!ELEMENT object (model?, listmaterials?, skeleton?, listanims?, physics?)>
 <!ELEMENT model EMPTY>
@@ -47,3 +55,4 @@
 <!ATTLIST anim path CDATA #IMPLIED>
 
 <!ATTLIST physics path CDATA #IMPLIED>
+-->
