@@ -148,6 +148,8 @@ PNGLGroup::append(FXGLObject* obj)
   case PN_DYNAMIC:
 	_dynGroup.append(obj);
 	break;
+  default:
+    break;
   }
 }
 
@@ -170,6 +172,8 @@ PNGLGroup::remove(FXGLObject* obj)
   case PN_DYNAMIC:
 	_dynGroup.remove(obj);
 	break;
+  default:
+    break;
   }
 }
 
