@@ -50,6 +50,11 @@ const std::string	IPNXMLSerializable::_dtd;
 const std::string	IPNXMLSerializable::_dtdName;
 const std::string	IPNXMLSerializable::_rootNode = "root";
 
+IPNXMLSerializable::IPNXMLSerializable()
+{
+  _serializeInXML = true;
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 const std::string&
@@ -68,11 +73,6 @@ const std::string&
 IPNXMLSerializable::getRootNodeName() const
 {
   return _rootNode;
-}
-
-IPNXMLSerializable::IPNXMLSerializable()
-{
-  _serializeInXML = true;
 }
 
 //////////////////////////////////////////////////////////////////////////
