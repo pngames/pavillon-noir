@@ -3,11 +3,11 @@
 	XML DTD for 3D models and scripts (entities.xml)
 -->
 
-<!ELEMENT listentities (entity*)>
+<!ELEMENT listentities (entity*, skybox?)>
 <!ELEMENT entity (action*, object?)>
-<!ELEMENT action (script+)>
-<!ELEMENT script EMPTY>
-<!ELEMENT skybox (enabled?)>
+  <!ELEMENT action (script+)>
+    <!ELEMENT script EMPTY>
+<!ELEMENT skybox EMPTY>
 
 <!ATTLIST entity id ID #REQUIRED>
 <!ATTLIST entity label CDATA #IMPLIED>
@@ -22,18 +22,17 @@
 <!ATTLIST entity yy CDATA #REQUIRED>
 <!ATTLIST entity zz CDATA #REQUIRED>
 <!ATTLIST entity ww CDATA #REQUIRED>
-
-<!ATTLIST action ref CDATA #REQUIRED>
-
-<!ATTLIST script ref CDATA #REQUIRED>
+  <!ATTLIST action ref CDATA #REQUIRED>
+    <!ATTLIST script ref CDATA #REQUIRED>
 
 <!ATTLIST skybox enabled (ture|false) #IMPLIED>
 
 <!-- imported from object.dtd -->
 
-<!ELEMENT object (model?, listmaterials?, skeleton?, listanims?)>
+<!ELEMENT object (model?, listmaterials?, skeleton?, listanims?, physics?)>
 <!ELEMENT model EMPTY>
 <!ELEMENT skeleton EMPTY>
+<!ELEMENT physics EMPTY>
 <!ELEMENT listmaterials (material*)>
 	<!ELEMENT material EMPTY>
 <!ELEMENT listanims (anim*)>
@@ -46,3 +45,5 @@
 <!ATTLIST skeleton path CDATA #IMPLIED>
 
 <!ATTLIST anim path CDATA #IMPLIED>
+
+<!ATTLIST physics path CDATA #IMPLIED>
