@@ -33,26 +33,6 @@
 
 <!ATTLIST skybox enabled (ture|false) #IMPLIED>
 
+<!-- EXTERNALS -->
+
 %object.dtd;
-
-<!-- imported from object.dtd 
-
-<!ELEMENT object (model?, listmaterials?, skeleton?, listanims?, physics?)>
-<!ELEMENT model EMPTY>
-<!ELEMENT skeleton EMPTY>
-<!ELEMENT physics EMPTY>
-<!ELEMENT listmaterials (material*)>
-	<!ELEMENT material EMPTY>
-<!ELEMENT listanims (anim*)>
-	<!ELEMENT anim EMPTY>
-
-<!ATTLIST model path CDATA #IMPLIED>
-
-<!ATTLIST material path CDATA #IMPLIED>
-
-<!ATTLIST skeleton path CDATA #IMPLIED>
-
-<!ATTLIST anim path CDATA #IMPLIED>
-
-<!ATTLIST physics path CDATA #IMPLIED>
--->
