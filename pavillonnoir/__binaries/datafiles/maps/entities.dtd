@@ -7,13 +7,15 @@
 
 <!ENTITY % object.dtd SYSTEM "../objects/object.dtd">
 
-<!-- BODY -->
+<!-- ELEMENTS -->
 
 <!ELEMENT listentities (entity*, skybox?)>
 <!ELEMENT entity (action*, object?)>
   <!ELEMENT action (script+)>
     <!ELEMENT script EMPTY>
-<!ELEMENT skybox EMPTY>
+<!ELEMENT skybox (object?)>
+
+<!-- ATTRIBUTES -->
 
 <!ATTLIST entity id ID #REQUIRED>
 <!ATTLIST entity label CDATA #IMPLIED>
@@ -31,7 +33,14 @@
   <!ATTLIST action ref CDATA #REQUIRED>
     <!ATTLIST script ref CDATA #REQUIRED>
 
-<!ATTLIST skybox enabled (ture|false) #IMPLIED>
+<!ATTLIST skybox enabled (true|false) #IMPLIED>
+
+<!ATTLIST skybox top CDATA #IMPLIED>
+<!ATTLIST skybox botttom CDATA #IMPLIED>
+<!ATTLIST skybox left CDATA #IMPLIED>
+<!ATTLIST skybox right CDATA #IMPLIED>
+<!ATTLIST skybox front CDATA #IMPLIED>
+<!ATTLIST skybox back CDATA #IMPLIED>
 
 <!-- EXTERNALS -->
 
