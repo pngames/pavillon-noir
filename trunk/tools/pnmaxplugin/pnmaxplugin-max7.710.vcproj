@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="pnmaxplugin"
+	Name="pnmaxplugin-max7"
 	ProjectGUID="{FBE8C34C-1861-41C3-87AF-BECA84744864}"
 	RootNamespace="pnmaxplugin"
 	Keyword="MFCProj">
