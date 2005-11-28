@@ -30,8 +30,12 @@
 #ifndef _PNXML_H_
 # define _PNXML_H_
 
+static const std::string	PNMAP_XMLDTD_NAME		= "entities";
+static const std::string	PNMAP_XMLDTD			= std::string("../") + PNMAP_XMLDTD_NAME + ".dtd";
+static const std::string	PNMAP_XMLNODE_ROOT		= "listentities";
+
 // Markups
-#define PNXML_LISTENTITIES_MKP		(const xmlChar *)"listentities"
+#define PNXML_LISTENTITIES_MKP		(const xmlChar *)PNMAP_XMLNODE_ROOT.c_str()
 #define PNXML_ENTITY_MKP			(const xmlChar *)"entity"
 #define PNXML_ACTION_MKP			(const xmlChar *)"action"
 #define PNXML_SCRIPT_MKP			(const xmlChar *)"script"

@@ -51,51 +51,48 @@ class PNWayPoint;
 typedef std::list<PNWayPoint*>	WPLIST;
 typedef std::map<int,PNWayPoint*> WPIDMAP;
 
-class PNAPI PNIAGraph : public PNObject, public IPNSerializable
+class PNAPI					PNIAGraph : public PNObject, public IPNSerializable
 {
 private:
-	WPLIST					_wayPoints;
-	WPIDMAP					_wpidmap;
-	pnint					_idMax;
+  WPLIST					_wayPoints;
+  WPIDMAP					_wpidmap;
+  pnint						_idMax;
 
-	pnbool					addWayPoint(pnint id, PNPoint3f&pos);			
-	pnbool					addWayPoint(pnint id, pnfloat x, pnfloat y, pnfloat z);
-	pnbool					addWayPoint(PNWayPoint* wp);
+  pnbool					addWayPoint(pnint id, PNPoint3f&pos);			
+  pnbool					addWayPoint(pnint id, pnfloat x, pnfloat y, pnfloat z);
+  pnbool					addWayPoint(PNWayPoint* wp);
 public:
-	PNIAGraph();
-	virtual ~PNIAGraph();
+  PNIAGraph();
+  virtual ~PNIAGraph();
 
-	/* adds a WP at specified position and gives it an id number */
-	pnint						addWayPoint(PNPoint3f&pos);
-	pnint						addWayPoint(pnfloat x, pnfloat y, pnfloat z);
-	
-	/* functions to delete WP by id or ptr. delete links to it too */
-	std::list<pnint>			deleteWayPoint(PNWayPoint *wp);
-	std::list<pnint>			deleteWayPoint(pnint id);
+  /* adds a WP at specified position and gives it an id number */
+  pnint						addWayPoint(PNPoint3f&pos);
+  pnint						addWayPoint(pnfloat x, pnfloat y, pnfloat z);
 
-	/*
-	** functions that create links from 1 WP to another
-	** if type is DOUBLE, links wp1 with w2 and also wp2 with wp1
-	** if type is SINGLE, only links wp1 with wp2
-	*/
-	pnbool					makeLink(PNWayPoint &wp1, PNWayPoint &wp2,
-							  		  pnbool type = DOUBLE, pnfloat coef = 1.0);
-	pnbool					makeLink(PNWayPoint &wp1, pnint id,
-							  		  pnbool type = DOUBLE, pnfloat coef = 1.0);
-	pnbool					makeLink(pnint id1, pnint id2, pnbool type = DOUBLE,
-									  pnfloat coef = 1.0);
-	pnint					getNbWayPoints();
+  /* functions to delete WP by id or ptr. delete links to it too */
+  std::list<pnint>			deleteWayPoint(PNWayPoint *wp);
+  std::list<pnint>			deleteWayPoint(pnint id);
 
-	/* returns a reference on _wayPoints */
-	WPLIST&					getWayPoints();
+  /*
+  ** functions that create links from 1 WP to another
+  ** if type is DOUBLE, links wp1 with w2 and also wp2 with wp1
+  ** if type is SINGLE, only links wp1 with wp2
+  */
+  pnbool					makeLink(PNWayPoint &wp1, PNWayPoint &wp2, pnbool type = true, pnfloat coef = 1.0);
+  pnbool					makeLink(PNWayPoint &wp1, pnint id, pnbool type = true, pnfloat coef = 1.0);
+  pnbool					makeLink(pnint id1, pnint id2, pnbool type = true, pnfloat coef = 1.0);
+  pnint						getNbWayPoints();
 
-	/* return pointer to the WP corresponding to the given id */
-	PNWayPoint				*getWPFromId(int id);
+  /* returns a reference on _wayPoints */
+  WPLIST&					getWayPoints();
 
-	/* save/load a graph to/from a file/stream */
-	pnint serializeInStream(std::ostream& o);
-	pnint unserializeFromFile(const boost::filesystem::path& file);
-	int	  processChild(xmlTextReader* _reader);
+  /* return pointer to the WP corresponding to the given id */
+  PNWayPoint*				getWPFromId(int id);
+
+  /* save/load a graph to/from a file/stream */
+  pnint						serializeInStream(std::ostream& o);
+  pnint						unserializeFromFile(const boost::filesystem::path& file);
+  int						processChild(xmlTextReader* _reader);
 };
 
 //////////////////////////////////////////////////////////////////////////
