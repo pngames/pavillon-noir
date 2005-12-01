@@ -186,10 +186,14 @@ int PN3DObjectExporter::exportBody()
 
   if (!DefaultDirection)
   {
+	Point3	pnFront = -Top;
+	Point3	pnRight = Right;
+	Point3	pnTop = Front;
+
 	objString
-	  << " " << PNO_XMLPROP_FRONT << "=\"" << Front.x << " " << Front.y << " " << Front.z << "\""
-	  << " " << PNO_XMLPROP_RIGHT << "=\"" << Right.x << " " << Right.y << " " << Right.z << "\""
-	  << " " << PNO_XMLPROP_TOP << "=\"" << Top.x << " " << Top.y << " " << Top.z << "\"";
+	  << " " << PNO_XMLPROP_FRONT << "=\"" << pnFront.x << " " << pnFront.y << " " << pnFront.z << "\""
+	  << " " << PNO_XMLPROP_RIGHT << "=\"" << pnRight.x << " " << pnRight.y << " " << pnRight.z << "\""
+	  << " " << PNO_XMLPROP_TOP << "=\"" << pnTop.x << " " << pnTop.y << " " << pnTop.z << "\"";
   }
 
   objString << ">\n";
