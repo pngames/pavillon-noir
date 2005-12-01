@@ -191,6 +191,14 @@ Called when an object enters the frustrum of the character
 	end
 --------------------------------------------------------
 --[[%
+Called at the end of a Fight Action
+%--]]
+	OVERRIDE(OBJ, "onDamage")
+	function OBJ:onDamage(damage)
+		self.combat_state = COMBAT_STATE.NEUTRAL
+	end
+--------------------------------------------------------
+--[[%
 Called at init
 Not used yet
 %--]]

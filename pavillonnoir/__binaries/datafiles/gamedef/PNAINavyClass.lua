@@ -27,6 +27,9 @@ Called while handling a fight
 	function OBJ:manageFight()
 		--print("==>> PNAINavy:manageFight()")
 		--print(self)
+	    if (self.combat_state == COMBAT_STATE.ATTACK) then
+	    	return
+	    end
 		if (self:getCoord():getDistance(self:getViewTarget():getCoord()) > self.selected_weapon.range) then
 			self.combat_state = COMBAT_STATE.DEFENSE
 			if (self.elapsedTurns == 0) then
@@ -35,14 +38,14 @@ Called while handling a fight
 			self.ennemyJustReached = false
 			self.elapsedTurns = 0
 		else
-			self.combat_state = COMBAT_STATE.ATTACK
 			if (self.elapsedTurns == 0) then
 				self:onMoveForward(ACTION_STATE.STOP)
 				self.ennemyJustReached = true
 			end
 			if ((self.ennemyJustReached == true) or ((self.elapsedTurns) == (self.stats.awareness * 50))) then
-				pnprint(self.id .. " attacking " .. self:getViewTarget():getId() .. "\n")
 				--attack
+				self.combat_state = COMBAT_STATE.ATTACK
+				gameMap:onAttack(self.id, self:getViewTarget():getId())
 				self.elapsedTurns = 1
 				self.ennemyJustReached = false
 			else
@@ -61,7 +64,6 @@ Prepares the Character to handle a fight
 		pnprint("fightnavy\n")
 		self:setState(self.stateEnum.PN_IA_FIGHTING)
 		self:onMoveForward(ACTION_STATE.STOP)
-		self.combat_state = COMBAT_STATE.DEFENSE
 		-- anim combat, sortir l'arme toussa
 	end
 --------------------------------------------------------
