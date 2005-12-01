@@ -21,6 +21,7 @@ function PNAICharacterClass(id)
 	OBJ.toReach = PN3DObject:new_local()
 	OBJ.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2}
 	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
+	OBJ.elapsedTurns = 0
 	OBJ.pastStates = {}
 	OBJ.ennemies = {}
 --------------------------------------------------------

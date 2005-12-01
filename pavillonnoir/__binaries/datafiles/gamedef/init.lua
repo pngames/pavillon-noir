@@ -5,7 +5,10 @@ loadLuaScript("utilities.lua", true)
 
 loadLuaScript("PNTimerClass.lua", true)
    pnprint("PNTimerClass.lua loaded\n")
-   
+
+loadLuaScript("PNDieClass.lua", true)
+   pnprint("PNDieClass.lua loaded\n")
+
 loadLuaScript("PN3DObjectClass.lua", true)
    pnprint("PN3DObjectClass.lua loaded\n")
      
