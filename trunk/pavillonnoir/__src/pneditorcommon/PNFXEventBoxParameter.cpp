@@ -82,6 +82,10 @@ namespace PN {
 	return;
   }
 
+  /*! \brief Called on left button press event
+  * Sets the text of the widget to "???" and sets the widget in "capture mode" 
+  * waiting for a keypress
+  */
   long	PNFXEventBoxParameter::onLeftBtnPress(FXObject* obj,FXSelector sel, void* ptr)
   {
 	FXTextField::handle(obj, sel, ptr);
@@ -92,6 +96,10 @@ namespace PN {
 	return 1;
   }
 
+  /*! \brief Called on key release event
+  * Sets the text of the widget to "???" and sets the widget in "capture mode" 
+  * waiting for a keypress
+  */
   long	PNFXEventBoxParameter::onKeyRelease(FXObject* obj,FXSelector sel, void* ptr)
   {
 	FXEvent* event=(FXEvent*)ptr;
