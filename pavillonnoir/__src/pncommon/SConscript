@@ -17,6 +17,7 @@ PNCharacter.cpp
 PNConfigurableParameter.cpp
 PNConsole.cpp
 PNEventManager.cpp
+PNException.cpp
 PNExportInterface.cpp
 PNExportManager.cpp
 PNFace.cpp
