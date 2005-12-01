@@ -19,6 +19,7 @@ PNPropertiesGrid.cpp
 PNPropertiesPopup.cpp
 pneditorcommon.cpp
 PNFXStringListParameter.cpp
+PNFXEventBoxParameter.cpp
 """.split()
 obj.target = 'libpneditorcommon' + env['suffix']
 obj.vnum = env['package_version']
