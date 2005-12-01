@@ -36,18 +36,13 @@ static const std::string	PNMAP_XMLDTD_NAME		= "entities";
 static const std::string	PNMAP_XMLDTD			=  std::string("../") + PNMAP_XMLDTD_NAME + ".dtd";
 static const std::string	PNMAP_XMLNODE_ROOT		= "listentities";
 
+static const std::string	PNENTITY_XMLNODE_ROOT	= "entity";
+
 // Markups
 #define PNXML_LISTENTITIES_MKP		(const xmlChar *)PNMAP_XMLNODE_ROOT.c_str()
-#define PNXML_ENTITY_MKP			(const xmlChar *)"entity"
+#define PNXML_ENTITY_MKP			(const xmlChar *)PNENTITY_XMLNODE_ROOT.c_str()
 #define PNXML_ACTION_MKP			(const xmlChar *)"action"
 #define PNXML_SCRIPT_MKP			(const xmlChar *)"script"
-#define PNXML_OBJECT_MKP			(const xmlChar *)"object"
-#define PNXML_MODEL_MKP				(const xmlChar *)"model"
-#define PNXML_SKELETON_MKP			(const xmlChar *)"skeleton"
-#define PNXML_LISTMATERIALS_MKP		(const xmlChar *)"listmaterials"
-#define PNXML_MATERIAL_MKP			(const xmlChar *)"material"
-#define PNXML_LISTANIMS_MKP			(const xmlChar *)"listanims"
-#define PNXML_ANIM_MKP				(const xmlChar *)"anim"
 #define PNXML_GRAPH_MKP				(const xmlChar *)"graph"
 #define PNXML_LISTWAYPOINTS_MKP		(const xmlChar *)"listwp"
 #define	PNXML_WAYPOINT_MKP			(const xmlChar *)"wp"

@@ -41,6 +41,13 @@ namespace fs = boost::filesystem;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
+IPNSerializable::IPNSerializable()
+{
+  _hasFile = false;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 /**
  * @brief Get 3DObject associated file for serialize/unserialize system.
  *
@@ -49,7 +56,7 @@ namespace PN {
 boost::filesystem::path*
 IPNSerializable::getFile()
 {
-  return &_file;
+  return _hasFile ? &_file : NULL;
 }
 
 /**
@@ -61,7 +68,8 @@ IPNSerializable::getFile()
 void
 IPNSerializable::setFile(const boost::filesystem::path& file)
 {
-  _file = file;
+  _file = fs::path(file.string(), fs::native);
+  _hasFile = true;
 }
 
 //////////////////////////////////////////////////////////////////////////

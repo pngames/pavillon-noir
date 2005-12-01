@@ -101,6 +101,8 @@ public:
   
   /// Append child object
   void					append(FXGLObject* obj);
+  /// Append child group
+  void					append(FXGLGroup* group);
   /// Remove child object
   void					remove(FXGLObject* obj);
 
@@ -116,12 +118,10 @@ public:
   const std::string&	getRootNodeName() const;
 
 private:
-  pnint					_parseID(std::string id);
-
-  pnint					_unserializeActions(xmlNode* node, PNGLShape* shape);
   pnint					_unserializeEntity(xmlNode* node);
   pnint					_unserializeNode(xmlNode* node);
 
+public:
   pnint					unserializeFromXML(xmlNode* node);
   pnint					serializeInXML(xmlNode* root, pnbool isroot = false);
 };

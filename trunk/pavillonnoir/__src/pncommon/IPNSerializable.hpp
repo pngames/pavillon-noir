@@ -40,6 +40,7 @@ namespace PN
 class PNAPI							IPNSerializable
 {
 public:
+  IPNSerializable();
   virtual ~IPNSerializable() {}
 
   //////////////////////////////////////////////////////////////////////////
@@ -69,6 +70,7 @@ public:
   /// Save object
   virtual pnint						serialize();
 protected:
+  pnbool							_hasFile;
   /// File that represent object
   boost::filesystem::path			_file;
 };
