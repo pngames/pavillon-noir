@@ -72,7 +72,7 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 /* -- 
   std::string* tmpstr = new std::string("");
   PNFoxOptionsObject* confobject = new PNFoxOptionsObject();
-  PNConfigurableParameter* confparam = new PNConfigurableParameter(confobject, PN_PARAMTYPE_EVENTBOX, tmpstr, "Event", "Event?", FALSE);
+  PNConfigurableParameter* confparam = new PNConfigurableParameter(confobject, PN_PARAMTYPE_EVENTBOX, tmpstr, "Jump", "Jump ?", FALSE);
   confobject->addParam(confparam);
   pnerror(PN_LOGLVL_DEBUG, "PNFoxOptionWindow::PNFoxOptionWindow() : confobject->getNbParameters()=%i", confobject->getNbParameters());
 
