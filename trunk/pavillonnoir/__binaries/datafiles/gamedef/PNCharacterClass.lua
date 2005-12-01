@@ -95,7 +95,7 @@ function PNCharacterClass(id)
 	OBJ.view:addTargetMode(OBJ.TMODE_ORIENTATION_ABS_LOCKED)
 	OBJ.view:addTargetMode(OBJ.TMODE_POSITION_ABS_LOCKED)
 	OBJ.view:setTarget(OBJ);
-	OBJ.view:setTargetPosition(0.0, 100.0, 0.0);
+	OBJ.view:setTargetPosition(0.0, 40.0, 0.0);
 	
 -------------------------------------------------------------------------------
 	-----------------------------------------------------------
@@ -118,6 +118,8 @@ function PNCharacterClass(id)
 	--------------- Animation parameters ---------------------- 
 	OBJ:setAnimSpeed(4.0)
 	OBJ.idleTime = 0
+	--------------- Animation parameters ---------------------- 
+	gameMap.fights[OBJ.id] = -1
 -------------------------------------------------------------------------------
 ---------------------move order callback-----------------------
 --[[%
@@ -358,6 +360,12 @@ Add the entity in the seen_entities list
     end	
 --------------------------------------------------------------------------------
 --[[%
+Overriden in PNAICharacterClass
+%--]]
+    function OBJ:onDamage(damage)
+	end
+--------------------------------------------------------------------------------
+--[[%
 Returns the type of the character that is visible to others
 %--]]
 	function OBJ:getCharacType()
@@ -365,6 +373,7 @@ Returns the type of the character that is visible to others
 	end
 --------------------------------------------------------------------------------
 	function OBJ:launchGoodAnimation()
+		 --[[
 		self:setEnableLoop(true)
 		if (self.attitude == CHARACTER_ATTITUDE.WALKING) then
 			--pnprint ("walk\n")
@@ -461,7 +470,8 @@ Returns the type of the character that is visible to others
 				return		
 			end 		
 		end
-	end
+
+--]]end
 	
 	function OBJ:updateJump()
 		
