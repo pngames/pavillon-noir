@@ -42,6 +42,8 @@
 #include "pnevent.h"
 #include "pnproperties.h"
 
+#include "IPNXMLSerializable.hpp"
+
 typedef	enum
 {
   PN_GROUND = 0,
@@ -50,86 +52,104 @@ typedef	enum
   NB_ENVTYPES
 }		PNEnvType;
 
-namespace PN
-{
-  class PN3DObject;
-  class PNPropertiesPanel;
+namespace PN {
 //////////////////////////////////////////////////////////////////////////
-  namespace EDITOR
-  {
-	class PNEditor;
-	class PNGLShape : public FXGLShape, public PNConfigurableObject
-    {
-	  FXDECLARE_ABSTRACT(PNGLShape);
 
-	  PNEditor*			  		_ed;
-	  PN3DObject*				_obj;
-	  boost::filesystem::path	_temppath;
-	  int				  		_id;
-	  PNEnvType			  		_envType;
-	  bool				  		_canDrag;
-	  std::string		  		_label;
-	  std::string		  		_classStr;
-	  scriptMap			  		_scripts;
-	  PNPropertiesPanel*  		_grid;
-	  bool						_modified;
-	protected:
-	  PNGLShape();
-    public:
-      FXfloat			  		radius;   // Radius of sphere
-      FXint				  		slices;   // Longitudinal subdivision
-      FXint				  		stacks;   // Latitudinal subdivision
+class PN3DObject;
+class PNPropertiesPanel;
 
-	  PNGLShape(PN3DObject* obj, PNPropertiesPanel* grid, PNEditor* ed, PNEnvType envType, std::string classStr = "PN3DObject", int id = 0, std::string label = "No label");
+namespace EDITOR {
+//////////////////////////////////////////////////////////////////////////
 
-	  virtual ~PNGLShape();
+class PNEditor;
 
-	  PN3DObject*		  getObj() {return _obj;}
-	  int				  getId() {return _id;}
-	  PNEditor*			  getEd() {return _ed;}
-	  PNEnvType			  getEnvType() {return _envType;}
-	  scriptMap&		  getScripts() {return _scripts;}
-	  std::string&		  getClassStr() {return _classStr;}
-	  void				  setDragable() {_canDrag = TRUE;}
-	  void				  setUndragable() {_canDrag = FALSE;}
-	  void				  setPosNull();
-	  void				  setPosFromObj();
-	  void				  setMinMax();
-	  void				  buildParams();
+class						PNGLShape : public FXGLShape, public PNConfigurableObject, public IPNXMLSerializable
+{
+  FXDECLARE_ABSTRACT(PNGLShape);
 
-	  FXbool			  drag(FXGLViewer* viewer,FXint fx,FXint fy,FXint tx,FXint ty);
-      virtual void		  drawshape(FXGLViewer* viewer);
+  PNEditor*			  		_ed;
+  PN3DObject*				_obj;
+  boost::filesystem::path	_temppath;
+  int				  		_id;
+  PNEnvType			  		_envType;
+  bool				  		_canDrag;
+  std::string		  		_label;
+  std::string		  		_classStr;
+  scriptMap			  		_scripts;
+  PNPropertiesPanel*  		_grid;
+  bool						_modified;
+protected:
+  PNGLShape();
+public:
+  FXfloat			  		radius;   // Radius of sphere
+  FXint				  		slices;   // Longitudinal subdivision
+  FXint				  		stacks;   // Latitudinal subdivision
 
-	  void				  setInObjView();
-	  void				  addScript(pnEventType type, const char* name);
-	  void				  selfRemove();
-	  void				  makeViewerCurrent();
-	  void				  makeViewerNonCurrent();
+  PNGLShape(xmlNode* node, PNPropertiesPanel* grid, PNEditor* ed);
+  PNGLShape(PN3DObject* obj, PNPropertiesPanel* grid, PNEditor* ed, PNEnvType envType, std::string classStr = "PN3DObject", int id = 0, std::string label = "No label");
 
-	  long				  onSelected(FXObject*,FXSelector,void*);
-	  long				  onLeftBtnRelease(FXObject*,FXSelector,void*);
-	  long				  onDNDDrop(FXObject* obj,FXSelector sel,void* v);
+  virtual ~PNGLShape();
 
-	  //////////////////////////////////////////////////////////////////////////
-	  // ConfigurableObject
+  PN3DObject*				getObj() {return _obj;}
+  int						getId() {return _id;}
+  PNEditor*					getEd() {return _ed;}
+  PNEnvType					getEnvType() {return _envType;}
+  scriptMap&				getScripts() {return _scripts;}
+  std::string&				getClassStr() {return _classStr;}
+  void						setDragable() {_canDrag = TRUE;}
+  void						setUndragable() {_canDrag = FALSE;}
+  void						setPosNull();
+  void						setPosFromObj();
+  void						setMinMax();
+  void						buildParams();
 
-	protected:
-	  typedef std::vector<PNConfigurableParameter*> ParametersVector;
-	  ParametersVector			_params;
-	public:
-	  void						update(PNConfigurableParameter* p);
-	  void						updateOrient();
-	  int						getNbParameters();
-	  PNConfigurableParameter*	getParameter(int idx);
-	  void						reset();
-	  
-	  bool						modified() {return _modified;}
-	  void						setModified() {_modified = TRUE;}
-	  void						setUnmodified() {_modified = FALSE;}
+  FXbool					drag(FXGLViewer* viewer,FXint fx,FXint fy,FXint tx,FXint ty);
+  virtual void				drawshape(FXGLViewer* viewer);
 
-	  const std::string&		getLabel() {return _label;}
-	};
-  };
+  void						setInObjView();
+  void						addScript(pnEventType type, const char* name);
+  void						selfRemove();
+  void						makeViewerCurrent();
+  void						makeViewerNonCurrent();
+
+  long						onSelected(FXObject*,FXSelector,void*);
+  long						onLeftBtnRelease(FXObject*,FXSelector,void*);
+  long						onDNDDrop(FXObject* obj,FXSelector sel,void* v);
+
+  //////////////////////////////////////////////////////////////////////////
+  // ConfigurableObject
+
+protected:
+  typedef std::vector<PNConfigurableParameter*> ParametersVector;
+  ParametersVector			_params;
+public:
+  void						update(PNConfigurableParameter* p);
+  void						updateOrient();
+  int						getNbParameters();
+  PNConfigurableParameter*	getParameter(int idx);
+  void						reset();
+
+  bool						modified() {return _modified;}
+  void						setModified() {_modified = TRUE;}
+  void						setUnmodified() {_modified = FALSE;}
+
+  const std::string&		getLabel() {return _label;}
+
+  //////////////////////////////////////////////////////////////////////////
+public:
+  const std::string&		getRootNodeName() const;
+
+private:
+  pnint						_parseID(std::string id);
+
+  pnint						_unserializeActions(xmlNode* node);
+  pnint						_unserializeNode(xmlNode* node);
+
+public:
+  pnint						unserializeFromXML(xmlNode* node);
+  pnint						serializeInXML(xmlNode* root, pnbool isroot = false);
+};
+};
 //////////////////////////////////////////////////////////////////////////
 };
 

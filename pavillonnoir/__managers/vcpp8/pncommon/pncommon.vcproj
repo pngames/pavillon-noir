@@ -687,6 +687,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncommon\PNException.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\pnexception.h"
 				>
 			</File>

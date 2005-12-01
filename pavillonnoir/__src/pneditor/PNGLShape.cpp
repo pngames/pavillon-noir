@@ -27,16 +27,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-
+#include <sstream>
+#include <libxml/xmlreader.h>
 #include <boost/filesystem/operations.hpp>
 
 #include "pneditorcommon.hpp"
 #include "pnimport.h"
+#include "pnexception.h"
+
+#include "pnxml.h"
+#include "pno_format.h"
+
+#include "PN3DObject.hpp"
+#include "PN3DSkeletonObject.hpp"
+#include "PNCharacter.hpp"
 
 #include "PNImportManager.hpp"
 #include "pnresources.h"
-#include "PN3DObject.hpp"
-#include "PN3DSkeletonObject.hpp"
 #include "PN3DModel.hpp"
 #include "PNGLShape.hpp"
 #include "PNWayPoint.hpp"
@@ -45,12 +52,16 @@
 #include "pnproperties.h"
 #include "PNEditor.hpp"
 
+namespace fs = boost::filesystem;
+using namespace PN;
+using namespace PN::EDITOR;
+
 //////////////////////////////////////////////////////////////////////////
 
 namespace PN
 {
-  namespace EDITOR
-  {
+namespace EDITOR
+{
 //////////////////////////////////////////////////////////////////////////
 
 /* Map
@@ -61,6 +72,7 @@ FXDEFMAP(PNGLShape) PNGLShapeMap[]=
   FXMAPFUNC(SEL_SELECTED,0,PNGLShape::onSelected)
 };
 */
+
 //////////////////////////////////////////////////////////////////////////
 FXIMPLEMENT_ABSTRACT(PNGLShape,FXGLShape,NULL,0)
 
@@ -92,6 +104,8 @@ PNGLShape::PNGLShape(void)
 PNGLShape::PNGLShape(PN3DObject *obj, PNPropertiesPanel* grid, PNEditor* ed, PNEnvType envType, std::string classStr, int id, std::string label)
 : radius(0.5f), slices(SPHERE_SLICES), stacks(SPHERE_STACKS)
 {
+  FXTRACE((100,"PNGLShape::PNGLShape\n"));
+
   _obj = obj;
   _ed = ed;
   _id = id;
@@ -102,9 +116,25 @@ PNGLShape::PNGLShape(PN3DObject *obj, PNPropertiesPanel* grid, PNEditor* ed, PNE
   _classStr = classStr;
   _modified = FALSE;
 
+  setPosFromObj();
+  setMinMax();
+  buildParams();
+}
+
+PNGLShape::PNGLShape(xmlNode* node, PNPropertiesPanel* grid, PNEditor* ed)
+: radius(0.5f), slices(SPHERE_SLICES), stacks(SPHERE_STACKS)
+{
   FXTRACE((100,"PNGLShape::PNGLShape\n"));
 
-  setPosFromObj();	
+  pnint error = unserializeFromXML(node);
+
+  if (error != PNEC_SUCCESS)
+	throw PNException(error);
+
+  _grid = grid;
+  _ed = ed;
+
+  setPosFromObj();
   setMinMax();
   buildParams();
 }
@@ -112,10 +142,15 @@ PNGLShape::PNGLShape(PN3DObject *obj, PNPropertiesPanel* grid, PNEditor* ed, PNE
 void
 PNGLShape::setMinMax()
 {
+  if (_obj->get3DModel() == NULL)
+	return ;
+
   PN::PN3DModel*		m = _obj->get3DModel();
   const PN::PNPoint3f&	min = m->getMin();
   const PN::PNPoint3f&	max = m->getMax();
-  _temppath = *(m->getFile());
+
+  if (m->getFile() != NULL)
+	_temppath = *(m->getFile());
 
   range.lower.x = min.x;
   range.lower.y = min.y;
@@ -123,6 +158,7 @@ PNGLShape::setMinMax()
   range.upper.x = max.x;
   range.upper.y = max.y;
   range.upper.z = max.z;
+
   pnerror(PN_LOGLVL_DEBUG, "New obj: minx=%f miny=%f minz=%f maxx=%f maxy=%f maxz=%f",
 	min.x, min.y, min.z, max.x, max.y, max.z);
 }
@@ -292,6 +328,229 @@ void			PNGLShape::reset()
   setUnmodified();
 }
 
+//////////////////////////////////////////////////////////////////////////
+
+const std::string&
+PNGLShape::getRootNodeName() const
+{
+  return PNENTITY_XMLNODE_ROOT;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+pnint
+PNGLShape::_parseID(std::string id)
+{
+  std::string idstr((const char *)PNXML_IDBASE_VAL);
+  std::string::size_type	  index = id.find(idstr);
+
+  if (index == std::string::npos)
+	return atoi(id.c_str());
+
+  return atoi(id.c_str() + index + idstr.size());
+}
+
+pnint
+PNGLShape::_unserializeActions(xmlNode* root)
+{
+  std::string	name((char *)xmlGetProp(root, PNXML_REFERENCE_ATTR));
+  pnEventType t = PNEventManager::getInstance()->getTypeByName(name);
+
+  if (t > 1 && t <= PN_NUMBER_EVENTS)
+  {
+	for (xmlNodePtr node = root->children; node != NULL; node = node->next)
+	  if (xmlStrEqual(node->name, PNXML_SCRIPT_MKP))
+		addScript(t, (const char*)xmlGetProp(node, PNXML_REFERENCE_ATTR));
+  }
+
+  return PNEC_SUCCESS;
+}
+
+pnint
+PNGLShape::_unserializeNode(xmlNode* node)
+{
+  if (xmlStrEqual(PNXML_ACTION_MKP, node->name))
+	_unserializeActions(node);
+  else if (xmlStrEqual(BAD_CAST PNO_XMLNODE_ROOT.c_str(), node->name))
+  {
+	pnint error = _obj->unserializeFromXML(node);
+	if (error != PNEC_SUCCESS)
+	{
+	  pnerror(PN_LOGLVL_WARNING, "%s(%d) : %s", _label.c_str(), _id, pnGetErrorString(error));
+	  return error;
+	}
+  }
+
+  return PNEC_SUCCESS;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+pnint
+PNGLShape::unserializeFromXML(xmlNode* root)
+{
+  _id = _parseID((const char *)xmlGetProp(root, PNXML_ID_ATTR));
+  _label = (const char *)xmlGetProp(root, PNXML_LABEL_ATTR);
+  _classStr = (const char *)xmlGetProp(root, PNXML_CLASS_ATTR);
+
+  pnerror(PN_LOGLVL_DEBUG, "PNEditor - New entity : name=%s, id=%d", root->name, _id);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  if (xmlStrEqual(xmlGetProp(root, PNXML_ENVTYPE_ATTR), PNXML_GROUND_VAL))
+	_envType = PN_GROUND;
+  else if (xmlStrEqual(xmlGetProp(root, PNXML_ENVTYPE_ATTR), PNXML_STATIC_VAL))
+	_envType = PN_STATIC;
+  else if (xmlStrEqual(xmlGetProp(root, PNXML_ENVTYPE_ATTR), PNXML_DYNAMIC_VAL))
+	_envType = PN_DYNAMIC;
+
+  //////////////////////////////////////////////////////////////////////////
+
+  if (xmlStrEqual(xmlGetProp(root, PNXML_OBJTYPE_ATTR), PNXML_OBJECT_VAL))
+	_obj = new PN3DObject();
+  else if (xmlStrEqual(xmlGetProp(root, PNXML_OBJTYPE_ATTR), PNXML_DYNAMIC_VAL))
+	_obj = new PN3DSkeletonObject();
+  else if (xmlStrEqual(xmlGetProp(root, PNXML_OBJTYPE_ATTR), PNXML_CHARACTER_VAL))
+	_obj = new PNCharacter();
+
+  if (_obj == NULL)
+	return PNEC_FAILED_TO_PARSE;
+
+  //////////////////////////////////////////////////////////////////////////
+
+  for (xmlNodePtr node = root->children ; node != NULL; node = node->next)
+  {
+	pnint error = _unserializeNode(node);
+	if (error != PNEC_SUCCESS)
+	  return error;
+  }
+
+  //////////////////////////////////////////////////////////////////////////
+
+  std::string mdref((const char *)xmlGetProp(root, PNXML_MODELREFERENCE_ATTR));
+
+  if (_obj->getFile() == NULL)
+  {
+	pnint obj_error = _obj->unserializeFromPath(DEF::objectFilePath + mdref);
+	if (obj_error != PNEC_SUCCESS)
+	{
+	  pnerror(PN_LOGLVL_ERROR, "%s%s : %s", DEF::objectFilePath.c_str(), mdref.c_str(), pnGetErrorString(obj_error));
+	  return obj_error;
+	}
+  }
+  else
+  {
+	_obj->setFile(fs::path(DEF::objectFilePath + mdref, fs::native));
+	setModified();
+  }
+
+  //////////////////////////////////////////////////////////////////////////
+
+  pnfloat	  x, y, z, xx, yy, zz, ww;
+
+  x = (pnfloat)atof((const char *)xmlGetProp(root, PNXML_COORDX_ATTR));
+  y = (pnfloat)atof((const char *)xmlGetProp(root, PNXML_COORDY_ATTR));
+  z = (pnfloat)atof((const char *)xmlGetProp(root, PNXML_COORDZ_ATTR));
+  _obj->setCoord(x, y, z);
+
+  xx = (pnfloat)atof((const char *)xmlGetProp(root, PNXML_ROTX_ATTR));
+  yy = (pnfloat)atof((const char *)xmlGetProp(root, PNXML_ROTY_ATTR));
+  zz = (pnfloat)atof((const char *)xmlGetProp(root, PNXML_ROTZ_ATTR));
+  ww = (pnfloat)atof((const char *)xmlGetProp(root, PNXML_ROTW_ATTR));
+  _obj->setOrient(xx, yy, zz, ww);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  return PNEC_SUCCESS;
+}
+
+pnint
+PNGLShape::serializeInXML(xmlNode* root, pnbool isroot/* = false*/)
+{
+  if (isroot == false)
+	root = xmlNewChild(root, NULL, BAD_CAST getRootNodeName().c_str(), NULL);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  std::ostringstream os;
+  os << PNXML_IDBASE_VAL << getId();
+
+  xmlNewProp(root, PNXML_ID_ATTR, BAD_CAST os.str().c_str());
+
+  xmlNewProp(root, PNXML_LABEL_ATTR, BAD_CAST getLabel().c_str());
+  xmlNewProp(root, PNXML_MODELREFERENCE_ATTR,BAD_CAST DEF::convertPath(DEF::objectFilePath, _obj->getFile()->string()).c_str());
+
+  switch (getEnvType())
+  {
+  case PN_GROUND:
+	xmlNewProp(root, PNXML_ENVTYPE_ATTR, PNXML_GROUND_VAL);
+  	break;
+  case PN_STATIC:
+	xmlNewProp(root, PNXML_ENVTYPE_ATTR, PNXML_STATIC_VAL);
+	break;
+  case PN_DYNAMIC:
+	xmlNewProp(root, PNXML_ENVTYPE_ATTR, PNXML_DYNAMIC_VAL);
+	break;
+  default:
+	break;
+  }
+
+  switch (_obj->getObjType())
+  {
+  case PN3DObject::OBJTYPE_3DSKELETONOBJ:
+	xmlNewProp(root, PNXML_OBJTYPE_ATTR, PNXML_DYNAMIC_VAL);
+	break;
+  case PN3DObject::OBJTYPE_3DOBJ:
+	xmlNewProp(root, PNXML_OBJTYPE_ATTR, PNXML_OBJECT_VAL);
+	break;
+  case PN3DObject::OBJTYPE_CHARACTER:
+	xmlNewProp(root, PNXML_OBJTYPE_ATTR, PNXML_CHARACTER_VAL);
+	break;
+  default:
+	break;
+  }
+
+  xmlNewProp(root, PNXML_CLASS_ATTR, BAD_CAST getClassStr().c_str());
+
+  PNPoint3f		p = _obj->getCoord();
+  PNQuatf		q = _obj->getOrient();
+
+  XMLUtils::xmlNewProp(root, PNXML_COORDX_ATTR, p.x);
+  XMLUtils::xmlNewProp(root, PNXML_COORDY_ATTR, p.y);
+  XMLUtils::xmlNewProp(root, PNXML_COORDZ_ATTR, p.z);
+
+  XMLUtils::xmlNewProp(root, PNXML_ROTX_ATTR, q.x);
+  XMLUtils::xmlNewProp(root, PNXML_ROTY_ATTR, q.y);
+  XMLUtils::xmlNewProp(root, PNXML_ROTZ_ATTR, q.z);
+  XMLUtils::xmlNewProp(root, PNXML_ROTW_ATTR, q.w);
+
+  //////////////////////////////////////////////////////////////////////////
+  // save modifications of the pno if necessary
+  if (modified())
+	_obj->serializeInXML(root);
+
+  //////////////////////////////////////////////////////////////////////////
+  // actions
+  scriptMap&	  scripts = getScripts();
+  for (scriptMap::iterator i = scripts.begin(); i != scripts.end(); i++)
+  {
+	xmlNodePtr node = xmlNewChild(root, NULL, PNXML_ACTION_MKP, NULL);
+	xmlNewProp(node, PNXML_REFERENCE_ATTR, BAD_CAST PNEventManager::getInstance()->getNameByType(i->first).c_str());
+
+	for (scriptList::iterator j = i->second->begin(); j != i->second->end(); j++)
+	{
+	  std::string str = (*j)->string().substr(PN::DEF::gamedefFilePath.size(),
+		(*j)->string().size() - PN::DEF::gamedefFilePath.size());
+
+	  xmlNewChild(node, NULL, PNXML_SCRIPT_MKP, NULL);
+	  xmlNewProp(node, PNXML_REFERENCE_ATTR, BAD_CAST str.c_str());
+	}
+  }
+
+  return PNEC_SUCCESS;
+}
+
+//////////////////////////////////////////////////////////////////////////
 };
 //////////////////////////////////////////////////////////////////////////
 };

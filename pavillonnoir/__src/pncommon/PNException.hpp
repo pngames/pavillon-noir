@@ -2,7 +2,7 @@
  * PNException.hpp
  * 
  * Description :
- * PNException declaration/definition
+ * PNException declaration
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -39,14 +39,15 @@ class PNAPI		PNException
 {
 private:
   std::string	_message;
+  pnint			_errcode;
 public:
-  PNException(const std::string& message) : _message(message) {}
-  virtual ~PNException() {}
+  PNException(const std::string& message);
+  PNException(pnint errcode);
+  virtual ~PNException();
 
-  virtual const std::string	&getMessage(void) const
-  {
-	return _message;
-  }
+  virtual const std::string	&getMessage(void) const;
+
+  virtual pnint	getErrorCode(void) const;
 };
 
 //////////////////////////////////////////////////////////////////////////
