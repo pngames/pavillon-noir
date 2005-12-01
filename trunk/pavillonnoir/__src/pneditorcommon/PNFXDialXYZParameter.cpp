@@ -128,15 +128,28 @@ namespace PN {
 	  {
 	  case PN_PARAMTYPE_DIALX:
 		o->rotatePitchRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
+		#ifdef WIN32
 		sprintf_s(str, "%f", x);
+		#else
+		sprintf(str, "%f", x);
+		#endif
 		break;
 	  case PN_PARAMTYPE_DIALY:
 		o->rotateYawRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
+		#ifdef WIN32
 		sprintf_s(str, "%f", y);
+		#else
+		sprintf(str, "%f", y);
+		#endif
 		break;
 	  case PN_PARAMTYPE_DIALZ:
 		o->rotateRollRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
+		#ifdef WIN32
 		sprintf_s(str, "%f", z);
+		#else
+		sprintf(str, "%f", z);
+		#endif
+
 		break;
 	  default:
 		break;
