@@ -74,8 +74,7 @@ struct				pnevent
   /// Destructor for pnevent
   ~pnevent()
   {
-    if (data != NULL && data->destructData)
-      delete data;
+    
   }
 };
 
