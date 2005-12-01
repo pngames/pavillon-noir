@@ -29,6 +29,7 @@
 
 
 #include <iostream>
+#include <sstream>
 
 #include "pneditorcommon.hpp"
 #include "pnproperties.h"
@@ -39,126 +40,103 @@
 using namespace std;
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  // Map
-  FXDEFMAP(PNFXDialXYZParameter) PNFXDialXYZParameterMap[]={
-	FXMAPFUNC(SEL_UPDATE,0,PNFXDialXYZParameter::onUpdate)
-  };
+// Map
+FXDEFMAP(PNFXDialXYZParameter) PNFXDialXYZParameterMap[]={
+  FXMAPFUNC(SEL_UPDATE,0,PNFXDialXYZParameter::onUpdate)
+};
 
-  //////////////////////////////////////////////////////////////////////////
-  FXIMPLEMENT(PNFXDialXYZParameter,FXHorizontalFrame,PNFXDialXYZParameterMap,ARRAYNUMBER(PNFXDialXYZParameterMap))
+//////////////////////////////////////////////////////////////////////////
+FXIMPLEMENT(PNFXDialXYZParameter,FXHorizontalFrame,PNFXDialXYZParameterMap,ARRAYNUMBER(PNFXDialXYZParameterMap))
 
-	PNFXDialXYZParameter::PNFXDialXYZParameter(FXComposite* p, PNConfigurableParameter* param)
-	: FXHorizontalFrame(p)
+PNFXDialXYZParameter::PNFXDialXYZParameter(FXComposite* p, PNConfigurableParameter* param)
+: FXHorizontalFrame(p)
+{
+  _param = param;
+  PN3DObject* o = (PN3DObject*)_param->getElem();
+  _dial = new FXDial(this, NULL, 0, FRAME_SUNKEN  |  FRAME_THICK  |  DIAL_CYCLIC  |  
+	DIAL_HORIZONTAL  |  LAYOUT_FIX_WIDTH  |  LAYOUT_FIX_HEIGHT  |  
+	LAYOUT_CENTER_Y, 0, 0, 160, 14, 0, 0, 0, 0);
+  _field = new FXTextField(this, 6, NULL, 0, TEXTFIELD_READONLY|FRAME_SUNKEN|FRAME_THICK|LAYOUT_SIDE_TOP);
+  _oldValue = _dial->getValue();
+
+  ostringstream oss;
+
+  pnfloat x, y, z;
+  o->getOrient().getDegrees(x, y, z);
+  switch (_param->getType())
   {
-	char str[128];
-	pnfloat x,y,z;
+  case PN_PARAMTYPE_DIALX:
+	oss << x;
+	break;
+  case PN_PARAMTYPE_DIALY:
+	oss << y;
+	break;
+  case PN_PARAMTYPE_DIALZ:
+	oss << z;
+	break;
+  default:
+	break;
+  }
 
-	_param = param;
+  _field->setText(oss.str().c_str());
+}
+
+PNFXDialXYZParameter::~PNFXDialXYZParameter()
+{
+  delete _dial;
+  delete _field;
+}
+
+
+void	PNFXDialXYZParameter::create()
+{
+  FXHorizontalFrame::create();
+}
+
+void	PNFXDialXYZParameter::update()
+{
+  return;
+}
+
+long  PNFXDialXYZParameter::onUpdate(FXObject* sender, FXSelector sel, void *ptr)
+{
+  FXHorizontalFrame::onUpdate(sender,sel,ptr);
+  pnfloat pos = (pnfloat)_dial->getValue();
+
+  if (pos != _oldValue)
+  {
 	PN3DObject* o = (PN3DObject*)_param->getElem();
-	_dial = new FXDial(this, NULL, 0, FRAME_SUNKEN  |  FRAME_THICK  |  DIAL_CYCLIC  |  
-						DIAL_HORIZONTAL  |  LAYOUT_FIX_WIDTH  |  LAYOUT_FIX_HEIGHT  |  
-						LAYOUT_CENTER_Y, 0, 0, 160, 14, 0, 0, 0, 0);
-	_field = new FXTextField(this, 6, NULL, 0, TEXTFIELD_READONLY|FRAME_SUNKEN|FRAME_THICK|LAYOUT_SIDE_TOP);
-	_oldValue = _dial->getValue();
 
-	memset(str, 0, 128);
+	ostringstream oss;
+
+	pnfloat	  x, y, z;
 	o->getOrient().getDegrees(x, y, z);
 	switch (_param->getType())
 	{
 	case PN_PARAMTYPE_DIALX:
-#ifdef WIN32
-	  sprintf_s(str, "%f", x);
-#else
-	  sprintf(str, "%f", x);
-#endif
+	  o->rotatePitchRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
+	  oss << x;
 	  break;
 	case PN_PARAMTYPE_DIALY:
-#ifdef WIN32
-	  sprintf_s(str, "%f", y);
-#else
-	  sprintf(str, "%f", y);
-#endif
+	  o->rotateYawRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
+	  oss << y;
 	  break;
 	case PN_PARAMTYPE_DIALZ:
-#ifdef WIN32
-	  sprintf_s(str, "%f", z);
-#else
-	  sprintf(str, "%f", z);
-#endif
+	  o->rotateRollRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
+	  oss << z;
 	  break;
 	default:
 	  break;
 	}
-	_field->setText(str);
+
+	_oldValue = (pnint)pos;
+	_field->setText(oss.str().c_str());
+	_param->getConfigurableObject()->update(_param);
   }
 
-  PNFXDialXYZParameter::~PNFXDialXYZParameter()
-  {
-	delete _dial;
-	delete _field;
-  }
-
-
-  void	PNFXDialXYZParameter::create()
-  {
-	FXHorizontalFrame::create();
-  }
-
-  void	PNFXDialXYZParameter::update()
-  {
-	return;
-  }
-
-  long  PNFXDialXYZParameter::onUpdate(FXObject* sender, FXSelector sel, void *ptr)
-  {
-	FXHorizontalFrame::onUpdate(sender,sel,ptr);
-	pnfloat pos = (pnfloat)_dial->getValue();
-
-	if (pos != _oldValue)
-	{
-	  PN3DObject* o = (PN3DObject*)_param->getElem();
-	  char		  str[128];
-	  pnfloat	  x, y, z;
-
-	  memset(str, 0, 128);
-	  o->getOrient().getDegrees(x, y, z);
-	  switch (_param->getType())
-	  {
-	  case PN_PARAMTYPE_DIALX:
-		o->rotatePitchRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
-		#ifdef WIN32
-		sprintf_s(str, "%f", x);
-		#else
-		sprintf(str, "%f", x);
-		#endif
-		break;
-	  case PN_PARAMTYPE_DIALY:
-		o->rotateYawRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
-		#ifdef WIN32
-		sprintf_s(str, "%f", y);
-		#else
-		sprintf(str, "%f", y);
-		#endif
-		break;
-	  case PN_PARAMTYPE_DIALZ:
-		o->rotateRollRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
-		#ifdef WIN32
-		sprintf_s(str, "%f", z);
-		#else
-		sprintf(str, "%f", z);
-		#endif
-
-		break;
-	  default:
-		break;
-	  }
-	  _oldValue = (pnint)pos;
-	  _field->setText(str);
-	  _param->getConfigurableObject()->update(_param);
-	}
-	return 1;
-  }
-  //////////////////////////////////////////////////////////////////////////
+  return 1;
+}
+//////////////////////////////////////////////////////////////////////////
 };
