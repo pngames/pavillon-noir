@@ -168,9 +168,9 @@ PNFXStringListParameter::getStringValue()
   return *str;
 }
 
-/*! Runs throught the list and selects the given string.
+/*! Runs through the list and selects the given string.
 *  \param	val	  the string to select in _listBox
-*	 \return true on success, false if val is not part of _listBox
+*  \return true on success, false if val is not part of _listBox
 */
 pnbool
 PNFXStringListParameter::setStringValue(const std::string& val)
