@@ -39,6 +39,7 @@
 #include "PNFXDirParameter.hpp"
 #include "PNFXLinksParameter.hpp"
 #include "PNFXDialXYZParameter.hpp"
+#include "PNFXEventBoxParameter.hpp"
 #include "PNFXAnimListParameter.hpp"
 #include "PNFXMaterialListParameter.hpp"
 #include "PNFXScriptListParameter.hpp"
@@ -111,6 +112,10 @@ void  PNPropertiesGrid::setObject(PNConfigurableObject* object)
 	case PN_PARAMTYPE_DIALZ:
 	  _params.push_back((PNPropertiesGridParameter*)(new PNFXDialXYZParameter(this, current_param)));
 	  break;
+	case PN_PARAMTYPE_EVENTBOX:
+	  _params.push_back((PNPropertiesGridParameter*)(new PNFXEventBoxParameter(this, current_param)));
+	  pnerror(PN_LOGLVL_DEBUG, "PNPropertiesGrid::setObject() => new PNFXEventBoxParameter");
+	  break;
 	case PN_PARAMTYPE_ANIMLIST:
 	  _params.push_back((PNPropertiesGridParameter*)(new PNFXAnimListParameter(this, current_param)));
 	  break;
@@ -121,7 +126,7 @@ void  PNPropertiesGrid::setObject(PNConfigurableObject* object)
 	  _params.push_back((PNPropertiesGridParameter*)(new PNFXScriptListParameter(this, current_param)));
 	  break;
 	case PN_PARAMTYPE_STRINGLIST:
-		_params.push_back((PNPropertiesGridParameter*)(new PNFXStringListParameter(this, current_param)));
+	  _params.push_back((PNPropertiesGridParameter*)(new PNFXStringListParameter(this, current_param)));
 	  break;
 	default:
 	break;

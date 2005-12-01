@@ -37,6 +37,7 @@
 #include "PNFoxOptionsObject.hpp"
 #include "PNPropertiesGrid.hpp"
 #include "PNConf.hpp"
+#include "PNPluginManager.hpp"
 
 namespace PN
 {
@@ -46,13 +47,10 @@ class	PNFoxOptionWindow : public FXDialogBox
 	FXDECLARE(PNFoxOptionWindow)
 
 private:
-	PNFoxOptionsObject*		_graphicObj;
-	PNFoxOptionsObject*		_audioObj;
-	PNFoxOptionsObject*		_inputObj;
-	
-	PNPropertiesGrid*		_graphicGrid;
-	PNPropertiesGrid*		_audioGrid;
-	PNPropertiesGrid*		_inputGrid;
+
+	PNPluginManager*		_plist;
+	PNConf*					_conf;
+	std::list<PNPropertiesGrid*>  _gridslist;
 
 protected:
 	FXHorizontalFrame*		buttons;
@@ -67,9 +65,10 @@ public:
 	virtual void	create();
 	long			onAccept(FXObject* obj,FXSelector sel,void* ptr);
 	long			onApply(FXObject* obj,FXSelector sel,void* ptr);
+	long			onKeyPress(FXObject*,FXSelector,void* ptr);
 
-	void			saveGrid(PNPropertiesGrid* grid, PNConf* conf);
-	void			loadGrid(PNPropertiesGrid* grid, PNConf* conf);
+	void			saveGrid(PNPropertiesGrid* grid, PNConf* conf, const pnchar* section);
+	void			loadGrid(PNPropertiesGrid* grid, PNConf* conf, const pnchar* section);
 
 public:
   enum {

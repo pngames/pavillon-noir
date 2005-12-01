@@ -68,13 +68,13 @@ namespace PN {
 	switch (_param->getType())
 	{
 	case PN_PARAMTYPE_DIALX:
-	  sprintf(str, "%f", x);
+	  sprintf_s(str, "%f", x);
 	  break;
 	case PN_PARAMTYPE_DIALY:
-	  sprintf(str, "%f", y);
+	  sprintf_s(str, "%f", y);
 	  break;
 	case PN_PARAMTYPE_DIALZ:
-	  sprintf(str, "%f", z);
+	  sprintf_s(str, "%f", z);
 	  break;
 	default:
 	  break;
@@ -116,15 +116,15 @@ namespace PN {
 	  {
 	  case PN_PARAMTYPE_DIALX:
 		o->rotatePitchRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
-		sprintf(str, "%f", x);
+		sprintf_s(str, "%f", x);
 		break;
 	  case PN_PARAMTYPE_DIALY:
 		o->rotateYawRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
-		sprintf(str, "%f", y);
+		sprintf_s(str, "%f", y);
 		break;
 	  case PN_PARAMTYPE_DIALZ:
 		o->rotateRollRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
-		sprintf(str, "%f", z);
+		sprintf_s(str, "%f", z);
 		break;
 	  default:
 		break;

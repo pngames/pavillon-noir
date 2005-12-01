@@ -50,6 +50,7 @@ typedef enum
   PN_PARAMTYPE_DIALY,
   PN_PARAMTYPE_DIALZ,
   PN_PARAMTYPE_BOOLEAN,			// based on bool
+  PN_PARAMTYPE_EVENTBOX,
 
   PN_PARAMTYPE_INTLIST,			// based on std:list<int>
   PN_PARAMTYPE_REALLIST,		// based on std:list<float>
