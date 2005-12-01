@@ -10,6 +10,7 @@ gameMap.entities.all = {}
 gameMap.entities.className = {}
 gameMap.fights = {}
 gameMap.timer = PNTimerClass()
+gameMap.die = PNDieClass()
 
 function gameMap:spawn2(entity, id)
 	pnprint("==>> gameMap:spawn2\n")
@@ -159,19 +160,54 @@ end
 
 function gameMap:onFrustrumIn(sourceId, targetId)
     self.entities.all[sourceId]:onFrustrumIn(self.entities.all[targetId])
-end 
+end
 
 function gameMap:onFrustrumOut(sourceId, targetId)
     self.entities.all[sourceId]:onFrustrumOut(self.entities.all[targetId])
-end 
+end
 
 function gameMap:fightAction(sourceId)
 	local targetId = self.fights[sourceId]
+	local source = self.entities.all[sourceId]
+	local target = self.entities.all[targetId]
 	pnprint(sourceId .. " attacking " .. targetId .. "\n")
-	--gestion du combat (contre, dodge ...) et calcul des degats
+
+	-- gestion du combat (contre, dodge ...) et calcul des degats
+	-- Success Modifier
+	local MDsuccess = 0
+	if (source.health_state == HEALTH_STATE.SERIOUS) then
+		MDsuccess = -1
+	elseif (source.health_state == HEALTH_STATE.DANGEROUS) then
+		MDsuccess = -2
+	elseif (source.health_state == HEALTH_STATE.CRITIC) then
+		MDsuccess = -4
+	end
+
+	-- Number of dice
+	local nbDice = source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier
+	if (source:getViewTarget():getCoord() > source.selected_weapon.range) then
+		nbDice = nbDice - 1
+	elseif (source:getViewTarget():getCoord() > (source.selected_weapon.range / 2)) then
+		nbDice = nbDice + 1
+	end
+
+	-- Attacker's nb success
+	local nbAS = 0
+	while (nbDice > 0) do
+		if (self.die:getVal() <= source.skills[source.selected_weapon.type]) then
+			nbAS = nbAS + 1
+		end
+	end
+
+	pnprint("MDSuccess=" .. MDsuccess .. " nbDice=" .. nbDice .. "nbSuccessAttacker=" .. nbAS .. "\n")
+	if (target.combat_state == COMBAT_STATE.ATTACK) then
+		pnprint(targetId .. " tries to counter!\n")
+	elseif (target.combat_state == COMBAT_STATE.DODGE) then
+		pnprint(targetId .. " tries to dodge!\n")
+	end
 	--Appliquer les degats
-	self.entities.all[sourceId]:onDamage(0)
-	self.entities.all[targetId]:onDamage(0)
+	source:onDamage(0)
+	target:onDamage(0)
 	self.fights[sourceId] = -1
 	if (self.fights[targetId] == sourceId) then
 		self.fights[targetId] = -1

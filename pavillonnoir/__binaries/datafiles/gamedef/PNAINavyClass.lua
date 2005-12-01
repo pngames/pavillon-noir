@@ -19,6 +19,13 @@ function PNAINavyClass(id)
 						 awareness=5,
 						 resistance=5
 						}
+	OBJ.skills=	{h2h_combat=4, -- hand to hand
+						 firearm=7,
+						 slasher=8,
+						 throw_weapon=3,
+						 dodge=6,
+						 escrime=5
+						}
 --------------------------------------------------------
 --[[%
 Called while handling a fight
@@ -31,7 +38,11 @@ Called while handling a fight
 	    	return
 	    end
 		if (self:getCoord():getDistance(self:getViewTarget():getCoord()) > self.selected_weapon.range) then
-			self.combat_state = COMBAT_STATE.DEFENSE
+			if (self.health_state >= (2 * self:getViewTarget().health_state)) then
+				self.combat_state = COMBAT_STATE.DODGE
+			else
+				self.combat_state = COMBAT_STATE.DEFENSE
+			end
 			if (self.elapsedTurns == 0) then
 				self:onMoveForward(ACTION_STATE.START)
 			end

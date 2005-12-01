@@ -4,6 +4,16 @@ COMBAT_STATE={NEUTRAL=0,
 			 DEFENCE=2,
 			 DODGE=3
 			 }
+
+HEALTH_STATE={OK=0,
+			 LIGHT=1,
+			 SERIOUS=2,
+			 DANGEROUS=3,
+			 CRITIC=4,
+			 COMA=5,
+			 LETHAL=6
+			 }
+
 CHARACTER_TYPE={CIVILAN=0,
 				NAVY=1,
 				PIRATE=2
@@ -28,12 +38,11 @@ CHARACTER_ANIM={IDLE=0,
 				STRIKE_1=16
 				}
 								
-CHARACTER_ATTITUDE={
-					WALKING=0,
+CHARACTER_ATTITUDE={WALKING=0,
 				  	RUNNING=1,
 				  	CROUCHING=2,
 				  	JUMPING=3
-				  }
+				  	}
 				  
 CHARACTER_DIR_LONG={NONE=0,
 					FORWARD=1,
@@ -118,7 +127,7 @@ function PNCharacterClass(id)
 	--------------- Animation parameters ---------------------- 
 	OBJ:setAnimSpeed(4.0)
 	OBJ.idleTime = 0
-	--------------- Animation parameters ---------------------- 
+	----------------- Fight Management ------------------------ 
 	gameMap.fights[OBJ.id] = -1
 -------------------------------------------------------------------------------
 ---------------------move order callback-----------------------
