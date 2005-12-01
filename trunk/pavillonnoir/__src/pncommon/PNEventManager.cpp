@@ -328,6 +328,9 @@ PNEventManager::run()
 	PNLOCK(this);
 
     _events.pop();
+    
+	if (data != NULL && data->destructData)
+      delete data;
   }
 }
 
@@ -344,13 +347,9 @@ void	PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* d
   if (data != NULL)
 	data->destructData = destruct;
 
-  pnevent eventParams(type, source, data);
-
   PNLOCK(this);
 
-  _events.push(eventParams);
-
-  eventParams.data = NULL;
+  _events.push(pnevent(type, source, data));
 
   if (_events.size() == 1)
   {
