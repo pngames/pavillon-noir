@@ -8,6 +8,7 @@ tolua:takeownership(gameMap)
 gameMap.entities = {}	
 gameMap.entities.all = {}
 gameMap.entities.className = {}
+gameMap.fights = {}
 gameMap.timer = PNTimerClass()
 
 function gameMap:spawn2(entity, id)
@@ -164,10 +165,26 @@ function gameMap:onFrustrumOut(sourceId, targetId)
     self.entities.all[sourceId]:onFrustrumOut(self.entities.all[targetId])
 end 
 
+function gameMap:fightAction(sourceId)
+	local targetId = self.fights[sourceId]
+	pnprint(sourceId .. " attacking " .. targetId .. "\n")
+	--gestion du combat (contre, dodge ...) et calcul des degats
+	--Appliquer les degats
+	self.entities.all[sourceId]:onDamage(0)
+	self.entities.all[targetId]:onDamage(0)
+	self.fights[sourceId] = -1
+	if (self.fights[targetId] == sourceId) then
+		self.fights[targetId] = -1
+	end
+end
+
 function gameMap:onAttack(sourceId, targetId)
 	--local id
 	--local entity
-	for id, entity in pairs(self.entities.all) do
-      self.entities.all[id]:onAttack(self.entities.all[sourceId], self.entities.all[targetId])
-	end	
+	pnprint(sourceId .. " wants to attack " .. targetId .. "\n")
+	self.fights[sourceId] = targetId
+	if (self.fights[targetId] ~= sourceId) then
+		pnprint("addTask\n")
+		self.timer:addTask(self, "fightAction", 100, false, sourceId)
+	end
 end

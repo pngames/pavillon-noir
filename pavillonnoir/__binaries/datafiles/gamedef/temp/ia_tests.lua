@@ -13,7 +13,7 @@ pnprint("entering ia_tests.lua\n")
 if (gameMap.entities.className.PNAIPirate ~= nil) then
 	for id, entity in pairs(gameMap.entities.className.PNAIPirate) do
 		pnprint(entity:getId())
-		local aPoint = PNPoint:new_local(-1200.0, 40.0, -1000.0)
+		local aPoint = PNPoint3f:new_local(-1200.0, 40.0, -1000.0)
 		entity:moveTo(aPoint)
 		pnprint("\n")
 		break
