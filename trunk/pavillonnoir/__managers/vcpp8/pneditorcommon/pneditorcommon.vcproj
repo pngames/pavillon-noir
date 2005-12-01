@@ -187,54 +187,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXActiveStringParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXAnimListParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXDialXYZParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXDirParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXFileParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXIntParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXLinksParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXMaterialListParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXRealParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXScriptListParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXStringListParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXStringParameter.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pneditorcommon\PNGLContext.cpp"
 				>
 			</File>
@@ -246,6 +198,62 @@
 				RelativePath="..\..\..\__src\pneditorcommon\PNPropertiesPopup.cpp"
 				>
 			</File>
+			<Filter
+				Name="parameters"
+				>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXActiveStringParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXAnimListParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXDialXYZParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXDirParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXEventBoxParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXFileParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXIntParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXLinksParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXMaterialListParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXRealParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXScriptListParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXStringListParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXStringParameter.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -254,54 +262,6 @@
 			>
 			<File
 				RelativePath="..\..\..\__src\pneditorcommon\pneditorcommon.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXActiveStringParameter.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXAnimListParameter.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXDialXYZParameter.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXDirParameter.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXFileParameter.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXIntParameter.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXLinksParameter.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXMaterialListParameter.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXRealParameter.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXScriptListParameter.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXStringListParameter.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pneditorcommon\PNFXStringParameter.hpp"
 				>
 			</File>
 			<File
@@ -316,6 +276,62 @@
 				RelativePath="..\..\..\__src\pneditorcommon\PNPropertiesPopup.hpp"
 				>
 			</File>
+			<Filter
+				Name="Parameters"
+				>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXActiveStringParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXAnimListParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXDialXYZParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXDirParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXEventBoxParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXFileParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXIntParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXLinksParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXMaterialListParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXRealParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXScriptListParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXStringListParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXStringParameter.hpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
