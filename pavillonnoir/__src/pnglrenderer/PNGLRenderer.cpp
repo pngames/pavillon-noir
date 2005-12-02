@@ -49,6 +49,7 @@
 
 #include "PNGameInterface.hpp"
 #include "PNGUIConsole.hpp"
+#include "PNGUIConfPanel.hpp"
 
 #include "PNMatrix4f.hpp"
 #include "PNPoint3f.hpp"
@@ -732,6 +733,9 @@ PNGLRenderer::initGUI()
 
 	//init console
 	PNGUIConsole::getInstance();
+
+	//init confpanel
+	PNGUIConfPanel::getInstance();
 
 	PNEventManager::getInstance()->addCallback(PN_EVENT_RU_ENDING, EventCallback(this, &PNGLRenderer::updateGUI));
 	_infoPanel = new PNInfoPanel();
