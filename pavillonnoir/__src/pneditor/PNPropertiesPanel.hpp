@@ -50,7 +50,7 @@ class PNEditor;
 
 //////////////////////////////////////////////////////////////////////////
 
-class PNPropertiesPanel : public FXComposite, public PNEditorObject
+class								PNPropertiesPanel : public FXVerticalFrame, public PNEditorObject
 {
   FXDECLARE(PNPropertiesPanel)
 
@@ -58,34 +58,35 @@ public:
   typedef	enum
   {
 	PN_PANELTYPE_3DOBJECTS,
-	PN_PANELTYPE_WAYPOINTS
+	PN_PANELTYPE_WAYPOINTS,
+	PN_PANELTYPE_SKYBOX
   }		paneltype_t;
 
 private:
   // list of all the PNConfigurableObject in the panel
-  std::list<PNConfigurableObject*>  _objectsList;
-  FXGroupBox*                       _groupBox;   
-  FXListBox*                        _objectsListBox;
-  FXButton*						  _buttonAdd;
-  FXButton*						  _buttonDelete;
-  FXButton*						  _buttonSave;
-  FXButton*						  _buttonReset;
-  PNPropertiesGrid*                 _grid;
-  EDITOR::PNEditor*				  _ed;
+  std::list<PNConfigurableObject*>	_objectsList;
+  FXGroupBox*						_groupBox;   
+  FXListBox*						_objectsListBox;
+  FXButton*							_buttonAdd;
+  FXButton*							_buttonDelete;
+  FXButton*							_buttonSave;
+  FXButton*							_buttonReset;
+  PNPropertiesGrid*					_grid;
+  EDITOR::PNEditor*					_ed;
 
   // dialogbox
-  FXDialogBox*					  _dbox;
-  FXListBox*                        _envTypesListBox;
-  FXListBox*                        _objTypesListBox;
-  FXTextField*					  _fieldX;
-  FXTextField*					  _fieldY;
-  FXTextField*					  _fieldZ;
-  FXTextField*					  _objLabel;
-  FXTextField*					  _classLabel;
-  FXTextField*					  _path;
+  FXDialogBox*						_dbox;
+  FXListBox*						_envTypesListBox;
+  FXListBox*						_objTypesListBox;
+  FXTextField*						_fieldX;
+  FXTextField*						_fieldY;
+  FXTextField*						_fieldZ;
+  FXTextField*						_objLabel;
+  FXTextField*						_classLabel;
+  FXTextField*						_path;
 
-  paneltype_t						  _type;
-  pnint							  _idMax;
+  paneltype_t						_type;
+  pnint								_idMax;
 
 protected:
   PNPropertiesPanel(){}

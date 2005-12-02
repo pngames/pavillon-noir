@@ -118,7 +118,6 @@ namespace PN
 	case KEY_KP_Enter:
 	  {
 		_param->getConfigurableObject()->update(_param);
-		((PNPropertiesGrid*)obj)->updateParent();
 		return 1;
 	  }
 	default:

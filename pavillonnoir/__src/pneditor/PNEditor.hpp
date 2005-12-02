@@ -40,17 +40,18 @@
 #include "PNGLShape.hpp"
 #include "PNGLGroup.hpp"
 
-namespace PN 
-{
-  class PNIAGraph;
-  class PNWayPoint;
-  class PNPropertiesPanel;
-  class PN3DSkeletonObject;
-  
-  namespace EDITOR
-  {
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
 
-/*******************************************************************************/
+class PNIAGraph;
+class PNWayPoint;
+class PNPropertiesPanel;
+class PN3DSkeletonObject;
+  
+namespace EDITOR {
+//////////////////////////////////////////////////////////////////////////
+
+class PNEDSkyboxPanel;
 
 // Main Window
 class PNEditor : public FXMainWindow
@@ -142,8 +143,11 @@ private:
   FXIcon            *smoothlighticon;*/
   FXListBox*        waypointsListBox;
   FXQuatf			camOrient;
+
   PN::PNPropertiesPanel* objPanel;
   PN::PNPropertiesPanel* wpPanel;
+  PNEDSkyboxPanel* _skPanel;
+
   PNWayPoint*		_startWP;
   FXTabBook*		_panels;
 
@@ -156,6 +160,7 @@ private:
 protected:
   PNEditor() {}
 public:
+  PNEDSkyboxPanel*	getSKPanel() { return _skPanel; }
 
   // Message handlers
   long onCmdOpen(FXObject* obj, FXSelector sel, void* ptr);
