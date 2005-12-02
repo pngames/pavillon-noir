@@ -173,33 +173,10 @@ function gameMap:fightAction(sourceId)
 	pnprint(sourceId .. " attacking " .. targetId .. "\n")
 
 	-- gestion du combat (contre, dodge ...) et calcul des degats
-	-- Success Modifier
-	local MDsuccess = 0
-	if (source.health_state == HEALTH_STATE.SERIOUS) then
-		MDsuccess = -1
-	elseif (source.health_state == HEALTH_STATE.DANGEROUS) then
-		MDsuccess = -2
-	elseif (source.health_state == HEALTH_STATE.CRITIC) then
-		MDsuccess = -4
-	end
 
-	-- Number of dice
-	local nbDice = source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier
-	if (source:getViewTarget():getCoord() > source.selected_weapon.range) then
-		nbDice = nbDice - 1
-	elseif (source:getViewTarget():getCoord() > (source.selected_weapon.range / 2)) then
-		nbDice = nbDice + 1
-	end
-
-	-- Attacker's nb success
-	local nbAS = 0
-	while (nbDice > 0) do
-		if (self.die:getVal() <= source.skills[source.selected_weapon.type]) then
-			nbAS = nbAS + 1
-		end
-	end
-
-	pnprint("MDSuccess=" .. MDsuccess .. " nbDice=" .. nbDice .. "nbSuccessAttacker=" .. nbAS .. "\n")
+	nbAS = source:getNBFightSuccess()
+	nbDS = target:getNBFightSuccess()
+	pnprint("nbAtackerSucces=" .. nbAS .. "nbDefenderSuccess=" .. nbDS .. "\n")
 	if (target.combat_state == COMBAT_STATE.ATTACK) then
 		pnprint(targetId .. " tries to counter!\n")
 	elseif (target.combat_state == COMBAT_STATE.DODGE) then
