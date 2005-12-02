@@ -43,6 +43,7 @@
 #include "PNGLShape.hpp"
 #include "PNPropertiesPanel.hpp"
 #include "PNEDSkyboxPanel.hpp"
+#include "PNEditor.hpp"
 
 #include "PNGLGroup.hpp"
 

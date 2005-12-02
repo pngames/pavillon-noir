@@ -56,12 +56,12 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 class PN3DObject;
-class PNPropertiesPanel;
 
 namespace EDITOR {
 //////////////////////////////////////////////////////////////////////////
 
 class PNEditor;
+class PNPropertiesPanel;
 
 class						PNGLShape : public FXGLShape, public PNConfigurableObject, public IPNXMLSerializable
 {
