@@ -51,8 +51,7 @@ namespace PN {
 	pnuint			getNbInterface();
 
 	// initialise le module
-	void			init();
-	
+	void			init();	
 
 	//////////////////////////////////////////////////////////////////////////
 

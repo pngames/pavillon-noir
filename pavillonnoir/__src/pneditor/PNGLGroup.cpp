@@ -201,19 +201,13 @@ PNGLGroup::remove(FXGLObject* obj)
 //////////////////////////////////////////////////////////////////////////
 
 void
-PNGLGroup::setPropertiesPanel(PNPropertiesPanel* panel)
+PNGLGroup::init(PNEditor* editor, PNPropertiesPanel* panel)
 {
+  _editor = editor;
   _grid = panel;
 
   _skybox.setContext(_grid, _editor);
-}
-
-void
-PNGLGroup::setEditor(PNEditor* editor)
-{
-  _editor = editor;
-
-  _skybox.setContext(_grid, _editor);
+  _grid->addObject(&_skybox);
 }
 
 //////////////////////////////////////////////////////////////////////////

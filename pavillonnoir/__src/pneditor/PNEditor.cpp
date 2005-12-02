@@ -352,9 +352,6 @@ PNEditor::PNEditor(FXApp* a)
   //////////////////////////////////////////////////////////////////////////
   
   _genScene.setOptionView(PNGLGroup::VIEW_ALL);
-
-  _genScene.setPropertiesPanel(objPanel);
-  _genScene.setEditor(this);
 }
 
 // Destructor
@@ -386,6 +383,8 @@ void PNEditor::create()
   dragshell2->create();
   dragshell3->create();
   show(PLACEMENT_SCREEN);
+
+  _genScene.init(this, objPanel);
 }
 
 
