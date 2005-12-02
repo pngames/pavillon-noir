@@ -47,22 +47,20 @@ class PNEDAPI			PNPropertiesGrid : public FXMatrix
 
   PNConfigurableObject*	_object;
   std::list<PNPropertiesGridParameter*> _params;
-  PNEditorObject*		_parent;
 
 protected:
   PNPropertiesGrid(){}
   PNPropertiesGrid(const PNPropertiesGrid&){}
 
 public:
-  long					onUpdate(FXObject*,FXSelector,void*);
-  long					onCmdListBox(FXObject*,FXSelector,void*);
+  long					onUpdate(FXObject*, FXSelector, void*);
+  long					onCmdListBox(FXObject*, FXSelector, void*);
 
-  PNPropertiesGrid(FXComposite* p, PNEditorObject* parent=NULL);
+  PNPropertiesGrid(FXComposite* p);
   virtual ~PNPropertiesGrid();
 
   void					create();
   void					update();
-  void					updateParent();
   std::list<PNPropertiesGridParameter*>& getParams() { return _params; }
 
   void  setObject(PNConfigurableObject* object);

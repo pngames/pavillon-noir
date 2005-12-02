@@ -42,6 +42,7 @@
 
 #include "PNGLShape.hpp"
 #include "PNPropertiesPanel.hpp"
+#include "PNEDSkyboxPanel.hpp"
 
 #include "PNGLGroup.hpp"
 
@@ -207,7 +208,7 @@ PNGLGroup::init(PNEditor* editor, PNPropertiesPanel* panel)
   _grid = panel;
 
   _skybox.setContext(_grid, _editor);
-  _grid->addObject(&_skybox);
+  _editor->getSKPanel()->setObject(&_skybox);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -285,10 +286,6 @@ pnint
 PNGLGroup::unserializeFromXML(xmlNode* root)
 {
   pnerror(PN_LOGLVL_DEBUG, "%s : %s", "PNEditor - node name", root->name);
-
-  //////////////////////////////////////////////////////////////////////////
-
-  _grid->addObject(&_skybox);
 
   //////////////////////////////////////////////////////////////////////////
 

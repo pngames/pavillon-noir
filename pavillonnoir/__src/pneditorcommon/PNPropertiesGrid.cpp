@@ -52,10 +52,9 @@ namespace PN
   //FXIMPLEMENT(PNPropertiesGrid,FXComposite,PNPropertiesGridMap,ARRAYNUMBER(PNPropertiesGridMap))
   FXIMPLEMENT(PNPropertiesGrid,FXComposite,NULL,0)
 
-PNPropertiesGrid::PNPropertiesGrid(FXComposite* p, PNEditorObject* parent)
+PNPropertiesGrid::PNPropertiesGrid(FXComposite* p)
 : FXMatrix(p, 2, LAYOUT_FILL_X|LAYOUT_FILL_Y|MATRIX_BY_COLUMNS)
 {
-  _parent = parent;
 }
 
 PNPropertiesGrid::~PNPropertiesGrid()
@@ -141,19 +140,6 @@ void PNPropertiesGrid::update()
 {
   for (std::list<PNPropertiesGridParameter*>::iterator it = _params.begin(); it != _params.end(); it++)
     (*it)->update();
-  return;
-}
-
-void PNPropertiesGrid::updateParent()
-{
-  // BUG : _parent est de type FXFont
-  // BUG2 : _parent->update() => PNPropertiesGrid->update() n'est pas appele
-  if (_parent != NULL)
-  {
-	pnerror(PN_LOGLVL_DEBUG, "void PNPropertiesGrid::updateParent() : _parent->update()");
-	//_parent->update();
-  }
-  return;
 }
 
 PNConfigurableObject*  PNPropertiesGrid::getObject()
