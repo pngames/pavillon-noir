@@ -50,7 +50,7 @@ class PNEditor;
 
 //////////////////////////////////////////////////////////////////////////
 
-class						PNEDSkyboxPanel : public FXVerticalFrame, public PNEditorObject
+class						PNEDSkyboxPanel : public FXVerticalFrame
 {
   FXDECLARE(PNEDSkyboxPanel)
 

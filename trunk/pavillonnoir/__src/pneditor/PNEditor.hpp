@@ -45,13 +45,13 @@ namespace PN {
 
 class PNIAGraph;
 class PNWayPoint;
-class PNPropertiesPanel;
 class PN3DSkeletonObject;
   
 namespace EDITOR {
 //////////////////////////////////////////////////////////////////////////
 
 class PNEDSkyboxPanel;
+class PNPropertiesPanel;
 
 // Main Window
 class PNEditor : public FXMainWindow
@@ -144,9 +144,9 @@ private:
   FXListBox*        waypointsListBox;
   FXQuatf			camOrient;
 
-  PN::PNPropertiesPanel* objPanel;
-  PN::PNPropertiesPanel* wpPanel;
-  PNEDSkyboxPanel* _skPanel;
+  PNPropertiesPanel*	objPanel;
+  PNPropertiesPanel*	wpPanel;
+  PNEDSkyboxPanel*		_skPanel;
 
   PNWayPoint*		_startWP;
   FXTabBook*		_panels;
@@ -192,9 +192,9 @@ public:
   long onCmdCopyObj(FXObject* obj, FXSelector sel, void* ptr);
 
   // panels
-  PN::PNPropertiesPanel*  getObjPanel() { return objPanel; }
-  PN::PNPropertiesPanel*  getWpPanel() { return wpPanel; }
-  void					  setCurrentTab(int idx) { if(_panels->getCurrent()!=idx)_panels->setCurrent(idx); }
+  PNPropertiesPanel*	getObjPanel() { return objPanel; }
+  PNPropertiesPanel*	getWpPanel() { return wpPanel; }
+  void					setCurrentTab(int idx) { if(_panels->getCurrent()!=idx)_panels->setCurrent(idx); }
 
   // Loading
   /*int	  _loadEntities(const boost::filesystem::path& file);

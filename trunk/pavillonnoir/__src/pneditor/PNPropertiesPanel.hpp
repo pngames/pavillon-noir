@@ -40,17 +40,17 @@
 
 #include "PNPropertiesGrid.hpp"
 #include "PNConfigurableObject.hpp"
-#include "PNEditor.hpp" // linux
 
 /////////////////////////////////////
 
-namespace PN {
+namespace PN { namespace EDITOR {
+//////////////////////////////////////////////////////////////////////////
 
 class PNEditor;
 
 //////////////////////////////////////////////////////////////////////////
 
-class								PNPropertiesPanel : public FXVerticalFrame, public PNEditorObject
+class								PNPropertiesPanel : public FXVerticalFrame
 {
   FXDECLARE(PNPropertiesPanel)
 
@@ -72,7 +72,7 @@ private:
   FXButton*							_buttonSave;
   FXButton*							_buttonReset;
   PNPropertiesGrid*					_grid;
-  EDITOR::PNEditor*					_ed;
+  PNEditor*							_ed;
 
   // dialogbox
   FXDialogBox*						_dbox;
@@ -141,6 +141,6 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
-};
+};};
 
 #endif /* _PN_PROPERTIESPANEL_HPP_ */
