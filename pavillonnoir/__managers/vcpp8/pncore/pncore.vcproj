@@ -212,10 +212,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncore\PNGUIConfPanel.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pncore\PNGUIEscMenu.cpp"
 				>
 			</File>
@@ -279,10 +275,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncore\PNGUIChatWindow.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncore\PNGUIConfPanel.hpp"
 				>
 			</File>
 			<File

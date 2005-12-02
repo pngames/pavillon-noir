@@ -34,11 +34,12 @@
 
 #include "pndefs.h"
 #include "pnplugins.h"
-
+#include "pnproperties.h"
 
 namespace PN{
-  class PNGUIMenuRoot
+  class PNGUIMenuRoot : public PNConfigurableObject
   {
+
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                   Properties                                /
 	/////////////////////////////////////////////////////////////////////////////*/
@@ -75,9 +76,36 @@ namespace PN{
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
-	PNGUIMenuRoot();
+	PNGUIMenuRoot(std::string label = "No label");
 	~PNGUIMenuRoot();
   private:
+
+
+	/************************************************************************/
+	/*                  PNCONFPANEL TEST for example only				    */
+	/************************************************************************/
+	std::string					  _label;
+	float						  _aReal;
+	bool						  _aBool;
+	int							  _aInt;
+	std::string					  _aString;
+
+  protected:
+	typedef std::vector<PNConfigurableParameter*> ParametersVector;
+	ParametersVector			_params;
+  public:
+
+	void						update(PNConfigurableParameter* p) {}
+	int							getNbParameters() { return _params.size(); }
+	PNConfigurableParameter*	getParameter(int idx) { return _params[idx]; }
+
+	void						setModified() {}
+	void						setUnmodified() {}
+	const std::string&	        getLabel() { return _label; }
+
+	/************************************************************************/
+	/*            // PNCONFPANEL TEST for example only  //                  */
+	/************************************************************************/
 
   };
 }
