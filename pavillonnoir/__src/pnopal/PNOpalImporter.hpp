@@ -35,7 +35,7 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class			PNOpalImporter : public PNImportInterface
+class					PNOpalImporter : public PNImportInterface
 {
 public:
   PNOpalImporter();
@@ -44,10 +44,9 @@ public:
   //////////////////////////////////////////////////////////////////////////
   // PNIImporter
 
-  bool  		isManaged(const boost::filesystem::path& file);
-  PNObject*		doImport(const boost::filesystem::path& file);
-  importtype	getImportType();
-
+  bool  				isManaged(const boost::filesystem::path& file);
+  IPNImportedObject*	doImport(const boost::filesystem::path& file);
+  importtype			getImportType();
 };
 
 //////////////////////////////////////////////////////////////////////////

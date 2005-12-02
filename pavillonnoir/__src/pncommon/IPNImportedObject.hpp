@@ -38,6 +38,7 @@ namespace PN
 
 class /*PNAPI*/						IPNImportedObject
 {
+  friend class PNImportManager;
 protected:
   virtual ~IPNImportedObject() {}
 

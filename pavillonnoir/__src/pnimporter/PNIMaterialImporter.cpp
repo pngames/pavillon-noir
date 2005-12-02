@@ -61,7 +61,8 @@ PNIMaterialImporter::~PNIMaterialImporter()
 
 //////////////////////////////////////////////////////////////////////////
 
-PNObject*	PNIMaterialImporter::doImport(const fs::path& path)
+IPNImportedObject*
+PNIMaterialImporter::doImport(const fs::path& path)
 {
   pnerror(PN_LOGLVL_INFO, "Import %s", path.string().c_str());
 
@@ -79,7 +80,8 @@ PNObject*	PNIMaterialImporter::doImport(const fs::path& path)
   return mat;
 }
 
-importtype	PNIMaterialImporter::getImportType()
+importtype
+PNIMaterialImporter::getImportType()
 {
   return PN_IMPORT_MATERIAL;
 }

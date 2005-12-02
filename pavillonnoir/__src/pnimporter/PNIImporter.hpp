@@ -38,19 +38,18 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
-class				PNIImporter : public PNImportInterface
+class							PNIImporter : public PNImportInterface
 {
 protected:
-  pnchar*			_magic;
-  pnuint			_magicSize;
+  pnchar*						_magic;
+  pnuint						_magicSize;
 public:
   PNIImporter();
   virtual ~PNIImporter();
 
   //////////////////////////////////////////////////////////////////////////
 
-  virtual PNObject*	doImport(const boost::filesystem::path& file)=0;
-  virtual pnbool  	isManaged(const boost::filesystem::path& file);
+  virtual pnbool  				isManaged(const boost::filesystem::path& file);
 
   //////////////////////////////////////////////////////////////////////////
 };

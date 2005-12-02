@@ -39,7 +39,7 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class			PNIMaterialImporter : public PNIImporter
+class					PNIMaterialImporter : public PNIImporter
 {
 public:
   PNIMaterialImporter();
@@ -48,8 +48,8 @@ public:
   //////////////////////////////////////////////////////////////////////////
   // PNIImporter
 
-  PNObject*		doImport(const boost::filesystem::path& file);
-  importtype	getImportType();
+  IPNImportedObject*	doImport(const boost::filesystem::path& file);
+  importtype			getImportType();
 };
 
 //////////////////////////////////////////////////////////////////////////

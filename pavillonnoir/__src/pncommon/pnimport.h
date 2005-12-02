@@ -32,6 +32,7 @@
 
 #include "pnplugins.h"
 
+#include "IPNImportedObject.hpp"
 #include "PNImportInterface.hpp"
 #include "PNImportManager.hpp"
 

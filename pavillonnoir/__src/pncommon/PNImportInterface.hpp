@@ -46,7 +46,9 @@ typedef enum
   PN_IMPORT_NB_TYPES
 }		importtype;
 
-class PNAPI				PNImportInterface : public PNInterface
+class IPNImportedObject;
+
+class PNAPI						PNImportInterface : public PNInterface
 {
 public:
   PNImportInterface();
@@ -54,15 +56,15 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   
-  virtual void			init();
+  virtual void					init();
   
-  plugintypes			getType();
+  plugintypes					getType();
 
   //////////////////////////////////////////////////////////////////////////
 
-  virtual pnbool  		isManaged(const boost::filesystem::path& file)=0;
-  virtual PNObject*  	doImport(const boost::filesystem::path& file)=0;
-  virtual importtype	getImportType()=0;
+  virtual pnbool  				isManaged(const boost::filesystem::path& file)=0;
+  virtual IPNImportedObject*	doImport(const boost::filesystem::path& file)=0;
+  virtual importtype			getImportType()=0;
 };
 
 //////////////////////////////////////////////////////////////////////////
