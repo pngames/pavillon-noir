@@ -58,7 +58,8 @@ PNIAnimationImporter::~PNIAnimationImporter()
 
 //////////////////////////////////////////////////////////////////////////
 
-PNObject*	PNIAnimationImporter::doImport(const fs::path& path)
+IPNImportedObject*
+PNIAnimationImporter::doImport(const fs::path& path)
 {
   pnerror(PN_LOGLVL_INFO, "Import %s", path.string().c_str());
 
@@ -76,7 +77,8 @@ PNObject*	PNIAnimationImporter::doImport(const fs::path& path)
   return obj;
 }
 
-importtype	PNIAnimationImporter::getImportType()
+importtype
+PNIAnimationImporter::getImportType()
 {
   return PN_IMPORT_3DANIMATION;
 }

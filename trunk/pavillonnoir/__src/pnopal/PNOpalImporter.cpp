@@ -57,12 +57,14 @@ PNOpalImporter::~PNOpalImporter()
 
 //////////////////////////////////////////////////////////////////////////
 
-pnbool  		PNOpalImporter::isManaged(const fs::path& path)
+pnbool
+PNOpalImporter::isManaged(const fs::path& path)
 {
   return true;
 }
 
-PNObject*	PNOpalImporter::doImport(const fs::path& path)
+IPNImportedObject*
+PNOpalImporter::doImport(const fs::path& path)
 {
   pnerror(PN_LOGLVL_INFO, "Import %s", path.string().c_str());
 
@@ -80,7 +82,8 @@ PNObject*	PNOpalImporter::doImport(const fs::path& path)
   return physicalObject;
 }
 
-importtype	PNOpalImporter::getImportType()
+importtype
+PNOpalImporter::getImportType()
 {
   return PN_IMPORT_PHYSICS;
 }

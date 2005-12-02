@@ -58,7 +58,8 @@ PNIModelImporter::~PNIModelImporter()
 
 //////////////////////////////////////////////////////////////////////////
 
-PNObject*	PNIModelImporter::doImport(const fs::path& path)
+IPNImportedObject*
+PNIModelImporter::doImport(const fs::path& path)
 {
   pnerror(PN_LOGLVL_INFO, "Import %s", path.string().c_str());
 
@@ -76,7 +77,8 @@ PNObject*	PNIModelImporter::doImport(const fs::path& path)
   return obj;
 }
 
-importtype	PNIModelImporter::getImportType()
+importtype
+PNIModelImporter::getImportType()
 {
   return PN_IMPORT_3DMODEL;
 }

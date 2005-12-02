@@ -53,12 +53,13 @@ PNISkeletonImporter::PNISkeletonImporter(void)
 
 PNISkeletonImporter::~PNISkeletonImporter(void)
 {
-
+  
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-PNObject*	PNISkeletonImporter::doImport(const fs::path& path)
+IPNImportedObject*
+PNISkeletonImporter::doImport(const fs::path& path)
 {
   pnerror(PN_LOGLVL_INFO, "Import %s", path.string().c_str());
 
@@ -76,7 +77,8 @@ PNObject*	PNISkeletonImporter::doImport(const fs::path& path)
   return obj;
 }
 
-importtype	PNISkeletonImporter::getImportType()
+importtype
+PNISkeletonImporter::getImportType()
 {
   return PN_IMPORT_3DSKELETON;
 }

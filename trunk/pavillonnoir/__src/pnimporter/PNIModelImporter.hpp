@@ -37,7 +37,7 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class			PNIModelImporter : public PNIImporter
+class					PNIModelImporter : public PNIImporter
 {
 public:
   PNIModelImporter();
@@ -45,8 +45,8 @@ public:
   
   //////////////////////////////////////////////////////////////////////////
   
-  PNObject*		doImport(const boost::filesystem::path& path);
-  importtype	getImportType();
+  IPNImportedObject*	doImport(const boost::filesystem::path& path);
+  importtype			getImportType();
 };
 
 //////////////////////////////////////////////////////////////////////////

@@ -41,6 +41,7 @@ namespace PN {
 
 class PNImportInterface;
 class PNObject;
+class IPNImportedObject;
 
 class PNAPI			PNImportManager
 {
@@ -54,21 +55,21 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
 public:
-  void				addImporter(PNImportInterface* importer);
+  void					addImporter(PNImportInterface* importer);
 
   //////////////////////////////////////////////////////////////////////////
 
-  PNObject*			import(const boost::filesystem::path& file, importtype type = PN_IMPORT_DEFAULT, bool copy = false);
+  IPNImportedObject*	import(const boost::filesystem::path& file, importtype type = PN_IMPORT_DEFAULT, bool copy = false);
 
-  void				clean();
+  void					clean();
 
   //////////////////////////////////////////////////////////////////////////
 private:
-  typedef std::list<PNImportInterface*>							  LIST_IMPORTER;
-  typedef std::map<const boost::filesystem::path, PNObject*>	  MAPIMPORTER;
+  typedef std::list<PNImportInterface*>									LIST_IMPORTER;
+  typedef std::map<const boost::filesystem::path, IPNImportedObject*>	MAPIMPORTER;
 
-  MAPIMPORTER		_mapObject;
-  LIST_IMPORTER		_tabImporter[PN_IMPORT_NB_TYPES];
+  MAPIMPORTER			_mapObject;
+  LIST_IMPORTER			_tabImporter[PN_IMPORT_NB_TYPES];
 };
 
 //////////////////////////////////////////////////////////////////////////
