@@ -32,18 +32,19 @@
 
 #include <vector>
 
-#include "PN3DAnimation.hpp"
-
 #include "PNIAnimationBone.hpp"
 
 #include "pna_format.h"
+
+#include "PN3DAnimation.hpp"
+#include "IPNSerializable.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 class PNMatrixTR4f;
 
-class						PNI3DAnimation : public PN3DAnimation
+class						PNI3DAnimation : public PN3DAnimation, public IPNSerializable
 {
 private:
   typedef std::vector<PNIAnimationBone>	BoneList;
@@ -60,6 +61,8 @@ public:
   pnuint					getTotalTime();
 
   //////////////////////////////////////////////////////////////////////////
+
+  boost::filesystem::path*	getFile();
 
   pnint						unserializeFromStream(std::istream& i);
 

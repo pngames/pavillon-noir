@@ -35,91 +35,93 @@
 #include <list>
 #include <fstream>
 
-#include "PN3DModel.hpp"
-
 #include "PNVector3f.hpp"
 #include "PNIVertex.hpp"
 #include "PNI3DMesh.hpp"
 
 #include "pnm_format.h"
 
+#include "PN3DModel.hpp"
+#include "IPNSerializable.hpp"
+
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class 				PNI3DModel : public PN3DModel
+class 						PNI3DModel : public PN3DModel, public IPNSerializable
 {
   friend class	PNI3DMesh;
 private:
-  std::istream*		_istream;
+  std::istream*				_istream;
 
-  pnmHeader_t		_header;
-  pnuint			_nbFaces;
+  pnmHeader_t				_header;
+  pnuint					_nbFaces;
 
   typedef std::list<PNI3DMesh*>		LIST_3DMESH;
-  LIST_3DMESH		_meshes;
+  LIST_3DMESH				_meshes;
 
   typedef std::vector<PNIVertex>	VECTOR_VERTEX;
-  VECTOR_VERTEX		_vertex;
+  VECTOR_VERTEX				_vertex;
 private:
-  PNPoint3f			_min;
-  PNPoint3f			_max;
-  PNPoint3f			_center;
+  PNPoint3f					_min;
+  PNPoint3f					_max;
+  PNPoint3f					_center;
 public:
   PNI3DModel();
   ~PNI3DModel();
   
-  void				dispose();
+  void						dispose();
 
   //////////////////////////////////////////////////////////////////////////
   // PN3DModel
   //////////////////////////////////////////////////////////////////////////
 
-  void				render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk = NULL);
-  void				render(PN3DSkeleton* sk = NULL);
+  void						render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk = NULL);
+  void						render(PN3DSkeleton* sk = NULL);
 
   //////////////////////////////////////////////////////////////////////////
   
-  pnuint			getNbSupportedBones() const;
-  pnuint			getNbSupportedMaterials() const;
+  pnuint					getNbSupportedBones() const;
+  pnuint					getNbSupportedMaterials() const;
 
-  pnuint			getNbVerts() const;
-  pnuint			getNbFaces() const;
+  pnuint					getNbVerts() const;
+  pnuint					getNbFaces() const;
 
   //////////////////////////////////////////////////////////////////////////
 
-  const PNPoint3f&	getMin() const;
-  const PNPoint3f&	getMax() const;
-  const PNPoint3f&	getCenter() const;
+  const PNPoint3f&			getMin() const;
+  const PNPoint3f&			getMax() const;
+  const PNPoint3f&			getCenter() const;
 
   //////////////////////////////////////////////////////////////////////////
   
-  pnuint			getNbVertexComputed();
+  pnuint					getNbVertexComputed();
 
-  pnuint			computeVertex(pnfloat* buffer, pnuint step = 0);
-  pnuint			computeNormales(pnfloat* buffer, pnuint step = 0);
-  pnuint			computeTextCoord(pnfloat* buffer, pnuint step = 0);
-  pnuint			computeColors(pnfloat* buffer, pnuint step = 0);
+  pnuint					computeVertex(pnfloat* buffer, pnuint step = 0);
+  pnuint					computeNormales(pnfloat* buffer, pnuint step = 0);
+  pnuint					computeTextCoord(pnfloat* buffer, pnuint step = 0);
+  pnuint					computeColors(pnfloat* buffer, pnuint step = 0);
 
-  pnuint			getNbFacesComputed();
+  pnuint					getNbFacesComputed();
 
-  pnuint			computeFaces(std::vector<PN3DMaterial*>& mat, PNFace* faces, pnuint step);
+  pnuint					computeFaces(std::vector<PN3DMaterial*>& mat, PNFace* faces, pnuint step);
 
   //////////////////////////////////////////////////////////////////////////
   // PNObject
   //////////////////////////////////////////////////////////////////////////
   
-  pnint				unserializeFromStream(std::istream& i);
+  boost::filesystem::path*	getFile();
+  pnint						unserializeFromStream(std::istream& i);
 
   //////////////////////////////////////////////////////////////////////////
   // MAIN
   //////////////////////////////////////////////////////////////////////////
   
-  pnint				parseVertexes();
+  pnint						parseVertexes();
 
-  pnint				parseMeshes();
+  pnint						parseMeshes();
 
-  pnint				parseHeader();
-  pnint				parseBody();
+  pnint						parseHeader();
+  pnint						parseBody();
 };
 
 //////////////////////////////////////////////////////////////////////////

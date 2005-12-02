@@ -86,6 +86,10 @@ public:
   const PNPoint3f&			getMin() const {return _min;}
   const PNPoint3f&			getMax() const {return _max;}
   const PNPoint3f&			getCenter() const {return _center;}
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  boost::filesystem::path*	getFile();
 };
 
 //////////////////////////////////////////////////////////////////////////

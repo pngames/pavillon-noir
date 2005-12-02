@@ -54,6 +54,7 @@ namespace EDITOR {
 //////////////////////////////////////////////////////////////////////////
 
 class PNEditor;
+class PN3DMaterial;
 
 class						PNEDSkybox : public FXGLShape, public PNConfigurableObject, public IPNXMLSerializable
 {
@@ -68,6 +69,13 @@ class						PNEDSkybox : public FXGLShape, public PNConfigurableObject, public IP
   static const std::string	_label;
 
   bool						_enabled;
+
+  PN3DMaterial*				_top;
+  PN3DMaterial*				_bottom;
+  PN3DMaterial*				_left;
+  PN3DMaterial*				_right;
+  PN3DMaterial*				_front;
+  PN3DMaterial*				_back;
 public:
 
   PNEDSkybox();

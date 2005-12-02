@@ -33,7 +33,7 @@
 #include "PN3DSkeletonAnimation.hpp"
 
 #include "PNObject.hpp"
-#include "IPNSerializable.hpp"
+#include "IPNImportedObject.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -43,7 +43,7 @@ class PN3DAnimation;
 class PNQuatf;
 
 /// Skeleton
-class /*PNAPI*/					PN3DSkeleton : public PNObject, public IPNSerializable
+class /*PNAPI*/					PN3DSkeleton : public PNObject, public IPNImportedObject
 {
 public:
   /// Destructor for PN3DSkeleton.
