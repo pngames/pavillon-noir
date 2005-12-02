@@ -31,7 +31,7 @@
 # define _PNPHYSICALOBJECT_HPP_
 
 #include "PNObject.hpp"
-#include "IPNXMLSerializable.hpp"
+#include "IPNImportedObject.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ namespace PN {
 class PNPoint3f;
 class PNQuatf;
 
-class PNPhysicalObject: public PNObject, public IPNXMLSerializable
+class					PNPhysicalObject: public PNObject, public IPNImportedObject
 {
 public:
   virtual ~PNPhysicalObject(void) {}

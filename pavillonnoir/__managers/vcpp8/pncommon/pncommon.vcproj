@@ -567,6 +567,10 @@
 			Name="import"
 			>
 			<File
+				RelativePath="..\..\..\__src\pncommon\IPNImportedObject.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\pnimport.h"
 				>
 			</File>

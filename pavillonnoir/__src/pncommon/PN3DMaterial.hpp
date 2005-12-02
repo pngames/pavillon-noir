@@ -31,7 +31,7 @@
 # define _PN3DMATERIAL_HPP_
 
 #include "PNObject.hpp"
-#include "IPNSerializable.hpp"
+#include "IPNImportedObject.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ namespace PN {
 class PNRenderMaterial;
 
 /// Material
-class /*PNAPI*/			PN3DMaterial : public PNObject, public IPNSerializable
+class /*PNAPI*/			PN3DMaterial : public PNObject, public IPNImportedObject
 {
 public:
   /// Destructor for PN3DMaterial.

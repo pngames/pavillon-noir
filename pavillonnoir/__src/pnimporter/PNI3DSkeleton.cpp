@@ -126,6 +126,12 @@ PNI3DSkeleton::reinit()
 
 //////////////////////////////////////////////////////////////////////////
 
+boost::filesystem::path*
+PNI3DSkeleton::getFile()
+{
+  return IPNSerializable::getFile();
+}
+
 pnint
 PNI3DSkeleton::unserializeFromStream(std::istream& istm)
 {
