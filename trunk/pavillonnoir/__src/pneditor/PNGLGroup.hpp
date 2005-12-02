@@ -35,6 +35,8 @@
 
 #include "pndefs.h"
 
+#include "PNEDSkyBox.hpp"
+
 #include "IPNXMLSerializable.hpp"
 
 namespace PN {
@@ -62,8 +64,9 @@ public:
 	VIEW_GROUND			= 0x000001,
 	VIEW_STATIC			= 0x000001 << 1,
 	VIEW_DYNAMIC		= 0x000001 << 2,
+	VIEW_SKYBOX			= 0x000001 << 3,
 
-	VIEW_ALL			= VIEW_GROUND | VIEW_STATIC | VIEW_DYNAMIC,
+	VIEW_ALL			= VIEW_GROUND | VIEW_STATIC | VIEW_DYNAMIC | VIEW_SKYBOX,
   }						viewOption;
 
   //////////////////////////////////////////////////////////////////////////
@@ -71,6 +74,7 @@ private:
 
   pnuint				_view;
 
+  PNEDSkybox			_skybox;
   FXGLGroup				_groundGroup;	// Ground type objects
   FXGLGroup	  			_staticGroup;	// Static type objects
   FXGLGroup				_dynGroup;		// Dynamic type objects
@@ -118,6 +122,7 @@ public:
   const std::string&	getRootNodeName() const;
 
 private:
+  pnint					_unserializeSkyBox(xmlNode* node);
   pnint					_unserializeEntity(xmlNode* node);
   pnint					_unserializeNode(xmlNode* node);
 

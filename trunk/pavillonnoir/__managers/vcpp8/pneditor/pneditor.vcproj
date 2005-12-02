@@ -223,6 +223,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pneditor\PNEDSkyBox.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pneditor\PNEDSkyBox.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pneditor\PNGLGroup.cpp"
 				>
 			</File>

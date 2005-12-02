@@ -66,6 +66,7 @@ protected:
   void					_renderBox(pnfloat size);
   void					_renderObj();
 public:
+  void					render(pnfloat size);
   void					render();
 
   //////////////////////////////////////////////////////////////////////////

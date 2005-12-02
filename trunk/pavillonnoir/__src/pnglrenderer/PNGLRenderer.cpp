@@ -491,6 +491,13 @@ PNGLRenderer::setSkyBox(PNRenderMaterial* top, PNRenderMaterial* bottom, PNRende
   PNGLSkyBox::getInstance()->set(top, bottom, left, right, front, back);
 }
 
+/// Use by pneditor to print skyBox
+void
+PNGLRenderer::renderSkyBox(pnfloat size)
+{
+  PNGLSkyBox::getInstance()->render(size);
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 PNRenderMaterial*

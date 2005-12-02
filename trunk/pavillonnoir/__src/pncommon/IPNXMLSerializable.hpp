@@ -51,10 +51,11 @@ protected:
   pnbool						_serializeInXML;
 
   IPNXMLSerializable();
-public:
   virtual ~IPNXMLSerializable() {}
 
   //////////////////////////////////////////////////////////////////////////
+  
+public:
   
   virtual const std::string&	getDTD() const;
   virtual const std::string&	getDTDName() const;
@@ -74,10 +75,20 @@ public:
 
 namespace XMLUtils
 {
+  PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const pnuchar* name, pnbool value);
+  PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const char* name, pnbool value);
+  PNAPI pnbool					xmlGetProp(xmlNode* node, const pnuchar* name, pnbool def);
+  PNAPI pnbool					xmlGetProp(xmlNode* node, const char* name, pnbool def);
+
   PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const pnuchar *name, pnint value);
   PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const char *name, pnint value);
+  PNAPI pnint					xmlGetProp(xmlNode* node, const pnuchar* name, pnint def);
+  PNAPI pnint					xmlGetProp(xmlNode* node, const char* name, pnint def);
+
   PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const pnuchar *name, pnfloat value);
   PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const char *name, pnfloat value);
+  PNAPI pnfloat					xmlGetProp(xmlNode* node, const pnuchar* name, pnfloat def);
+  PNAPI pnfloat					xmlGetProp(xmlNode* node, const char* name, pnfloat def);
 }
 
 //////////////////////////////////////////////////////////////////////////

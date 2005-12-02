@@ -96,10 +96,14 @@ FXDEFMAP(PNEditor) PNEditorMap[] =
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_SAVE,			PNEditor::onCmdSave),
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_SAVEAS,		PNEditor::onCmdSaveAs),
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_EXPORT,		PNEditor::onCmdExport),
+
   FXMAPFUNC(SEL_UPDATE,		PNEditor::ID_QUERY_MODE,	PNEditor::onUpdMode),
   FXMAPFUNC(SEL_COMMAND,	FXWindow::ID_QUERY_MENU,	PNEditor::onQueryMenu),
+
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_GENERAL,		PNEditor::onCmdGenView),
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_OBJECTS,		PNEditor::onCmdObjView),
+
+  FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_SKYBOX,		PNEditor::onCmdSkyboxView),
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_GROUND,		PNEditor::onCmdGroundView),
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_STATIC,		PNEditor::onCmdStaticView),
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_DYNAMIC,		PNEditor::onCmdDynView),
@@ -252,12 +256,15 @@ PNEditor::PNEditor(FXApp* a)
   fileopenicon = new FXGIFIcon(getApp(), fileopen);
   filesaveicon = new FXGIFIcon(getApp(), filesave);
   filesaveasicon = new FXGIFIcon(getApp(), filesaveas, 0, IMAGE_ALPHAGUESS);
+
   generalicon = new FXBMPIcon(getApp(), _general);
   objectsicon = new FXBMPIcon(getApp(), _3DObjects);
+
   waypointsicon = new FXBMPIcon(getApp(), _waypoints);
   groundicon = new FXBMPIcon(getApp(), groundIcon);
   staticicon = new FXBMPIcon(getApp(), staticIcon);
   dynicon = new FXBMPIcon(getApp(), dynamicIcon);
+
 /*  nolighticon=new FXGIFIcon(getApp(),nolight);
   lighticon=new FXGIFIcon(getApp(),light);
   smoothlighticon=new FXGIFIcon(getApp(),smoothlight);*/
@@ -280,24 +287,43 @@ PNEditor::PNEditor(FXApp* a)
   new FXButton(toolbar1, "\tSave As\tSave document to another file.", 
 	filesaveasicon, this, ID_SAVEAS, BUTTON_TOOLBAR | FRAME_RAISED | 
 	LAYOUT_TOP | LAYOUT_LEFT);
+
   new FXSeparator(toolbar1, SEPARATOR_GROOVE);
+
   new FXButton(toolbar1, "\tGeneral\tGeneral View.", generalicon, this, ID_GENERAL, 
 	BUTTON_NORMAL | FRAME_RAISED | LAYOUT_TOP | LAYOUT_LEFT);
   new FXButton(toolbar1, "\tObjects\tObjects View.", objectsicon, this, ID_OBJECTS, 
 	BUTTON_NORMAL | FRAME_RAISED | LAYOUT_TOP | LAYOUT_LEFT);
-  new FXToggleButton(toolbar1, "\tGround\tHide Ground Objects",
+
+  new FXSeparator(toolbar1, SEPARATOR_GROOVE);
+
+  new FXToggleButton(toolbar1, 
+	"\tSkybox\tHide Skybox",
+	"\tSkybox\tShow Skybox", groundicon, groundicon, this,
+	ID_SKYBOX, BUTTON_NORMAL | FRAME_RAISED | LAYOUT_TOP | LAYOUT_LEFT);
+
+  new FXToggleButton(toolbar1, 
+	"\tGround\tHide Ground Objects",
 	"\tGround\tShow Ground Objects", groundicon, groundicon, this,
 	ID_GROUND, BUTTON_NORMAL | FRAME_RAISED | LAYOUT_TOP | LAYOUT_LEFT);
-  new FXToggleButton(toolbar1, "\tStatic\tHide Static Objects",
+
+  new FXToggleButton(toolbar1, 
+	"\tStatic\tHide Static Objects",
 	"\tStatic\tShow Static Objects", staticicon, staticicon, this,
 	ID_STATIC, BUTTON_NORMAL | FRAME_RAISED | LAYOUT_TOP | LAYOUT_LEFT);
-  new FXToggleButton(toolbar1, "\tDynamic\tHide Dynamic Objects",
+
+  new FXToggleButton(toolbar1,
+	"\tDynamic\tHide Dynamic Objects",
 	"\tDynamic\tShow Dynamic Objects", dynicon, dynicon, this,
 	ID_DYNAMIC, BUTTON_NORMAL | FRAME_RAISED | LAYOUT_TOP | LAYOUT_LEFT);
-  new FXToggleButton(toolbar1, "\tWaypoints\tShow Waypoints",
+
+  new FXToggleButton(toolbar1, 
+	"\tWaypoints\tShow Waypoints",
 	"\tWaypoints\tHide Waypoints", waypointsicon, waypointsicon, this,
 	ID_WAYPOINTS, BUTTON_NORMAL | FRAME_RAISED | LAYOUT_TOP | LAYOUT_LEFT);
-  new FXSeparator(toolbar1,SEPARATOR_GROOVE);
+
+  new FXSeparator(toolbar1, SEPARATOR_GROOVE);
+
 /*  new FXButton(toolbar1,"\tNo shading\tTurn light sources off.",nolighticon,this,FXGLShape::ID_SHADEOFF,BUTTON_AUTOGRAY|BUTTON_TOOLBAR|FRAME_RAISED|LAYOUT_TOP|LAYOUT_LEFT);
   new FXButton(toolbar1,"\tFlat shading\tTurn on faceted (flat) shading.",lighticon,this,FXGLShape::ID_SHADEON,BUTTON_AUTOGRAY|BUTTON_TOOLBAR|FRAME_RAISED|LAYOUT_TOP|LAYOUT_LEFT);
   new FXButton(toolbar1,"\tSmooth shading\tTurn on smooth shading.",smoothlighticon,this,FXGLShape::ID_SHADESMOOTH,BUTTON_AUTOGRAY|BUTTON_TOOLBAR|FRAME_RAISED|LAYOUT_TOP|LAYOUT_LEFT);
@@ -393,8 +419,11 @@ long PNEditor::onCmdOpen(FXObject*, FXSelector, void*)
   if (open.execute())
   {
     _genScene.clear();
+
 	if (wpPanel != NULL)
 	  wpPanel->clear();
+	if (objPanel != NULL)
+	  objPanel->clear();
 
 	_dir = open.getDirectory().text();
 	_dir += PATHSEP;
@@ -416,8 +445,8 @@ long PNEditor::onCmdOpen(FXObject*, FXSelector, void*)
 	  delete wpGroup;
 	}
 
-	wpGroup = new FXGLGroup;
-	_graph = new PNIAGraph;
+	wpGroup = new FXGLGroup();
+	_graph = new PNIAGraph();
 	boost::filesystem::path wppath(_dir + "waypoints.xml", boost::filesystem::no_check);
 	_graph->unserializeFromFile(wppath);
 	fxmessage("%d Waypoints in %s\n", _graph->getNbWayPoints(), wppath.string().c_str());
@@ -569,9 +598,19 @@ long PNEditor::onCmdObjView(FXObject*, FXSelector, void*)
   return 1;
 }
 
+long
+PNEditor::onCmdSkyboxView(FXObject* obj, FXSelector sel, void* ptr)
+{
+  _genScene.enableOptionView(PNGLGroup::VIEW_SKYBOX, !_genScene.contains(PNGLGroup::VIEW_SKYBOX));
+
+  fitToBounds();
+
+  return 1;
+}
+
 long PNEditor::onCmdGroundView(FXObject* sender, FXSelector, void*)
 {
-  _genScene.enableOptionView(PNGLGroup::VIEW_GROUND, _genScene.contains(PNGLGroup::VIEW_GROUND));
+  _genScene.enableOptionView(PNGLGroup::VIEW_GROUND, !_genScene.contains(PNGLGroup::VIEW_GROUND));
 
   fitToBounds();
 
@@ -580,7 +619,7 @@ long PNEditor::onCmdGroundView(FXObject* sender, FXSelector, void*)
 
 long PNEditor::onCmdStaticView(FXObject* sender, FXSelector, void*)
 {
-  _genScene.enableOptionView(PNGLGroup::VIEW_STATIC, _genScene.contains(PNGLGroup::VIEW_STATIC));
+  _genScene.enableOptionView(PNGLGroup::VIEW_STATIC, !_genScene.contains(PNGLGroup::VIEW_STATIC));
 
   fitToBounds();
 
@@ -589,7 +628,7 @@ long PNEditor::onCmdStaticView(FXObject* sender, FXSelector, void*)
 
 long PNEditor::onCmdDynView(FXObject* sender, FXSelector, void*)
 {
-  _genScene.enableOptionView(PNGLGroup::VIEW_DYNAMIC, _genScene.contains(PNGLGroup::VIEW_DYNAMIC));
+  _genScene.enableOptionView(PNGLGroup::VIEW_DYNAMIC, !_genScene.contains(PNGLGroup::VIEW_DYNAMIC));
 
   fitToBounds();
 
