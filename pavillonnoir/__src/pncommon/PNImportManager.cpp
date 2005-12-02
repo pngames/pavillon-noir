@@ -41,6 +41,7 @@
 #include "pnimport.h"
 
 #include "PNImportManager.hpp"
+#include "IPNImportedObject.hpp"
 
 namespace fs = boost::filesystem;
 using namespace PN;
@@ -82,7 +83,7 @@ PNImportManager::addImporter(PNImportInterface* importer)
 
 //////////////////////////////////////////////////////////////////////////
 
-PNObject*
+IPNImportedObject*
 PNImportManager::import(const fs::path& file, importtype type, bool copy)
 {
   pnerror(PN_LOGLVL_INFO, "Import %s %i", file.string().c_str(), type);
@@ -102,7 +103,7 @@ PNImportManager::import(const fs::path& file, importtype type, bool copy)
 
   LIST_IMPORTER&  lst = _tabImporter[type];
 
-  PNObject*  obj = NULL;
+  IPNImportedObject*  obj = NULL;
 
   for (LIST_IMPORTER::iterator it = lst.begin(); it != lst.end(); it++)
   {
