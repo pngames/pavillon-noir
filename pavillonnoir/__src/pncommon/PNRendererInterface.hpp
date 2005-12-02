@@ -108,6 +108,9 @@ public:
   /// Set the sky box properties
   virtual void				setSkyBox(PNRenderMaterial* top, PNRenderMaterial* bottom, PNRenderMaterial* left, PNRenderMaterial* right, PNRenderMaterial* front, PNRenderMaterial* back)=0;
 
+  /// Use by pneditor to print skyBox
+  virtual void				renderSkyBox(pnfloat size)=0;
+
   //////////////////////////////////////////////////////////////////////////
   // Material
 

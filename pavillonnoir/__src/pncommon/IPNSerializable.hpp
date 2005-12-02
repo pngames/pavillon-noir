@@ -39,12 +39,13 @@ namespace PN
 
 class PNAPI							IPNSerializable
 {
-public:
+protected:
   IPNSerializable();
   virtual ~IPNSerializable() {}
 
   //////////////////////////////////////////////////////////////////////////
 
+public:
   /// Object associated file for serialize/unserialize system
   virtual boost::filesystem::path*	getFile();
 

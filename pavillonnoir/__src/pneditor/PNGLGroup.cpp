@@ -41,6 +41,7 @@
 #include "PNCharacter.hpp"
 
 #include "PNGLShape.hpp"
+#include "PNPropertiesPanel.hpp"
 
 #include "PNGLGroup.hpp"
 
@@ -95,6 +96,11 @@ PNGLGroup::_updateView()
 	append(&_dynGroup);
   else
 	remove(&_dynGroup);
+
+  if (_view & VIEW_SKYBOX)
+	append(&_skybox);
+  else
+	remove(&_skybox);
 }
 
 pnbool
@@ -198,12 +204,16 @@ void
 PNGLGroup::setPropertiesPanel(PNPropertiesPanel* panel)
 {
   _grid = panel;
+
+  _skybox.setContext(_grid, _editor);
 }
 
 void
 PNGLGroup::setEditor(PNEditor* editor)
 {
   _editor = editor;
+
+  _skybox.setContext(_grid, _editor);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -227,6 +237,12 @@ PNGLGroup::getRootNodeName() const
 }
 
 //////////////////////////////////////////////////////////////////////////
+
+pnint
+PNGLGroup::_unserializeSkyBox(xmlNode* node)
+{
+  return _skybox.unserializeFromXML(node);
+}
 
 pnint
 PNGLGroup::_unserializeEntity(xmlNode* node)
@@ -261,8 +277,10 @@ PNGLGroup::_unserializeEntity(xmlNode* node)
 pnint
 PNGLGroup::_unserializeNode(xmlNode* node)
 {
-  if (strcmp((const char*)PNXML_ENTITY_MKP, (const char*)node->name) == 0)
+  if (xmlStrEqual(PNXML_ENTITY_MKP, node->name))
 	_unserializeEntity(node);
+  if (xmlStrEqual(PNXML_SKYBOX_MKP, node->name))
+	_unserializeSkyBox(node);
 
   return PNEC_SUCCESS;
 }
@@ -273,6 +291,12 @@ pnint
 PNGLGroup::unserializeFromXML(xmlNode* root)
 {
   pnerror(PN_LOGLVL_DEBUG, "%s : %s", "PNEditor - node name", root->name);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  _grid->addObject(&_skybox);
+
+  //////////////////////////////////////////////////////////////////////////
 
   if (strcmp((const char*)root->name, (const char*)PNXML_LISTENTITIES_MKP) == 0)
 	for (root = root->children ; root != NULL; root = root->next)

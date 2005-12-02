@@ -44,102 +44,102 @@
 
 /////////////////////////////////////
 
-namespace PN
+namespace PN {
+
+class PNEditor;
+
+//////////////////////////////////////////////////////////////////////////
+
+class PNPropertiesPanel : public FXComposite, public PNEditorObject
 {
-  class PNEditor;
+  FXDECLARE(PNPropertiesPanel)
 
-  //////////////////////////////////////////////////////////////////////////
-
-  class PNPropertiesPanel : public FXComposite, public PNEditorObject
+public:
+  typedef	enum
   {
-    FXDECLARE(PNPropertiesPanel)
+	PN_PANELTYPE_3DOBJECTS,
+	PN_PANELTYPE_WAYPOINTS
+  }		paneltype_t;
 
-  public:
-	typedef	enum
-	{
-	  PN_PANELTYPE_3DOBJECTS,
-	  PN_PANELTYPE_WAYPOINTS
-	}		paneltype_t;
-
-  private:
-	// list of all the PNConfigurableObject in the panel
-    std::list<PNConfigurableObject*>  _objectsList;
-    FXGroupBox*                       _groupBox;   
-	FXListBox*                        _objectsListBox;
-	FXButton*						  _buttonAdd;
-	FXButton*						  _buttonDelete;
-	FXButton*						  _buttonSave;
-	FXButton*						  _buttonReset;
+private:
+  // list of all the PNConfigurableObject in the panel
+  std::list<PNConfigurableObject*>  _objectsList;
+  FXGroupBox*                       _groupBox;   
+  FXListBox*                        _objectsListBox;
+  FXButton*						  _buttonAdd;
+  FXButton*						  _buttonDelete;
+  FXButton*						  _buttonSave;
+  FXButton*						  _buttonReset;
   PNPropertiesGrid*                 _grid;
-	EDITOR::PNEditor*				  _ed;
-	
-	// dialogbox
-	FXDialogBox*					  _dbox;
-	FXListBox*                        _envTypesListBox;
-	FXListBox*                        _objTypesListBox;
-	FXTextField*					  _fieldX;
-	FXTextField*					  _fieldY;
-	FXTextField*					  _fieldZ;
-	FXTextField*					  _objLabel;
-	FXTextField*					  _classLabel;
-	FXTextField*					  _path;
+  EDITOR::PNEditor*				  _ed;
 
-	paneltype_t						  _type;
-	pnint							  _idMax;
+  // dialogbox
+  FXDialogBox*					  _dbox;
+  FXListBox*                        _envTypesListBox;
+  FXListBox*                        _objTypesListBox;
+  FXTextField*					  _fieldX;
+  FXTextField*					  _fieldY;
+  FXTextField*					  _fieldZ;
+  FXTextField*					  _objLabel;
+  FXTextField*					  _classLabel;
+  FXTextField*					  _path;
 
-  protected:
-    PNPropertiesPanel(){}
+  paneltype_t						  _type;
+  pnint							  _idMax;
 
-  public:
-    long onCmdListBox(FXObject* obj, FXSelector sel, void* ptr);
-	long onCmdAdd(FXObject* obj, FXSelector sel, void* ptr);
-	long onCmdDelete(FXObject* obj, FXSelector sel, void* ptr);
-	long onCmdSave(FXObject* obj, FXSelector sel, void* ptr);
-	long onCmdReset(FXObject* obj, FXSelector sel, void* ptr);
-	// dialogbox
-	long onAccept(FXObject* obj, FXSelector sel, void* ptr);
-	long onCancel(FXObject* obj, FXSelector sel, void* ptr);
-	long onAddObject(FXObject* sender, FXSelector sel, void* ptr);
+protected:
+  PNPropertiesPanel(){}
 
-	void  addObject(PNConfigurableObject* object);
-	void  setObject(PNConfigurableObject* object);
-	PNConfigurableObject*	getObject();
+public:
+  long onCmdListBox(FXObject* obj, FXSelector sel, void* ptr);
+  long onCmdAdd(FXObject* obj, FXSelector sel, void* ptr);
+  long onCmdDelete(FXObject* obj, FXSelector sel, void* ptr);
+  long onCmdSave(FXObject* obj, FXSelector sel, void* ptr);
+  long onCmdReset(FXObject* obj, FXSelector sel, void* ptr);
+  // dialogbox
+  long onAccept(FXObject* obj, FXSelector sel, void* ptr);
+  long onCancel(FXObject* obj, FXSelector sel, void* ptr);
+  long onAddObject(FXObject* sender, FXSelector sel, void* ptr);
 
-    PNPropertiesPanel(FXComposite* p, paneltype_t t, EDITOR::PNEditor* ed);      
-    virtual ~PNPropertiesPanel();
+  void  addObject(PNConfigurableObject* object);
+  void  setObject(PNConfigurableObject* object);
+  PNConfigurableObject*	getObject();
 
-    void  create();
-	void  update();
-	void  clear();
+  PNPropertiesPanel(FXComposite* p, paneltype_t t, EDITOR::PNEditor* ed);      
+  virtual ~PNPropertiesPanel();
 
-  public:
-	void  updateGrid();
-	void  updateView();
-	void  updateListBox();
+  void  create();
+  void  update();
+  void  clear();
 
-	pnint getIdMax();
-	void  incrementIdMax();
+public:
+  void  updateGrid();
+  void  updateView();
+  void  updateListBox();
 
-  protected:
-	void updateGrid(PNConfigurableObject* co);
-	void updateView(PNConfigurableObject* co);
-   
-  public:
-    enum {
-      // _objectsListBox selection changed
-	  ID_LISTBOX_SEL = FXComposite::ID_LAST,
-	  ID_ADD,
-	  ID_DELETE,
-	  ID_SAVE,
-	  ID_RESET,
-	  ID_ADDWP,
-	  ID_CANCEL,
-	  ID_ADDOBJECT,
-	  ID_LAST
-	};
+  pnint getIdMax();
+  void  incrementIdMax();
+
+protected:
+  void updateGrid(PNConfigurableObject* co);
+  void updateView(PNConfigurableObject* co);
+
+public:
+  enum {
+	// _objectsListBox selection changed
+	ID_LISTBOX_SEL = FXComposite::ID_LAST,
+	ID_ADD,
+	ID_DELETE,
+	ID_SAVE,
+	ID_RESET,
+	ID_ADDWP,
+	ID_CANCEL,
+	ID_ADDOBJECT,
+	ID_LAST
   };
+};
 
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /* _PN_PROPERTIESPANEL_HPP_ */

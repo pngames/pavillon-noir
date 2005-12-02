@@ -68,7 +68,11 @@ class						PNGLShape : public FXGLShape, public PNConfigurableObject, public IPN
   FXDECLARE_ABSTRACT(PNGLShape);
 
   PNEditor*			  		_ed;
+  PNPropertiesPanel*  		_grid;
+
   PN3DObject*				_obj;
+  pnbool					_objLoaded;
+
   boost::filesystem::path	_temppath;
   int				  		_id;
   PNEnvType			  		_envType;
@@ -76,7 +80,6 @@ class						PNGLShape : public FXGLShape, public PNConfigurableObject, public IPN
   std::string		  		_label;
   std::string		  		_classStr;
   scriptMap			  		_scripts;
-  PNPropertiesPanel*  		_grid;
   bool						_modified;
 protected:
   PNGLShape();

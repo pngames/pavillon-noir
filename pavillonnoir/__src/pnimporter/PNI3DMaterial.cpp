@@ -78,7 +78,7 @@ PNI3DMaterial::_parse(std::istream& istm)
 
   std::cout << "nbMap : " << _header.nbMap << std::endl;
 
-  if (!_header.nbMap)
+  if (_header.nbMap == 0)
   {
 	_texture.clear();
 	return PNEC_SUCCESS;

@@ -68,7 +68,7 @@ IPNSerializable::getFile()
 void
 IPNSerializable::setFile(const boost::filesystem::path& file)
 {
-  _file = fs::path(file.string(), fs::native);
+  _file = file;
   _hasFile = true;
 }
 

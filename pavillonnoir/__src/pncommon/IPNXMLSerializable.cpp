@@ -103,7 +103,7 @@ IPNXMLSerializable::unserializeFromFile(const boost::filesystem::path& file)
   if (fs::is_directory(file))
 	return PNEC_NOT_A_FILE;
 
-  _file = file;
+  setFile(file);
 
   xmlParserCtxtPtr	ctxt;
   xmlDocPtr			doc;
@@ -198,8 +198,46 @@ IPNXMLSerializable::serializeInXML(xmlNode* node, pnbool root /*=false*/)
 //////////////////////////////////////////////////////////////////////////
 
 
-namespace XMLUtils
+namespace XMLUtils {
+//////////////////////////////////////////////////////////////////////////
+
+#define XML_TUE_VAL		(const xmlChar *)"enabled"
+#define XML_FALSE_VAL	(const xmlChar *)"false"
+
+PNAPI xmlAttr*
+xmlNewProp(xmlNode* node, const xmlChar *name, pnbool value)
 {
+  return xmlNewProp(node, name, value ? XML_TUE_VAL : XML_FALSE_VAL);
+}
+
+PNAPI xmlAttr*
+xmlNewProp(xmlNode* node, const char *name, pnbool value)
+{
+  return xmlNewProp(node, BAD_CAST name, value);
+}
+
+PNAPI pnbool
+xmlGetProp(xmlNode* node, const pnuchar* name, pnbool def)
+{
+  xmlChar*	att = xmlGetProp(node, name);
+
+  if (att == NULL)
+	return def;
+
+  if (xmlStrEqual(att, XML_TUE_VAL))
+	return true;
+  if (xmlStrEqual(att, XML_FALSE_VAL))
+	return false;
+
+  return def;
+}
+
+PNAPI pnbool
+xmlGetProp(xmlNode* node, const char* name, pnbool def)
+{
+  return xmlGetProp(node, BAD_CAST name, def);
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 PNAPI xmlAttr*
@@ -217,6 +255,25 @@ xmlNewProp(xmlNode* node, const char *name, pnint value)
   return xmlNewProp(node, BAD_CAST name, value);
 }
 
+PNAPI pnint
+xmlGetProp(xmlNode* node, const pnuchar* name, pnint def)
+{
+  xmlChar*	att = xmlGetProp(node, name);
+
+  if (att == NULL)
+	return def;
+
+  return atoi((const char*)att);
+}
+
+PNAPI pnint
+xmlGetProp(xmlNode* node, const char* name, pnint def)
+{
+  return xmlGetProp(node, BAD_CAST name, def);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 PNAPI xmlAttr*
 xmlNewProp(xmlNode* node, const pnuchar *name, pnfloat value)
 {
@@ -230,6 +287,23 @@ PNAPI xmlAttr*
 xmlNewProp(xmlNode* node, const char *name, pnfloat value)
 {
   return xmlNewProp(node, BAD_CAST name, value);
+}
+
+PNAPI pnfloat
+xmlGetProp(xmlNode* node, const pnuchar* name, pnfloat def)
+{
+  xmlChar*	att = xmlGetProp(node, name);
+
+  if (att == NULL)
+	return def;
+
+  return (pnfloat)atof((const char*)att);
+}
+
+PNAPI pnfloat
+xmlGetProp(xmlNode* node, const char* name, pnfloat def)
+{
+  return xmlGetProp(node, BAD_CAST name, def);
 }
 
 //////////////////////////////////////////////////////////////////////////
