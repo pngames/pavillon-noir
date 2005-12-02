@@ -9,6 +9,8 @@ PNGLViewer.cpp
 PNPropertiesPanel.cpp
 PNWaypointObject.cpp
 PNGLGroup.cpp
+PNEDSkyBox.cpp
+PNEDSkyboxPanel.cpp
 """.split()
 obj.target = 'pneditor' + env['suffix']
 obj.instdir = env['install_prefix'] + env['install_path'] + '/linux'
