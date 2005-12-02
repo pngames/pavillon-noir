@@ -29,7 +29,9 @@
 				TreatWChar_tAsBuiltInType="FALSE"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile="./Debug/$(TargetName).pch"
+				PrecompiledHeaderFile="max8\Debug/$(TargetName).pch"
+				ObjectFile="max8\$(IntDir)/"
+				ProgramDataBaseFileName="max8\$(IntDir)/vc70.pdb"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="4"
@@ -45,16 +47,17 @@
 				AdditionalLibraryDirectories="C:\Program Files\Autodesk\3dsMax8\maxsdk\lib"
 				ModuleDefinitionFile=""
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\Debug\$(ProjectName).pdb"
+				ProgramDatabaseFile="max8\Debug\$(ProjectName).pdb"
 				SubSystem="2"
-				ImportLibrary=".\Debug\$(TargetName).lib"
+				ImportLibrary="max8\Debug\$(TargetName).lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				MkTypLibCompatible="FALSE"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="copy /Y &quot;C:\Program Files\Autodesk\3dsMax8\plugins\pnmaxplugin-max8-dbg.dle&quot; &quot;..\..\pavillonnoir\__binaries\win32\tools&quot;"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -84,13 +87,15 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="C:\3dsmax7\maxsdk\include;../../pavillonnoir/__src/pncommon"
+				AdditionalIncludeDirectories="&quot;C:\Program Files\Autodesk\3dsMax8\maxsdk\include&quot;;../../pavillonnoir/__src/pncommon"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				MinimalRebuild="FALSE"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="TRUE"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile="./Release/$(TargetName).pch"
+				PrecompiledHeaderFile="max8\Release/$(TargetName).pch"
+				ObjectFile="max8\$(IntDir)/"
+				ProgramDataBaseFileName="max8\$(IntDir)/vc70.pdb"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="3"/>
@@ -99,22 +104,23 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="core.lib geom.lib gfx.lib mesh.lib maxutil.lib maxscrpt.lib paramblk2.lib IGame.lib"
-				OutputFile="C:\3dsmax7\plugins\$(ProjectName).dle"
+				OutputFile="C:\Program Files\Autodesk\3dsMax8\plugins\$(ProjectName).dle"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="C:\3dsmax7\maxsdk\lib"
+				AdditionalLibraryDirectories="C:\Program Files\Autodesk\3dsMax8\maxsdk\lib"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\Release\$(ProjectName).pdb"
+				ProgramDatabaseFile="max8\Release\$(ProjectName).pdb"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				ImportLibrary=".\release\$(TargetName).lib"
+				ImportLibrary="max8\release\$(TargetName).lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				MkTypLibCompatible="FALSE"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="copy /Y &quot;C:\Program Files\Autodesk\3dsMax8\plugins\pnmaxplugin-max8.dle&quot; &quot;..\..\pavillonnoir\__binaries\win32\tools&quot;"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
