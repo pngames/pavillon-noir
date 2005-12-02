@@ -72,15 +72,20 @@ public:
 	ID_EXPORT,
 	ID_QUERY_MODE,
 	ID_GLVIEWER,
+
 	// views
 	ID_GENERAL,
 	ID_OBJECTS,
+
+	ID_SKYBOX,
 	ID_WAYPOINTS,
 	ID_GROUND,
 	ID_STATIC,
 	ID_DYNAMIC,
+
 	// grid
 	ID_GRID_OBJ_SEL,
+
 	// waypoints
 	ID_WP_START,
 	ID_WP_END,
@@ -156,14 +161,20 @@ public:
   long onCmdOpen(FXObject* obj, FXSelector sel, void* ptr);
   long onCmdSave(FXObject* obj, FXSelector sel, void* ptr);
   long onCmdSaveAs(FXObject* obj, FXSelector sel, void* ptr);
+
   long onCmdAbout(FXObject* obj, FXSelector sel, void* ptr);
   long onCmdAboutPNE(FXObject* obj, FXSelector sel, void* ptr);
+
   long onUpdMode(FXObject* obj, FXSelector sel, void* ptr);
   long onQueryMenu(FXObject* obj, FXSelector sel, void* ptr);
+
   long onCmdExport(FXObject* obj, FXSelector sel, void* ptr);
+
   // view messages handlers
   long onCmdGenView(FXObject* obj, FXSelector sel, void* ptr);
   long onCmdObjView(FXObject* obj, FXSelector sel, void* ptr);
+
+  long onCmdSkyboxView(FXObject* obj, FXSelector sel, void* ptr);
   long onCmdGroundView(FXObject* obj, FXSelector sel, void* ptr);
   long onCmdStaticView(FXObject* obj, FXSelector sel, void* ptr);
   long onCmdDynView(FXObject* obj, FXSelector sel, void* ptr);

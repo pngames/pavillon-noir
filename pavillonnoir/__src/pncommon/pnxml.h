@@ -82,8 +82,19 @@ static const std::string	PNENTITY_XMLNODE_ROOT	= "entity";
 #define PNXML_FALSE_VAL				(const xmlChar *)"false"
 #define PNXML_IDBASE_VAL			(const xmlChar *)"id_"
 
+//////////////////////////////////////////////////////////////////////////
+// SKYBOX
+
+static const std::string PNSKBOX_XMLNODE_ROOT	= "skybox";
+
+#define PNXML_SKYBOX_MKP		(const xmlChar *)PNSKBOX_XMLNODE_ROOT.c_str()
+
+#define PNXML_ENABLED_ATT		(const xmlChar *)"enabled"
+
+//////////////////////////////////////////////////////////////////////////
+
 // DTD Files
-#define PNXML_ENTITIES_DTD			(const xmlChar *)"../entities.dtd"
+//#define PNXML_ENTITIES_DTD			(const xmlChar *)"../entities.dtd"
 #define PNXML_WAYPOINTS_DTD			(const xmlChar *)"../waypoints.dtd"
 #define PNXML_SOUNDS_DTD			(const xmlChar *)"../sounds.dtd"
 

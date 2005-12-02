@@ -132,6 +132,9 @@ public:
   /// Set the sky box properties
   virtual void				setSkyBox(PNRenderMaterial* top, PNRenderMaterial* bottom, PNRenderMaterial* left, PNRenderMaterial* right, PNRenderMaterial* front, PNRenderMaterial* back);
 
+  /// Use by pneditor to print skyBox
+  virtual void				renderSkyBox(pnfloat size);
+
   //////////////////////////////////////////////////////////////////////////
   
   PNRenderMaterial*			newMaterial();
@@ -163,11 +166,7 @@ public:
   void						updateGUI(pnEventType type, PNObject* source, PNEventData* data);
   void*						getGUIRenderer();
   guiType					getGUIType();
-  void						initGUI();
-
-  //////////////////////////////////////////////////////////////////////////
-
- 
+  void						initGUI(); 
 };
 
 //////////////////////////////////////////////////////////////////////////

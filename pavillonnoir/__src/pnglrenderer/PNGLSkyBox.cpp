@@ -275,21 +275,25 @@ PNGLSkyBox::_renderObj()
 }
 
 void
-PNGLSkyBox::render()
+PNGLSkyBox::render(pnfloat size)
 {
   glPushAttrib(GL_ALL_ATTRIB_BITS);
 
   glCullFace(GL_FRONT);
 
+  _renderBox(size);
+
+  glPopAttrib();
+}
+
+void
+PNGLSkyBox::render()
+{
   PNGLRendererCamera*	camera = (PNGLRendererCamera*)PN3DCamera::getRenderCam();
 
   pnfloat size = sqrtf((camera->getFar() * camera->getFar()) / 2);
 
-  //////////////////////////////////////////////////////////////////////////
-
-  _renderBox(size);
-
-  glPopAttrib();
+  render(size);
 }
 
 //////////////////////////////////////////////////////////////////////////

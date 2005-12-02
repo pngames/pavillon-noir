@@ -374,6 +374,8 @@ PNGLShape::_unserializeNode(xmlNode* node)
   else if (xmlStrEqual(BAD_CAST PNO_XMLNODE_ROOT.c_str(), node->name))
   {
 	pnint error = _obj->unserializeFromXML(node);
+	_objLoaded = true;
+
 	if (error != PNEC_SUCCESS)
 	{
 	  pnerror(PN_LOGLVL_WARNING, "%s(%d) : %s", _label.c_str(), _id, pnGetErrorString(error));
@@ -418,6 +420,8 @@ PNGLShape::unserializeFromXML(xmlNode* root)
 
   //////////////////////////////////////////////////////////////////////////
 
+  _objLoaded = false;
+
   for (xmlNodePtr node = root->children ; node != NULL; node = node->next)
   {
 	pnint error = _unserializeNode(node);
@@ -429,7 +433,7 @@ PNGLShape::unserializeFromXML(xmlNode* root)
 
   std::string mdref((const char *)xmlGetProp(root, PNXML_MODELREFERENCE_ATTR));
 
-  if (_obj->getFile() == NULL)
+  if (!_objLoaded)
   {
 	pnint obj_error = _obj->unserializeFromPath(DEF::objectFilePath + mdref);
 	if (obj_error != PNEC_SUCCESS)
@@ -448,15 +452,15 @@ PNGLShape::unserializeFromXML(xmlNode* root)
 
   pnfloat	  x, y, z, xx, yy, zz, ww;
 
-  x = (pnfloat)atof((const char *)xmlGetProp(root, PNXML_COORDX_ATTR));
-  y = (pnfloat)atof((const char *)xmlGetProp(root, PNXML_COORDY_ATTR));
-  z = (pnfloat)atof((const char *)xmlGetProp(root, PNXML_COORDZ_ATTR));
+  x = XMLUtils::xmlGetProp(root, PNXML_COORDX_ATTR, 0.0f);
+  y = XMLUtils::xmlGetProp(root, PNXML_COORDY_ATTR, 0.0f);
+  z = XMLUtils::xmlGetProp(root, PNXML_COORDZ_ATTR, 0.0f);
   _obj->setCoord(x, y, z);
 
-  xx = (pnfloat)atof((const char *)xmlGetProp(root, PNXML_ROTX_ATTR));
-  yy = (pnfloat)atof((const char *)xmlGetProp(root, PNXML_ROTY_ATTR));
-  zz = (pnfloat)atof((const char *)xmlGetProp(root, PNXML_ROTZ_ATTR));
-  ww = (pnfloat)atof((const char *)xmlGetProp(root, PNXML_ROTW_ATTR));
+  xx = XMLUtils::xmlGetProp(root, PNXML_ROTX_ATTR, 0.0f);
+  yy = XMLUtils::xmlGetProp(root, PNXML_ROTY_ATTR, 0.0f);
+  zz = XMLUtils::xmlGetProp(root, PNXML_ROTZ_ATTR, 0.0f);
+  ww = XMLUtils::xmlGetProp(root, PNXML_ROTW_ATTR, 0.0f);
   _obj->setOrient(xx, yy, zz, ww);
 
   //////////////////////////////////////////////////////////////////////////
