@@ -59,33 +59,44 @@ PNPropertiesPanel
 #include <boost/filesystem/operations.hpp>
 #include <libxml/xmlreader.h>
 
+//////////////////////////////////////////////////////////////////////////
+
 #include "pndefs.h"
 #include "pnxml.h"
-#include "pneditorcommon.hpp"
 #include "pnresources.h"
+#include "pnrender.h"
+
 #include "pnplugins.h"
 #include "PNPlugin.hpp"
 #include "PNPluginManager.hpp"
-#include "pnrender.h"
-
-#include "PNGLShape.hpp"
-#include "PNGLViewer.hpp"
-#include "PNPropertiesPanel.hpp"
-#include "PNConfigurableObject.hpp"
-#include "PN3DSkeletonObject.hpp"
-#include "PN3DCamera.hpp"
-#include "PNPropertiesGrid.hpp"
 #include "PNWayPoint.hpp"
 #include "PNIAGraph.hpp"
 #include "PNWaypointObject.hpp"
 #include "PNCharacter.hpp"
+#include "PNConfigurableObject.hpp"
+#include "PN3DSkeletonObject.hpp"
+#include "PN3DCamera.hpp"
+
+//////////////////////////////////////////////////////////////////////////
+
+#include "pneditorcommon.hpp"
+
+//////////////////////////////////////////////////////////////////////////
+
+#include "PNGLShape.hpp"
+#include "PNGLViewer.hpp"
+#include "PNPropertiesPanel.hpp"
+#include "PNEDSkyboxPanel.hpp"
+#include "PNPropertiesGrid.hpp"
+
 #include "PNEditor.hpp"
 
 namespace fs = boost::filesystem;
 
 namespace PN { namespace EDITOR
 {
-
+//////////////////////////////////////////////////////////////////////////
+  
 // Message Map PNEditor class
 FXDEFMAP(PNEditor) PNEditorMap[] =
 {
@@ -231,24 +242,17 @@ PNEditor::PNEditor(FXApp* a)
   new FXFrame(angles, 0);
 
   // 3D Objects
-  new FXTabItem(_panels,"3D Objects\t3D Objects\tEdit 3D Objects.");
-  FXVerticalFrame *settingsObj = new FXVerticalFrame(_panels, FRAME_THICK  |  
-	FRAME_RAISED  | LAYOUT_FILL_Y  
-	|  LAYOUT_CENTER_X  |  LAYOUT_TOP 
-	|  LAYOUT_LEFT, 0, 0, 0, 0, 
-	10, 10, 10, 10);
-
-  objPanel = new PNPropertiesPanel(settingsObj, PNPropertiesPanel::PN_PANELTYPE_3DOBJECTS, this);
+  new FXTabItem(_panels, "3D Objects\t3D Objects\tEdit 3D Objects.");
+  objPanel = new PNPropertiesPanel(_panels, PNPropertiesPanel::PN_PANELTYPE_3DOBJECTS, this);
 
   // Waypoints
-  new FXTabItem(_panels,"WayPoints\tWayPoints\tManipulate waypoints.");
-  FXVerticalFrame *settingsWP = new FXVerticalFrame(_panels, FRAME_THICK  |  
-	FRAME_RAISED  | LAYOUT_FILL_Y  
-	|  LAYOUT_CENTER_X  |  LAYOUT_TOP 
-	|  LAYOUT_LEFT, 0, 0, 0, 0, 
-	10, 10, 10, 10);
+  new FXTabItem(_panels, "WayPoints\tWayPoints\tManipulate waypoints.");
+  wpPanel = new PNPropertiesPanel(_panels, PNPropertiesPanel::PN_PANELTYPE_WAYPOINTS, this);
 
-  wpPanel = new PNPropertiesPanel(settingsWP, PNPropertiesPanel::PN_PANELTYPE_WAYPOINTS, this);
+  // Skybox
+
+  new FXTabItem(_panels, "Skybox\tSky box\tEdit skybox.");
+  _skPanel = new PNEDSkyboxPanel(_panels, this);
 
   // Menus
 

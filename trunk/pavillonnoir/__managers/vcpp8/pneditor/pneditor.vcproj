@@ -231,6 +231,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pneditor\PNEDSkyboxPanel.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pneditor\PNEDSkyboxPanel.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pneditor\PNGLGroup.cpp"
 				>
 			</File>

@@ -84,11 +84,13 @@ FXIMPLEMENT(PNPropertiesPanel,FXComposite,PNPropertiesPanelMap,ARRAYNUMBER(PNPro
 *	\param	  ed	Instance of PNEditor.
 */
 PNPropertiesPanel::PNPropertiesPanel(FXComposite* p, paneltype_t t, EDITOR::PNEditor* ed)
+: FXVerticalFrame(p, FRAME_THICK | FRAME_RAISED | LAYOUT_FILL_Y | LAYOUT_CENTER_X | LAYOUT_TOP | LAYOUT_LEFT,
+				  0, 0, 0, 0, 
+				  10, 10, 10, 10)
 {
-  FXVerticalFrame*	panel = new FXVerticalFrame(p, LAYOUT_FILL_X|LAYOUT_FILL_Y);
-  FXHorizontalFrame*	listbox = new FXHorizontalFrame(panel, LAYOUT_FILL_X);
-  FXHorizontalFrame*	command = new FXHorizontalFrame(panel, LAYOUT_FILL_X);
-  FXString			text;
+  FXHorizontalFrame*	listbox = new FXHorizontalFrame(this, LAYOUT_FILL_X);
+  FXHorizontalFrame*	command = new FXHorizontalFrame(this, LAYOUT_FILL_X);
+  FXString				text;
 
   if (t == PN_PANELTYPE_3DOBJECTS)
 	text = "3D Objects";
@@ -103,8 +105,8 @@ PNPropertiesPanel::PNPropertiesPanel(FXComposite* p, paneltype_t t, EDITOR::PNEd
   _buttonSave = new FXButton(command, "Save", NULL, this, ID_SAVE, FRAME_SUNKEN | FRAME_THICK);
   if (t == PN_PANELTYPE_3DOBJECTS)
 	_buttonReset = new FXButton(command, "Reset", NULL, this, ID_RESET, FRAME_SUNKEN | FRAME_THICK);
-  _groupBox = new FXGroupBox(panel, text, LAYOUT_FILL_X | LAYOUT_FILL_Y | FRAME_GROOVE);
-  _grid = new PNPropertiesGrid(_groupBox, (PNEditorObject*)this);
+  _groupBox = new FXGroupBox(this, text, LAYOUT_FILL_X | LAYOUT_FILL_Y | FRAME_GROOVE);
+  _grid = new PNPropertiesGrid(_groupBox);
 }
 
 /*! \brief Default destructor for PNPropertiesPanel.
@@ -199,7 +201,7 @@ void  PNPropertiesPanel::update()
 	if (_grid != NULL)
 	{
 	  delete _grid;
-	  _grid = new PNPropertiesGrid(_groupBox, (PNEditorObject*)this);
+	  _grid = new PNPropertiesGrid(_groupBox);
 	}
 
 	PNConfigurableObject* co = (PNConfigurableObject*)_objectsListBox->getItemData(_objectsListBox->getCurrentItem());
@@ -381,7 +383,6 @@ long          PNPropertiesPanel::onCmdAdd(FXObject* obj, FXSelector sel, void* p
 
   if (_type == PN_PANELTYPE_3DOBJECTS)
   {
-
 	new FXHorizontalSeparator(vFrame, LAYOUT_FILL_X);
 	FXGroupBox* gBoxProperties = new FXGroupBox(vFrame, "Properties", LAYOUT_FILL_X | LAYOUT_FILL_Y | FRAME_GROOVE);
 	FXMatrix* matrixProperties = new FXMatrix(gBoxProperties, 4, MATRIX_BY_COLUMNS|LAYOUT_FILL_X);
