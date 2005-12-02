@@ -55,8 +55,9 @@
 
 /////////////////////////////////////
 
-namespace PN
-{
+namespace PN { namespace EDITOR {
+//////////////////////////////////////////////////////////////////////////
+
 // Map
 FXDEFMAP(PNPropertiesPanel) PNPropertiesPanelMap[]={
   FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_LISTBOX_SEL,PNPropertiesPanel::onCmdListBox),
@@ -557,4 +558,5 @@ void			PNPropertiesPanel::incrementIdMax()
   _idMax++;
 }
 
-};
+//////////////////////////////////////////////////////////////////////////
+};};

@@ -33,6 +33,5 @@
 #include "PNConfigurableParameter.hpp"
 #include "PNConfigurableObject.hpp"
 #include "PNPropertiesGridParameter.hpp"
-#include "PNEditorObject.hpp"
 
 #endif /*_PNPROPERTIES_H_*/
