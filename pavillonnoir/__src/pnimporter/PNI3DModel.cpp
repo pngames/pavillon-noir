@@ -260,7 +260,14 @@ PNI3DModel::computeFaces(std::vector<PN3DMaterial*>& mat, PNFace* faces, pnuint 
 
 //////////////////////////////////////////////////////////////////////////
 
-pnint				PNI3DModel::unserializeFromStream(std::istream& i)
+boost::filesystem::path*
+PNI3DModel::getFile()
+{
+  return IPNSerializable::getFile();
+}
+
+pnint
+PNI3DModel::unserializeFromStream(std::istream& i)
 {
   _istream = &i;
 

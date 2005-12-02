@@ -34,18 +34,19 @@
 #include <map>
 #include <string>
 
-#include "PN3DSkeleton.hpp"
-
 #include "PNIBone.hpp"
 
 #include "pns_format.h"
+
+#include "PN3DSkeleton.hpp"
+#include "IPNSerializable.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 class PNRendererObject;
 
-class								PNI3DSkeleton : public PN3DSkeleton
+class								PNI3DSkeleton : public PN3DSkeleton, public IPNSerializable
 {
 private:
   typedef std::vector<PNIBone>				BoneList;
@@ -88,6 +89,7 @@ public:
   // MAIN
   //////////////////////////////////////////////////////////////////////////
   
+  boost::filesystem::path*			getFile();
   pnint								unserializeFromStream(std::istream& i);
 
   //////////////////////////////////////////////////////////////////////////

@@ -31,13 +31,14 @@
 # define _PNI3DMATERIAL_HPP_
 
 #include "PN3DMaterial.hpp"
+#include "IPNSerializable.hpp"
 
 #include "pnt_format.h"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class						PNI3DMaterial : public PN3DMaterial
+class						PNI3DMaterial : public PN3DMaterial, public IPNSerializable
 {
 private:
   pntHeader_t				_header;
@@ -50,6 +51,8 @@ public:
   ~PNI3DMaterial();
 
   //////////////////////////////////////////////////////////////////////////
+
+  boost::filesystem::path*	getFile();
 
   pnint						unserializeFromStream(std::istream& i);
 

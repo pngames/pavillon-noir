@@ -102,7 +102,14 @@ PNEDSkybox::~PNEDSkybox()
 void
 PNEDSkybox::buildParams()
 {
-  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_BOOLEAN, &_enabled, "enabled", "enable"));
+  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_BOOLEAN, &_enabled, "Enabled", "Enable"));
+
+  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_MATERIAL, &_top, "Top", "Top"));
+  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_MATERIAL, &_bottom, "Bottom", "Bottom"));
+  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_MATERIAL, &_left, "Left", "Left"));
+  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_MATERIAL, &_right, "Right", "Right"));
+  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_MATERIAL, &_front, "Front", "Front"));
+  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_MATERIAL, &_back, "Back", "Back"));
 }
 
 // Draw this object in a viewer

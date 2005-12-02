@@ -58,6 +58,7 @@ typedef enum
   PN_PARAMTYPE_FILELIST,		// based on std:list<boost:filesystem:path>
   PN_PARAMTYPE_DIRLIST,			// based on std:list<boost:filesystem:path>
   PN_PARAMTYPE_LINKLIST,
+  PN_PARAMTYPE_MATERIAL,		// based on PNMaterial*
   PN_PARAMTYPE_MATERIALLIST,	// based on PN3DObject:VectorMaterial
   PN_PARAMTYPE_ANIMLIST,		// based on PN3DSkeletonObject:AnimationVector
   PN_PARAMTYPE_SCRIPTLIST

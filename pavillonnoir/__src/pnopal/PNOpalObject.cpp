@@ -486,4 +486,11 @@ pnint			PNOpalObject::unserializeFromXML(xmlNode* root)
   return PNEC_SUCCESS;
 }
 
+boost::filesystem::path*
+PNOpalObject::getFile()
+{
+  return IPNXMLSerializable::getFile();
 }
+
+//////////////////////////////////////////////////////////////////////////
+};

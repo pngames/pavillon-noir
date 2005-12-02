@@ -41,59 +41,63 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
-class PNAPI PNWPModel : public PN3DModel
+class PNAPI					PNWPModel : public PN3DModel
 {
 private:
-  static PNWPModel*		  _instance;
+  static PNWPModel*			_instance;
 
-  pnpoint4f				  _selectcolor;
-  pnpoint4f				  _dflcolor;
-  pnfloat*				  _color;
+  pnpoint4f					_selectcolor;
+  pnpoint4f					_dflcolor;
+  pnfloat*					_color;
 
-  PNPoint3f				  _min;
-  PNPoint3f				  _max;
-  PNPoint3f				  _center;
+  PNPoint3f					_min;
+  PNPoint3f					_max;
+  PNPoint3f					_center;
 
   PNWPModel(void);
   ~PNWPModel(void);
 
 public:
-  static PNWPModel*	getInstance();
+  static PNWPModel*			getInstance();
 
-  void				render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk = NULL);
-  void				render(PN3DSkeleton* sk = NULL);
-  void				renderLink(const PNPoint3f&p1, const PNPoint3f&p2, const pnfloat* color,
+  void						render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk = NULL);
+  void						render(PN3DSkeleton* sk = NULL);
+  void						renderLink(const PNPoint3f&p1, const PNPoint3f&p2, const pnfloat* color,
 								pnuint direction = 0, pnfloat thickness = 1);
 
-  void				setSlctColor();
-  void				setDflColor();
+  void						setSlctColor();
+  void						setDflColor();
 
   //////////////////////////////////////////////////////////////////////////
 
-  pnuint			getNbSupportedBones() const {return 0;}
-  pnuint			getNbSupportedMaterials() const {return 0;}
+  pnuint					getNbSupportedBones() const {return 0;}
+  pnuint					getNbSupportedMaterials() const {return 0;}
 
-  pnuint			getNbVerts() const {return 400;}
-  pnuint			getNbFaces() const {return 400;}
-
-  //////////////////////////////////////////////////////////////////////////
-
-  pnuint			getNbVertexComputed() {return 0;};
-
-  pnuint			computeVertex(pnfloat* buffer, pnuint step = 0) {return 0;}
-  pnuint			computeNormales(pnfloat* buffer, pnuint step = 0) {return 0;}
-  pnuint			computeTextCoord(pnfloat* buffer, pnuint step = 0) {return 0;}
-  pnuint			computeColors(pnfloat* buffer, pnuint step = 0) {return 0;}
-
-  pnuint			getNbFacesComputed() {return 0;}
-
-  pnuint			computeFaces(std::vector<PN3DMaterial*>& mat, PNFace* faces, pnuint step = 0) {return 0;}
+  pnuint					getNbVerts() const {return 400;}
+  pnuint					getNbFaces() const {return 400;}
 
   //////////////////////////////////////////////////////////////////////////
 
-  const PNPoint3f&	getMin() const {return _min;}
-  const PNPoint3f&	getMax() const {return _max;}
-  const PNPoint3f&	getCenter() const {return _center;}
+  pnuint					getNbVertexComputed() {return 0;};
+
+  pnuint					computeVertex(pnfloat* buffer, pnuint step = 0) {return 0;}
+  pnuint					computeNormales(pnfloat* buffer, pnuint step = 0) {return 0;}
+  pnuint					computeTextCoord(pnfloat* buffer, pnuint step = 0) {return 0;}
+  pnuint					computeColors(pnfloat* buffer, pnuint step = 0) {return 0;}
+
+  pnuint					getNbFacesComputed() {return 0;}
+
+  pnuint					computeFaces(std::vector<PN3DMaterial*>& mat, PNFace* faces, pnuint step = 0) {return 0;}
+
+  //////////////////////////////////////////////////////////////////////////
+
+  const PNPoint3f&			getMin() const {return _min;}
+  const PNPoint3f&			getMax() const {return _max;}
+  const PNPoint3f&			getCenter() const {return _center;}
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  boost::filesystem::path*	getFile();
 };
 
 //////////////////////////////////////////////////////////////////////////
