@@ -486,5 +486,40 @@ Returns the type of the character that is visible to others
 		
 	end
 	
+	function OBJ:getNBFightSuccess()
+		-- Success Modifier
+		local MDsuccess = 0
+		if (self.health_state == HEALTH_STATE.SERIOUS) then
+			MDsuccess = -1
+		elseif (self.health_state == HEALTH_STATE.DANGEROUS) then
+			MDsuccess = -2
+		elseif (self.health_state == HEALTH_STATE.CRITIC) then
+			MDsuccess = -4
+		end
+
+		-- Number of dice
+		local nbDice = self.stats[self.selected_weapon.skill] + self.selected_weapon.modifier
+		local nbS = 0
+		--pnprint("competence=" .. self.stats[self.selected_weapon.skill] .. " modifier=" .. self.selected_weapon.modifier .. " nbDice=" .. nbDice .. "\n")
+	
+		-- Success Modifiers
+		local distance = self:getCoord():getDistance(self:getViewTarget():getCoord())
+		local range = self.selected_weapon.range
+		if ((self.selected_weapon.type ~= firearm) and (self.selected_weapon.type ~= throw_weapon)) then
+			if (distance < range) then
+				-- nb success
+				for i = 1, nbDice do
+					--pnprint(self.id .. " throwing a die !\n")
+					if ((gameMap.die:getVal() + MDsuccess) <= self.skills[self.selected_weapon.type]) then
+						--pnprint("\tsuccess !\n")
+						nbS = nbS + 1
+					end
+				end
+			end
+		end
+
+		return nbS
+	end
+
 	return OBJ
 end

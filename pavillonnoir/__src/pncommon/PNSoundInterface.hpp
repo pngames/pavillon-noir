@@ -61,7 +61,7 @@ public:
 
   virtual pnint			getMaxId()=0;
   virtual void			setMaxid(pnint id)=0;
-  
+
   //////////////////////////////////////////////////////////////////////////
 
   virtual pnint			createNewSound(const std::string &name, const char* file, char looping, pnfloat x, pnfloat y, pnfloat z)=0;
