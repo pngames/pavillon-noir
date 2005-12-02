@@ -42,6 +42,7 @@
 #include "PNGUIMenuRoot.hpp"
 #include "PNGUIGame.hpp"
 #include "PNGUIMsgBox.hpp"
+#include "PNConfPanel.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -72,8 +73,9 @@ namespace PN
 {
   PNGUIMenuRoot*	PNGUIMenuRoot::_instance = NULL;
 
-  PNGUIMenuRoot::PNGUIMenuRoot()
+  PNGUIMenuRoot::PNGUIMenuRoot(std::string label)
   {
+	_label = label;
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("MenuRootImage") == false)
 	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/MenuRoot.imageset");
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/MenuRoot.layout"); 
@@ -97,6 +99,21 @@ namespace PN
 	//PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, data4);
 	//delete data4;
 
+
+	//////////////////////////////////////////////////////////////////////////
+	//PNConfPanel TEST for example
+	//////////////////////////////////////////////////////////////////////////
+	_label = label;
+	_aReal = 0.00;
+	_aBool = true;
+	_aInt = 0;
+	_aString = "rien";
+	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL,	  &_aReal, "position x", "position x"));
+	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_BOOLEAN, &_aBool, "position y", "position y"));
+	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_INT,	  &_aInt, "position z", "position z"));
+	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_STRING,  &_aString, "class", "class"));
+
+	PNConfPanel::getInstance()->addConfigurableObject(this);
 	//////////////////////////////////////////////////////////////////////////
   }
 

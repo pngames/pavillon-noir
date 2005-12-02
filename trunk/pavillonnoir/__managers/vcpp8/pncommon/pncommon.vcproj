@@ -812,6 +812,18 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="confpanel"
+			>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNConfPanel.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNConfPanel.hpp"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

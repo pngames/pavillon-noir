@@ -67,6 +67,7 @@ namespace PN{
 	void	pnSdlEvent(SDL_Event *event);
 	void	pninjectTimePulse();
   private:
+	CEGUI::uint SDLKeyToCEGUIKey(SDLKey key);
 	void	handleKeyPress(SDL_keysym*	key, bool state);
 	void	handleMouse(SDL_MouseMotionEvent* event);
 	void	handleKeyMouse(SDL_MouseButtonEvent* event, bool state);

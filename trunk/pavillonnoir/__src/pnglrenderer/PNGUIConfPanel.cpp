@@ -35,7 +35,7 @@ namespace PN
 {
   #define RGBA(R,G,B,A) (B+(G<<8)+(R<<16)+(A<<24))
 
-  confPanelTEST::confPanelTEST(std::string label)
+  /*confPanelTEST::confPanelTEST(std::string label)
   {
 	_label = label;
 	_aReal = 0.00;
@@ -68,10 +68,10 @@ namespace PN
 	  break;
 	}
 	
-  }
+  }*/
   /**************************************************************************************/
   
-  PNGUIConfPanel* PNGUIConfPanel::_instance = NULL;
+//  PNGUIConfPanel* PNGUIConfPanel::_instance = NULL;
  
   PNGUIConfPanel::PNGUIConfPanel()
   {
@@ -88,10 +88,10 @@ namespace PN
 
 	PNEventManager::getInstance()->addCallback(PN_EVENT_CONFPANEL, EventCallback(this, &PNGUIConfPanel::confPanelVisibility));
 
-	confPanelTEST* testobj = new confPanelTEST("123456789abcde");
+	/*confPanelTEST* testobj = new confPanelTEST("123456789abcde");
 
 	addConfigurableObject(testobj);
-	addConfigurableObject(testobj);
+	addConfigurableObject(testobj);*/
 	/*addConfigurableObject(testobj);
 	addConfigurableObject(testobj);
 	addConfigurableObject(testobj);
@@ -109,8 +109,9 @@ namespace PN
   PNGUIConfPanel* PNGUIConfPanel::getInstance()
   {
 	if (_instance == NULL)
-	  _instance = new PNGUIConfPanel();
-	return _instance;
+	  return new PNGUIConfPanel();
+
+	return (PNGUIConfPanel*)_instance;
   }
 
   void  PNGUIConfPanel::confPanelVisibility(pnEventType type, PNObject* source, PNEventData* data)
@@ -238,11 +239,6 @@ namespace PN
 	}
   }
 
-/************************************************************************/
-/* TODO ajouter une fonction d'UPDATE de val
-(overload avec soit qui prend un PNConfigurableObject soit rien soit un PNConfigurableParameter)*/
-/************************************************************************/
-
  /* std::string PNGUIConfPanel::getWinNameByConfParam(PNConfigurableParameter* current_param)
   {
 	confPanelMap::iterator iter;
@@ -259,6 +255,7 @@ namespace PN
 
   void  PNGUIConfPanel::update()
   {
+	 PNLOCK(this);
 	confPanelMap::iterator iter;
 	for (iter = _confPanelMap.begin(); iter != _confPanelMap.end(); iter++)
 	  update((std::string)iter->first, (PNConfigurableParameter*)iter->second);
@@ -408,6 +405,7 @@ namespace PN
 
   void	PNGUIConfPanel::addConfigurableObject(PNConfigurableObject* pncobj)
   {
+	 PNLOCK(this);
 	CEGUI::Window* tmpTab = addTab(pncobj->getLabel());
 	
 	//LIMIT DU TAB 20 elements
