@@ -57,6 +57,7 @@ protected:
   PN3DCamera*				_camera;
   boost::filesystem::path*	_wpFile;
 
+  pnint						_unserializeSkybox(xmlNode* node);
   pnint						_unserializeEntity(xmlNode* node);
   pnint						_unserializeNode(xmlNode* node);
 public:

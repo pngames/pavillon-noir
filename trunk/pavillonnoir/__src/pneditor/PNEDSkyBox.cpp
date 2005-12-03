@@ -162,7 +162,7 @@ PNEDSkybox::getRootNodeName() const
 pnint
 PNEDSkybox::unserializeFromXML(xmlNode* root)
 {
-  _enabled = XMLUtils::xmlGetProp(root, PNXML_ENABLED_ATT, true);
+  _enabled = XMLUtils::xmlGetProp(root, PNXML_ENABLED_ATT, false);
 
   //////////////////////////////////////////////////////////////////////////
 
