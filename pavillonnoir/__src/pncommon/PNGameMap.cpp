@@ -72,6 +72,16 @@ PNGameMap::getEntityList() const
 }
 
 pnint
+PNGameMap::_unserializeSkybox(xmlNode* root)
+{
+  PNRendererInterface::getInstance()->setSkyBoxEnabled(XMLUtils::xmlGetProp(root, PNXML_ENABLED_ATT, false));
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  return PNEC_SUCCESS;
+}
+
+pnint
 PNGameMap::_unserializeEntity(xmlNode* node)
 {
   std::string id = (char *)xmlGetProp(node, PNXML_ID_ATTR);
@@ -91,6 +101,9 @@ PNGameMap::_unserializeEntity(xmlNode* node)
   addToMap(className, id);
 
   PN3DObject*  object = _entityList[id];
+
+  if (object == NULL)
+	return PNEC_ERROR;
 
   //////////////////////////////////////////////////////////////////////////
   
@@ -156,8 +169,10 @@ PNGameMap::_unserializeEntity(xmlNode* node)
 pnint
 PNGameMap::_unserializeNode(xmlNode* node)
 {
-  if (strcmp((const char*)PNXML_ENTITY_MKP, (const char*)node->name) == 0)
+  if (xmlStrEqual(PNXML_ENTITY_MKP, node->name))
 	_unserializeEntity(node);
+  if (xmlStrEqual(PNXML_SKYBOX_MKP, node->name))
+	_unserializeSkybox(node);
 
   return PNEC_SUCCESS;
 }
