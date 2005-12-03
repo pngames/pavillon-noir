@@ -97,17 +97,17 @@ public:
   //////////////////////////////////////////////////////////////////////////
   
 public:
-  void						stopAnimation();
-  void						stopAnimation(pnuint animId);
+  pnuint					stopAnimation();
+  pnuint					stopAnimation(pnuint animId);
 
   pnuint					startAnimation();
   pnuint					startAnimation(pnuint animId);
 
-  void						setAnimSpeed(pnfloat speed);
-  void						setAnimSpeed(pnint animId, pnfloat speed);
+  pnuint					setAnimSpeed(pnfloat speed);
+  pnuint					setAnimSpeed(pnint animId, pnfloat speed);
 
-  void						setAnimWeight(pnfloat weight);
-  void						setAnimWeight(pnint animId, pnfloat weight);
+  pnuint					setAnimWeight(pnfloat weight);
+  pnuint					setAnimWeight(pnint animId, pnfloat weight);
 
   //////////////////////////////////////////////////////////////////////////
 
