@@ -170,24 +170,31 @@ void  PNFoxOptionWindow::create()
 void  PNFoxOptionWindow::loadGrid(PNPropertiesGrid* grid, PNConf* conf, const pnchar* section)
 {
   std::list<PNPropertiesGridParameter*> gridParameters = grid->getParams();
-  for (std::list<PNPropertiesGridParameter*>::iterator it = gridParameters.begin(); 
-	it != gridParameters.end(); it++)
+  if (gridParameters.size() != 0)
   {
-	PNConfigurableParameter* configurableParameter  = (*it)->getParam();
-	PNPropertiesGridParameter* gridParameter;
-	// first check the type of the GridParameters we're dealing with (float, string, stringlist ...)
-	switch (configurableParameter->getType())
+    for (std::list<PNPropertiesGridParameter*>::iterator it = gridParameters.begin(); 
+  	  it != gridParameters.end(); it++)
 	{
-	case PN_PARAMTYPE_STRINGLIST:
-	  gridParameter = (PNFXStringListParameter*)(*it); break;
-	default:
-	  break;
+	  PNConfigurableParameter* configurableParameter  = (*it)->getParam();
+	  PNPropertiesGridParameter* gridParameter;
+	  // first check the type of the GridParameters we're dealing with (float, string, stringlist ...)
+	  switch (configurableParameter->getType())
+	  {
+	  case PN_PARAMTYPE_STRINGLIST:
+		gridParameter = (PNFXStringListParameter*)(*it); break;
+	  default:
+		break;
+  	  }
+	  // then loads its value in the parameter
+  	  std::string key = gridParameter->getParam()->getLabel();
+	  pnbool ok = gridParameter->setStringValue(conf->getKey(key, section, std::string()));
+	  if (ok == false)
+		pnerror(PN_LOGLVL_DEBUG, "Could not load values for key \"%s\"", key.c_str());
 	}
-	// then loads its value in the parameter
-	std::string key = gridParameter->getParam()->getLabel();
-	pnbool ok = gridParameter->setStringValue(conf->getKey(key, section, std::string()));
-	if (ok == false)
-	  pnerror(PN_LOGLVL_DEBUG, "Could not load values for key \"%s\"", key.c_str());
+  }
+  else
+  {
+	new FXLabel(grid, "No options available for this plugin.");
   }
 }
 
