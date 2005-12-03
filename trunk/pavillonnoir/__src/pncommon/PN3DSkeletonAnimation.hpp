@@ -47,13 +47,11 @@ class PNAPI				PN3DSkeletonAnimation : PNObject, IPNXMLSerializable
 public:
   PN3DAnimation*		anim;
 public:
-  PN3DSkeletonAnimation(PN3DAnimation* anim, pnint id);
+  PN3DSkeletonAnimation(PN3DAnimation* anim);
   ~PN3DSkeletonAnimation();
 
   pnbool				update(pnuint current);
 public:
-  pnint					id;
-
   pnbool				looping;
 
   pnuint				step;

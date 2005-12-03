@@ -42,10 +42,8 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
-PN3DSkeletonAnimation::PN3DSkeletonAnimation(PN3DAnimation* anim, pnint id)
+PN3DSkeletonAnimation::PN3DSkeletonAnimation(PN3DAnimation* anim)
 {
-  this->id = id;
-
   this->weight = 1.0f;
   this->speed = 1.0f;
 
