@@ -47,58 +47,56 @@
 
 namespace PN
 {
+/**
+ * Configuration file management class
+ */
+class PNAPI							PNConf
+{
+private:
+  static PNConf*					_instance;
+  std::string						_homePath;
+  boost::filesystem::path			_confFilePath;
+  std::map<std::string, std::map<std::string, std::string> >	_confHash;
+  std::map<std::string, std::map<std::string, std::string> >	_defaultHash;
+
+  PNConf();
+  ~PNConf();
+  void								_loadConfFile();
+  void								_createDefaultConf();
+public:
+
+  static void						initialize();
+  static PNConf*					getInstance();
+  void								setKey(const std::string& key, const std::string& value, const std::string& section);
+  void								saveConf();
+  boost::filesystem::path			getConfPath();
+
+  ///////////////////////////////////////////////////////////////////
+  // Templates
+  ///////////////////////////////////////////////////////////////////
+
   /**
-  * Configuration file management class
+  * @brief get the matching value to the given section and key
+  * @param key string value representing an item key
+  * @param section string value of the desired section
+  * @param type a type constructor (like int(), string(), ...)
+  * @return value of the matching key or throw a PNException if key is not found.
+  * @sa setKey()
   */
-  class PNAPI							PNConf
+  template <typename T>
+  T getKey(const std::string& key, const std::string& section, const T& type)
   {
-  private:
-	static PNConf*						_instance;
-	std::string							_homePath;
-	boost::filesystem::path				_confFilePath;
-	std::map<std::string, std::map<std::string, std::string> >	_confHash;
-	std::map<std::string, std::map<std::string, std::string> >	_defaultHash;
-
-	PNConf();
-	~PNConf();
-	void								_loadConfFile();
-	void								_createDefaultConf();
-  public:
-
-	static void							initialize();
-	static PNConf*						getInstance();
-	void								setKey(const std::string& key, 
-											   const std::string& value, 
-											   const std::string& section);
-	void								saveConf();
-	boost::filesystem::path				getConfPath();
-	
-	///////////////////////////////////////////////////////////////////
-	// Templates
-	///////////////////////////////////////////////////////////////////
-	
-	/**
-	* @brief get the matching value to the given section and key
-	* @param key string value representing an item key
-	* @param section string value of the desired section
-	* @param type a type constructor (like int(), string(), ...)
-	* @return value of the matching key or throw a PNException if key is not found.
-	* @sa setKey()
-	*/
-  	template <typename T>
-	T getKey(const std::string& key, const std::string& section, const T& type)
-	{
-		T dest;
-		if (_confHash.find(section) == _confHash.end())
-			throw PNException("Section not found");
-		if (_confHash[section].find(key) == _confHash[section].end())
-			throw PNException("Key not found");
-		std::stringstream convert(_confHash[section][key]);
-		convert >> dest;
-		std::cout << dest << std::endl;
-		return dest;
-	}
-  };
+	T dest;
+	if (_confHash.find(section) == _confHash.end())
+	  throw PNException("Section not found");
+	if (_confHash[section].find(key) == _confHash[section].end())
+	  throw PNException("Key not found");
+	std::stringstream convert(_confHash[section][key]);
+	convert >> dest;
+	std::cout << dest << std::endl;
+	return dest;
+  }
+};
 }
 
 #endif /*_PNCONF_HPP_*/
