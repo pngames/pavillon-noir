@@ -97,6 +97,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
   
 public:
+  pnbool					setEnable(pnuint animId, pnbool enabled);
   pnbool					isEnable(pnuint animId);
 
   pnuint					stopAnimation();
@@ -110,6 +111,9 @@ public:
 
   pnuint					setAnimWeight(pnfloat weight);
   pnuint					setAnimWeight(pnint animId, pnfloat weight);
+
+  pnuint					setEnableLoop(pnbool loop);
+  pnuint					setEnableLoop(pnint animId, pnbool loop);
 
   //////////////////////////////////////////////////////////////////////////
 

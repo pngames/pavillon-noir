@@ -80,7 +80,7 @@ public:
   
   //////////////////////////////////////////////////////////////////////////
 public:
-  std::string				serialize();
+  std::string				serialize() const;
   void						unserialize(const std::string& str);
   void						unserialize(std::istream& istr);
 
