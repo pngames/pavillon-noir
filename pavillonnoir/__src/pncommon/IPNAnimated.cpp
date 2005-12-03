@@ -98,7 +98,7 @@ IPNAnimated::startAnimation()
   return PNEC_SUCCESS;
 }
 
-void
+pnuint
 IPNAnimated::stopAnimation()
 {
   PNLOCKP(this);
@@ -107,6 +107,8 @@ IPNAnimated::stopAnimation()
 
   if (_stopedEventType > -1)
     PNEventManager::getInstance()->addEvent((pnEventType)_stopedEventType, (PNObject* )this, NULL);
+
+  return PNEC_SUCCESS;
 }
 
 void
@@ -141,20 +143,24 @@ IPNAnimated::setAnimTransTime(pnuint transTime)
   _animTransTime = transTime;
 }
 
-void
+pnuint
 IPNAnimated::setAnimSpeed(pndouble speed)
 {
   PNLOCKP(this);
 
   _animSpeed = speed;
+
+  return PNEC_SUCCESS;
 }
 
-void
+pnuint
 IPNAnimated::setEnableLoop(pnbool enabled)
 {
   PNLOCKP(this);
 
   _looping = enabled;
+
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -261,22 +261,27 @@ PN3DSkeletonObject::getSkeleton()
 
 //////////////////////////////////////////////////////////////////////////
 
-void
+pnuint
 PN3DSkeletonObject::stopAnimation()
 {
-  IPNAnimated::stopAnimation();
+  return IPNAnimated::stopAnimation();
 }
 
-void
+pnuint
 PN3DSkeletonObject::stopAnimation(pnuint animId)
 {
   PNLOCK(this);
 
-  assert(animId < _anims.size()	&& "This animation does not exist.");
+  if (animId < 0 || (pnuint)animId >= _anims.size())
+	return PNEC_ERROR;
+
+  //assert(animId < _anims.size()	&& "This animation does not exist.");
 
   //////////////////////////////////////////////////////////////////////////
 
   _animsToPlay.erase(&_anims[_animId]);
+
+  return PNEC_SUCCESS;
 }
 
 pnuint
@@ -295,7 +300,10 @@ PN3DSkeletonObject::startAnimation(pnuint animId)
 {
   PNLOCK(this);
 
-  assert((pnuint)animId < _anims.size() && "This animation does not exist.");
+  if (animId < 0 || (pnuint)animId >= _anims.size())
+	return PNEC_ERROR;
+
+  //assert((pnuint)animId < _anims.size() && "This animation does not exist.");
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -308,7 +316,7 @@ PN3DSkeletonObject::startAnimation(pnuint animId)
 
 //////////////////////////////////////////////////////////////////////////
 
-void
+pnuint
 PN3DSkeletonObject::setAnimSpeed(pnfloat speed)
 {
   PNLOCK(this);
@@ -316,38 +324,49 @@ PN3DSkeletonObject::setAnimSpeed(pnfloat speed)
   for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
 	it->speed = speed;
 
-  IPNAnimated::setAnimSpeed(speed);
+  return IPNAnimated::setAnimSpeed(speed);
 }
 
-void
+pnuint
 PN3DSkeletonObject::setAnimSpeed(pnint animId, pnfloat speed)
 {
   PNLOCK(this);
 
-  assert(animId >= 0 && (pnuint)animId < _anims.size()
-	&& "This animation does not exist.");
+  if (animId < 0 || (pnuint)animId >= _anims.size())
+	return PNEC_ERROR;
+
+  /*assert(animId >= 0 && (pnuint)animId < _anims.size()
+	&& "This animation does not exist.");*/
 
   _anims[animId].speed = speed;
+
+  return PNEC_SUCCESS;
 }
 
-void
+pnuint
 PN3DSkeletonObject::setAnimWeight(pnfloat weight)
 {
   PNLOCK(this);
 
   for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
 	it->weight = weight;
+
+  return PNEC_SUCCESS;
 }
 
-void
+pnuint
 PN3DSkeletonObject::setAnimWeight(pnint animId, pnfloat weight)
 {
   PNLOCK(this);
 
-  assert(animId >= 0 && (pnuint)animId < _anims.size()
-	&& "This animation does not exist.");
+  if (animId < 0 || (pnuint)animId >= _anims.size())
+	return PNEC_ERROR;
+  /*assert(animId >= 0 && (pnuint)animId < _anims.size()
+	&& "This animation does not exist.");*/
 
   _anims[animId].weight = weight;
+
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////
