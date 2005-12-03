@@ -40,10 +40,16 @@ PNConfigurableParameter::PNConfigurableParameter(PNConfigurableObject* p,
                                                  void* elem, 
                                                  const string& label, 
                                                  const string& altText,
-												 bool editable)
+												 bool editable,
+												 void* max,
+												 void* min)
 {	
   _p = p;
+
   _elem = elem;
+  _max = max;
+  _min = min;
+
   _label = label;
   _altText = altText;
   _type = type;
@@ -66,6 +72,18 @@ void*
 PNConfigurableParameter::getElem()
 {
   return _elem;
+}
+
+void*
+PNConfigurableParameter::getMax()
+{
+  return _max;
+}
+
+void*
+PNConfigurableParameter::getMin()
+{
+  return _min;
 }
 
 const string&

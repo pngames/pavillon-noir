@@ -73,17 +73,25 @@ class PNAPI				PNConfigurableParameter
 protected:
   PNConfigurableObject*	_p;
   pnparamtype			_type;
+
   void*					_elem;
+  void*					_max;
+  void*					_min;
+
   std::string			_label;
   std::string			_altText;
   bool					_editable;
 
 public:
-  PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, bool editable = true);
+  PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, bool editable = true, void* max = NULL, void* min = NULL);
   virtual ~PNConfigurableParameter();
 
   pnparamtype			getType();
+
   void*					getElem();
+  void*					getMax();
+  void*					getMin();
+
   const std::string&	getLabel();
   const std::string&	getAltText();
   bool					isEditable();
