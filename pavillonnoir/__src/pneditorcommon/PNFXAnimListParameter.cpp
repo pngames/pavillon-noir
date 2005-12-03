@@ -170,7 +170,7 @@ PNFXAnimListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
 
 	  if (anim != NULL)
 	  {
-		v->push_back(PN3DSkeletonAnimation(anim, (pnint)v->size()));
+		v->push_back(PN3DSkeletonAnimation(anim));
 
 		std::string s = v->at(i).anim->getFile()->string();
 		if (s.size() > 29)
