@@ -503,7 +503,7 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 	}
   }
   
-  _genScene.serializeInFile(fs::path((_dir + "entities.xml").c_str(), fs::native));
+  _genScene.serializeInFile(fs::path((_dir + "entities.xml"), fs::no_check));
 
   //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
