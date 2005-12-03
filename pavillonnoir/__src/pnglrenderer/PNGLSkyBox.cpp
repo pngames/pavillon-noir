@@ -134,11 +134,11 @@ PNGLSkyBox::_renderBox(pnfloat size)
   glColor4fv(color);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
 
-  pnfloat xmin =-0.5f * size;
+  pnfloat xmin = -0.5f * size;
   pnfloat xmax = 0.5f * size;
-  pnfloat ymin =-0.5f * size;
+  pnfloat ymin = -0.5f * size;
   pnfloat ymax = 0.5f * size;
-  pnfloat zmin =-0.5f * size;
+  pnfloat zmin = -0.5f * size;
   pnfloat zmax = 0.5f * size;
 
   if (_front != NULL)
