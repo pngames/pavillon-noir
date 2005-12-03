@@ -39,6 +39,8 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
+class PNPoint3f;
+
 class PNAPI						IPNXMLSerializable : public IPNSerializable
 {
 private:
@@ -89,6 +91,11 @@ namespace XMLUtils
   PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const char *name, pnfloat value);
   PNAPI pnfloat					xmlGetProp(xmlNode* node, const pnuchar* name, pnfloat def);
   PNAPI pnfloat					xmlGetProp(xmlNode* node, const char* name, pnfloat def);
+
+  PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const pnuchar *name, const PNPoint3f& value);
+  PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const char *name, const PNPoint3f& value);
+  PNAPI PNPoint3f				xmlGetProp(xmlNode* node, const pnuchar* name, const PNPoint3f& def);
+  PNAPI PNPoint3f				xmlGetProp(xmlNode* node, const char* name, const PNPoint3f& def);
 }
 
 //////////////////////////////////////////////////////////////////////////

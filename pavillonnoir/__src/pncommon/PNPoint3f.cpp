@@ -158,7 +158,7 @@ PNPoint3f::isEquals(pnfloat x, pnfloat y, pnfloat z)
 //////////////////////////////////////////////////////////////////////////
 
 std::string
-PNPoint3f::serialize()
+PNPoint3f::serialize() const
 {
   std::ostringstream os;
   os << x << " " << y << " " << z;

@@ -279,6 +279,22 @@ PN3DSkeletonObject::getSkeleton()
 //////////////////////////////////////////////////////////////////////////
 
 pnbool
+PN3DSkeletonObject::setEnable(pnuint animId, pnbool enabled)
+{
+  PNLOCK(this);
+
+  if (animId < 0 || (pnuint)animId >= _anims.size())
+	return PNEC_ERROR;
+  
+  if (enabled)
+	_animsToPlay.insert(&_anims[animId]);
+  else
+	_animsToPlay.erase(&_anims[_animId]);
+
+  return PNEC_SUCCESS;
+}
+
+pnbool
 PN3DSkeletonObject::isEnable(pnuint animId)
 {
   if (animId < 0 || (pnuint)animId >= _anims.size())
@@ -296,18 +312,7 @@ PN3DSkeletonObject::stopAnimation()
 pnuint
 PN3DSkeletonObject::stopAnimation(pnuint animId)
 {
-  PNLOCK(this);
-
-  if (animId < 0 || (pnuint)animId >= _anims.size())
-	return PNEC_ERROR;
-
-  //assert(animId < _anims.size()	&& "This animation does not exist.");
-
-  //////////////////////////////////////////////////////////////////////////
-
-  _animsToPlay.erase(&_anims[_animId]);
-
-  return PNEC_SUCCESS;
+  return setEnable(_animId, false);
 }
 
 pnuint
@@ -329,15 +334,11 @@ PN3DSkeletonObject::startAnimation(pnuint animId)
   if (animId < 0 || (pnuint)animId >= _anims.size())
 	return PNEC_ERROR;
 
-  //assert((pnuint)animId < _anims.size() && "This animation does not exist.");
-
   //////////////////////////////////////////////////////////////////////////
 
   _anims[animId].step = 0;
 
-  _animsToPlay.insert(&_anims[animId]);
-
-  return PNEC_SUCCESS;
+  return setEnable(_animId, true);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -391,6 +392,30 @@ PN3DSkeletonObject::setAnimWeight(pnint animId, pnfloat weight)
 	&& "This animation does not exist.");*/
 
   _anims[animId].weight = weight;
+
+  return PNEC_SUCCESS;
+}
+
+pnuint
+PN3DSkeletonObject::setEnableLoop(pnbool loop)
+{
+  PNLOCK(this);
+
+  for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
+	it->looping = loop;
+
+  return IPNAnimated::setEnableLoop(loop);
+}
+
+pnuint
+PN3DSkeletonObject::setEnableLoop(pnint animId, pnbool loop)
+{
+  PNLOCK(this);
+
+  if (animId < 0 || (pnuint)animId >= _anims.size())
+	return PNEC_ERROR;
+
+  _anims[animId].looping = loop;
 
   return PNEC_SUCCESS;
 }

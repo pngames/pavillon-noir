@@ -71,9 +71,9 @@ PN3DObject::PN3DObject()
   _orient.loadIdentity();
   _updateTranslation.setNull();
 
-  _frontDirection.setArray(PNVector3f::NEGATIVE_UNIT_Z);
-  _rightDirection.setArray(PNVector3f::UNIT_X);
-  _topDirection.setArray(PNVector3f::UNIT_Y);
+  _frontDirection = PNVector3f::NEGATIVE_UNIT_Z;
+  _rightDirection = PNVector3f::UNIT_X;
+  _topDirection = PNVector3f::UNIT_Y;
 
   _renderMode = RENDER_MODEL | RENDER_MATERIALS;
   _movingState = STATE_NONE;
@@ -249,16 +249,9 @@ PN3DObject::unserializeFromXML(xmlNode* root)
 
   //////////////////////////////////////////////////////////////////////////
 
-  xmlChar*	  attr = NULL;
-
-  if ((attr = xmlGetProp(root, PNO_XMLPROP_FRONT)) != NULL)
-	_frontDirection.setArray(PNPoint3f((const char*)attr));
-
-  if ((attr = xmlGetProp(root, PNO_XMLPROP_RIGHT)) != NULL)
-	_rightDirection.setArray(PNPoint3f((const char*)attr));
-
-  if ((attr = xmlGetProp(root, PNO_XMLPROP_TOP)) != NULL)
-	_topDirection.setArray(PNPoint3f((const char*)attr));
+  _frontDirection = XMLUtils::xmlGetProp(root, PNO_XMLPROP_FRONT, _frontDirection.getVector());
+  _rightDirection = XMLUtils::xmlGetProp(root, PNO_XMLPROP_RIGHT, _rightDirection.getVector());
+  _topDirection = XMLUtils::xmlGetProp(root, PNO_XMLPROP_TOP, _topDirection.getVector());
 	
   //////////////////////////////////////////////////////////////////////////
 
@@ -291,6 +284,12 @@ PN3DObject::serializeInXML(xmlNode* node, pnbool isroot)
 pnint
 PN3DObject::_serializeContent(xmlNode* root)
 {
+  XMLUtils::xmlNewProp(root, PNO_XMLPROP_FRONT, _frontDirection.getVector());
+  XMLUtils::xmlNewProp(root, PNO_XMLPROP_RIGHT, _rightDirection.getVector());
+  XMLUtils::xmlNewProp(root, PNO_XMLPROP_TOP, _topDirection.getVector());
+
+  //////////////////////////////////////////////////////////////////////////
+
   xmlNode* node = NULL;
 
   if (_model != NULL && _model->getFile() != NULL)
