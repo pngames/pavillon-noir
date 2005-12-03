@@ -82,6 +82,8 @@ PN3DSkeletonObject::_parseAnimations(xmlNode* parent)
 	if (node->type != XML_ELEMENT_NODE)
 	  continue;
 
+	//////////////////////////////////////////////////////////////////////////
+	
 	xmlChar*	  attr = xmlGetProp(node, (const xmlChar *)PNO_XMLPROP_PATH);
 
 	PN3DAnimation*	anim = NULL;
@@ -94,9 +96,17 @@ PN3DSkeletonObject::_parseAnimations(xmlNode* parent)
 		import(p, PN_IMPORT_3DANIMATION);
 	}
 
-	PN3DSkeletonAnimation	skanim(anim, (pnint)_anims.size());
+	PN3DSkeletonAnimation	skanim(anim);
+
+	//////////////////////////////////////////////////////////////////////////
 
 	skanim.speed = (pnfloat)_animSpeed;
+	skanim.looping = XMLUtils::xmlGetProp(node, PNO_ANIM_XMLPROP_LOOP, false);
+
+	if (XMLUtils::xmlGetProp(node, PNO_XMLPROP_ENABLED, false))
+	  startAnimation((pnuint)_anims.size());
+
+	//////////////////////////////////////////////////////////////////////////
 
 	_anims.push_back(skanim);
   }
@@ -175,8 +185,15 @@ PN3DSkeletonObject::_serializeContent(xmlNode* root)
 	for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
 	  if (it->anim != NULL && it->anim->getFile() != NULL)
 	  {
+		PN3DSkeletonAnimation* skAnimation = &(*it);
+  
 		node = xmlNewChild(root, NULL, BAD_CAST PNOA_XMLNODE_ROOT.c_str(), NULL);
-		xmlNewProp(node, PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::animationFilePath, it->anim->getFile()->string()).c_str());
+		xmlNewProp(node, PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::animationFilePath, skAnimation->anim->getFile()->string()).c_str());
+
+		XMLUtils::xmlNewProp(node, PNO_ANIM_XMLPROP_LOOP, skAnimation->looping);
+
+		if (_animsToPlay.find(skAnimation) != _animsToPlay.end())
+		  XMLUtils::xmlNewProp(node, PNO_XMLPROP_ENABLED, true);
 	  }
   }
 
@@ -260,6 +277,15 @@ PN3DSkeletonObject::getSkeleton()
 }
 
 //////////////////////////////////////////////////////////////////////////
+
+pnbool
+PN3DSkeletonObject::isEnable(pnuint animId)
+{
+  if (animId < 0 || (pnuint)animId >= _anims.size())
+	return false;
+
+  return _animsToPlay.find(&_anims[animId]) != _animsToPlay.end();
+}
 
 pnuint
 PN3DSkeletonObject::stopAnimation()
