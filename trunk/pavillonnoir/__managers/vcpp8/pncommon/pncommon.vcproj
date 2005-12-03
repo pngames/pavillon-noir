@@ -432,6 +432,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncommon\PNFOXSDLKeyMap.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNFOXSDLKeyMap.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\PNGameEventData.hpp"
 				>
 			</File>
@@ -449,6 +457,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNGameMap.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNKeyCodes.hpp"
 				>
 			</File>
 			<File
@@ -673,6 +685,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNConf.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\pnconfkeys.h"
 				>
 			</File>
 		</Filter>

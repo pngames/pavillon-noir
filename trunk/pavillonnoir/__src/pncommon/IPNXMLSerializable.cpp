@@ -35,9 +35,15 @@
 #include <libxml/tree.h>
 #include <libxml/xmlreader.h>
 
+//////////////////////////////////////////////////////////////////////////
+
 #include "pndefs.h"
 
+#include "PNPoint3f.hpp"
+
 #include "IPNXMLSerializable.hpp"
+
+//////////////////////////////////////////////////////////////////////////
 
 using namespace PN;
 using namespace std;
@@ -302,6 +308,37 @@ xmlGetProp(xmlNode* node, const pnuchar* name, pnfloat def)
 
 PNAPI pnfloat
 xmlGetProp(xmlNode* node, const char* name, pnfloat def)
+{
+  return xmlGetProp(node, BAD_CAST name, def);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+PNAPI xmlAttr*
+xmlNewProp(xmlNode* node, const pnuchar *name, const PNPoint3f& value)
+{
+  return xmlNewProp(node, name, BAD_CAST value.serialize().c_str());
+}
+
+PNAPI xmlAttr*
+xmlNewProp(xmlNode* node, const char *name, const PNPoint3f& value)
+{
+  return xmlNewProp(node, BAD_CAST name, value);
+}
+
+PNAPI PNPoint3f
+xmlGetProp(xmlNode* node, const pnuchar* name, const PNPoint3f& def)
+{
+  xmlChar*	att = xmlGetProp(node, name);
+
+  if (att == NULL)
+	return def;
+
+  return PNPoint3f((const char*)att);
+}
+
+PNAPI PNPoint3f
+xmlGetProp(xmlNode* node, const char* name, const PNPoint3f& def)
 {
   return xmlGetProp(node, BAD_CAST name, def);
 }

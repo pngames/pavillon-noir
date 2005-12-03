@@ -200,10 +200,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncore\PNFoxOptionsObject.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pncore\PNFoxOptionWindow.cpp"
 				>
 			</File>
@@ -263,10 +259,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncore\PNFoxMainWindow.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncore\PNFoxOptionsObject.hpp"
 				>
 			</File>
 			<File
