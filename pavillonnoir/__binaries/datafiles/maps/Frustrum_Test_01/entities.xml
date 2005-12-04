@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<!DOCTYPE listentities SYSTEM "../entities.dtd">
-<listentities>
+<!DOCTYPE entities SYSTEM "../entities.dtd">
+<entities>
   <entity id="id_0" label="Ground" mdref="plane_10000x10000.pno" envtype="ground" objtype="object" class="PN3DObject" x="-1.000000" y="-1.000000" z="-1.000000" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000">
     <object>
       <model path="plane_10000x10000.pnm"/>
@@ -13,4 +13,4 @@
   </entity>
   <entity id="id_2" label="Navy" mdref="pirate.pno" envtype="dynamic" objtype="character" class="PNAINavy" x="-1000.000000" y="40.000000" z="-1000.000000" xx="0.000000" yy="-0.008726" zz="0.000000" ww="0.999961">
   </entity>
-</listentities>
+</entities>
