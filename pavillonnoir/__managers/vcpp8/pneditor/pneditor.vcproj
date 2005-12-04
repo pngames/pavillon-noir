@@ -75,10 +75,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="opengl32.lib glu32.lib comctl32.lib wsock32.lib ws2_32.lib mpr.lib FOXDLLD-1.4.lib libxml2.lib"
-				OutputFile="../../../__binaries/win32/pneditor-dbg.exe"
+				OutputFile="..\..\..\__binaries\win32\pneditor-dbg.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib;..\..\pncommon\Debug"
-				GenerateManifest="true"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				EntryPointSymbol="mainCRTStartup"
@@ -170,10 +169,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="opengl32.lib glu32.lib comctl32.lib wsock32.lib ws2_32.lib mpr.lib FOXDLL-1.4.lib libxml2.lib"
-				OutputFile="../../../__binaries/win32/pneditor.exe"
+				OutputFile="..\..\..\__binaries\win32\pneditor.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
-				GenerateManifest="true"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
 				TargetMachine="1"
