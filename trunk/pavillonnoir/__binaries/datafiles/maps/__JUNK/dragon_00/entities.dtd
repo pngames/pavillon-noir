@@ -3,7 +3,7 @@
 	XML DTD for 3D models and associated scripts (entities.xml)
 -->
 
-<!ELEMENT listentities (entity*)>
+<!ELEMENT entities (entity*)>
 <!ELEMENT entity (action*)>
 <!ELEMENT action (script+)>
 <!ELEMENT script EMPTY>

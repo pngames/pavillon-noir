@@ -9,7 +9,7 @@
 
 <!-- ELEMENTS -->
 
-<!ELEMENT listentities (entity*, skybox?)>
+<!ELEMENT entities (entity*, skybox?)>
 <!ELEMENT entity (action*, object?)>
   <!ELEMENT action (script+)>
     <!ELEMENT script EMPTY>

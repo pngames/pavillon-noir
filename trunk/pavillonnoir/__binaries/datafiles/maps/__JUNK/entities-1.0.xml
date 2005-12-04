@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<!DOCTYPE listentities SYSTEM "entities-1.0.dtd">
-<listentities>
+<!DOCTYPE entities SYSTEM "entities-1.0.dtd">
+<entities>
 
   <entity id="31" label="plop" mdref="groundLevel2.pno" static="true" x="0" y="-720" z="0" xx="0" yy="0" zz="0" ww="0" />
 
@@ -13,4 +13,4 @@
   <entity id="8" label="plop" mdref="carre texture.pno" static="false" x="0" y="0" z="-120" xx="0" yy="0" zz="0" ww="0" />
   <entity id="9" label="plop" mdref="carre texture.pno" static="false" x="60" y="0" z="-120" xx="0" yy="0" zz="0" ww="0" /-->
 
-</listentities>
+</entities>
