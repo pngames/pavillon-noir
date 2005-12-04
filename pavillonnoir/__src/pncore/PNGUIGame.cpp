@@ -440,12 +440,12 @@ PNGUIGame*	PNGUIGame::getInstance()
   return _instance;
 }
 
-void PNGUIGame::startGUI()
+void PNGUIGame::suscribeConsoleCommand()
 {
-  PNGUIStateManager::getInstance()->setMainState(PNGUIStateManager::INGAME);
-  PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::NONE);
+  //////////////////////////////////////////////////////////////////////////
+  // DO NOT FORGET TO DELETE YOUR FUNCTIONS IN unsuscribeConsoleCommand !!!!
+  //////////////////////////////////////////////////////////////////////////
 
-  // do not forget to delete your functions in resetGUI
 
   //////////////////////////////////////////////////////////////////////////
   PNConsole::addFonction("loadmap", &PNGUIGame::_commandLoadMap, "Load game map, parameter : string MapFileName");
@@ -472,15 +472,10 @@ void PNGUIGame::startGUI()
   //////////////////////////////////////////////////////////////////////////
   PNConsole::addFonction("skybox", &PNGUIGame::_commandSkyBox, "Active/unactive skybox");
 
-  PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE, EventCallback(this, &PNGUIGame::inputHandleModifierState));
-  PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_OFF, EventCallback(this, &PNGUIGame::inputHandleModifierState));
-  PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
-  PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
-
-  show();
+ 
 }
 
-void PNGUIGame::resetGUI()
+void PNGUIGame::unsuscribeConsoleCommand()
 {
   PNConsole::delFonction("loadmap");
   /////////////////////////////////////////////
@@ -492,12 +487,12 @@ void PNGUIGame::resetGUI()
   /////////////////////////////////////////////
   PNConsole::delFonction("rcspeed");
   /////////////////////////////////////////////
-  PNConsole::delFonction("newsound");
+ /* PNConsole::delFonction("newsound");
   PNConsole::delFonction("playsound");
   PNConsole::delFonction("stopsound");
   PNConsole::delFonction("pausesound");
   PNConsole::delFonction("loadedsounds");
-  PNConsole::delFonction("changesoundvolume");
+  PNConsole::delFonction("changesoundvolume");*/
   /////////////////////////////////////////////
   PNConsole::delFonction("physics");
   PNConsole::delFonction("renderphysics");
@@ -510,12 +505,31 @@ void PNGUIGame::resetGUI()
   PNConsole::delFonction("showwp");
   PNConsole::delFonction("hidewp");
   PNConsole::delFonction("moveto");
+  /////////////////////////////////////////////
+  PNConsole::delFonction("skybox");
+  
+}
 
+void PNGUIGame::startGUI()
+{
+  PNGUIStateManager::getInstance()->setMainState(PNGUIStateManager::INGAME);
+  PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::NONE);
+
+  PNEventManager::getInstance()->addCallback(PN_EVENT_CONSOLE, EventCallback(this, &PNGUIGame::inputHandleModifierState));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_OFF, EventCallback(this, &PNGUIGame::inputHandleModifierState));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
+  suscribeConsoleCommand();
+  show();
+}
+
+void PNGUIGame::resetGUI()
+{
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_CONSOLE, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_GRAB_OFF, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
-
+  unsuscribeConsoleCommand();
   hide();
 }
 
