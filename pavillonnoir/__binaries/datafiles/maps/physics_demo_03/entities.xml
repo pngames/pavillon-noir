@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<!DOCTYPE listentities SYSTEM "../../entities.dtd">
-<listentities>
+<!DOCTYPE entities SYSTEM "../../entities.dtd">
+<entities>
 <entity id="0" id="New Object" mdref="plane_3000x3000.pno" envtype="static" objtype="object" class="PN3DObject" x="0" y="0" z="0" xx="0" yy="0" zz="0" yy="1">
 </entity>
 <entity id="3" id="New Object" mdref="carre texture1.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="134.658" y="1328.43" z="182.283" xx="0.118665" yy="-0.0727178" zz="-0.517414" yy="-0.844342">
@@ -99,4 +99,4 @@
 </entity>
 <entity id="69" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0.000244141" y="316.095" z="-20.5531" xx="-0.156435" yy="0" zz="0" yy="0.987688">
 </entity>
-</listentities>
+</entities>

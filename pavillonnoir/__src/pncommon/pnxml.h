@@ -34,7 +34,7 @@
 
 static const std::string	PNMAP_XMLDTD_NAME		= "entities";
 static const std::string	PNMAP_XMLDTD			=  std::string("../") + PNMAP_XMLDTD_NAME + ".dtd";
-static const std::string	PNMAP_XMLNODE_ROOT		= "listentities";
+static const std::string	PNMAP_XMLNODE_ROOT		= PNMAP_XMLDTD_NAME;
 
 static const std::string	PNENTITY_XMLNODE_ROOT	= "entity";
 
