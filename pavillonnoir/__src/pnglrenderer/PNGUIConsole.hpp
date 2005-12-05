@@ -32,10 +32,8 @@
 
 #include "myCEGUI.h"
 #include <list>
-#include <stdio.h>
 #include <boost/thread/recursive_mutex.hpp>
 
-#include "pndefs.h"
 #include "pnevent.h"
 #include "PNConsole.hpp"
 
