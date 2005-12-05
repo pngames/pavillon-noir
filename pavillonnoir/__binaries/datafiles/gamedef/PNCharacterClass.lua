@@ -43,7 +43,7 @@ CHARACTER_ATTITUDE={WALKING=0,
 				  	CROUCHING=2,
 				  	JUMPING=3
 				  	}
---[[				  
+				  
 CHARACTER_DIR_LONG={NONE=0,
 					FORWARD=1,
 					BACKWARD=-1
@@ -53,7 +53,7 @@ CHARACTER_DIR_LATE={NONE=0,
 					LEFT=1,
 				  	RIGHT=-1
 				    }
---]]				  
+				  
 function PNCharacterClass(id)
 	----------inheritance-----------------
 	local OBJ = inheritFrom(PN3DSkeletonObjectClass(id))
@@ -129,6 +129,7 @@ function PNCharacterClass(id)
 	OBJ:setAnimSpeed(4.0)
 	OBJ.idleTime = 0
 	----------------- Fight Management ------------------------ 
+	OBJ.armor = 0
 	gameMap.fights[OBJ.id] = -1
 -------------------------------------------------------------------------------
 ---------------------move order callback-----------------------

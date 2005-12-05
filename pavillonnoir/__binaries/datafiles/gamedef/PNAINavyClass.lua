@@ -26,6 +26,7 @@ function PNAINavyClass(id)
 						 dodge=6,
 						 escrime=5
 						}
+	OBJ.armor = 1
 --------------------------------------------------------
 --[[%
 Called while handling a fight
