@@ -187,6 +187,7 @@ PNGLRenderer::init()
   //////////////////////////////////////////////////////////////////////////
   
   PNEventManager::getInstance()->addCallback(PN_EVENT_VIDEO_START, EventCallback(this, &PNGLRenderer::_onPlayVideo));
+   PNEventManager::getInstance()->addCallback(PN_EVENT_RU_END, EventCallback(this, &PNGLRenderer::_endRenderLoop));
 }
 
 void
@@ -388,19 +389,26 @@ PNGLRenderer::run()
 	  //////////////////////////////////////////////////////////////////////////
 	  // END
 	  //////////////////////////////////////////////////////////////////////////
-
-	  PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_ENDING, this, NULL);
-
-	  //////////////////////////////////////////////////////////////////////////
-	  // APPLY
-	  //////////////////////////////////////////////////////////////////////////
-
-	  glFlush(); // force lexecution des commande opengl avant le rendu
-	  SDL_GL_SwapBuffers(); // inverser le buffer decriture et le buffer de rendu
+	  
+	  PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_END, this, NULL);
+	
 	}
   }
 
   delete sdlEvent;
+}
+
+void
+PNGLRenderer::_endRenderLoop(pnEventType type, PNObject* source, PNEventData* data)
+{
+  PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_ENDING, this, NULL);
+
+  //////////////////////////////////////////////////////////////////////////
+  // APPLY
+  //////////////////////////////////////////////////////////////////////////
+
+  glFlush();
+  SDL_GL_SwapBuffers();
 }
 
 void

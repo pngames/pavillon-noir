@@ -94,11 +94,13 @@ typedef enum
   PN_EVENT_ML_STARTED,			/// loading the map
   PN_EVENT_ML_END,				/// end loading map
   PN_EVENT_ML_ENDED,			/// loading map ended
+  PN_EVENT_ML_STEP,				/// step loading map
   
   PN_EVENT_MU_START,			/// start unloading map
   PN_EVENT_MU_STARTED,			/// unloading map
   PN_EVENT_MU_END,				/// end unloading map
   PN_EVENT_MU_ENDED,			/// unloading map ended
+  PN_EVENT_MU_STEP,				/// step unloading map
 
   PN_EVENT_MP_START,			/// start play map
   PN_EVENT_MP_STARTED,          /// say the map has started
@@ -155,7 +157,9 @@ typedef enum
   //////////////////////////////////////////////////////////////////////////
   // UPDATE
 
+  PN_EVENT_RU_START,			/// event occurred when render engine start frame
   PN_EVENT_RU_STARTING,			/// event occurred when render engine starting frame
+  PN_EVENT_RU_END,			/// event occurred when render engine end frame
   PN_EVENT_RU_ENDING,			/// event occurred when render engine ending frame
   PN_EVENT_RSU_STARTING,		/// event occurred when scene rendering starting
   PN_EVENT_RSU_ENDING,			/// event occurred when scene rendering finishing
