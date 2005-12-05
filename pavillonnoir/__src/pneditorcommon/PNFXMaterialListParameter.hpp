@@ -35,51 +35,52 @@
 #include <map>
 
 #include "pneditorcommon.h"
+
 #include "PNConfigurableParameter.hpp"
+#include "PNPropertiesGridParameter.hpp"
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  class PNIAGraph;
-  class PNEDAPI PNFXMaterialListParameter : public FXHorizontalFrame
+class PNIAGraph;
+
+class PNEDAPI PNFXMaterialListParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+{
+  FXDECLARE(PNFXMaterialListParameter);
+
+  FXComposite*				_parent;
+
+  FXListBox*				_listBox;
+  FXButton*					_buttonDelete;
+  FXButton*					_buttonAdd;
+
+  bool						_changed;
+  //FXImage ? FXBouton avec image (cliquable = defaut) ?  // temoin de modification
+
+protected:
+  PNFXMaterialListParameter() {}
+  PNFXMaterialListParameter(PNFXMaterialListParameter&) {}
+public:
+  PNFXMaterialListParameter(FXComposite* p, PNConfigurableParameter* param);
+  ~PNFXMaterialListParameter();
+
+  void	create();
+
+  enum 
   {
-	FXDECLARE(PNFXMaterialListParameter);
-
-	FXComposite*				_parent;
-	PNConfigurableParameter*	_param;
-//	PNConfigurableParameter*	_defaultParam;
-
-	FXListBox*					_listBox;
-	FXButton*					_buttonDelete;
-	FXButton*					_buttonAdd;
-
-	bool						_changed;
-	//FXImage ? FXBouton avec image (cliquable = defaut) ?  // temoin de modification
-
-  protected:
-	PNFXMaterialListParameter() {}
-	PNFXMaterialListParameter(PNFXMaterialListParameter&) {}
-  public:
-	PNFXMaterialListParameter(FXComposite* p, PNConfigurableParameter* param);
-	~PNFXMaterialListParameter();
-
-	void	create();
-
-	enum 
-	{
-	  ID_ADD = FXHorizontalFrame::ID_LAST,
-	  ID_DELETE
-	};
-
-  public:
-	long	onDelete(FXObject*,FXSelector,void* ptr);
-	long	onAdd(FXObject* obj,FXSelector sel,void* ptr);
-	long	onReset(FXObject* obj,FXSelector sel,void* ptr);
-	void	buildList(void);
-	void	update(void);
+	ID_ADD = FXHorizontalFrame::ID_LAST,
+	ID_DELETE
   };
 
-  //////////////////////////////////////////////////////////////////////////
+public:
+  long	onDelete(FXObject*,FXSelector,void* ptr);
+  long	onAdd(FXObject* obj,FXSelector sel,void* ptr);
+  long	onReset(FXObject* obj,FXSelector sel,void* ptr);
+  void	buildList(void);
+  void	update(void);
+};
+
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PNFXMaterialListPARAMETER_HPP_*/

@@ -26,9 +26,6 @@
 #pragma once
 #include "afxcmn.h"
 
-
-// Bo�e de dialogue PNSkeletonWin
-
 class PNSBone;
 class PNSkeletonExporter;
 
@@ -37,14 +34,13 @@ class PNSkeletonWin : public CDialog
 	DECLARE_DYNAMIC(PNSkeletonWin)
 
 public:
-	PNSkeletonWin(PNSkeletonExporter *skeleton, UINT nIDTemplate = IDD, CWnd* pParent = NULL);   // constructeur standard
+	PNSkeletonWin(PNSkeletonExporter *skeleton, UINT nIDTemplate = IDD, CWnd* pParent = NULL);
 	virtual ~PNSkeletonWin();
 
-// Donnees de boite de dialogue
 	enum { IDD = IDD_S_CONFIG };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // Prise en charge DDX/DDV
+	virtual void DoDataExchange(CDataExchange* pDX);
 
 	DECLARE_MESSAGE_MAP()
 protected:

@@ -207,9 +207,6 @@ int	PNGameMap::unserializeFromXML(xmlNode* node)
 	}
   }
 
-  //////////////////////////////////////////////////////////////////////////
-  // OTHERS
-
   return error;
 }
 

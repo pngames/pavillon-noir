@@ -55,30 +55,27 @@
  */
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  class PNEDAPI PNFXActiveStringParameter : public PNFXStringParameter
-  {
-	FXDECLARE(PNFXActiveStringParameter);
+class PNEDAPI PNFXActiveStringParameter : public PNFXStringParameter
+{
+  FXDECLARE(PNFXActiveStringParameter);
 
-	PNConfigurableParameter*	_param;
+protected:
+  PNFXActiveStringParameter() {}
+  PNFXActiveStringParameter(PNFXStringParameter&) {}
+public:
+  PNFXActiveStringParameter(FXComposite* p, PNConfigurableParameter* param);
+  ~PNFXActiveStringParameter();
 
-  protected:
-	PNFXActiveStringParameter() {}
-	PNFXActiveStringParameter(PNFXStringParameter&) {}
-  public:
-	PNFXActiveStringParameter(FXComposite* p, PNConfigurableParameter* param);
-	~PNFXActiveStringParameter();
+  void	create();
+  void	update();
 
-	void	create();
-	void	update();
+public:
+  long	onKeyRelease(FXObject*,FXSelector,void* ptr);
+};
 
-  public:
-	long	onKeyRelease(FXObject*,FXSelector,void* ptr);
-	PNConfigurableParameter* getParam() { return _param; }
-  };
-
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PNFXACTIVESTRINGPARAMETER_HPP_*/

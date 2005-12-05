@@ -51,9 +51,9 @@ FXDEFMAP(PNFXDialXYZParameter) PNFXDialXYZParameterMap[]={
 FXIMPLEMENT(PNFXDialXYZParameter,FXHorizontalFrame,PNFXDialXYZParameterMap,ARRAYNUMBER(PNFXDialXYZParameterMap))
 
 PNFXDialXYZParameter::PNFXDialXYZParameter(FXComposite* p, PNConfigurableParameter* param)
-: FXHorizontalFrame(p)
+: FXHorizontalFrame(p),
+PNPropertiesGridParameter(param)
 {
-  _param = param;
   PN3DObject* o = (PN3DObject*)_param->getElem();
   _dial = new FXDial(this, NULL, 0, FRAME_SUNKEN  |  FRAME_THICK  |  DIAL_CYCLIC  |  
 	DIAL_HORIZONTAL  |  LAYOUT_FIX_WIDTH  |  LAYOUT_FIX_HEIGHT  |  

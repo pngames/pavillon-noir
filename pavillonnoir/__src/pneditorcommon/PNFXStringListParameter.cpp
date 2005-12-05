@@ -66,11 +66,11 @@ FXDEFMAP(PNFXStringListParameter) PNFXStringListParameterMap[]={
 FXIMPLEMENT(PNFXStringListParameter,FXHorizontalFrame,PNFXStringListParameterMap,ARRAYNUMBER(PNFXStringListParameterMap))
 
 PNFXStringListParameter::PNFXStringListParameter(FXComposite* p, PNConfigurableParameter* param)
-: FXHorizontalFrame(p)
+: FXHorizontalFrame(p),
+PNPropertiesGridParameter(param)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXStringListParameter::PNFXStringListParameter(FXComposite* p, PNConfigurableParameter* param)");
   _parent = p;
-  _param = param;
   _listBox =  new FXListBox(this, NULL, 0, LAYOUT_FILL_X | FRAME_SUNKEN | FRAME_THICK, 0,0,50,0);
   _labelsNumChars = 29;
   _numVisibleItems = 5;

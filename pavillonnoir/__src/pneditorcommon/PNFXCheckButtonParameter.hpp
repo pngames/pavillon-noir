@@ -39,26 +39,24 @@
 */
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  class PNEDAPI PNFXCheckButtonParameter : public FXCheckButton, public PNPropertiesGridParameter
-  {
-	FXDECLARE(PNFXCheckButtonParameter);
+class PNEDAPI PNFXCheckButtonParameter : public FXCheckButton, public PNPropertiesGridParameter
+{
+  FXDECLARE(PNFXCheckButtonParameter);
 
-	PNConfigurableParameter*	_param;
+protected:
+  PNFXCheckButtonParameter() {}
+  PNFXCheckButtonParameter(PNFXCheckButtonParameter&) {}
+public:
+  PNFXCheckButtonParameter(FXComposite* p, PNConfigurableParameter* param);
+  ~PNFXCheckButtonParameter();
 
-  protected:
-	PNFXCheckButtonParameter() {}
-	PNFXCheckButtonParameter(PNFXCheckButtonParameter&) {}
-  public:
-	PNFXCheckButtonParameter(FXComposite* p, PNConfigurableParameter* param);
-	~PNFXCheckButtonParameter();
+  void	create();
+  void	update();
+};
 
-	void	create();
-	void	update();
-  };
-
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /* _PNFXCHECKBUTTONPARAMETER_HPP_ */

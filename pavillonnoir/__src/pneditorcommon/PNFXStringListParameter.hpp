@@ -59,7 +59,6 @@ class PNEDAPI PNFXStringListParameter : public FXHorizontalFrame, public PNPrope
   FXDECLARE(PNFXStringListParameter);
 
   FXComposite*				_parent;
-  PNConfigurableParameter*	_param;
 
   FXListBox*				_listBox;
   FXButton*					_buttonDelete;
@@ -87,8 +86,6 @@ public:
 
   void						setNumVisibleItems(int numItems);
   void						setLabelsNumChars(int numChars);
-
-  PNConfigurableParameter* getParam() { return _param; }
 
   std::string				getStringValue();
   pnbool					setStringValue(const std::string& val);

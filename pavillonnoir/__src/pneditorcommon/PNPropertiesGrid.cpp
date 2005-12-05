@@ -27,7 +27,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-
 #include "pneditorcommon.h"
 
 #include "PNPropertiesGrid.hpp"
@@ -47,13 +46,13 @@
 #include "PNFXCheckButtonParameter.hpp"
 #include "PNFXDefaultParameter.hpp"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
 
-namespace PN
-{
   // Map
   /*FXDEFMAP(PNPropertiesGrid) PNPropertiesGridMap[]={};*/
   //FXIMPLEMENT(PNPropertiesGrid,FXComposite,PNPropertiesGridMap,ARRAYNUMBER(PNPropertiesGridMap))
-  FXIMPLEMENT(PNPropertiesGrid,FXComposite,NULL,0)
+FXIMPLEMENT(PNPropertiesGrid,FXComposite,NULL,0)
 
 PNPropertiesGrid::PNPropertiesGrid(FXComposite* p)
 : FXMatrix(p, 2, LAYOUT_FILL_X|LAYOUT_FILL_Y|MATRIX_BY_COLUMNS)
@@ -66,12 +65,14 @@ PNPropertiesGrid::~PNPropertiesGrid()
 
 //////////////////////////////////////////////////////////////////////////
 
-void  PNPropertiesGrid::create()
+void 
+PNPropertiesGrid::create()
 {
   FXComposite::create();
 }
 
-void  PNPropertiesGrid::setObject(PNConfigurableObject* object)
+void 
+PNPropertiesGrid::setObject(PNConfigurableObject* object)
 {
   // FIXME : y'a un bug d'affichage ici, lorsqu'on efface les widgets les unes 
   // apres les autres on apercoit un FXDial en haut a gauche de la grille
@@ -89,51 +90,51 @@ void  PNPropertiesGrid::setObject(PNConfigurableObject* object)
 	switch (current_param->getType())
 	{
 	case PN_PARAMTYPE_STRING:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXStringParameter(this, current_param)));
+	  _params.push_back(new PNFXStringParameter(this, current_param));
 	  break;
 	case PN_PARAMTYPE_ACTIVESTRING:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXActiveStringParameter(this, current_param)));
+	  _params.push_back(new PNFXActiveStringParameter(this, current_param));
 	  break;
 	case PN_PARAMTYPE_INT:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXIntParameter(this, current_param)));
+	  _params.push_back(new PNFXIntParameter(this, current_param));
 	  break;
 	case PN_PARAMTYPE_REAL:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXRealParameter(this, current_param)));
+	  _params.push_back(new PNFXRealParameter(this, current_param));
 	  break;
 	case PN_PARAMTYPE_FILE:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXFileParameter(this, current_param)));
+	  _params.push_back(new PNFXFileParameter(this, current_param));
 	  break;
 	case PN_PARAMTYPE_DIR:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXDirParameter(this, current_param)));
+	  _params.push_back(new PNFXDirParameter(this, current_param));
 	  break;
 	case PN_PARAMTYPE_LINK:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXLinksParameter(this, current_param)));
+	  _params.push_back(new PNFXLinksParameter(this, current_param));
 	  break;
 	case PN_PARAMTYPE_DIALX:
 	case PN_PARAMTYPE_DIALY:
 	case PN_PARAMTYPE_DIALZ:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXDialXYZParameter(this, current_param)));
+	  _params.push_back(new PNFXDialXYZParameter(this, current_param));
 	  break;
 	case PN_PARAMTYPE_EVENTBOX:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXEventBoxParameter(this, current_param)));
+	  _params.push_back(new PNFXEventBoxParameter(this, current_param));
 	  break;
 	case PN_PARAMTYPE_ANIMLIST:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXAnimListParameter(this, current_param)));
+	  _params.push_back(new PNFXAnimListParameter(this, current_param));
 	  break;
 	case PN_PARAMTYPE_MATERIALLIST:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXMaterialListParameter(this, current_param)));
+	  _params.push_back(new PNFXMaterialListParameter(this, current_param));
 	  break;
 	case PN_PARAMTYPE_SCRIPTLIST:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXScriptListParameter(this, current_param)));
+	  _params.push_back(new PNFXScriptListParameter(this, current_param));
 	  break;
 	case PN_PARAMTYPE_STRINGLIST:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXStringListParameter(this, current_param)));
+	  _params.push_back(new PNFXStringListParameter(this, current_param));
 	  break;
 	case PN_PARAMTYPE_BOOLEAN:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXCheckButtonParameter(this, current_param)));
+	  _params.push_back(new PNFXCheckButtonParameter(this, current_param));
 	  break;
 	default:
-	  _params.push_back((PNPropertiesGridParameter*)(new PNFXDefaultParameter(this, current_param)));
+	  _params.push_back(new PNFXDefaultParameter(this, current_param));
 	  break;
 	}
   }
@@ -142,13 +143,15 @@ void  PNPropertiesGrid::setObject(PNConfigurableObject* object)
   recalc();
 }
 
-void PNPropertiesGrid::update()
+void 
+PNPropertiesGrid::update()
 {
   for (std::list<PNPropertiesGridParameter*>::iterator it = _params.begin(); it != _params.end(); it++)
     (*it)->update();
 }
 
-PNConfigurableObject*  PNPropertiesGrid::getObject()
+PNConfigurableObject* 
+PNPropertiesGrid::getObject()
 {
   return _object;
 }

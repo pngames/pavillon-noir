@@ -39,31 +39,30 @@
  */
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  class PNEDAPI PNFXEventBoxParameter : public FXTextField, public PNPropertiesGridParameter
-  {
-	FXDECLARE(PNFXEventBoxParameter);
+class PNEDAPI PNFXEventBoxParameter : public FXTextField, public PNPropertiesGridParameter
+{
+  FXDECLARE(PNFXEventBoxParameter);
 
-	PNConfigurableParameter*	_param;
-	pnbool						_capture;
-	std::string*				_current_text;
-  protected:
-	PNFXEventBoxParameter() {}
-	PNFXEventBoxParameter(PNFXEventBoxParameter&) {}
-  public:
-	PNFXEventBoxParameter(FXComposite* p, PNConfigurableParameter* param);
-	~PNFXEventBoxParameter();
+  pnbool					_capture;
+  std::string*				_current_text;
+protected:
+  PNFXEventBoxParameter() {}
+  PNFXEventBoxParameter(PNFXEventBoxParameter&) {}
+public:
+  PNFXEventBoxParameter(FXComposite* p, PNConfigurableParameter* param);
+  ~PNFXEventBoxParameter();
 
-	void	create();
-	void	update();
+  void	create();
+  void	update();
 
-  public:
-	long	onKeyRelease(FXObject*,FXSelector,void* ptr);
-	long	onLeftBtnPress(FXObject* obj,FXSelector sel, void* ptr);
-  };
+public:
+  long	onKeyRelease(FXObject*,FXSelector,void* ptr);
+  long	onLeftBtnPress(FXObject* obj,FXSelector sel, void* ptr);
+};
 
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PNFXEVENTBOXPARAMETER_HPP_*/
