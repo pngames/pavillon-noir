@@ -31,6 +31,8 @@
 #include <list>
 #include <string>
 
+#include "pndefs.h"
+
 #include "PNFoxOptionWindow.hpp"
 #include "PNFoxOptionsObject.hpp"
 #include "pnproperties.h"

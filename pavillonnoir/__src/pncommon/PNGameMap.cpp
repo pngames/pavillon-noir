@@ -53,10 +53,6 @@ namespace fs = boost::filesystem;
 using namespace PN;
 using namespace std;
 
-#define STATIC_ENTITY (const char *)"true"
-#define DYNAMIC_ENTITY (const char *)"false"
-#define LISTENTITIES_MARKUP (const char *)"listentities"
-
 PNGameMap::PNGameMap()
 {
 }
@@ -191,7 +187,7 @@ int	PNGameMap::unserializeFromXML(xmlNode* node)
   //////////////////////////////////////////////////////////////////////////
   // LISTENTITIES
 
-  if (!strcmp((const char*)root->name, LISTENTITIES_MARKUP) && root->children != NULL)
+  if (xmlStrEqual(root->name, PNXML_LISTENTITIES_MKP) && root->children != NULL)
   {
 	for (current = root->children; current != NULL; current = current->next)
 	{

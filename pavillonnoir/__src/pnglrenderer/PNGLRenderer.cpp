@@ -99,6 +99,11 @@ PNGLRenderer::PNGLRenderer()
 
   _converter[PN_T2F_N3F_V3F] = GL_T2F_N3F_V3F;
   _converter[PN_T2F_C4F_N3F_V3F] = GL_T2F_C4F_N3F_V3F;
+
+  //////////////////////////////////////////////////////////////////////////
+  // configurabe implementation
+
+  
 }
 
 PNGLRenderer::~PNGLRenderer()
@@ -111,7 +116,16 @@ PNGLRenderer::~PNGLRenderer()
 
 //////////////////////////////////////////////////////////////////////////
 
-void		PNGLRenderer::_onPlayVideo(pnEventType type, PNObject* source, PNEventData* ed)
+void
+PNGLRenderer::update(PNConfigurableParameter* p)
+{
+  
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void
+PNGLRenderer::_onPlayVideo(pnEventType type, PNObject* source, PNEventData* ed)
 {
   PNVideoEventData*	videoEventData = (PNVideoEventData*)ed;
 
@@ -266,6 +280,7 @@ PNGLRenderer::initSDL(int widht, int height, int bpp, char* title, bool fullscre
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
   screen = SDL_SetVideoMode(widht, height, bpp, videoFlags);
   SDL_WM_SetCaption(title, NULL);
+  //SDL_WM_SetCaption(_pTitle->getString().c_str(), NULL);
   SDL_EnableUNICODE(1);
  // SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
   
