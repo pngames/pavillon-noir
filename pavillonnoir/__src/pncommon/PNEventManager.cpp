@@ -131,6 +131,8 @@ PNEventManager::PNEventManager()
   _eventNames[PN_EVENT_ML_END] = "PN_EVENT_ML_END";
   _eventEnums["PN_EVENT_ML_ENDED"] = PN_EVENT_ML_ENDED;
   _eventNames[PN_EVENT_ML_ENDED] = "PN_EVENT_ML_ENDED";
+  _eventEnums["PN_EVENT_ML_STEP"] = PN_EVENT_ML_STEP;
+  _eventNames[PN_EVENT_ML_STEP] = "PN_EVENT_ML_STEP";
 
   _eventEnums["PN_EVENT_MU_START"] = PN_EVENT_MU_START;
   _eventNames[PN_EVENT_MU_START] = "PN_EVENT_MU_START";
@@ -140,6 +142,8 @@ PNEventManager::PNEventManager()
   _eventNames[PN_EVENT_MU_END] = "PN_EVENT_MU_END";
   _eventEnums["PN_EVENT_MU_ENDED"] = PN_EVENT_MU_ENDED;
   _eventNames[PN_EVENT_MU_ENDED] = "PN_EVENT_MU_ENDED";
+  _eventEnums["PN_EVENT_MU_STEP"] = PN_EVENT_MU_STEP;
+  _eventNames[PN_EVENT_MU_STEP] = "PN_EVENT_MU_STEP";
 
   _eventEnums["PN_EVENT_MP_START"] = PN_EVENT_MP_START;
   _eventNames[PN_EVENT_MP_START] = "PN_EVENT_MP_START";
@@ -226,8 +230,12 @@ PNEventManager::PNEventManager()
   //////////////////////////////////////////////////////////////////////////
   // UPDATE
 
+  _eventEnums["PN_EVENT_RU_START"] = PN_EVENT_RU_START;
+  _eventNames[PN_EVENT_RU_START] = "PN_EVENT_RU_START";
   _eventEnums["PN_EVENT_RU_STARTING"] = PN_EVENT_RU_STARTING;
   _eventNames[PN_EVENT_RU_STARTING] = "PN_EVENT_RU_STARTING";
+  _eventEnums["PN_EVENT_RU_END"] = PN_EVENT_RU_END;
+  _eventNames[PN_EVENT_RU_END] = "PN_EVENT_RU_END";
   _eventEnums["PN_EVENT_RU_ENDING"] = PN_EVENT_RU_ENDING;
   _eventNames[PN_EVENT_RU_ENDING] = "PN_EVENT_RU_ENDING";
   _eventEnums["PN_EVENT_PU_STARTING"] = PN_EVENT_PU_STARTING;
