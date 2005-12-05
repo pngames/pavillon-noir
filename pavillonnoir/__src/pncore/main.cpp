@@ -55,8 +55,7 @@
 
 #include "PNConsole.hpp"
 
-#include "PNGUIMenuRootManager.hpp"
-#include "PNGUIGameManager.hpp"
+#include "PNGUIMenuRoot.hpp"
 #include "PNGUIStateManager.hpp"
 
 #include "PNGameInterface.hpp"
@@ -144,12 +143,7 @@ int	  main(int argc, char* argv[])
 	
 	PNGUIStateManager::getInstance();
 	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::NONE && PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
-	{
 	  PNGUIMenuRoot::getInstance()->startGUI();
-	}
-	//PNGUIMenuRootManager::getInstance();
-	//PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_MENU_ROOT, NULL, NULL);
-	//PNGUIGameManager::getInstance();
 
 	//////////////////////////////////////////////////////////////////////////
 	///					Init of the event's manager						   ///
