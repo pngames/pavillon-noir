@@ -569,6 +569,14 @@
 				RelativePath="..\..\..\__src\pncommon\PNPropertiesGridParameter.hpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNStringParameter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNStringParameter.hpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="import"

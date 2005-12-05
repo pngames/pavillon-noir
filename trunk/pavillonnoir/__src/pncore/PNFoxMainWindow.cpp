@@ -31,6 +31,8 @@
 #include <boost/filesystem/operations.hpp>
 #include <iostream>
 
+#include "pndefs.h"
+
 #include "PNFoxMainWindow.hpp"
 #include "top_image2.h"
 #include "pnresources.h"
