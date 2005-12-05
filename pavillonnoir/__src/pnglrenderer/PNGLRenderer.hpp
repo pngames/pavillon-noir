@@ -56,6 +56,7 @@ class PNRendererObject;
 class PN3DObject;
 class PNFace;
 class PNEventData;
+class PNStringParameter;
 
 #define PNGL_MAX_FACES		4096
 
@@ -90,6 +91,15 @@ public:
   void						init();
 
   void						initRender(pnuint widht, pnuint height, pnuint bpp, pnchar* title, pnbool fullscreen);
+
+  //////////////////////////////////////////////////////////////////////////
+private:
+  PNConfigurableParameter*	_pFullScreen;
+  PNConfigurableParameter*	_pDefinition;
+  PNConfigurableParameter*	_pBpp;
+  PNStringParameter*		_pTitle;
+public:
+  void						update(PNConfigurableParameter* p);
 
   //////////////////////////////////////////////////////////////////////////
 

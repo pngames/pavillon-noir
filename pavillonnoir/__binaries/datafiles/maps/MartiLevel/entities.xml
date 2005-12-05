@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 <!DOCTYPE entities SYSTEM "../entities.dtd">
 <entities>
-<entity id="4" label="SkyBoite" mdref="skybox_poor.pno" envtype="static" objtype="object" class="PN3DObject" x="56.650002" y="-245.789001" z="-34.342300" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000"/>
+<entity id="id_4" label="SkyBoite" mdref="skybox_poor.pno" envtype="static" objtype="object" class="PN3DObject" x="56.650002" y="-245.789001" z="-34.342300" xx="0.000000" yy="0.000000" zz="0.000000" ww="1.000000"/>
 </entities>

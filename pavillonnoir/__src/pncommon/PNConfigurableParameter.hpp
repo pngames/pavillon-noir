@@ -27,11 +27,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#ifndef _PN_CONFIGURABLE_PARAMETER_HPP_
-# define _PN_CONFIGURABLE_PARAMETER_HPP_
+#ifndef _PNCONFIGURABLEPARAMETER_HPP_
+# define _PNCONFIGURABLEPARAMETER_HPP_
 
 #include <string>
-#include "pndefs.h" // /!\ normalement inutile mais pas de compilation sans
 
 namespace PN
 {
@@ -104,4 +103,4 @@ public:
 //////////////////////////////////////////////////////////////////////////
 };
 
-#endif /*_PN_CONFIGURABLE_PARAMETER_HPP_*/
+#endif /*!_PNCONFIGURABLEPARAMETER_HPP_*/
