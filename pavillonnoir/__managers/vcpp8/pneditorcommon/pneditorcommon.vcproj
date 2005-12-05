@@ -208,6 +208,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXCheckButtonParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXDefaultParameter.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\__src\pneditorcommon\PNFXDialXYZParameter.cpp"
 					>
 				</File>
@@ -283,6 +291,14 @@
 				</File>
 				<File
 					RelativePath="..\..\..\__src\pneditorcommon\PNFXAnimListParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXCheckButtonParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXDefaultParameter.hpp"
 					>
 				</File>
 				<File
