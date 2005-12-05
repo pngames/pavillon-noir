@@ -438,7 +438,7 @@ PNGLRenderer::newObj(pnfloat *vertices, pnfloat *normals,
 {
   PNGLRendererObject *my_obj = (PNGLRendererObject*)newObj();
 
-  my_obj->setMode(mode);
+  my_obj->setMode(PN_TRIANGLES);
 
   if (nbVerts != 0)
   {
