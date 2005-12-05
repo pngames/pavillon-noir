@@ -46,19 +46,25 @@ PNGLRendererObject::PNGLRendererObject(PNGLRenderer& renderer) : _renderer(rende
 {
   _material = NULL;
 
-  _verticesArrays = NULL;
-  _colorsArrays = NULL;
-  _texturesArrays = NULL;
-  _normalsArrays = NULL;
   _nbVerts = 0;
+  _verticesArrays = NULL;
+  _verticesArraysId = -1;
+  _normalsArrays = NULL;
+  _normalsArraysId = -1;
+  _colorsArrays = NULL;
+  _colorsArraysId = -1;
+  _texturesArrays = NULL;
+  _texturesArraysId = -1;
 
-  _interleaveArrays = NULL;
   _size = 0;
   _format = PN_T2F_C4F_N3F_V3F;
+  _interleaveArrays = NULL;
+  _interleaveArraysId = -1;
 
-  _indexArrays = NULL;
   _nbIndex = 0;
   _mode = PN_TRIANGLES;
+  _indexArrays = NULL;
+  _indexArraysId = -1;
 
   //_color = DFLCOLOR;
   _color.r = 1.0f;
@@ -69,16 +75,29 @@ PNGLRendererObject::PNGLRendererObject(PNGLRenderer& renderer) : _renderer(rende
 
 PNGLRendererObject::~PNGLRendererObject()
 {
+  if (_verticesArraysId != -1)
+	glDeleteBuffersARB(1, &_verticesArraysId);
+
+  if (_normalsArraysId != -1)
+	glDeleteBuffersARB(1, &_normalsArraysId);
+
+  if (_colorsArraysId != -1)
+	glDeleteBuffersARB(1, &_colorsArraysId);
+
+  if (_texturesArraysId != -1)
+	glDeleteBuffersARB(1, &_texturesArraysId);
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-void	PNGLRendererObject::setMode(pnrenderflag mode)
+void
+PNGLRendererObject::setMode(pnrenderflag mode)
 {
   _mode = mode;
 }
 
-void	PNGLRendererObject::setDFLColor(const pnfloat *color)
+void
+PNGLRendererObject::setDFLColor(const pnfloat *color)
 {
   _color.r = color[0];
   _color.g = color[1];
@@ -86,39 +105,83 @@ void	PNGLRendererObject::setDFLColor(const pnfloat *color)
   _color.a = color[3];
 }
 
-void	PNGLRendererObject::setDFLColor(pnfloat r, pnfloat g, pnfloat b, pnfloat a)
+void
+PNGLRendererObject::setDFLColor(pnfloat r, pnfloat g, pnfloat b, pnfloat a)
 {
   setDFLColor(&r);
 }
 
-void	PNGLRendererObject::setNbVerts(pnint nbVerts)
+void
+PNGLRendererObject::setNbVerts(pnint nbVerts)
 {
   _nbVerts = nbVerts;
 }
 
-void	PNGLRendererObject::setBuffer(pnrenderarray flag_array, pnfloat *array)
+void
+PNGLRendererObject::setBuffer(pnrenderarray flag_array, pnfloat *array, pnbool compressed/* = false*/)
 {
+  static GLboolean	vertex_buffer_object_ENABLED = GLEW_ARB_vertex_buffer_object;
+
+  GLenum			target = 0;
+  GLuint			*id = NULL;
+  GLsizeiptrARB		buffSize = _nbVerts;
+
   switch (flag_array)
   {
   case 	PN_VARRAY:
+	id = &_verticesArraysId;
 	_verticesArrays = array;
+	buffSize *= 3;
+
 	break;
 
   case 	PN_NARRAY:
+	id = &_normalsArraysId;
 	_normalsArrays = array;
+	buffSize *= 3;
+
 	break;
 
   case	PN_CARRAY:
+	id = &_colorsArraysId;
 	_colorsArrays = array;
+	buffSize *= 4;
+
 	break;
 
   case PN_TCARRAY:
+	id = &_texturesArraysId;
 	_texturesArrays = array;
+	buffSize *= 2;
+
 	break;
+  }
+
+  if (vertex_buffer_object_ENABLED && compressed && id != NULL && array != NULL)
+  {
+	if (*id == -1)
+	  glGenBuffersARB(1, id);
+
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, *id);
+	glBufferDataARB(GL_ARRAY_BUFFER_ARB, buffSize, array, GL_STATIC_DRAW_ARB);
+
+	GLint	stmp = 0;
+	glGetBufferParameterivARB(GL_ARRAY_BUFFER_ARB, GL_BUFFER_SIZE_ARB, &stmp);
+	if (stmp <= 0 )
+	{
+	  glBindBufferARB(GL_ARRAY_BUFFER_ARB, NULL);
+	  glDeleteBuffersARB(1, id);
+	  *id = -1;
+
+	  return;
+	}
+
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, NULL);
   }
 }
 
-void	PNGLRendererObject::setInterleaveArray(void* array, pnuint size, pnrenderflag format)
+void
+PNGLRendererObject::setInterleaveArray(void* array, pnuint size, pnrenderflag format)
 {
   _interleaveArrays = array;
   _size = size;
@@ -126,7 +189,8 @@ void	PNGLRendererObject::setInterleaveArray(void* array, pnuint size, pnrenderfl
   _format = format;
 }
 
-void	PNGLRendererObject::setIndexBuffer(pnuint *array, pnint nbIndex)
+void
+PNGLRendererObject::setIndexBuffer(pnuint *array, pnint nbIndex)
 {
   _indexArrays = array;
   _nbIndex = nbIndex;
@@ -134,31 +198,36 @@ void	PNGLRendererObject::setIndexBuffer(pnuint *array, pnint nbIndex)
 
 //////////////////////////////////////////////////////////////////////////
 
-void	PNGLRendererObject::setMaterial(PNRenderMaterial* mat)
+void
+PNGLRendererObject::setMaterial(PNRenderMaterial* mat)
 {
   _material = mat;
 }
 
-void	PNGLRendererObject::setTextureRepeat(pnbool repeat)
+void	
+PNGLRendererObject::setTextureRepeat(pnbool repeat)
 {
   _textureRepeat = repeat;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-void	PNGLRendererObject::_initAttrib()
+void	
+PNGLRendererObject::_initAttrib()
 {
   glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
   glPushAttrib(GL_ALL_ATTRIB_BITS);
 }
 
-void	PNGLRendererObject::_restoreAttrib()
+void
+PNGLRendererObject::_restoreAttrib()
 {
   glPopClientAttrib();
   glPopAttrib();
 }
 
-void	PNGLRendererObject::render()
+void	
+PNGLRendererObject::render()
 {
   if (_nbIndex <= 0)
 	return ;
@@ -322,6 +391,24 @@ PNGLRendererObject::_renderBuffer()
 
 //////////////////////////////////////////////////////////////////////////
 
+#define		SET_BUFFER(id, array, fct)	\
+  if (id != -1) \
+{ \
+  glBindBufferARB(GL_ARRAY_BUFFER_ARB, id); \
+  fct(GL_FLOAT, 0, NULL); \
+} \
+else \
+  fct(GL_FLOAT, 0, array);
+
+#define		SET_BUFFER_SIZE(id, array, size, fct) \
+  if (id != -1) \
+{ \
+  glBindBufferARB(GL_ARRAY_BUFFER_ARB, id); \
+  fct(size, GL_FLOAT, 0, NULL); \
+} \
+else \
+  fct(size, GL_FLOAT, 0, array);
+
 void	PNGLRendererObject::_setBuffers()
 { 
   glColor4fv((const GLfloat *)&_color);
@@ -340,28 +427,28 @@ void	PNGLRendererObject::_setBuffers()
 	// Set buffers
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, _verticesArrays);
-
-	if (_mode <= PN_TRIANGLE_FAN && _colorsArrays != NULL)
-	{
-	  glEnableClientState(GL_COLOR_ARRAY);
-	  glColorPointer(3, GL_FLOAT, 0, _colorsArrays);
-	}
-	else
-	  glDisableClientState(GL_COLOR_ARRAY);
+	SET_BUFFER_SIZE(_verticesArraysId, _verticesArrays, 3, glVertexPointer);
 
 	if (_mode <= PN_TRIANGLE_FAN && _normalsArrays != NULL)
 	{
 	  glEnableClientState(GL_NORMAL_ARRAY);
-	  glNormalPointer(GL_FLOAT, 0, _normalsArrays);
+	  SET_BUFFER(_normalsArraysId, _normalsArrays, glNormalPointer);
 	}
 	else
 	  glDisableClientState(GL_NORMAL_ARRAY);
 
-	if (_mode <= PN_TRIANGLE_FAN && _texturesArrays != NULL)
+	if (_colorsArrays != NULL)
+	{
+	  glEnableClientState(GL_COLOR_ARRAY);
+	  SET_BUFFER_SIZE(_colorsArraysId, _colorsArrays, 4, glColorPointer);
+	}
+	else
+	  glDisableClientState(GL_COLOR_ARRAY);
+
+	if (_texturesArrays != NULL)
 	{
 	  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	  glTexCoordPointer(2, GL_FLOAT, 0, _texturesArrays);
+	  SET_BUFFER_SIZE(_texturesArraysId, _texturesArrays, 2, glTexCoordPointer);
 	}
 	else
 	  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
