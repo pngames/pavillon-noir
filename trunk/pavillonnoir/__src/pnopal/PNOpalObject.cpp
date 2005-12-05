@@ -36,6 +36,8 @@
 
 #include "PNPhysicsInterface.hpp"
 #include "PNPhysicalObject.hpp"
+#include "PNGameInterface.hpp"
+#include "PNGameMap.hpp"
 #include "PNConsole.hpp"
 
 #include "PNOpal.hpp"
@@ -46,6 +48,8 @@
 #include "PNMatrixTR4f.hpp"
 
 namespace fs = boost::filesystem;
+
+#define FORCE_MAGNITUDE 100
 
 namespace PN {
 
@@ -288,23 +292,50 @@ void	  PNOpalObject::printAccel()
 //////////////////////////////////////////////////////////////////////////
 
 /** Add a force to the solid
-*
-* /param  x force axis (global x axis)
-* /param  y force axis (global y axis)
-* /param  z force axis (global z axis)
-* /param  duration Specifies how long to apply to force. (in millisecond) 
+* /param  vec the force vector
+* /param  magnitude the force magnitude
+* /param  duration Specifies how long to apply the force. (in millisecond)
 */
 
-void		PNOpalObject::addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration)
+void		PNOpalObject::addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration)
 {
-  _force.type = opal::LOCAL_FORCE;
-  _force.vec = opal::Vec3r((opal::real)x, (opal::real)y, (opal::real)z);
-  _force.duration = (opal::real)duration;
-  _solid->addForce(_force);
+  opal::Force f;
+  
+  f.type = opal::LOCAL_FORCE_AT_LOCAL_POS;
+  f.pos = opal::Point3r(0.0, 0.0, 0.0);
+  f.duration = duration;
+  if (duration == 0.0f)
+	f.singleStep = true;
+  else
+	 f.singleStep = false;
+  opal::Vec3r v(vec.x, vec.y, vec.z);
+  v *= magnitude;
+  f.vec = v;
 
-#ifdef DEBUG
-  PNConsole::writeLine("Adding force - x : %f, y : %f, z : %f, duration : %f", x, y, z, duration);
-#endif
+  _solid->addForce(f);
+}
+
+/** Add a torque to the solid
+* /param  axis axis on which the torque will be applied
+* /param  magnitude the torque magnitude
+* /param  duration Specifies how long to apply the torque. (in millisecond)
+*/
+
+void		PNOpalObject::addTorque(const PNVector3f& axis, pnfloat magnitude, pnfloat duration)
+{
+  opal::Force f;
+
+  f.type = opal::LOCAL_TORQUE;
+  f.pos = opal::Point3r(0.0, 0.0, 0.0);
+  f.duration = duration;
+  if (duration == 0.0f)
+	f.singleStep = true;
+  else
+	f.singleStep = false;
+  opal::Vec3r maxis(axis.x, axis.y, axis.z);
+  f.vec = maxis * 400;
+
+  _solid->addForce(f);
 }
 
 /** Enable the movementMotor attached to the solid
@@ -325,44 +356,33 @@ void		PNOpalObject::setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf or
   _movementMotorData.desiredPos.set((opal::real)x, (opal::real)y, (opal::real)z);
 
   /* creation of the orientation matrix */
-  
   opal::Matrix44r transform;
   transform.makeIdentity();
   if (!orient.isIdentity())
   {
 	transform.setRotation((opal::real)orient.w, (opal::real)orient.x, (opal::real)orient.y, (opal::real)orient.z);
+	_movementMotorData.desiredUp.set(transform.getUp().getData());
+	_movementMotorData.desiredRight.set(transform.getRight().getData());
+	_movementMotorData.desiredForward.set(transform.getForward().getData());
   }
+
   /* optional motor data */
-  
-  _movementMotorData.linearKd = 2.0f;
-  _movementMotorData.linearKs = 20.0f;
-  _movementMotorData.angularKd = 0.2f;
-  _movementMotorData.angularKs = 0.6f;
-  
-
-  /* motor options */
-  //_movementMotorData.linearKd = (opal::real)2.0;
-  //_movementMotorData.linearKs = (opal::real)20.0;
-  //_movementMotorData.angularKd = (opal::real)0.2;
-  //_movementMotorData.angularKs = (opal::real)0.6;
-
-  linearAccel = true;
+  _movementMotorData.linearKd = 2.0;
+  _movementMotorData.linearKs = 20.0;
+  _movementMotorData.angularKd = 0.01;
+  _movementMotorData.angularKs = 0.6;
 
   /* motor init */
   _movementMotor->init(_movementMotorData);
-  //_movementMotor->setEnabled(true);
 }
-
 
 /** Disable the movementMotor attached to the solid
 */
 
 void		PNOpalObject::destroyMovementMotor()
 {
-  //_movementMotorData.solid = opal::defaults::solid::angularDamping;
   _movementMotorData.solid = NULL;
-  //_movementMotor->init(_movementMotorData);
-  //_movementMotor->setEnabled(false);
+  _movementMotor->init(_movementMotorData);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -390,6 +410,8 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
   opal::loadFile(_blueprint, _file);
   _sim->instantiateBlueprint(_blueprintInstance, _blueprint);
 
+  pnfloat mpp = PNGameInterface::getInstance()->getGameMap()->getMpp();
+
   _solid = _blueprintInstance.getSolid("Boite01");
   if (_solid != NULL)
   {
@@ -403,22 +425,34 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
 	for (int i = 0; i < 6; i++)
 	{
 	  if (_aabb[i] < 0)
-		_aabb[i] -= 1.0;
+		_aabb[i] -= 0.1;
 	  else
-		_aabb[i] += 1.0;
+		_aabb[i] += 0.1;
 	}
+
+	// resize the object according to map's meters per pixel
+	opal::Vec3r SDim = ((opal::BoxShapeData*)_solid->getData().getShapeData(0))->dimensions.getData();
+	((opal::BoxShapeData*)_solid->getData().getShapeData(0))->dimensions.set(SDim[0] * mpp,
+																			  SDim[1] * mpp,
+																			  SDim[2] * mpp);
   }
   else 
   {
 	_solid = _blueprintInstance.getSolid("Sphere01");
 	_type = OPALSPHERE;
 	opal::SphereShapeData* shapeData = (opal::SphereShapeData*)_solid->getData().getShapeData(0);
-	_radius = shapeData->radius + 1.0;
+	_radius = shapeData->radius + 0.1;
+
+	// resize the object according to map's meters per pixel
+	shapeData->radius *= mpp;
   }
 
   // check for loading errors
   if (!_solid)
 	return PNEC_NOT_INITIALIZED;
+
+  //_solid->setLinearDamping(0.10);
+  //_solid->setAngularDamping(0.05);
 
   // set Collision handling function
   PNOpal* pnopalInstance = (PNOpal*)PNOpal::getInstance();
@@ -435,6 +469,10 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
   _accelSensorData.solid = _solid;
   _accelSensor = _sim->createAccelerationSensor();
   _accelSensor->init(_accelSensorData);
+
+  _solid->setEnabled(true);
+
+  linearAccel = false;
 
   return PNEC_SUCCESS;
 }
