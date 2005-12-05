@@ -12,6 +12,10 @@
 <!ELEMENT listanims (anim*)>
 	<!ELEMENT anim EMPTY>
 
+<!ATTLIST object front CDATA #IMPLIED>
+<!ATTLIST object right CDATA #IMPLIED>
+<!ATTLIST object top CDATA #IMPLIED>
+
 <!ATTLIST model path CDATA #IMPLIED>
 
 <!ATTLIST material path CDATA #IMPLIED>
