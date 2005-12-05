@@ -197,6 +197,7 @@ Called at the end of a Fight Action
 	OVERRIDE(OBJ, "onDamage")
 	function OBJ:onDamage(damage)
 		self.combat_state = COMBAT_STATE.NEUTRAL
+		pnprint(self.id .. " gets " .. damage .. " damage\n")
 	end
 --------------------------------------------------------
 --[[%

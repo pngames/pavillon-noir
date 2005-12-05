@@ -177,14 +177,39 @@ function gameMap:fightAction(sourceId)
 	nbAS = source:getNBFightSuccess()
 	nbDS = target:getNBFightSuccess()
 	pnprint("nbAtackerSucces=" .. nbAS .. "nbDefenderSuccess=" .. nbDS .. "\n")
+	local success = nbAS - nbDS
 	if (target.combat_state == COMBAT_STATE.ATTACK) then
 		pnprint(targetId .. " tries to counter!\n")
+		if (success > 0) then
+			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor)
+			--anim
+		else
+			source:onDamage(success + target.stats[target.selected_weapon.skill] + target.selected_weapon.modifier - source.armor)
+			--anim
+		end
 	elseif (target.combat_state == COMBAT_STATE.DODGE) then
 		pnprint(targetId .. " tries to dodge!\n")
+		if (success > 0) then
+			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor)
+			--anim
+		else
+			--anim
+			target.elapsedTurns = 1 --Cannot attack right after
+		end
+	elseif (target.combat_state == COMBAT_STATE.DEFENSE) then
+		pnprint(targetId .. " defending!\n")
+		if (success > 0) then
+			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor)
+			--anim
+		else
+			source:onDamage(success + target.stats[target.selected_weapon.skill] + target.selected_weapon.modifier - source.armor)
+			--anim
+		end
+	else
+		pnprint(targetId .. " gonna get it loud!\n")
+		target:onDamage(nbAS + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor)
 	end
 	--Appliquer les degats
-	source:onDamage(0)
-	target:onDamage(0)
 	self.fights[sourceId] = -1
 	if (self.fights[targetId] == sourceId) then
 		self.fights[targetId] = -1

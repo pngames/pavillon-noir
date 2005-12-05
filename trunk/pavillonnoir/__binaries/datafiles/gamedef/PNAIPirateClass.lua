@@ -25,6 +25,7 @@ function PNAIPirateClass(id)
 						 dodge=2,
 						 escrime=2
 						}
+	OBJ.armor = 0
 --------------------------------------------------------
 --[[%
 Called while handling a fight
