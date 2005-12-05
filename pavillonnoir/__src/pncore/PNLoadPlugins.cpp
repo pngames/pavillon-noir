@@ -28,6 +28,7 @@
  */
 
 #include <iostream>
+#include "pndefs.h"
 
 #include "PNLoadPlugins.hpp"
 

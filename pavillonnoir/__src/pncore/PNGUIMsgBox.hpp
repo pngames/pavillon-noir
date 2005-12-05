@@ -31,7 +31,6 @@
 #define _PN_GUIMSGBOX_HPP_
 
 #include "myCEGUI.h"
-#include "pndefs.h"
 #include <fastdelegate/FastDelegate.h>
 
 namespace PN

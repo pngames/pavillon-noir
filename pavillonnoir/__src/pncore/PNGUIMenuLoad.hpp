@@ -32,9 +32,6 @@
 
 #include "myCEGUI.h"
 
-#include "pndefs.h"
-#include "pnplugins.h"
-#include "pnrender.h"
 
 namespace PN{
 

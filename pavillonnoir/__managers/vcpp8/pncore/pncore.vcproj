@@ -214,10 +214,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncore\PNGUIGameManager.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pncore\PNGUILoadingScreen.cpp"
 				>
 			</File>
@@ -227,10 +223,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncore\PNGUIMenuRoot.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncore\PNGUIMenuRootManager.cpp"
 				>
 			</File>
 			<File
@@ -276,10 +268,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncore\PNGUIGameManager.hpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pncore\PNGUILoadingScreen.hpp"
 				>
 			</File>
@@ -289,10 +277,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncore\PNGUIMenuRoot.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncore\PNGUIMenuRootManager.hpp"
 				>
 			</File>
 			<File

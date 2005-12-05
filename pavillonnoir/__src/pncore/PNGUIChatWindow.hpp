@@ -33,7 +33,7 @@
 #include <vector>
 
 #include "myCEGUI.h"
-#include "pndefs.h"
+
 
 namespace PN
 {

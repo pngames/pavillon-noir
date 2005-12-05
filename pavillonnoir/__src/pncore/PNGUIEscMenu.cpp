@@ -27,8 +27,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+#include "pndefs.h"
 #include "PNGUIEscMenu.hpp"
-#include "pnrender.h"
 #include "PNGUIMenuLoad.hpp"
 #include "PNGUIGame.hpp"
 #include "PNGUIStateManager.hpp"

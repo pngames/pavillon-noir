@@ -27,6 +27,7 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
+#include "pndefs.h"
 #include "PNGUILoadingScreen.hpp"
 
 using namespace PN;

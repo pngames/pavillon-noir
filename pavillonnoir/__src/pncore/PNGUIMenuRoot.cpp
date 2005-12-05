@@ -113,7 +113,7 @@ namespace PN
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_INT,	  &_aInt, "position z", "position z"));
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_STRING,  &_aString, "class", "class"));
 
-	PNConfPanel::getInstance()->addConfigurableObject(this);
+//	PNConfPanel::getInstance()->addConfigurableObject(this);
 	//////////////////////////////////////////////////////////////////////////
   }
 

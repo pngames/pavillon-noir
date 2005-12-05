@@ -31,9 +31,6 @@
 # define _PNGUIMENUROOT_HPP_
 
 #include "myCEGUI.h"
-
-#include "pndefs.h"
-#include "pnplugins.h"
 #include "pnproperties.h"
 
 namespace PN{

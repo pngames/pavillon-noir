@@ -30,7 +30,7 @@
 #ifndef _PNGUILOADINGSCREEN_HPP_
 #define _PNGUILOADINGSCREEN_HPP_
 
-#include "pndefs.h"
+
 #include "pnevent.h"
 #include "myCEGUI.h"
 
