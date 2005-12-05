@@ -7,7 +7,7 @@
     <Property Name="AlwaysOnTop" Value="True" />
     <Property Name="Alpha" Value="0.650000" />
 
-    <Window Type="TaharezLook/TabControl" Name="PNConfPanel/tabControl" >
+    <Window Type="WindowsLook/TabControl" Name="PNConfPanel/tabControl" >
       <Property Name="UnifiedAreaRect" Value="{{0.650000,0.000000},{0.010000,0.000000},{0.990000,0.000000},{0.990000,0.000000}}" />
       <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
       <Property Name="Font" Value="VeraSe-8" />
