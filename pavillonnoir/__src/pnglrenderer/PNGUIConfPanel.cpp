@@ -27,6 +27,7 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
+#include "pndefs.h"
 #include "PNGUIConfPanel.hpp"
 
 using namespace PN;
@@ -35,43 +36,6 @@ namespace PN
 {
   #define RGBA(R,G,B,A) (B+(G<<8)+(R<<16)+(A<<24))
 
-  /*confPanelTEST::confPanelTEST(std::string label)
-  {
-	_label = label;
-	_aReal = 0.00;
-	_aBool = true;
-	_aInt = 0;
-	_aString = "rien";
-	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL,	  &_aReal, "position x", "position x"));
-	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_BOOLEAN, &_aBool, "position y", "position y"));
-	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_INT,	  &_aInt, "position z", "position z"));
-	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_STRING,  &_aString, "class", "class"));
-  }
-
-  void						confPanelTEST::update(PNConfigurableParameter* p)
-  {
-	switch(p->getType()) 
-	{
-	case PN_PARAMTYPE_REAL:
-	  std::cout << "update : " <<*(float*)p->getElem() << std::endl;
-		break;
-	case PN_PARAMTYPE_INT:
-	  std::cout << "update : " <<*(int*)p->getElem() << std::endl;
-	  break;
-	case PN_PARAMTYPE_STRING:
-	  std::cout << "update : " <<*(std::string*)p->getElem() << std::endl;
-	  break;
-	case PN_PARAMTYPE_BOOLEAN:
-	  std::cout << "update : " <<*(bool*)p->getElem() << std::endl;
-	  break;
-	default:
-	  break;
-	}
-	
-  }*/
-  /**************************************************************************************/
-  
-//  PNGUIConfPanel* PNGUIConfPanel::_instance = NULL;
  
   PNGUIConfPanel::PNGUIConfPanel()
   {
@@ -84,22 +48,8 @@ namespace PN
 	_pnConfPanel->hide();
 	_tabControl = (CEGUI::TabControl*)CEGUI::WindowManager::getSingleton().getWindow("PNConfPanel/tabControl");
 	_tabControl->setTabTextPadding(0.00f);
-	//_testTab = CEGUI::WindowManager::getSingleton().getWindow("PNConfPanel/tabControl/testTab");
 
 	PNEventManager::getInstance()->addCallback(PN_EVENT_CONFPANEL, EventCallback(this, &PNGUIConfPanel::confPanelVisibility));
-
-	/*confPanelTEST* testobj = new confPanelTEST("123456789abcde");
-
-	addConfigurableObject(testobj);
-	addConfigurableObject(testobj);*/
-	/*addConfigurableObject(testobj);
-	addConfigurableObject(testobj);
-	addConfigurableObject(testobj);
-	addConfigurableObject(testobj);
-	addConfigurableObject(testobj);
-	addConfigurableObject(testobj);
-	addConfigurableObject(testobj);
-	addConfigurableObject(testobj);*/
   }
 
   PNGUIConfPanel::~PNGUIConfPanel()

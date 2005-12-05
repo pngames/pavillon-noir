@@ -32,36 +32,11 @@
 
 #include "myCEGUI.h"
 #include <boost/thread/recursive_mutex.hpp>
-#include "pndefs.h"
 #include "pnevent.h"
 #include "pnproperties.h"
 #include "PNConfPanel.hpp"
 
 namespace PN{
-
-  /*class confPanelTEST : public PNConfigurableObject
-  {
-	
-	std::string		  		_label;
-	float _aReal;
-	bool  _aBool;
-	int	_aInt;
-	std::string	_aString;
-
-  protected:
-	typedef std::vector<PNConfigurableParameter*> ParametersVector;
-	ParametersVector			_params;
-  public:
-	confPanelTEST(std::string label = "No label");
-	void						update(PNConfigurableParameter* p);
-	int							getNbParameters() { return _params.size(); }
-	PNConfigurableParameter*	getParameter(int idx) { return _params[idx]; }
-
-	void						setModified() {}
-	void						setUnmodified() {}
-	const std::string&		getLabel() { return _label; }
-  };*/
-
   class PNGUIConfPanel : PNConfPanel
   {
 	/*/////////////////////////////////////////////////////////////////////////////
@@ -76,7 +51,6 @@ namespace PN{
 	CEGUI::Window*			_pnConfPanel;
 	CEGUI::TabControl*		_tabControl;
 	CEGUI::Window*			_testTab;
-	//static PNGUIConfPanel*	_instance;
 	int						_nbTAB;
 	std::vector<std::string> _vectTabNames;
 
