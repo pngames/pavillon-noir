@@ -52,7 +52,6 @@ typedef enum
   PN_PLUGIN_NB_TYPES
 } plugintypes;
 
-// interface tiree du plugin et permettant de manipuler le module
 class PNAPI							PNInterface : public PNObject, public PNConfigurableObject
 {
 protected:
@@ -60,12 +59,8 @@ protected:
 public:
   virtual ~PNInterface();
 
-  //////////////////////////////////////////////////////////////////////////
-  // initialise le module
   virtual void						init()=0;
 
-  //////////////////////////////////////////////////////////////////////////
-  // type d'interface
   virtual plugintypes				getType();
 
   //////////////////////////////////////////////////////////////////////////
@@ -73,8 +68,8 @@ public:
 
   virtual void						update(PNConfigurableParameter* p);
 
-  int								getNbParameters();
-  PNConfigurableParameter*			getParameter(int idx);
+  pnint								getNbParameters();
+  PNConfigurableParameter*			getParameter(pnint idx);
 
   const std::string&				getLabel();
 

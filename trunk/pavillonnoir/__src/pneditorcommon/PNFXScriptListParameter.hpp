@@ -45,7 +45,6 @@ namespace PN {
 	FXDECLARE(PNFXScriptListParameter);
 
 	FXComposite*				_parent;
-	PNConfigurableParameter*	_param;
 
 	FXListBox*					_eventList;
 	FXTextField*				_event;

@@ -60,6 +60,10 @@ public:
   CString	getAnimationFile();
   CString	getAnimationFullPath();
 
+  bool		hasPhysics() {return _exporter->_hasPhysics;}
+  CString	getPhysicalFile();
+  CString	getPhysicalFullPath();
+
 protected:
   virtual void DoDataExchange(CDataExchange* pDX);    // Prise en charge DDX/DDV
 
@@ -109,4 +113,10 @@ public:
   afx_msg void OnEnChangeTMaterials();
   afx_msg void OnBnClickedOk();
   afx_msg void OnBnClickedBoGeneral();
+  CEdit t_physics;
+  afx_msg void OnBnClickedBoPhysics();
+  afx_msg void OnBnClickedCPhysics();
+  CButton bt_physics;
+  CButton bt_option_physics;
+  afx_msg void OnBnClickedBbPhysics();
 };

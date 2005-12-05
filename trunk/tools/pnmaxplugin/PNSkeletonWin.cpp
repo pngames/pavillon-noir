@@ -30,7 +30,6 @@
 #include "PNSBone.hpp"
 #include "PNMainWin.hpp"
 #include "PNSkeletonExporter.hpp"
-#include ".\pnskeletonwin.hpp"
 
 #define UNCHECK 1
 #define CHECK 2
@@ -47,12 +46,12 @@ PNSkeletonWin::~PNSkeletonWin()
 {
 }
 
-void PNSkeletonWin::DoDataExchange(CDataExchange* pDX)
+void 
+PNSkeletonWin::DoDataExchange(CDataExchange* pDX)
 {
   CDialog::DoDataExchange(pDX);
   DDX_Control(pDX, IDC_TREE_SQUELETOR, _treeSkeletor);
 }
-
 
 BEGIN_MESSAGE_MAP(PNSkeletonWin, CDialog)
   ON_BN_CLICKED(IDOK, OnBnClickedOk)

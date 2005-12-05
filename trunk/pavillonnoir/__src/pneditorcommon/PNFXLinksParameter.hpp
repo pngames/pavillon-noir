@@ -39,64 +39,64 @@
 #include "pnproperties.h"
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  class PNIAGraph;
-  class PNEDAPI PNFXLinksParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+class PNIAGraph;
+
+class PNEDAPI				PNFXLinksParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+{
+  FXDECLARE(PNFXLinksParameter);
+
+  std::map<int,int>			_lnkMap;
+  PNIAGraph*				_graph;
+
+  FXComposite*				_parent;
+
+  FXListBox*				_listbox;
+  FXButton*					_buttonDelete;
+  FXButton*					_buttonAdd;
+  FXTextField*				_fieldCoef;
+
+  FXDialogBox*				_dbox;
+  FXListBox*				_lnkList;
+  FXTextField*				_fieldAddCoef;
+  FXRadioButton*			_simpleLnk;
+  FXRadioButton*			_doubleLnk;
+
+protected:
+  PNFXLinksParameter() {}
+  PNFXLinksParameter(PNFXLinksParameter&) {}
+public:
+  PNFXLinksParameter(FXComposite* p, PNConfigurableParameter* param);
+  ~PNFXLinksParameter();
+
+  void	create();
+
+  enum 
   {
-	FXDECLARE(PNFXLinksParameter);
-	
-	std::map<int,int>			_lnkMap;
-	PNIAGraph*					_graph;
-	
-	FXComposite*				_parent;
-	PNConfigurableParameter*	_param;
-
-	FXListBox*					_listbox;
-	FXButton*					_buttonDelete;
-	FXButton*					_buttonAdd;
-	FXTextField*				_fieldCoef;
-	
-	FXDialogBox*				_dbox;
-	FXListBox*					_lnkList;
-	FXTextField*				_fieldAddCoef;
-	FXRadioButton*				_simpleLnk;
-	FXRadioButton*				_doubleLnk;
-	
-  protected:
-	PNFXLinksParameter() {}
-	PNFXLinksParameter(PNFXLinksParameter&) {}
-  public:
-	PNFXLinksParameter(FXComposite* p, PNConfigurableParameter* param);
-	~PNFXLinksParameter();
-
-	void	create();
-
-	enum 
-	{
-	  ID_LISTBOX_SEL = FXHorizontalFrame::ID_LAST,
-	  ID_ADD,
-	  ID_DELETE,
-	  ID_RADIO_SIMPLE,
-	  ID_RADIO_DOUBLE,
-	  ID_MAKELINK,
-	  ID_CANCEL
-	};
-
-  public:
-    long	onCmdListBox(FXObject*,FXSelector,void*);
-	long	onDelete(FXObject*,FXSelector,void* ptr);
-	long	onAdd(FXObject* obj,FXSelector sel,void* ptr);
-	long	onRadioSimple(FXObject* obj,FXSelector sel,void* ptr);
-	long	onRadioDouble(FXObject* obj,FXSelector sel,void* ptr);
-	long	onAccept(FXObject* obj,FXSelector sel,void* ptr);
-	long	onCancel(FXObject* obj,FXSelector sel,void* ptr);
-	void	buildList(void);
-	void	update(void);
-	void	updateCoef(void);
+	ID_LISTBOX_SEL = FXHorizontalFrame::ID_LAST,
+	ID_ADD,
+	ID_DELETE,
+	ID_RADIO_SIMPLE,
+	ID_RADIO_DOUBLE,
+	ID_MAKELINK,
+	ID_CANCEL
   };
 
-  //////////////////////////////////////////////////////////////////////////
+public:
+  long						onCmdListBox(FXObject*,FXSelector,void*);
+  long						onDelete(FXObject*,FXSelector,void* ptr);
+  long						onAdd(FXObject* obj,FXSelector sel,void* ptr);
+  long						onRadioSimple(FXObject* obj,FXSelector sel,void* ptr);
+  long						onRadioDouble(FXObject* obj,FXSelector sel,void* ptr);
+  long						onAccept(FXObject* obj,FXSelector sel,void* ptr);
+  long						onCancel(FXObject* obj,FXSelector sel,void* ptr);
+  void						buildList(void);
+  void						update(void);
+  void						updateCoef(void);
+};
+
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PNFXLINKSPARAMETER_HPP_*/

@@ -30,6 +30,7 @@
 #include "PNOConfig.hpp"
 
 #include "PNObjectWindow.hpp"
+#include ".\pnobjectwindow.hpp"
 
 // Bo�e de dialogue PNObjectWindow
 
@@ -43,22 +44,28 @@ PNObjectWindow::~PNObjectWindow()
 {
 }
 
-CString		PNObjectWindow::getModelFile()
+//////////////////////////////////////////////////////////////////////////
+
+CString		
+PNObjectWindow::getModelFile()
 {
   return _exporter->_modelPath;
 }
 
-CString		PNObjectWindow::getModelFullPath()
+CString		
+PNObjectWindow::getModelFullPath()
 {
   return makePathFromDir(_exporter->_rootPath, _exporter->_modelPath, PNM_EXT, PN::DEF::modelFilePath.c_str());
 }
 
-int			PNObjectWindow::getNbMaterials()
+int		
+PNObjectWindow::getNbMaterials()
 {
   return _exporter->_materialsExporter.getNBMaterials();
 }
 
-CString		PNObjectWindow::getMaterialFile(int index)
+CString		
+PNObjectWindow::getMaterialFile(int index)
 {
   CString	path = _exporter->_materialsExporter.getMaterialFile(index) + "." + PNT_EXT;
 
@@ -73,32 +80,52 @@ CString		PNObjectWindow::getMaterialFile(int index)
   return name;
 }
 
-CString		PNObjectWindow::getMaterialsFullPath()
+CString	
+PNObjectWindow::getMaterialsFullPath()
 {
   return makePathFromDir(_exporter->_rootPath, _exporter->_materialsPath, PNT_EXT, PN::DEF::materialFilePath.c_str());
 }
 
-CString		PNObjectWindow::getSkeletonFile()
+CString	
+PNObjectWindow::getSkeletonFile()
 {
   return _exporter->_skeletonPath;
 }
 
-CString		PNObjectWindow::getSkeletonFullPath()
+CString	
+PNObjectWindow::getSkeletonFullPath()
 {
   return makePathFromDir(_exporter->_rootPath, _exporter->_skeletonPath, PNS_EXT, PN::DEF::skeletonFilePath.c_str());
 }
 
-CString		PNObjectWindow::getAnimationFile()
+CString		
+PNObjectWindow::getAnimationFile()
 {
   return _exporter->_animationPath;
 }
 
-CString		PNObjectWindow::getAnimationFullPath()
+CString		
+PNObjectWindow::getAnimationFullPath()
 {
   return makePathFromDir(_exporter->_rootPath, _exporter->_animationPath, PNA_EXT, PN::DEF::animationFilePath.c_str());
 }
 
-void PNObjectWindow::DoDataExchange(CDataExchange* pDX)
+CString	
+PNObjectWindow::getPhysicalFile()
+{
+  return _exporter->_physicalPath;
+}
+
+CString
+PNObjectWindow::getPhysicalFullPath()
+{
+  return makePathFromDir(_exporter->_rootPath, _exporter->_physicalPath, PNP_EXT, PN::DEF::physicsFilePath.c_str());
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void 
+PNObjectWindow::DoDataExchange(CDataExchange* pDX)
 {
   CDialog::DoDataExchange(pDX);
   DDX_Control(pDX, IDC_C_MODEL, _c_model);
@@ -115,6 +142,9 @@ void PNObjectWindow::DoDataExchange(CDataExchange* pDX)
   DDX_Control(pDX, IDC_BB_SKELETON, bt_skeleton);
   DDX_Control(pDX, IDC_BO_ANIMATION, bt_option_animation);
   DDX_Control(pDX, IDC_BB_ANIMATION, bt_animation);
+  DDX_Control(pDX, IDC_T_PHYSICS, t_physics);
+  DDX_Control(pDX, IDC_BB_PHYSICS, bt_physics);
+  DDX_Control(pDX, IDC_BO_PHYSICS, bt_option_physics);
 }
 
 
@@ -139,6 +169,9 @@ BEGIN_MESSAGE_MAP(PNObjectWindow, CDialog)
   ON_EN_CHANGE(IDC_T_MATERIALS, OnEnChangeTMaterials)
   ON_BN_CLICKED(IDOK, OnBnClickedOk)
   ON_BN_CLICKED(IDC_BO_GENERAL, OnBnClickedBoGeneral)
+  ON_BN_CLICKED(IDC_BO_PHYSICS, OnBnClickedBoPhysics)
+  ON_BN_CLICKED(IDC_C_PHYSICS, OnBnClickedCPhysics)
+  ON_BN_CLICKED(IDC_BB_PHYSICS, OnBnClickedBbPhysics)
 END_MESSAGE_MAP()
 
 // Gestionnaires de messages PNObjectWindow
@@ -149,9 +182,21 @@ BOOL PNObjectWindow::OnInitDialog()
 	return FALSE;
 
   CheckDlgButton(IDC_C_MODEL, _exporter->_hasModel ? BST_CHECKED : BST_UNCHECKED);
+  CheckDlgButton(IDC_C_MODEL_SAVE, _exporter->_saveModel ? BST_CHECKED : BST_UNCHECKED);
+
   CheckDlgButton(IDC_C_MATERIALS, _exporter->_hasMaterials ? BST_CHECKED : BST_UNCHECKED);
+  CheckDlgButton(IDC_C_MATERIALS_SAVE, _exporter->_saveMaterials ? BST_CHECKED : BST_UNCHECKED);
+
   CheckDlgButton(IDC_C_SKELETON, _exporter->_hasSkeleton ? BST_CHECKED : BST_UNCHECKED);
+  CheckDlgButton(IDC_C_SKELETON_SAVE, _exporter->_saveSkeleton ? BST_CHECKED : BST_UNCHECKED);
+
   CheckDlgButton(IDC_C_ANIMATION, _exporter->_hasAnimation ? BST_CHECKED : BST_UNCHECKED);
+  CheckDlgButton(IDC_C_ANIMATION_SAVE, _exporter->_saveAnimation ? BST_CHECKED : BST_UNCHECKED);
+
+  CheckDlgButton(IDC_C_PHYSICS, _exporter->_hasPhysics ? BST_CHECKED : BST_UNCHECKED);
+  CheckDlgButton(IDC_C_PHYSICS_SAVE, _exporter->_savePhysics ? BST_CHECKED : BST_UNCHECKED);
+
+  //////////////////////////////////////////////////////////////////////////
 
   CString objPath = PN::DEF::objectFilePath.c_str();
   objPath.Replace('/', '\\');
@@ -298,54 +343,6 @@ void  PNObjectWindow::getPath(CEdit& textField, LPCTSTR lpszDefExt, LPCTSTR lpsz
   }
 }
 
-void  PNObjectWindow::OnBnClickedBbModel()
-{
-  getPath(t_model, PNM_EXT, "Model Files(*.pnm)|*.pnm||", "Save Model File", PN::DEF::modelFilePath.c_str());
-}
-
-void PNObjectWindow::OnBnClickedBbMaterial()
-{
-  getPath(t_materials, PNT_EXT, "Material Files(*.pnt)|*.pnt||", "Save Material Files", PN::DEF::materialFilePath.c_str());
-}
-
-void PNObjectWindow::OnBnClickedBbSkeleton()
-{
-  getPath(t_skeleton, PNS_EXT, "Skeleton Files(*.pns)|*.pns||", "Save Skeleton File", PN::DEF::skeletonFilePath.c_str());
-}
-
-void PNObjectWindow::OnBnClickedBbAnimation()
-{
-  getPath(t_animation, PNA_EXT, "Animation Files(*.pna)|*.pna||", "Save Animation File", PN::DEF::animationFilePath.c_str());
-}
-
-void PNObjectWindow::OnBnClickedCModel()
-{
-  t_model.EnableWindow(IsDlgButtonChecked(IDC_C_MODEL));
-  bt_model.EnableWindow(IsDlgButtonChecked(IDC_C_MODEL));
-  bt_option_model.EnableWindow(IsDlgButtonChecked(IDC_C_MODEL));
-}
-
-void PNObjectWindow::OnBnClickedCMaterials()
-{
-  t_materials.EnableWindow(IsDlgButtonChecked(IDC_C_MATERIALS));
-  bt_materials.EnableWindow(IsDlgButtonChecked(IDC_C_MATERIALS));
-  bt_option_materials.EnableWindow(IsDlgButtonChecked(IDC_C_MATERIALS));
-}
-
-void PNObjectWindow::OnBnClickedCSkeleton()
-{
-  t_skeleton.EnableWindow(IsDlgButtonChecked(IDC_C_SKELETON));
-  bt_skeleton.EnableWindow(IsDlgButtonChecked(IDC_C_SKELETON));
-  bt_option_skeleton.EnableWindow(IsDlgButtonChecked(IDC_C_SKELETON));
-}
-
-void PNObjectWindow::OnBnClickedCAnimation()
-{
-  t_animation.EnableWindow(IsDlgButtonChecked(IDC_C_ANIMATION));
-  bt_animation.EnableWindow(IsDlgButtonChecked(IDC_C_ANIMATION));
-  bt_option_animation.EnableWindow(IsDlgButtonChecked(IDC_C_ANIMATION));
-}
-
 BOOL  PNObjectWindow::verifSubTextfield(CEdit& textField)
 {
   CString	name;
@@ -364,24 +361,29 @@ BOOL  PNObjectWindow::verifSubTextfield(CEdit& textField)
   return TRUE;
 }
 
+//////////////////////////////////////////////////////////////////////////
+// EVENTS
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+// MODELS
+void  PNObjectWindow::OnBnClickedBbModel()
+{
+  getPath(t_model, PNM_EXT, "Model Files(*.pnm)|*.pnm||", "Save Model File", PN::DEF::modelFilePath.c_str());
+}
+
+void PNObjectWindow::OnBnClickedCModel()
+{
+  t_model.EnableWindow(IsDlgButtonChecked(IDC_C_MODEL));
+  GetDlgItem(IDC_C_MODEL_SAVE)->EnableWindow(IsDlgButtonChecked(IDC_C_MODEL));
+
+  bt_model.EnableWindow(IsDlgButtonChecked(IDC_C_MODEL));
+  bt_option_model.EnableWindow(IsDlgButtonChecked(IDC_C_MODEL));
+}
+
 void PNObjectWindow::OnEnUpdateTModel()
 {
   verifSubTextfield(t_model);
-}
-
-void PNObjectWindow::OnEnUpdateTMaterials()
-{
-  verifSubTextfield(t_materials);
-}
-
-void PNObjectWindow::OnEnUpdateTSkeleton()
-{
-  verifSubTextfield(t_skeleton);
-}
-
-void PNObjectWindow::OnEnUpdateTAnimation()
-{
-  verifSubTextfield(t_animation);
 }
 
 void PNObjectWindow::OnBnClickedBoModel()
@@ -389,19 +391,31 @@ void PNObjectWindow::OnBnClickedBoModel()
   _exporter->_modelExporter.configure();
 }
 
+//////////////////////////////////////////////////////////////////////////
+// MATERIALS
+
+void PNObjectWindow::OnBnClickedBbMaterial()
+{
+  getPath(t_materials, PNT_EXT, "Material Files(*.pnt)|*.pnt||", "Save Material Files", PN::DEF::materialFilePath.c_str());
+}
+
+void PNObjectWindow::OnBnClickedCMaterials()
+{
+  t_materials.EnableWindow(IsDlgButtonChecked(IDC_C_MATERIALS));
+  GetDlgItem(IDC_C_MATERIALS_SAVE)->EnableWindow(IsDlgButtonChecked(IDC_C_MATERIALS));
+
+  bt_materials.EnableWindow(IsDlgButtonChecked(IDC_C_MATERIALS));
+  bt_option_materials.EnableWindow(IsDlgButtonChecked(IDC_C_MATERIALS));
+}
+
+void PNObjectWindow::OnEnUpdateTMaterials()
+{
+  verifSubTextfield(t_materials);
+}
+
 void PNObjectWindow::OnBnClickedBoMaterials()
 {
   _exporter->_materialsExporter.configure();
-}
-
-void PNObjectWindow::OnBnClickedBoSkeleton()
-{
-  _exporter->_skeletonExporter.configure();
-}
-
-void PNObjectWindow::OnBnClickedBoAnimation()
-{
-  _exporter->_animationExporter.configure();
 }
 
 void PNObjectWindow::OnEnChangeTMaterials()
@@ -409,6 +423,84 @@ void PNObjectWindow::OnEnChangeTMaterials()
   _exporter->_materialsExporter.initFiles(
 	makePathFromDir(t_materials, PNT_EXT, PN::DEF::materialFilePath.c_str()));
 }
+
+//////////////////////////////////////////////////////////////////////////
+// SKELETON
+
+void PNObjectWindow::OnBnClickedBbSkeleton()
+{
+  getPath(t_skeleton, PNS_EXT, "Skeleton Files(*.pns)|*.pns||", "Save Skeleton File", PN::DEF::skeletonFilePath.c_str());
+}
+
+void PNObjectWindow::OnBnClickedCSkeleton()
+{
+  t_skeleton.EnableWindow(IsDlgButtonChecked(IDC_C_SKELETON));
+  GetDlgItem(IDC_C_SKELETON_SAVE)->EnableWindow(IsDlgButtonChecked(IDC_C_SKELETON));
+
+  bt_skeleton.EnableWindow(IsDlgButtonChecked(IDC_C_SKELETON));
+  bt_option_skeleton.EnableWindow(IsDlgButtonChecked(IDC_C_SKELETON));
+}
+
+void PNObjectWindow::OnEnUpdateTSkeleton()
+{
+  verifSubTextfield(t_skeleton);
+}
+
+void PNObjectWindow::OnBnClickedBoSkeleton()
+{
+  _exporter->_skeletonExporter.configure();
+}
+
+//////////////////////////////////////////////////////////////////////////
+// ANIMATIONS
+
+void PNObjectWindow::OnBnClickedBbAnimation()
+{
+  getPath(t_animation, PNA_EXT, "Animation Files(*.pna)|*.pna||", "Save Animation File", PN::DEF::animationFilePath.c_str());
+}
+
+void PNObjectWindow::OnBnClickedCAnimation()
+{
+  t_animation.EnableWindow(IsDlgButtonChecked(IDC_C_ANIMATION));
+  GetDlgItem(IDC_C_ANIMATION_SAVE)->EnableWindow(IsDlgButtonChecked(IDC_C_ANIMATION));
+
+  bt_animation.EnableWindow(IsDlgButtonChecked(IDC_C_ANIMATION));
+  bt_option_animation.EnableWindow(IsDlgButtonChecked(IDC_C_ANIMATION));
+}
+
+void PNObjectWindow::OnEnUpdateTAnimation()
+{
+  verifSubTextfield(t_animation);
+}
+
+void PNObjectWindow::OnBnClickedBoAnimation()
+{
+  _exporter->_animationExporter.configure();
+}
+
+//////////////////////////////////////////////////////////////////////////
+// PHYSICS
+
+void PNObjectWindow::OnBnClickedBbPhysics()
+{
+  getPath(t_physics, PNP_EXT, "Physics Files(*.pnp)|*.pnp||", "Save Physics File", PN::DEF::physicsFilePath.c_str());
+}
+
+void PNObjectWindow::OnBnClickedCPhysics()
+{
+  t_physics.EnableWindow(IsDlgButtonChecked(IDC_C_PHYSICS));
+  GetDlgItem(IDC_C_PHYSICS_SAVE)->EnableWindow(IsDlgButtonChecked(IDC_C_PHYSICS));
+
+  bt_physics.EnableWindow(IsDlgButtonChecked(IDC_C_PHYSICS));
+  bt_option_physics.EnableWindow(IsDlgButtonChecked(IDC_C_PHYSICS));
+}
+
+void PNObjectWindow::OnBnClickedBoPhysics()
+{
+  _exporter->_physicalExporter.configure();
+}
+
+//////////////////////////////////////////////////////////////////////////
 
 void PNObjectWindow::OnBnClickedBoGeneral()
 {
@@ -419,17 +511,27 @@ void PNObjectWindow::OnBnClickedBoGeneral()
 
 void PNObjectWindow::OnBnClickedOk()
 {
-  _exporter->_hasModel = IsDlgButtonChecked(IDC_C_MODEL) == TRUE;
-  _exporter->_hasMaterials = IsDlgButtonChecked(IDC_C_MATERIALS) == TRUE;
-  _exporter->_hasSkeleton = IsDlgButtonChecked(IDC_C_SKELETON) == TRUE;
-  _exporter->_hasAnimation = IsDlgButtonChecked(IDC_C_ANIMATION) == TRUE;
-
   t_root.GetWindowText(_exporter->_rootPath);
 
+  _exporter->_hasModel = IsDlgButtonChecked(IDC_C_MODEL) == TRUE;
+  _exporter->_saveModel = IsDlgButtonChecked(IDC_C_MODEL_SAVE) == TRUE;
   t_model.GetWindowText(_exporter->_modelPath);
+
+  _exporter->_hasMaterials = IsDlgButtonChecked(IDC_C_MATERIALS) == TRUE;
+  _exporter->_saveMaterials = IsDlgButtonChecked(IDC_C_MATERIALS_SAVE) == TRUE;
   t_materials.GetWindowText(_exporter->_materialsPath);
+
+  _exporter->_hasSkeleton = IsDlgButtonChecked(IDC_C_SKELETON) == TRUE;
+  _exporter->_saveSkeleton = IsDlgButtonChecked(IDC_C_SKELETON_SAVE) == TRUE;
   t_skeleton.GetWindowText(_exporter->_skeletonPath);
+
+  _exporter->_hasAnimation = IsDlgButtonChecked(IDC_C_ANIMATION) == TRUE;
+  _exporter->_saveAnimation = IsDlgButtonChecked(IDC_C_ANIMATION_SAVE) == TRUE;
   t_animation.GetWindowText(_exporter->_animationPath);
+
+  _exporter->_hasPhysics = IsDlgButtonChecked(IDC_C_PHYSICS) == TRUE;
+  _exporter->_savePhysics = IsDlgButtonChecked(IDC_C_PHYSICS_SAVE) == TRUE;
+  t_physics.GetWindowText(_exporter->_physicalPath);
 
   OnOK();
 }

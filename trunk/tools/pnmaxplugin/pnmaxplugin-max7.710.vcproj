@@ -337,7 +337,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="physical"
+			Name="pnp"
 			Filter="">
 			<File
 				RelativePath="..\..\pavillonnoir\__src\pncommon\pnp_format.h">

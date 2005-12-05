@@ -34,18 +34,22 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
-class							PNPropertiesGridParameter
+class								PNPropertiesGridParameter
 {
-public:
+protected:
+  PNConfigurableParameter*			_param;
+
+  PNPropertiesGridParameter() : _param(NULL) {}
+  PNPropertiesGridParameter(PNConfigurableParameter* param) : _param(param) {}
   virtual ~PNPropertiesGridParameter() {};
 
-  virtual void					update() = 0;
+public:
+  virtual void						update()=0;
 
-  // TOOD : remove all NULL references
-  virtual PNConfigurableParameter* getParam() {return NULL; }
+  virtual PNConfigurableParameter*	getParam() { return _param; };
 
-  virtual std::string			getStringValue() { return ""; }
-  virtual pnbool				setStringValue(const std::string& val) { return false; }
+  virtual std::string				getStringValue() { return ""; }
+  virtual pnbool					setStringValue(const std::string& val) { return false; }
 };
 
 //////////////////////////////////////////////////////////////////////////

@@ -46,6 +46,7 @@
 #define IDD_PNO_CONFIG                  138
 #define IDD_VEC_EDITOR                  139
 #define IDD_UTILS_VEDIT                 139
+#define IDD_PNP_CONFIG                  140
 #define IDC_LIST1                       1001
 #define IDC_CONSOLE                     1001
 #define IDC_MATERIALS                   1001
@@ -69,10 +70,14 @@
 #define IDC_BB_ROOT                     1011
 #define IDC_L_ANIMATIONS                1012
 #define IDC_L_ANIMATION                 1012
+#define IDC_C_PHYSICS                   1012
 #define IDC_L_BONES                     1013
 #define IDC_L_SKELETON                  1013
+#define IDC_T_PHYSICS                   1013
 #define IDC_L_MATERIALS                 1014
+#define IDC_C_MODEL_SAVE                1014
 #define IDC_L_MODEL                     1015
+#define IDC_C_MATERIALS_SAVE            1015
 #define IDC_TREE_SQUELETOR              1016
 #define IDC_B_MODEL                     1016
 #define IDC_BB_MODEL                    1016
@@ -83,9 +88,11 @@
 #define IDC_L_MODEL4                    1017
 #define IDC_TT_MODEL                    1018
 #define IDC_L_MODEL5                    1018
+#define IDC_C_SKELETON_SAVE             1018
 #define IDC_LIST2                       1019
 #define IDC_L_MODEL6                    1019
 #define IDC_L_X                         1019
+#define IDC_C_ANIMATION_SAVE            1019
 #define IDC_B_MATERIAL                  1020
 #define IDC_A_T_NAME                    1020
 #define IDC_BB_MATERIAL                 1020
@@ -107,6 +114,8 @@
 #define IDC_RADIO3                      1025
 #define IDC_T_FRONT                     1025
 #define IDC_RB_TDEFAULT                 1025
+#define IDC_t_PATH                      1025
+#define IDC_T_PATH                      1025
 #define IDC_BO_MODEL                    1026
 #define IDC_EDIT2                       1026
 #define IDC_RADIO4                      1026
@@ -114,12 +123,15 @@
 #define IDC_BO_GENERAL                  1027
 #define IDC_BO_GENERAL2                 1028
 #define IDC_BT_RIGHT                    1028
+#define IDC_BB_PHYSICS                  1028
 #define IDC_EDIT3                       1029
 #define IDC_T_X                         1029
+#define IDC_BO_PHYSICS                  1029
 #define IDC_BO_GENERAL3                 1030
 #define IDC_EDIT4                       1030
 #define IDC_BT_TOP                      1030
 #define IDC_T_Z                         1030
+#define IDC_C_PHYSICS_SAVE              1030
 #define IDC_EDIT5                       1031
 #define IDC_RB_180                      1031
 #define IDC_T_Y                         1031
@@ -136,9 +148,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        140
+#define _APS_NEXT_RESOURCE_VALUE        141
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1041
+#define _APS_NEXT_CONTROL_VALUE         1043
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

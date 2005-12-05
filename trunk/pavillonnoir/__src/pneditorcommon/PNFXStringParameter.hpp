@@ -40,29 +40,27 @@
  */
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  class PNEDAPI PNFXStringParameter : public FXTextField, public PNPropertiesGridParameter
-  {
-	FXDECLARE(PNFXStringParameter);
+class PNEDAPI PNFXStringParameter : public FXTextField, public PNPropertiesGridParameter
+{
+  FXDECLARE(PNFXStringParameter);
 
-	PNConfigurableParameter*	_param;
+protected:
+  PNFXStringParameter() {}
+  PNFXStringParameter(PNFXStringParameter&) {}
+public:
+  PNFXStringParameter(FXComposite* p, PNConfigurableParameter* param);
+  ~PNFXStringParameter();
 
-  protected:
-	PNFXStringParameter() {}
-	PNFXStringParameter(PNFXStringParameter&) {}
-  public:
-	PNFXStringParameter(FXComposite* p, PNConfigurableParameter* param);
-	~PNFXStringParameter();
+  void	create();
+  void	update();
 
-	void	create();
-	void	update();
+public:
+  long	onKeyRelease(FXObject*,FXSelector,void* ptr);
+};
 
-  public:
-	long	onKeyRelease(FXObject*,FXSelector,void* ptr);
-  };
-
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PNFXSTRINGPARAMETER_HPP_*/

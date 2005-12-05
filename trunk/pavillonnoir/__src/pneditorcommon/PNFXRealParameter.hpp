@@ -36,29 +36,27 @@
 #include "pnproperties.h"
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  class PNEDAPI PNFXRealParameter : public FXTextField, public PNPropertiesGridParameter
-  {
-	FXDECLARE(PNFXRealParameter);
+class PNEDAPI PNFXRealParameter : public FXTextField, public PNPropertiesGridParameter
+{
+  FXDECLARE(PNFXRealParameter);
 
-	PNConfigurableParameter*	_param;
+protected:
+  PNFXRealParameter() {}
+  PNFXRealParameter(PNFXRealParameter&) {}
+public:
+  PNFXRealParameter(FXComposite* p, PNConfigurableParameter* param);
+  ~PNFXRealParameter();
 
-  protected:
-	PNFXRealParameter() {}
-	PNFXRealParameter(PNFXRealParameter&) {}
-  public:
-	PNFXRealParameter(FXComposite* p, PNConfigurableParameter* param);
-	~PNFXRealParameter();
+  void  create();
+  void  update();
 
-	void  create();
-	void  update();
+public:
+  long	onKeyRelease(FXObject*,FXSelector,void* ptr);
+};
 
-  public:
-	long	PNFXRealParameter::onKeyRelease(FXObject*,FXSelector,void* ptr);
-  };
-
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PNFXREALPARAMETER_HPP_*/

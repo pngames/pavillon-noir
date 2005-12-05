@@ -51,81 +51,84 @@ using namespace std;
 namespace PN 
 { 
 
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  FXDEFMAP(PNFXActiveStringParameter) PNFXActiveStringParameterMap[]={
-	FXMAPFUNC(SEL_KEYRELEASE,0,PNFXActiveStringParameter::onKeyRelease),
-  };
+FXDEFMAP(PNFXActiveStringParameter) PNFXActiveStringParameterMap[]={
+  FXMAPFUNC(SEL_KEYRELEASE,0,PNFXActiveStringParameter::onKeyRelease),
+};
 
-  //////////////////////////////////////////////////////////////////////////
-    
-  FXIMPLEMENT(PNFXActiveStringParameter,PNFXStringParameter,PNFXActiveStringParameterMap,ARRAYNUMBER(PNFXActiveStringParameterMap))
+//////////////////////////////////////////////////////////////////////////
 
-  //////////////////////////////////////////////////////////////////////////
+FXIMPLEMENT(PNFXActiveStringParameter,PNFXStringParameter,PNFXActiveStringParameterMap,ARRAYNUMBER(PNFXActiveStringParameterMap))
 
-  /*! 
-   *	\brief
-   *	Constructor for PNFXActiveStringParameter.
-   *
-   *	\param		p
-   *	Parent object (FXComposite)
-   *
-   *	\parma		param
-   */
-	PNFXActiveStringParameter::PNFXActiveStringParameter(FXComposite* p, PNConfigurableParameter* param)
-	: PNFXStringParameter(p, param)
+//////////////////////////////////////////////////////////////////////////
+
+/*! 
+*	\brief
+*	Constructor for PNFXActiveStringParameter.
+*
+*	\param		p
+*	Parent object (FXComposite)
+*
+*	\parma		param
+*/
+PNFXActiveStringParameter::PNFXActiveStringParameter(FXComposite* p, PNConfigurableParameter* param)
+: PNFXStringParameter(p, param)
+{
+
+}
+
+/*! 
+*	\brief
+*	Default destructor for PNFXActiveStringParameter.
+*/
+PNFXActiveStringParameter::~PNFXActiveStringParameter()
+{
+}
+
+// fox ////////////////////////////////////////////////////////////////////
+
+void	
+PNFXActiveStringParameter::create()
+{
+  PNFXStringParameter::create();
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+/*!
+*/
+void	
+PNFXActiveStringParameter::update()
+{
+  PNFXStringParameter::update();
+}
+
+// events ////////////////////////////////////////////////////////////////
+
+/*!
+*	\brief
+*	Handles validation (KEY_Return, KEY_KP_Enter)
+*/
+long	
+PNFXActiveStringParameter::onKeyRelease(FXObject* obj,FXSelector sel, void* ptr)
+{
+  PNFXStringParameter::handle(obj, sel, ptr);
+  FXEvent* event=(FXEvent*)ptr;
+  switch(event->code)
   {
-	_param = param;
-  }
-
-  /*! 
-   *	\brief
-   *	Default destructor for PNFXActiveStringParameter.
-   */
-  PNFXActiveStringParameter::~PNFXActiveStringParameter()
-  {
-  }
-
-  // fox ////////////////////////////////////////////////////////////////////
-
-  void	PNFXActiveStringParameter::create()
-  {
-	PNFXStringParameter::create();
-  }
-
-  //////////////////////////////////////////////////////////////////////////
-
-  /*!
-   */
-  void	PNFXActiveStringParameter::update()
-  {
-	PNFXStringParameter::update();
-  }
-
-  // events ////////////////////////////////////////////////////////////////
-
-  /*!
-   *	\brief
-   *	Handles validation (KEY_Return, KEY_KP_Enter)
-   */
-  long	PNFXActiveStringParameter::onKeyRelease(FXObject* obj,FXSelector sel, void* ptr)
-  {
-	PNFXStringParameter::handle(obj, sel, ptr);
-	FXEvent* event=(FXEvent*)ptr;
-	switch(event->code)
+  case KEY_Return:
+  case KEY_KP_Enter:
 	{
-	case KEY_Return:
-	case KEY_KP_Enter:
-	  {
-		_param->getConfigurableObject()->update(_param);
-		return 1;
-	  }
-	default:
-	  {
-		return 1;
-	  }
+	  _param->getConfigurableObject()->update(_param);
+	  return 1;
+	}
+  default:
+	{
+	  return 1;
 	}
   }
+}
 
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 };

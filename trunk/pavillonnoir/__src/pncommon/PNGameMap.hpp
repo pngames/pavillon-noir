@@ -83,11 +83,7 @@ public:
   virtual void				addToMap(const std::string& entityName,const std::string& id);
   virtual void				clear();
   
-  //virtual void loadScript(const std::string& file, const std::string& id, const std::string& events)=0;
-  //virtual void unloadScript(const std::string& file, const std::string& id, const std::string& events)=0;
   const std::string&		getWpFile();
-
-  /////////////////////////////////////////////////////////////////////////
 };
 
 //////////////////////////////////////////////////////////////////////////

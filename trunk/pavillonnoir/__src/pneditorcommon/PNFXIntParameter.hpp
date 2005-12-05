@@ -43,8 +43,6 @@ class PNEDAPI PNFXIntParameter : public FXTextField, public PNPropertiesGridPara
 {
   FXDECLARE(PNFXIntParameter);
 
-  PNConfigurableParameter*	_param;
-
 protected:
   PNFXIntParameter() {}
   PNFXIntParameter(PNFXIntParameter&) {}
@@ -56,7 +54,7 @@ public:
   void	update();
 
 public:
-  long	PNFXIntParameter::onKeyRelease(FXObject*,FXSelector,void* ptr);
+  long	onKeyRelease(FXObject*,FXSelector,void* ptr);
 };
 
 //////////////////////////////////////////////////////////////////////////

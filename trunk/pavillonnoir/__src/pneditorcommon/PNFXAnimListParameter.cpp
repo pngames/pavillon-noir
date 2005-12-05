@@ -67,11 +67,11 @@ FXDEFMAP(PNFXAnimListParameter) PNFXAnimListParameterMap[]={
 FXIMPLEMENT(PNFXAnimListParameter,FXHorizontalFrame,PNFXAnimListParameterMap,ARRAYNUMBER(PNFXAnimListParameterMap))
 
 PNFXAnimListParameter::PNFXAnimListParameter(FXComposite* p, PNConfigurableParameter* param)
-: FXHorizontalFrame(p)
+: FXHorizontalFrame(p),
+PNPropertiesGridParameter(param)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::PNFXAnimListParameter(FXComposite* p, PNConfigurableParameter* param)");
   _parent = p;
-  _param = param;
   _listBox =  new FXListBox(this, NULL, 0, LAYOUT_FILL_X | FRAME_SUNKEN | FRAME_THICK, 0,0,50,0);
   _buttonAdd = new FXButton(this, "Add", NULL, this, ID_ADD,FRAME_RAISED|FRAME_THICK);
   _buttonDelete = new FXButton(this, "Delete", NULL, this, ID_DELETE,FRAME_RAISED|FRAME_THICK);
@@ -93,7 +93,6 @@ PNFXAnimListParameter::create()
   _buttonDelete->create();
   _buttonAdd->create();
   _listBox->create();
-  return;
 }
 
 /*

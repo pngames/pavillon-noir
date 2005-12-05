@@ -103,7 +103,8 @@ PNGLRenderer::PNGLRenderer()
   //////////////////////////////////////////////////////////////////////////
   // configurabe implementation
 
-  
+  _pTitle = new PNStringParameter(this, "Pavillon Noir", "Title", "Title");
+  addParam(_pTitle);
 }
 
 PNGLRenderer::~PNGLRenderer()
@@ -119,6 +120,8 @@ PNGLRenderer::~PNGLRenderer()
 void
 PNGLRenderer::update(PNConfigurableParameter* p)
 {
+  PNRendererInterface::update(p);
+
   
 }
 
@@ -187,9 +190,9 @@ PNGLRenderer::init()
 }
 
 void
-PNGLRenderer::initRender(pnuint widht, pnuint height, pnuint bpp, pnchar* title, pnbool fullscreen)
+PNGLRenderer::initRender(pnuint widht, pnuint height, pnuint bpp, pnbool fullscreen)
 {
-  initSDL(widht, height, bpp, title, fullscreen);
+  initSDL(widht, height, bpp, fullscreen);
   initGL(widht, height);
 
   //////////////////////////////////////////////////////////////////////////
@@ -268,7 +271,7 @@ String describes the SDL window title.
 Bool specifies the fullscreen state of the SDL window. 
 */
 void
-PNGLRenderer::initSDL(int widht, int height, int bpp, char* title, bool fullscreen)
+PNGLRenderer::initSDL(int widht, int height, int bpp, bool fullscreen)
 {
   std::cout << "--== SDL init start ==--" << std::endl;
 	  
@@ -279,8 +282,7 @@ PNGLRenderer::initSDL(int widht, int height, int bpp, char* title, bool fullscre
   setSDLFlags(&videoFlags, fullscreen);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
   screen = SDL_SetVideoMode(widht, height, bpp, videoFlags);
-  SDL_WM_SetCaption(title, NULL);
-  //SDL_WM_SetCaption(_pTitle->getString().c_str(), NULL);
+  SDL_WM_SetCaption(_pTitle->getString().c_str(), NULL);
   SDL_EnableUNICODE(1);
  // SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
   

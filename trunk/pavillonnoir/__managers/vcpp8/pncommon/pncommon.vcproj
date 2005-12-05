@@ -430,14 +430,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncommon\PNFOXSDLKeyMap.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNFOXSDLKeyMap.hpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pncommon\PNGameEventData.hpp"
 				>
 			</File>

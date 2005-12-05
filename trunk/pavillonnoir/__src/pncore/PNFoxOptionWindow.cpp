@@ -96,7 +96,7 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 	
   // probably dirty but the app crashes if we don't do that, eat some fox documentation!
   owner->create();
-  this->create();
+  create();
   vertical->create();
   horizontal->create();
   buttons->create();
@@ -160,7 +160,8 @@ PNFoxOptionWindow::~PNFoxOptionWindow()
 
 // --
 
-void  PNFoxOptionWindow::create()
+void
+PNFoxOptionWindow::create()
 {
   FXDialogBox::create();
 }
@@ -169,29 +170,22 @@ void  PNFoxOptionWindow::create()
 * For the given grid (group of configuration widgets displaying parameters) 
 * goes through the different parameters and gets the string value to load.
 */
-void  PNFoxOptionWindow::loadGrid(PNPropertiesGrid* grid, PNConf* conf, const pnchar* section)
+void 
+PNFoxOptionWindow::loadGrid(PNPropertiesGrid* grid, PNConf* conf, const pnchar* section)
 {
-  std::list<PNPropertiesGridParameter*> gridParameters = grid->getParams();
+  PNPropertiesGrid::PNPPList& gridParameters = grid->getParams();
+
   if (gridParameters.size() != 0)
   {
-    for (std::list<PNPropertiesGridParameter*>::iterator it = gridParameters.begin(); 
-  	  it != gridParameters.end(); it++)
+    for (PNPropertiesGrid::PNPPList::iterator it = gridParameters.begin(); it != gridParameters.end(); it++)
 	{
-	  PNConfigurableParameter* configurableParameter  = (*it)->getParam();
-	  PNPropertiesGridParameter* gridParameter;
-	  // first check the type of the GridParameters we're dealing with (float, string, stringlist ...)
-	  switch (configurableParameter->getType())
-	  {
-	  case PN_PARAMTYPE_STRINGLIST:
-		gridParameter = (PNFXStringListParameter*)(*it); break;
-	  default:
-		break;
-  	  }
-	  // then loads its value in the parameter
+	  PNPropertiesGridParameter* gridParameter = *it;
+
   	  std::string key = gridParameter->getParam()->getLabel();
-	  pnbool ok = gridParameter->setStringValue(conf->getKey(key, section, std::string()));
+
+	  /*pnbool ok = gridParameter->setStringValue(conf->getKey(key, section, std::string()));
 	  if (ok == false)
-		pnerror(PN_LOGLVL_DEBUG, "Could not load values for key \"%s\"", key.c_str());
+		pnerror(PN_LOGLVL_DEBUG, "Could not load values for key \"%s\"", key.c_str());*/
 	}
   }
   else
@@ -204,24 +198,15 @@ void  PNFoxOptionWindow::loadGrid(PNPropertiesGrid* grid, PNConf* conf, const pn
 * For the given grid, goes through the different parameters
 * and get a string value to save.
 */
-void  PNFoxOptionWindow::saveGrid(PNPropertiesGrid* grid, PNConf* conf, const pnchar* section)
+void 
+PNFoxOptionWindow::saveGrid(PNPropertiesGrid* grid, PNConf* conf, const pnchar* section)
 {
-  std::list<PNPropertiesGridParameter*>& gridParameters = grid->getParams();
+  PNPropertiesGrid::PNPPList& gridParameters = grid->getParams();
 
-  for (std::list<PNPropertiesGridParameter*>::iterator it = gridParameters.begin(); 
-	it != gridParameters.end(); ++it)
+  for (PNPropertiesGrid::PNPPList::iterator it = gridParameters.begin(); it != gridParameters.end(); ++it)
   {
-	PNConfigurableParameter* configurableParameter  = (*it)->getParam();
-	PNPropertiesGridParameter* gridParameter;
-	// first check the type of the GridParameters we're dealing with (float, string, stringlist ...)
-	switch (configurableParameter->getType())
-	{
-	case PN_PARAMTYPE_STRINGLIST:
-	  gridParameter = (PNFXStringListParameter*)(*it);
-	  break;
-	default:
-	  break;
-	}
+	PNPropertiesGridParameter* gridParameter = *it;
+
 	// then call the appropriate method
 	conf->setKey(gridParameter->getParam()->getLabel().c_str(), gridParameter->getStringValue().c_str(), section);
   }
@@ -230,7 +215,8 @@ void  PNFoxOptionWindow::saveGrid(PNPropertiesGrid* grid, PNConf* conf, const pn
 /*! \brief Saves the preferences using PNConf
 * Saves each grid in the option window.
 */
-long  PNFoxOptionWindow::onApply(FXObject* obj,FXSelector sel,void* ptr)
+long 
+PNFoxOptionWindow::onApply(FXObject* obj,FXSelector sel,void* ptr)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFoxOptionWindow::onApply");
 
@@ -240,6 +226,7 @@ long  PNFoxOptionWindow::onApply(FXObject* obj,FXSelector sel,void* ptr)
 	PNPropertiesGrid* current_grid = (*it);
 	saveGrid(current_grid, _conf, current_grid->getObject()->getLabel().c_str());
   }
+
   _conf->saveConf();
 
   return 1;
@@ -247,24 +234,30 @@ long  PNFoxOptionWindow::onApply(FXObject* obj,FXSelector sel,void* ptr)
 
 /*! \brief Saves the preferences using PNConf and closes the window.
 */
-long  PNFoxOptionWindow::onAccept(FXObject* obj,FXSelector sel,void* ptr)
+long
+PNFoxOptionWindow::onAccept(FXObject* obj,FXSelector sel,void* ptr)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFoxOptionWindow::onAccept");
   onApply(obj,sel,ptr);
+
   return FXDialogBox::onCmdAccept(obj, sel, ptr);
 }
 
 /*! Disables ESC key handling of FSDialogBox.
 */
-long	PNFoxOptionWindow::onKeyPress(FXObject* s,FXSelector sel,void* ptr)
+long	
+PNFoxOptionWindow::onKeyPress(FXObject* s,FXSelector sel,void* ptr)
 {
   FXEvent* event=(FXEvent*)ptr;
-  switch(event->code)
+
+  switch (event->code)
   {
   case KEY_Escape: break;
   default: FXDialogBox::handle(s, sel, ptr);
   }
+
   return 1;
 }
 
+//////////////////////////////////////////////////////////////////////////
 };

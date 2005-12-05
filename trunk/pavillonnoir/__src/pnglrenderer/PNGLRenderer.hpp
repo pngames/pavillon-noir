@@ -90,7 +90,7 @@ public:
 
   void						init();
 
-  void						initRender(pnuint widht, pnuint height, pnuint bpp, pnchar* title, pnbool fullscreen);
+  void						initRender(pnuint widht, pnuint height, pnuint bpp, pnbool fullscreen);
 
   //////////////////////////////////////////////////////////////////////////
 private:
@@ -156,7 +156,7 @@ public:
   // MAIN
   //////////////////////////////////////////////////////////////////////////
 
-  void						initSDL(int widht, int height, int bpp, char* title, bool fullscreen);
+  void						initSDL(int widht, int height, int bpp, bool fullscreen);
   void						setSDLFlags(int *flags, bool fullscreen);
 
   void						initGL(GLsizei width, GLsizei height);

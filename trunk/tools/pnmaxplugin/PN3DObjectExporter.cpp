@@ -201,7 +201,8 @@ int PN3DObjectExporter::exportBody()
   if (_owin->hasModel())
   {
 	PNMainWin::WriteLine(_owin->getModelFullPath());
-	_modelExporter.export(_owin->getModelFullPath());
+	if (_saveModel)
+	  _modelExporter.export(_owin->getModelFullPath());
 
 	objString << "  " << "<" << PNO_XMLNODE_MODEL << " " << PNO_XMLPROP_PATH << "=\"" << _owin->getModelFile().GetString() << "\" />\n";
   }
@@ -209,7 +210,8 @@ int PN3DObjectExporter::exportBody()
   if (_owin->hasMaterials())
   {
 	PNMainWin::WriteLine(_owin->getMaterialsFullPath());
-	_materialsExporter.export(_owin->getMaterialsFullPath());
+	if (_saveMaterials)
+	  _materialsExporter.export(_owin->getMaterialsFullPath());
 
 	objString << "  " << "<" << PNO_XMLNODE_LISTMATERIALS << ">\n";
 	for (int i = 0 ; i < _owin->getNbMaterials(); i++)
@@ -220,7 +222,8 @@ int PN3DObjectExporter::exportBody()
   if (_owin->hasSkeleton())
   {
 	PNMainWin::WriteLine(_owin->getSkeletonFullPath());
-	_skeletonExporter.export(_owin->getSkeletonFullPath());
+	if (_saveSkeleton)
+	  _skeletonExporter.export(_owin->getSkeletonFullPath());
 
 	objString << "  " << "<" << PNO_XMLNODE_SKELETON << " " << PNO_XMLPROP_PATH << "=\"" << _owin->getSkeletonFile().GetString() << "\" />\n";
   }
@@ -228,11 +231,21 @@ int PN3DObjectExporter::exportBody()
   if (_owin->hasAnimation())
   {
 	PNMainWin::WriteLine(_owin->getAnimationFullPath());
-	_animationExporter.export(_owin->getAnimationFullPath());
+	if (_saveAnimation)
+	  _animationExporter.export(_owin->getAnimationFullPath());
 
 	objString << "  " << "<" << PNO_XMLNODE_LISTANIMS << ">\n";
 	objString << "    " << "<" << PNOA_XMLNODE_ROOT << " " << PNO_XMLPROP_PATH << "=\"" << _owin->getAnimationFile().GetString() << "\" />\n";
 	objString << "  " << "</" << PNO_XMLNODE_LISTANIMS << ">\n";
+  }
+
+  if (_owin->hasPhysics())
+  {
+	PNMainWin::WriteLine(_owin->getPhysicalFullPath());
+	if (_savePhysics)
+	  _physicalExporter.export(_owin->getPhysicalFullPath());
+
+	objString << "  " << "<" << PNO_XMLNODE_PHYSICS << " " << PNO_XMLPROP_PATH << "=\"" << _owin->getPhysicalFullPath().GetString() << "\" />\n";
   }
 
   objString << "</" << PNO_XMLNODE_ROOT << ">\n";
