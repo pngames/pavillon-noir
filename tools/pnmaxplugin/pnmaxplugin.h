@@ -37,6 +37,7 @@ class PNAnimationExporterDesc;
 class PNModelExporterDesc;
 class PNSkeletonExporterDesc;
 class PNMaterialExporterDesc;
+class PNPhysicalExporterDesc;
 class PN3DObjectExporterDesc;
 
 // CpnmaxpluginApp:
@@ -45,10 +46,11 @@ class PN3DObjectExporterDesc;
 
 class CpnmaxpluginApp : public CWinApp
 {
-  static PNAnimationExporterDesc	_animationExporter;
   static PNModelExporterDesc		_modelExporter;
-  static PNSkeletonExporterDesc		_skeletonExporter;
   static PNMaterialExporterDesc		_materialExporter;
+  static PNSkeletonExporterDesc		_skeletonExporter;
+  static PNAnimationExporterDesc	_animationExporter;
+  static PNPhysicalExporterDesc		_physicsExporter;
   static PN3DObjectExporterDesc		_objectExporter;
 
 public:

@@ -39,26 +39,24 @@
 */
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  class PNEDAPI PNFXDefaultParameter : public FXLabel, public PNPropertiesGridParameter
-  {
-	FXDECLARE(PNFXDefaultParameter);
+class PNEDAPI PNFXDefaultParameter : public FXLabel, public PNPropertiesGridParameter
+{
+  FXDECLARE(PNFXDefaultParameter);
 
-	PNConfigurableParameter*	_param;
+protected:
+  PNFXDefaultParameter() {}
+  PNFXDefaultParameter(PNFXDefaultParameter&) {}
+public:
+  PNFXDefaultParameter(FXComposite* p, PNConfigurableParameter* param);
+  ~PNFXDefaultParameter();
 
-  protected:
-	PNFXDefaultParameter() {}
-	PNFXDefaultParameter(PNFXDefaultParameter&) {}
-  public:
-	PNFXDefaultParameter(FXComposite* p, PNConfigurableParameter* param);
-	~PNFXDefaultParameter();
+  void	create();
+  void	update();
+};
 
-	void	create();
-	void	update();
-  };
-
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /* _PNFXDEFAULTPARAMETER_HPP_ */

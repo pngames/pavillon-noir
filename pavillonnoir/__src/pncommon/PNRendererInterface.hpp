@@ -31,10 +31,12 @@
 # define _PNRENDERERINTERFACE_HPP_
 
 #include <list>
-#include "pnrender.h"
-#include "PNInterface.hpp"
 
-#include "PN3DCamera.hpp"
+#include "pnrender.h"
+
+#include "PNPoint3f.hpp"
+
+#include "PNInterface.hpp"
 
 namespace PN
 {
@@ -47,7 +49,6 @@ typedef enum
 
 class PNRendererObject;
 class PNRenderMaterial;
-class PNPoint3f;
 
 class PNAPI					PNRendererInterface : public PNInterface
 {
@@ -63,7 +64,7 @@ protected:
 public:
   plugintypes				getType();
   
-  virtual void				initRender(pnuint widht, pnuint height, pnuint bpp, pnchar* title, pnbool fullscreen)=0;
+  virtual void				initRender(pnuint widht, pnuint height, pnuint bpp, pnbool fullscreen)=0;
 
   //////////////////////////////////////////////////////////////////////////
   

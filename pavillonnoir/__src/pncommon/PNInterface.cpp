@@ -60,14 +60,14 @@ void
 PNInterface::update(PNConfigurableParameter* p)
 {}
 
-int
+pnint
 PNInterface::getNbParameters()
 {
   return (int)_vectorParameters.size();
 }
 
 PNConfigurableParameter*
-PNInterface::getParameter(int idx)
+PNInterface::getParameter(pnint idx)
 {
   if (idx < 0 || idx >= (int)_vectorParameters.size())
 	return NULL;

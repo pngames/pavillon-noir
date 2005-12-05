@@ -32,8 +32,7 @@
 
 #include <string>
 
-namespace PN
-{
+namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 class PNConfigurableParameter;
@@ -45,16 +44,16 @@ public:
 
   virtual void						update(PNConfigurableParameter* p) = 0;
 
-  virtual int						getNbParameters() = 0;
-  virtual PNConfigurableParameter*	getParameter(int idx) = 0;
+  virtual pnint						getNbParameters() = 0;
+  virtual PNConfigurableParameter*	getParameter(pnint idx) = 0;
 
   virtual const std::string&		getLabel() = 0;
 
-  virtual bool						modified() { return FALSE; }
+  virtual pnbool					modified() { return FALSE; }
   virtual void						setModified() { }
   virtual void						setUnmodified() { }
 
-  void						addParam(PNConfigurableParameter* p);
+  void								addParam(PNConfigurableParameter* p);
 };
 
 //////////////////////////////////////////////////////////////////////////

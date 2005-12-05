@@ -41,44 +41,44 @@
 /////////////////////////////////////
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  class PNIAGraph;
-  class PNEDAPI PNFXAnimListParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+class PNIAGraph;
+
+class PNEDAPI PNFXAnimListParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+{
+  FXDECLARE(PNFXAnimListParameter);
+
+  FXComposite*				_parent;
+
+  FXListBox*				_listBox;
+  FXButton*					_buttonDelete;
+  FXButton*					_buttonAdd;
+
+protected:
+  PNFXAnimListParameter() {}
+  PNFXAnimListParameter(PNFXAnimListParameter&) {}
+public:
+  PNFXAnimListParameter(FXComposite* p, PNConfigurableParameter* param);
+  ~PNFXAnimListParameter();
+
+  void	create();
+
+  enum 
   {
-	FXDECLARE(PNFXAnimListParameter);
-
-	FXComposite*				_parent;
-	PNConfigurableParameter*	_param;
-
-	FXListBox*					_listBox;
-	FXButton*					_buttonDelete;
-	FXButton*					_buttonAdd;
-
-  protected:
-	PNFXAnimListParameter() {}
-	PNFXAnimListParameter(PNFXAnimListParameter&) {}
-  public:
-	PNFXAnimListParameter(FXComposite* p, PNConfigurableParameter* param);
-	~PNFXAnimListParameter();
-
-	void	create();
-
-	enum 
-	{
-	  ID_ADD = FXHorizontalFrame::ID_LAST,
-	  ID_DELETE
-	};
-
-  public:
-//	long	onCmdListBox(FXObject*,FXSelector,void*);
-	long	onDelete(FXObject*,FXSelector,void* ptr);
-	long	onAdd(FXObject* obj,FXSelector sel,void* ptr);
-	void	buildList(void);
-	void	update(void);
+	ID_ADD = FXHorizontalFrame::ID_LAST,
+	ID_DELETE
   };
 
-  //////////////////////////////////////////////////////////////////////////
+public:
+  //	long	onCmdListBox(FXObject*,FXSelector,void*);
+  long	onDelete(FXObject*,FXSelector,void* ptr);
+  long	onAdd(FXObject* obj,FXSelector sel,void* ptr);
+  void	buildList(void);
+  void	update(void);
+};
+
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PNFXAnimListPARAMETER_HPP_*/

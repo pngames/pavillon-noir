@@ -45,8 +45,11 @@ class PNEDAPI			PNPropertiesGrid : public FXMatrix
 {
   FXDECLARE(PNPropertiesGrid)
 
+public:
+  typedef std::list<PNPropertiesGridParameter*>	PNPPList;
+private:
   PNConfigurableObject*	_object;
-  std::list<PNPropertiesGridParameter*> _params;
+  PNPPList				_params;
 
 protected:
   PNPropertiesGrid(){}
@@ -61,9 +64,9 @@ public:
 
   void					create();
   void					update();
-  std::list<PNPropertiesGridParameter*>& getParams() { return _params; }
+  PNPPList&				getParams() { return _params; }
 
-  void  setObject(PNConfigurableObject* object);
+  void					setObject(PNConfigurableObject* object);
   PNConfigurableObject*	getObject();
 };
 

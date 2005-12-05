@@ -35,30 +35,29 @@
 #include "pnproperties.h"
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  class PNEDAPI PNFXDialXYZParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
-  {
-	FXDECLARE(PNFXDialXYZParameter);
+class PNEDAPI PNFXDialXYZParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+{
+  FXDECLARE(PNFXDialXYZParameter);
 
-	FXDial*						_dial;
-	FXTextField*				_field;
-	PNConfigurableParameter*	_param;
-	pnint						_oldValue;
+  FXDial*						_dial;
+  FXTextField*				_field;
+  pnint						_oldValue;
 
-  protected:
-	PNFXDialXYZParameter() {}
-	PNFXDialXYZParameter(PNFXDialXYZParameter&) {}
-  public:
-	PNFXDialXYZParameter(FXComposite* p, PNConfigurableParameter* param);
-	~PNFXDialXYZParameter();
+protected:
+  PNFXDialXYZParameter() {}
+  PNFXDialXYZParameter(PNFXDialXYZParameter&) {}
+public:
+  PNFXDialXYZParameter(FXComposite* p, PNConfigurableParameter* param);
+  ~PNFXDialXYZParameter();
 
-	void  create();
-	void  update(); // TODO : update
-	long  onUpdate(FXObject* sender, FXSelector sel, void *ptr);
-  };
+  void  create();
+  void  update(); // TODO : update
+  long  onUpdate(FXObject* sender, FXSelector sel, void *ptr);
+};
 
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PNFXDIALXYZPARAMETER_HPP_*/

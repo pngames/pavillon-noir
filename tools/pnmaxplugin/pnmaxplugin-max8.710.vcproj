@@ -337,7 +337,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="physical"
+			Name="pnp"
 			Filter="">
 			<File
 				RelativePath="..\..\pavillonnoir\__src\pncommon\pnp_format.h">
@@ -347,6 +347,12 @@
 			</File>
 			<File
 				RelativePath=".\PNPhysicalExporter.hpp">
+			</File>
+			<File
+				RelativePath=".\PNPhysicsWin.cpp">
+			</File>
+			<File
+				RelativePath=".\PNPhysicsWin.hpp">
 			</File>
 		</Filter>
 		<File

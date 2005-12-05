@@ -36,30 +36,31 @@
 using namespace std;
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  FXIMPLEMENT(PNFXDefaultParameter,FXLabel,NULL,0)
+FXIMPLEMENT(PNFXDefaultParameter,FXLabel,NULL,0)
 
-	// Fixme : change text parameter
-	PNFXDefaultParameter::PNFXDefaultParameter(FXComposite* p, PNConfigurableParameter* param) : FXLabel(p, "unknown parameter")
-  {
-	_param = param;
-	setTextColor(0x0000FF);
-  }
+// Fixme : change text parameter
+PNFXDefaultParameter::PNFXDefaultParameter(FXComposite* p, PNConfigurableParameter* param) 
+: FXLabel(p, "unknown parameter"),
+PNPropertiesGridParameter(param)
+{
+  setTextColor(0x0000FF);
+}
 
-  PNFXDefaultParameter::~PNFXDefaultParameter()
-  {
-  }
+PNFXDefaultParameter::~PNFXDefaultParameter()
+{
+}
 
-  void	PNFXDefaultParameter::create()
-  {
-	FXLabel::create();
-  }
+void	PNFXDefaultParameter::create()
+{
+  FXLabel::create();
+}
 
-  void PNFXDefaultParameter::update()
-  {
-	return;
-  }
+void PNFXDefaultParameter::update()
+{
+  return;
+}
 
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 };

@@ -43,79 +43,79 @@
 using namespace std;
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  // Map
-  FXDEFMAP(PNFXFileParameter) PNFXFileParameterMap[]={
-	FXMAPFUNC(SEL_COMMAND,PNFXFileParameter::ID_BROWSE,PNFXFileParameter::onBrowse),
-  };
+// Map
+FXDEFMAP(PNFXFileParameter) PNFXFileParameterMap[]={
+  FXMAPFUNC(SEL_COMMAND,PNFXFileParameter::ID_BROWSE,PNFXFileParameter::onBrowse),
+};
 
-  //////////////////////////////////////////////////////////////////////////
-  FXIMPLEMENT(PNFXFileParameter,FXHorizontalFrame,PNFXFileParameterMap,ARRAYNUMBER(PNFXFileParameterMap))
+//////////////////////////////////////////////////////////////////////////
+FXIMPLEMENT(PNFXFileParameter,FXHorizontalFrame,PNFXFileParameterMap,ARRAYNUMBER(PNFXFileParameterMap))
 
-	PNFXFileParameter::PNFXFileParameter(FXComposite* p, PNConfigurableParameter* param)
-	: FXHorizontalFrame(p)
+PNFXFileParameter::PNFXFileParameter(FXComposite* p, PNConfigurableParameter* param)
+: FXHorizontalFrame(p),
+PNPropertiesGridParameter(param)
+{
+  _field = new FXTextField(this, 24, NULL, 0, TEXTFIELD_NORMAL|FRAME_SUNKEN|FRAME_THICK|LAYOUT_SIDE_TOP);
+  _button = new FXButton(this, "Browse", NULL, this, ID_BROWSE,FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_X|LAYOUT_CENTER_Y);
+  update();
+}
+
+PNFXFileParameter::~PNFXFileParameter()
+{
+}
+
+void	PNFXFileParameter::create()
+{
+  FXHorizontalFrame::create();
+  _field->create();
+  _button->create();
+}
+
+void	PNFXFileParameter::update()
+{
+  boost::filesystem::path*	file = (boost::filesystem::path*)_param->getElem();
+  _field->setText(file->native_file_string().c_str());
+  _field->setEditable(_param->isEditable());
+
+  return;
+}
+
+long	PNFXFileParameter::onBrowse(FXObject* obj,FXSelector sel, void* ptr)
+{
+  pnerror(PN_LOGLVL_DEBUG, "PNFXFileParameter::onBrowse");
+  FXFileDialog open(this, "Choose a file", SELECTFILE_MULTIPLE);
+
+  if (open.execute())
   {
-	_field = new FXTextField(this, 24, NULL, 0, TEXTFIELD_NORMAL|FRAME_SUNKEN|FRAME_THICK|LAYOUT_SIDE_TOP);
-	_button = new FXButton(this, "Browse", NULL, this, ID_BROWSE,FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_X|LAYOUT_CENTER_Y);
-	_param = param;
-	update();
-  }
+	char buf[512] = "";
+	getcwd(buf, 512);
 
-  PNFXFileParameter::~PNFXFileParameter()
-  {
-  }
+	FXString strbuf(buf);
+	strbuf = strbuf.substitute('\\', '/');
 
-  void	PNFXFileParameter::create()
-  {
-	FXHorizontalFrame::create();
-	_field->create();
-	_button->create();
-  }
+	FXString str = open.getFilename();
 
-  void	PNFXFileParameter::update()
-  {
-	boost::filesystem::path*	file = (boost::filesystem::path*)_param->getElem();
-	_field->setText(file->native_file_string().c_str());
-	_field->setEditable(_param->isEditable());
-
-	return;
-  }
-
-  long	PNFXFileParameter::onBrowse(FXObject* obj,FXSelector sel, void* ptr)
-  {
-	pnerror(PN_LOGLVL_DEBUG, "PNFXFileParameter::onBrowse");
-	FXFileDialog open(this, "Choose a file", SELECTFILE_MULTIPLE);
-
-	if (open.execute())
+	pnerror(PN_LOGLVL_DEBUG, "strbuf=%s, str=%s", strbuf.text(), str.substitute('\\','/').text());
+	if ( str.substitute('\\','/').find(strbuf.text(), 0) == -1)
 	{
-	  char buf[512] = "";
-	  getcwd(buf, 512);
-	
-	  FXString strbuf(buf);
-	  strbuf = strbuf.substitute('\\', '/');
-
-	  FXString str = open.getFilename();
-	  
-	  pnerror(PN_LOGLVL_DEBUG, "strbuf=%s, str=%s", strbuf.text(), str.substitute('\\','/').text());
-	  if ( str.substitute('\\','/').find(strbuf.text(), 0) == -1)
-	  {
-		FXMessageBox dbox(this, "File Error", "403");
-		dbox.execute();
-	  }
-	  else
-	  {
-		_field->setText(str.replace(0, (FXint)strlen(buf) + 1, "").substitute('\\', '/').text());
-		boost::filesystem::path* p = (boost::filesystem::path*)_param->getElem();
-		//delete p;
-		boost::filesystem::path* fsp = new boost::filesystem::path(_field->getText().text(), boost::filesystem::no_check);
-		*p = *fsp;
-		_param->getConfigurableObject()->update(_param);
-	  }
+	  FXMessageBox dbox(this, "File Error", "403");
+	  dbox.execute();
 	}
-
-	return 1;
+	else
+	{
+	  _field->setText(str.replace(0, (FXint)strlen(buf) + 1, "").substitute('\\', '/').text());
+	  boost::filesystem::path* p = (boost::filesystem::path*)_param->getElem();
+	  //delete p;
+	  boost::filesystem::path* fsp = new boost::filesystem::path(_field->getText().text(), boost::filesystem::no_check);
+	  *p = *fsp;
+	  _param->getConfigurableObject()->update(_param);
+	}
   }
 
-  //////////////////////////////////////////////////////////////////////////
+  return 1;
+}
+
+//////////////////////////////////////////////////////////////////////////
 };

@@ -41,36 +41,35 @@
  */
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  class PNEDAPI PNFXDirParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+class PNEDAPI PNFXDirParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+{
+  FXDECLARE(PNFXDirParameter);
+
+  FXTextField*				_field;
+  FXButton*					_button;
+
+protected:
+  PNFXDirParameter() {}
+  PNFXDirParameter(PNFXDirParameter&) {}
+public:
+  PNFXDirParameter(FXComposite* p, PNConfigurableParameter* param);
+  ~PNFXDirParameter();
+
+  void  create();
+  void  update();
+
+  enum 
   {
-	FXDECLARE(PNFXDirParameter);
-
-	PNConfigurableParameter*	_param;
-	FXTextField*				_field;
-	FXButton*					_button;
-
-  protected:
-	PNFXDirParameter() {}
-	PNFXDirParameter(PNFXDirParameter&) {}
-  public:
-	PNFXDirParameter(FXComposite* p, PNConfigurableParameter* param);
-	~PNFXDirParameter();
-
-	void  create();
-	void  update();
-
-	enum 
-	{
-	  ID_BROWSE = FXHorizontalFrame::ID_LAST
-	};
-
-  public:
-	long	PNFXDirParameter::onBrowse(FXObject*,FXSelector,void* ptr);
+	ID_BROWSE = FXHorizontalFrame::ID_LAST
   };
 
-  //////////////////////////////////////////////////////////////////////////
+public:
+  long	onBrowse(FXObject*,FXSelector,void* ptr);
+};
+
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PNFXDIRPARAMETER_HPP_*/

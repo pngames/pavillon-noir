@@ -36,37 +36,38 @@
 using namespace std;
 
 namespace PN {
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-  // Map
+// Map
 /*  FXDEFMAP(PNFXCheckButtonParameter) PNFXCheckButtonParameterMap[]={
 	FXMAPFUNC(SEL_KEYRELEASE,0,PNFXCheckButtonParameter::onKeyRelease),
   };*/
 
-  //////////////////////////////////////////////////////////////////////////
-  //FXIMPLEMENT(PNFXCheckButtonParameter,FXTextField,PNFXCheckButtonParameterMap,ARRAYNUMBER(PNFXCheckButtonParameterMap))
-  FXIMPLEMENT(PNFXCheckButtonParameter,FXCheckButton,NULL,0)
+//////////////////////////////////////////////////////////////////////////
+//FXIMPLEMENT(PNFXCheckButtonParameter,FXTextField,PNFXCheckButtonParameterMap,ARRAYNUMBER(PNFXCheckButtonParameterMap))
+FXIMPLEMENT(PNFXCheckButtonParameter,FXCheckButton,NULL,0)
 
-  // Fixme : change text parameter
-	PNFXCheckButtonParameter::PNFXCheckButtonParameter(FXComposite* p, PNConfigurableParameter* param) : FXCheckButton(p, "")
-  {
-	_param = param;
-	update();
-  }
+// Fixme : change text parameter
+PNFXCheckButtonParameter::PNFXCheckButtonParameter(FXComposite* p, PNConfigurableParameter* param) 
+: FXCheckButton(p, ""),
+PNPropertiesGridParameter(param)
+{
+  update();
+}
 
-  PNFXCheckButtonParameter::~PNFXCheckButtonParameter()
-  {
-  }
+PNFXCheckButtonParameter::~PNFXCheckButtonParameter()
+{
+}
 
-  void	PNFXCheckButtonParameter::create()
-  {
-	FXCheckButton::create();
-  }
+void	PNFXCheckButtonParameter::create()
+{
+  FXCheckButton::create();
+}
 
-  void PNFXCheckButtonParameter::update()
-  {
-	return;
-  }
+void PNFXCheckButtonParameter::update()
+{
+  
+}
 
-  //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 };

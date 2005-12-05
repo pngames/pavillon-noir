@@ -42,30 +42,40 @@
 #include "PNMaterialExporter.hpp"
 #include "PNSkeletonExporter.hpp"
 #include "PNAnimationExporter.hpp"
+#include "PNPhysicalExporter.hpp"
 
 class PNObjectWindow;
 
-class PN3DObjectExporter : public PNExporter
+class					PN3DObjectExporter : public PNExporter
 {
   friend class PNObjectWindow;
 private:
   CString				_rootPath;
 
   bool					_hasModel;
+  bool					_saveModel;
   CString				_modelPath;
   PNModelExporter		_modelExporter;
 
   bool					_hasMaterials;
+  bool					_saveMaterials;
   CString				_materialsPath;
   PNMaterialExporter	_materialsExporter;
 
   bool					_hasSkeleton;
+  bool					_saveSkeleton;
   CString				_skeletonPath;
   PNSkeletonExporter	_skeletonExporter;
 
   bool					_hasAnimation;
+  bool					_saveAnimation;
   CString				_animationPath;
   PNAnimationExporter	_animationExporter;
+
+  bool					_hasPhysics;
+  bool					_savePhysics;
+  CString				_physicalPath;
+  PNPhysicalExporter	_physicalExporter;
 
   PNObjectWindow*		_owin;
 

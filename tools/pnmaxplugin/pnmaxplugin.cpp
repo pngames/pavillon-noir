@@ -25,10 +25,11 @@
 
 #include "stdafx.h"
 
-#include "PNAnimationExporter.hpp"
 #include "PNModelExporter.hpp"
-#include "PNSkeletonExporter.hpp"
 #include "PNMaterialExporter.hpp"
+#include "PNSkeletonExporter.hpp"
+#include "PNAnimationExporter.hpp"
+#include "PNPhysicalExporter.hpp"
 #include "PN3DObjectExporter.hpp"
 
 #include "pnmaxplugin.h"
@@ -81,6 +82,7 @@ PNAnimationExporterDesc	  CpnmaxpluginApp::_animationExporter;
 PNModelExporterDesc		  CpnmaxpluginApp::_modelExporter;
 PNSkeletonExporterDesc	  CpnmaxpluginApp::_skeletonExporter;
 PNMaterialExporterDesc	  CpnmaxpluginApp::_materialExporter;
+PNPhysicalExporterDesc	  CpnmaxpluginApp::_physicsExporter;
 PN3DObjectExporterDesc	  CpnmaxpluginApp::_objectExporter;
 
 // CpnmaxpluginApp
@@ -122,7 +124,7 @@ TCHAR*		CpnmaxpluginApp::GetString(int id)
 
 int			CpnmaxpluginApp::GetClassDescCount()
 {
-  return 5;
+  return 6;
 }
 
 ClassDesc*	CpnmaxpluginApp::GetClassDesc(int id)
@@ -130,18 +132,21 @@ ClassDesc*	CpnmaxpluginApp::GetClassDesc(int id)
   switch (id)
   {
   case 0:
-	_animationExporter.SetInstance(m_hInstance);
-	return &_animationExporter;
-  case 1:
 	_modelExporter.SetInstance(m_hInstance);
 	return &_modelExporter;
+  case 1:
+	_materialExporter.SetInstance(m_hInstance);
+	return &_materialExporter;
   case 2:
 	_skeletonExporter.SetInstance(m_hInstance);
 	return &_skeletonExporter;
   case 3:
-	_materialExporter.SetInstance(m_hInstance);
-	return &_materialExporter;
+	_animationExporter.SetInstance(m_hInstance);
+	return &_animationExporter;
   case 4:
+	_physicsExporter.SetInstance(m_hInstance);
+	return &_physicsExporter;
+  case 5:
 	_objectExporter.SetInstance(m_hInstance);
 	return &_objectExporter;
   default:
