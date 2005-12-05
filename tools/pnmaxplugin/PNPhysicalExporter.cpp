@@ -25,10 +25,10 @@
 
 #include "stdafx.h"
 
-#include "PNPhysicalExporter.hpp"
 #include "pnmaxplugin.h"
+#include "PNPhysicsWin.hpp"
 
-//#include "PNMaterialWin.hpp"
+#include "PNPhysicalExporter.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -143,7 +143,9 @@ int			PNPhysicalExporter::releaseExport()
 
 int			PNPhysicalExporter::configure()
 {
-  // throw window
+  PNPhysicsWin  win(this);
+
+  win.DoModal();
 
   return TRUE;
 }

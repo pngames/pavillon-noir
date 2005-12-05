@@ -348,6 +348,12 @@
 			<File
 				RelativePath=".\PNPhysicalExporter.hpp">
 			</File>
+			<File
+				RelativePath=".\PNPhysicsWin.cpp">
+			</File>
+			<File
+				RelativePath=".\PNPhysicsWin.hpp">
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\CHANGELOG.txt">

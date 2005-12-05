@@ -27,11 +27,10 @@
 #include "pnmaxplugin.h"
 
 #include "PNPhysicsWin.hpp"
-#include ".\pnphysicswin.hpp"
 
 IMPLEMENT_DYNAMIC(PNPhysicsWin, CDialog)
-PNPhysicsWin::PNPhysicsWin(CWnd* pParent /*=NULL*/)
-: CDialog(PNPhysicsWin::IDD, pParent)
+PNPhysicsWin::PNPhysicsWin(PNPhysicalExporter* exporter, CWnd* pParent /*=NULL*/)
+: CDialog(PNPhysicsWin::IDD, pParent), _exporter(exporter)
 {
 }
 
@@ -66,45 +65,19 @@ END_MESSAGE_MAP()
 
 void PNPhysicsWin::OnBnClickedBbPhysics()
 {
-  /*CString	name;
-  textField.GetWindowText(name);
+  CString	name;
+  GetDlgItemText(IDC_T_PHYSICS, name);
 
-  /*CFileFind	finder;
-
-  dir = dir + "/" + subDirectory;
-  dir.Delete(dir.GetLength() - 1);
-  dir.Replace('/', '\\');
-
-  PNMainWin::WriteLine(dir);
-
-  if (finder.FindFile(dir) == FALSE)
-  {
-	dir = _exporter->getInitFile()->GetFilePath();
-	PNMainWin::WriteLine("dir=%s", dir);
-	dir.Replace(_exporter->getInitFile()->GetFileName(), name);
-	PNMainWin::WriteLine("dir=%s", dir);
-	int l = name.GetLength();
-	name = dir;
-	dir.Truncate(dir.GetLength() - l - 1);
-	PNMainWin::WriteLine("dir=%s", dir);
-  }
-  else
-	name = dir + '\\' + name;
-
-  PNMainWin::WriteLine(name);
-
-  // Create an instance
-  CFileDialog fileDlg(FALSE, lpszDefExt, name, OFN_NOCHANGEDIR | OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY, lpszFilter, this);
+  CFileDialog fileDlg(FALSE, "xml", name, OFN_HIDEREADONLY | OFN_FILEMUSTEXIST, 
+	"Model Files(*.pnm)|*.pnm|Opal Files(*.xml)|*.xml||", this);
 
   // Initializes m_ofn structure
-  fileDlg.m_ofn.lpstrTitle = lpstrTitle;
-  //fileDlg.m_ofn.lpstrInitialDir = dir;
+  fileDlg.m_ofn.lpstrTitle = "Choice file link";
 
   // Call DoModal
   if (fileDlg.DoModal() == IDOK)
   {
 	name = fileDlg.GetPathName();
-	if (name.Find(dir) == 0)
-	  textField.SetWindowText(name.GetString() + dir.GetLength() + 1);
-  }*/
+	SetDlgItemText(IDC_T_PHYSICS, name);
+  }
 }
