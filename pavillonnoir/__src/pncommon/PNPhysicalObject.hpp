@@ -30,6 +30,8 @@
 #ifndef _PNPHYSICALOBJECT_HPP_
 # define _PNPHYSICALOBJECT_HPP_
 
+#include "PNVector3f.hpp"
+
 #include "PNObject.hpp"
 #include "IPNImportedObject.hpp"
 
@@ -67,7 +69,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  virtual void			addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration)=0;
+  virtual void			addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration)=0;
 };
 
 //////////////////////////////////////////////////////////////////////////

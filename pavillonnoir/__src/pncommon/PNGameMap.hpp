@@ -53,6 +53,7 @@ class PNAPI PNGameMap : public PNObject, public IPNXMLSerializable
 public:
     typedef std::map<std::string, PN3DObject *>	ObjMap;
 protected:
+  pnfloat					_mpp;
   ObjMap					_entityList;
   PN3DCamera*				_camera;
   boost::filesystem::path*	_wpFile;
@@ -72,6 +73,9 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
   const ObjMap&				getEntityList() const;
+  pnfloat					getMpp();
+
+  //////////////////////////////////////////////////////////////////////////
 
   virtual void				executeScript(const std::string& ScriptName){}
 

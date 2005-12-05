@@ -15,7 +15,12 @@
     <!ELEMENT script EMPTY>
 <!ELEMENT skybox (object?)>
 
-<!-- ATTRIBUTES -->
+<!-- ENTITIES ATTRIBUTES -->
+
+<!-- mpp : meters per pixel -->
+<!ATTLIST entities mpp CDATA #IMPLIED>
+
+<!-- ENTITY ATTRIBUTES -->
 
 <!ATTLIST entity id ID #REQUIRED>
 <!ATTLIST entity label CDATA #IMPLIED>

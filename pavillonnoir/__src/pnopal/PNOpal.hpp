@@ -34,6 +34,7 @@
 
 #include "pnevent.h"
 
+#include "pnproperties.h"
 #include "PNPhysicsInterface.hpp"
 #include "IPNXMLSerializable.hpp"
 
@@ -51,6 +52,7 @@ private:
   bool						_break;
   pnfloat					_lastTicks;
   PNOpalCommonEventHandler* _eventHandler;
+  std::string		  		_label;
 
 public:
   PNOpal();
@@ -59,34 +61,51 @@ public:
   //////////////////////////////////////////////////////////////////////////
   // PNPhysicalInterface
 
-  void				init();
-  void				setPause(bool state);
+  void						init();
+  void						setPause(bool state);
 
-  void				createSimulation();
-  void				destroySimulation();
-  void*				getSimulation();
+  void						createSimulation();
+  void						destroySimulation();
+  void*					 	getSimulation();
 
  //////////////////////////////////////////////////////////////////////////
 
-  void				setAllPhysicalObjectsStatic(bool state);
+  void						setAllPhysicalObjectsStatic(bool state);
 
   //////////////////////////////////////////////////////////////////////////
   // Events
+  
+  void*						getEventHandler();
 
-  void*				getEventHandler();
+private:
+  void						_onFrame(pnEventType type, PNObject* source, PNEventData* data);
+  void						_onMapLoad(pnEventType type, PNObject* source, PNEventData* data);
+  void						_onMapUnload(pnEventType type, PNObject* source, PNEventData* data);
 
-  void				frameStarted(pnEventType type, PNObject* source, PNEventData* data);
+  //////////////////////////////////////////////////////////////////////////
+  // PNConfigurableObject & PNConfPanel
 
-  void				mapStart(pnEventType type, PNObject* source, PNEventData* data);
-  void				mapEnded(pnEventType type, PNObject* source, PNEventData* data);
+/*protected:
+  typedef std::vector<PNConfigurableParameter*> ParametersVector;
+  ParametersVector			_params;
+/*public:
+
+  void						update(PNConfigurableParameter* p) {}
+  int						getNbParameters() { return _params.size(); }
+  PNConfigurableParameter*	getParameter(int idx) { return _params[idx]; }
+
+  void						setModified() {}
+  void						setUnmodified() {}
+  const std::string&	    getLabel() { return _label; }
+*/
 
   //////////////////////////////////////////////////////////////////////////
   // Internal
 
 protected:
-  pnfloat			getElapsedTime();
-  void				opal2pn();
-  void				pn2opal();
+  pnfloat					getElapsedTime();
+  void						opal2pn();
+  void						pn2opal();
 };
 
 //////////////////////////////////////////////////////////////////////////
