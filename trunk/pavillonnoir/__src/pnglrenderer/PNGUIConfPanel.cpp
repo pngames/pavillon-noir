@@ -331,7 +331,7 @@ namespace PN
 	if (current_param->getType() == PN_PARAMTYPE_BOOLEAN)
 	{
 	  tmpName = isWinPresent(CBname, "_");
-	  cb =  (CEGUI::Checkbox*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/Checkbox", tmpName.c_str());
+	  cb =  (CEGUI::Checkbox*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"WindowsLook/Checkbox", tmpName.c_str());
 	   cb->setSize(CEGUI::Size(0.30f, 0.05f));
 	  cb->setPosition(CEGUI::Point(0.10f, incVal));
 	  cb->subscribeEvent(CEGUI::Checkbox::EventCheckStateChanged, CEGUI::Event::Subscriber(&PNGUIConfPanel::mainEventHandler, this));
