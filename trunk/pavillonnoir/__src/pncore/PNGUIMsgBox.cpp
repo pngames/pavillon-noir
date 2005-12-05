@@ -27,9 +27,12 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
+#include <iostream>
+#include "pndefs.h"
+
 #include "PNGUIMsgBox.hpp"
 #include "PNConsole.hpp"
-#include <iostream>
+
 using namespace PN;
 
 namespace PN

@@ -35,7 +35,6 @@
 #include <set>
 #include <sstream>
 
-#include "pndefs.h"
 #include "pnevent.h"
 #include "pnproperties.h"
 

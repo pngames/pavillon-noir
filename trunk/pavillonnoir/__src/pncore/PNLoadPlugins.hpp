@@ -31,14 +31,7 @@
 #define _PNLOADPLUGINS_HPP_
 
 #include <boost/filesystem/path.hpp>
-
-#include "pndefs.h"
 #include "pnplugins.h"
-
-#include "PNPlugin.hpp"
-#include "PNPluginManager.hpp"
-#include "PNImportInterface.hpp"
-#include "PNImportManager.hpp"
 
 namespace  PN{
   class PNLoadPlugins

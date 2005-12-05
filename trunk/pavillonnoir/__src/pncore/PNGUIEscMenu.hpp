@@ -31,9 +31,7 @@
 #define _PNGUIESCMENU_HPP_
 
 #include "myCEGUI.h"
-#include "pndefs.h"
 #include "pnevent.h"
-#include "pnrender.h"
 
 namespace PN{
   class PNGUIEscMenu

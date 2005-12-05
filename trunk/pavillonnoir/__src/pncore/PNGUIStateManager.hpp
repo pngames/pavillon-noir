@@ -30,7 +30,7 @@
 #ifndef _PNGUISTATEMANAGER_HPP_
 # define _PNGUISTATEMANAGER_HPP_
 
-#include "pndefs.h"
+#include "pnevent.h"
 #include "PNGameEventData.hpp"
 
 namespace PN
