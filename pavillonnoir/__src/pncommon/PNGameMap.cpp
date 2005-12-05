@@ -67,6 +67,12 @@ PNGameMap::getEntityList() const
   return _entityList;
 }
 
+pnfloat
+PNGameMap::getMpp()
+{
+  return _mpp;
+}
+
 pnint
 PNGameMap::_unserializeSkybox(xmlNode* root)
 {
@@ -185,7 +191,7 @@ int	PNGameMap::unserializeFromXML(xmlNode* node)
   pnint	error = PNEC_SUCCESS;
 
   //////////////////////////////////////////////////////////////////////////
-  // LISTENTITIES
+  // ENTITIES
 
   if (xmlStrEqual(root->name, PNXML_LISTENTITIES_MKP) && root->children != NULL)
   {
@@ -195,6 +201,9 @@ int	PNGameMap::unserializeFromXML(xmlNode* node)
 
 	  if (error != PNEC_SUCCESS)
 		break ;
+	 else
+		if ((_mpp = XMLUtils::xmlGetProp(root, PNXML_MPP_ATTR, 1.0f)) == NULL)
+		  error = PNEC_ERROR;
 	}
   }
 

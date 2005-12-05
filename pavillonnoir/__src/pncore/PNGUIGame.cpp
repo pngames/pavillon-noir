@@ -354,7 +354,8 @@ void  PNGUIGame::_addForce(const std::string&, std::istream& i)
 	if (it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end())
 	{
 	  PN3DObject* current_obj = it->second;
-	  current_obj->getPhysicalObject()->addForce(x, y, z, duration);
+	  // FIXME
+	  //current_obj->getPhysicalObject()->addForce(x, y, z, duration);
 	}
 	else
 	  PNConsole::writeLine("object %s does not exist", objectid.c_str());

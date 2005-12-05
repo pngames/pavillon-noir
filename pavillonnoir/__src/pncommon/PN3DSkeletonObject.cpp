@@ -214,7 +214,7 @@ PN3DSkeletonObject::update(pnuint deltaTime)
   if (_skeleton == NULL)
 	return ;
 
-  if (_running)
+  if (false/*_running*/)
   {
 	IPNAnimated::update(deltaTime);
 
@@ -318,6 +318,8 @@ PN3DSkeletonObject::stopAnimation(pnuint animId)
 pnuint
 PN3DSkeletonObject::startAnimation()
 {
+  PNLOCK(this);
+
   for (AnimationSet::iterator it = _animsToPlay.begin(); it != _animsToPlay.end(); ++it)
 	((PN3DSkeletonAnimation*)*it)->step = 0;
 

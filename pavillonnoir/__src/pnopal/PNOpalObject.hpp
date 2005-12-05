@@ -113,15 +113,14 @@ public:
   //////////////////////////////////////////////////////////////////////////
   // PNPhysicalObject
 
-  void							update(pnuint elapsed_time);
-  void							render();
-
   const PNPoint3f&				getCoord();
   const PNQuatf&				getOrient();
   const PNPoint3f&				getOffset();
   opal::Solid*					getOpalSolid();
   opal::AccelerationSensor*		getAccelSensor();
 
+  void							render();
+  void							update(pnuint elapsed_time);
   void							setStatic(bool state);
   bool							isStatic();
   void							setCoord(const PNPoint3f& coord);
@@ -133,7 +132,8 @@ public:
   //////////////////////////////////////////////////////////////////////////
   // PNOpalObject specific
 
-  void							addForce(pnfloat x, pnfloat y, pnfloat z, pnfloat duration);
+  void							addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration);
+  void							addTorque(const PNVector3f& axis, pnfloat magnitude, pnfloat duration);
   void							setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf orient);
   void							destroyMovementMotor();
 
