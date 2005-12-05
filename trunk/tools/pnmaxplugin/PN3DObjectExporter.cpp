@@ -121,9 +121,19 @@ void PN3DObjectExporter::ShowAbout(HWND hWnd)
 int PN3DObjectExporter::initExport()
 {
   _hasModel = theApp.getIntOption("pno", "hasModel", TRUE) == TRUE;
+  _saveModel = theApp.getIntOption("pno", "saveModel", TRUE) == TRUE;
+
   _hasMaterials = theApp.getIntOption("pno", "hasMaterials", TRUE) == TRUE;
+  _saveMaterials = theApp.getIntOption("pno", "saveMaterials", TRUE) == TRUE;
+
   _hasSkeleton = theApp.getIntOption("pno", "hasSkeleton", TRUE) == TRUE;
+  _saveSkeleton = theApp.getIntOption("pno", "saveSkeleton", TRUE) == TRUE;
+
   _hasAnimation = theApp.getIntOption("pno", "hasAnimation", TRUE) == TRUE;
+  _saveAnimation = theApp.getIntOption("pno", "saveAnimation", TRUE) == TRUE;
+
+  _hasPhysics = theApp.getIntOption("pno", "hasPhysics", TRUE) == TRUE;
+  _savePhysics = theApp.getIntOption("pno", "savePhysics", TRUE) == TRUE;
 
   _modelExporter.setIgameScene(_igameScene);
   _modelExporter.initExport();
@@ -136,6 +146,9 @@ int PN3DObjectExporter::initExport()
 
   _animationExporter.setIgameScene(_igameScene);
   _animationExporter.initExport();
+
+  _physicalExporter.setIgameScene(_igameScene);
+  _physicalExporter.initExport();
 
   return TRUE;
 }
@@ -156,13 +169,24 @@ int	PN3DObjectExporter::releaseExport()
   _materialsExporter.releaseExport();
   _skeletonExporter.releaseExport();
   _animationExporter.releaseExport();
+  _physicalExporter.releaseExport();
 
   delete _owin;
 
   theApp.setIntOption("pno", "hasModel", _hasModel);
+  theApp.setIntOption("pno", "saveModel", _saveModel);
+
   theApp.setIntOption("pno", "hasMaterials", _hasMaterials);
+  theApp.setIntOption("pno", "saveMaterials", _saveMaterials);
+
   theApp.setIntOption("pno", "hasSkeleton", _hasSkeleton);
+  theApp.setIntOption("pno", "saveSkeleton", _saveSkeleton);
+
   theApp.setIntOption("pno", "hasAnimation", _hasAnimation);
+  theApp.setIntOption("pno", "saveAnimation", _saveAnimation);
+
+  theApp.setIntOption("pno", "hasPhysics", _hasPhysics);
+  theApp.setIntOption("pno", "savePhysics", _savePhysics);
 
   return TRUE;
 }

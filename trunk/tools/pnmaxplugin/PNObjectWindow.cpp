@@ -223,6 +223,8 @@ BOOL PNObjectWindow::OnInitDialog()
   t_skeleton.SetWindowText(name);
   name.Replace(".pns", ".pna");
   t_animation.SetWindowText(name);
+  name.Replace(".pnp", ".pns");
+  t_physics.SetWindowText(name);
 
   return TRUE;
 }
