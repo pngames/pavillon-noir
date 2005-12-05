@@ -44,6 +44,9 @@
 #include "PNFXMaterialListParameter.hpp"
 #include "PNFXScriptListParameter.hpp"
 #include "PNFXStringListParameter.hpp"
+#include "PNFXCheckButtonParameter.hpp"
+#include "PNFXDefaultParameter.hpp"
+
 
 namespace PN
 {
@@ -113,7 +116,6 @@ void  PNPropertiesGrid::setObject(PNConfigurableObject* object)
 	  break;
 	case PN_PARAMTYPE_EVENTBOX:
 	  _params.push_back((PNPropertiesGridParameter*)(new PNFXEventBoxParameter(this, current_param)));
-	  pnerror(PN_LOGLVL_DEBUG, "PNPropertiesGrid::setObject() => new PNFXEventBoxParameter");
 	  break;
 	case PN_PARAMTYPE_ANIMLIST:
 	  _params.push_back((PNPropertiesGridParameter*)(new PNFXAnimListParameter(this, current_param)));
@@ -127,8 +129,12 @@ void  PNPropertiesGrid::setObject(PNConfigurableObject* object)
 	case PN_PARAMTYPE_STRINGLIST:
 	  _params.push_back((PNPropertiesGridParameter*)(new PNFXStringListParameter(this, current_param)));
 	  break;
+	case PN_PARAMTYPE_BOOLEAN:
+	  _params.push_back((PNPropertiesGridParameter*)(new PNFXCheckButtonParameter(this, current_param)));
+	  break;
 	default:
-	break;
+	  _params.push_back((PNPropertiesGridParameter*)(new PNFXDefaultParameter(this, current_param)));
+	  break;
 	}
   }
 
