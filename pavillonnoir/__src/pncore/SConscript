@@ -18,7 +18,6 @@ PNGUIMenuLoad.cpp
 PNGUILoadingScreen.cpp
 PNGUIChatWindow.cpp
 PNGUIStateManager.cpp
-PNGUIConfPanel.cpp
 """.split()
 obj.target = 'pncore' + env['suffix']
 obj.instdir = env['install_prefix'] + env['install_path'] + '/linux'

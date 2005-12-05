@@ -17,6 +17,7 @@ pndlmain.cpp
 PNGLSceneGraph.cpp
 PNGLSkyBox.cpp
 PNGLTextureManager.cpp
+PNGUIConfPanel.cpp
 """.split()
 obj.target = 'pnglrenderer' + env['suffix'] + '.pnp'
 obj.instdir = env['install_prefix'] + env['install_path'] + '/linux/plugins' + env['debug_path']
