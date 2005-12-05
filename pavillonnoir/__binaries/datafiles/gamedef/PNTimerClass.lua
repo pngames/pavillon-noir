@@ -10,9 +10,9 @@ function PNTimerClass()
         local id = 0
         while id < table.getn(self.scheduledTasks) do
             local task = self.scheduledTasks[id + 1]
-        	pnprint("taskTime is " .. task.s+task.r .. " and timerTime is " .. self.time .. "\n")
+        	--pnprint("taskTime is " .. task.s+task.r .. " and timerTime is " .. self.time .. "\n")
             if (task.s+task.r <= self.time) then
-            	pnprint("found a Task !\n")
+            	--pnprint("found a Task !\n")
                 task.e[task.f](task.e, task.p)
                 if task.l == true then 
                     task.s = self.time
