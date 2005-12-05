@@ -60,7 +60,7 @@ public:
   void			setDFLColor(pnfloat r, pnfloat g, pnfloat b, pnfloat a);
 
   void			setNbVerts(pnint nbVerts);
-  void			setBuffer(pnrenderarray flag_array, pnfloat *array);
+  void			setBuffer(pnrenderarray flag_array, pnfloat *array, pnbool compressed = false);
 
   void			setInterleaveArray(void* array, pnuint size, pnrenderflag format = PN_T2F_C4F_N3F_V3F);
 
@@ -103,18 +103,25 @@ private:
   pncolor_t		_color;
 
   pnuint		_nbVerts;
+
   pnfloat*		_verticesArrays;
+  GLuint		_verticesArraysId;
   pnfloat*		_normalsArrays;
+  GLuint		_normalsArraysId;
   pnfloat*		_colorsArrays;
+  GLuint		_colorsArraysId;
   pnfloat*		_texturesArrays;
+  GLuint		_texturesArraysId;
 
   pnuint		_size;
   pnrenderflag	_format;
   void*			_interleaveArrays;
+  GLuint		_interleaveArraysId;
 
   pnuint		_nbIndex;
   pnrenderflag	_mode;
   pnuint*		_indexArrays;
+  GLuint		_indexArraysId;
 
 };
 

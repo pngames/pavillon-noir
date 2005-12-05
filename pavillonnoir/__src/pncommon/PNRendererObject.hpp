@@ -60,7 +60,7 @@ public:
   virtual void		setDFLColor(pnfloat r, pnfloat g, pnfloat b, pnfloat a)=0;
 
   virtual void		setNbVerts(pnint nbVerts)=0;
-  virtual void		setBuffer(pnrenderarray flag_array, pnfloat* array)=0;
+  virtual void		setBuffer(pnrenderarray flag_array, pnfloat* array, pnbool compressed = false)=0;
 
   virtual void		setInterleaveArray(void* array, pnuint size, pnrenderflag format = PN_T2F_C4F_N3F_V3F)=0;
 

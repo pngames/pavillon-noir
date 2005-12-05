@@ -231,12 +231,21 @@ PNI3DMesh::unserializeFromStream(std::istream& i)
 
   _parseFaces();
 
-  _robject = PNRendererInterface::getInstance()->newObj(
-	(pnfloat*)_vertBuffer, (pnfloat*)_normBuffer, (pnfloat*)_colorBuffer, (pnfloat*)_texCoordBuffer, _header.nbVerts,
-	(pnuint*)_idBuffer,	_header.nbFaces * 3);
+  _robject = PNRendererInterface::getInstance()->newObj();
+
+  _robject->setNbVerts(_header.nbVerts);
+
+  _robject->setBuffer(PN_VARRAY, (pnfloat*)_vertBuffer);
+  _robject->setBuffer(PN_NARRAY, (pnfloat*)_normBuffer);
+
+  if (_colorBuffer != NULL)
+	_robject->setBuffer(PN_CARRAY, (pnfloat*)_colorBuffer, true);
+
+  //////////////////////////////////////////////////////////////////////////
 
   if (_texCoordBuffer != NULL)
   {
+	_robject->setBuffer(PN_TCARRAY, (pnfloat*)_texCoordBuffer, true);
 	_robject->setTextureRepeat(false);
 
 	for (pnuint i = 0; i <  _header.nbVerts; ++i)
@@ -248,6 +257,10 @@ PNI3DMesh::unserializeFromStream(std::istream& i)
 	  }
 	}
   }
+
+  //////////////////////////////////////////////////////////////////////////
+
+  _robject->setIndexBuffer((pnuint*)_idBuffer, _header.nbFaces * 3);
 
   return PNEC_SUCCESS;
 }
