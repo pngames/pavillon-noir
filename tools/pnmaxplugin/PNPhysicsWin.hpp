@@ -25,20 +25,24 @@
 
 #pragma once
 
-class PNPhysicsWin : public CDialog
+class PNPhysicalExporter;
+
+class					PNPhysicsWin : public CDialog
 {
   DECLARE_DYNAMIC(PNPhysicsWin)
 
 public:
-  PNPhysicsWin(CWnd* pParent = NULL);
+  PNPhysicsWin(PNPhysicalExporter* exporter, CWnd* pParent = NULL);
   virtual ~PNPhysicsWin();
 
   enum { IDD = IDD_PNP_CONFIG };
 
 protected:
-  virtual void DoDataExchange(CDataExchange* pDX);
+  virtual void			DoDataExchange(CDataExchange* pDX);
 
   DECLARE_MESSAGE_MAP()
+protected:
+  PNPhysicalExporter*	_exporter;
 public:
   virtual BOOL OnInitDialog();
   afx_msg void OnBnClickedBbPhysics();
