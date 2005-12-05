@@ -52,6 +52,8 @@ PNDie.cpp
 PN3DCameraModel.cpp
 PNConf.cpp
 PN3DSkeletonAnimation.cpp
+PNConfPanel.cpp
+PNStringParameter.cpp
 """.split()
 obj.target = 'libpncommon' + env['suffix']
 obj.vnum = env['package_version']
