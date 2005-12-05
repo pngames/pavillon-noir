@@ -27,6 +27,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+#include <sstream>
+#include <iostream>
+#include <vector>
+#include "pndefs.h"
 #include "PNInfoPanel.hpp"
 #include "PNConsole.hpp"
 

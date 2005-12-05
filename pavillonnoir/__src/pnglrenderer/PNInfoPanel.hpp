@@ -32,12 +32,7 @@
 
 #include <SDL/SDL.h>
 #include "myCEGUI.h"
-#include <sstream>
-#include <iostream>
-#include <vector>
 
-
-#include "pndefs.h"
 #include "pnevent.h"
 
 namespace PN{
