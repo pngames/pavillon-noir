@@ -85,6 +85,8 @@ PNPhysicalExporter::PNPhysicalExporter()
   _ext = PNP_EXT;
   _longDesc = PNP_LONGDESC;
   _shortDesc = PNP_SHORTDESC;
+
+  type = 0;
 }
 
 PNPhysicalExporter::~PNPhysicalExporter() 
@@ -109,28 +111,59 @@ int			PNPhysicalExporter::initFiles(CString file)
   return TRUE;
 }
 
-int			PNPhysicalExporter::export(CString path)
-{
-  // recuperer le string du fichier de script
-  // inclure le path dans une variable au debut du script
-  // appeller:
-  //
-  //GUP * gp = (GUP*)CreateInstance(GUP_CLASS_ID,Class_ID(470000002,0);
-  // gp->ExecuteStringScript("toto=$path\n" + filestring);
-
-
-  return TRUE;
-}
-
 //////////////////////////////////////////////////////////////////////////
 
 int			PNPhysicalExporter::exportHeader()
 {
+  PNMainWin::WriteLine("PN3DObjectExporter::exportHeader()");
+
+  _file->Write(PNP_XML_HEADER.c_str(), (UINT)PNP_XML_HEADER.size());
+
   return TRUE;
 }
 
 int			PNPhysicalExporter::exportBody()
 {
+  PNMainWin::WriteLine("PNPhysicalExporter::exportBody()");
+
+  std::ostringstream	objString;
+
+  objString << "<" << PNP_XMLNODE_ROOT;
+
+  //////////////////////////////////////////////////////////////////////////
+
+  if (type == 0)
+  {
+	objString	<< " " << PNP_XMLPROP_TYPE << "=\"" << "opal" << "\"";
+	objString	<< " " << PNP_XMLPROP_PATH << "=\"" << 
+	  PN::DEF::convertPath(PN::DEF::physicsFilePath + "opal/", path.GetString()) << "\"";
+
+	if (save)
+	{
+	  // recuperer le string du fichier de script
+	  // inclure le path dans une variable au debut du script
+	  // appeller:
+	  //
+	  //GUP * gp = (GUP*)CreateInstance(GUP_CLASS_ID,Class_ID(470000002,0);
+	  // gp->ExecuteStringScript("toto=$path\n" + filestring);
+	}
+  }
+  else
+  {
+	objString	<< " " << PNP_XMLPROP_TYPE << "=\"" << "model" << "\"";
+	objString	<< " " << PNP_XMLPROP_PATH << "=\"" << 
+	  PN::DEF::convertPath(PN::DEF::modelFilePath, path.GetString()) << "\"";
+
+	if (save)
+	{
+	  // utiliser l'exporter de model
+	}
+  }
+
+  //////////////////////////////////////////////////////////////////////////
+
+  objString << ">\n";
+
   return TRUE;
 }
 

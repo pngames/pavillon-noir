@@ -47,6 +47,10 @@ class				PNPhysicalExporter : public PNExporter
 public:
 	static HWND		hParams;
 
+	bool			save;
+	CString			path;
+	DWORD			type;
+
 	void			ShowAbout(HWND hWnd);		// Show DLL's "About..." box
 
 	//Constructor/Destructor
@@ -56,7 +60,6 @@ public:
 public:
 	virtual int		initExport();
 	virtual int		initFiles(CString file);
-	virtual int		export(CString path);
 
 	virtual int		releaseExport();
 

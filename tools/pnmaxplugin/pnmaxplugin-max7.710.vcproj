@@ -340,6 +340,10 @@
 			Name="pnp"
 			Filter="">
 			<File
+				RelativePath=".\PNOpalExporter.ms"
+				DeploymentContent="TRUE">
+			</File>
+			<File
 				RelativePath="..\..\pavillonnoir\__src\pncommon\pnp_format.h">
 			</File>
 			<File
