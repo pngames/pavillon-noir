@@ -37,7 +37,13 @@
 !define PRODUCT_STARTMENU_REGVAL "NSIS:StartMenuDir"
 
 ; MUI 1.67 compatible ------
+!include Sections.nsh
 !include "MUI.nsh"
+
+!include "bg-size.nsh"
+
+# Reserved Files
+ReserveFile "${NSISDIR}\Plugins\BGImage.dll"
 
 ; MUI Settings
 !define MUI_ABORTWARNING
@@ -64,6 +70,7 @@ var ICONS_GROUP
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT "${PRODUCT_UNINST_ROOT_KEY}"
 !define MUI_STARTMENUPAGE_REGISTRY_KEY "${PRODUCT_UNINST_KEY}"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "${PRODUCT_STARTMENU_REGVAL}"
+!define MUI_CUSTOMFUNCTION_GUIINIT CustomGUIInit
 !insertmacro MUI_PAGE_STARTMENU Application $ICONS_GROUP
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
@@ -84,11 +91,15 @@ Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 OutFile "pn-setup-${PNSETUP_TYPE}-${PRODUCT_VERSION}.exe"
 InstallDir "$PROGRAMFILES\Pavillon Noir"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
+
+CRCCheck on
+XPStyle on
 ShowInstDetails show
 ShowUnInstDetails show
 
 Function .onInit
   !insertmacro MUI_LANGDLL_DISPLAY
+  InitPluginsDir
 FunctionEnd
 
 SectionGroup /e "Jeu"
@@ -160,6 +171,47 @@ Section -Post
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
 SectionEnd
+
+# Installer functions
+Function CustomGUIInit
+    Push $R1
+    Push $R2
+    BgImage::SetReturn /NOUNLOAD on
+    BgImage::SetBg /NOUNLOAD /GRADIENT "0 0 128 0 0 0"
+    Pop $R1
+    StrCmp $R1 success 0 error
+    File /oname=$PLUGINSDIR\bgimage.bmp slides_contenu.bmp
+    System::call "user32::GetSystemMetrics(i 0)i.R1"
+    System::call "user32::GetSystemMetrics(i 1)i.R2"
+    IntOp $R1 $R1 - ${PNBG_WIDTH}
+    IntOp $R1 $R1 / 2
+    IntOp $R2 $R2 - ${PNBG_HEIGTH}
+    IntOp $R2 $R2 / 2
+    BGImage::AddImage /NOUNLOAD $PLUGINSDIR\bgimage.bmp $R1 $R2
+    CreateFont $R1 "Times New Roman" 26 700 /ITALIC
+    BGImage::AddText /NOUNLOAD "$(^SetupCaption)" $R1 "255 255 255" 16 8 500 100
+    Pop $R1
+    StrCmp $R1 success 0 error
+    BGImage::Redraw /NOUNLOAD
+    
+    ; File /oname=$PLUGINSDIR\bgimage.wav D:\telechargement\alien.wav
+    ; BGImage::Sound /NOUNLOAD /LOOP $PLUGINSDIR\bgimage.wav
+    
+    Goto done
+error:
+    MessageBox MB_OK|MB_ICONSTOP $R1
+done:
+    Pop $R2
+    Pop $R1
+FunctionEnd
+
+Function .onGUIEnd
+    ; BGImage::Sound /NOUNLOAD /STOP
+    BGImage::Destroy
+FunctionEnd
+
+####################
+## Uninstall Section
 
 Function un.onUninstSuccess
   HideWindow
