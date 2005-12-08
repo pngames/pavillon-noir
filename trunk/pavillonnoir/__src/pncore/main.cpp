@@ -57,6 +57,7 @@
 
 #include "PNGUIMenuRoot.hpp"
 #include "PNGUIStateManager.hpp"
+#include "PNGUILoadingScreen.hpp"
 
 #include "PNGameInterface.hpp"
 
@@ -141,6 +142,8 @@ int	  main(int argc, char* argv[])
 	new CEGUI::System((CEGUI::Renderer*)ri->getGUIRenderer());
 	ri->initGUI();
 	
+	PNGUILoadingScreen::getInstance();
+
 	PNGUIStateManager::getInstance();
 	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::NONE && PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
 	  PNGUIMenuRoot::getInstance()->startGUI();

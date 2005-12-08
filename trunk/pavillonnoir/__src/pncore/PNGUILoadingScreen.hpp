@@ -61,8 +61,10 @@ namespace PN{
 	void  hide();
   protected:
   private:
-	 bool handleClickTest(const CEGUI::EventArgs& e);
+	bool handleClickTest(const CEGUI::EventArgs& e);
 	void  setRandomBackground();
+	void  stepLoad(pnEventType type, PNObject* source, PNEventData* data);
+	void  resetScreen();
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/

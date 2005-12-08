@@ -29,6 +29,7 @@
 
 #include "pndefs.h"
 #include "PNGUILoadingScreen.hpp"
+#include <Windows.h>
 
 using namespace PN;
 
@@ -54,6 +55,15 @@ namespace PN{
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 	//resetProgBar();
 	hide();
+
+	PNEventManager::getInstance()->addCallback(PN_EVENT_ML_STARTED, EventCallback(this, &PNGUILoadingScreen::startGUI));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_MU_STARTED, EventCallback(this, &PNGUILoadingScreen::startGUI));
+
+	PNEventManager::getInstance()->addCallback(PN_EVENT_ML_ENDED, EventCallback(this, &PNGUILoadingScreen::resetGUI));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_MU_ENDED, EventCallback(this, &PNGUILoadingScreen::resetGUI));
+
+	PNEventManager::getInstance()->addCallback(PN_EVENT_ML_STEP, EventCallback(this, &PNGUILoadingScreen::stepLoad));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_MU_STEP, EventCallback(this, &PNGUILoadingScreen::stepLoad));
   }
 
   PNGUILoadingScreen::~PNGUILoadingScreen()
@@ -83,10 +93,10 @@ namespace PN{
   {
   }
 
- // void  PNGUILoadingScreen::resetScreen()
- // {
-	//_progBar->setProgress(0.0f;
- // }
+  void  PNGUILoadingScreen::resetScreen()
+  {
+	_progBar->setProgress(0.0f);
+  }
 
  bool PNGUILoadingScreen::handleClickTest(const CEGUI::EventArgs& e)
  {
@@ -100,34 +110,39 @@ namespace PN{
 
 	refreshScreen(tmp, str );
 	
-
   return true;
  }
 
   void	PNGUILoadingScreen::startGUI(pnEventType type, PNObject* source, PNEventData* data)
   {
-	//CEGUI::MouseCursor::getSingleton().hide();
+	CEGUI::MouseCursor::getSingleton().hide();
 	//setRandomBackground();
 	show();
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STEP, 0, NULL);
 	// TODO : voir les conflis avec la console
-
-	//CEGUI::Rect* re = new CEGUI::Rect( CEGUI::Point(0 , 0), CEGUI::Size(0, 0));
-	//CEGUI::MouseCursor::getSingleton().setConstraintArea(re);
   }
 
   void	PNGUILoadingScreen::resetGUI(pnEventType type, PNObject* source, PNEventData* data)
   {
+		
 	hide();
+	//Sleep(50);
   }
 
   void	PNGUILoadingScreen::show()
   {
 	_mainSheet->show();
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STEP, 0, NULL);
   }
 
   void	PNGUILoadingScreen::hide()
   {
 	_mainSheet->hide();
+  }
+
+  void	PNGUILoadingScreen::stepLoad(pnEventType type, PNObject* source, PNEventData* data)
+  {
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_END, 0, NULL);
   }
 
 }
