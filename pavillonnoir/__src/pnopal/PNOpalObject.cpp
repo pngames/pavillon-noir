@@ -405,12 +405,14 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
   if (fs::is_directory(file))
 	return PNEC_NOT_A_FILE;
 
+  pnfloat mpp = PNGameInterface::getInstance()->getGameMap()->getMpp();
+
   // create and instantiate the opal blueprint
   _file = file.string();
   opal::loadFile(_blueprint, _file);
-  _sim->instantiateBlueprint(_blueprintInstance, _blueprint);
+  _sim->instantiateBlueprint(_blueprintInstance, _blueprint, opal::Matrix44r(), mpp);
 
-  pnfloat mpp = PNGameInterface::getInstance()->getGameMap()->getMpp();
+  
 
   _solid = _blueprintInstance.getSolid("Boite01");
   if (_solid != NULL)
@@ -431,10 +433,10 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
 	}
 
 	// resize the object according to map's meters per pixel
-	opal::Vec3r SDim = ((opal::BoxShapeData*)_solid->getData().getShapeData(0))->dimensions.getData();
-	((opal::BoxShapeData*)_solid->getData().getShapeData(0))->dimensions.set(SDim[0] * mpp,
-																			  SDim[1] * mpp,
-																			  SDim[2] * mpp);
+	//opal::Vec3r SDim = ((opal::BoxShapeData*)_solid->getData().getShapeData(0))->dimensions.getData();
+	//((opal::BoxShapeData*)_solid->getData().getShapeData(0))->dimensions.set(SDim[0] * mpp,
+																			  //SDim[1] * mpp,
+																			  //SDim[2] * mpp);
   }
   else 
   {
@@ -444,7 +446,7 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
 	_radius = shapeData->radius + 0.1;
 
 	// resize the object according to map's meters per pixel
-	shapeData->radius *= mpp;
+	//shapeData->radius *= mpp;
   }
 
   // check for loading errors
@@ -458,8 +460,10 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
   PNOpal* pnopalInstance = (PNOpal*)PNOpal::getInstance();
   _solid->setCollisionEventHandler((opal::CollisionEventHandler*)pnopalInstance->getEventHandler());
 
-  // get the solid translation (will allow the renderer to represent the AABB at the good coords)
+  // get the solid translation
   opal::real* translation = _solid->getTransform().getTranslation().getData();
+  
+  //_solid->getTransform().setPosition(translation[0] * mpp, translation[1] * mpp, translation[2] * mpp);
   _offset.set(translation[0], translation[1], translation[2]);
 
   // create a motor
@@ -470,9 +474,8 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
   _accelSensor = _sim->createAccelerationSensor();
   _accelSensor->init(_accelSensorData);
 
+  // enable the object
   _solid->setEnabled(true);
-
-  linearAccel = false;
 
   return PNEC_SUCCESS;
 }
