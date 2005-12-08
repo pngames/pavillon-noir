@@ -271,7 +271,7 @@ void	PNOpal::pn2opal()
 		const PNPoint3f& coord = current_obj->getCoord();
 		const PNQuatf& orient = current_obj->getOrient();
 		const PNPoint3f& offset = current_obj->getPhysicalObject()->getOffset();
-		current_obj->getPhysicalObject()->setCoord((coord.x + offset.x) * mpp, 
+		current_obj->getPhysicalObject()->setCoord((coord.x + offset.x) * mpp,
 												  (coord.y + offset.y) * mpp,
 												  (coord.z + offset.z) * mpp);
 		current_obj->getPhysicalObject()->setOrient(orient);
@@ -302,7 +302,7 @@ void	PNOpal::opal2pn()
 		const PNPoint3f& offset = current_obj->getPhysicalObject()->getOffset();
 		const PNQuatf& orient = current_obj->getPhysicalObject()->getOrient();
 
-		current_obj->setCoord((coord.x - offset.x) / mpp, 
+		current_obj->setCoord((coord.x - offset.x) / mpp,
 							  (coord.y - offset.y) / mpp,
 							  (coord.z - offset.z) / mpp);
 		current_obj->setOrient(orient);
