@@ -29,7 +29,6 @@
 
 #include "pndefs.h"
 #include "PNGUILoadingScreen.hpp"
-#include <Windows.h>
 
 using namespace PN;
 
@@ -124,9 +123,7 @@ namespace PN{
 
   void	PNGUILoadingScreen::resetGUI(pnEventType type, PNObject* source, PNEventData* data)
   {
-		
 	hide();
-	//Sleep(50);
   }
 
   void	PNGUILoadingScreen::show()
