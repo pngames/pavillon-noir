@@ -63,14 +63,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="luad.lib lualibd.lib tolua++d.lib"
+				AdditionalDependencies="lua.lib lualib.lib tolua++.lib"
 				OutputFile="../../../__binaries/win32/plugins/Debug/pnscript-dbg.pnp"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/pnscript.pdb"
 				SubSystem="2"
-				ImportLibrary=""
+				ImportLibrary="$(IntDir)\$(TargetName).lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -152,7 +151,7 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				ImportLibrary=""
+				ImportLibrary="$(IntDir)\$(TargetName).lib"
 				TargetMachine="1"
 			/>
 			<Tool

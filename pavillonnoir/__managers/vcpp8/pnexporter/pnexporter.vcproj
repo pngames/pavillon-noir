@@ -65,9 +65,8 @@
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/pnexporter.pdb"
 				SubSystem="2"
-				ImportLibrary=""
+				ImportLibrary="$(IntDir)\$(TargetName).lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -145,7 +144,7 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				ImportLibrary=""
+				ImportLibrary="$(IntDir)\$(TargetName).lib"
 				TargetMachine="1"
 			/>
 			<Tool
