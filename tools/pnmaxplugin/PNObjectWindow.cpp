@@ -172,6 +172,8 @@ BEGIN_MESSAGE_MAP(PNObjectWindow, CDialog)
   ON_BN_CLICKED(IDC_BO_PHYSICS, OnBnClickedBoPhysics)
   ON_BN_CLICKED(IDC_C_PHYSICS, OnBnClickedCPhysics)
   ON_BN_CLICKED(IDC_BB_PHYSICS, OnBnClickedBbPhysics)
+  ON_BN_CLICKED(IDC_RB_PHYS_MODEL, OnBnClickedRbPhysModel)
+  ON_BN_CLICKED(IDC_RB_PHYS_OPTIONS, OnBnClickedRbPhysOptions)
 END_MESSAGE_MAP()
 
 // Gestionnaires de messages PNObjectWindow
@@ -223,7 +225,7 @@ BOOL PNObjectWindow::OnInitDialog()
   t_skeleton.SetWindowText(name);
   name.Replace(".pns", ".pna");
   t_animation.SetWindowText(name);
-  name.Replace(".pnp", ".pns");
+  name.Replace(".pna", ".pnp");
   t_physics.SetWindowText(name);
 
   return TRUE;
@@ -502,6 +504,16 @@ void PNObjectWindow::OnBnClickedBoPhysics()
   _exporter->_physicalExporter.configure();
 }
 
+void PNObjectWindow::OnBnClickedRbPhysModel()
+{
+  bt_physics.EnableWindow(FALSE);
+}
+
+void PNObjectWindow::OnBnClickedRbPhysOptions()
+{
+  bt_physics.EnableWindow(TRUE);
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 void PNObjectWindow::OnBnClickedBoGeneral()
@@ -534,6 +546,7 @@ void PNObjectWindow::OnBnClickedOk()
   _exporter->_hasPhysics = IsDlgButtonChecked(IDC_C_PHYSICS) == TRUE;
   _exporter->_savePhysics = IsDlgButtonChecked(IDC_C_PHYSICS_SAVE) == TRUE;
   t_physics.GetWindowText(_exporter->_physicalPath);
+  _exporter->_physicsModel = IsDlgButtonChecked(IDC_RB_PHYS_MODEL) == TRUE;
 
   OnOK();
 }

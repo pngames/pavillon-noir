@@ -74,6 +74,7 @@ private:
 
   bool					_hasPhysics;
   bool					_savePhysics;
+  bool					_physicsModel;
   CString				_physicalPath;
   PNPhysicalExporter	_physicalExporter;
 
