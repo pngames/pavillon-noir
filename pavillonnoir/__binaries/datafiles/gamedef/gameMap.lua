@@ -108,6 +108,7 @@ end
 
 function gameMap:onMoveForward(srcId, targId, state)
     pnprint("LUA GameMap:onMoveForward()\n")
+    pnprint("TargetId"..targId.."\n")
     self.entities.all[targId]:onMoveForward(state)
 end	
 

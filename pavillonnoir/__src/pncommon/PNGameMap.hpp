@@ -56,6 +56,7 @@ protected:
   pnfloat					_mpp;
   ObjMap					_entityList;
   PN3DCamera*				_camera;
+  PN3DObject*               _player;
   boost::filesystem::path*	_wpFile;
 
   pnint						_unserializeSkybox(xmlNode* node);
@@ -75,6 +76,7 @@ public:
   const ObjMap&				getEntityList() const;
   pnfloat					getMpp();
 
+  const PN3DObject*           getPlayer(){return _player;}
   //////////////////////////////////////////////////////////////////////////
 
   virtual void				executeScript(const std::string& ScriptName){}

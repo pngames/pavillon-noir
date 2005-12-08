@@ -51,6 +51,7 @@ namespace PN
         PNLuaVm&		_LVM;
         bool            _mapStarted;
         bool            _mapPaused;
+        std::string     _playerId;
         /*scriptInfosMap	_entitiesActions;*/
     public:
         PNLuaGameMap(PNLuaVm &lvm);
