@@ -39,19 +39,23 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 class PN3DAnimation;
+class PN3DSkeletonObject;
 
 //////////////////////////////////////////////////////////////////////////
 
 class PNAPI				PN3DSkeletonAnimation : PNObject, IPNXMLSerializable
 {
+  PN3DSkeletonObject*	_object;
 public:
   PN3DAnimation*		anim;
 public:
-  PN3DSkeletonAnimation(PN3DAnimation* anim);
+  PN3DSkeletonAnimation(PN3DAnimation* anim, PN3DSkeletonObject* object);
   ~PN3DSkeletonAnimation();
 
   pnbool				update(pnuint current);
 public:
+  pnint					playId;
+
   pnbool				looping;
 
   pnuint				step;
@@ -60,6 +64,8 @@ public:
   pnfloat				weight;
 
   //////////////////////////////////////////////////////////////////////////
+
+  PN3DSkeletonObject*	getParent() const;
 
 protected:
   const std::string&	getRootNodeName() const;

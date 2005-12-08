@@ -35,6 +35,7 @@
 #include "pno_format.h"
 
 #include "PN3DAnimation.hpp"
+#include "PN3DSkeletonObject.hpp"
 
 #include "PN3DSkeletonAnimation.hpp"
 
@@ -42,8 +43,10 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
-PN3DSkeletonAnimation::PN3DSkeletonAnimation(PN3DAnimation* anim)
+PN3DSkeletonAnimation::PN3DSkeletonAnimation(PN3DAnimation* anim, PN3DSkeletonObject* object)
 {
+  _object = object;
+
   this->weight = 1.0f;
   this->speed = 1.0f;
 
@@ -55,6 +58,14 @@ PN3DSkeletonAnimation::~PN3DSkeletonAnimation()
   
 }
 
+PN3DSkeletonObject*
+PN3DSkeletonAnimation::getParent() const
+{
+  return _object;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 pnbool
 PN3DSkeletonAnimation::update(pnuint deltaTime)
 {
@@ -65,12 +76,16 @@ PN3DSkeletonAnimation::update(pnuint deltaTime)
 	if (this->looping)
 	{
 	  this->step -= this->anim->getTotalTime();
-	  //TODO: Throw loop event
+
+	  PNEventManager::getInstance()->addEvent(PN_EVENT_OA_LOOPED, _object,
+		new PNObjectAnimationEventData(playId, looping, step, speed, weight));
 	}
 	else
 	{
 	  this->step = (pnuint)-1;
-	  //TODO: Throw stop event
+
+	  PNEventManager::getInstance()->addEvent(PN_EVENT_OA_ENDED, _object,
+		new PNObjectAnimationEventData(playId, looping, step, speed, weight));
 
 	  return false;
 	}

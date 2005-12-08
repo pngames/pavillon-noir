@@ -490,7 +490,8 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
   // NEAR-FAR
   //////////////////////////////////////////////////////////////////////////
 
-  // TODO : check Neer/Far
+  // FIXME : check Neer/Far
+
   pnbool	  inNearFar = true;
 
   return 
@@ -530,6 +531,7 @@ PN3DCamera::_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed)
 	  {
 		_list3DObj.insert(oldIt, it->second);
 		PNEventManager::getInstance()->addEvent(PN_EVENT_F_IN, this, new PNFrustrumEventData(it->second));
+		std::cout << "PN_EVENT_F_IN : " << it->second->getId() << std::endl;
 	  }
 	}
 	else if (!_is3DObjVisible2(it->second))
@@ -537,6 +539,7 @@ PN3DCamera::_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed)
 	  PN3DObjList::iterator	itmp = oldIt++;
 	  _list3DObj.erase(itmp);
 	  PNEventManager::getInstance()->addEvent(PN_EVENT_F_OUT, this, new PNFrustrumEventData(it->second));
+	  std::cout << "PN_EVENT_F_OUT : " << it->second->getId() << std::endl;
 	}
 	else
 	  ++oldIt;
