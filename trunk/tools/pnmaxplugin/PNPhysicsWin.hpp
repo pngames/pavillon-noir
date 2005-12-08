@@ -46,4 +46,5 @@ protected:
 public:
   virtual BOOL OnInitDialog();
   afx_msg void OnBnClickedBbPhysics();
+  afx_msg void OnBnClickedOk();
 };

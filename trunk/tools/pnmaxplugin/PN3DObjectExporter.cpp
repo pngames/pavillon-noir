@@ -267,7 +267,16 @@ int PN3DObjectExporter::exportBody()
   {
 	PNMainWin::WriteLine(_owin->getPhysicalFullPath());
 	if (_savePhysics)
+	{
+	  if (_physicsModel)
+	  {
+		_physicalExporter.type = 1;
+		_physicalExporter.path = _owin->getModelFile();
+		_physicalExporter.save = false;
+	  }
+
 	  _physicalExporter.export(_owin->getPhysicalFullPath());
+	}
 
 	objString << "  " << "<" << PNO_XMLNODE_PHYSICS << " " << PNO_XMLPROP_PATH << "=\"" << _owin->getPhysicalFullPath().GetString() << "\" />\n";
   }

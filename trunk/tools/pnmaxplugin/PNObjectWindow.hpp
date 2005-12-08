@@ -119,4 +119,6 @@ public:
   CButton bt_physics;
   CButton bt_option_physics;
   afx_msg void OnBnClickedBbPhysics();
+  afx_msg void OnBnClickedRbPhysModel();
+  afx_msg void OnBnClickedRbPhysOptions();
 };

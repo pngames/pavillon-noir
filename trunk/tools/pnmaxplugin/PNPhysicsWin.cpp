@@ -26,7 +26,10 @@
 #include "stdafx.h"
 #include "pnmaxplugin.h"
 
+#include "PNPhysicalExporter.hpp"
+
 #include "PNPhysicsWin.hpp"
+#include ".\pnphysicswin.hpp"
 
 IMPLEMENT_DYNAMIC(PNPhysicsWin, CDialog)
 PNPhysicsWin::PNPhysicsWin(PNPhysicalExporter* exporter, CWnd* pParent /*=NULL*/)
@@ -57,6 +60,7 @@ PNPhysicsWin::OnInitDialog()
 
 BEGIN_MESSAGE_MAP(PNPhysicsWin, CDialog)
   ON_BN_CLICKED(IDC_BB_PHYSICS, OnBnClickedBbPhysics)
+  ON_BN_CLICKED(IDOK, OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
@@ -68,8 +72,9 @@ void PNPhysicsWin::OnBnClickedBbPhysics()
   CString	name;
   GetDlgItemText(IDC_T_PHYSICS, name);
 
-  CFileDialog fileDlg(FALSE, "xml", name, OFN_HIDEREADONLY | OFN_FILEMUSTEXIST, 
-	"Model Files(*.pnm)|*.pnm|Opal Files(*.xml)|*.xml||", this);
+  CFileDialog fileDlg(FALSE, "xml", name, OFN_HIDEREADONLY 
+	| (IsDlgButtonChecked(IDC_C_SAVE) == TRUE ? OFN_OVERWRITEPROMPT : OFN_FILEMUSTEXIST), 
+	  "Opal Files(*.xml)|*.xml|Model Files(*.pnm)|*.pnm||", this);
 
   // Initializes m_ofn structure
   fileDlg.m_ofn.lpstrTitle = "Choice file link";
@@ -79,5 +84,16 @@ void PNPhysicsWin::OnBnClickedBbPhysics()
   {
 	name = fileDlg.GetPathName();
 	SetDlgItemText(IDC_T_PHYSICS, name);
+
+	_exporter->type = fileDlg.GetOFN().nFilterIndex;
   }
+}
+
+void PNPhysicsWin::OnBnClickedOk()
+{
+  _exporter->save = IsDlgButtonChecked(IDC_C_SAVE) == TRUE;
+  
+  GetDlgItemText(IDC_T_PATH, _exporter->path);
+
+  OnOK();
 }
