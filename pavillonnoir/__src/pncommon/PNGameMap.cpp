@@ -160,7 +160,7 @@ PNGameMap::_unserializeEntity(xmlNode* node)
 	bool isStatic = (!strcmp((const char*)xmlGetProp(node, PNXML_ENVTYPE_ATTR), "dynamic")) ? false : true;
 	object->getPhysicalObject()->setStatic(isStatic);
 	// set the physical object coordinates
-	object->getPhysicalObject()->setCoord(object->getCoord());
+	object->getPhysicalObject()->setCoord(object->getCoord().x * getMpp(), object->getCoord().y * getMpp(), object->getCoord().z * getMpp());
 	// set the physical object orientation
 	object->getPhysicalObject()->setOrient(object->getOrient());
   }
