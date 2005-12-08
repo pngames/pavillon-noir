@@ -96,7 +96,7 @@ PN3DSkeletonObject::_parseAnimations(xmlNode* parent)
 		import(p, PN_IMPORT_3DANIMATION);
 	}
 
-	PN3DSkeletonAnimation	skanim(anim);
+	PN3DSkeletonAnimation	skanim(anim, this);
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -286,6 +286,8 @@ PN3DSkeletonObject::setEnable(pnuint animId, pnbool enabled)
   if (animId < 0 || (pnuint)animId >= _anims.size())
 	return PNEC_ERROR;
   
+  _anims[animId].playId = (pnint)animId;
+
   if (enabled)
 	_animsToPlay.insert(&_anims[animId]);
   else

@@ -63,6 +63,26 @@ public:
   virtual ~PNFrustrumEventData() {}
 };
 
+class PNAPI		PNObjectAnimationEventData : public PNEventData
+{
+public:
+  pnint			playId;
+
+  pnbool		looping;
+
+  pnuint		step;
+
+  pnfloat		speed;
+  pnfloat		weight;
+
+  PNObjectAnimationEventData(pnint	playId, pnbool looping, pnuint step, pnfloat speed, pnfloat weight)
+	: playId(playId), looping(looping), step(step), speed(speed), weight(weight)
+  {}
+
+  /// Destructor for PNObjectAnimationEventData
+  virtual ~PNObjectAnimationEventData() {}
+};
+
 //////////////////////////////////////////////////////////////////////////
 }
 

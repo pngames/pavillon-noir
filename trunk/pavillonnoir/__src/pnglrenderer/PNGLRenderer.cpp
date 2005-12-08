@@ -103,7 +103,7 @@ PNGLRenderer::PNGLRenderer()
   //////////////////////////////////////////////////////////////////////////
   // configurabe implementation
 
-  _pTitle = new PNStringParameter(this, "Pavillon Noir", "Title", "Title");
+  _pTitle = new PNStringParameter(this, "Pavillon Noir", "Title", "Title", true);
   addParam(_pTitle);
 }
 
