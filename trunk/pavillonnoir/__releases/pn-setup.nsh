@@ -180,7 +180,7 @@ Function CustomGUIInit
     BgImage::SetBg /NOUNLOAD /GRADIENT "0 0 128 0 0 0"
     Pop $R1
     StrCmp $R1 success 0 error
-    File /oname=$PLUGINSDIR\bgimage.bmp slides_contenu.bmp
+    File /oname=$PLUGINSDIR\bgimage.bmp bgimage.bmp
     System::call "user32::GetSystemMetrics(i 0)i.R1"
     System::call "user32::GetSystemMetrics(i 1)i.R2"
     IntOp $R1 $R1 - ${PNBG_WIDTH}
