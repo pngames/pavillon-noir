@@ -173,6 +173,7 @@ namespace PN {
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
+	hide();
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_UNPAUSE, NULL, NULL);
 	PNGUIStateManager::getInstance()->LoadManager(NULL, PNGUIStateManager::NONE);
 	//PNRendererInterface::getInstance()->endRendering();
