@@ -125,7 +125,7 @@ void	PNFXMaterialListParameter::buildList(void)
 	}
 	*/
 
-	std::string s = material->getFile()->string();
+	std::string s = *material->getFile();
 	if (s.size() > 29)
 	  s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
 	_listBox->appendItem(s.c_str(), NULL, material);
@@ -184,7 +184,7 @@ long	PNFXMaterialListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
 	  {
 		v->push_back(mat);
 
-		std::string s = v->at(i)->getFile()->string();
+		std::string s = *v->at(i)->getFile();
 		if (s.size() > 29)
 		  s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
 		_listBox->appendItem(s.c_str(), NULL, v->at(i));

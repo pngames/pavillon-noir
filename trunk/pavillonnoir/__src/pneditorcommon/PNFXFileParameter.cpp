@@ -54,8 +54,7 @@ FXDEFMAP(PNFXFileParameter) PNFXFileParameterMap[]={
 FXIMPLEMENT(PNFXFileParameter,FXHorizontalFrame,PNFXFileParameterMap,ARRAYNUMBER(PNFXFileParameterMap))
 
 PNFXFileParameter::PNFXFileParameter(FXComposite* p, PNConfigurableParameter* param)
-: FXHorizontalFrame(p),
-PNPropertiesGridParameter(param)
+: FXHorizontalFrame(p), PNPropertiesGridParameter(param)
 {
   _field = new FXTextField(this, 24, NULL, 0, TEXTFIELD_NORMAL|FRAME_SUNKEN|FRAME_THICK|LAYOUT_SIDE_TOP);
   _button = new FXButton(this, "Browse", NULL, this, ID_BROWSE,FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_X|LAYOUT_CENTER_Y);
@@ -66,23 +65,27 @@ PNFXFileParameter::~PNFXFileParameter()
 {
 }
 
-void	PNFXFileParameter::create()
+void
+PNFXFileParameter::create()
 {
   FXHorizontalFrame::create();
   _field->create();
   _button->create();
 }
 
-void	PNFXFileParameter::update()
+void
+PNFXFileParameter::update()
 {
-  boost::filesystem::path*	file = (boost::filesystem::path*)_param->getElem();
-  _field->setText(file->native_file_string().c_str());
+  std::string*	path = (std::string*)_param->getElem();
+
+  _field->setText(path->c_str());
   _field->setEditable(_param->isEditable());
 
   return;
 }
 
-long	PNFXFileParameter::onBrowse(FXObject* obj,FXSelector sel, void* ptr)
+long
+PNFXFileParameter::onBrowse(FXObject* obj,FXSelector sel, void* ptr)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXFileParameter::onBrowse");
   FXFileDialog open(this, "Choose a file", SELECTFILE_MULTIPLE);
@@ -98,7 +101,7 @@ long	PNFXFileParameter::onBrowse(FXObject* obj,FXSelector sel, void* ptr)
 	FXString str = open.getFilename();
 
 	pnerror(PN_LOGLVL_DEBUG, "strbuf=%s, str=%s", strbuf.text(), str.substitute('\\','/').text());
-	if ( str.substitute('\\','/').find(strbuf.text(), 0) == -1)
+	if (str.substitute('\\','/').find(strbuf.text(), 0) == -1)
 	{
 	  FXMessageBox dbox(this, "File Error", "403");
 	  dbox.execute();
@@ -106,10 +109,10 @@ long	PNFXFileParameter::onBrowse(FXObject* obj,FXSelector sel, void* ptr)
 	else
 	{
 	  _field->setText(str.replace(0, (FXint)strlen(buf) + 1, "").substitute('\\', '/').text());
-	  boost::filesystem::path* p = (boost::filesystem::path*)_param->getElem();
-	  //delete p;
-	  boost::filesystem::path* fsp = new boost::filesystem::path(_field->getText().text(), boost::filesystem::no_check);
-	  *p = *fsp;
+
+	  std::string* p = (std::string*)_param->getElem();
+	  *p = _field->getText().text();
+
 	  _param->getConfigurableObject()->update(_param);
 	}
   }

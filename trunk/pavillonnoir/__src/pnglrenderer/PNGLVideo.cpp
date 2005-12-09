@@ -51,9 +51,7 @@ PNGLVideo::~PNGLVideo()
 
 pnint
 PNGLVideo::unserializeFromFile(const boost::filesystem::path& file)
-{		  
-  _file = file;
-
+{
   return PNEC_SUCCESS;
 }
 
@@ -68,7 +66,7 @@ PNGLVideo::startAnimation()
     return err;
 
 #ifdef WIN32
-  _command = std::string("win32\\mplayer\\mplayer.exe -really-quiet -fs ") + _file.string();
+  _command = std::string("win32\\mplayer\\mplayer.exe -really-quiet -fs ") + _path;
 #else
   _command = std::string("xine --auto-play=Fhq ") + _file.string();
 #endif

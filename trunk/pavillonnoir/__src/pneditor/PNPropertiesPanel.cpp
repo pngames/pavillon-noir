@@ -344,7 +344,7 @@ long          PNPropertiesPanel::onCmdSave(FXObject* obj, FXSelector sel, void* 
 	  }
 	  else
 	  {
-		obj->setFile(str.replace(0, strlen(buf) + 1, "").substitute('\\', '/').text());
+		obj->setPath(str.replace(0, strlen(buf) + 1, "").substitute('\\', '/').text());
 		obj->serialize();
 	  }
 	}

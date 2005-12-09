@@ -65,7 +65,7 @@ protected:
   virtual pnint				_serializeContent(xmlNode* node);
 public:
   /// List of animations associated with 3d object
-  typedef std::vector<PN3DSkeletonAnimation>	AnimationVector;
+  typedef std::vector<PN3DSkeletonAnimation*>	AnimationVector;
 private:
   /// Skeleton of this 3d object
   PN3DSkeleton*				_skeleton;

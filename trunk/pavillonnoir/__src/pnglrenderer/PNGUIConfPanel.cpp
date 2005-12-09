@@ -118,7 +118,6 @@ namespace PN
 			break;
 		  }
 		case PN_PARAMTYPE_STRING:
-		case PN_PARAMTYPE_ACTIVESTRING:
 		  {
 			std::string* s = (std::string*)obj->getElem();
 			s->clear();
@@ -176,7 +175,6 @@ namespace PN
 	switch(current_param->getType()) 
 	{
 	case PN_PARAMTYPE_STRING:
-	case PN_PARAMTYPE_ACTIVESTRING:
 	  return " (string)";
 	case PN_PARAMTYPE_INT:
 	 return " (int)";
@@ -242,7 +240,6 @@ namespace PN
 	  else
 		cb->setSelected(false);
 	  break;
-	case PN_PARAMTYPE_ACTIVESTRING:
 	case PN_PARAMTYPE_STRING:
 	  eb = (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().getWindow(winName.c_str());
 	  convert_tmp << (*(std::string*)current_param->getElem());
@@ -369,7 +366,6 @@ namespace PN
 	  switch (current_param->getType())
 	  {
 	  case PN_PARAMTYPE_STRING:
-	  case PN_PARAMTYPE_ACTIVESTRING:
 	  case PN_PARAMTYPE_INT:
 	  case PN_PARAMTYPE_REAL:
 	  case PN_PARAMTYPE_BOOLEAN:

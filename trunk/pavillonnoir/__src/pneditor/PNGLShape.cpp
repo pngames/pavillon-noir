@@ -101,7 +101,7 @@ PNGLShape::PNGLShape(void)
   range.lower.z = -radius; range.upper.z = radius;
 }
 
-PNGLShape::PNGLShape(PN3DObject *obj, PNPropertiesPanel* grid, PNEditor* ed, PNEnvType envType, std::string classStr, int id, std::string label)
+PNGLShape::PNGLShape(PN3DObject *obj, PNPropertiesPanel* panel, PNEditor* ed, PNEnvType envType, std::string classStr, int id, std::string label)
 : radius(0.5f), slices(SPHERE_SLICES), stacks(SPHERE_STACKS)
 {
   FXTRACE((100,"PNGLShape::PNGLShape\n"));
@@ -112,7 +112,7 @@ PNGLShape::PNGLShape(PN3DObject *obj, PNPropertiesPanel* grid, PNEditor* ed, PNE
   _envType = envType;
   _canDrag = TRUE;
   _label = label;
-  _grid = grid;
+  _panel = panel;
   _classStr = classStr;
   _modified = FALSE;
 
@@ -121,7 +121,7 @@ PNGLShape::PNGLShape(PN3DObject *obj, PNPropertiesPanel* grid, PNEditor* ed, PNE
   buildParams();
 }
 
-PNGLShape::PNGLShape(xmlNode* node, PNPropertiesPanel* grid, PNEditor* ed)
+PNGLShape::PNGLShape(xmlNode* node, PNPropertiesPanel* panel, PNEditor* ed)
 : radius(0.5f), slices(SPHERE_SLICES), stacks(SPHERE_STACKS)
 {
   FXTRACE((100,"PNGLShape::PNGLShape\n"));
@@ -131,7 +131,7 @@ PNGLShape::PNGLShape(xmlNode* node, PNPropertiesPanel* grid, PNEditor* ed)
   if (error != PNEC_SUCCESS)
 	throw PNException(error);
 
-  _grid = grid;
+  _panel = panel;
   _ed = ed;
 
   setPosFromObj();
@@ -174,7 +174,7 @@ PNGLShape::buildParams()
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_LINK, _obj, "links", "links")); // FIXME _obj should'nt be given as param
   else
   {
-	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_ACTIVESTRING, &_label, "label", "label"));
+	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_STRING, &_label, "label", "label"));
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_FILE, &_temppath, "model", "model"));
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_DIALX, _obj, "Pitch", "Pitch"));
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_DIALY, _obj, "Yaw", "Yaw"));
@@ -185,7 +185,7 @@ PNGLShape::buildParams()
 	  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_ANIMLIST, &((PN3DSkeletonObject*)_obj)->getAnimations(), "Animations", "Animations"));
   }
 
-  _grid->addObject(this);
+  _panel->addObject(this);
 }
 
 void
@@ -297,6 +297,9 @@ void PNGLShape::update(PNConfigurableParameter* p)
 	PN3DModel* m = (PN3DModel*)PNImportManager::getInstance()->import(_temppath, PN_IMPORT_3DMODEL);
 	_obj->set3DModel(m);
   }
+  else if (p->getElem() == &_label)
+	_panel->updateListBox();
+
   _ed->redraw();
 
   return;
@@ -444,7 +447,7 @@ PNGLShape::unserializeFromXML(xmlNode* root)
   }
   else
   {
-	_obj->setFile(fs::path(DEF::objectFilePath + mdref, fs::native));
+	_obj->setPath(DEF::objectFilePath + mdref);
 	setModified();
   }
 
@@ -482,7 +485,7 @@ PNGLShape::serializeInXML(xmlNode* root, pnbool isroot/* = false*/)
   xmlNewProp(root, PNXML_ID_ATTR, BAD_CAST os.str().c_str());
 
   xmlNewProp(root, PNXML_LABEL_ATTR, BAD_CAST getLabel().c_str());
-  xmlNewProp(root, PNXML_MODELREFERENCE_ATTR,BAD_CAST DEF::convertPath(DEF::objectFilePath, _obj->getFile()->string()).c_str());
+  xmlNewProp(root, PNXML_MODELREFERENCE_ATTR,BAD_CAST DEF::convertPath(DEF::objectFilePath, *_obj->getPath()).c_str());
 
   switch (getEnvType())
   {

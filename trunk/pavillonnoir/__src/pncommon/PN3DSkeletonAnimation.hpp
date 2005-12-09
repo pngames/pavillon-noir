@@ -86,13 +86,13 @@ public:
 
 protected:
   typedef std::vector<PNConfigurableParameter*> ParametersVector;
-  ParametersVector			_params;
+  ParametersVector					_params;
 
 public:
-  void								update(PNConfigurableParameter* p) { }
-  pnint								getNbParameters() { return _params.size(); }
-  virtual PNConfigurableParameter*	getParameter(pnint idx) { return _params[idx]; }
-  virtual const std::string&		getLabel() { return ""; }
+  void								update(PNConfigurableParameter* p);
+  pnint								getNbParameters();
+  virtual PNConfigurableParameter*	getParameter(pnint idx);
+  virtual const std::string&		getLabel();
 };
 
 //////////////////////////////////////////////////////////////////////////

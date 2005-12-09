@@ -110,19 +110,44 @@ PN3DSkeletonAnimation::getRootNodeName() const
 pnint
 PN3DSkeletonAnimation::unserializeFromXML(xmlNode* root)
 {
-  for (root = root->children ; root != NULL; root = root->next)
-	;///TODO: parse
+  looping = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_LOOP, false);
 
   return PNEC_SUCCESS;
 }
 
 /// Save 3DObject into XML file
 pnint
-PN3DSkeletonAnimation::serializeInXML(xmlNode* node, pnbool isroot)
+PN3DSkeletonAnimation::serializeInXML(xmlNode* root, pnbool isroot)
 {
-  ///TODO: write
+  XMLUtils::xmlNewProp(root, PNO_ANIM_XMLPROP_LOOP, looping);
 
   return PNEC_SUCCESS;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// ConfigurableObject stuffs
+
+void
+PN3DSkeletonAnimation::update(PNConfigurableParameter* p)
+{ 
+}
+
+pnint
+PN3DSkeletonAnimation::getNbParameters()
+{
+  return (pnint)_params.size();
+}
+
+PNConfigurableParameter*
+PN3DSkeletonAnimation::getParameter(pnint idx)
+{
+  return _params[idx];
+}
+
+const std::string&
+PN3DSkeletonAnimation::getLabel()
+{
+  return *anim->getFile();
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -65,7 +65,7 @@ PNIModelImporter::doImport(const fs::path& path)
 
   PNI3DModel* obj = new PNI3DModel();
 
-  pnuint error = obj->unserializeFromFile(path);
+  pnuint error = obj->unserializeFromPath(path.string());
 
   if (error != PNEC_SUCCESS)
   {

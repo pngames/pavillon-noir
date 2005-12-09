@@ -62,7 +62,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  boost::filesystem::path*	getFile();
+  std::string*				getFile();
 
   pnint						unserializeFromStream(std::istream& i);
 

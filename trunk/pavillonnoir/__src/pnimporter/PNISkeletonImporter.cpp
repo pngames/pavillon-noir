@@ -65,7 +65,7 @@ PNISkeletonImporter::doImport(const fs::path& path)
 
   PNI3DSkeleton* obj = new PNI3DSkeleton();
 
-  pnuint error = obj->unserializeFromFile(path);
+  pnuint error = obj->unserializeFromPath(path.string());
 
   if (error != PNEC_SUCCESS)
   {

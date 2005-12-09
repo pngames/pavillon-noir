@@ -68,12 +68,12 @@ class						PNGLShape : public FXGLShape, public PNConfigurableObject, public IPN
   FXDECLARE_ABSTRACT(PNGLShape);
 
   PNEditor*			  		_ed;
-  PNPropertiesPanel*  		_grid;
+  PNPropertiesPanel*  		_panel;
 
   PN3DObject*				_obj;
   pnbool					_objLoaded;
 
-  boost::filesystem::path	_temppath;
+  std::string				_temppath;
   int				  		_id;
   PNEnvType			  		_envType;
   bool				  		_canDrag;
@@ -88,8 +88,8 @@ public:
   FXint				  		slices;   // Longitudinal subdivision
   FXint				  		stacks;   // Latitudinal subdivision
 
-  PNGLShape(xmlNode* node, PNPropertiesPanel* grid, PNEditor* ed);
-  PNGLShape(PN3DObject* obj, PNPropertiesPanel* grid, PNEditor* ed, PNEnvType envType, std::string classStr = "PN3DObject", int id = 0, std::string label = "No label");
+  PNGLShape(xmlNode* node, PNPropertiesPanel* panel, PNEditor* ed);
+  PNGLShape(PN3DObject* obj, PNPropertiesPanel* panel, PNEditor* ed, PNEnvType envType, std::string classStr = "PN3DObject", int id = 0, std::string label = "No label");
 
   virtual ~PNGLShape();
 

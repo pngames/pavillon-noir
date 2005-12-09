@@ -154,7 +154,7 @@ protected:
   pnint							_unserializeNode(xmlNode* node);
 
 public:
-  boost::filesystem::path*		getFile();
+  std::string*					getFile();
   pnint							unserializeFromXML(xmlNode* node);
 };
 }

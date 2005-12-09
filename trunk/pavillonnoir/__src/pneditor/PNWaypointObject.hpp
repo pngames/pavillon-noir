@@ -43,31 +43,31 @@
 
 ///////////////////////////////
 
-namespace PN 
-{
-  //////////////////////////////////////////////////////////////////////////
+namespace PN { namespace EDITOR {
+//////////////////////////////////////////////////////////////////////////
   
-  class PNWaypointObject : public PNConfigurableObject
-  {
-    private:
-      std::string							  _label;
-      std::vector<PNConfigurableParameter*>   _parameters;
-      
-    public:
-      PNWaypointObject(std::string label);
-      ~PNWaypointObject();
+class PNWaypointObject : public PNConfigurableObject
+{
+private:
+  std::string							  _label;
+  std::vector<PNConfigurableParameter*>   _parameters;
 
-      void    update(PNConfigurableParameter* p);
-	  void    addParameter(pnparamtype type, void* elem, const std::string& label, const std::string& altText);
+public:
+  PNWaypointObject(std::string label);
+  ~PNWaypointObject();
 
-      int getNbParameters();
-      PNConfigurableParameter* getParameter(int idx);
+  void    update(PNConfigurableParameter* p);
+  void    addParameter(pnparamtype type, void* elem, const std::string& label, const std::string& altText);
 
-      // for tests only
-      void          setLabel(std::string label) { _label = label; };
-      const std::string&   getLabel() { return _label; };
-  };
-    //////////////////////////////////////////////////////////////////////////
+  int getNbParameters();
+  PNConfigurableParameter* getParameter(int idx);
+
+  // for tests only
+  void          setLabel(std::string label) { _label = label; };
+  const std::string&   getLabel() { return _label; };
 };
+
+//////////////////////////////////////////////////////////////////////////
+};};
 
 #endif /* _PNWAYPOINTOBJECT_HPP_ */

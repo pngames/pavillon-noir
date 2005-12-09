@@ -109,7 +109,7 @@ IPNXMLSerializable::unserializeFromFile(const boost::filesystem::path& file)
   if (fs::is_directory(file))
 	return PNEC_NOT_A_FILE;
 
-  setFile(file);
+  //////////////////////////////////////////////////////////////////////////
 
   xmlParserCtxtPtr	ctxt;
   xmlDocPtr			doc;
@@ -128,8 +128,6 @@ IPNXMLSerializable::unserializeFromFile(const boost::filesystem::path& file)
   xmlNodePtr  node = xmlDocGetRootElement(doc);
 
   //////////////////////////////////////////////////////////////////////////
-  
-  _file = file;
 
   pnint error = unserializeFromXML(node);
 

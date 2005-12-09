@@ -60,10 +60,10 @@ PNI3DAnimation::getTotalTime()
 
 //////////////////////////////////////////////////////////////////////////
 
-boost::filesystem::path*
+std::string*
 PNI3DAnimation::getFile()
 {
-  return IPNSerializable::getFile();
+  return IPNSerializable::getPath();
 }
 
 pnint

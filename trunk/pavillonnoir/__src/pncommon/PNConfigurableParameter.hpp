@@ -42,9 +42,8 @@ typedef enum
   PN_PARAMTYPE_INT,				// based on int
   PN_PARAMTYPE_REAL,			// based on float
   PN_PARAMTYPE_STRING,			// based on std::string
-  PN_PARAMTYPE_ACTIVESTRING,	
-  PN_PARAMTYPE_FILE,			// based on boost:filesystem:path
-  PN_PARAMTYPE_DIR,				// based on boost:filesystem:path
+  PN_PARAMTYPE_FILE,			// based on std::string
+  PN_PARAMTYPE_DIR,				// based on std::string
   PN_PARAMTYPE_LINK,
   PN_PARAMTYPE_DIALX,
   PN_PARAMTYPE_DIALY,
@@ -55,8 +54,8 @@ typedef enum
   PN_PARAMTYPE_INTLIST,			// based on std:list<int>
   PN_PARAMTYPE_REALLIST,		// based on std:list<float>
   PN_PARAMTYPE_STRINGLIST,		// based on std:list<std::string>
-  PN_PARAMTYPE_FILELIST,		// based on std:list<boost:filesystem:path>
-  PN_PARAMTYPE_DIRLIST,			// based on std:list<boost:filesystem:path>
+  PN_PARAMTYPE_FILELIST,		// based on std:list<std::string>
+  PN_PARAMTYPE_DIRLIST,			// based on std:list<std::string>
   PN_PARAMTYPE_LINKLIST,
   PN_PARAMTYPE_MATERIAL,		// based on PNMaterial*
   PN_PARAMTYPE_MATERIALLIST,	// based on PN3DObject:VectorMaterial
@@ -74,6 +73,7 @@ protected:
   PNConfigurableObject*	_p;
   pnparamtype			_type;
 
+  std::string			_name;
   void*					_elem;
   void*					_max;
   void*					_min;

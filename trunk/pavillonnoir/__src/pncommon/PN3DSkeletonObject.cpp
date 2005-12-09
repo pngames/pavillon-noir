@@ -68,6 +68,9 @@ PN3DSkeletonObject::~PN3DSkeletonObject()
 {
   if (_skeleton != NULL)
 	delete _skeleton;
+
+  for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
+	delete *it;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -92,19 +95,22 @@ PN3DSkeletonObject::_parseAnimations(xmlNode* parent)
 	{
 	  fs::path	  p(DEF::animationFilePath + (const char*)attr, fs::native);
 
-	  anim = (PN3DAnimation*)PNImportManager::getInstance()->
-		import(p, PN_IMPORT_3DANIMATION);
+	  if ((anim = (PN3DAnimation*)PNImportManager::getInstance()->import(p, PN_IMPORT_3DANIMATION))= NULL)
+		return PNEC_ERROR;
 	}
+	else
+	  return PNEC_FAILED_TO_PARSE;
 
-	PN3DSkeletonAnimation	skanim(anim, this);
+	PN3DSkeletonAnimation*	skanim = new PN3DSkeletonAnimation(anim, this);
 
 	//////////////////////////////////////////////////////////////////////////
 
-	skanim.speed = (pnfloat)_animSpeed;
-	skanim.looping = XMLUtils::xmlGetProp(node, PNO_ANIM_XMLPROP_LOOP, false);
+	skanim->speed = (pnfloat)_animSpeed;
 
 	if (XMLUtils::xmlGetProp(node, PNO_XMLPROP_ENABLED, false))
 	  startAnimation((pnuint)_anims.size());
+
+	skanim->unserializeFromXML(node);
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -175,7 +181,7 @@ PN3DSkeletonObject::_serializeContent(xmlNode* root)
   if (_skeleton != NULL && _skeleton->getFile() != NULL)
   {
 	node = xmlNewChild(root, NULL, BAD_CAST PNO_XMLNODE_SKELETON.c_str(), NULL);
-	xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::skeletonFilePath, _skeleton->getFile()->string()).c_str());
+	xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::skeletonFilePath, *_skeleton->getFile()).c_str());
   }
 
   if (_anims.size() > 0)
@@ -183,14 +189,14 @@ PN3DSkeletonObject::_serializeContent(xmlNode* root)
 	root = xmlNewChild(root, NULL, BAD_CAST PNO_XMLNODE_LISTANIMS.c_str(), NULL);
 
 	for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
-	  if (it->anim != NULL && it->anim->getFile() != NULL)
+	  if ((*it)->anim != NULL && (*it)->anim->getFile() != NULL)
 	  {
-		PN3DSkeletonAnimation* skAnimation = &(*it);
+		PN3DSkeletonAnimation* skAnimation = *it;
   
 		node = xmlNewChild(root, NULL, BAD_CAST PNOA_XMLNODE_ROOT.c_str(), NULL);
-		xmlNewProp(node, PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::animationFilePath, skAnimation->anim->getFile()->string()).c_str());
+		xmlNewProp(node, PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::animationFilePath, *skAnimation->anim->getFile()).c_str());
 
-		XMLUtils::xmlNewProp(node, PNO_ANIM_XMLPROP_LOOP, skAnimation->looping);
+		skAnimation->serializeInXML(node, true);
 
 		if (_animsToPlay.find(skAnimation) != _animsToPlay.end())
 		  XMLUtils::xmlNewProp(node, PNO_XMLPROP_ENABLED, true);
@@ -286,12 +292,12 @@ PN3DSkeletonObject::setEnable(pnuint animId, pnbool enabled)
   if (animId < 0 || (pnuint)animId >= _anims.size())
 	return PNEC_ERROR;
   
-  _anims[animId].playId = (pnint)animId;
+  _anims[animId]->playId = (pnint)animId;
 
   if (enabled)
-	_animsToPlay.insert(&_anims[animId]);
+	_animsToPlay.insert(_anims[animId]);
   else
-	_animsToPlay.erase(&_anims[_animId]);
+	_animsToPlay.erase(_anims[_animId]);
 
   return PNEC_SUCCESS;
 }
@@ -302,7 +308,7 @@ PN3DSkeletonObject::isEnable(pnuint animId)
   if (animId < 0 || (pnuint)animId >= _anims.size())
 	return false;
 
-  return _animsToPlay.find(&_anims[animId]) != _animsToPlay.end();
+  return _animsToPlay.find(_anims[animId]) != _animsToPlay.end();
 }
 
 pnuint
@@ -340,7 +346,7 @@ PN3DSkeletonObject::startAnimation(pnuint animId)
 
   //////////////////////////////////////////////////////////////////////////
 
-  _anims[animId].step = 0;
+  _anims[animId]->step = 0;
 
   return setEnable(animId, true);
 }
@@ -353,7 +359,7 @@ PN3DSkeletonObject::setAnimSpeed(pnfloat speed)
   PNLOCK(this);
 
   for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
-	it->speed = speed;
+	(*it)->speed = speed;
 
   return IPNAnimated::setAnimSpeed(speed);
 }
@@ -369,7 +375,7 @@ PN3DSkeletonObject::setAnimSpeed(pnint animId, pnfloat speed)
   /*assert(animId >= 0 && (pnuint)animId < _anims.size()
 	&& "This animation does not exist.");*/
 
-  _anims[animId].speed = speed;
+  _anims[animId]->speed = speed;
 
   return PNEC_SUCCESS;
 }
@@ -380,7 +386,7 @@ PN3DSkeletonObject::setAnimWeight(pnfloat weight)
   PNLOCK(this);
 
   for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
-	it->weight = weight;
+	(*it)->weight = weight;
 
   return PNEC_SUCCESS;
 }
@@ -395,7 +401,7 @@ PN3DSkeletonObject::setAnimWeight(pnint animId, pnfloat weight)
   /*assert(animId >= 0 && (pnuint)animId < _anims.size()
 	&& "This animation does not exist.");*/
 
-  _anims[animId].weight = weight;
+  _anims[animId]->weight = weight;
 
   return PNEC_SUCCESS;
 }
@@ -406,7 +412,7 @@ PN3DSkeletonObject::setEnableLoop(pnbool loop)
   PNLOCK(this);
 
   for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
-	it->looping = loop;
+	(*it)->looping = loop;
 
   return IPNAnimated::setEnableLoop(loop);
 }
@@ -419,7 +425,7 @@ PN3DSkeletonObject::setEnableLoop(pnint animId, pnbool loop)
   if (animId < 0 || (pnuint)animId >= _anims.size())
 	return PNEC_ERROR;
 
-  _anims[animId].looping = loop;
+  _anims[animId]->looping = loop;
 
   return PNEC_SUCCESS;
 }
