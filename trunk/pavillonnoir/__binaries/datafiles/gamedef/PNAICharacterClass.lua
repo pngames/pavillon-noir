@@ -24,11 +24,12 @@ function PNAICharacterClass(id)
 	OBJ.elapsedTurns = 0
 	OBJ.pastStates = {}
 	OBJ.ennemies = {}
+--	pnprint("PNCharacterClass creating 3\n")
 --------------------------------------------------------
 --[[%
 Called at the update
 Calls a Behaviour Function depending on the state in which the character is
-%--]]		
+%--]]
 	function OBJ:beSmart()
 		--print("==>> PNAICharacter:beSmart()")
 	    --print(self)
@@ -97,7 +98,7 @@ Prepares the character to handle the PathFinding
 Called when an ennemy enters the frustrum
 Prepares the Character to handle a fight
 %--]]
-	function OBJ:startFight()	
+	function OBJ:startFight()
 	    print("==>> PNAICharacter:startFight()")
 	    print(self)
 	    print("<<== PNAICharacter:startFight()")

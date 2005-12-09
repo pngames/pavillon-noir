@@ -223,7 +223,7 @@ PN3DSkeletonObject::update(pnuint deltaTime)
   {
 	IPNAnimated::update(deltaTime);
 
-	for (AnimationSet::iterator it = _animsToPlay.begin(); it != _animsToPlay.end(); ++it)
+	for (AnimationSet::iterator it = _animsToPlay.begin(); it != _animsToPlay.end();)
 	{
 	  PN3DSkeletonAnimation*  anim = *it;
 	  if (!anim->update(deltaTime))
@@ -233,6 +233,8 @@ PN3DSkeletonObject::update(pnuint deltaTime)
 
 		_animsToPlay.erase(itmp);
 	  }
+	  else
+		++it;
 	}
 
 	//////////////////////////////////////////////////////////////////////////
