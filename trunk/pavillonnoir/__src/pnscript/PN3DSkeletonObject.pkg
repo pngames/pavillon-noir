@@ -10,6 +10,8 @@ public:
 
 //////////////////////////////////////////////////////////////////////////
   
+  pnuint					startAnimation();
+  pnuint					startAnimation(pnuint animId);
   /// Set animation to play and the time used to make the transition between last animation and this
    unsigned int			startAnimation(int animation, unsigned int transTime);
   /// Stop current animation and reset position

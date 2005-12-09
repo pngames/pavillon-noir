@@ -19,7 +19,7 @@ function PNAICharacterClass(id)
 	OBJ.pathFinding:unserializeFromPath(gameMap:getWpFile())
 --	pnprint("pathFinding created\n")
 	OBJ.toReach = PN3DObject:new_local()
-	OBJ.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2}
+	OBJ.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2, PN_IA_WAIT_ANIM_END = 3}
 	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
 	OBJ.elapsedTurns = 0
 	OBJ.pastStates = {}
@@ -129,10 +129,10 @@ Called when a behaviour is not needed anymore
 Sets the character's behaviour to the previous state on the stack
 %--]]
 	function OBJ:restoreState()
---		pnprint("=> PNCharacter:restoreState()\n")
+		pnprint("=> PNCharacter:restoreState()\n")
 		self.state = self.pastStates[0]
 		table.remove(self.pastStates,0)
---		pnprint("<= PNCharacter:restoreState()\n")
+		pnprint("<= PNCharacter:restoreState()\n")
 	end
 --------------------------------------------------------
 --[[%
@@ -196,8 +196,33 @@ Called at the end of a Fight Action
 %--]]
 	OVERRIDE(OBJ, "onDamage")
 	function OBJ:onDamage(damage)
-		self.combat_state = COMBAT_STATE.NEUTRAL
-		pnprint(self.id .. " gets " .. damage .. " damage\n")
+		pnprint(self.id .. " gets " .. damage .. " as damage\n")
+	end
+--------------------------------------------------------
+--[[%
+Launches an Animation and waits for its end
+%--]]
+	OVERRIDE(OBJ, "waitForAnimEnd")
+	function OBJ:waitForAnimEnd(anim)
+		pnprint(self.id .. ":waitForAnimEnd(" .. anim .. ")\n")
+		self.waitedAnim = anim
+		self:startAnimation(anim)
+		self:setState(self.stateEnum.PN_IA_WAIT_ANIM_END)
+	end
+--------------------------------------------------------
+--[[%
+Checks if waited Animation is the one that ended
+%--]]
+	OVERRIDE(OBJ, "checkAnimEnd")
+	function OBJ:checkAnimEnd(anim)
+		pnprint("=> PNAICharacter:checkAnimEnd\n")
+		if ((self.state == self.stateEnum.PN_IA_WAIT_ANIM_END) and (self.waitedAnim == anim)) then
+			restoreState()
+			if (self.state == self.stateEnum.PN_IA_FIGHTING and (self.combat_state == COMBAT_STATE.ATTACK)) then
+				self.combat_state = COMBAT_STATE.NEUTRAL
+			end
+		end
+		pnprint("<= PNAICharacter:checkAnimEnd\n")
 	end
 --------------------------------------------------------
 --[[%
