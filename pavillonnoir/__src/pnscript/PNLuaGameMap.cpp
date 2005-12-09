@@ -42,6 +42,7 @@ extern "C"
 #include "PNObject.hpp"
 #include "PN3DObject.hpp"
 #include "PN3DCamera.hpp"
+#include "PN3DSkeletonObject.hpp"
 #include "PNLuaGameMap.hpp"
 #include "PNLuaGameUtil.h"
 #include "PNLuaGame.hpp"
@@ -241,6 +242,20 @@ void  PNLuaGameMap::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData
   }
 }
 
+void  PNLuaGameMap::onAnimEnd(pnEventType evt, PNObject* source, PNEventData* data)
+{
+  PNObjectAnimationEventData* animData = (PNObjectAnimationEventData*)data;
+  PN3DSkeletonObject*		  obj = (PN3DSkeletonObject*)source;
+  std::string				  luaOrder;
+
+  luaOrder = "gameMap.entities.all[\"";
+  luaOrder += obj->getId().c_str();
+  luaOrder += "\"]:checkAnimEnd(\"";
+  luaOrder += animData->playId;
+  luaOrder += "\")";
+  pnerror(PN_LOGLVL_DEBUG, "%s", luaOrder.c_str());
+  manageLuaError(_LVM.execString(luaOrder));
+}
 
 void  PNLuaGameMap::onMouseMove(pnEventType evt, PNObject* source, PNEventData* data)
 {
@@ -267,6 +282,7 @@ void  PNLuaGameMap::registerInGameCallbacks()
   PNEventManager::getInstance()->addCallback(PN_EVENT_MOUSE_MOVE, EventCallback(this, &PNLuaGameMap::onMouseMove));
   PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGameMap::onGameAction)); 
   PNEventManager::getInstance()->addCallback(PN_EVENT_COLLISION, EventCallback(this, &PNLuaGameMap::onColision));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_OA_ENDED, EventCallback(this, &PNLuaGameMap::onAnimEnd));
   pnerror(PN_LOGLVL_DEBUG, "in game callbacks registered");
 }
 
@@ -280,5 +296,6 @@ void  PNLuaGameMap::unregisterInGameCallbacks()
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_MOUSE_MOVE, EventCallback(this, &PNLuaGameMap::onMouseMove));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGameMap::onGameAction)); 
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_COLLISION, EventCallback(this, &PNLuaGameMap::onColision));
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_OA_ENDED, EventCallback(this, &PNLuaGameMap::onAnimEnd));
   pnerror(PN_LOGLVL_DEBUG, "in game callbacks unregistered");
 }

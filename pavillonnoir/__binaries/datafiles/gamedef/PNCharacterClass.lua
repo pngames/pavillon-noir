@@ -1,4 +1,3 @@
-
 COMBAT_STATE={NEUTRAL=0,
 			 ATTACK=1,
 			 DEFENCE=2,
@@ -35,25 +34,30 @@ CHARACTER_ANIM={IDLE=0,
 				CROUCH_R=13,
 				JUMP=14,
 				DIE=15,
-				STRIKE_1=16
+				STRIKE_HEAD=16,
+				STRIKE_TORSO=17,
+				STRIKE_LARM=18,
+				STRIKE_RARM=19,
+				STRIKE_LLEG=20,
+				STRIKE_RLEG=21
 				}
-								
+
 CHARACTER_ATTITUDE={WALKING=0,
 				  	RUNNING=1,
 				  	CROUCHING=2,
 				  	JUMPING=3
 				  	}
-				  
+
 CHARACTER_DIR_LONG={NONE=0,
 					FORWARD=1,
 					BACKWARD=-1
 					}
-					
+
 CHARACTER_DIR_LATE={NONE=0,
 					LEFT=1,
 				  	RIGHT=-1
 				    }
-				  
+
 function PNCharacterClass(id)
 	----------inheritance-----------------
 	local OBJ = inheritFrom(PN3DSkeletonObjectClass(id))
@@ -128,6 +132,7 @@ function PNCharacterClass(id)
 	--------------- Animation parameters ---------------------- 
 	OBJ:setAnimSpeed(4.0)
 	OBJ.idleTime = 0
+	OBJ.waitedAnim = 0
 	----------------- Fight Management ------------------------ 
 	OBJ.armor = 0
 	gameMap.fights[OBJ.id] = -1
@@ -384,7 +389,7 @@ Returns the type of the character that is visible to others
 	end
 --------------------------------------------------------------------------------
 	function OBJ:launchGoodAnimation()
-		 --[[
+		--[[
 		self:setEnableLoop(true)
 		if (self.attitude == CHARACTER_ATTITUDE.WALKING) then
 			--pnprint ("walk\n")
@@ -483,11 +488,17 @@ Returns the type of the character that is visible to others
 		end
 
 --]]end
-	
+--------------------------------------------------------
+--[[%
+Add comment here
+%--]]
 	function OBJ:updateJump()
 		
 	end
-	
+--------------------------------------------------------
+--[[%
+Launches an Animation and waits for its end
+%--]]
 	function OBJ:getNBFightSuccess()
 		-- Success Modifier
 		local MDsuccess = 0
@@ -522,6 +533,18 @@ Returns the type of the character that is visible to others
 
 		return nbS
 	end
-
+--------------------------------------------------------
+--[[%
+Launches an Animation and waits for its end
+%--]]
+	function OBJ:waitForAnimEnd(anim)
+	end
+--------------------------------------------------------
+--[[%
+Checks if waited Animation is the one that ended
+%--]]
+	function OBJ:checkAnimEnd(anim)
+	end
+--------------------------------------------------------
 	return OBJ
 end
