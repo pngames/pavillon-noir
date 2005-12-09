@@ -246,15 +246,15 @@ void  PNLuaGameMap::onAnimEnd(pnEventType evt, PNObject* source, PNEventData* da
 {
   PNObjectAnimationEventData* animData = (PNObjectAnimationEventData*)data;
   PN3DSkeletonObject*		  obj = (PN3DSkeletonObject*)source;
-  std::string				  luaOrder;
+  std::ostringstream 		  luaOrder;
 
-  luaOrder = "gameMap.entities.all[\"";
-  luaOrder += obj->getId().c_str();
-  luaOrder += "\"]:checkAnimEnd(\"";
-  luaOrder += animData->playId;
-  luaOrder += "\")";
-  pnerror(PN_LOGLVL_DEBUG, "%s", luaOrder.c_str());
-  manageLuaError(_LVM.execString(luaOrder));
+  luaOrder << "gameMap.entities.all[\"";
+  luaOrder << obj->getId();
+  luaOrder << "\"]:checkAnimEnd(\"";
+  luaOrder << animData->playId;
+  luaOrder << "\")";
+  pnerror(PN_LOGLVL_DEBUG, "%s", luaOrder.str().c_str());
+  manageLuaError(_LVM.execString(luaOrder.str()));
 }
 
 void  PNLuaGameMap::onMouseMove(pnEventType evt, PNObject* source, PNEventData* data)
