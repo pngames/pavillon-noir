@@ -199,10 +199,6 @@
 				Name="parameters"
 				>
 				<File
-					RelativePath="..\..\..\__src\pneditorcommon\PNFXActiveStringParameter.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\__src\pneditorcommon\PNFXAnimListParameter.cpp"
 					>
 				</File>
@@ -284,10 +280,6 @@
 			<Filter
 				Name="Parameters"
 				>
-				<File
-					RelativePath="..\..\..\__src\pneditorcommon\PNFXActiveStringParameter.hpp"
-					>
-				</File>
 				<File
 					RelativePath="..\..\..\__src\pneditorcommon\PNFXAnimListParameter.hpp"
 					>

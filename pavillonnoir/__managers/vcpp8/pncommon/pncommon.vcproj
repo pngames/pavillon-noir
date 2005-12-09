@@ -541,6 +541,14 @@
 			Name="properties"
 			>
 			<File
+				RelativePath="..\..\..\__src\pncommon\PNBoolParameter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNBoolParameter.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\PNConfigurableObject.hpp"
 				>
 			</File>
@@ -550,6 +558,22 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNConfigurableParameter.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNFloatParameter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNFloatParameter.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNIntParameter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNIntParameter.hpp"
 				>
 			</File>
 			<File
@@ -566,6 +590,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNStringParameter.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNUIntParameter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNUIntParameter.hpp"
 				>
 			</File>
 		</Filter>

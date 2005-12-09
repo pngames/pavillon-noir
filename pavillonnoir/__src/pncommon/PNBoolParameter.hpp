@@ -1,8 +1,8 @@
 /*
-* PNStringParameter.hpp
+* PNBoolParameter.hpp
 * 
 * Description :
-* PNStringParameter declaration
+* PNBoolParameter declaration
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,10 +27,8 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#ifndef _PNSTRINGPARAMETER_HPP_
-# define _PNSTRINGPARAMETER_HPP_
-
-#include <string>
+#ifndef _PNBOOLPARAMETER_HPP_
+# define _PNBOOLPARAMETER_HPP_
 
 #include "PNConfigurableParameter.hpp"
 
@@ -39,24 +37,23 @@ namespace PN {
 
 class PNConfigurableObject;
 
-class PNAPI				PNStringParameter : public PNConfigurableParameter
+class PNAPI				PNBoolParameter : public PNConfigurableParameter
 {
 private:
-  std::string			_str;
+  pnbool				_bool;
 
 public:
-  PNStringParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable = true);
-  PNStringParameter(PNConfigurableObject* p, const std::string& param, const std::string& label, const std::string& altText, bool editable = true);
-  virtual ~PNStringParameter();
+  PNBoolParameter(PNConfigurableObject* p, pnbool param, const std::string& label, const std::string& altText, bool editable = true);
+  virtual ~PNBoolParameter();
 
-  const std::string&	getString();
+  pnbool				getBool();
 
   //////////////////////////////////////////////////////////////////////////
   
-  operator				std::string&();
+  operator				pnbool&();
 };
 
   //////////////////////////////////////////////////////////////////////////
 };
 
-#endif /*_PNSTRINGPARAMETER_HPP_*/
+#endif /*_PNBOOLPARAMETER_HPP_*/

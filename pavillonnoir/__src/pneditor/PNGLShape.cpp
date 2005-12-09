@@ -139,6 +139,17 @@ PNGLShape::PNGLShape(xmlNode* node, PNPropertiesPanel* panel, PNEditor* ed)
   buildParams();
 }
 
+// Destroy
+PNGLShape::~PNGLShape()
+{
+  FXTRACE((100,"PNGLShape::~PNGLShape\n"));
+
+  for (ParametersVector::iterator it = _params.begin(); it != _params.end(); ++it)
+	delete *it;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 void
 PNGLShape::setMinMax()
 {
@@ -276,14 +287,6 @@ PNGLShape::selfRemove()
   _ed->removeShape((FXGLShape*)this);
   if (_obj->getObjType() == PN3DObject::OBJTYPE_WAYPOINT)
 	_ed->deleteWP((PNWayPoint*)_obj);
-}
-
-// Destroy
-PNGLShape::~PNGLShape()
-{
-  FXTRACE((100,"PNGLShape::~PNGLShape\n"));
-
-//  delete _obj;
 }
 
 //////////////////////////////////////////////////////////////////////////

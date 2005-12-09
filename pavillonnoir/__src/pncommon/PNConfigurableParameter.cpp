@@ -48,6 +48,8 @@ PNConfigurableParameter::PNConfigurableParameter(PNConfigurableObject* p,
 {	
   _p = p;
 
+  _name = label;
+
   _elem = elem;
   _max = max;
   _min = min;

@@ -60,6 +60,8 @@ PNWaypointObject::PNWaypointObject(std::string label)
 */
 PNWaypointObject::~PNWaypointObject()
 {
+  for (ParametersVector::iterator it = _params.begin(); it != _params.end(); ++it)
+	delete *it;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -90,15 +92,14 @@ void      PNWaypointObject::update(PNConfigurableParameter* p)
 */
 void      PNWaypointObject::addParameter(pnparamtype type, void* elem, const std::string& label, const std::string& altText)
 {
-  _parameters.push_back(new PNConfigurableParameter(this, type, elem, label, altText));
-  return;
+  _params.push_back(new PNConfigurableParameter(this, type, elem, label, altText));
 }
 
 /*! \brief  Returns the number of parameters for this object.
 */
 int PNWaypointObject::getNbParameters() 
 { 
-  return _parameters.size(); 
+  return _params.size();
 }
 
 /*! \brief  Returns the paramter at index idx.
@@ -106,7 +107,7 @@ int PNWaypointObject::getNbParameters()
 */
 PNConfigurableParameter* PNWaypointObject::getParameter(int idx) 
 {
-  return _parameters[idx]; 
+  return _params[idx]; 
 }
 
 ////////////////////////////////////////////////////////////////////////// 

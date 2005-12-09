@@ -187,7 +187,7 @@ PNGLRenderer::init()
   //////////////////////////////////////////////////////////////////////////
   
   PNEventManager::getInstance()->addCallback(PN_EVENT_VIDEO_START, EventCallback(this, &PNGLRenderer::_onPlayVideo));
-   PNEventManager::getInstance()->addCallback(PN_EVENT_RU_END, EventCallback(this, &PNGLRenderer::_endRenderLoop));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_RU_END, EventCallback(this, &PNGLRenderer::_endRenderLoop));
 }
 
 void
