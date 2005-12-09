@@ -205,13 +205,13 @@ IPNXMLSerializable::serializeInXML(xmlNode* node, pnbool root /*=false*/)
 namespace XMLUtils {
 //////////////////////////////////////////////////////////////////////////
 
-#define XML_TUE_VAL		(const xmlChar *)"enabled"
+#define XML_TRUE_VAL	(const xmlChar *)"true"
 #define XML_FALSE_VAL	(const xmlChar *)"false"
 
 PNAPI xmlAttr*
 xmlNewProp(xmlNode* node, const xmlChar *name, pnbool value)
 {
-  return xmlNewProp(node, name, value ? XML_TUE_VAL : XML_FALSE_VAL);
+  return xmlNewProp(node, name, value ? XML_TRUE_VAL : XML_FALSE_VAL);
 }
 
 PNAPI xmlAttr*
@@ -228,7 +228,7 @@ xmlGetProp(xmlNode* node, const pnuchar* name, pnbool def)
   if (att == NULL)
 	return def;
 
-  if (xmlStrEqual(att, XML_TUE_VAL))
+  if (xmlStrEqual(att, XML_TRUE_VAL))
 	return true;
   if (xmlStrEqual(att, XML_FALSE_VAL))
 	return false;

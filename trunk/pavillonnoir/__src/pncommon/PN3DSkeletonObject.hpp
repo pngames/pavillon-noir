@@ -97,7 +97,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
   
 public:
-  pnbool					setEnable(pnuint animId, pnbool enabled);
+  pnuint					setEnable(pnuint animId, pnbool enabled);
   pnbool					isEnable(pnuint animId);
 
   pnuint					stopAnimation();
