@@ -52,6 +52,7 @@ PNFXCheckButtonParameter::PNFXCheckButtonParameter(FXComposite* p, PNConfigurabl
 : FXCheckButton(p, ""),
 PNPropertiesGridParameter(param)
 {
+  this->setCheck(FALSE);
   update();
 }
 
@@ -66,7 +67,14 @@ void	PNFXCheckButtonParameter::create()
 
 void PNFXCheckButtonParameter::update()
 {
-  
+  if ((bool)_param->getElem() == true)
+  {
+	this->setCheck();
+  }
+  else
+  {
+	this->setCheck(FALSE);
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////
