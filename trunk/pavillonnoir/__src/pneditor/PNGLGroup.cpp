@@ -59,7 +59,8 @@ FXIMPLEMENT(PNGLGroup,FXGLGroup,NULL,0)
 
 PNGLGroup::PNGLGroup()
 {
-  
+   _mpp = 1.0f;
+   _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &_mpp, "mpp", "meters per pixel"));
 }
 
 PNGLGroup::~PNGLGroup()
@@ -322,4 +323,5 @@ PNGLGroup::serializeInXML(xmlNode* node, pnbool isroot/* = false*/)
 }
 
 //////////////////////////////////////////////////////////////////////////
+
 }};

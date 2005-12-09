@@ -39,6 +39,7 @@
 
 #include "PNGLShape.hpp"
 #include "PNGLGroup.hpp"
+#include "PNEDMapPanel.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -147,6 +148,7 @@ private:
   PNPropertiesPanel*	objPanel;
   PNPropertiesPanel*	wpPanel;
   PNEDSkyboxPanel*		_skPanel;
+  PNEDMapPanel*			_mapPanel;
 
   PNWayPoint*		_startWP;
   FXTabBook*		_panels;

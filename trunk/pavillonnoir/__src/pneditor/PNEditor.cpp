@@ -250,9 +250,12 @@ PNEditor::PNEditor(FXApp* a)
   wpPanel = new PNPropertiesPanel(_panels, PNPropertiesPanel::PN_PANELTYPE_WAYPOINTS, this);
 
   // Skybox
-
-  new FXTabItem(_panels, "Skybox\tSky box\tEdit skybox.");
+  new FXTabItem(_panels, "Skybox\tSkybox\tEdit skybox.");
   _skPanel = new PNEDSkyboxPanel(_panels, this);
+
+  // Map options
+  new FXTabItem(_panels, "Map options\tMap options\tEdit Map options.");
+  _mapPanel = new PNEDMapPanel(_panels, this);
 
   // Menus
 
@@ -334,8 +337,6 @@ PNEditor::PNEditor(FXApp* a)
   new FXSeparator(toolbar1,SEPARATOR_GROOVE);
   new FXToggleButton(toolbar1,"\tToggle Light\tToggle light source.",NULL,nolighticon,lighticon,NULL,0,BUTTON_TOOLBAR|FRAME_RAISED|LAYOUT_TOP|LAYOUT_LEFT);*/
 
-
-
   helpmenu = new FXMenuPane(this);
   new FXMenuTitle(menubar, "&Help", NULL, helpmenu);
   new FXMenuCommand(helpmenu, "&About FOX...\t\tDisplay FOX about panel.", 
@@ -389,6 +390,7 @@ void PNEditor::create()
   show(PLACEMENT_SCREEN);
 
   _genScene.init(this, objPanel);
+  _mapPanel->setObject((PNConfigurableObject*)&_genScene);
 }
 
 
@@ -708,12 +710,10 @@ long PNEditor::onUpdMode(FXObject* sender, FXSelector, void*)
 *  GLObject (if any). If that message isn't handled,  it tries to send it to the
 *  GLViewer's target (which in our case is the main window).
 */
-
 long PNEditor::onQueryMenu(FXObject* sender, FXSelector, void* ptr)
 {
   FXEvent *event = (FXEvent*)ptr;
   FXMenuPane pane(this);
-//  PNGLShape*  s = (PNGLShape*)viewer->getSelection(); // UNUSED
 
   // waypoints control
 //  new FXMenuCommand(&pane,"&Add waypoint", NULL, sender, PNEditor::ID_WP_ADD);
