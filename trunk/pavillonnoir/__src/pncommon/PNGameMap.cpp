@@ -209,6 +209,10 @@ PNGameMap::unserializeFromXML(xmlNode* node)
 pnint
 PNGameMap::unserializeFromFile(const fs::path& dir)
 {
+  _wpFile = dir.string() + "/waypoints.xml";
+
+  //////////////////////////////////////////////////////////////////////////
+  
   fs::path file(dir.string() + "/entities.xml", fs::native);
 
   return IPNXMLSerializable::unserializeFromFile(file);
@@ -267,5 +271,5 @@ void PNGameMap::clear()
 
 const std::string&	PNGameMap::getWpFile()
 {
-  return _wpFile->string();
+  return _wpFile;
 }
