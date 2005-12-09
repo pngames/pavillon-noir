@@ -57,5 +57,10 @@ PNStringParameter::getString()
   return _str;
 }
 
+PNStringParameter::operator	std::string&()
+{
+  return _str;
+}
+
 //////////////////////////////////////////////////////////////////////////
 };

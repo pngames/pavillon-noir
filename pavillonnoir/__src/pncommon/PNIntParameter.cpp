@@ -1,8 +1,8 @@
 /*
-* PNStringParameter.hpp
+* PNIntParameter.cpp
 * 
 * Description :
-* PNStringParameter declaration
+* PNIntParameter definition
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,36 +27,40 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#ifndef _PNSTRINGPARAMETER_HPP_
-# define _PNSTRINGPARAMETER_HPP_
+#include "pndefs.h"
 
-#include <string>
-
-#include "PNConfigurableParameter.hpp"
+#include "PNIntParameter.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNConfigurableObject;
-
-class PNAPI				PNStringParameter : public PNConfigurableParameter
+PNIntParameter::PNIntParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable/* = true*/)
+: PNConfigurableParameter(p, PN_PARAMTYPE_INT, &_int, label, altText, editable)
 {
-private:
-  std::string			_str;
 
-public:
-  PNStringParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable = true);
-  PNStringParameter(PNConfigurableObject* p, const std::string& param, const std::string& label, const std::string& altText, bool editable = true);
-  virtual ~PNStringParameter();
+}
 
-  const std::string&	getString();
+PNIntParameter::PNIntParameter(PNConfigurableObject* p, pnint param, const std::string& label, const std::string& altText, bool editable/* = true*/)
+: PNConfigurableParameter(p, PN_PARAMTYPE_INT, &_int, label, altText, editable)
+{
+  _int = param;
+}
 
-  //////////////////////////////////////////////////////////////////////////
-  
-  operator				std::string&();
+PNIntParameter::~PNIntParameter()
+{}
+
+//////////////////////////////////////////////////////////////////////////
+
+pnint
+PNIntParameter::getInt()
+{
+  return _int;
+}
+
+PNIntParameter::operator	pnint&()
+{
+  return _int;
+}
+
+//////////////////////////////////////////////////////////////////////////
 };
-
-  //////////////////////////////////////////////////////////////////////////
-};
-
-#endif /*_PNSTRINGPARAMETER_HPP_*/

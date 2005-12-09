@@ -47,19 +47,24 @@ PN3DSkeletonAnimation::PN3DSkeletonAnimation(PN3DAnimation* anim, PN3DSkeletonOb
 {
   _object = object;
 
+  this->looping = false;
+
+  this->step = -1;
+
   this->weight = 1.0f;
   this->speed = 1.0f;
 
   this->anim = anim;
 
-  this->_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &weight, "weight", "weight"));
-  this->_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &speed, "speed", "speed"));
-  this->_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_BOOLEAN, &looping, "looping", "looping"));
+  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_BOOLEAN, &looping, "looping", "looping"));
+  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &weight, "weight", "weight"));
+  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &speed, "speed", "speed"));
 }
 
 PN3DSkeletonAnimation::~PN3DSkeletonAnimation()
 {
-  
+  for (ParametersVector::iterator it = _params.begin(); it != _params.end(); ++it)
+	delete *it;
 }
 
 PN3DSkeletonObject*
@@ -110,7 +115,10 @@ PN3DSkeletonAnimation::getRootNodeName() const
 pnint
 PN3DSkeletonAnimation::unserializeFromXML(xmlNode* root)
 {
-  looping = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_LOOP, false);
+  looping = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_LOOP, looping);
+  step = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_STEP, step);
+  speed = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_SPEED, speed);
+  weight = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_WEIGHT, weight);
 
   return PNEC_SUCCESS;
 }
@@ -120,6 +128,9 @@ pnint
 PN3DSkeletonAnimation::serializeInXML(xmlNode* root, pnbool isroot)
 {
   XMLUtils::xmlNewProp(root, PNO_ANIM_XMLPROP_LOOP, looping);
+  XMLUtils::xmlNewProp(root, PNO_ANIM_XMLPROP_STEP, step);
+  XMLUtils::xmlNewProp(root, PNO_ANIM_XMLPROP_SPEED, speed);
+  XMLUtils::xmlNewProp(root, PNO_ANIM_XMLPROP_WEIGHT, weight);
 
   return PNEC_SUCCESS;
 }

@@ -1,8 +1,8 @@
 /*
-* PNStringParameter.hpp
+* PNUIntParameter.hpp
 * 
 * Description :
-* PNStringParameter declaration
+* PNUIntParameter declaration
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,10 +27,8 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#ifndef _PNSTRINGPARAMETER_HPP_
-# define _PNSTRINGPARAMETER_HPP_
-
-#include <string>
+#ifndef _PNUINTPARAMETER_HPP_
+# define _PNUINTPARAMETER_HPP_
 
 #include "PNConfigurableParameter.hpp"
 
@@ -39,24 +37,24 @@ namespace PN {
 
 class PNConfigurableObject;
 
-class PNAPI				PNStringParameter : public PNConfigurableParameter
+class PNAPI				PNUIntParameter : public PNConfigurableParameter
 {
 private:
-  std::string			_str;
+  pnuint				_uint;
 
 public:
-  PNStringParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable = true);
-  PNStringParameter(PNConfigurableObject* p, const std::string& param, const std::string& label, const std::string& altText, bool editable = true);
-  virtual ~PNStringParameter();
+  PNUIntParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable = true);
+  PNUIntParameter(PNConfigurableObject* p, pnuint param, const std::string& label, const std::string& altText, bool editable = true);
+  virtual ~PNUIntParameter();
 
-  const std::string&	getString();
+  pnuint				getUInt();
 
   //////////////////////////////////////////////////////////////////////////
   
-  operator				std::string&();
+  operator				pnuint&();
 };
 
   //////////////////////////////////////////////////////////////////////////
 };
 
-#endif /*_PNSTRINGPARAMETER_HPP_*/
+#endif /*_PNUINTPARAMETER_HPP_*/

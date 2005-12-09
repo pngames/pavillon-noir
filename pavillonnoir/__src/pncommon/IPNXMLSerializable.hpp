@@ -90,6 +90,11 @@ namespace XMLUtils
   PNAPI pnint					xmlGetProp(xmlNode* node, const pnuchar* name, pnint def);
   PNAPI pnint					xmlGetProp(xmlNode* node, const char* name, pnint def);
 
+  PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const pnuchar *name, pnuint value);
+  PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const char *name, pnuint value);
+  PNAPI pnuint					xmlGetProp(xmlNode* node, const pnuchar* name, pnuint def);
+  PNAPI pnuint					xmlGetProp(xmlNode* node, const char* name, pnuint def);
+
   PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const pnuchar *name, pnfloat value);
   PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const char *name, pnfloat value);
   PNAPI pnfloat					xmlGetProp(xmlNode* node, const pnuchar* name, pnfloat def);

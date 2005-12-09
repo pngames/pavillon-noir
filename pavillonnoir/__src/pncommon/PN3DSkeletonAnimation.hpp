@@ -46,39 +46,39 @@ class PN3DSkeletonObject;
 
 //////////////////////////////////////////////////////////////////////////
 
-class PNAPI				PN3DSkeletonAnimation : PNObject, IPNXMLSerializable, public PNConfigurableObject
+class PNAPI							PN3DSkeletonAnimation : PNObject, IPNXMLSerializable, public PNConfigurableObject
 {
-  PN3DSkeletonObject*	_object;
+  PN3DSkeletonObject*				_object;
 public:
-  PN3DAnimation*		anim;
+  PN3DAnimation*					anim;
 public:
   PN3DSkeletonAnimation(PN3DAnimation* anim, PN3DSkeletonObject* object);
   ~PN3DSkeletonAnimation();
 
-  pnbool				update(pnuint current);
+  pnbool							update(pnuint current);
 public:
-  pnint					playId;
+  pnint								playId;
 
-  pnbool				looping;
+  pnbool							looping;
 
-  pnuint				step;
+  pnuint							step;
 
-  pnfloat				speed;
-  pnfloat				weight;
+  pnfloat							speed;
+  pnfloat							weight;
 
   //////////////////////////////////////////////////////////////////////////
 
-  PN3DSkeletonObject*	getParent() const;
+  PN3DSkeletonObject*				getParent() const;
 
 protected:
-  const std::string&	getRootNodeName() const;
+  const std::string&				getRootNodeName() const;
 
 public:
   /// Parse XML root node
-  pnint					unserializeFromXML(xmlNode* node);
+  pnint								unserializeFromXML(xmlNode* node);
 
   /// Save 3DObject into XML file
-  pnint					serializeInXML(xmlNode* node, pnbool isroot = false);
+  pnint								serializeInXML(xmlNode* node, pnbool isroot = false);
 
   //////////////////////////////////////////////////////////////////////////
 

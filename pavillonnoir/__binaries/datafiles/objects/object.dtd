@@ -25,5 +25,8 @@
 <!ATTLIST anim path CDATA #IMPLIED>
 <!ATTLIST anim enabled (true|false) #IMPLIED>
 <!ATTLIST anim loop (true|false) #IMPLIED>
+<!ATTLIST anim step CDATA #IMPLIED>
+<!ATTLIST anim speed CDATA #IMPLIED>
+<!ATTLIST anim weight CDATA #IMPLIED>
 
 <!ATTLIST physics path CDATA #IMPLIED>

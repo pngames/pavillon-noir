@@ -276,6 +276,30 @@ xmlGetProp(xmlNode* node, const char* name, pnint def)
   return xmlGetProp(node, BAD_CAST name, def);
 }
 
+PNAPI xmlAttr*
+xmlNewProp(xmlNode* node, const pnuchar *name, pnuint value)
+{
+  return xmlNewProp(node, BAD_CAST name, (pnint)value);
+}
+
+PNAPI xmlAttr*
+xmlNewProp(xmlNode* node, const char *name, pnuint value)
+{
+  return xmlNewProp(node, BAD_CAST name, value);
+}
+
+PNAPI pnuint
+xmlGetProp(xmlNode* node, const pnuchar* name, pnuint def)
+{
+  return xmlGetProp(node, BAD_CAST name, (pnint)def);
+}
+
+PNAPI pnuint
+xmlGetProp(xmlNode* node, const char* name, pnuint def)
+{
+  return xmlGetProp(node, BAD_CAST name, def);
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 PNAPI xmlAttr*

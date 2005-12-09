@@ -34,7 +34,7 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
-class								PNPropertiesGridParameter
+class /*PNAPI*/						PNPropertiesGridParameter
 {
 protected:
   PNConfigurableParameter*			_param;
