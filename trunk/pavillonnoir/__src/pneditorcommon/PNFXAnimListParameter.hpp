@@ -37,6 +37,8 @@
 
 #include <fx.h>
 #include "pnproperties.h"
+#include "PN3DAnimation.hpp"
+#include "PN3DSkeletonAnimation.hpp"
 
 /////////////////////////////////////
 
@@ -53,7 +55,12 @@ class PNEDAPI PNFXAnimListParameter : public FXHorizontalFrame, public PNPropert
 
   FXListBox*				_listBox;
   FXButton*					_buttonDelete;
+  FXButton*					_buttonEdit;
   FXButton*					_buttonAdd;
+
+  FXDialogBox*				_animDialBox;
+  
+  PN3DSkeletonAnimation*	_skanim;
 
 protected:
   PNFXAnimListParameter() {}
@@ -67,15 +74,23 @@ public:
   enum 
   {
 	ID_ADD = FXHorizontalFrame::ID_LAST,
-	ID_DELETE
+	ID_DELETE,
+	ID_EDIT,
+	ID_DIAL_OK,
+	ID_DIAL_CANCEL
   };
 
 public:
   //	long	onCmdListBox(FXObject*,FXSelector,void*);
   long	onDelete(FXObject*,FXSelector,void* ptr);
   long	onAdd(FXObject* obj,FXSelector sel,void* ptr);
+  long	onEdit(FXObject* obj,FXSelector sel,void* ptr);
+  long	onDialOK(FXObject* obj,FXSelector sel,void* ptr);
+  long	onDialCancel(FXObject* obj,FXSelector sel,void* ptr);
   void	buildList(void);
   void	update(void);
+  void	showAnim(PNConfigurableObject* anim);
+  PN3DAnimation*  openAnim(void);
 };
 
 //////////////////////////////////////////////////////////////////////////
