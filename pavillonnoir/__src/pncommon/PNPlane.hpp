@@ -27,17 +27,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#ifndef PNPLANE_HPP_
-#define PNPLANE_HPP_
-
-////////////////////////////////////////
-
-#include "pndefs.h"
-#include "IAutoTestable.hpp"
+#ifndef _PNPLANE_HPP_
+# define _PNPLANE_HPP_
 
 ////////////////////////////////////////
 
 namespace PN {
+
+class PNPoint3f;
+class PNNormal3f;
+class PNVector3f;
 
 ////////////////////////////////////////
 
@@ -57,8 +56,8 @@ class PNAPI PNPlane
 public:
   PNPlane	();
   PNPlane	(pnfloat x, pnfloat y, pnfloat z, pnfloat d);
-  PNPlane	(const PNPoint3f& position, const PNNormal3f & orientation);
-  PNPlane	(const PNPlane & source);
+  PNPlane	(const PNPoint3f& position, const PNNormal3f& orientation);
+  PNPlane	(const PNPlane& source);
 
 public:
   virtual ~PNPlane	();
@@ -99,11 +98,8 @@ private:
 };
 
 ////////////////////////////////////////
-
-} /* end of namespace */
-
-////////////////////////////////////////
-
-#endif /* PNPLANE_HPP_ */
+};
 
 ////////////////////////////////////////
+
+#endif /* _PNPLANE_HPP_ */

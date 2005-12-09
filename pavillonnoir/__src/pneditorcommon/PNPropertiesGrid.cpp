@@ -31,7 +31,6 @@
 
 #include "PNPropertiesGrid.hpp"
 #include "PNFXStringParameter.hpp"
-#include "PNFXActiveStringParameter.hpp"
 #include "PNFXIntParameter.hpp"
 #include "PNFXRealParameter.hpp"
 #include "PNFXFileParameter.hpp"
@@ -91,9 +90,6 @@ PNPropertiesGrid::setObject(PNConfigurableObject* object)
 	{
 	case PN_PARAMTYPE_STRING:
 	  _params.push_back(new PNFXStringParameter(this, current_param));
-	  break;
-	case PN_PARAMTYPE_ACTIVESTRING:
-	  _params.push_back(new PNFXActiveStringParameter(this, current_param));
 	  break;
 	case PN_PARAMTYPE_INT:
 	  _params.push_back(new PNFXIntParameter(this, current_param));

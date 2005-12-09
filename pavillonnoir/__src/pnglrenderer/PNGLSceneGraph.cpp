@@ -120,6 +120,7 @@ PNGLSceneGraph::render(pnuint deltaTime, pnuint time)
   // Initialise le buffer de rendu
 
   glClearDepth(1.0);
+
   glDepthMask(GL_TRUE);
   glEnable(GL_DEPTH_TEST);
 

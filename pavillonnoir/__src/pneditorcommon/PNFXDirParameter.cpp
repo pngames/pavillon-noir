@@ -27,7 +27,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-
 #include <iostream>
 
 #include <fxkeys.h>
@@ -51,8 +50,7 @@ FXDEFMAP(PNFXDirParameter) PNFXDirParameterMap[]={
 FXIMPLEMENT(PNFXDirParameter,FXHorizontalFrame,PNFXDirParameterMap,ARRAYNUMBER(PNFXDirParameterMap))
 
 PNFXDirParameter::PNFXDirParameter(FXComposite* p, PNConfigurableParameter* param)
-: FXHorizontalFrame(p),
-PNPropertiesGridParameter(param)
+: FXHorizontalFrame(p), PNPropertiesGridParameter(param)
 {
   _field = new FXTextField(this, 24, NULL, 0, TEXTFIELD_NORMAL|FRAME_SUNKEN|FRAME_THICK|LAYOUT_SIDE_TOP);
   _button = new FXButton(this, "Browse", NULL, this, 0,FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_X|LAYOUT_CENTER_Y);
@@ -66,6 +64,7 @@ PNFXDirParameter::~PNFXDirParameter()
 void	PNFXDirParameter::create()
 {
   FXHorizontalFrame::create();
+
   _field->create();
   _button->create();
 }
@@ -75,7 +74,6 @@ void  PNFXDirParameter::update()
   string* str = (string*)_param->getElem();
   _field->setText(str->c_str());
   _field->setEditable(_param->isEditable());
-  return;
 }
 
 long	PNFXDirParameter::onBrowse(FXObject* obj,FXSelector sel, void* ptr)
@@ -87,6 +85,7 @@ long	PNFXDirParameter::onBrowse(FXObject* obj,FXSelector sel, void* ptr)
   {
 	_field->setText(open.getDirectory().text());
   }
+
   return 1;
 }
 

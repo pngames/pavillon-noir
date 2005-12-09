@@ -260,10 +260,10 @@ PNI3DModel::computeFaces(std::vector<PN3DMaterial*>& mat, PNFace* faces, pnuint 
 
 //////////////////////////////////////////////////////////////////////////
 
-boost::filesystem::path*
+std::string*
 PNI3DModel::getFile()
 {
-  return IPNSerializable::getFile();
+  return IPNSerializable::getPath();
 }
 
 pnint

@@ -315,7 +315,7 @@ PNGLRenderer::initGL(GLsizei width, GLsizei height)
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-  //glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+  glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
 
   //////////////////////////////////////////////////////////////////////////
   
@@ -350,7 +350,7 @@ PNGLRenderer::run()
   SDL_Event		event;
 
  
-  PNSDLEvent*	sdlEvent = new PNSDLEvent();
+  PNSDLEvent	sdlEvent;
 
   //float Light1Pos[4] = {0.0f, 0.0f, 40.0f, 1.0f};
 
@@ -362,9 +362,9 @@ PNGLRenderer::run()
     lastLoopDate = currentLoopDate;
 
 	while (SDL_PollEvent(&event))
-	  sdlEvent->pnSdlEvent(&event);
+	  sdlEvent.pnSdlEvent(&event);
 
-	sdlEvent->pninjectTimePulse();
+	sdlEvent.pninjectTimePulse();
 	////////////////////////////////////////////
 	if (_isProgramLooping == true)
 	{
@@ -391,11 +391,8 @@ PNGLRenderer::run()
 	  //////////////////////////////////////////////////////////////////////////
 	  
 	  PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_END, this, NULL);
-	
 	}
   }
-
-  delete sdlEvent;
 }
 
 void

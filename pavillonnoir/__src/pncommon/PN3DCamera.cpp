@@ -38,6 +38,7 @@
 #include "PNGameInterface.hpp"
 #include "PN3DModel.hpp"
 #include "PN3DCameraModel.hpp"
+#include "PNPlane.hpp"
 
 #include "PN3DCamera.hpp"
 
@@ -106,6 +107,11 @@ PN3DCamera::setHFov(pnfloat rad)
   PNLOCK(this);
 
   _viewHRadFov = rad;
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  _viewLeftFov = _viewHRadFov / 2 + (pnfloat)DEGREE_TO_RADIAN(90.0);
+  _viewRightFov = -_viewLeftFov;
 }
 
 void
@@ -114,6 +120,11 @@ PN3DCamera::setVFov(pnfloat rad)
   PNLOCK(this);
 
   _viewVRadFov = rad;
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  _viewTopFov = _viewVRadFov / 2 + (pnfloat)DEGREE_TO_RADIAN(90.0);
+  _viewBackFov = -_viewTopFov;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -151,269 +162,42 @@ PN3DCamera::render()
 
 //////////////////////////////////////////////////////////////////////////
 
-/*pnbool
-PN3DCamera::_is3DObjVisible(PN3DObject* obj)
-{
-  return true;
-
-  PNLOCK(obj);
-
-  //////////////////////////////////////////////////////////////////////////
-
-  if (obj->get3DModel() == NULL || obj->getRenderMode() == 0)
-	return false;
-
-  //////////////////////////////////////////////////////////////////////////
-
-  _viewMaxCosFov = cosf(max(_viewYRadFov, _viewXRadFov)/2);
-
-  PNVector3f	frontDirection = _orient * _frontDirection.getVector();
-  PNVector3f	rightDirection = _orient * _rightDirection.getVector();
-  PNVector3f	topDirection = _orient * _topDirection.getVector();
-
-  frontDirection.setNorm(1.0f);
-  rightDirection.setNorm(1.0f);
-  topDirection.setNorm(1.0f);
-
-  //////////////////////////////////////////////////////////////////////////
-
-  PNPoint3fcoord = _coord - obj->getCoord();
-  coord = obj->getOrient().getInvert() * coord;
-  frontDirection = obj->getOrient().getInvert() * frontDirection;
-
-  PNVector3f	targetVector = PNPoint3f::ZERO - coord;
-
-  const PNPoint3f&  minCoords = obj->get3DModel()->getMin();
-  const PNPoint3f&  maxCoords = obj->get3DModel()->getMax();
-
-  PNVector3f	targetVector1(minCoords);
-  targetVector1 += targetVector;
-  PNVector3f	targetVector2(minCoords.x, minCoords.y, maxCoords.z);
-  targetVector2 += targetVector;
-  PNVector3f	targetVector3(minCoords.x, maxCoords.y, minCoords.z);
-  targetVector3 += targetVector;
-  PNVector3f	targetVector4(maxCoords.x, minCoords.y, minCoords.z);
-  targetVector4 += targetVector;
-  PNVector3f	targetVector5(maxCoords.x, maxCoords.y, minCoords.z);
-  targetVector5 += targetVector;
-  PNVector3f	targetVector6(maxCoords.x, minCoords.y, maxCoords.z);
-  targetVector6 += targetVector;
-  PNVector3f	targetVector7(minCoords.x, maxCoords.y, maxCoords.z);
-  targetVector7 += targetVector;
-  PNVector3f	targetVector8(maxCoords);
-  targetVector8 += targetVector;
-
-  //////////////////////////////////////////////////////////////////////////
-
-  pnfloat norm1 = targetVector1.getNorm();
-  pnfloat norm2 = targetVector2.getNorm();
-  pnfloat norm3 = targetVector3.getNorm();
-  pnfloat norm4 = targetVector4.getNorm();
-  pnfloat norm5 = targetVector5.getNorm();
-  pnfloat norm6 = targetVector6.getNorm();
-  pnfloat norm7 = targetVector7.getNorm();
-  pnfloat norm8 = targetVector8.getNorm();
-
-  pnbool	inNearFar = true;
-  pnbool	inFov = true;
-
-  //////////////////////////////////////////////////////////////////////////
-  // FOV
-
-  targetVector1 /= norm1;
-  pndouble	sp1 = frontDirection.scalarProduct(targetVector1);
-  targetVector2 /= norm2;
-  pndouble	sp2 = frontDirection.scalarProduct(targetVector2);
-  targetVector3 /= norm3;
-  pndouble	sp3 = frontDirection.scalarProduct(targetVector3);
-  targetVector4 /= norm4;
-  pndouble	sp4 = frontDirection.scalarProduct(targetVector4);
-  targetVector5 /= norm5;
-  pndouble	sp5 = frontDirection.scalarProduct(targetVector5);
-  targetVector6 /= norm6;
-  pndouble	sp6 = frontDirection.scalarProduct(targetVector6);
-  targetVector7 /= norm7;
-  pndouble	sp7 = frontDirection.scalarProduct(targetVector7);
-  targetVector8 /= norm8;
-  pndouble	sp8 = frontDirection.scalarProduct(targetVector8);
-
-  inFov = 
-	sp1 > _viewMaxCosFov ||
-	sp2 > _viewMaxCosFov ||
-	sp3 > _viewMaxCosFov ||
-	sp4 > _viewMaxCosFov ||
-	sp5 > _viewMaxCosFov ||
-	sp6 > _viewMaxCosFov ||
-	sp7 > _viewMaxCosFov ||
-	sp8 > _viewMaxCosFov;
-
-  //////////////////////////////////////////////////////////////////////////
-  // NEER-FAR
-
-  inNearFar = 
-	(sp1 > 0.0 && norm1 >= _viewNear && norm1 <= _viewFar) ||
-	(sp2 > 0.0 && norm2 >= _viewNear && norm2 <= _viewFar) ||
-	(sp3 > 0.0 && norm3 >= _viewNear && norm3 <= _viewFar) ||
-	(sp4 > 0.0 && norm4 >= _viewNear && norm4 <= _viewFar) ||
-	(sp5 > 0.0 && norm5 >= _viewNear && norm5 <= _viewFar) ||
-	(sp6 > 0.0 && norm6 >= _viewNear && norm6 <= _viewFar) ||
-	(sp7 > 0.0 && norm7 >= _viewNear && norm7 <= _viewFar) ||
-	(sp8 > 0.0 && norm8 >= _viewNear && norm8 <= _viewFar);
-
-  //////////////////////////////////////////////////////////////////////////
-
-  if (inNearFar && inFov)
-	return true;
-
-  //////////////////////////////////////////////////////////////////////////
-  // BIGGER THAN NEER-FAR
-
-  if (inNearFar == false)
-  {
-	pnbool bigger = sp1 > 0.0 && norm1 > _viewFar;
-
-	bigger = 
-	  (sp2 > 0.0 && norm2 > _viewFar != bigger) ||
-	  (sp3 > 0.0 && norm3 > _viewFar != bigger) ||
-	  (sp4 > 0.0 && norm4 > _viewFar != bigger) ||
-	  (sp5 > 0.0 && norm5 > _viewFar != bigger) ||
-	  (sp6 > 0.0 && norm6 > _viewFar != bigger) ||
-	  (sp7 > 0.0 && norm7 > _viewFar != bigger) ||
-	  (sp8 > 0.0 && norm8 > _viewFar != bigger);
-
-	if (bigger)
-	{
-	  if (inFov)
-		return true;
-	  else
-		inNearFar = true;
-	}
-	else
-	  return false;
-  }
-
-  //////////////////////////////////////////////////////////////////////////
-  // BIGGER THAN FOV
-
-  pndouble	spr1 = rightDirection.scalarProduct(targetVector1);
-  pndouble	spr2 = rightDirection.scalarProduct(targetVector2);
-  pndouble	spr3 = rightDirection.scalarProduct(targetVector3);
-  pndouble	spr4 = rightDirection.scalarProduct(targetVector4);
-  pndouble	spr5 = rightDirection.scalarProduct(targetVector5);
-  pndouble	spr6 = rightDirection.scalarProduct(targetVector6);
-  pndouble	spr7 = rightDirection.scalarProduct(targetVector7);
-  pndouble	spr8 = rightDirection.scalarProduct(targetVector8);
-
-  pnbool	rightFov = spr1 >= 0.0;
-
-  rightFov = 
-	(spr2 >= 0.0 != rightFov) ||
-	(spr3 >= 0.0 != rightFov) ||
-	(spr4 >= 0.0 != rightFov) ||
-	(spr5 >= 0.0 != rightFov) ||
-	(spr6 >= 0.0 != rightFov) ||
-	(spr7 >= 0.0 != rightFov) ||
-	(spr8 >= 0.0 != rightFov);
-
-  pndouble	spt1 = topDirection.scalarProduct(targetVector1);
-  pndouble	spt2 = topDirection.scalarProduct(targetVector2);
-  pndouble	spt3 = topDirection.scalarProduct(targetVector3);
-  pndouble	spt4 = topDirection.scalarProduct(targetVector4);
-  pndouble	spt5 = topDirection.scalarProduct(targetVector5);
-  pndouble	spt6 = topDirection.scalarProduct(targetVector6);
-  pndouble	spt7 = topDirection.scalarProduct(targetVector7);
-  pndouble	spt8 = topDirection.scalarProduct(targetVector8);
-
-  pnbool	topFov = spt1 >= 0.0;
-
-  topFov = 
-	(spt2 >= 0.0 != topFov) ||
-	(spt3 >= 0.0 != topFov) ||
-	(spt4 >= 0.0 != topFov) ||
-	(spt5 >= 0.0 != topFov) ||
-	(spt6 >= 0.0 != topFov) ||
-	(spt7 >= 0.0 != topFov) ||
-	(spt8 >= 0.0 != topFov);
-
-  inFov = rightFov && topFov;
-
-  return (inFov && inNearFar);
-}*/
-
-#define SUB_FOV_TEST(targetV, vFov1, vFov2)  \
-  ( \
-    ( \
-      ((_inTest1 = vFov1.scalarProduct(targetV) < 0) == _inTest1 && (_inTest2 = vFov2.scalarProduct(targetV) < 0) == _inTest1) \
-      && _inTest1 && _inTest2 \
-	) \
-  || _inTest1 != _firstInTest1 || _inTest2 != _firstInTest2 \
-  )
-
-static pnbool	_inTest1, _inTest2, _firstInTest1, _firstInTest2;
-
-pnbool	_isPointVisile(const PNVector3f& targetV, const PNVector3f& vFov1, const PNVector3f& vFov2)
+pnbool
+PN3DCamera::_isPointVisile(const PNVector3f& targetV, const PNVector3f& vFov1, const PNVector3f& vFov2)
 {
   _inTest1 = vFov1.scalarProduct(targetV) < 0;
   _inTest2 = vFov2.scalarProduct(targetV) < 0;
 
-  return (_inTest1 && _inTest2) || _inTest1 != _firstInTest1 || _inTest2 != _firstInTest2;
+  if (!_isIn1)
+	_isIn1 = (_inTest1 != _firstInTest1);
+  if (!_isIn2)
+	_isIn2 = (_inTest2 != _firstInTest2);
+
+  return (_inTest1 && _inTest2) || (_isIn1 && _isIn2);
 }
 
-bool
-PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
+pnbool
+PN3DCamera::_isPointVisile(const PNPoint3f& point, const PNPlane& plane1, const PNPlane& plane2)
 {
-  PNLOCK(obj);
+  _inTest1 = plane1.getDistanceFromPlane(point) < 0;
+  _inTest2 = plane1.getDistanceFromPlane(point) < 0;
 
-  //////////////////////////////////////////////////////////////////////////
+  return (_inTest1 && _inTest2) || (_inTest1 != _firstInTest1 && _inTest2 != _firstInTest2);
+}
 
-  if (obj->get3DModel() == NULL || obj->getRenderMode() == 0)
-	return false;
+//////////////////////////////////////////////////////////////////////////
 
-  //////////////////////////////////////////////////////////////////////////
-
-  pnfloat		viewLeftFov = _viewHRadFov / 2 + (pnfloat)DEGREE_TO_RADIAN(90.0);
-  pnfloat		viewRightFov = -viewLeftFov;
-  pnfloat		viewTopFov = _viewVRadFov / 2 + (pnfloat)DEGREE_TO_RADIAN(90.0);
-  pnfloat		viewBackFov = -viewTopFov;
-
-  PNVector3f	frontDirection = _orient * _frontDirection.getVector();
-  PNVector3f	rightDirection = _orient * _rightDirection.getVector();
-  PNVector3f	topDirection = _orient * _topDirection.getVector();
-
-  frontDirection.setNorm(1.0f);
-  rightDirection.setNorm(1.0f);
-  topDirection.setNorm(1.0f);
-
-  //////////////////////////////////////////////////////////////////////////
-
-  PNPoint3f coord = _coord - obj->getCoord();
-  coord = obj->getOrient().getInvert() * coord;
-
-  frontDirection = obj->getOrient().getInvert() * frontDirection;
-  rightDirection = obj->getOrient().getInvert() * rightDirection;
-  topDirection = obj->getOrient().getInvert() * topDirection;
-
-  PNVector3f	targetVector = PNPoint3f::ZERO - coord;
-
-  const PNPoint3f&  minCoords = obj->get3DModel()->getMin();
-  const PNPoint3f&  maxCoords = obj->get3DModel()->getMax();
-
-  PNVector3f	targetVector1(minCoords);
-  targetVector1 += targetVector;
-  PNVector3f	targetVector2(minCoords.x, minCoords.y, maxCoords.z);
-  targetVector2 += targetVector;
-  PNVector3f	targetVector3(minCoords.x, maxCoords.y, minCoords.z);
-  targetVector3 += targetVector;
-  PNVector3f	targetVector4(maxCoords.x, minCoords.y, minCoords.z);
-  targetVector4 += targetVector;
-  PNVector3f	targetVector5(maxCoords.x, maxCoords.y, minCoords.z);
-  targetVector5 += targetVector;
-  PNVector3f	targetVector6(maxCoords.x, minCoords.y, maxCoords.z);
-  targetVector6 += targetVector;
-  PNVector3f	targetVector7(minCoords.x, maxCoords.y, maxCoords.z);
-  targetVector7 += targetVector;
-  PNVector3f	targetVector8(maxCoords);
-  targetVector8 += targetVector;
+pnbool
+PN3DCamera::_isBoxSpeedVisible()
+{
+  PNVector3f	targetVector1 = _point1 + _tTargetVector;
+  PNVector3f	targetVector2 = _point2 + _tTargetVector;
+  PNVector3f	targetVector3 = _point3 + _tTargetVector;
+  PNVector3f	targetVector4 = _point4 + _tTargetVector;
+  PNVector3f	targetVector5 = _point5 + _tTargetVector;
+  PNVector3f	targetVector6 = _point6 + _tTargetVector;
+  PNVector3f	targetVector7 = _point7 + _tTargetVector;
+  PNVector3f	targetVector8 = _point8 + _tTargetVector;
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -430,13 +214,6 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
   // FOV
   //////////////////////////////////////////////////////////////////////////
 
-  PNVector3f  rightFov(PNQuatf(topDirection, viewRightFov) * frontDirection);
-  PNVector3f  leftFov(PNQuatf(topDirection, viewLeftFov) * frontDirection);
-  PNVector3f  topFov(PNQuatf(rightDirection, viewTopFov) * frontDirection);
-  PNVector3f  backFov(PNQuatf(rightDirection, viewBackFov) * frontDirection);
-
-  //////////////////////////////////////////////////////////////////////////
-
   targetVector1 /= norm1;
   targetVector2 /= norm2;
   targetVector3 /= norm3;
@@ -446,40 +223,45 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
   targetVector7 /= norm7;
   targetVector8 /= norm8;
 
-  //pnbool	inTest1, inTest2, firstInTest1, firstInTest2;
-
   //////////////////////////////////////////////////////////////////////////
 
-  _firstInTest1 = rightFov.scalarProduct(targetVector1) < 0;
-  _firstInTest2 = leftFov.scalarProduct(targetVector1) < 0;
+  _firstInTest1 = _tRightFov.scalarProduct(targetVector1) < 0;
+  _firstInTest2 = _tLeftFov.scalarProduct(targetVector1) < 0;
+  _isIn1 = _isIn2 = false;
 
   pnbool	inHFoV = 
-	_isPointVisile(targetVector1, rightFov, leftFov) ||
-	_isPointVisile(targetVector2, rightFov, leftFov) ||
-	_isPointVisile(targetVector3, rightFov, leftFov) ||
-	_isPointVisile(targetVector4, rightFov, leftFov) ||
-	_isPointVisile(targetVector5, rightFov, leftFov) ||
-	_isPointVisile(targetVector6, rightFov, leftFov) ||
-	_isPointVisile(targetVector7, rightFov, leftFov) ||
-	_isPointVisile(targetVector8, rightFov, leftFov);
+	_isPointVisile(targetVector1, _tRightFov, _tLeftFov) ||
+	_isPointVisile(targetVector2, _tRightFov, _tLeftFov) ||
+	_isPointVisile(targetVector3, _tRightFov, _tLeftFov) ||
+	_isPointVisile(targetVector4, _tRightFov, _tLeftFov) ||
+	_isPointVisile(targetVector5, _tRightFov, _tLeftFov) ||
+	_isPointVisile(targetVector6, _tRightFov, _tLeftFov) ||
+	_isPointVisile(targetVector7, _tRightFov, _tLeftFov) ||
+	_isPointVisile(targetVector8, _tRightFov, _tLeftFov);
 
   if (!inHFoV)
 	return false;
 
   //////////////////////////////////////////////////////////////////////////
 
-  _firstInTest1 = topFov.scalarProduct(targetVector1) < 0;
-  _firstInTest2 = backFov.scalarProduct(targetVector1) < 0;
+  _firstInTest1 = _tTopFov.scalarProduct(targetVector1) < 0;
+  _firstInTest2 = _tBackFov.scalarProduct(targetVector1) < 0;
+  _isIn1 = _isIn2 = false;
 
   pnbool	inVFoV = 
-	_isPointVisile(targetVector1, topFov, backFov) ||
-	_isPointVisile(targetVector2, topFov, backFov) ||
-	_isPointVisile(targetVector3, topFov, backFov) ||
-	_isPointVisile(targetVector4, topFov, backFov) ||
-	_isPointVisile(targetVector5, topFov, backFov) ||
-	_isPointVisile(targetVector6, topFov, backFov) ||
-	_isPointVisile(targetVector7, topFov, backFov) ||
-	_isPointVisile(targetVector8, topFov, backFov);
+	_isPointVisile(targetVector1, _tTopFov, _tBackFov) ||
+	_isPointVisile(targetVector2, _tTopFov, _tBackFov) ||
+	_isPointVisile(targetVector3, _tTopFov, _tBackFov) ||
+	_isPointVisile(targetVector4, _tTopFov, _tBackFov) ||
+	_isPointVisile(targetVector5, _tTopFov, _tBackFov) ||
+	_isPointVisile(targetVector6, _tTopFov, _tBackFov) ||
+	_isPointVisile(targetVector7, _tTopFov, _tBackFov) ||
+	_isPointVisile(targetVector8, _tTopFov, _tBackFov);
+
+  if (!inVFoV)
+	return false;
+
+  //////////////////////////////////////////////////////////////////////////
 
   pnbool	inFov = inHFoV && inVFoV;
 
@@ -490,21 +272,113 @@ PN3DCamera::_is3DObjVisible2(PN3DObject* obj)
   // NEAR-FAR
   //////////////////////////////////////////////////////////////////////////
 
-  // FIXME : check Neer/Far
+  PNPoint3f	nearCoord(
+	_tCoord.x + (_tFrontDirection.x * _viewNear),
+	_tCoord.y + (_tFrontDirection.y * _viewNear),
+	_tCoord.z + (_tFrontDirection.z * _viewNear));
 
-  pnbool	  inNearFar = true;
+  PNPoint3f	farCoord(
+	_tCoord.x + (_tFrontDirection.x * _viewFar),
+	_tCoord.y + (_tFrontDirection.y * _viewFar),
+	_tCoord.z + (_tFrontDirection.z * _viewFar));
 
-  return 
-	frontDirection.scalarProduct(targetVector1) > 0 ||
-	frontDirection.scalarProduct(targetVector2) > 0 ||
-	frontDirection.scalarProduct(targetVector3) > 0 ||
-	frontDirection.scalarProduct(targetVector4) > 0 ||
-	frontDirection.scalarProduct(targetVector5) > 0 ||
-	frontDirection.scalarProduct(targetVector6) > 0 ||
-	frontDirection.scalarProduct(targetVector7) > 0 ||
-	frontDirection.scalarProduct(targetVector8) > 0;
+  PNPlane near(nearCoord, -_tFrontDirection);
+  PNPlane far(farCoord, _tFrontDirection);
+
+  _firstInTest1 = near.getDistanceFromPlane(targetVector1) < 0;
+  _firstInTest2 = far.getDistanceFromPlane(targetVector1) < 0;
+  _isIn1 = _isIn2 = false;
+
+  pnbool	inNearFar = 
+	_isPointVisile(_point1, near, far) ||
+	_isPointVisile(_point2, near, far) ||
+	_isPointVisile(_point3, near, far) ||
+	_isPointVisile(_point4, near, far) ||
+	_isPointVisile(_point5, near, far) ||
+	_isPointVisile(_point6, near, far) ||
+	_isPointVisile(_point7, near, far) ||
+	_isPointVisile(_point8, near, far);
 
   return inNearFar;
+}
+
+pnbool
+PN3DCamera::_isBoxSlowVisible()
+{
+  return true;
+}
+
+pnbool
+PN3DCamera::_isBoxVisible()
+{
+  const PNPoint3f&  minCoords = _testedObj->get3DModel()->getMin();
+  const PNPoint3f&  maxCoords = _testedObj->get3DModel()->getMax();
+
+  _point1.set(minCoords);
+  _point2.set(minCoords.x, minCoords.y, maxCoords.z);
+  _point3.set(minCoords.x, maxCoords.y, minCoords.z);
+  _point4.set(maxCoords.x, minCoords.y, minCoords.z);
+  _point5.set(maxCoords.x, maxCoords.y, minCoords.z);
+  _point6.set(maxCoords.x, minCoords.y, maxCoords.z);
+  _point7.set(minCoords.x, maxCoords.y, maxCoords.z);
+  _point8.set(maxCoords);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  return _isBoxSpeedVisible() && _isBoxSlowVisible();
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+pnbool
+PN3DCamera::_isSphereVisible()
+{
+  return true;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+bool
+PN3DCamera::_is3DObjVisible(PN3DObject* obj)
+{
+  PNLOCK(_testedObj = obj);
+
+  if (_testedObj->get3DModel() == NULL || _testedObj->getRenderMode() == 0)
+	return false;
+
+  //////////////////////////////////////////////////////////////////////////
+
+  _tFrontDirection = _orient * _frontDirection.getVector();
+  _tRightDirection = _orient * _rightDirection.getVector();
+  _tTopDirection = _orient * _topDirection.getVector();
+
+  _tFrontDirection.setNorm(1.0f);
+  _tRightDirection.setNorm(1.0f);
+  _tTopDirection.setNorm(1.0f);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  _tCoord = _coord - _testedObj->getCoord();
+
+  PNQuatf	invertOrient = _testedObj->getOrient().getInvert();
+
+  _tCoord = invertOrient * _tCoord;
+  _tFrontDirection = invertOrient * _tFrontDirection;
+  _tRightDirection = invertOrient * _tRightDirection;
+  _tTopDirection = invertOrient * _tTopDirection;
+
+  _tTargetVector = -_tCoord;
+
+  //////////////////////////////////////////////////////////////////////////
+
+  _tRightFov.set(PNQuatf(_tTopDirection, _viewRightFov) * _tFrontDirection);
+  _tLeftFov.set(PNQuatf(_tTopDirection, _viewLeftFov) * _tFrontDirection);
+  _tTopFov.set(PNQuatf(_tRightDirection, _viewTopFov) * _tFrontDirection);
+  _tBackFov.set(PNQuatf(_tRightDirection, _viewBackFov) * _tFrontDirection);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  return _isSphereVisible() && _isBoxVisible();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -527,14 +401,14 @@ PN3DCamera::_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed)
   {
 	if (oldIt == _list3DObj.end() || *oldIt != it->second)
 	{
-	  if (_is3DObjVisible2(it->second))
+	  if (_is3DObjVisible(it->second))
 	  {
 		_list3DObj.insert(oldIt, it->second);
 		PNEventManager::getInstance()->addEvent(PN_EVENT_F_IN, this, new PNFrustrumEventData(it->second));
 		std::cout << "PN_EVENT_F_IN : " << it->second->getId() << std::endl;
 	  }
 	}
-	else if (!_is3DObjVisible2(it->second))
+	else if (!_is3DObjVisible(it->second))
 	{
 	  PN3DObjList::iterator	itmp = oldIt++;
 	  _list3DObj.erase(itmp);

@@ -30,8 +30,6 @@
 #ifndef _IPNIMPORTEDOBJECT_HPP_
 # define _IPNIMPORTEDOBJECT_HPP_
 
-#include <boost/filesystem/path.hpp>
-
 namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
@@ -46,7 +44,7 @@ protected:
 
 public:
   /// Object associated file for serialize/unserialize system
-  virtual boost::filesystem::path*	getFile()=0;
+  virtual std::string*	getFile() {return NULL;}
 };
 
 //////////////////////////////////////////////////////////////////////////

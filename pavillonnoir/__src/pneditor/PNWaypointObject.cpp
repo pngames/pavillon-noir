@@ -27,7 +27,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-
 #include <iostream>
 
 ///////////////////////////////
@@ -45,74 +44,70 @@ using namespace std;
 
 ///////////////////////////////
 
-namespace PN
+namespace PN { namespace EDITOR {
+//////////////////////////////////////////////////////////////////////////
+
+/*! \brief Default PNWaypointObject constructor.
+*  Constructs a new PNWaypointObject.
+*  \param	label	  User friendly naming style to distinguish waypoints (!=id).
+*/
+PNWaypointObject::PNWaypointObject(std::string label)
 {
+  _label = label;
+}
 
-  //////////////////////////////////////////////////////////////////////////
+/*! \brief Default PNWaypointObject destructor.
+*/
+PNWaypointObject::~PNWaypointObject()
+{
+}
 
-  /*! \brief Default PNWaypointObject constructor.
-   *  Constructs a new PNWaypointObject.
-   *  \param	label	  User friendly naming style to distinguish waypoints (!=id).
-   */
-  PNWaypointObject::PNWaypointObject(std::string label)
+//////////////////////////////////////////////////////////////////////////
+
+// FIXME : doc
+/*! \brief
+*  \param	p		PNConfigurableParameter.
+*/
+void      PNWaypointObject::update(PNConfigurableParameter* p)
+{ 
+  switch (p->getType())
   {
-    _label = label;
+  case PN_PARAMTYPE_INT:
+	std::cout << "update:" << p->getLabel() << "=" << *((int*)p->getElem()) << std::endl;
+  case PN_PARAMTYPE_STRING:
+	std::cout << "update:" << p->getLabel() << "=" << *((string*)p->getElem()) << std::endl;
+  default:
+	;
   }
+  return;
+}
 
-  /*! \brief Default PNWaypointObject destructor.
-   */
-  PNWaypointObject::~PNWaypointObject()
-  {
-  }
+/*! \brief  Adds a parameter.
+*  \param	type	  Type of the new parameter.
+*  \param	elem	  Data of the new parameter.
+*  \param	label	  Label to display in the grid.
+*  \param	altText	  Alttext/tooltip for this parameter.
+*/
+void      PNWaypointObject::addParameter(pnparamtype type, void* elem, const std::string& label, const std::string& altText)
+{
+  _parameters.push_back(new PNConfigurableParameter(this, type, elem, label, altText));
+  return;
+}
 
+/*! \brief  Returns the number of parameters for this object.
+*/
+int PNWaypointObject::getNbParameters() 
+{ 
+  return _parameters.size(); 
+}
 
-  //////////////////////////////////////////////////////////////////////////
+/*! \brief  Returns the paramter at index idx.
+*  \param	idx		  Index of paramter to return.
+*/
+PNConfigurableParameter* PNWaypointObject::getParameter(int idx) 
+{
+  return _parameters[idx]; 
+}
 
-
-  // FIXME : doc
-  /*! \brief
-   *  \param	p		PNConfigurableParameter.
-   */
-  void      PNWaypointObject::update(PNConfigurableParameter* p)
-  { 
-		switch (p->getType())
-		{
-		case PN_PARAMTYPE_INT:
-	  	std::cout << "update:" << p->getLabel() << "=" << *((int*)p->getElem()) << std::endl;
-		case PN_PARAMTYPE_STRING:
-	  	std::cout << "update:" << p->getLabel() << "=" << *((string*)p->getElem()) << std::endl;
-	 	default:
-	  	;
-		}
-	return;
-  }
-
-  /*! \brief  Adds a parameter.
-   *  \param	type	  Type of the new parameter.
-   *  \param	elem	  Data of the new parameter.
-   *  \param	label	  Label to display in the grid.
-   *  \param	altText	  Alttext/tooltip for this parameter.
-   */
-  void      PNWaypointObject::addParameter(pnparamtype type, void* elem, const std::string& label, const std::string& altText)
-  {
-    _parameters.push_back(new PNConfigurableParameter(this, type, elem, label, altText));
-	return;
-  }
-
-  /*! \brief  Returns the number of parameters for this object.
-   */
-  int PNWaypointObject::getNbParameters() 
-  { 
-    return _parameters.size(); 
-  }
-
-  /*! \brief  Returns the paramter at index idx.
-   *  \param	idx		  Index of paramter to return.
-   */
-  PNConfigurableParameter* PNWaypointObject::getParameter(int idx) 
-  {
-    return _parameters[idx]; 
-  }
-
-  ////////////////////////////////////////////////////////////////////////// 
-};
+////////////////////////////////////////////////////////////////////////// 
+};};

@@ -108,11 +108,6 @@ PNGameMap::_unserializeEntity(xmlNode* node)
 	return PNEC_ERROR;
 
   //////////////////////////////////////////////////////////////////////////
-  
-  // create boost path
-  //fs::path  file(DEF::objectFilePath + (const char*)xmlGetProp(node, PNXML_MODELREFERENCE_ATTR), fs::native);
-
-  //////////////////////////////////////////////////////////////////////////
 
   pnint		error = -1;
 
@@ -181,7 +176,8 @@ PNGameMap::_unserializeNode(xmlNode* node)
 
 //////////////////////////////////////////////////////////////////////////
 
-int	PNGameMap::unserializeFromXML(xmlNode* node)
+pnint
+PNGameMap::unserializeFromXML(xmlNode* node)
 {
   //////////////////////////////////////////////////////////////////////////
 
@@ -210,16 +206,53 @@ int	PNGameMap::unserializeFromXML(xmlNode* node)
   return error;
 }
 
-pnint PNGameMap::unserializeFromFile(const fs::path& dir)
+pnint
+PNGameMap::unserializeFromFile(const fs::path& dir)
 {
-  _wpFile = new fs::path(dir.string() + "/waypoints.xml", fs::native);
-
-  //////////////////////////////////////////////////////////////////////////
-
   fs::path file(dir.string() + "/entities.xml", fs::native);
 
   return IPNXMLSerializable::unserializeFromFile(file);
 }
+
+/// Save object to file
+pnint
+PNGameMap::serializeInFile(const boost::filesystem::path& dir)
+{
+  //////////////////////////////////////////////////////////////////////////
+  // Entities
+
+  fs::path file(dir.string() + "/entities.xml", fs::native);
+
+  IPNXMLSerializable::serializeInFile(file);
+
+  //////////////////////////////////////////////////////////////////////////
+  // Waypoints
+
+  //_graph->serializeInPath(dir.string() + "waypoints.xml");
+
+  return PNEC_SUCCESS;
+}
+
+/// Save object into XML file
+pnint
+PNGameMap::serializeInXML(xmlNode* root, pnbool isroot/* = false*/)
+{
+  if (isroot == false)
+	root = xmlNewChild(root, NULL, BAD_CAST getRootNodeName().c_str(), NULL);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  for (ObjMap::iterator	it = _entityList.begin(); it != _entityList.end(); ++it)
+  {
+	PN3DObject	*object = it->second;
+
+	object->serializeInXML(root);
+  }
+
+  return PNEC_SUCCESS;
+}
+
+//////////////////////////////////////////////////////////////////////////
 
 void PNGameMap::addToMap(const std::string& entityName,const std::string& id)
 {

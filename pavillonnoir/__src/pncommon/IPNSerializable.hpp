@@ -46,26 +46,32 @@ protected:
   //////////////////////////////////////////////////////////////////////////
 
 public:
-  /// Object associated file for serialize/unserialize system
-  virtual boost::filesystem::path*	getFile();
+  /*/// Object associated file for serialize/unserialize system
+  virtual boost::filesystem::path*	getFile();*/
 
-  /// Modify object associated file for serialize/unserialize system
-  virtual void						setFile(const boost::filesystem::path& file);
+  /*/// Modify object associated file for serialize/unserialize system
+  virtual void						setFile(const boost::filesystem::path& file);*/
+
+  std::string*						getPath();
+  void								setPath(const std::string& path);
 
   //////////////////////////////////////////////////////////////////////////
 
+protected:
   /// Load object from file
   virtual pnint						unserializeFromFile(const boost::filesystem::path& file);
+  /// Save object to file
+  virtual pnint						serializeInFile(const boost::filesystem::path& file);
+
+public:
   /// Load object from path
   virtual pnint						unserializeFromPath(const std::string& file);
   /// Load object from stream
   virtual pnint						unserializeFromStream(std::istream& i);
   /// Load object
   virtual pnint						unserialize();
-  /// Save object to file
-  virtual pnint						serializeInFile(const boost::filesystem::path& file);
   /// Save object to path
-  virtual pnint						serializeInFile(const std::string& file);
+  virtual pnint						serializeInPath(const std::string& file);
   /// Save object to stream
   virtual pnint						serializeInStream(std::ostream& o);
   /// Save object
@@ -73,7 +79,8 @@ public:
 protected:
   pnbool							_hasFile;
   /// File that represent object
-  boost::filesystem::path			_file;
+  //boost::filesystem::path			_file;
+  std::string						_path;
 };
 
 //////////////////////////////////////////////////////////////////////////
