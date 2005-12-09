@@ -31,9 +31,12 @@
 # define _PN3DSKELETONANIMATION_HPP_
 
 #include <set>
+#include <vector>
 
 #include "IPNXMLSerializable.hpp"
 #include "PNObject.hpp"
+
+#include "pnproperties.h"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -43,7 +46,7 @@ class PN3DSkeletonObject;
 
 //////////////////////////////////////////////////////////////////////////
 
-class PNAPI				PN3DSkeletonAnimation : PNObject, IPNXMLSerializable
+class PNAPI				PN3DSkeletonAnimation : PNObject, IPNXMLSerializable, public PNConfigurableObject
 {
   PN3DSkeletonObject*	_object;
 public:
@@ -76,6 +79,20 @@ public:
 
   /// Save 3DObject into XML file
   pnint					serializeInXML(xmlNode* node, pnbool isroot = false);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  // ConfigurableObject stuffs
+
+protected:
+  typedef std::vector<PNConfigurableParameter*> ParametersVector;
+  ParametersVector			_params;
+
+public:
+  void								update(PNConfigurableParameter* p) { }
+  pnint								getNbParameters() { return _params.size(); }
+  virtual PNConfigurableParameter*	getParameter(pnint idx) { return _params[idx]; }
+  virtual const std::string&		getLabel() { return ""; }
 };
 
 //////////////////////////////////////////////////////////////////////////

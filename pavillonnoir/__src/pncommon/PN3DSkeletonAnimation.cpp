@@ -51,6 +51,10 @@ PN3DSkeletonAnimation::PN3DSkeletonAnimation(PN3DAnimation* anim, PN3DSkeletonOb
   this->speed = 1.0f;
 
   this->anim = anim;
+
+  this->_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &weight, "weight", "weight"));
+  this->_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &speed, "speed", "speed"));
+  this->_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_BOOLEAN, &looping, "looping", "looping"));
 }
 
 PN3DSkeletonAnimation::~PN3DSkeletonAnimation()
