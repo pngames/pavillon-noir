@@ -367,10 +367,10 @@ void		PNOpalObject::setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf or
   }
 
   /* optional motor data */
-  _movementMotorData.linearKd = 2.0;
-  _movementMotorData.linearKs = 20.0;
-  _movementMotorData.angularKd = 0.01;
-  _movementMotorData.angularKs = 0.6;
+  _movementMotorData.linearKd = (opal::real)2.0;
+  _movementMotorData.linearKs = (opal::real)20.0;
+  _movementMotorData.angularKd = (opal::real)0.01;
+  _movementMotorData.angularKs = (opal::real)0.6;
 
   /* motor init */
   _movementMotor->init(_movementMotorData);
@@ -427,16 +427,10 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
 	for (int i = 0; i < 6; i++)
 	{
 	  if (_aabb[i] < 0)
-		_aabb[i] -= 0.1;
+		_aabb[i] -= 0.1f;
 	  else
-		_aabb[i] += 0.1;
+		_aabb[i] += 0.1f;
 	}
-
-	// resize the object according to map's meters per pixel
-	//opal::Vec3r SDim = ((opal::BoxShapeData*)_solid->getData().getShapeData(0))->dimensions.getData();
-	//((opal::BoxShapeData*)_solid->getData().getShapeData(0))->dimensions.set(SDim[0] * mpp,
-																			  //SDim[1] * mpp,
-																			  //SDim[2] * mpp);
   }
   else 
   {
@@ -444,9 +438,6 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
 	_type = OPALSPHERE;
 	opal::SphereShapeData* shapeData = (opal::SphereShapeData*)_solid->getData().getShapeData(0);
 	_radius = shapeData->radius + 0.1;
-
-	// resize the object according to map's meters per pixel
-	//shapeData->radius *= mpp;
   }
 
   // check for loading errors
