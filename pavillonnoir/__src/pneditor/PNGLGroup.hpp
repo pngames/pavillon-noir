@@ -37,6 +37,8 @@
 
 #include "PNEDSkyBox.hpp"
 
+#include "PNConfigurableObject.hpp"
+
 #include "IPNXMLSerializable.hpp"
 
 namespace PN {
@@ -49,7 +51,7 @@ class PNPropertiesPanel;
 class PNGLShape;
 class PNEditor;
 
-class					PNGLGroup : public FXGLGroup, public IPNXMLSerializable
+class					PNGLGroup : public FXGLGroup, public IPNXMLSerializable, public PNConfigurableObject
 {
   FXDECLARE(PNGLGroup);
 
@@ -72,6 +74,8 @@ public:
 private:
 
   pnuint				_view;
+
+  pnfloat				_mpp;
 
   PNEDSkybox			_skybox;
   FXGLGroup				_groundGroup;	// Ground type objects
@@ -127,6 +131,24 @@ private:
 public:
   pnint					unserializeFromXML(xmlNode* node);
   pnint					serializeInXML(xmlNode* root, pnbool isroot = false);
+
+  // ConfigurableObject /////////////////////////////////////////////////////
+
+  std::string		  		_label;
+
+protected:
+  typedef std::vector<PNConfigurableParameter*> ParametersVector;
+  ParametersVector			_params;
+public:
+  void						update(PNConfigurableParameter* p) { }
+  int						getNbParameters() { return _params.size(); }
+  PNConfigurableParameter*	getParameter(int idx) { return _params[idx]; }
+
+  const std::string&		getLabel() { return _label; }
+
+  //bool						modified() { return _modified; }
+  //void						setModified() { _modified = true; }
+  //void						setUnmodified() { _modified = false; }
 };
 
 //////////////////////////////////////////////////////////////////////////
