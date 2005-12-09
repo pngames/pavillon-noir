@@ -57,7 +57,7 @@ protected:
   ObjMap					_entityList;
   PN3DCamera*				_camera;
   PN3DObject*               _player;
-  boost::filesystem::path*	_wpFile;
+  std::string			  	_wpFile;
 
   pnint						_unserializeSkybox(xmlNode* node);
   pnint						_unserializeEntity(xmlNode* node);
