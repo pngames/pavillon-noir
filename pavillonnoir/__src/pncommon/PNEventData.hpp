@@ -53,7 +53,7 @@ public:
 class PNAPI		PNFrustrumEventData : public PNEventData
 {
 public:
-  /// The objet that enters/exits from frustrum
+  /// The object that enters/exits from frustrum
   PN3DObject*	obj;
 
   PNFrustrumEventData() {obj = NULL;}

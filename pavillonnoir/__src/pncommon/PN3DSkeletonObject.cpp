@@ -314,7 +314,7 @@ PN3DSkeletonObject::stopAnimation()
 pnuint
 PN3DSkeletonObject::stopAnimation(pnuint animId)
 {
-  return setEnable(_animId, false);
+  return setEnable(animId, false);
 }
 
 pnuint
@@ -342,7 +342,7 @@ PN3DSkeletonObject::startAnimation(pnuint animId)
 
   _anims[animId].step = 0;
 
-  return setEnable(_animId, true);
+  return setEnable(animId, true);
 }
 
 //////////////////////////////////////////////////////////////////////////

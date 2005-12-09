@@ -168,53 +168,72 @@ function gameMap:onFrustrumOut(sourceId, targetId)
 end
 
 function gameMap:fightAction(sourceId)
+	pnprint("=> gameMap:fightAction()\n")
 	local targetId = self.fights[sourceId]
 	local source = self.entities.all[sourceId]
 	local target = self.entities.all[targetId]
 	pnprint(sourceId .. " attacking " .. targetId .. "\n")
 
-	-- gestion du combat (contre, dodge ...) et calcul des degats
-
 	nbAS = source:getNBFightSuccess()
 	nbDS = target:getNBFightSuccess()
 	pnprint("nbAtackerSucces=" .. nbAS .. "nbDefenderSuccess=" .. nbDS .. "\n")
 	local success = nbAS - nbDS
-	if (target.combat_state == COMBAT_STATE.ATTACK) then
+	local sAnim = 0
+	local tAnim = 0
+
+	if ((target.combat_state == COMBAT_STATE.ATTACK) and (self.fights[targetId] == sourceId)) then
 		pnprint(targetId .. " tries to counter!\n")
 		if (success > 0) then
 			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor)
 			--anim
+			sAnim = CHARACTER_ANIM.JUMP
+			tAnim = CHARACTER_ANIM.WALK_B
 		else
-			source:onDamage(success + target.stats[target.selected_weapon.skill] + target.selected_weapon.modifier - source.armor)
+			source:onDamage(-success + target.stats[target.selected_weapon.skill] + target.selected_weapon.modifier - source.armor)
 			--anim
+			sAnim = CHARACTER_ANIM.WALK_B
+			tAnim = CHARACTER_ANIM.JUMP
 		end
+
 	elseif (target.combat_state == COMBAT_STATE.DODGE) then
 		pnprint(targetId .. " tries to dodge!\n")
 		if (success > 0) then
 			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor)
 			--anim
+			sAnim = CHARACTER_ANIM.JUMP
+			tAnim = CHARACTER_ANIM.WALK_B
 		else
 			--anim
+			sAnim = CHARACTER_ANIM.JUMP
+			tAnim = CHARACTER_ANIM.CROUCH
 			target.elapsedTurns = 1 --Cannot attack right after
 		end
+
 	elseif (target.combat_state == COMBAT_STATE.DEFENSE) then
 		pnprint(targetId .. " defending!\n")
 		if (success > 0) then
 			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor)
 			--anim
-		else
-			source:onDamage(success + target.stats[target.selected_weapon.skill] + target.selected_weapon.modifier - source.armor)
-			--anim
+			sAnim = CHARACTER_ANIM.JUMP
+			tAnim = CHARACTER_ANIM.WALK_B
 		end
+
 	else
 		pnprint(targetId .. " gonna get it loud!\n")
 		target:onDamage(nbAS + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor)
+		sAnim = CHARACTER_ANIM.JUMP
+		tAnim = CHARACTER_ANIM.WALK_B
 	end
-	--Appliquer les degats
+
 	self.fights[sourceId] = -1
 	if (self.fights[targetId] == sourceId) then
 		self.fights[targetId] = -1
 	end
+	source:waitForAnimEnd(sAnim)
+	target:waitForAnimEnd(tAnim)
+	source.combat_state = COMBAT_STATE.NEUTRAL
+	target.combat_state = COMBAT_STATE.NEUTRAL
+	pnprint("<= gameMap:fightAction()\n")
 end
 
 function gameMap:onAttack(sourceId, targetId)
@@ -223,7 +242,7 @@ function gameMap:onAttack(sourceId, targetId)
 	pnprint(sourceId .. " wants to attack " .. targetId .. "\n")
 	self.fights[sourceId] = targetId
 	if (self.fights[targetId] ~= sourceId) then
-		pnprint("addTask\n")
+		--pnprint("addTask\n")
 		self.timer:addTask(self, "fightAction", 100, false, sourceId)
 	end
 end

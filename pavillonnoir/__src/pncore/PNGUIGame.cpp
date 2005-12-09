@@ -589,7 +589,10 @@ Called when a key is pressed in game screen
 bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
 {
   std::cout << "pressed: ";
-  std::string playerid = PNGameInterface::getInstance()->getGameMap()->getPlayer()->getId();
+  std::string playerid = "";
+
+  if (PNGameInterface::getInstance()->getGameMap()->getPlayer() != 0)
+	playerid = PNGameInterface::getInstance()->getGameMap()->getPlayer()->getId();
   //TODO : utiliser un vector pour stocker la liste des touches et leur correspondance ascii : DONE
 
   CEGUI::KeyEventArgs* me = (CEGUI::KeyEventArgs*)&e;
@@ -750,7 +753,10 @@ Called when a key is released in game screen
 bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
 {
   std::cout << "release : ";
-  std::string playerid = PNGameInterface::getInstance()->getGameMap()->getPlayer()->getId();
+  std::string playerid = "";
+
+  if (PNGameInterface::getInstance()->getGameMap()->getPlayer() != 0)
+	playerid = PNGameInterface::getInstance()->getGameMap()->getPlayer()->getId();
   CEGUI::KeyEventArgs* me = (CEGUI::KeyEventArgs*)&e;
   // Update keydown map
   mBufferedKeysDown.erase(static_cast<CEGUI::Key::Scan>(me->scancode));
