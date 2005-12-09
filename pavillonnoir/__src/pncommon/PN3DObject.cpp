@@ -295,7 +295,7 @@ PN3DObject::_serializeContent(xmlNode* root)
   if (_model != NULL && _model->getFile() != NULL)
   {
 	node = xmlNewChild(root, NULL, BAD_CAST PNO_XMLNODE_MODEL.c_str(), NULL);
-	xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::modelFilePath, _model->getFile()->string()).c_str());
+	xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::modelFilePath, *_model->getFile()).c_str());
   }
 
   if (_materials.size() > 0)
@@ -306,7 +306,7 @@ PN3DObject::_serializeContent(xmlNode* root)
 	  if (*it != NULL && ((PN3DMaterial*)*it)->getFile() != NULL)
 	  {
 		node = xmlNewChild(root, NULL, BAD_CAST PNO_XMLNODE_MATERIAL.c_str(), NULL);
-		xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::materialFilePath, ((PN3DMaterial*)*it)->getFile()->string()).c_str());
+		xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::materialFilePath, *((PN3DMaterial*)*it)->getFile()).c_str());
 	  }
   }
 

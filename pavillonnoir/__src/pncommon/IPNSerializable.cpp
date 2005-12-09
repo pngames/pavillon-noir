@@ -53,11 +53,11 @@ IPNSerializable::IPNSerializable()
  *
  * @return File
  */
-boost::filesystem::path*
+/*boost::filesystem::path*
 IPNSerializable::getFile()
 {
   return _hasFile ? &_file : NULL;
-}
+}*/
 
 /**
  * @brief	Modify 3DObject associated file for serialize/unserialize system
@@ -65,11 +65,23 @@ IPNSerializable::getFile()
  * @param	file		File
  * @return	void
  */
-void
+/*void
 IPNSerializable::setFile(const boost::filesystem::path& file)
 {
   _file = file;
   _hasFile = true;
+}*/
+
+std::string*
+IPNSerializable::getPath()
+{
+  return _hasFile ? &_path : NULL;
+}
+
+void
+IPNSerializable::setPath(const std::string& path)
+{
+  _path = path;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -92,17 +104,19 @@ IPNSerializable::unserializeFromFile(const boost::filesystem::path& file)
   if (fs::is_directory(file))
 	return PNEC_NOT_A_FILE;
 
-  setFile(file);
+  //setFile(file);
 
-  ifstream	i(_file.string().c_str(), ifstream::binary);
+  ifstream	i(_path.c_str(), ifstream::binary);
 
   return unserializeFromStream(i);
 }
 
 pnint
-IPNSerializable::unserializeFromPath(const std::string& file)
+IPNSerializable::unserializeFromPath(const std::string& path)
 {
-  return unserializeFromFile(fs::path(file, fs::native));
+  setPath(path);
+
+  return unserializeFromFile(fs::path(path, fs::native));
 }
 
 /**
@@ -130,7 +144,7 @@ IPNSerializable::unserializeFromStream(istream& i)
 pnint
 IPNSerializable::unserialize()
 {
-  return unserializeFromFile(_file);
+  return unserializeFromPath(_path);
 }
 
 /**
@@ -148,17 +162,19 @@ IPNSerializable::serializeInFile(const boost::filesystem::path& file)
   if (fs::exists(file) && fs::is_directory(file))
 	return PNEC_NOT_A_FILE;
 
-  setFile(file);
+  //setFile(file);
 
-  ofstream	o(file.string().c_str(), ofstream::binary);
+  ofstream	o(_path.c_str(), ofstream::binary);
 
   return serializeInStream(o);
 }
 
 pnint
-IPNSerializable::serializeInFile(const std::string& file)
+IPNSerializable::serializeInPath(const std::string& path)
 {
-  return serializeInFile(fs::path(file, fs::native));
+  setPath(path);
+
+  return serializeInFile(fs::path(path, fs::native));
 }
 
 /**
@@ -186,8 +202,8 @@ IPNSerializable::serializeInStream(ostream& o)
 pnint
 IPNSerializable::serialize()
 {
-  return serializeInFile(_file);
+  return serializeInPath(_path);
 }
 
 //////////////////////////////////////////////////////////////////////////
-}
+};

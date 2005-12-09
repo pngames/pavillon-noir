@@ -34,10 +34,17 @@
 
 #include "pnevent.h"
 
+#include "PNPoint3f.hpp"
+#include "PNVector3f.hpp"
+
 #include "PN3DObject.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
+
+class PNPlane;
+class PNPoint3f;
+class PNVector3f;
 
 typedef std::list<PN3DObject *> PN3DObjList;
 
@@ -82,8 +89,56 @@ public:
 protected:
   PN3DObjList				_list3DObj;
 
-  //pnbool					_is3DObjVisible(PN3DObject* obj);
-  pnbool					_is3DObjVisible2(PN3DObject* obj);
+  //////////////////////////////////////////////////////////////////////////
+protected:
+  PN3DObject*				_testedObj;
+
+  pnbool					_firstInTest1, _firstInTest2;
+  pnbool					_inTest1, _inTest2;
+  pnbool					_isIn1, _isIn2;
+
+  pnbool					_isPointVisile(const PNVector3f& targetV, const PNVector3f& vFov1, const PNVector3f& vFov2);
+  pnbool					_isPointVisile(const PNPoint3f& point, const PNPlane& plane1, const PNPlane& plane2);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  pnbool					_isSphereVisible();
+
+  //////////////////////////////////////////////////////////////////////////
+
+  PNPoint3f					_point1;
+  PNPoint3f					_point2;
+  PNPoint3f					_point3;
+  PNPoint3f					_point4;
+  PNPoint3f					_point5;
+  PNPoint3f					_point6;
+  PNPoint3f					_point7;
+  PNPoint3f					_point8;
+  
+  pnbool					_isBoxSpeedVisible();
+  pnbool					_isBoxSlowVisible();
+  pnbool					_isBoxVisible();
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  pnfloat					_viewLeftFov;
+  pnfloat					_viewRightFov;
+  pnfloat					_viewTopFov;
+  pnfloat					_viewBackFov;
+
+  PNVector3f				_tFrontDirection;
+  PNVector3f				_tRightDirection;
+  PNVector3f				_tTopDirection;
+
+  PNPoint3f					_tCoord;
+  PNVector3f				_tTargetVector;
+
+  PNVector3f				_tRightFov;
+  PNVector3f				_tLeftFov;
+  PNVector3f				_tTopFov;
+  PNVector3f				_tBackFov;
+
+  pnbool					_is3DObjVisible(PN3DObject* obj);
 
   void			  		  	_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed);
 

@@ -70,7 +70,7 @@ PNOpalImporter::doImport(const fs::path& path)
 
   PNOpalObject* physicalObject = new PNOpalObject((opal::Simulator*)((PNOpal*)PNPhysicsInterface::getInstance())->getSimulation());
 
-  pnuint error = physicalObject->unserializeFromFile(path);
+  pnuint error = physicalObject->unserializeFromPath(path.string());
 
   if (error != PNEC_SUCCESS)
   {

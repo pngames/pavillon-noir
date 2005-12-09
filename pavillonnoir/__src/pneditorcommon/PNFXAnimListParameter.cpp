@@ -113,14 +113,14 @@ PNFXAnimListParameter::buildList(void)
 
   for (PN3DSkeletonObject::AnimationVector::iterator it = v->begin(); it != v->end(); ++it)
   {
-	PN3DSkeletonAnimation&	skanim = *it;
+	PN3DSkeletonAnimation*	skanim = *it;
 
-	std::string s = skanim.anim->getFile()->string();
+	std::string s = *skanim->anim->getFile();
 
 	if (s.size() > 29)
 	  s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
 
-	_listBox->appendItem(s.c_str(), NULL, skanim.anim);
+	_listBox->appendItem(s.c_str(), NULL, skanim->anim);
   }
 
   _listBox->setNumVisible(_listBox->getNumItems()< 5 ? _listBox->getNumItems() : 5);
@@ -158,7 +158,7 @@ PNFXAnimListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
   {  
     PN3DSkeletonAnimation* skanim = new PN3DSkeletonAnimation(anim, NULL);
 	this->_skanim = skanim;
-    this->showAnim((PNConfigurableObject*)skanim);
+    this->showAnim(skanim);
   }
   return 1;
 }
@@ -193,7 +193,7 @@ PNFXAnimListParameter::openAnim(void)
 		/*
 		v->push_back(PN3DSkeletonAnimation(anim, NULL));
 
-		std::string s = v->at(i).anim->getFile()->string();
+		std::string s = *v->at(i).anim->getFile();
 		if (s.size() > 29)
 		  s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
 		_listBox->appendItem(s.c_str(), NULL, v->at(i).anim);
@@ -224,8 +224,7 @@ PNFXAnimListParameter::onEdit(FXObject* obj,FXSelector sel,void* ptr)
   {
 	if (i == _listBox->getCurrentItem())
 	{
-	  PN3DSkeletonAnimation&	anim = *it;
-	  this->showAnim((PNConfigurableObject*)&anim);
+	  showAnim(*it);
 	  break;
 	}
 	i++;
@@ -263,7 +262,7 @@ PNFXAnimListParameter::onDialOK(FXObject* obj,FXSelector sel,void* ptr)
   if (_skanim != NULL)
   {
 	PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem(); 
-	v->push_back(*_skanim);
+	v->push_back(_skanim);
 	_skanim = NULL;
   }
   _animDialBox->getApp()->stopModal(_animDialBox, TRUE);

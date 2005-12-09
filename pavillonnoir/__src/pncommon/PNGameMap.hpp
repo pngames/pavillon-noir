@@ -48,10 +48,10 @@ class PNIAGraph;
 class PN3DCamera;
 class PN3DObject;
 
-class PNAPI PNGameMap : public PNObject, public IPNXMLSerializable
+class PNAPI					PNGameMap : public PNObject, public IPNXMLSerializable
 {
 public:
-    typedef std::map<std::string, PN3DObject *>	ObjMap;
+  typedef std::map<std::string, PN3DObject *>	ObjMap;
 protected:
   pnfloat					_mpp;
   ObjMap					_entityList;
@@ -66,20 +66,29 @@ public:
   PNGameMap();
   ~PNGameMap();
 
-  /// Parse XML root node
-  pnint						unserializeFromXML(xmlNode* node);
+  //////////////////////////////////////////////////////////////////////////
+
+protected:
   /// Load object from file
-  pnint						unserializeFromFile(const boost::filesystem::path& dir);
+  virtual pnint				unserializeFromFile(const boost::filesystem::path& dir);
+  /// Save object to file
+  virtual pnint				serializeInFile(const boost::filesystem::path& file);
+
+public:
+  /// Parse XML root node
+  virtual pnint				unserializeFromXML(xmlNode* node);
+  /// Save object into XML file
+  virtual pnint				serializeInXML(xmlNode* node, pnbool root = false);
 
   //////////////////////////////////////////////////////////////////////////
 
   const ObjMap&				getEntityList() const;
   pnfloat					getMpp();
 
-  const PN3DObject*           getPlayer(){return _player;}
+  const PN3DObject*			getPlayer() {return _player;}
   //////////////////////////////////////////////////////////////////////////
 
-  virtual void				executeScript(const std::string& ScriptName){}
+  virtual void				executeScript(const std::string& ScriptName) {}
 
   //add an object to the gameMap
   virtual void				addToMap(const std::string& entityName,const std::string& id);

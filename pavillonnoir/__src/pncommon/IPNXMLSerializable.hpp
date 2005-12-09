@@ -65,12 +65,15 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  /// Parse XML root node
-  virtual pnint					unserializeFromXML(xmlNode* node);
+protected:
   /// Load object from XML file
   virtual pnint					unserializeFromFile(const boost::filesystem::path& file);
   /// Save object to file
   virtual pnint					serializeInFile(const boost::filesystem::path& file);
+
+public:
+  /// Parse XML root node
+  virtual pnint					unserializeFromXML(xmlNode* node);
   /// Save object into XML file
   virtual pnint					serializeInXML(xmlNode* node, pnbool root = false);
 };

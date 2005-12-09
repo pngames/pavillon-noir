@@ -55,10 +55,10 @@ PNI3DMaterial::~PNI3DMaterial()
 
 //////////////////////////////////////////////////////////////////////////
 
-boost::filesystem::path*
+std::string*
 PNI3DMaterial::getFile()
 {
-  return IPNSerializable::getFile();
+  return IPNSerializable::getPath();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -113,7 +113,7 @@ PNI3DMaterial::unserializeFromStream(std::istream& istm)
 
   if (err != PNEC_SUCCESS)
   {
-	pnerror(PN_LOGLVL_ERROR, "%s : %s", _file.string().c_str(), pnGetErrorString(err));
+	pnerror(PN_LOGLVL_ERROR, "%s : %s", _path.c_str(), pnGetErrorString(err));
 	return err;
   }
 

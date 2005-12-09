@@ -32,7 +32,6 @@
 # define _PNFXFILEPARAMETER_HPP_
 
 #include <fx.h>
-#include <boost/filesystem/path.hpp>
 
 #include "pnproperties.h"
 
@@ -44,7 +43,7 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNEDAPI PNFXFileParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+class PNEDAPI				PNFXFileParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
 {
   FXDECLARE(PNFXFileParameter);
 

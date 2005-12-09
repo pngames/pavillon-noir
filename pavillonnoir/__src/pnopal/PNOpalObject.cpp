@@ -500,7 +500,8 @@ pnint		  PNOpalObject::_parseModel(xmlNode* node)
   return PNEC_SUCCESS;
 }
 
-pnint			PNOpalObject::_unserializeNode(xmlNode* node)
+pnint
+PNOpalObject::_unserializeNode(xmlNode* node)
 {
   if (PNP_XMLNODE_MODEL == (const char*)node->name)
 	_parseModel(node);
@@ -508,7 +509,8 @@ pnint			PNOpalObject::_unserializeNode(xmlNode* node)
   return PNEC_SUCCESS;
 }
 
-pnint			PNOpalObject::unserializeFromXML(xmlNode* root)
+pnint
+PNOpalObject::unserializeFromXML(xmlNode* root)
 {
   for (root = root->children ; root != NULL; root = root->next)
   {
@@ -518,10 +520,10 @@ pnint			PNOpalObject::unserializeFromXML(xmlNode* root)
   return PNEC_SUCCESS;
 }
 
-boost::filesystem::path*
+std::string*
 PNOpalObject::getFile()
 {
-  return IPNXMLSerializable::getFile();
+  return IPNXMLSerializable::getPath();
 }
 
 //////////////////////////////////////////////////////////////////////////

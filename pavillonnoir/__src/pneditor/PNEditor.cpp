@@ -434,10 +434,8 @@ long PNEditor::onCmdOpen(FXObject*, FXSelector, void*)
 	_dir += PATHSEP;
 	fxmessage("File = %s\n", _dir.c_str());
 
-	boost::filesystem::path entpath(_dir + "entities.xml", boost::filesystem::no_check);
-
 	viewer->makeCurrent();
-	_genScene.unserializeFromFile(entpath);
+	_genScene.unserializeFromPath(_dir + "entities.xml");
 	viewer->makeNonCurrent();
 
 	_genScene.setOptionView(PNGLGroup::VIEW_ALL);
@@ -452,9 +450,9 @@ long PNEditor::onCmdOpen(FXObject*, FXSelector, void*)
 
 	wpGroup = new FXGLGroup();
 	_graph = new PNIAGraph();
-	boost::filesystem::path wppath(_dir + "waypoints.xml", boost::filesystem::no_check);
-	_graph->unserializeFromFile(wppath);
-	fxmessage("%d Waypoints in %s\n", _graph->getNbWayPoints(), wppath.string().c_str());
+	
+	_graph->unserializeFromPath(_dir + "waypoints.xml");
+	fxmessage("%d Waypoints in %s\n", _graph->getNbWayPoints(), (_dir + "waypoints.xml").c_str());
 	buildWPGroup();
 	if (_wpenabled)
 	  _genScene.append(wpGroup);
@@ -505,16 +503,14 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 	}
   }
   
-  _genScene.serializeInFile(fs::path((_dir + "entities.xml"), fs::no_check));
+  _genScene.serializeInPath(_dir + "entities.xml");
 
   //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
   // Waypoints
 
-  boost::filesystem::path wppath(_dir + "waypoints.xml", boost::filesystem::no_check);
-
-  pnerror(PN_LOGLVL_DEBUG, "Saving waypoints in %s", wppath.string().c_str());
-  _graph->serializeInFile(wppath);
+  pnerror(PN_LOGLVL_DEBUG, "Saving waypoints in %s", (_dir + "waypoints.xml").c_str());
+  _graph->serializeInPath(_dir + "waypoints.xml");
 
   //////////////////////////////////////////////////////////////////////////
   
@@ -684,7 +680,7 @@ long PNEditor::onCmdCopyObj(FXObject* obj, FXSelector sel, void* ptr)
   PN3DObject* cp = new PN3DObject();
 
   viewer->makeCurrent();
-  cp->unserializeFromFile(*orig->getFile()); //FIXME
+  cp->unserializeFromPath(*orig->getPath()); //FIXME
   viewer->makeNonCurrent();
 
   cp->setCoord(orig->getCoord());

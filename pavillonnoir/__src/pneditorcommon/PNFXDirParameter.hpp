@@ -27,7 +27,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-
 #ifndef _PNFXDIRPARAMETER_HPP_
 # define _PNFXDIRPARAMETER_HPP_
 
@@ -43,7 +42,7 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNEDAPI PNFXDirParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+class PNEDAPI				PNFXDirParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
 {
   FXDECLARE(PNFXDirParameter);
 

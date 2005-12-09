@@ -126,10 +126,10 @@ PNI3DSkeleton::reinit()
 
 //////////////////////////////////////////////////////////////////////////
 
-boost::filesystem::path*
+std::string*
 PNI3DSkeleton::getFile()
 {
-  return IPNSerializable::getFile();
+  return IPNSerializable::getPath();
 }
 
 pnint

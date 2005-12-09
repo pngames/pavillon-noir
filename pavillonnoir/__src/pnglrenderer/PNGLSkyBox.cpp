@@ -280,6 +280,8 @@ PNGLSkyBox::render(pnfloat size)
   glPushAttrib(GL_ALL_ATTRIB_BITS);
 
   glCullFace(GL_FRONT);
+  glDepthMask(GL_TRUE);
+  glEnable(GL_DEPTH_TEST);
 
   _renderBox(size);
 
