@@ -49,6 +49,15 @@ public:
   PNGameUpdateEventData(float deltatime, pnuint time): deltaTime(deltatime), time(time) {}
 };
 
+class PNGameLoadStepsMapEventData : public PNEventData
+{
+public:
+  PNGameLoadStepsMapEventData(){}
+  PNGameLoadStepsMapEventData(std::string value, float progress): item(value), progressVal(progress) {}
+  std::string item;
+  float		  progressVal;
+};
+
 class PNGameLoadMapEventData : public PNEventData
 {
 public:

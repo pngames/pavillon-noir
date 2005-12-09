@@ -1,45 +1,68 @@
 <?xml version="1.0" ?>
 <GUILayout>
 	<Window Type="DefaultWindow" Name="MenuRoot">
-		<Window Type="Vanilla/StaticImage" Name="MenuRoot/Background">
-			<!--<Property Name="AbsoluteRect" Value="l:597.000000 t:304.000000 r:716.000000 b:328.000000" />-->
+		<!--<Window Type="Vanilla/StaticImage" Name="MenuRoot/Background">
 			<Property Name="RelativeRect" Value="l:0.000000 t:0.000000 r:1.000000 b:1.000000" />
 			<Property Name="UnifiedAreaRect" Value="{{0.000000,0.000000},{0.000000,0.000000},{1.000000,0.000000},{1.000000,0.000000}}" />
 			<Property Name="Image" Value="set:MenuRootImage image:MenuRootBackground" />
 			<Property Name="FrameEnabled" Value="false"/>
 			<Property Name="Disabled" Value="true"/>				
-		</Window>
+		</Window>-->
+    <Window Type="Vanilla/StaticImage" Name="MenuRoot/Background">
+      <Property Name="RelativeRect" Value="l:0.000000 t:0.000000 r:1.000000 b:1.000000" />
+      <Property Name="UnifiedAreaRect" Value="{{0.000000,0.000000},{0.000000,0.000000},{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="Image" Value="set:Vanilla-Images image:GenericBrush" />
+      <Property Name="ImageColours" Value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+      <Property Name="FrameEnabled" Value="false"/>
+      <Property Name="Disabled" Value="true"/>
+    </Window>
 
+    <Window Type="Vanilla/StaticImage" Name="MenuRoot/BackgroundText">
+      <Property Name="UnifiedAreaRect" Value="{{0.18000,0.000000},{0.08000,0.000000},{0.82000,0.000000},{0.40000,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="Image" Value="set:LoadingScreenImages image:LoadingScreenImages/title" />
+      <Property Name="FrameEnabled" Value="false"/>
+      <Property Name="Disabled" Value="true"/>
+    </Window>
+
+    <!--<Window Type="Vanilla/StaticImage" Name="MenuRoot/BackgroundParrot">
+      <Property Name="UnifiedAreaRect" Value="{{0.250000,0.000000},{0.850000,0.000000},{0.750000,0.000000},{0.970000,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="Image" Value="set:LoadingScreenImages image:LoadingScreenImages/parrot_image" />
+      <Property Name="FrameEnabled" Value="false"/>
+      <Property Name="Disabled" Value="true"/>
+    </Window>-->
+    
 		<Window Type="Vanilla/Button" Name="MenuRoot/New">
-			<Property Name="AbsoluteRect" Value="l:561.000000 t:391.000000 r:867.000000 b:430.000000" />
-			<Property Name="RelativeRect" Value="l:0.550000 t:0.500000 r:0.850000 b:0.550000" />
+			<!--<Property Name="AbsoluteRect" Value="l:561.000000 t:391.000000 r:867.000000 b:430.000000" />
+			<Property Name="RelativeRect" Value="l:0.550000 t:0.500000 r:0.850000 b:0.550000" />-->
 			<Property Name="Text" Value="Nouvelle partie" />
-			<Property Name="UnifiedAreaRect" Value="{{0.550000,0.000000},{0.500000,0.000000},{0.850000,0.000000},{0.550000,0.000000}}" />
+			<Property Name="UnifiedAreaRect" Value="{{0.350000,0.000000},{0.500000,0.000000},{0.650000,0.000000},{0.550000,0.000000}}" />
 			</Window>
 		<Window Type="Vanilla/Button" Name="MenuRoot/Load">
-			<Property Name="AbsoluteRect" Value="l:561.000000 t:469.000000 r:867.000000 b:508.000000" />
-			<Property Name="RelativeRect" Value="l:0.550000 t:0.600000 r:0.850000 b:0.650000" />
+			<!--<Property Name="AbsoluteRect" Value="l:561.000000 t:469.000000 r:867.000000 b:508.000000" />
+			<Property Name="RelativeRect" Value="l:0.550000 t:0.600000 r:0.850000 b:0.650000" />-->
 			<Property Name="Text" Value="Charger une partie" />
-			<Property Name="UnifiedAreaRect" Value="{{0.550000,0.000000},{0.600000,0.000000},{0.850000,0.000000},{0.650000,0.000000}}" />
+			<Property Name="UnifiedAreaRect" Value="{{0.350000,0.000000},{0.600000,0.000000},{0.650000,0.000000},{0.650000,0.000000}}" />
 			</Window>
 		<Window Type="Vanilla/Button" Name="MenuRoot/Credits">
-			<Property Name="AbsoluteRect" Value="l:561.000000 t:547.000000 r:867.000000 b:586.000000" />
-			<Property Name="RelativeRect" Value="l:0.550000 t:0.700000 r:0.850000 b:0.750000" />
+			<!--<Property Name="AbsoluteRect" Value="l:561.000000 t:547.000000 r:867.000000 b:586.000000" />
+			<Property Name="RelativeRect" Value="l:0.550000 t:0.700000 r:0.850000 b:0.750000" />-->
 			<Property Name="Text" Value="Scene 1" />
-			<Property Name="UnifiedAreaRect" Value="{{0.550000,0.000000},{0.700000,0.000000},{0.850000,0.000000},{0.750000,0.000000}}" />
+			<Property Name="UnifiedAreaRect" Value="{{0.350000,0.000000},{0.700000,0.000000},{0.650000,0.000000},{0.750000,0.000000}}" />
 			</Window>
 		<Window Type="Vanilla/Button" Name="MenuRoot/Options">
-			<Property Name="AbsoluteRect" Value="l:562.000000 t:626.000000 r:868.000000 b:665.000000" />
-			<Property Name="RelativeRect" Value="l:0.550980 t:0.800000 r:0.850980 b:0.850000" />
+			<!--<Property Name="AbsoluteRect" Value="l:562.000000 t:626.000000 r:868.000000 b:665.000000" />
+			<Property Name="RelativeRect" Value="l:0.550980 t:0.800000 r:0.850980 b:0.850000" />-->
 			<Property Name="Text" Value="Options" />
-			<Property Name="UnifiedAreaRect" Value="{{0.550980,0.000000},{0.800000,0.000000},{0.850980,0.000000},{0.850000,0.000000}}" />
-			<Property Name="Disabled" Value="true"/>
+			<Property Name="UnifiedAreaRect" Value="{{0.350000,0.000000},{0.800000,0.000000},{0.650000,0.000000},{0.850000,0.000000}}" />
+			<Property Name="Disabled" Value="false"/>
 			</Window>
 		<Window Type="Vanilla/Button" Name="MenuRoot/Exit">
-			<Property Name="AbsoluteRect" Value="l:561.000000 t:704.000000 r:867.000000 b:743.000000" />
-			<Property Name="RelativeRect" Value="l:0.550000 t:0.900000 r:0.850000 b:0.950000" />
+			<!--<Property Name="AbsoluteRect" Value="l:561.000000 t:704.000000 r:867.000000 b:743.000000" />
+			<Property Name="RelativeRect" Value="l:0.550000 t:0.900000 r:0.850000 b:0.950000" />-->
 			<Property Name="Text" Value="Quitter" />
-			<Property Name="UnifiedAreaRect" Value="{{0.550000,0.000000},{0.900000,0.000000},{0.850000,0.000000},{0.950000,0.000000}}" />
+			<Property Name="UnifiedAreaRect" Value="{{0.350000,0.000000},{0.900000,0.000000},{0.650000,0.000000},{0.950000,0.000000}}" />
 			</Window>
 		</Window>
 </GUILayout>
