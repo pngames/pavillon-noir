@@ -31,6 +31,7 @@
 # define _PNCONFIGURABLEPARAMETER_HPP_
 
 #include <string>
+#include "pndefs.h"
 
 namespace PN
 {
