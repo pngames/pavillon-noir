@@ -60,7 +60,10 @@ namespace PN {
 // Map
 FXDEFMAP(PNFXAnimListParameter) PNFXAnimListParameterMap[]={
   FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_DELETE,PNFXAnimListParameter::onDelete),
-  FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_ADD,PNFXAnimListParameter::onAdd)
+  FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_ADD,PNFXAnimListParameter::onAdd),
+  FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_EDIT,PNFXAnimListParameter::onEdit),
+  FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_DIAL_OK,PNFXAnimListParameter::onDialOK),
+  FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_DIAL_CANCEL,PNFXAnimListParameter::onDialCancel)
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -74,7 +77,9 @@ PNPropertiesGridParameter(param)
   _parent = p;
   _listBox =  new FXListBox(this, NULL, 0, LAYOUT_FILL_X | FRAME_SUNKEN | FRAME_THICK, 0,0,50,0);
   _buttonAdd = new FXButton(this, "Add", NULL, this, ID_ADD,FRAME_RAISED|FRAME_THICK);
+  _buttonEdit = new FXButton(this, "Edit", NULL, this, ID_EDIT,FRAME_RAISED|FRAME_THICK);
   _buttonDelete = new FXButton(this, "Delete", NULL, this, ID_DELETE,FRAME_RAISED|FRAME_THICK);
+
   buildList();
 }
 
@@ -142,11 +147,27 @@ PNFXAnimListParameter::onDelete(FXObject* obj,FXSelector sel,void* ptr)
   return 1;
 }
 
+
 long
 PNFXAnimListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::onAdd");
-  FXFileDialog fd(this, "Choose animation file");
+
+  PN3DAnimation* anim = this->openAnim();
+  if (anim != NULL)
+  {  
+    PN3DSkeletonAnimation* skanim = new PN3DSkeletonAnimation(anim, NULL);
+	this->_skanim = skanim;
+    this->showAnim((PNConfigurableObject*)skanim);
+  }
+  return 1;
+}
+
+
+PN3DAnimation*  
+PNFXAnimListParameter::openAnim(void)
+{
+  FXFileDialog fd(this, "Choose animation file to add");
 
   if (fd.execute())
   {
@@ -160,7 +181,7 @@ PNFXAnimListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
 
 	if (str.find(cwd.substitute('\\', '/')) == -1)
 	{
-	  FXMessageBox::error(this, MBOX_OK, "Path Error", "An error occured. Please check file path.");	  	
+	  FXMessageBox::error(this, MBOX_OK, "Path Error", "An error occurred. Please check file path.");	  	
 	}
 	else
 	{
@@ -169,6 +190,7 @@ PNFXAnimListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
 
 	  if (anim != NULL)
 	  {
+		/*
 		v->push_back(PN3DSkeletonAnimation(anim, NULL));
 
 		std::string s = v->at(i).anim->getFile()->string();
@@ -178,15 +200,87 @@ PNFXAnimListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
 		_listBox->setNumVisible(_listBox->getNumItems()<5 ? _listBox->getNumItems() : 5);
 		PNConfigurableObject* co = _param->getConfigurableObject();
 		co->setModified();
+		*/
+		return anim;
 	  }
 	  else
 	  {
-		FXMessageBox::error(this, MBOX_OK, "File Error", "An error occured. Please check file format.");
+		FXMessageBox::error(this, MBOX_OK, "File Error", "An error occurred. Please check file format.");
 	  }
 	}
   }
+  return NULL;
+}
+
+
+long
+PNFXAnimListParameter::onEdit(FXObject* obj,FXSelector sel,void* ptr)
+{
+  pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::onEdit");
+
+  PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem();
+  int i = 0;
+  for (PN3DSkeletonObject::AnimationVector::iterator it = v->begin(); it != v->end(); ++it)
+  {
+	if (i == _listBox->getCurrentItem())
+	{
+	  PN3DSkeletonAnimation&	anim = *it;
+	  this->showAnim((PNConfigurableObject*)&anim);
+	  break;
+	}
+	i++;
+  }
   return 1;
 }
+
+
+void
+PNFXAnimListParameter::showAnim(PNConfigurableObject* skanim)
+{
+  _animDialBox =  new FXDialogBox(this, "Add Anim", DECOR_TITLE|DECOR_BORDER);
+  FXVerticalFrame* vframe = new FXVerticalFrame(_animDialBox, LAYOUT_FILL_X | LAYOUT_FILL_Y);
+  FXGroupBox* group = new FXGroupBox(vframe, "Animation properties", LAYOUT_FILL_X | LAYOUT_FILL_Y | FRAME_GROOVE);
+  PNPropertiesGrid* grid = new PNPropertiesGrid(group);
+  _animDialBox->create();
+  vframe->create();
+  group->create();
+
+  grid->setObject(skanim);
+
+  new FXHorizontalSeparator(vframe, LAYOUT_FILL_X);
+  FXHorizontalFrame*	buttons = new FXHorizontalFrame(vframe,LAYOUT_FILL_X|LAYOUT_FILL_Y);
+  new FXButton(buttons,"&Ok",NULL,this,PNFXAnimListParameter::ID_DIAL_OK,BUTTON_DEFAULT|LAYOUT_RIGHT|LAYOUT_CENTER_Y|FRAME_RAISED|FRAME_THICK,10,10,0,0, 20,20);
+  new FXButton(buttons,"&Cancel",NULL,this,PNFXAnimListParameter::ID_DIAL_CANCEL,BUTTON_DEFAULT|LAYOUT_RIGHT|LAYOUT_CENTER_Y|FRAME_RAISED|FRAME_THICK,10,10,0,0, 20,20);
+  buttons->create();
+
+  _animDialBox->execute();
+}
+
+
+long
+PNFXAnimListParameter::onDialOK(FXObject* obj,FXSelector sel,void* ptr)
+{
+  if (_skanim != NULL)
+  {
+	PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem(); 
+	v->push_back(*_skanim);
+	_skanim = NULL;
+  }
+  _animDialBox->getApp()->stopModal(_animDialBox, TRUE);
+  _animDialBox->close();
+  this->update();
+  return 1;
+}
+
+
+long
+PNFXAnimListParameter::onDialCancel(FXObject* obj,FXSelector sel,void* ptr)
+{
+  _animDialBox->getApp()->stopModal(_animDialBox, TRUE);
+  _animDialBox->close();
+  return 1;
+}
+
 
 /*
 *	Updates AnimList
@@ -203,3 +297,4 @@ PNFXAnimListParameter::update(void)
 
 //////////////////////////////////////////////////////////////////////////
 };
+
