@@ -46,25 +46,26 @@
 namespace PN { namespace EDITOR {
 //////////////////////////////////////////////////////////////////////////
   
-class PNWaypointObject : public PNConfigurableObject
+class						PNWaypointObject : public PNConfigurableObject
 {
+  typedef std::vector<PNConfigurableParameter*> ParametersVector;
+  ParametersVector			_params;
 private:
-  std::string							  _label;
-  std::vector<PNConfigurableParameter*>   _parameters;
+  std::string				_label;
 
 public:
   PNWaypointObject(std::string label);
   ~PNWaypointObject();
 
-  void    update(PNConfigurableParameter* p);
-  void    addParameter(pnparamtype type, void* elem, const std::string& label, const std::string& altText);
+  void						update(PNConfigurableParameter* p);
+  void						addParameter(pnparamtype type, void* elem, const std::string& label, const std::string& altText);
 
-  int getNbParameters();
-  PNConfigurableParameter* getParameter(int idx);
+  int						getNbParameters();
+  PNConfigurableParameter*	getParameter(int idx);
 
   // for tests only
-  void          setLabel(std::string label) { _label = label; };
-  const std::string&   getLabel() { return _label; };
+  void						setLabel(std::string label) { _label = label; };
+  const std::string&		getLabel() { return _label; };
 };
 
 //////////////////////////////////////////////////////////////////////////

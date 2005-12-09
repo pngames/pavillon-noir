@@ -95,6 +95,9 @@ PNEDSkybox::setContext(PNPropertiesPanel* grid, PNEditor* ed)
 PNEDSkybox::~PNEDSkybox()
 {
   FXTRACE((100,"PNEDSkybox::~PNEDSkybox\n"));
+
+  for (ParametersVector::iterator it = _params.begin(); it != _params.end(); ++it)
+	delete *it;
 }
 
 //////////////////////////////////////////////////////////////////////////

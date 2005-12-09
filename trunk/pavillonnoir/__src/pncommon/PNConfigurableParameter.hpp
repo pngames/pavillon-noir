@@ -39,8 +39,9 @@ namespace PN
 
 typedef enum
 {
-  PN_PARAMTYPE_INT,				// based on int
-  PN_PARAMTYPE_REAL,			// based on float
+  PN_PARAMTYPE_INT,				// based on pnint
+  PN_PARAMTYPE_UINT,			// based on pnuint
+  PN_PARAMTYPE_REAL,			// based on pnfloat
   PN_PARAMTYPE_STRING,			// based on std::string
   PN_PARAMTYPE_FILE,			// based on std::string
   PN_PARAMTYPE_DIR,				// based on std::string
@@ -95,6 +96,7 @@ public:
   const std::string&	getLabel();
   const std::string&	getAltText();
   bool					isEditable();
+
   PNConfigurableObject*	getConfigurableObject();
 
   // for tests only

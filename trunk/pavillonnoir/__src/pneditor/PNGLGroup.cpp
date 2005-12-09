@@ -66,6 +66,9 @@ PNGLGroup::PNGLGroup()
 PNGLGroup::~PNGLGroup()
 {
   clear();
+
+  for (ParametersVector::iterator it = _params.begin(); it != _params.end(); ++it)
+	delete *it;
 }
 
 //////////////////////////////////////////////////////////////////////////

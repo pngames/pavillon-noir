@@ -27,8 +27,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#ifndef _PN_CONFIGURABLE_OBJECT_HPP_
-# define _PN_CONFIGURABLE_OBJECT_HPP_
+#ifndef _PNCONFIGURABLEOBJECT_HPP_
+# define _PNCONFIGURABLEOBJECT_HPP_
 
 #include <string>
 
@@ -37,26 +37,27 @@ namespace PN {
 
 class PNConfigurableParameter;
 
-class PNConfigurableObject
+class /*PNAPI*/						PNConfigurableObject
 {
 public:
   virtual ~PNConfigurableObject() {};
 
   virtual void						update(PNConfigurableParameter* p) = 0;
 
-  virtual pnint						getNbParameters() = 0;
-  virtual PNConfigurableParameter*	getParameter(pnint idx) = 0;
-
   virtual const std::string&		getLabel() = 0;
 
-  virtual pnbool					modified() { return FALSE; }
+  virtual pnbool					modified() { return false; }
   virtual void						setModified() { }
   virtual void						setUnmodified() { }
 
-  void								addParam(PNConfigurableParameter* p);
+  //////////////////////////////////////////////////////////////////////////
+
+public:
+  virtual pnint						getNbParameters() = 0;
+  virtual PNConfigurableParameter*	getParameter(pnint idx) = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
 };
 
-#endif /*_PN_CONFIGURABLE_OBJECT_HPP_*/
+#endif /*!_PNCONFIGURABLEOBJECT_HPP_*/

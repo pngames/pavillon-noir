@@ -35,5 +35,9 @@
 #include "PNPropertiesGridParameter.hpp"
 
 #include "PNStringParameter.hpp"
+#include "PNIntParameter.hpp"
+#include "PNUIntParameter.hpp"
+#include "PNFloatParameter.hpp"
+#include "PNBoolParameter.hpp"
 
 #endif /*_PNPROPERTIES_H_*/
