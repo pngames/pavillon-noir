@@ -301,11 +301,8 @@ namespace PN
 	if (_mainSheet->isMuted() == true)
 	  return true;
 
-	//CEGUI::System::getSingleton().getGUISheet()->addChildWindow(CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/myschemas/demolayout.xml"));
-
-	//PNGUIChatWindow::getInstance()->startGUI();
 	resetGUI();
-
+	PNGUILoadingScreen::getInstance()->show();
 	return true;
   }
 

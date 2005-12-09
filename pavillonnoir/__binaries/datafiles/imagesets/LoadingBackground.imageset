@@ -1,5 +1,9 @@
 <?xml version="1.0" ?>
-<Imageset Name="LoadingScreenImage" Imagefile="./datafiles/imagesets/LoadingBackground_red-1024.tga" NativeHorzRes="1024" NativeVertRes="1024" AutoScaled="true">
-	<Image Name="LoadingScreenBackground" XPos="0" YPos="0" Width="1024" Height="768" />
+<Imageset Name="LoadingScreenImages" Imagefile="./datafiles/imagesets/LoadingBackground_IMAGES.tga" NativeHorzRes="1024" NativeVertRes="1024" AutoScaled="true">
+	<Image Name="LoadingScreenImages/parrot_orange" XPos="0" YPos="0" Width="459" Height="362" />
+	<Image Name="LoadingScreenImages/parrot_red" XPos="443" YPos="0" Width="443" Height="362" />
+	<Image Name="LoadingScreenImages/parrot_image" XPos="0" YPos="362" Width="163" Height="375" />
+	<Image Name="LoadingScreenImages/title" XPos="246" YPos="411" Width="746" Height="265" />
+	<Image Name="LoadingScreenImages/chargement" XPos="666" YPos="707" Width="342" Height="110" />
 </Imageset>
 
