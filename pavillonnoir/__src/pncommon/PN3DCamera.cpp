@@ -54,7 +54,7 @@ PN3DCamera::PN3DCamera()
 {
   _objType = OBJTYPE_CAMERA;
 
-  _viewFar = 20000.0f;
+  _viewFar = 50000.0f;
   _viewNear = 0.1f;
 
   setFov(45.0f);
@@ -157,7 +157,7 @@ PN3DCamera::render()
 
   pnfloat color[] = {1.0f, 0.0f, 0.0f, 1.0f};
 
-  pnri->renderSphere(15.0f, 20, 20, color, _coord);
+  //pnri->renderSphere(15.0f, 20, 20, color, _coord);
 }
 
 //////////////////////////////////////////////////////////////////////////

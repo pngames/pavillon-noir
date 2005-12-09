@@ -95,7 +95,7 @@ PN3DSkeletonObject::_parseAnimations(xmlNode* parent)
 	{
 	  fs::path	  p(DEF::animationFilePath + (const char*)attr, fs::native);
 
-	  if ((anim = (PN3DAnimation*)PNImportManager::getInstance()->import(p, PN_IMPORT_3DANIMATION))= NULL)
+	  if ((anim = (PN3DAnimation*)PNImportManager::getInstance()->import(p, PN_IMPORT_3DANIMATION)) == NULL)
 		return PNEC_ERROR;
 	}
 	else
@@ -107,14 +107,13 @@ PN3DSkeletonObject::_parseAnimations(xmlNode* parent)
 
 	skanim->speed = (pnfloat)_animSpeed;
 
+	_anims.push_back(skanim);
+
 	if (XMLUtils::xmlGetProp(node, PNO_XMLPROP_ENABLED, false))
-	  startAnimation((pnuint)_anims.size());
+	  startAnimation((pnuint)_anims.size() - 1);
 
 	skanim->unserializeFromXML(node);
 
-	//////////////////////////////////////////////////////////////////////////
-
-	_anims.push_back(skanim);
   }
 
   return PNEC_SUCCESS;
@@ -220,7 +219,7 @@ PN3DSkeletonObject::update(pnuint deltaTime)
   if (_skeleton == NULL)
 	return ;
 
-  if (false/*_running*/)
+  if (_running)
   {
 	IPNAnimated::update(deltaTime);
 
@@ -284,7 +283,7 @@ PN3DSkeletonObject::getSkeleton()
 
 //////////////////////////////////////////////////////////////////////////
 
-pnbool
+pnuint
 PN3DSkeletonObject::setEnable(pnuint animId, pnbool enabled)
 {
   PNLOCK(this);
@@ -348,7 +347,9 @@ PN3DSkeletonObject::startAnimation(pnuint animId)
 
   _anims[animId]->step = 0;
 
-  return setEnable(animId, true);
+  pnuint error = setEnable(animId, true);
+
+  return error != PNEC_SUCCESS ? error : IPNAnimated::startAnimation();
 }
 
 //////////////////////////////////////////////////////////////////////////
