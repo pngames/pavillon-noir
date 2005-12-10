@@ -48,23 +48,23 @@ PNGLRendererObject::PNGLRendererObject(PNGLRenderer& renderer) : _renderer(rende
 
   _nbVerts = 0;
   _verticesArrays = NULL;
-  _verticesArraysId = -1;
+  _verticesArraysId = (GLuint)-1;
   _normalsArrays = NULL;
-  _normalsArraysId = -1;
+  _normalsArraysId = (GLuint)-1;
   _colorsArrays = NULL;
-  _colorsArraysId = -1;
+  _colorsArraysId = (GLuint)-1;
   _texturesArrays = NULL;
-  _texturesArraysId = -1;
+  _texturesArraysId = (GLuint)-1;
 
   _size = 0;
   _format = PN_T2F_C4F_N3F_V3F;
   _interleaveArrays = NULL;
-  _interleaveArraysId = -1;
+  _interleaveArraysId = (GLuint)-1;
 
   _nbIndex = 0;
   _mode = PN_TRIANGLES;
   _indexArrays = NULL;
-  _indexArraysId = -1;
+  _indexArraysId = (GLuint)-1;
 
   //_color = DFLCOLOR;
   _color.r = 1.0f;
@@ -75,16 +75,16 @@ PNGLRendererObject::PNGLRendererObject(PNGLRenderer& renderer) : _renderer(rende
 
 PNGLRendererObject::~PNGLRendererObject()
 {
-  if (_verticesArraysId != -1)
+  if (_verticesArraysId != (GLuint)-1)
 	glDeleteBuffersARB(1, &_verticesArraysId);
 
-  if (_normalsArraysId != -1)
+  if (_normalsArraysId != (GLuint)-1)
 	glDeleteBuffersARB(1, &_normalsArraysId);
 
-  if (_colorsArraysId != -1)
+  if (_colorsArraysId != (GLuint)-1)
 	glDeleteBuffersARB(1, &_colorsArraysId);
 
-  if (_texturesArraysId != -1)
+  if (_texturesArraysId != (GLuint)-1)
 	glDeleteBuffersARB(1, &_texturesArraysId);
 }
 
@@ -121,8 +121,7 @@ void
 PNGLRendererObject::setBuffer(pnrenderarray flag_array, pnfloat *array, pnbool compressed/* = false*/)
 {
   static GLboolean	vertex_buffer_object_ENABLED = GLEW_ARB_vertex_buffer_object;
-
-  GLenum			target = 0;
+  
   GLuint			*id = NULL;
   GLsizeiptrARB		buffSize = _nbVerts;
 
@@ -159,7 +158,7 @@ PNGLRendererObject::setBuffer(pnrenderarray flag_array, pnfloat *array, pnbool c
 
   if (vertex_buffer_object_ENABLED && compressed && id != NULL && array != NULL)
   {
-	if (*id == -1)
+	if (*id == (GLuint)-1)
 	  glGenBuffersARB(1, id);
 
 	glBindBufferARB(GL_ARRAY_BUFFER_ARB, *id);
@@ -169,14 +168,14 @@ PNGLRendererObject::setBuffer(pnrenderarray flag_array, pnfloat *array, pnbool c
 	glGetBufferParameterivARB(GL_ARRAY_BUFFER_ARB, GL_BUFFER_SIZE_ARB, &stmp);
 	if (stmp <= 0 )
 	{
-	  glBindBufferARB(GL_ARRAY_BUFFER_ARB, NULL);
+	  glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
 	  glDeleteBuffersARB(1, id);
-	  *id = -1;
+	  *id = (GLuint)-1;
 
 	  return;
 	}
 
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, NULL);
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
   }
 }
 
@@ -392,7 +391,7 @@ PNGLRendererObject::_renderBuffer()
 //////////////////////////////////////////////////////////////////////////
 
 #define		SET_BUFFER(id, array, fct)	\
-  if (id != -1) \
+  if (id != (GLuint)-1) \
 { \
   glBindBufferARB(GL_ARRAY_BUFFER_ARB, id); \
   fct(GL_FLOAT, 0, NULL); \
@@ -401,7 +400,7 @@ else \
   fct(GL_FLOAT, 0, array);
 
 #define		SET_BUFFER_SIZE(id, array, size, fct) \
-  if (id != -1) \
+  if (id != (GLuint)-1) \
 { \
   glBindBufferARB(GL_ARRAY_BUFFER_ARB, id); \
   fct(size, GL_FLOAT, 0, NULL); \
