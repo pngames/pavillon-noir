@@ -50,8 +50,9 @@ namespace PN{
 	CEGUI::StaticImage*	_backGround;
 	CEGUI::ProgressBar*	_progBar;
 	CEGUI::Listbox*		_listBox;
-	typedef std::list<std::string>	imagesetAll;
-	imagesetAll					_imagesetAll;
+	CEGUI::StaticImage* _statImg;
+	typedef std::list<std::string>	listImagesetAll;
+	listImagesetAll					_listImagesetAll;
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/

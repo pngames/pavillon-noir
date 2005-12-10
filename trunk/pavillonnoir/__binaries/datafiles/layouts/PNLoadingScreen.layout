@@ -23,10 +23,11 @@
 -->
     <Window Type="Vanilla/StaticImage" Name="chargement" >
       <Property Name="Image" Value="set:LoadingScreenImages image:LoadingScreenImages/chargement" />
-      <Property Name="UnifiedAreaRect" Value="{{0.654901,0.000000},{0.65000,0.000000},{0.944902,0.000000},{0.780000,0.000000}}" />
+      <Property Name="UnifiedAreaRect" Value="{{0.60000,0.000000},{0.63000,0.000000},{0.95000,0.000000},{0.780000,0.000000}}" />
       <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
       <Property Name="FrameEnabled" Value="false"/>
       <Property Name="Disabled" Value="true"/>
+      <Property Name="BackgroundEnabled" Value="false" />
     </Window>
 		<Window Type="Vanilla/ProgressBar" Name="LoadingScreen/ProgressBar">
 			<Property Name="AbsoluteRect" Value="l:51.000000 t:587.000000 r:969.000000 b:622.000000" />
