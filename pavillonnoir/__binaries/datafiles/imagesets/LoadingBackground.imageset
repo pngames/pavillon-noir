@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
-<Imageset Name="LoadingScreenImages" Imagefile="./datafiles/imagesets/LoadingBackground_IMAGES.tga" NativeHorzRes="1024" NativeVertRes="1024" AutoScaled="true">
-	<Image Name="LoadingScreenImages/parrot_orange" XPos="0" YPos="0" Width="459" Height="362" />
+<Imageset Name="LoadingScreenImages" Imagefile="./datafiles/imagesets/LoadingBackground_IMAGES.tga" NativeHorzRes="1024" NativeVertRes="1024" AutoScaled="false">
+	<Image Name="LoadingScreenImages/parrot_orange" XPos="0" YPos="0" Width="445" Height="362" />
 	<Image Name="LoadingScreenImages/parrot_red" XPos="443" YPos="0" Width="443" Height="362" />
 	<Image Name="LoadingScreenImages/parrot_image" XPos="0" YPos="362" Width="163" Height="375" />
 	<Image Name="LoadingScreenImages/title" XPos="246" YPos="411" Width="746" Height="265" />

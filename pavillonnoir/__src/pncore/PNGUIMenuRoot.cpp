@@ -76,8 +76,8 @@ namespace PN
   PNGUIMenuRoot::PNGUIMenuRoot(std::string label)
   {
 	_label = label;
-	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("MenuRootImage") == false)
-	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/MenuRoot.imageset");
+	//if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("MenuRootImage") == false)
+	 // CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/MenuRoot.imageset");
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/MenuRoot.layout"); 
 
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
