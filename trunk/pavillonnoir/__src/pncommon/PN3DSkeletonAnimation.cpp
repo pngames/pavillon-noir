@@ -49,7 +49,7 @@ PN3DSkeletonAnimation::PN3DSkeletonAnimation(PN3DAnimation* anim, PN3DSkeletonOb
 
   this->looping = false;
 
-  this->step = -1;
+  this->step = (pnuint)-1;
 
   this->weight = 1.0f;
   this->speed = 1.0f;

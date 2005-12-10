@@ -42,7 +42,7 @@ PNConfigurableParameter::PNConfigurableParameter(PNConfigurableObject* p,
                                                  void* elem, 
                                                  const string& label, 
                                                  const string& altText,
-												 bool editable,
+												 pnbool editable,
 												 void* max,
 												 void* min)
 {	
@@ -102,7 +102,7 @@ PNConfigurableParameter::getAltText()
   return _altText;
 }
 
-bool
+pnbool
 PNConfigurableParameter::isEditable()
 {
   return _editable;
