@@ -68,7 +68,7 @@ PNGLVideo::startAnimation()
 #ifdef WIN32
   _command = std::string("win32\\mplayer\\mplayer.exe -really-quiet -fs ") + _path;
 #else
-  _command = std::string("xine --auto-play=Fhq ") + _file.string();
+  _command = std::string("xine --auto-play=Fhq ") + _path;
 #endif
 
   boost::thread thrd(fastdelegate::FastDelegate0<void>(this, &PNGLVideo::_playVideo));

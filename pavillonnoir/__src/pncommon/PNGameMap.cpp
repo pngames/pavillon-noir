@@ -177,13 +177,12 @@ PNGameMap::_unserializeNode(xmlNode* node)
 //////////////////////////////////////////////////////////////////////////
 
 pnint
-PNGameMap::unserializeFromXML(xmlNode* node)
-{
+PNGameMap::unserializeFromXML(xmlNode* root)
+{  
+  _mpp = XMLUtils::xmlGetProp(root, PNXML_MPP_ATTR, 1.0f);
+
   //////////////////////////////////////////////////////////////////////////
-
-  xmlNodePtr root = node;
-  xmlNodePtr current;
-
+  
   pnint	error = PNEC_SUCCESS;
 
   //////////////////////////////////////////////////////////////////////////
@@ -191,15 +190,12 @@ PNGameMap::unserializeFromXML(xmlNode* node)
 
   if (xmlStrEqual(root->name, PNXML_LISTENTITIES_MKP) && root->children != NULL)
   {
-	for (current = root->children; current != NULL; current = current->next)
+	for (xmlNodePtr current = root->children; current != NULL; current = current->next)
 	{
 	  error = _unserializeNode(current);
 
 	  if (error != PNEC_SUCCESS)
 		break ;
-	 else
-		if ((_mpp = XMLUtils::xmlGetProp(root, PNXML_MPP_ATTR, 1.0f)) == NULL)
-		  error = PNEC_ERROR;
 	}
   }
 
