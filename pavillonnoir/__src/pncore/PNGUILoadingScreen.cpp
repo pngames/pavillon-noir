@@ -27,6 +27,9 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
+//#include <stdlib.h>
+#include <time.h>
+
 #include "pndefs.h"
 #include "PNGameEventData.hpp"
 #include "PNGUILoadingScreen.hpp"
@@ -42,6 +45,8 @@ PNGUILoadingScreen*	PNGUILoadingScreen::_instance = NULL;
 
 PNGUILoadingScreen::PNGUILoadingScreen()
 {
+  srand((pnuint)time(0));
+
   CEGUI::Imageset* imgSet = CEGUI::ImagesetManager::getSingleton().getImageset("LoadingScreenImages");
   CEGUI::Imageset::ImageIterator imgSetIte = imgSet->getIterator();
 
@@ -94,9 +99,16 @@ PNGUILoadingScreen* PNGUILoadingScreen::getInstance()
 void 
 PNGUILoadingScreen::setRandomBackground()
 {
-  listImagesetAll::iterator			ite = _listImagesetAll.begin();
+  int i = 0;
+  listImagesetAll::iterator ite = _listImagesetAll.begin();
 
-  std::cout << (*ite).c_str() << std::endl;
+  int val = (rand() % (_listImagesetAll.size()-1));
+
+  while (i != val) 
+  {
+	ite++;
+	i++;
+  }
 
   CEGUI::Image img = (CEGUI::Image)CEGUI::ImagesetManager::getSingleton().getImageset("LoadingScreenImages")->getImage((*ite).c_str());
 
@@ -122,8 +134,18 @@ PNGUILoadingScreen::setRandomBackground()
   {
 	sizeWidth = 1;
 	sizeHeight = imgHeight * sizeWidth / imgWidth * 1.33; 
-	posX = 0.0;
-	posY = (0.63 - sizeHeight) /2;
+	if (sizeHeight > 0.63)
+	{
+	  sizeHeight = 0.63;
+	  sizeWidth = imgWidth * sizeHeight / imgHeight / 1.33;
+	  posX = (1 - sizeWidth) /2;
+	  posY = 0.0f;
+	}
+	else
+	{
+	  posX = 0.0;
+	  posY = (0.63 - sizeHeight) /2;
+	}
   }
 
   _statImg->setImage("LoadingScreenImages", (*ite).c_str());
@@ -132,7 +154,7 @@ PNGUILoadingScreen::setRandomBackground()
   _statImg->setFrameEnabled(false);
   _statImg->setBackgroundEnabled(false);
   _statImg->disable();
-
+  _statImg->setAlpha(1.0f);
 }
 
 void 
@@ -140,13 +162,13 @@ PNGUILoadingScreen::resetScreen()
 {
   _progBar->setProgress(0.0f);
   _listBox->resetList();
+  _statImg->setAlpha(0.0f);
 }
 
 void	
 PNGUILoadingScreen::show()
 {
   _mainSheet->show();
-  setRandomBackground();
 }
 
 void	
@@ -161,8 +183,8 @@ void
 PNGUILoadingScreen::startGUI(pnEventType type, PNObject* source, PNEventData* data)
 {
   CEGUI::MouseCursor::getSingleton().hide();
-  //setRandomBackground();
   resetScreen();
+  setRandomBackground();
   show();
   //PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STEP, 0, NULL);
 }
@@ -185,6 +207,7 @@ PNGUILoadingScreen::refreshScreen(float val, std::string update)
   item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
 
   _listBox->addItem(item);
+  _listBox->ensureItemIsVisible(item);
   _listBox->setShowVertScrollbar(false);
 }
 
