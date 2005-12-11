@@ -79,7 +79,6 @@ public:
 protected:
   pnbool							_hasFile;
   /// File that represent object
-  //boost::filesystem::path			_file;
   std::string						_path;
 };
 

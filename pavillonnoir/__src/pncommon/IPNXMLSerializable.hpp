@@ -80,6 +80,8 @@ public:
 
 namespace XMLUtils
 {
+  PNAPI pnuint					xmlGetNbChilds(xmlNode* node);
+
   PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const pnuchar* name, pnbool value);
   PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const char* name, pnbool value);
   PNAPI pnbool					xmlGetProp(xmlNode* node, const pnuchar* name, pnbool def);
