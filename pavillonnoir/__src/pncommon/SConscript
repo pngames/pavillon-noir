@@ -54,6 +54,10 @@ PNConf.cpp
 PN3DSkeletonAnimation.cpp
 PNConfPanel.cpp
 PNStringParameter.cpp
+PNBoolParameter.cpp
+PNFloatParameter.cpp
+PNIntParameter.cpp
+PNUIntParameter.cpp
 """.split()
 obj.target = 'libpncommon' + env['suffix']
 obj.vnum = env['package_version']

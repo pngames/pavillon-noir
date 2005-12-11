@@ -3,8 +3,7 @@
 Import('env')
 
 obj = env.genobj('shlib', env)
-obj.src = """PNFXActiveStringParameter.cpp
-PNFXAnimListParameter.cpp
+obj.src = """PNFXAnimListParameter.cpp
 PNFXDialXYZParameter.cpp
 PNFXDirParameter.cpp
 PNFXFileParameter.cpp
@@ -22,6 +21,7 @@ PNFXStringListParameter.cpp
 PNFXEventBoxParameter.cpp
 PNFXCheckButtonParameter.cpp
 PNFXDefaultParameter.cpp
+PNFXTextFieldParameter.cpp
 """.split()
 obj.target = 'libpneditorcommon' + env['suffix']
 obj.vnum = env['package_version']
