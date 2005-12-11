@@ -421,6 +421,14 @@
 			Name="game"
 			>
 			<File
+				RelativePath="..\..\..\__src\pncommon\IPNLoadingProgess.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\IPNLoadingProgess.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\PNDie.cpp"
 				>
 			</File>
