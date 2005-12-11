@@ -32,7 +32,8 @@
 # define _PNFXSTRINGPARAMETER_HPP_
 
 #include <fx.h>
-#include "PNConfigurableParameter.hpp"
+
+#include "PNFXTextFieldParameter.hpp"
 
 /*
  *	A simple FXStringParameter. The contents becomes red if modified, turns back 
@@ -42,7 +43,7 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNEDAPI PNFXStringParameter : public FXTextField, public PNPropertiesGridParameter
+class PNEDAPI	PNFXStringParameter : public PNFXTextFieldParameter
 {
   FXDECLARE(PNFXStringParameter);
 
@@ -53,11 +54,7 @@ public:
   PNFXStringParameter(FXComposite* p, PNConfigurableParameter* param);
   ~PNFXStringParameter();
 
-  void	create();
-  void	update();
-
-public:
-  long	onKeyRelease(FXObject*,FXSelector,void* ptr);
+  void			create();
 };
 
 //////////////////////////////////////////////////////////////////////////

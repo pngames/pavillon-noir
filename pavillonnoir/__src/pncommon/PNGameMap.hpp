@@ -62,6 +62,9 @@ protected:
   pnint						_unserializeSkybox(xmlNode* node);
   pnint						_unserializeEntity(xmlNode* node);
   pnint						_unserializeNode(xmlNode* node);
+
+  pnint						_serializeSkybox(xmlNode* node);
+  pnint						_serializeEntity(xmlNode* node, PN3DObject* object);
 public:
   PNGameMap();
   ~PNGameMap();

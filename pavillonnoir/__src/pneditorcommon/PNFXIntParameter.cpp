@@ -42,20 +42,19 @@ using namespace std;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-// Map
+/*// Map
 FXDEFMAP(PNFXIntParameter) PNFXIntParameterMap[]={
   FXMAPFUNC(SEL_KEYRELEASE,0,PNFXIntParameter::onKeyRelease),
-};
+};*/
 
 //////////////////////////////////////////////////////////////////////////
-//FXIMPLEMENT(PNFXIntParameter,FXTextField,PNFXIntParameterMap,ARRAYNUMBER(PNFXIntParameterMap))
-FXIMPLEMENT(PNFXIntParameter,FXTextField,NULL,0)
+//FXIMPLEMENT(PNFXIntParameter,PNFXTextFieldParameter,PNFXIntParameterMap,ARRAYNUMBER(PNFXIntParameterMap))
+FXIMPLEMENT(PNFXIntParameter, PNFXTextFieldParameter, NULL, 0)
 
 PNFXIntParameter::PNFXIntParameter(FXComposite* p, PNConfigurableParameter* param)
-: FXTextField(p, 12, NULL, 0, TEXTFIELD_INTEGER|TEXTFIELD_ENTER_ONLY),
-PNPropertiesGridParameter(param)
+: PNFXTextFieldParameter(p, param, 12)
 {
-  update();
+  
 }
 
 PNFXIntParameter::~PNFXIntParameter()
@@ -64,54 +63,7 @@ PNFXIntParameter::~PNFXIntParameter()
 
 void	PNFXIntParameter::create()
 {
-  FXTextField::create();
-}
-
-void PNFXIntParameter::update()
-{
-  FXString  str;
-  str.format("%i", *(int*)_param->getElem());
-  setText(str);
-  setEditable(_param->isEditable());
-  return;
-}
-
-long	PNFXIntParameter::onKeyRelease(FXObject* obj,FXSelector sel, void* ptr)
-{
-  FXTextField::handle(obj, sel, ptr);
-  FXEvent* event=(FXEvent*)ptr;
-  switch(event->code)
-  {
-  case KEY_Return:
-  case KEY_KP_Enter:
-	{
-	  pnint* i = (pnint*)_param->getElem();
-	  *i = atoi(getText().text());
-	  _param->getConfigurableObject()->update(_param);
-	  setTextColor(0x000000);
-	  return 1;
-	}
-  case KEY_Right:
-  case KEY_KP_Right:
-  case KEY_Left:
-  case KEY_KP_Left:
-  case KEY_Down:
-  case KEY_KP_Down:
-  case KEY_Up:
-  case KEY_KP_Up:
-  case KEY_Home:
-  case KEY_KP_Home:
-  case KEY_End:
-  case KEY_KP_End:
-  case KEY_Insert:
-  case KEY_KP_Insert:
-	return 1;
-  default:
-	{
-	  setTextColor(0x0000FF);
-	  return 1;
-	}
-  }
+  PNFXTextFieldParameter::create();
 }
 
 //////////////////////////////////////////////////////////////////////////
