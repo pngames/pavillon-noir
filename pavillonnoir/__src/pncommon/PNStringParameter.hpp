@@ -45,7 +45,7 @@ private:
   std::string			_str;
 
 public:
-  PNStringParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable = true);
+  PNStringParameter(const std::string& param, const std::string& label, const std::string& altText, bool editable = true);
   PNStringParameter(PNConfigurableObject* p, const std::string& param, const std::string& label, const std::string& altText, bool editable = true);
   virtual ~PNStringParameter();
 

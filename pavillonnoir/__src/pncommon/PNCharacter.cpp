@@ -55,9 +55,9 @@ PNCharacter::~PNCharacter()
 }
 
 void
-PNCharacter::buildGraph(fs::path& file)
+PNCharacter::buildGraph(const std::string& path)
 {
-  _pf.unserializeFromFile(file);
+  _pf.unserializeFromPath(path);
 }
 
 void

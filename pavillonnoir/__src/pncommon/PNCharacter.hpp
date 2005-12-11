@@ -31,6 +31,7 @@
 # define _PNCHARACTER_HPP_
 
 #include <stack>
+
 #include "PNPathFinding.hpp"
 #include "PN3DSkeletonObject.hpp"
 #include "PN3DCamera.hpp"
@@ -94,7 +95,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
   /// Use given class to find path
-  void									buildGraph(boost::filesystem::path& file);
+  void									buildGraph(const std::string& path);
 
   /// IA main loop function
   void									beSmart();

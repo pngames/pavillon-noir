@@ -30,8 +30,6 @@
 #ifndef _PNGLTEXTUREMANAGER_HPP_
 # define _PNGLTEXTUREMANAGER_HPP_
 
-#include <boost/filesystem/path.hpp>
-
 #include "PNObject.hpp"
 
 namespace PN {
@@ -55,7 +53,7 @@ private:
 
   //////////////////////////////////////////////////////////////////////////
 public:
-  PNGLTexture*					getTexture(const boost::filesystem::path& file, void* lightMap);
+  PNGLTexture*					getTexture(const std::string& path, void* lightMap);
   void							clean();
 };
 

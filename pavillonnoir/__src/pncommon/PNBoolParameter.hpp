@@ -43,6 +43,7 @@ private:
   pnbool				_bool;
 
 public:
+  PNBoolParameter(pnbool param, const std::string& label, const std::string& altText, bool editable = true);
   PNBoolParameter(PNConfigurableObject* p, pnbool param, const std::string& label, const std::string& altText, bool editable = true);
   virtual ~PNBoolParameter();
 

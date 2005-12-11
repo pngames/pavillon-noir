@@ -69,16 +69,13 @@ PN3DGround::PN3DGround()
   return ;
 }
 
-PN3DGround::PN3DGround(const fs::path& file)
+PN3DGround::PN3DGround(const std::string& path)
 {
-  unserializeFromFile(file);
-
-  return ;
+  unserializeFromPath(path);
 }
 
 PN3DGround::~PN3DGround()
 {
-  return ;
 }
 
 PN3DGround*
@@ -86,6 +83,7 @@ PN3DGround::getInstance()
 {
   if (_instance == NULL)
 	_instance = new PN3DGround(); 
+
   return (_instance);
 }
 
@@ -95,11 +93,11 @@ PN3DGround::getInstance()
 * \brief Call when a game is loaded.
 */
 pnint
-PN3DGround::unserializeFromFile(const fs::path& file)
+PN3DGround::unserializeFromPath(const std::string& path)
 {
   PN3DObject ground;
 
-  if (ground.unserializeFromPath(file.string()) != PNEC_SUCCESS)
+  if (ground.unserializeFromPath(path) != PNEC_SUCCESS)
 	return (PNEC_ERROR);
 
   if (!_convertIntoGroundRepresentation(ground))
@@ -175,8 +173,6 @@ PN3DGround::render(PN3DCamera & camera)
 
   _renderer->addFaces(_faces, _nbFace);
   _renderer->renderAllFaces();
-
-  return;
 }
 
 
@@ -185,7 +181,6 @@ PN3DGround::render(PN3DCamera & camera)
 void
 PN3DGround::setConfig()
 {
-  return ;
 }
 
 bool
@@ -218,8 +213,6 @@ PN3DGround::handleStaticCollision(PN3DObject & object, pnfloat rX, pnfloat rY, p
   PN3DGround::getInstance()->collisionProcess(camSphere, translation, trResult);		
   object.setUpdateTranslation(trResult);
   object.setCoord(posObject.x + trResult.x, posObject.y + trResult.y, posObject.z + trResult.z);
-
-  return ;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -227,20 +220,17 @@ PN3DGround::handleStaticCollision(PN3DObject & object, pnfloat rX, pnfloat rY, p
 void
 PN3DGround::partialRender()
 {
-  return ;
 }
 
 
 void
 PN3DGround::totalRender()
 {
-  return ;
 }
 
 void
 PN3DGround::find3DObjects(PN3DCamera& camera)
 {
-  return ;
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -84,12 +84,24 @@ PNImportManager::addImporter(PNImportInterface* importer)
 //////////////////////////////////////////////////////////////////////////
 
 IPNImportedObject*
-PNImportManager::import(const fs::path& file, importtype type, bool copy)
+PNImportManager::import(const std::string& path, importtype type, bool copy)
 {
-  pnerror(PN_LOGLVL_INFO, "Import %s %i", file.string().c_str(), type);
+  pnerror(PN_LOGLVL_INFO, "Import %s %i", path.c_str(), type);
+
+  fs::path	file(path, fs::native);
+
+  if (!fs::exists(file))
+  {
+	pnerror(PN_LOGLVL_ERROR, "%s : %s", file.string().c_str(), pnGetErrorString(PNEC_FILE_NOT_FOUND));
+	return NULL;
+  }
+
+  //////////////////////////////////////////////////////////////////////////
+
+  file = fs::complete(file);
+
   char buf[512];
-  if (fs::exists(file))
-	pnerror(PN_LOGLVL_INFO, "loading file %s from dir %s", file.string().c_str(), getcwd(buf, 511));
+  pnerror(PN_LOGLVL_INFO, "loading file %s from dir %s", file.string().c_str(), getcwd(buf, 511));
 
   MAPIMPORTER::const_iterator cit = _mapObject.find(file);
 
@@ -107,7 +119,7 @@ PNImportManager::import(const fs::path& file, importtype type, bool copy)
 
   for (LIST_IMPORTER::iterator it = lst.begin(); it != lst.end(); it++)
   {
-	obj = ((PNImportInterface*)(*it))->doImport(file);
+	obj = ((PNImportInterface*)(*it))->doImport(path);
 
 	if (obj != NULL)
 	{

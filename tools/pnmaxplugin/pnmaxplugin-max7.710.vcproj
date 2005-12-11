@@ -66,7 +66,8 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
 				Culture="1036"
-				AdditionalIncludeDirectories="$(IntDir)"/>
+				AdditionalIncludeDirectories="max7/$(IntDir)"
+				ResourceOutputFileName="max7/$(IntDir)/$(InputName).res"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -129,7 +130,8 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
 				Culture="1036"
-				AdditionalIncludeDirectories="$(IntDir)"/>
+				AdditionalIncludeDirectories="max7/$(IntDir)"
+				ResourceOutputFileName="max7/$(InputName).res"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -340,8 +342,7 @@
 			Name="pnp"
 			Filter="">
 			<File
-				RelativePath=".\PNOpalExporter.ms"
-				DeploymentContent="TRUE">
+				RelativePath="..\PNOpalExporter.ms">
 			</File>
 			<File
 				RelativePath="..\..\pavillonnoir\__src\pncommon\pnp_format.h">

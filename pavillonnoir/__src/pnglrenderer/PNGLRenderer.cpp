@@ -85,6 +85,8 @@ PNGLRenderer*  PNGLRenderer::getInstance()
 }
 
 PNGLRenderer::PNGLRenderer()
+: _pFullScreen(false, "Plein ecran", "Plein ecran", true),
+_pTitle("Pavillon Noir", "Title", "Title", true)
 {
   _guirenderer = NULL;
 
@@ -103,8 +105,11 @@ PNGLRenderer::PNGLRenderer()
   //////////////////////////////////////////////////////////////////////////
   // configurabe implementation
 
-  _pTitle = new PNStringParameter(this, "Pavillon Noir", "Title", "Title", true);
-  addParam(_pTitle);
+  _pTitle.setConfigurableObject(this);
+  _pFullScreen.setConfigurableObject(this);
+
+  addParam(&_pTitle);
+  addParam(&_pFullScreen);
 }
 
 PNGLRenderer::~PNGLRenderer()
@@ -121,8 +126,6 @@ void
 PNGLRenderer::update(PNConfigurableParameter* p)
 {
   PNRendererInterface::update(p);
-
-  
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -191,26 +194,26 @@ PNGLRenderer::init()
 }
 
 void
-PNGLRenderer::initRender(pnuint widht, pnuint height, pnuint bpp, pnbool fullscreen)
+PNGLRenderer::initRender(pnuint widht, pnuint height, pnuint bpp)
 {
-  initSDL(widht, height, bpp, fullscreen);
+  initSDL(widht, height, bpp);
   initGL(widht, height);
 
   //////////////////////////////////////////////////////////////////////////
   // FIXME : TEST
 
   PNRenderMaterial*		top = newMaterial();
-  top->setTexture(fs::path(DEF::texturesFilePath + "SB_TOP.BMP", fs::native));
+  top->setTexture(DEF::texturesFilePath + "SB_TOP.BMP");
   PNRenderMaterial*		bottom = newMaterial();
-  bottom->setTexture(fs::path(DEF::texturesFilePath + "sb_bottom.bmp", fs::native));
+  bottom->setTexture(DEF::texturesFilePath + "sb_bottom.bmp");
   PNRenderMaterial*		left = newMaterial();
-  left->setTexture(fs::path(DEF::texturesFilePath + "SB_LEFT.BMP", fs::native));
+  left->setTexture(DEF::texturesFilePath + "SB_LEFT.BMP");
   PNRenderMaterial*		right = newMaterial();
-  right->setTexture(fs::path(DEF::texturesFilePath + "SB_RIGHT.BMP", fs::native));
+  right->setTexture(DEF::texturesFilePath + "SB_RIGHT.BMP");
   PNRenderMaterial*		front = newMaterial();
-  front->setTexture(fs::path(DEF::texturesFilePath + "SB_FRONT.BMP", fs::native));
+  front->setTexture(DEF::texturesFilePath + "SB_FRONT.BMP");
   PNRenderMaterial*		back = newMaterial();
-  back->setTexture(fs::path(DEF::texturesFilePath + "SB_BACK.BMP", fs::native));
+  back->setTexture(DEF::texturesFilePath + "SB_BACK.BMP");
 
   PNGLSkyBox::getInstance()->set(top, bottom, left, right, front, back);
 }
@@ -224,7 +227,7 @@ Int pointer that contains SDL flags.
 Bool specifies the fullscreen state of the SDL window.
 */
 void
-PNGLRenderer::setSDLFlags(int *flags, bool fullscreen)
+PNGLRenderer::setSDLFlags(int *flags)
 {
   const SDL_VideoInfo *videoInfo;
   int 		videoFlags;
@@ -244,17 +247,17 @@ PNGLRenderer::setSDLFlags(int *flags, bool fullscreen)
 	std::cout << "Surface stored in system memory" << std::endl;
 	videoFlags |= SDL_SWSURFACE;
   }
+
   if (videoInfo->blit_hw)
   {
 	std::cout << "Surface blit uses hardware acceleration" << std::endl;
 	videoFlags |= SDL_HWACCEL;
   }
 
-  if (fullscreen == true)
+  if (_pFullScreen)
 	videoFlags |= SDL_FULLSCREEN;
   
   *flags = videoFlags;
-  return;
 }
 
 /*!
@@ -272,7 +275,7 @@ String describes the SDL window title.
 Bool specifies the fullscreen state of the SDL window. 
 */
 void
-PNGLRenderer::initSDL(int widht, int height, int bpp, bool fullscreen)
+PNGLRenderer::initSDL(int widht, int height, int bpp)
 {
   std::cout << "--== SDL init start ==--" << std::endl;
 	  
@@ -280,15 +283,14 @@ PNGLRenderer::initSDL(int widht, int height, int bpp, bool fullscreen)
   int				videoFlags;
 
   SDL_Init(SDL_INIT_VIDEO);
-  setSDLFlags(&videoFlags, fullscreen);
+  setSDLFlags(&videoFlags);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
   screen = SDL_SetVideoMode(widht, height, bpp, videoFlags);
-  SDL_WM_SetCaption(_pTitle->getString().c_str(), NULL);
+  SDL_WM_SetCaption(_pTitle.getString().c_str(), NULL);
   SDL_EnableUNICODE(1);
  // SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
   
   std::cout << "--== SDL init end ==--" << std::endl;
-  return;
 }
 
 void

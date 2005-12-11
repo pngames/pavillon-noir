@@ -28,7 +28,6 @@
  */
 
 #include <fstream>
-#include <boost/filesystem/operations.hpp>
 
 #include "pndefs.h"
 #include "pnplugins.h"
@@ -53,15 +52,9 @@ PNIImporter::~PNIImporter()
 //////////////////////////////////////////////////////////////////////////
 
 pnbool
-PNIImporter::isManaged(const fs::path& path)
+PNIImporter::isManaged(const std::string& path)
 {
-  if (!fs::exists(path))
-	return false;
-
-  if (fs::is_directory(path))
-	return false;
-
-  ifstream	file(path.string().c_str(), ifstream::binary);
+  ifstream	file(path.c_str(), ifstream::binary);
 
   char	buff[256];
 

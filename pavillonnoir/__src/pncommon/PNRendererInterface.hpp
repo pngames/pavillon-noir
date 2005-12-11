@@ -64,7 +64,7 @@ protected:
 public:
   plugintypes				getType();
   
-  virtual void				initRender(pnuint widht, pnuint height, pnuint bpp, pnbool fullscreen)=0;
+  virtual void				initRender(pnuint widht, pnuint height, pnuint bpp)=0;
 
   //////////////////////////////////////////////////////////////////////////
   

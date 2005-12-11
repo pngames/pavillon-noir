@@ -93,9 +93,7 @@ PN3DSkeletonObject::_parseAnimations(xmlNode* parent)
 
 	if (attr != NULL)
 	{
-	  fs::path	  p(DEF::animationFilePath + (const char*)attr, fs::native);
-
-	  if ((anim = (PN3DAnimation*)PNImportManager::getInstance()->import(p, PN_IMPORT_3DANIMATION)) == NULL)
+	  if ((anim = (PN3DAnimation*)PNImportManager::getInstance()->import(DEF::animationFilePath + (const char*)attr, PN_IMPORT_3DANIMATION)) == NULL)
 		return PNEC_ERROR;
 	}
 	else
@@ -128,10 +126,7 @@ PN3DSkeletonObject::_parseSkeleton(xmlNode* node)
 
   if ((attr = xmlGetProp(node, (const xmlChar *)PNO_XMLPROP_PATH)) != NULL)
   {
-	fs::path p(DEF::skeletonFilePath + (const char*)attr, fs::native);
-
-	if (fs::exists(p))
-	  _skeleton = (PN3DSkeleton*)PNImportManager::getInstance()->import(p, PN_IMPORT_3DSKELETON, true);
+    _skeleton = (PN3DSkeleton*)PNImportManager::getInstance()->import(DEF::skeletonFilePath + (const char*)attr, PN_IMPORT_3DSKELETON, true);
 
 	if (_skeleton == NULL)
 	  return PNEC_LOADING_MODEL;

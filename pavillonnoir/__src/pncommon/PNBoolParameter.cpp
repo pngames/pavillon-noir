@@ -34,8 +34,14 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
+PNBoolParameter::PNBoolParameter(pnbool param, const std::string& label, const std::string& altText, bool editable/* = true*/)
+: PNConfigurableParameter(NULL, PN_PARAMTYPE_BOOLEAN, &_bool, label, altText, editable)
+{
+  _bool = param;
+}
+
 PNBoolParameter::PNBoolParameter(PNConfigurableObject* p, pnbool param, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_bool, label, altText, editable)
+: PNConfigurableParameter(p, PN_PARAMTYPE_BOOLEAN, &_bool, label, altText, editable)
 {
   _bool = param;
 }

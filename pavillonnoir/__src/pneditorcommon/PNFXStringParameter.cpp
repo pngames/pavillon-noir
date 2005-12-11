@@ -51,8 +51,7 @@ FXDEFMAP(PNFXStringParameter) PNFXStringParameterMap[]={
 FXIMPLEMENT(PNFXStringParameter,FXTextField,PNFXStringParameterMap,ARRAYNUMBER(PNFXStringParameterMap))
 
 PNFXStringParameter::PNFXStringParameter(FXComposite* p, PNConfigurableParameter* param)
-: FXTextField(p, 25),
-PNPropertiesGridParameter(param)
+: FXTextField(p, 25), PNPropertiesGridParameter(param)
 {
   update();
 }
@@ -73,14 +72,13 @@ PNFXStringParameter::update()
   string* str = (string*)_param->getElem();
   setText(str->c_str());
   setEditable(_param->isEditable());
-
-  return;
 }
 
 long
 PNFXStringParameter::onKeyRelease(FXObject* obj,FXSelector sel, void* ptr)
 {
   FXTextField::handle(obj, sel, ptr);
+
   FXEvent* event=(FXEvent*)ptr;
   switch(event->code)
   {

@@ -30,8 +30,7 @@
 #ifndef _PNPROPERTIESGRIDPARAMETER_HPP_
 # define _PNPROPERTIESGRIDPARAMETER_HPP_
 
-namespace PN
-{
+namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 class /*PNAPI*/						PNPropertiesGridParameter
@@ -50,6 +49,12 @@ public:
 
   virtual std::string				getStringValue() { return ""; }
   virtual pnbool					setStringValue(const std::string& val) { return false; }
+
+  void								sendParamModif()
+  {
+	if (_param->getConfigurableObject())
+	  _param->getConfigurableObject()->update(_param);
+  }
 };
 
 //////////////////////////////////////////////////////////////////////////

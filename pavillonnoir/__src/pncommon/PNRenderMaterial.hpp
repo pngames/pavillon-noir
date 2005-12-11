@@ -30,7 +30,7 @@
 #ifndef _PNRENDERMATERIAL_HPP_
 # define _PNRENDERMATERIAL_HPP_
 
-#include <boost/filesystem/path.hpp>
+#include <string>
 
 #include "pnmath.h"
 
@@ -55,11 +55,11 @@ public:
   virtual void			setEmissive(const pnfloat* color)=0;
   virtual void			setSpecular(const pnfloat* color)=0;
 
-  virtual pnint			setTexture(const boost::filesystem::path& file, void* lightMap = NULL)=0;
+  virtual pnint			setTexture(const std::string& path, void* lightMap = NULL)=0;
   virtual PNTexture*	getTexture()=0;
   virtual void			setTextureRepeat(pnbool repeat)=0;
 
-  virtual pnint	bind()=0;
+  virtual pnint			bind()=0;
 };
 
 //////////////////////////////////////////////////////////////////////////

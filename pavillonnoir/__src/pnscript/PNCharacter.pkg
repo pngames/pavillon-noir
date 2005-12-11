@@ -21,7 +21,7 @@ public:
   PNCharacter();
   ~PNCharacter();
 
-  void									buildGraph(boost::filesystem::path& file);
+  void									buildGraph(const std::string& path);
 
   void									beSmart();
 

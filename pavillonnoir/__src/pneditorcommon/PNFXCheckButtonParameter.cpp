@@ -27,7 +27,6 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-
 #include "pneditorcommon.h"
 #include "pnproperties.h"
 
@@ -39,20 +38,21 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 // Map
-/*  FXDEFMAP(PNFXCheckButtonParameter) PNFXCheckButtonParameterMap[]={
-	FXMAPFUNC(SEL_KEYRELEASE,0,PNFXCheckButtonParameter::onKeyRelease),
-  };*/
+FXDEFMAP(PNFXCheckButtonParameter) PNFXCheckButtonParameterMap[]=
+{
+  FXMAPFUNC(SEL_COMMAND, PNFXCheckButtonParameter::ID_VALUE_CHANGED, PNFXCheckButtonParameter::onValueChanged)
+};
 
 //////////////////////////////////////////////////////////////////////////
-//FXIMPLEMENT(PNFXCheckButtonParameter,FXTextField,PNFXCheckButtonParameterMap,ARRAYNUMBER(PNFXCheckButtonParameterMap))
-FXIMPLEMENT(PNFXCheckButtonParameter,FXCheckButton,NULL,0)
+FXIMPLEMENT(PNFXCheckButtonParameter, FXCheckButton, PNFXCheckButtonParameterMap, ARRAYNUMBER(PNFXCheckButtonParameterMap))
 
 // Fixme : change text parameter
 PNFXCheckButtonParameter::PNFXCheckButtonParameter(FXComposite* p, PNConfigurableParameter* param) 
-: FXCheckButton(p, ""),
-PNPropertiesGridParameter(param)
+: FXCheckButton(p, ""), PNPropertiesGridParameter(param)
 {
-  this->setCheck(FALSE);
+  target = this;
+  message = ID_VALUE_CHANGED;
+
   update();
 }
 
@@ -60,16 +60,31 @@ PNFXCheckButtonParameter::~PNFXCheckButtonParameter()
 {
 }
 
-void	PNFXCheckButtonParameter::create()
+void
+PNFXCheckButtonParameter::create()
 {
   FXCheckButton::create();
 }
 
-void PNFXCheckButtonParameter::update()
+void
+PNFXCheckButtonParameter::update()
 {
   bool*	p = (bool*)_param->getElem();
 
   setCheck(*p);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+long
+PNFXCheckButtonParameter::onValueChanged(FXObject* obj, FXSelector sel, void* data)
+{
+  bool*	p = (bool*)_param->getElem();
+
+  *p = getCheck() == TRUE;
+  sendParamModif();
+
+  return 1;
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -177,8 +177,8 @@ long	PNFXMaterialListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
 	else
 	{
 	  EDITOR::PNGLContext::getInstance()->makeViewerCurrent();
-	  fs::path p(str.replace(0, (FXint)strlen(buf) + 1, "").text(), fs::no_check);
-	  PN3DMaterial* mat = (PN3DMaterial*)PNImportManager::getInstance()->import(p, PN_IMPORT_MATERIAL);
+	  PN3DMaterial* mat = (PN3DMaterial*)PNImportManager::getInstance()->import(
+		str.replace(0, (FXint)strlen(buf) + 1, "").text(), PN_IMPORT_MATERIAL);
 
 	  if (mat != NULL)
 	  {

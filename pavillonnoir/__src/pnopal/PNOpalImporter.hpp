@@ -44,8 +44,8 @@ public:
   //////////////////////////////////////////////////////////////////////////
   // PNIImporter
 
-  bool  				isManaged(const boost::filesystem::path& file);
-  IPNImportedObject*	doImport(const boost::filesystem::path& file);
+  bool  				isManaged(const std::string& file);
+  IPNImportedObject*	doImport(const std::string& file);
   importtype			getImportType();
 };
 
