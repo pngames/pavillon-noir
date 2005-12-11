@@ -214,6 +214,64 @@ PNGameMap::unserializeFromFile(const fs::path& dir)
   return IPNXMLSerializable::unserializeFromFile(file);
 }
 
+//////////////////////////////////////////////////////////////////////////
+
+pnint
+PNGameMap::_serializeSkybox(xmlNode* node)
+{
+  return PNEC_NOT_IMPLEMENTED;
+}
+
+pnint
+PNGameMap::_serializeEntity(xmlNode* node, PN3DObject* object)
+{
+  xmlNewProp(node, PNXML_ID_ATTR, BAD_CAST object->getId().c_str());
+  xmlNewProp(node, PNXML_MODELREFERENCE_ATTR, BAD_CAST object->getPath()->c_str());
+
+  /*
+	<!ATTLIST entity class CDATA #REQUIRED>
+	<!ATTLIST entity envtype (dynamic|static|ground) "dynamic">
+	<!ATTLIST entity objtype (object|dynamic|character) "object">*/
+
+  const PNPoint3f&	position = object->getCoord();
+
+  XMLUtils::xmlNewProp(node, PNXML_COORDX_ATTR, position.x);
+  XMLUtils::xmlNewProp(node, PNXML_COORDY_ATTR, position.y);
+  XMLUtils::xmlNewProp(node, PNXML_COORDZ_ATTR, position.z);
+
+  const PNQuatf&	orient = object->getOrient();
+
+  XMLUtils::xmlNewProp(node, PNXML_ROTX_ATTR, orient.x);
+  XMLUtils::xmlNewProp(node, PNXML_ROTY_ATTR, orient.y);
+  XMLUtils::xmlNewProp(node, PNXML_ROTZ_ATTR, orient.z);
+  XMLUtils::xmlNewProp(node, PNXML_ROTW_ATTR, orient.w);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  object->serializeInXML(node);
+
+  return PNEC_SUCCESS;
+}
+
+/// Save object into XML file
+pnint
+PNGameMap::serializeInXML(xmlNode* root, pnbool isroot/* = false*/)
+{
+  if (isroot == false)
+	root = xmlNewChild(root, NULL, BAD_CAST getRootNodeName().c_str(), NULL);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  _serializeSkybox(root);
+
+  for (ObjMap::iterator	it = _entityList.begin(); it != _entityList.end(); ++it)
+  {
+	_serializeEntity(root, it->second);
+  }
+
+  return PNEC_SUCCESS;
+}
+
 /// Save object to file
 pnint
 PNGameMap::serializeInFile(const boost::filesystem::path& dir)
@@ -229,25 +287,6 @@ PNGameMap::serializeInFile(const boost::filesystem::path& dir)
   // Waypoints
 
   //_graph->serializeInPath(dir.string() + "waypoints.xml");
-
-  return PNEC_SUCCESS;
-}
-
-/// Save object into XML file
-pnint
-PNGameMap::serializeInXML(xmlNode* root, pnbool isroot/* = false*/)
-{
-  if (isroot == false)
-	root = xmlNewChild(root, NULL, BAD_CAST getRootNodeName().c_str(), NULL);
-
-  //////////////////////////////////////////////////////////////////////////
-
-  for (ObjMap::iterator	it = _entityList.begin(); it != _entityList.end(); ++it)
-  {
-	PN3DObject	*object = it->second;
-
-	object->serializeInXML(root);
-  }
 
   return PNEC_SUCCESS;
 }

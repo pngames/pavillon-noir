@@ -33,12 +33,12 @@
 
 #include <fx.h>
 
-#include "pnproperties.h"
+#include "PNFXTextFieldParameter.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNEDAPI PNFXRealParameter : public FXTextField, public PNPropertiesGridParameter
+class PNEDAPI	PNFXRealParameter : public PNFXTextFieldParameter
 {
   FXDECLARE(PNFXRealParameter);
 
@@ -49,11 +49,7 @@ public:
   PNFXRealParameter(FXComposite* p, PNConfigurableParameter* param);
   ~PNFXRealParameter();
 
-  void  create();
-  void  update();
-
-public:
-  long	onKeyRelease(FXObject*,FXSelector,void* ptr);
+  void			create();
 };
 
 //////////////////////////////////////////////////////////////////////////

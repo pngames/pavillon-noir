@@ -43,17 +43,19 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 // Map
-FXDEFMAP(PNFXStringParameter) PNFXStringParameterMap[]={
+/*FXDEFMAP(PNFXStringParameter) PNFXStringParameterMap[]={
   FXMAPFUNC(SEL_KEYRELEASE,0,PNFXStringParameter::onKeyRelease),
-};
+  FXMAPFUNC(SEL_COMMAND, 0, PNFXStringParameter::onKeyRelease),
+};*/
 
 //////////////////////////////////////////////////////////////////////////
-FXIMPLEMENT(PNFXStringParameter,FXTextField,PNFXStringParameterMap,ARRAYNUMBER(PNFXStringParameterMap))
+//FXIMPLEMENT(PNFXStringParameter, PNFXTextFieldParameter, PNFXStringParameterMap, ARRAYNUMBER(PNFXStringParameterMap))
+FXIMPLEMENT(PNFXStringParameter, PNFXTextFieldParameter, NULL, 0)
 
 PNFXStringParameter::PNFXStringParameter(FXComposite* p, PNConfigurableParameter* param)
-: FXTextField(p, 25), PNPropertiesGridParameter(param)
+: PNFXTextFieldParameter(p, param, 25)
 {
-  update();
+  
 }
 
 PNFXStringParameter::~PNFXStringParameter()
@@ -64,53 +66,6 @@ void
 PNFXStringParameter::create()
 {
   FXTextField::create();
-}
-
-void
-PNFXStringParameter::update()
-{
-  string* str = (string*)_param->getElem();
-  setText(str->c_str());
-  setEditable(_param->isEditable());
-}
-
-long
-PNFXStringParameter::onKeyRelease(FXObject* obj,FXSelector sel, void* ptr)
-{
-  FXTextField::handle(obj, sel, ptr);
-
-  FXEvent* event=(FXEvent*)ptr;
-  switch(event->code)
-  {
-  case KEY_Return:
-  case KEY_KP_Enter:
-	{
-	  std::string* s = (std::string*)_param->getElem();
-	  *s = getText().text();
-	  setTextColor(0x000000);
-	  return 1;
-	}
-  case KEY_Right:
-  case KEY_KP_Right:
-  case KEY_Left:
-  case KEY_KP_Left:
-  case KEY_Down:
-  case KEY_KP_Down:
-  case KEY_Up:
-  case KEY_KP_Up:
-  case KEY_Home:
-  case KEY_KP_Home:
-  case KEY_End:
-  case KEY_KP_End:
-  case KEY_Insert:
-  case KEY_KP_Insert:
-	return 1;
-  default:
-	{
-	  setTextColor(0x0000FF);
-	  return 1;
-	}
-  }
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -1,8 +1,8 @@
 /*
- * PNFXIntParameter.hpp
+ * PNFXTextFieldParameter.hpp
  * 
  * Description :
- * PNFXIntParameter declaration
+ * PNFXTextFieldParameter declaration
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -28,31 +28,48 @@
  */
 
 
-#ifndef _PNFXINTPARAMETER_HPP_
-# define _PNFXINTPARAMETER_HPP_
+#ifndef _PNFXTEXFIELDPARAMETER_HPP_
+# define _PNFXTEXFIELDPARAMETER_HPP_
 
 #include <fx.h>
 
-#include "PNFXTextFieldParameter.hpp"
+#include "pnproperties.h"
+
+/*
+ *	A simple FXStringParameter. The contents becomes red if modified, turns back 
+ *  to black on validation (KEY_Return or KEY_KP_Enter).
+ */
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNEDAPI	PNFXIntParameter : public PNFXTextFieldParameter
+class PNEDAPI	PNFXTextFieldParameter : public FXTextField, public PNPropertiesGridParameter
 {
-  FXDECLARE(PNFXIntParameter);
+  FXDECLARE_ABSTRACT(PNFXTextFieldParameter);
 
 protected:
-  PNFXIntParameter() {}
-  PNFXIntParameter(PNFXIntParameter&) {}
+  PNFXTextFieldParameter() {}
+  PNFXTextFieldParameter(PNFXTextFieldParameter&) {}
 public:
-  PNFXIntParameter(FXComposite* p, PNConfigurableParameter* param);
-  ~PNFXIntParameter();
+  PNFXTextFieldParameter(FXComposite* p, PNConfigurableParameter* param, FXint ncols, FXObject* tgt = NULL, FXSelector sel = 0, FXuint opts = TEXTFIELD_NORMAL);
+  ~PNFXTextFieldParameter();
+
+  enum{
+	ID_VALUE_CHANGED=FXCheckButton::ID_LAST,
+	ID_LAST
+  };
 
   void			create();
+
+  virtual void	update();
+  virtual void	updateParam();
+
+public:
+  long			onValueChanged(FXObject*, FXSelector, void* ptr);
+  long			onValueValidated(FXObject*, FXSelector, void* ptr);
 };
 
 //////////////////////////////////////////////////////////////////////////
 };
 
-#endif /*_PNFXINTPARAMETER_HPP_*/
+#endif /*!_PNFXTEXFIELDPARAMETER_HPP_*/
