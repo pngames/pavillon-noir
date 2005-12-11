@@ -30,53 +30,56 @@
 #ifndef _PNGUILOADINGSCREEN_HPP_
 #define _PNGUILOADINGSCREEN_HPP_
 
+#include <list>
 
 #include "pnevent.h"
 #include "myCEGUI.h"
-#include <list>
+
+#include "IPNLoadingProgess.hpp"
 
 namespace PN{
+//////////////////////////////////////////////////////////////////////////
 
-  class PNGUILoadingScreen
-  {
-	/*/////////////////////////////////////////////////////////////////////////////
-	/                                   Properties                                /
-	/////////////////////////////////////////////////////////////////////////////*/
-  public:
-  protected:
-  private:
-	static	PNGUILoadingScreen* _instance;
-	CEGUI::Window*		_mainSheet;
-	CEGUI::StaticImage*	_backGround;
-	CEGUI::ProgressBar*	_progBar;
-	CEGUI::Listbox*		_listBox;
-	CEGUI::StaticImage* _statImg;
-	typedef std::list<std::string>	listImagesetAll;
-	listImagesetAll					_listImagesetAll;
-	/*/////////////////////////////////////////////////////////////////////////////
-	/                                    Methods                                  /
-	/////////////////////////////////////////////////////////////////////////////*/
-  public:
-	static	PNGUILoadingScreen* getInstance();
-	void refreshScreen(float val, std::string update);
-	void  startGUI(pnEventType type, PNObject* source, PNEventData* data);
-	void  resetGUI(pnEventType type, PNObject* source, PNEventData* data);
-	void  show();
-	void  hide();
-  protected:
-  private:
-	void  setRandomBackground();
-	void  stepLoad(pnEventType type, PNObject* source, PNEventData* data);
-	void  resetScreen();
-	/*/////////////////////////////////////////////////////////////////////////////
-	/                           Constructors / Destructor                         /
-	/////////////////////////////////////////////////////////////////////////////*/
-  public:
-	PNGUILoadingScreen();
-	~PNGUILoadingScreen();
-  protected:
-  private:
-  };
+class								PNGUILoadingScreen : public IPNLoadingProgess
+{
+  /*/////////////////////////////////////////////////////////////////////////////
+  /                                   Properties                                /
+  /////////////////////////////////////////////////////////////////////////////*/
+public:
+protected:
+private:
+  static PNGUILoadingScreen*		_instance;
+  CEGUI::Window*					_mainSheet;
+  CEGUI::StaticImage*				_backGround;
+  CEGUI::ProgressBar*				_progBar;
+  CEGUI::Listbox*					_listBox;
+  CEGUI::StaticImage*				_statImg;
+  typedef std::list<std::string>	listImagesetAll;
+  listImagesetAll					_listImagesetAll;
+  /*/////////////////////////////////////////////////////////////////////////////
+  /                                    Methods                                  /
+  /////////////////////////////////////////////////////////////////////////////*/
+public:
+  static PNGUILoadingScreen*		getInstance();
+  void								refreshScreen(float val, std::string update);
+  void								startGUI(pnEventType type, PNObject* source, PNEventData* data);
+  void								resetGUI(pnEventType type, PNObject* source, PNEventData* data);
+  void								show();
+  void								hide();
+protected:
+  void								setRandomBackground();
+  void								refresh();
+  void								resetScreen();
+
+  /*/////////////////////////////////////////////////////////////////////////////
+  /                           Constructors / Destructor                         /
+  /////////////////////////////////////////////////////////////////////////////*/
+private	:
+  PNGUILoadingScreen();
+  ~PNGUILoadingScreen();
+protected:
+private:
+};
 }
 
 #endif /*_PNGUILOADINGSCREEN_HPP_*/

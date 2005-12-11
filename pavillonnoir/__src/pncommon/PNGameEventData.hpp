@@ -39,43 +39,52 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
   
-class		PNGameUpdateEventData : public PNEventData
+class			PNGameUpdateEventData : public PNEventData
 {
 public:
-  float		deltaTime;
-  pnuint	time;
+  float			deltaTime;
+  pnuint		time;
 
   PNGameUpdateEventData(){}
   PNGameUpdateEventData(float deltatime, pnuint time): deltaTime(deltatime), time(time) {}
 };
 
-class		  PNGameLoadStepsMapEventData : public PNEventData
+class			PNGameLoadStepsMapEventData : public PNEventData
 {
+public:
+  typedef enum
+  {
+	LSTATE_CMD_NONE,
+	LSTATE_CMD_PUSH,
+	LSTATE_CMD_POP
+  }				lstate;
 public:
   PNGameLoadStepsMapEventData(){}
   PNGameLoadStepsMapEventData(std::string value, float progress): item(value), progressVal(progress) {}
-  std::string item;
-  float		  progressVal;
+
+  lstate		cmd;
+  std::string	item;
+  float			progressVal;
 };
 
-class		  PNGameLoadMapEventData : public PNEventData
+class			PNGameLoadMapEventData : public PNEventData
 {
 public:
   PNGameLoadMapEventData(){}
   PNGameLoadMapEventData(std::string map): mapName(map){}
-  std::string mapName;
+  std::string	mapName;
 };
 
-class		  PNGameLoadGameEventData : public PNEventData
+class			PNGameLoadGameEventData : public PNEventData
 {
 public:
-  std::string gameName;
+  std::string	gameName;
 };
 
-class		  PNGameSaveGameEventData : public PNEventData
+class			PNGameSaveGameEventData : public PNEventData
 {
 public:
-  std::string gameName;
+  std::string	gameName;
 };
 
 
@@ -87,8 +96,7 @@ public:
 	std::string sourceId;
 	double		value;
 
-	PNGameActionEventData
-        (std::string anAction, std::string aTargetId, std::string aSourceId, double aValue):
+	PNGameActionEventData(std::string anAction, std::string aTargetId, std::string aSourceId, double aValue):
 			action(anAction),
 			targetId(aTargetId),
             sourceId(aSourceId),
@@ -108,8 +116,7 @@ class			PNGameAIEventData : public PNGameActionEventData
 public:
   std::string	AITarget;
 
-  PNGameAIEventData
-        (std::string anAction, std::string atargetId, std::string aSourceId ,double aValue, std::string anAITarget):
+  PNGameAIEventData(std::string anAction, std::string atargetId, std::string aSourceId ,double aValue, std::string anAITarget):
            PNGameActionEventData(anAction, atargetId, aSourceId, aValue),
            AITarget(anAITarget){}
 

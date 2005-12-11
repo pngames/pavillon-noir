@@ -72,8 +72,8 @@ PNGUILoadingScreen::PNGUILoadingScreen()
   PNEventManager::getInstance()->addCallback(PN_EVENT_ML_ENDED, EventCallback(this, &PNGUILoadingScreen::resetGUI));
   PNEventManager::getInstance()->addCallback(PN_EVENT_MU_ENDED, EventCallback(this, &PNGUILoadingScreen::resetGUI));
 
-  PNEventManager::getInstance()->addCallback(PN_EVENT_ML_STEP, EventCallback(this, &PNGUILoadingScreen::stepLoad));
-  PNEventManager::getInstance()->addCallback(PN_EVENT_MU_STEP, EventCallback(this, &PNGUILoadingScreen::stepLoad));
+  addCallback(PN_EVENT_ML_STEP);
+  addCallback(PN_EVENT_MU_STEP);
 }
 
 PNGUILoadingScreen::~PNGUILoadingScreen()
@@ -85,22 +85,14 @@ PNGUILoadingScreen* PNGUILoadingScreen::getInstance()
 {
   if (_instance == NULL)
 	_instance = new PNGUILoadingScreen();
+
   return _instance;
 }
 
-void PNGUILoadingScreen::refreshScreen(float val, std::string update)
-{
-  _progBar->setProgress(val);
+//////////////////////////////////////////////////////////////////////////
 
-  CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(update.c_str());
-  item->setSelectionBrushImage((CEGUI::utf8*)"Vanilla-Images", (CEGUI::utf8*)"GenericBrush");
-  item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
-
-  _listBox->addItem(item);
-  _listBox->setShowVertScrollbar(false);
-}
-
-void  PNGUILoadingScreen::setRandomBackground()
+void 
+PNGUILoadingScreen::setRandomBackground()
 {
   listImagesetAll::iterator			ite = _listImagesetAll.begin();
 
@@ -143,13 +135,30 @@ void  PNGUILoadingScreen::setRandomBackground()
 
 }
 
-void  PNGUILoadingScreen::resetScreen()
+void 
+PNGUILoadingScreen::resetScreen()
 {
   _progBar->setProgress(0.0f);
   _listBox->resetList();
 }
 
-void	PNGUILoadingScreen::startGUI(pnEventType type, PNObject* source, PNEventData* data)
+void	
+PNGUILoadingScreen::show()
+{
+  _mainSheet->show();
+  setRandomBackground();
+}
+
+void	
+PNGUILoadingScreen::hide()
+{
+  _mainSheet->hide();
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void	
+PNGUILoadingScreen::startGUI(pnEventType type, PNObject* source, PNEventData* data)
 {
   CEGUI::MouseCursor::getSingleton().hide();
   //setRandomBackground();
@@ -158,27 +167,38 @@ void	PNGUILoadingScreen::startGUI(pnEventType type, PNObject* source, PNEventDat
   //PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STEP, 0, NULL);
 }
 
-void	PNGUILoadingScreen::resetGUI(pnEventType type, PNObject* source, PNEventData* data)
+void
+PNGUILoadingScreen::resetGUI(pnEventType type, PNObject* source, PNEventData* data)
 {
   hide();
 }
 
-void	PNGUILoadingScreen::show()
+//////////////////////////////////////////////////////////////////////////
+
+void
+PNGUILoadingScreen::refreshScreen(float val, std::string update)
 {
-  _mainSheet->show();
-  PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STEP, 0, new PNGameLoadStepsMapEventData("Chargement", 0.0f));
-  setRandomBackground();
+  _progBar->setProgress(val);
+
+  CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(update.c_str());
+  item->setSelectionBrushImage((CEGUI::utf8*)"Vanilla-Images", (CEGUI::utf8*)"GenericBrush");
+  item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
+
+  _listBox->addItem(item);
+  _listBox->setShowVertScrollbar(false);
 }
 
-void	PNGUILoadingScreen::hide()
+void
+PNGUILoadingScreen::refresh()
 {
-  _mainSheet->hide();
-}
+  _progBar->setProgress(_step);
 
-void	PNGUILoadingScreen::stepLoad(pnEventType type, PNObject* source, PNEventData* data)
-{
-  PNGameLoadStepsMapEventData* stepData = (PNGameLoadStepsMapEventData*)data;
-  refreshScreen(stepData->progressVal, stepData->item);
+  CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(_label.c_str());
+  item->setSelectionBrushImage((CEGUI::utf8*)"Vanilla-Images", (CEGUI::utf8*)"GenericBrush");
+  item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
+
+  _listBox->addItem(item);
+  _listBox->setShowVertScrollbar(false);
 
   PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_END, 0, NULL);
 }
