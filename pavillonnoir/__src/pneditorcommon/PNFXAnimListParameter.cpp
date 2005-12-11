@@ -185,8 +185,8 @@ PNFXAnimListParameter::openAnim(void)
 	}
 	else
 	{
-	  fs::path p(str.replace(0, (FXint)strlen(buf) + 1, "").text(), fs::no_check);
-	  PN3DAnimation* anim = (PN3DAnimation*)PNImportManager::getInstance()->import(p, PN_IMPORT_3DANIMATION);
+	  PN3DAnimation* anim = (PN3DAnimation*)PNImportManager::getInstance()->import(
+		str.replace(0, (FXint)strlen(buf) + 1, "").text(), PN_IMPORT_3DANIMATION);
 
 	  if (anim != NULL)
 	  {

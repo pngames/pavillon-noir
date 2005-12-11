@@ -36,6 +36,7 @@
 
 #include "pnrender.h"
 #include "pnevent.h"
+#include "pnproperties.h"
 
 #include "PNRendererInterface.hpp"
 #include "PNGLRendererCamera.hpp"
@@ -56,7 +57,9 @@ class PNRendererObject;
 class PN3DObject;
 class PNFace;
 class PNEventData;
+
 class PNStringParameter;
+class PNBoolParameter;
 
 #define PNGL_MAX_FACES		4096
 
@@ -91,14 +94,16 @@ public:
 
   void						init();
 
-  void						initRender(pnuint widht, pnuint height, pnuint bpp, pnbool fullscreen);
+  void						initRender(pnuint widht, pnuint height, pnuint bpp);
 
   //////////////////////////////////////////////////////////////////////////
 private:
-  PNConfigurableParameter*	_pFullScreen;
   PNConfigurableParameter*	_pDefinition;
   PNConfigurableParameter*	_pBpp;
-  PNStringParameter*		_pTitle;
+
+  PNBoolParameter			_pFullScreen;
+  PNStringParameter			_pTitle;
+
 public:
   void						update(PNConfigurableParameter* p);
 
@@ -157,8 +162,8 @@ public:
   // MAIN
   //////////////////////////////////////////////////////////////////////////
 
-  void						initSDL(int widht, int height, int bpp, bool fullscreen);
-  void						setSDLFlags(int *flags, bool fullscreen);
+  void						initSDL(int widht, int height, int bpp);
+  void						setSDLFlags(int *flags);
 
   void						initGL(GLsizei width, GLsizei height);
 

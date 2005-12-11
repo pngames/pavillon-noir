@@ -27,11 +27,11 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-
 #ifndef _PNFXCHECKBUTTONPARAMETER_HPP_
 # define _PNFXCHECKBUTTONPARAMETER_HPP_
 
 #include <fx.h>
+
 #include "PNConfigurableParameter.hpp"
 
 /*
@@ -41,10 +41,12 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNEDAPI PNFXCheckButtonParameter : public FXCheckButton, public PNPropertiesGridParameter
+class PNEDAPI	PNFXCheckButtonParameter : public FXCheckButton, public PNPropertiesGridParameter
 {
   FXDECLARE(PNFXCheckButtonParameter);
 
+  /*int			_val;
+  FXDataTarget	_valTarget;*/
 protected:
   PNFXCheckButtonParameter() {}
   PNFXCheckButtonParameter(PNFXCheckButtonParameter&) {}
@@ -52,8 +54,16 @@ public:
   PNFXCheckButtonParameter(FXComposite* p, PNConfigurableParameter* param);
   ~PNFXCheckButtonParameter();
 
-  void	create();
-  void	update();
+  enum{
+	ID_VALUE_CHANGED=FXCheckButton::ID_LAST,
+	ID_LAST
+  };
+
+  void			create();
+  void			update();
+
+public:
+  long			onValueChanged(FXObject*, FXSelector, void*);
 };
 
 //////////////////////////////////////////////////////////////////////////

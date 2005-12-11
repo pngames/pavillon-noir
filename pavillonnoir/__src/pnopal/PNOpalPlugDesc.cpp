@@ -39,13 +39,13 @@ PNInterface*	PNOpalPlugDesc::getInterface(pnuint id)
   switch (id)
   {
   case 0:
-	  if (_physicsInterface == NULL)
-		  _physicsInterface = new PNOpal();
-	  return (PNInterface*)_physicsInterface;
+	if (_physicsInterface == NULL)
+	  _physicsInterface = new PNOpal();
+	return (PNInterface*)_physicsInterface;
   case 1:
-	  if (_importerInterface == NULL)
-		  _importerInterface = new PNOpalImporter();
-	  return (PNInterface*)_importerInterface;
+	if (_importerInterface == NULL)
+	  _importerInterface = new PNOpalImporter();
+	return (PNInterface*)_importerInterface;
   }
 
   return NULL;

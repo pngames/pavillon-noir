@@ -152,11 +152,7 @@ PN3DObject::_parseMaterials(xmlNode* parent)
 	PN3DMaterial*		material = NULL;
 
 	if (attr != NULL)
-	{
-	  fs::path	  p(DEF::materialFilePath + (const char*)attr, fs::native);
-
-	  material = (PN3DMaterial*)PNImportManager::getInstance()->import(p, PN_IMPORT_MATERIAL);
-	}
+	  material = (PN3DMaterial*)PNImportManager::getInstance()->import(DEF::materialFilePath + (const char*)attr, PN_IMPORT_MATERIAL);
 
 	_materials.push_back(material);
   }
@@ -173,10 +169,7 @@ PN3DObject::_parseModel(xmlNode* node)
 
   if ((attr = xmlGetProp(node, PNO_XMLPROP_PATH)) != NULL)
   {
-	fs::path p(DEF::modelFilePath + (const char*)attr, fs::native);
-
-	if (fs::exists(p))
-	  _model = (PN3DModel*)PNImportManager::getInstance()->import(p, PN_IMPORT_3DMODEL);
+    _model = (PN3DModel*)PNImportManager::getInstance()->import(DEF::modelFilePath + (const char*)attr, PN_IMPORT_3DMODEL);
 
 	if (_model == NULL)
 	  return PNEC_LOADING_MODEL;
@@ -194,10 +187,7 @@ PN3DObject::_parsePhysics(xmlNode* node)
 
   if ((attr = xmlGetProp(node, PNO_XMLPROP_PATH)) != NULL)
   {
-	fs::path p(DEF::physicsFilePath + (const char*)attr, fs::native);
-
-	if (fs::exists(p))
-	  _physicalObject = (PNPhysicalObject*)PNImportManager::getInstance()->import(p, PN_IMPORT_PHYSICS, true);
+    _physicalObject = (PNPhysicalObject*)PNImportManager::getInstance()->import(DEF::physicsFilePath + (const char*)attr, PN_IMPORT_PHYSICS, true);
 
 	if (_physicalObject == NULL)
 	  return PNEC_LOADING_PHYSICS;

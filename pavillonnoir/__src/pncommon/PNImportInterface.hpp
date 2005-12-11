@@ -30,6 +30,8 @@
 #ifndef _PNIMPORTINTERFACE_HPP_
 # define _PNIMPORTINTERFACE_HPP_
 
+#include <string>
+
 #include "PNInterface.hpp"
 
 namespace PN {
@@ -62,8 +64,8 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  virtual pnbool  				isManaged(const boost::filesystem::path& file)=0;
-  virtual IPNImportedObject*	doImport(const boost::filesystem::path& file)=0;
+  virtual pnbool  				isManaged(const std::string& file)=0;
+  virtual IPNImportedObject*	doImport(const std::string& file)=0;
   virtual importtype			getImportType()=0;
 };
 

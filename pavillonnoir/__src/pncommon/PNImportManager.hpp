@@ -30,6 +30,7 @@
 #ifndef _PNIMPORTMANAGER_HPP_
 # define _PNIMPORTMANAGER_HPP_
 
+#include <string>
 #include <list>
 #include <map>
 #include <boost/filesystem/path.hpp>
@@ -43,7 +44,7 @@ class PNImportInterface;
 class PNObject;
 class IPNImportedObject;
 
-class PNAPI			PNImportManager
+class PNAPI					PNImportManager
 {
   static PNImportManager*	_instance;
 
@@ -55,21 +56,21 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
 public:
-  void					addImporter(PNImportInterface* importer);
+  void						addImporter(PNImportInterface* importer);
 
   //////////////////////////////////////////////////////////////////////////
 
-  IPNImportedObject*	import(const boost::filesystem::path& file, importtype type = PN_IMPORT_DEFAULT, bool copy = false);
+  IPNImportedObject*		import(const std::string& path, importtype type = PN_IMPORT_DEFAULT, bool copy = false);
 
-  void					clean();
+  void						clean();
 
   //////////////////////////////////////////////////////////////////////////
 private:
   typedef std::list<PNImportInterface*>									LIST_IMPORTER;
   typedef std::map<const boost::filesystem::path, IPNImportedObject*>	MAPIMPORTER;
 
-  MAPIMPORTER			_mapObject;
-  LIST_IMPORTER			_tabImporter[PN_IMPORT_NB_TYPES];
+  MAPIMPORTER				_mapObject;
+  LIST_IMPORTER				_tabImporter[PN_IMPORT_NB_TYPES];
 };
 
 //////////////////////////////////////////////////////////////////////////

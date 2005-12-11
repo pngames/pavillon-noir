@@ -34,10 +34,10 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-PNStringParameter::PNStringParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNConfigurableParameter(p, PN_PARAMTYPE_STRING, &_str, label, altText, editable)
+PNStringParameter::PNStringParameter(const std::string& param, const std::string& label, const std::string& altText, bool editable/* = true*/)
+: PNConfigurableParameter(NULL, PN_PARAMTYPE_STRING, &_str, label, altText, editable)
 {
-
+  _str = param;
 }
 
 PNStringParameter::PNStringParameter(PNConfigurableObject* p, const std::string& param, const std::string& label, const std::string& altText, bool editable/* = true*/)

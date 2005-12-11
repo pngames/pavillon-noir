@@ -69,7 +69,9 @@
 
 #include <Shlwapi.h>
 
-#include "Max.h"
+#include <max.h>
+#include <bmmlib.h>
+#include <guplib.h>
 
 #if MAX_PRODUCT_VERSION_MAJOR <= 5
 # if _MSC_VER >= 1300

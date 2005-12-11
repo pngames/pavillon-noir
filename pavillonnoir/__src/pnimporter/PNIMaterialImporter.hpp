@@ -48,7 +48,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
   // PNIImporter
 
-  IPNImportedObject*	doImport(const boost::filesystem::path& file);
+  IPNImportedObject*	doImport(const std::string& file);
   importtype			getImportType();
 };
 

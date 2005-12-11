@@ -58,23 +58,23 @@ PNOpalImporter::~PNOpalImporter()
 //////////////////////////////////////////////////////////////////////////
 
 pnbool
-PNOpalImporter::isManaged(const fs::path& path)
+PNOpalImporter::isManaged(const std::string& path)
 {
   return true;
 }
 
 IPNImportedObject*
-PNOpalImporter::doImport(const fs::path& path)
+PNOpalImporter::doImport(const std::string& path)
 {
-  pnerror(PN_LOGLVL_INFO, "Import %s", path.string().c_str());
+  pnerror(PN_LOGLVL_INFO, "Import %s", path.c_str());
 
   PNOpalObject* physicalObject = new PNOpalObject((opal::Simulator*)((PNOpal*)PNPhysicsInterface::getInstance())->getSimulation());
 
-  pnuint error = physicalObject->unserializeFromPath(path.string());
+  pnuint error = physicalObject->unserializeFromPath(path);
 
   if (error != PNEC_SUCCESS)
   {
-	pnerror(PN_LOGLVL_ERROR, "%s : %s", path.string().c_str(), pnGetErrorString(error));
+	pnerror(PN_LOGLVL_ERROR, "%s : %s", path.c_str(), pnGetErrorString(error));
 	delete physicalObject;
 	physicalObject = NULL;
   }

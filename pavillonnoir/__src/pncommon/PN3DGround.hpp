@@ -31,7 +31,6 @@
 # define _PN3DGROUND_HPP_
 
 #include <list>
-#include <boost/filesystem/path.hpp>
 
 #include "PN3DObject.hpp"
 
@@ -46,20 +45,20 @@ class PNFace;
 class PNRendererObject;
 class PNBoundingSphere;
 
-typedef 	 std::list<PN3DObject *> LIST_3DOBJ;
+typedef std::list<PN3DObject *> LIST_3DOBJ;
 
 class PNAPI				PN3DGround : public PN3DObject
 {
 private:
   PN3DGround();
-  PN3DGround(const boost::filesystem::path& file);
+  PN3DGround(const std::string& file);
   ~PN3DGround();
 
 public:
   static PN3DGround*	getInstance();	
 
 public:
-  pnint					unserializeFromFile(const boost::filesystem::path& file);
+  pnint					unserializeFromPath(const std::string& file);
 
 public:
   virtual bool			collisionProcess(const PNBoundingSphere& bSphere, const PNVector3f& translation, PNVector3f& trResult);

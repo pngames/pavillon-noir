@@ -140,12 +140,13 @@ int			PNPhysicalExporter::exportBody()
 
 	if (save)
 	{
+	  
 	  // recuperer le string du fichier de script
 	  // inclure le path dans une variable au debut du script
 	  // appeller:
 	  //
-	  //GUP * gp = (GUP*)CreateInstance(GUP_CLASS_ID,Class_ID(470000002,0);
-	  // gp->ExecuteStringScript("toto=$path\n" + filestring);
+	  GUP* gp = (GUP*)CreateInstance(GUP_CLASS_ID,Class_ID(470000002,0));
+	  // gp->ExecuteStringScript("global savePath=$path\n" + filestring);
 	}
   }
   else

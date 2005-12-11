@@ -30,7 +30,6 @@
 #ifndef _PNGLMATERIAL_HPP_
 # define _PNGLMATERIAL_HPP_
 
-#include <map>
 #include <GL/glew.h>
 
 #include "pndefs.h"
@@ -44,7 +43,7 @@ namespace PN
 
 class PNGLTexture;
 
-class PNGLMaterial : public PNRenderMaterial
+class				PNGLMaterial : public PNRenderMaterial
 {
   friend PNRenderMaterial* PNGLRenderer::newMaterial();
   friend void PNGLRenderer::deleteMaterial(PNRenderMaterial* material);
@@ -63,7 +62,7 @@ public:
   void				setEmissive(const pnfloat* color);
   void				setSpecular(const pnfloat* color);
 
-  pnint				setTexture(const boost::filesystem::path& file, void* lightMap = NULL);
+  pnint				setTexture(const std::string& path, void* lightMap = NULL);
   void				setTextureRepeat(pnbool repeat);
 
   //////////////////////////////////////////////////////////////////////////
