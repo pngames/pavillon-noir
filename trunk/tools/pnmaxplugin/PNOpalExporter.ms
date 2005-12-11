@@ -1,12 +1,12 @@
+-- Path for output files.
+-- global savePath
+
 global D_TRUE = 1
 global D_FALSE = 0
 global D_BOX_ID = #(16,0)
 global D_SPHERE_ID = #(17,0)
 --global D_CYLINDER_ID = #(18,0)
 global D_CAPSULE_ID = #(1832744876, 2043230633)
-
--- Path for output files.
--- global savePath
 
 -- Global handle for the output file.
 global outFile

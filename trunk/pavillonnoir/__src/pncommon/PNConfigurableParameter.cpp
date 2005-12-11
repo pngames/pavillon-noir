@@ -114,6 +114,12 @@ PNConfigurableParameter::getConfigurableObject()
   return _p;
 }
 
+void
+PNConfigurableParameter::setConfigurableObject(PNConfigurableObject* object)
+{
+  _p = object;
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 void

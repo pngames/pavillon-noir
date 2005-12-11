@@ -27,8 +27,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#include <boost/filesystem/operations.hpp>
-
 #include "pndefs.h"
 
 #include "PNGLRenderer.hpp"
@@ -115,9 +113,9 @@ PNGLMaterial::setSpecular(const pnfloat* color)
 }
 
 pnint
-PNGLMaterial::setTexture(const boost::filesystem::path& file, void* lightMap)
+PNGLMaterial::setTexture(const std::string& path, void* lightMap)
 {
-  _texture = PNGLTextureManager::getInstance()->getTexture(file, lightMap);
+  _texture = PNGLTextureManager::getInstance()->getTexture(path, lightMap);
 
   if (_texture == NULL)
 	return PNEC_ERROR;

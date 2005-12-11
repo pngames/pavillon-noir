@@ -27,6 +27,7 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
+#include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 
 #include "pndefs.h"
@@ -67,12 +68,9 @@ PNGLTextureManager::~PNGLTextureManager()
 //////////////////////////////////////////////////////////////////////////
 
 PNGLTexture*
-PNGLTextureManager::getTexture(const boost::filesystem::path& file, void* lightMap)
+PNGLTextureManager::getTexture(const std::string& path, void* lightMap)
 {
-  MAPTEXTURE::const_iterator cit = _textureMap.find(file);
-
-  if (cit != _textureMap.end())
-	return cit->second;
+  fs::path	file(path, fs::native);
 
   if (!fs::exists(file))
   {
@@ -85,6 +83,15 @@ PNGLTextureManager::getTexture(const boost::filesystem::path& file, void* lightM
 	pnerror(PN_LOGLVL_ERROR, "%s : %s", file.string().c_str(), pnGetErrorString(PNEC_NOT_A_FILE));
 	return NULL;
   }
+
+  //////////////////////////////////////////////////////////////////////////
+
+  file = fs::complete(file);
+
+  MAPTEXTURE::const_iterator cit = _textureMap.find(file);
+
+  if (cit != _textureMap.end())
+	return cit->second;
 
   PNGLTexture* texture = new PNGLTexture();
 

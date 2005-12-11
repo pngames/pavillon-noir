@@ -97,6 +97,7 @@ public:
   pnbool				isEditable();
 
   PNConfigurableObject*	getConfigurableObject();
+  void					setConfigurableObject(PNConfigurableObject* object);
 
   // for tests only
   void					dump();

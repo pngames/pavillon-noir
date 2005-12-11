@@ -28,7 +28,6 @@
  */
 
 #include <fstream>
-#include <boost/filesystem/operations.hpp>
 
 #include "pndefs.h"
 #include "pnplugins.h"
@@ -62,17 +61,17 @@ PNIMaterialImporter::~PNIMaterialImporter()
 //////////////////////////////////////////////////////////////////////////
 
 IPNImportedObject*
-PNIMaterialImporter::doImport(const fs::path& path)
+PNIMaterialImporter::doImport(const std::string& path)
 {
-  pnerror(PN_LOGLVL_INFO, "Import %s", path.string().c_str());
+  pnerror(PN_LOGLVL_INFO, "Import %s", path.c_str());
 
   PNI3DMaterial* mat = new PNI3DMaterial();
 
-  pnuint error = mat->unserializeFromPath(path.string());
+  pnuint error = mat->unserializeFromPath(path);
 
   if (error != PNEC_SUCCESS)
   {
-	pnerror(PN_LOGLVL_ERROR, "%s : %s", path.string().c_str(), pnGetErrorString(error));
+	pnerror(PN_LOGLVL_ERROR, "%s : %s", path.c_str(), pnGetErrorString(error));
 	delete mat;
 	mat = NULL;
   }
