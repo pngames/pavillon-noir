@@ -254,6 +254,10 @@
 					RelativePath="..\..\..\__src\pneditorcommon\PNFXStringParameter.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXTextFieldParameter.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -334,6 +338,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\__src\pneditorcommon\PNFXStringParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXTextFieldParameter.hpp"
 					>
 				</File>
 			</Filter>

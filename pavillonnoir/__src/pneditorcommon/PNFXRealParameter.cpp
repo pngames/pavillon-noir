@@ -42,20 +42,19 @@ using namespace std;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-// Map
+/*// Map
 FXDEFMAP(PNFXRealParameter) PNFXRealParameterMap[]={
   FXMAPFUNC(SEL_KEYRELEASE,0,PNFXRealParameter::onKeyRelease),
-};
+};*/
 
 //////////////////////////////////////////////////////////////////////////
-FXIMPLEMENT(PNFXRealParameter,FXTextField,PNFXRealParameterMap,ARRAYNUMBER(PNFXRealParameterMap))
-// FXIMPLEMENT(PNFXRealParameter,FXTextField,NULL,0)
+//FXIMPLEMENT(PNFXRealParameter, PNFXTextFieldParameter, PNFXRealParameterMap, ARRAYNUMBER(PNFXRealParameterMap))
+FXIMPLEMENT(PNFXRealParameter, PNFXTextFieldParameter, NULL, 0)
 
 PNFXRealParameter::PNFXRealParameter(FXComposite* p, PNConfigurableParameter* param)
-: FXTextField(p, 12, NULL, 0, TEXTFIELD_REAL|FRAME_SUNKEN|FRAME_THICK|LAYOUT_SIDE_TOP),
-PNPropertiesGridParameter(param)
+: PNFXTextFieldParameter(p, param, 12)
 {
-  update();
+  
 }
 
 PNFXRealParameter::~PNFXRealParameter()
@@ -66,55 +65,8 @@ PNFXRealParameter::~PNFXRealParameter()
 
 void	PNFXRealParameter::create()
 {
-  FXTextField::create();
+  PNFXTextFieldParameter::create();
 }
 
-void	PNFXRealParameter::update()
-{
-  FXString  str;
-  str.format("%f", *(pnfloat*)_param->getElem());
-  setText(str);
-  setEditable(_param->isEditable());
-  return;
-}
-
-
-long	PNFXRealParameter::onKeyRelease(FXObject* obj,FXSelector sel, void* ptr)
-{
-  FXTextField::handle(obj, sel, ptr);
-  FXEvent* event=(FXEvent*)ptr;
-  switch(event->code)
-  {
-  case KEY_Return:
-  case KEY_KP_Enter:
-	{
-	  pnfloat* f = (pnfloat*)_param->getElem();
-	  *f = (pnfloat)atof(getText().text());
-	  _param->getConfigurableObject()->update(_param);
-	  setTextColor(0x000000);
-	  return 1;
-	}
-  case KEY_Right:
-  case KEY_KP_Right:
-  case KEY_Left:
-  case KEY_KP_Left:
-  case KEY_Down:
-  case KEY_KP_Down:
-  case KEY_Up:
-  case KEY_KP_Up:
-  case KEY_Home:
-  case KEY_KP_Home:
-  case KEY_End:
-  case KEY_KP_End:
-  case KEY_Insert:
-  case KEY_KP_Insert:
-	return 1;
-  default:
-	{
-	  setTextColor(0x0000FF);
-	  return 1;
-	}
-  }
-}
 //////////////////////////////////////////////////////////////////////////
 };

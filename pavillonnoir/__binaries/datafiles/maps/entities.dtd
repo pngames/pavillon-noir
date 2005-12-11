@@ -39,7 +39,6 @@
     <!ATTLIST script ref CDATA #REQUIRED>
 
 <!ATTLIST skybox enabled (true|false) #IMPLIED>
-
 <!ATTLIST skybox top CDATA #IMPLIED>
 <!ATTLIST skybox botttom CDATA #IMPLIED>
 <!ATTLIST skybox left CDATA #IMPLIED>
