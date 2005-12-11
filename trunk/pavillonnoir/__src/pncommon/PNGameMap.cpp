@@ -49,9 +49,20 @@
 
 #include "PNGameMap.hpp"
 
+//////////////////////////////////////////////////////////////////////////
+
 namespace fs = boost::filesystem;
 using namespace PN;
 using namespace std;
+
+//////////////////////////////////////////////////////////////////////////
+
+#define _SEND_LOAD_STEP(eventData, name, step)	\
+  eventData.item = name;	\
+  eventData.progressVal = step;	\
+PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STEP, this, &eventData);	\
+
+//////////////////////////////////////////////////////////////////////////
 
 PNGameMap::PNGameMap()
 {
@@ -178,7 +189,11 @@ PNGameMap::_unserializeNode(xmlNode* node)
 
 pnint
 PNGameMap::unserializeFromXML(xmlNode* root)
-{  
+{
+  _SEND_LOAD_STEP(_eaLoadStep, _path, 0.0f)
+
+  //////////////////////////////////////////////////////////////////////////
+
   _mpp = XMLUtils::xmlGetProp(root, PNXML_MPP_ATTR, 1.0f);
 
   //////////////////////////////////////////////////////////////////////////
@@ -190,14 +205,24 @@ PNGameMap::unserializeFromXML(xmlNode* root)
 
   if (xmlStrEqual(root->name, PNXML_LISTENTITIES_MKP) && root->children != NULL)
   {
+	pnuint	nbNodes = XMLUtils::xmlGetNbChilds(root);
+
+	pnfloat	nb = 0.0f;
+
 	for (xmlNodePtr current = root->children; current != NULL; current = current->next)
 	{
+	  _eaLoadStep.progressVal = nb++ / nbNodes;
+
 	  error = _unserializeNode(current);
 
 	  if (error != PNEC_SUCCESS)
 		break ;
 	}
   }
+
+  //////////////////////////////////////////////////////////////////////////
+
+  _SEND_LOAD_STEP(_eaLoadStep, _path, 1.0f)
 
   return error;
 }

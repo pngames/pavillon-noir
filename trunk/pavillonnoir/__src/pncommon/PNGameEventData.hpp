@@ -49,7 +49,7 @@ public:
   PNGameUpdateEventData(float deltatime, pnuint time): deltaTime(deltatime), time(time) {}
 };
 
-class PNGameLoadStepsMapEventData : public PNEventData
+class		  PNGameLoadStepsMapEventData : public PNEventData
 {
 public:
   PNGameLoadStepsMapEventData(){}
@@ -58,7 +58,7 @@ public:
   float		  progressVal;
 };
 
-class PNGameLoadMapEventData : public PNEventData
+class		  PNGameLoadMapEventData : public PNEventData
 {
 public:
   PNGameLoadMapEventData(){}
@@ -66,20 +66,20 @@ public:
   std::string mapName;
 };
 
-class PNGameLoadGameEventData : public PNEventData
+class		  PNGameLoadGameEventData : public PNEventData
 {
 public:
   std::string gameName;
 };
 
-class PNGameSaveGameEventData : public PNEventData
+class		  PNGameSaveGameEventData : public PNEventData
 {
 public:
   std::string gameName;
 };
 
 
-class PNGameActionEventData : public PNEventData
+class			PNGameActionEventData : public PNEventData
 {
 public:
 	std::string action;
@@ -95,18 +95,18 @@ public:
 			value(aValue) {}
 };
 
-class PNGameMouseMoveEventData : public PNEventData
+class			PNGameMouseMoveEventData : public PNEventData
 {
 public:
-	PNPoint3f coords;
+	PNPoint3f	coords;
 
 	PNGameMouseMoveEventData(PNPoint3f someCoords): coords(someCoords) {}
 };
 
-class PNGameAIEventData : public PNGameActionEventData
+class			PNGameAIEventData : public PNGameActionEventData
 {
 public:
-  std::string AITarget;
+  std::string	AITarget;
 
   PNGameAIEventData
         (std::string anAction, std::string atargetId, std::string aSourceId ,double aValue, std::string anAITarget):

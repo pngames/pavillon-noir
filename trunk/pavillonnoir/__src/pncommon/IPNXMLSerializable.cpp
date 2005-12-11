@@ -201,8 +201,20 @@ IPNXMLSerializable::serializeInXML(xmlNode* node, pnbool root /*=false*/)
 
 //////////////////////////////////////////////////////////////////////////
 
-
 namespace XMLUtils {
+//////////////////////////////////////////////////////////////////////////
+
+PNAPI pnuint
+xmlGetNbChilds(xmlNode* node)
+{
+  int nb = 0;
+
+  for (xmlNodePtr current = node->children; current != NULL; current = current->next)
+	++nb;
+
+  return nb;
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 #define XML_TRUE_VAL	(const xmlChar *)"true"

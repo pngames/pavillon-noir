@@ -36,151 +36,152 @@ using namespace PN;
 #define RGBA(R,G,B,A) (B+(G<<8)+(R<<16)+(A<<24))
 
 namespace PN{
+//////////////////////////////////////////////////////////////////////////
 
-  PNGUILoadingScreen*	PNGUILoadingScreen::_instance = NULL;
+PNGUILoadingScreen*	PNGUILoadingScreen::_instance = NULL;
 
-  PNGUILoadingScreen::PNGUILoadingScreen()
+PNGUILoadingScreen::PNGUILoadingScreen()
+{
+  CEGUI::Imageset* imgSet = CEGUI::ImagesetManager::getSingleton().getImageset("LoadingScreenImages");
+  CEGUI::Imageset::ImageIterator imgSetIte = imgSet->getIterator();
+
+
+  while( !imgSetIte.isAtEnd() )
   {
-	
-	
-	CEGUI::Imageset* imgSet = CEGUI::ImagesetManager::getSingleton().getImageset("LoadingScreenImages");
-	CEGUI::Imageset::ImageIterator imgSetIte = imgSet->getIterator();
-	
-	
-	while( !imgSetIte.isAtEnd() )
-	{
-	  std::string tmp = (*imgSetIte).getName().c_str();
-	  if (tmp != "LoadingScreenImages/chargement")
-		_listImagesetAll.push_back(tmp);
-	  imgSetIte++;
-	}
-
-	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNLoadingScreen.layout");
-	_backGround = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/Background");
-	_progBar = (CEGUI::ProgressBar*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/ProgressBar");
-	_listBox = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/ListBox");
-	_listBox->setShowVertScrollbar(false);
-
-	_statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "LoadingScreenImages/randomBack");
-	_mainSheet->addChildWindow(_statImg);
-
-	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
-	hide();
-
-	PNEventManager::getInstance()->addCallback(PN_EVENT_ML_STARTED, EventCallback(this, &PNGUILoadingScreen::startGUI));
-	PNEventManager::getInstance()->addCallback(PN_EVENT_MU_STARTED, EventCallback(this, &PNGUILoadingScreen::startGUI));
-
-	PNEventManager::getInstance()->addCallback(PN_EVENT_ML_ENDED, EventCallback(this, &PNGUILoadingScreen::resetGUI));
-	PNEventManager::getInstance()->addCallback(PN_EVENT_MU_ENDED, EventCallback(this, &PNGUILoadingScreen::resetGUI));
-
-	PNEventManager::getInstance()->addCallback(PN_EVENT_ML_STEP, EventCallback(this, &PNGUILoadingScreen::stepLoad));
-	PNEventManager::getInstance()->addCallback(PN_EVENT_MU_STEP, EventCallback(this, &PNGUILoadingScreen::stepLoad));
+	std::string tmp = (*imgSetIte).getName().c_str();
+	if (tmp != "LoadingScreenImages/chargement")
+	  _listImagesetAll.push_back(tmp);
+	imgSetIte++;
   }
 
-  PNGUILoadingScreen::~PNGUILoadingScreen()
+  _mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNLoadingScreen.layout");
+  _backGround = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/Background");
+  _progBar = (CEGUI::ProgressBar*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/ProgressBar");
+  _listBox = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/ListBox");
+  _listBox->setShowVertScrollbar(false);
+
+  _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "LoadingScreenImages/randomBack");
+  _mainSheet->addChildWindow(_statImg);
+
+  CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
+  hide();
+
+  PNEventManager::getInstance()->addCallback(PN_EVENT_ML_STARTED, EventCallback(this, &PNGUILoadingScreen::startGUI));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_MU_STARTED, EventCallback(this, &PNGUILoadingScreen::startGUI));
+
+  PNEventManager::getInstance()->addCallback(PN_EVENT_ML_ENDED, EventCallback(this, &PNGUILoadingScreen::resetGUI));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_MU_ENDED, EventCallback(this, &PNGUILoadingScreen::resetGUI));
+
+  PNEventManager::getInstance()->addCallback(PN_EVENT_ML_STEP, EventCallback(this, &PNGUILoadingScreen::stepLoad));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_MU_STEP, EventCallback(this, &PNGUILoadingScreen::stepLoad));
+}
+
+PNGUILoadingScreen::~PNGUILoadingScreen()
+{
+  _mainSheet->destroy();
+}
+
+PNGUILoadingScreen* PNGUILoadingScreen::getInstance()
+{
+  if (_instance == NULL)
+	_instance = new PNGUILoadingScreen();
+  return _instance;
+}
+
+void PNGUILoadingScreen::refreshScreen(float val, std::string update)
+{
+  _progBar->setProgress(val);
+
+  CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(update.c_str());
+  item->setSelectionBrushImage((CEGUI::utf8*)"Vanilla-Images", (CEGUI::utf8*)"GenericBrush");
+  item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
+
+  _listBox->addItem(item);
+  _listBox->setShowVertScrollbar(false);
+}
+
+void  PNGUILoadingScreen::setRandomBackground()
+{
+  listImagesetAll::iterator			ite = _listImagesetAll.begin();
+
+  std::cout << (*ite).c_str() << std::endl;
+
+  CEGUI::Image img = (CEGUI::Image)CEGUI::ImagesetManager::getSingleton().getImageset("LoadingScreenImages")->getImage((*ite).c_str());
+
+  float imgWidth = img.getWidth();
+  float imgHeight = img.getHeight();
+  float screenHeight = CEGUI::System::getSingleton().getRenderer()->getHeight();
+  float screenWidth = CEGUI::System::getSingleton().getRenderer()->getWidth();
+
+  float sizeWidth = 0.0f;
+  float sizeHeight = 0.0f;
+  float posX = 0.0;
+  float posY = 0.0;
+
+  if (imgHeight >= imgWidth) 
   {
-	_mainSheet->destroy();
+	sizeHeight = 0.63;
+	sizeWidth = imgWidth * sizeHeight / imgHeight / 1.33;
+	posX = (1 - sizeWidth) /2;
+	posY = 0.0f;
+
+  }
+  else if (imgHeight < imgWidth)
+  {
+	sizeWidth = 1;
+	sizeHeight = imgHeight * sizeWidth / imgWidth * 1.33; 
+	posX = 0.0;
+	posY = (0.63 - sizeHeight) /2;
   }
 
-  PNGUILoadingScreen* PNGUILoadingScreen::getInstance()
-  {
-	if (_instance == NULL)
-	  _instance = new PNGUILoadingScreen();
-	return _instance;
-  }
-
-  void PNGUILoadingScreen::refreshScreen(float val, std::string update)
-  {
-	_progBar->setProgress(val);
-
-	CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(update.c_str());
-	item->setSelectionBrushImage((CEGUI::utf8*)"Vanilla-Images", (CEGUI::utf8*)"GenericBrush");
-	item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
-
-	_listBox->addItem(item);
-	_listBox->setShowVertScrollbar(false);
-  }
-
-  void  PNGUILoadingScreen::setRandomBackground()
-  {
-	listImagesetAll::iterator			ite = _listImagesetAll.begin();
-	
-	std::cout << (*ite).c_str() << std::endl;
-
-	CEGUI::Image img = (CEGUI::Image)CEGUI::ImagesetManager::getSingleton().getImageset("LoadingScreenImages")->getImage((*ite).c_str());
-	
-	float imgWidth = img.getWidth();
-	float imgHeight = img.getHeight();
-	float screenHeight = CEGUI::System::getSingleton().getRenderer()->getHeight();
-	float screenWidth = CEGUI::System::getSingleton().getRenderer()->getWidth();
-
-	float sizeWidth = 0.0f;
-	float sizeHeight = 0.0f;
-	float posX = 0.0;
-	float posY = 0.0;
-
-	if (imgHeight >= imgWidth) 
-	{
-	  sizeHeight = 0.63;
-	  sizeWidth = imgWidth * sizeHeight / imgHeight / 1.33;
-	  posX = (1 - sizeWidth) /2;
-	  posY = 0.0f;
-
-	}
-	else if (imgHeight < imgWidth)
-	{
-	  sizeWidth = 1;
-	  sizeHeight = imgHeight * sizeWidth / imgWidth * 1.33; 
-	  posX = 0.0;
-	  posY = (0.63 - sizeHeight) /2;
-	}
-
-	_statImg->setImage("LoadingScreenImages", (*ite).c_str());
-	_statImg->setSize(CEGUI::Size(sizeWidth, sizeHeight));
-	_statImg->setPosition(CEGUI::Point(posX, posY));
-	_statImg->setFrameEnabled(false);
-	_statImg->setBackgroundEnabled(false);
-	_statImg->disable();
-	
-  }
-
-  void  PNGUILoadingScreen::resetScreen()
-  {
-	_progBar->setProgress(0.0f);
-	_listBox->resetList();
-  }
-
-  void	PNGUILoadingScreen::startGUI(pnEventType type, PNObject* source, PNEventData* data)
-  {
-	CEGUI::MouseCursor::getSingleton().hide();
-	//setRandomBackground();
-	resetScreen();
-	show();
-	//PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STEP, 0, NULL);
-  }
-
-  void	PNGUILoadingScreen::resetGUI(pnEventType type, PNObject* source, PNEventData* data)
-  {
-	hide();
-  }
-
-  void	PNGUILoadingScreen::show()
-  {
-	_mainSheet->show();
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STEP, 0, new PNGameLoadStepsMapEventData("Chargement", 0.0f));
-	setRandomBackground();
-  }
-
-  void	PNGUILoadingScreen::hide()
-  {
-	_mainSheet->hide();
-  }
-
-  void	PNGUILoadingScreen::stepLoad(pnEventType type, PNObject* source, PNEventData* data)
-  {
-	PNGameLoadStepsMapEventData* stepData = (PNGameLoadStepsMapEventData*)data;
-	refreshScreen(stepData->progressVal, stepData->item);
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_END, 0, NULL);
-  }
+  _statImg->setImage("LoadingScreenImages", (*ite).c_str());
+  _statImg->setSize(CEGUI::Size(sizeWidth, sizeHeight));
+  _statImg->setPosition(CEGUI::Point(posX, posY));
+  _statImg->setFrameEnabled(false);
+  _statImg->setBackgroundEnabled(false);
+  _statImg->disable();
 
 }
+
+void  PNGUILoadingScreen::resetScreen()
+{
+  _progBar->setProgress(0.0f);
+  _listBox->resetList();
+}
+
+void	PNGUILoadingScreen::startGUI(pnEventType type, PNObject* source, PNEventData* data)
+{
+  CEGUI::MouseCursor::getSingleton().hide();
+  //setRandomBackground();
+  resetScreen();
+  show();
+  //PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STEP, 0, NULL);
+}
+
+void	PNGUILoadingScreen::resetGUI(pnEventType type, PNObject* source, PNEventData* data)
+{
+  hide();
+}
+
+void	PNGUILoadingScreen::show()
+{
+  _mainSheet->show();
+  PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STEP, 0, new PNGameLoadStepsMapEventData("Chargement", 0.0f));
+  setRandomBackground();
+}
+
+void	PNGUILoadingScreen::hide()
+{
+  _mainSheet->hide();
+}
+
+void	PNGUILoadingScreen::stepLoad(pnEventType type, PNObject* source, PNEventData* data)
+{
+  PNGameLoadStepsMapEventData* stepData = (PNGameLoadStepsMapEventData*)data;
+  refreshScreen(stepData->progressVal, stepData->item);
+
+  PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_END, 0, NULL);
+}
+
+//////////////////////////////////////////////////////////////////////////
+};
