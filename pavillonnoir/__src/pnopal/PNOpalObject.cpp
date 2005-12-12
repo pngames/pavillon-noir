@@ -32,6 +32,7 @@
 
 #include "pndefs.h"
 #include "pnplugins.h"
+#include "pnimport.h"
 #include "pnp_format.h"
 
 #include "PNPhysicsInterface.hpp"
@@ -39,6 +40,9 @@
 #include "PNGameInterface.hpp"
 #include "PNGameMap.hpp"
 #include "PNConsole.hpp"
+
+#include "PN3DModel.hpp"
+#include "PN3DMaterial.hpp"
 
 #include "PNOpal.hpp"
 #include "PNOpalObject.hpp"
@@ -72,7 +76,7 @@ PNOpalObject::~PNOpalObject()
 
 //////////////////////////////////////////////////////////////////////////
 
-void PNOpalObject::update(pnuint elapsed_time)
+void PNOpalObject::update()
 {
   /* deprecated */
 }
@@ -98,21 +102,37 @@ void PNOpalObject::render()
 	boxShapeData = (opal::BoxShapeData*)solidData.getShapeData(i);
 	boxShapeData->getLocalAABB(aabb);
 
-	PNRendererInterface::getInstance()->renderBox(aabb[1] - aabb[0], aabb[3] - aabb[2], aabb[5] - aabb[4], color);	
   }
   */
   pnfloat color[4] = {1.0f, 1.0f, 1.0f, 0.3f};
 
-  switch (_type)
+  opal::ShapeData* shapeData = _solid->getData().getShapeData(0);
+
+  switch(shapeData->getType())
   {
-  case OPALBOX :
-	PNRendererInterface::getInstance()->renderBox(_aabb[1] - _aabb[0], _aabb[3] - _aabb[2], _aabb[5] - _aabb[4], color, _offset);
+  case opal::BOX_SHAPE:
+	{
+	  opal::BoxShapeData* boxData = (opal::BoxShapeData*)shapeData;
+	  PNRendererInterface::getInstance()->renderBox(_aabb[1] - _aabb[0], _aabb[3] - _aabb[2], _aabb[5] - _aabb[4], color, _offset);
+	  break;
+	}
+  case opal::SPHERE_SHAPE:
+	{
+	  opal::SphereShapeData* sphereData = (opal::SphereShapeData*)shapeData;
+	  PNRendererInterface::getInstance()->renderSphere(_radius, 20, 20, color, _offset);
+	  break;
+	}
+  case opal::CAPSULE_SHAPE:
+	{
+	  opal::CapsuleShapeData* capsuleData = (opal::CapsuleShapeData*)shapeData;
+	  break;
+	}
+  case opal::PLANE_SHAPE:
 	break;
-  case OPALSPHERE :
-	PNRendererInterface::getInstance()->renderSphere(_radius, 20, 20, color, _offset);
+  case opal::MESH_SHAPE:
 	break;
   default:
-	break;
+	assert(false);
   }
 }
 
@@ -198,78 +218,28 @@ bool			PNOpalObject::isStatic()
   return _solid->isStatic();
 }
 
-/** Set the coordinates of the physical object
-*
-* /param  coord  point object
-*/ 
-
-void			PNOpalObject::setCoord(const PNPoint3f& coord)
-{
-  _solid->setPosition(coord.x, coord.y, coord.z);
-}
-
-/** Set the coordinates of the physical object
-*
-* /param  x  coordinate on the x axis
-* /param  y  coordinate on the y axis
-* /param  z  coordinate on the z axis
-*/ 
-
-void			PNOpalObject::setCoord(pnfloat x, pnfloat y, pnfloat z)
-{
-  _solid->setPosition(x, y, z);
-}
-
-/** Set the orientation of the physical object
-*
-* /param  orient  quaternion of orientation
-*/ 
-
-void			PNOpalObject::setOrient(const PNQuatf& orient)
-{
-  opal::Matrix44r transform;
-  opal::Point3r pos = _solid->getPosition();
-
-  transform.makeIdentity();
-  transform.setPosition(pos[0], pos[1], pos[2]);
-  if (!orient.isIdentity())
-	transform.setRotation((opal::real)orient.w, (opal::real)orient.x, (opal::real)orient.y, (opal::real)orient.z);
-  _solid->setTransform(transform);
-}
-
-/** Set the orientation of the physical object
-*
-* /param  x  orientation on the x axis
-* /param  y  orientation on the y axis
-* /param  z  orientation on the z axis
-* /param  w  theta
-*/ 
-
-void			PNOpalObject::setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w)
-{
-  opal::Matrix44r transform;
-  transform.makeIdentity();
-  opal::Point3r pos = _solid->getPosition();
-  transform.setPosition(pos[0], pos[1], pos[2]);
-
-  if (!(x == 0.0f && y == 0.0f && z == 0.0f && w == 1.0f))
-	transform.rotate((opal::real)w, (opal::real)x, (opal::real)y, (opal::real)z);
-  _solid->setTransform(transform);
-}
-
 /** Set the coordinates and orientation of the physical object
 *
 * /param  coord  coordinates
 * /param  orient  orientation
 */ 
 
-void			PNOpalObject::setTransform(const PNPoint3f& coord, const PNQuatf& orient)
+void			PNOpalObject::setTransform(const PNPoint3f& coord, const PNQuatf& orient, pnfloat scale)
 {
-  opal::Matrix44r transform;
-  transform.makeIdentity();
-  transform.setPosition((opal::real)coord.x, (opal::real)coord.y, (opal::real)coord.z);
-  if (!orient.isIdentity())
-	transform.setRotation((opal::real)orient.w, (opal::real)orient.x, (opal::real)orient.y, (opal::real)orient.z);
+  pnfloat			trans[3];
+  opal::Matrix44r	transform;
+  PNMatrix4f		pntransform;
+  const PNPoint3f&	offset = getOffset();
+
+  trans[0] = coord.x * scale + offset.x;
+  trans[1] = coord.y * scale + offset.y;
+  trans[2] = coord.z * scale + offset.z;
+
+  pntransform.loadIdentity();
+  pntransform.setTranslation(trans);
+  pntransform.setRotationQuaternion(orient);
+
+  transform.set(pntransform.getMatrix());
   _solid->setTransform(transform);
 }
 
@@ -367,10 +337,10 @@ void		PNOpalObject::setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf or
   }
 
   /* optional motor data */
-  _movementMotorData.linearKd = (opal::real)2.0;
+  /*_movementMotorData.linearKd = (opal::real)2.0;
   _movementMotorData.linearKs = (opal::real)20.0;
   _movementMotorData.angularKd = (opal::real)0.01;
-  _movementMotorData.angularKs = (opal::real)0.6;
+  _movementMotorData.angularKs = (opal::real)0.6;*/
 
   /* motor init */
   _movementMotor->init(_movementMotorData);
@@ -390,36 +360,67 @@ void		PNOpalObject::destroyMovementMotor()
 
 pnint		  PNOpalObject::_parseTypePnm(const boost::filesystem::path& file)
 {
-  // FIXME :
-  // must create a solid
-  // must use the model file to create the shape
+  /*PN3DModel*		  PNMesh;
+  opal::MeshShapeData meshData;
+
+  PNMesh = (PN3DModel*)PNImportManager::getInstance()->import(file.string(), PN_IMPORT_3DMODEL);
+
+  meshData.numVertices = PNMesh->getNbVertexComputed();
+  meshData.numTriangles = PNMesh->getNbFacesComputed();
+
+  meshData.vertexArray = new opal::real[3 * meshData.numVertices];
+  meshData.triangleArray = new unsigned int[3 * meshData.numTriangles];
+  pnfloat* PNVertex = new pnfloat[3 * meshData.numVertices];
+
+  PNMesh->computeVertex(PNVertex);
+  pnfloat mpp = PNGameInterface::getInstance()->getGameMap()->getMpp();
+  for (unsigned i = 0; i < meshData.numVertices; i++)
+  {
+	meshData.vertexArray[i * 3] = PNVertex[i][0] * mpp;
+	meshData.vertexArray[i * 3 + 1] = PNVertex[i][1] * mpp;
+	meshData.vertexArray[i * 3 + 2] = PNVertex[i][2] * mpp;
+  }
+  delete[] PNVertex;
+
+  std::vector<PN3DMaterial*> PNFaces;
+  PNMesh->computeFaces(PNFaces, 0);
+  for (unsigned int j = 0; j < meshData.numTriangles; j++)
+  {
+	meshData.triangleArray[j * 3] = PNFaces. [j * 3];
+	meshData.triangleArray[j * 3 + 1] = PNFaces[j * 3 + 1];
+	meshData.triangleArray[j * 3 + 2] = PNFaces[j * 3 + 2];
+  }
+
+  // create a solid
+  _solid = _sim->createSolid();
+  _solid->setStatic(true);
+
+  // Add the mesh Shape to the Solid.
+  _solid->addShape(meshData);*/
+
   return PNEC_SUCCESS;
 }
 
 pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
 {
-
   // check for errors
   if (!fs::exists(file))
 	return PNEC_FILE_NOT_FOUND;
   if (fs::is_directory(file))
 	return PNEC_NOT_A_FILE;
 
-  pnfloat mpp = PNGameInterface::getInstance()->getGameMap()->getMpp();
+  PNGameMap*  gm = PNGameInterface::getInstance()->getGameMap();
+
+  pnfloat mpp = gm->getMpp();
 
   // create and instantiate the opal blueprint
   _file = file.string();
   opal::loadFile(_blueprint, _file);
   _sim->instantiateBlueprint(_blueprintInstance, _blueprint, opal::Matrix44r(), mpp);
 
-  
-
   _solid = _blueprintInstance.getSolid("Boite01");
   if (_solid != NULL)
   {
-	// store the shape type
-	_type = OPALBOX;
-
 	// get the AABB dimensions
 	_solid->getData().getShapeData(0)->getLocalAABB(_aabb);
 
@@ -435,7 +436,6 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
   else 
   {
 	_solid = _blueprintInstance.getSolid("Sphere01");
-	_type = OPALSPHERE;
 	opal::SphereShapeData* shapeData = (opal::SphereShapeData*)_solid->getData().getShapeData(0);
 	_radius = shapeData->radius + 0.1;
   }
@@ -471,7 +471,7 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
   return PNEC_SUCCESS;
 }
 
-pnint		  PNOpalObject::_parseModel(xmlNode* node)
+pnint		  PNOpalObject::_parsePhysics(xmlNode* node)
 {
   xmlChar*	  attr = NULL;
 
@@ -504,7 +504,7 @@ pnint
 PNOpalObject::_unserializeNode(xmlNode* node)
 {
   if (PNP_XMLNODE_MODEL == (const char*)node->name)
-	_parseModel(node);
+	_parsePhysics(node);
  
   return PNEC_SUCCESS;
 }
