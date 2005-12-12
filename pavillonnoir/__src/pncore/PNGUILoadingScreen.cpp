@@ -45,7 +45,8 @@ PNGUILoadingScreen*	PNGUILoadingScreen::_instance = NULL;
 
 PNGUILoadingScreen::PNGUILoadingScreen()
 {
-  srand((pnuint)time(0));
+  pnuint t = (pnuint)time(0);
+  srand(t);
 
   CEGUI::Imageset* imgSet = CEGUI::ImagesetManager::getSingleton().getImageset("LoadingScreenImages");
   CEGUI::Imageset::ImageIterator imgSetIte = imgSet->getIterator();
@@ -160,7 +161,9 @@ PNGUILoadingScreen::setRandomBackground()
 void 
 PNGUILoadingScreen::resetScreen()
 {
-  _progBar->setProgress(0.0f);
+  reinit();
+
+  _progBar->setProgress(_step);
   _listBox->resetList();
   _statImg->setAlpha(0.0f);
 }
@@ -197,7 +200,7 @@ PNGUILoadingScreen::resetGUI(pnEventType type, PNObject* source, PNEventData* da
 
 //////////////////////////////////////////////////////////////////////////
 
-void
+/*void
 PNGUILoadingScreen::refreshScreen(float val, std::string update)
 {
   _progBar->setProgress(val);
@@ -209,7 +212,7 @@ PNGUILoadingScreen::refreshScreen(float val, std::string update)
   _listBox->addItem(item);
   _listBox->ensureItemIsVisible(item);
   _listBox->setShowVertScrollbar(false);
-}
+}*/
 
 void
 PNGUILoadingScreen::refresh()
