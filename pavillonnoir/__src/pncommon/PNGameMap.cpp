@@ -43,6 +43,7 @@
 #include "PNWayPoint.hpp"
 #include "PNIAGraph.hpp"
 #include "PNCharacter.hpp"
+#include "PNLoadingProgressEventData.hpp"
 
 #include "pnxml.h"
 #include "pno_format.h"
@@ -64,18 +65,18 @@ using namespace std;
   PNEventManager::getInstance()->sendEvent(d_event, this, &(d_eventData));	\
 
 #define SEND_LOAD_STEP(d_eventData, d_name, d_step)	\
-  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNGameLoadStepsMapEventData::LSTATE_CMD_NONE, d_eventData, d_name, d_step)
+  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNLoadingProgressEventData::LSTATE_CMD_NONE, d_eventData, d_name, d_step)
 #define SEND_LOAD_STEP_POP(d_eventData, d_name, d_step)	\
-  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNGameLoadStepsMapEventData::LSTATE_CMD_POP, d_eventData, d_name, d_step)
+  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNLoadingProgressEventData::LSTATE_CMD_POP, d_eventData, d_name, d_step)
 #define SEND_LOAD_STEP_PUSH(d_eventData, d_name, d_step)	\
-  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNGameLoadStepsMapEventData::LSTATE_CMD_PUSH, d_eventData, d_name, d_step)
+  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNLoadingProgressEventData::LSTATE_CMD_PUSH, d_eventData, d_name, d_step)
 
 #define SEND_UNLOAD_STEP(d_eventData, d_name, d_step)	\
-  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNGameLoadStepsMapEventData::LSTATE_CMD_NONE, d_eventData, d_name, d_step)
+  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNLoadingProgressEventData::LSTATE_CMD_NONE, d_eventData, d_name, d_step)
 #define SEND_UNLOAD_STEP_POP(d_eventData, d_name, d_step)	\
-  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNGameLoadStepsMapEventData::LSTATE_CMD_POP, d_eventData, d_name, d_step)
+  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNLoadingProgressEventData::LSTATE_CMD_POP, d_eventData, d_name, d_step)
 #define SEND_UNLOAD_STEP_PUSH(d_eventData, d_name, d_step)	\
-  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNGameLoadStepsMapEventData::LSTATE_CMD_PUSH, d_eventData, d_name, d_step)
+  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNLoadingProgressEventData::LSTATE_CMD_PUSH, d_eventData, d_name, d_step)
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -112,7 +113,7 @@ PNGameMap::_unserializeSkybox(xmlNode* root)
 pnint
 PNGameMap::_unserializeEntity(xmlNode* node)
 {
-  PNGameLoadStepsMapEventData	eaLoadStep;
+  PNLoadingProgressEventData	eaLoadStep;
   pnfloat						nbSteps = 5.0f;
 
   //////////////////////////////////////////////////////////////////////////
@@ -218,7 +219,7 @@ PNGameMap::_unserializeNode(xmlNode* node)
 pnint
 PNGameMap::unserializeFromXML(xmlNode* root)
 {
-  PNGameLoadStepsMapEventData	eaLoadStep;
+  PNLoadingProgressEventData	eaLoadStep;
 
   SEND_LOAD_STEP(eaLoadStep, _path, 0.0f)
 
@@ -354,7 +355,7 @@ void PNGameMap::addToMap(const std::string& entityName,const std::string& id)
 
 void PNGameMap::clear()
 {
-  PNGameLoadStepsMapEventData	eaLoadStep;
+  PNLoadingProgressEventData	eaLoadStep;
 
   SEND_UNLOAD_STEP(eaLoadStep, _path, 0.0f)
 
