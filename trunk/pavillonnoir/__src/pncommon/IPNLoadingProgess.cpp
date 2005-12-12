@@ -58,8 +58,7 @@ IPNLoadingProgess::reinit()
 	_stepStack.pop();
 
   _label = "";
-  _step = 0.0f;
-  _oldStep = 0.0f;
+  _base = _step = 0.0f;
 }
 
 void
@@ -72,36 +71,48 @@ IPNLoadingProgess::addCallback(pnEventType type)
 
 //////////////////////////////////////////////////////////////////////////
 
+#ifdef WIN32
+# include <Windows.h>
+#endif
+
 void
 IPNLoadingProgess::stepLoad(pnEventType type, PNObject* source, PNEventData* data)
 {
+#ifdef WIN32
+  //Sleep(1000);
+#endif
+
   PNGameLoadStepsMapEventData* stepData = (PNGameLoadStepsMapEventData*)data;
+
+  std::cout << "label=" << stepData->item << "step=" << stepData->progressVal;
 
   //////////////////////////////////////////////////////////////////////////
   
   switch (stepData->cmd)
   {
   case PNGameLoadStepsMapEventData::LSTATE_CMD_PUSH:
-	_oldStep = _step;
+	_stepStack.push(StackData(_base, stepData->progressVal));
 
-	_stepStack.push(stepData->progressVal);
-	_stepMultiplier *= _stepStack.top();
+	_base = _step;
+	_stepMultiplier *= _stepStack.top().size;
 	break;
   case PNGameLoadStepsMapEventData::LSTATE_CMD_POP:
 	if (!_stepStack.empty())
 	{
-	  _oldStep -= _stepMultiplier;
+	  _base = _stepStack.top().base;
+	  _stepMultiplier /= _stepStack.top().size;
 
-	  _stepMultiplier /= _stepStack.top();
 	  _stepStack.pop();
 	}
 	break;
   default:
-	_step = _oldStep + (stepData->progressVal * _stepMultiplier);
+	_step = _base + (stepData->progressVal * _stepMultiplier);
 	break;
   }
 
   _label = stepData->item;
+
+  refresh();
 }
 
 //////////////////////////////////////////////////////////////////////////

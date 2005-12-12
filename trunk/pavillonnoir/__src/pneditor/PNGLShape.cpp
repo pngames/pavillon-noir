@@ -192,8 +192,9 @@ PNGLShape::buildParams()
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_DIALZ, _obj, "Roll", "Roll"));
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_MATERIALLIST, (void*)&_obj->getMaterials(), "Materials", "Materials"));
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_SCRIPTLIST, &_scripts, "Events & Scripts", "Events & Scripts"));
+
 	if (_obj->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ)
-	  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_ANIMLIST, &((PN3DSkeletonObject*)_obj)->getAnimations(), "Animations", "Animations"));
+	  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_ANIMLIST, (void*)&((PN3DSkeletonObject*)_obj)->getAnimations(), "Animations", "Animations"));
   }
 
   _panel->addObject(this);

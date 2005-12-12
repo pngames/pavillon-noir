@@ -61,7 +61,6 @@ private:
   /////////////////////////////////////////////////////////////////////////////*/
 public:
   static PNGUILoadingScreen*		getInstance();
-  //void								refreshScreen(float val, std::string update);
   void								startGUI(pnEventType type, PNObject* source, PNEventData* data);
   void								resetGUI(pnEventType type, PNObject* source, PNEventData* data);
   void								show();
