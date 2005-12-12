@@ -49,24 +49,6 @@ public:
   PNGameUpdateEventData(float deltatime, pnuint time): deltaTime(deltatime), time(time) {}
 };
 
-class			PNGameLoadStepsMapEventData : public PNEventData
-{
-public:
-  typedef enum
-  {
-	LSTATE_CMD_NONE,
-	LSTATE_CMD_PUSH,
-	LSTATE_CMD_POP
-  }				lstate;
-public:
-  PNGameLoadStepsMapEventData(){}
-  PNGameLoadStepsMapEventData(std::string value, float progress): item(value), progressVal(progress) {}
-
-  lstate		cmd;
-  std::string	item;
-  float			progressVal;
-};
-
 class			PNGameLoadMapEventData : public PNEventData
 {
 public:

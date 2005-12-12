@@ -421,14 +421,6 @@
 			Name="game"
 			>
 			<File
-				RelativePath="..\..\..\__src\pncommon\IPNLoadingProgess.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\IPNLoadingProgess.hpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pncommon\PNDie.cpp"
 				>
 			</File>
@@ -874,6 +866,26 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNConfPanel.hpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="progress"
+			>
+			<File
+				RelativePath="..\..\..\__src\pncommon\IPNLoadingProgess.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\IPNLoadingProgess.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNLoadingProgressEventData.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNLoadingProgressEventData.hpp"
 				>
 			</File>
 		</Filter>
