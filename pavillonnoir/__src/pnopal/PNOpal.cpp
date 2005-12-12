@@ -77,8 +77,9 @@ void  PNOpal::init()
   pnerror(PN_LOGLVL_DEBUG, "%s", "PNOpal (PNPhysicsInterface implementation) initialization");
 
   PNEventManager::getInstance()->addCallback(PN_EVENT_ML_STARTED, EventCallback(this, &PNOpal::_onMapLoad));
-  PNEventManager::getInstance()->addCallback(PN_EVENT_MU_ENDED, EventCallback(this, &PNOpal::_onMapUnload));
-  PNEventManager::getInstance()->addCallback(PN_EVENT_PU_START, EventCallback(this, &PNOpal::_onFrame));
+  //PNEventManager::getInstance()->addCallback(PN_EVENT_ML_ENDED, EventCallback(this, &PNOpal::_onMapLoaded));
+  //PNEventManager::getInstance()->addCallback(PN_EVENT_MU_ENDED, EventCallback(this, &PNOpal::_onMapUnload));
+  //PNEventManager::getInstance()->addCallback(PN_EVENT_PU_START, EventCallback(this, &PNOpal::_onFrame));
 
   _label = PNOPAL_LABEL;
   addParam(new PNConfigurableParameter(this, PN_PARAMTYPE_BOOLEAN, &_paused, "pause", "pause"));
@@ -94,9 +95,6 @@ void  PNOpal::init()
 void  PNOpal::setPause(bool state)
 {
   _paused = state;
-
-  if (_paused == false)
-	pn2opal();
 }
 
 /** Create the physical simulation (opal::Simulator)
@@ -157,7 +155,15 @@ void* PNOpal::getEventHandler()
 void
 PNOpal::_onMapLoad(pnEventType type, PNObject* source, PNEventData* data)
 {
-  this->createSimulation();
+  createSimulation();
+}
+
+/** invoked by PN_EVENT_ML_ENDED (level loading end)
+*/
+void
+PNOpal::_onMapLoaded(pnEventType type, PNObject* source, PNEventData* data)
+{
+  pn2opal();
 }
 
 /** invoked by PN_EVENT_MU_ENDED (end of level unload)
@@ -167,7 +173,7 @@ void PNOpal::_onMapUnload(pnEventType type, PNObject* source, PNEventData* data)
   _lastTicks = 0;
   _break = true;
 
-  this->destroySimulation();
+  destroySimulation();
 }
 
 /** Called at the start of each frame : calculate dt since the last frame,
@@ -176,8 +182,6 @@ void PNOpal::_onMapUnload(pnEventType type, PNObject* source, PNEventData* data)
 
 void PNOpal::_onFrame(pnEventType type, PNObject* source, PNEventData* data)
 {
-  static int i = 0;
-
   pnfloat elapsedTime = ((PNGameUpdateEventData*)data)->deltaTime / TIME_SCALE;
 
   if (_sim == NULL)
@@ -187,8 +191,6 @@ void PNOpal::_onFrame(pnEventType type, PNObject* source, PNEventData* data)
   if (_paused == true)
 	return;
   
-  i++;
-
   for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
   {
 	if (_break == true)
@@ -206,18 +208,13 @@ void PNOpal::_onFrame(pnEventType type, PNObject* source, PNEventData* data)
 		  //const PNPoint3f& offset = current_obj->getPhysicalObject()->getOffset();
 		  //((PNOpalObject*)current_obj->getPhysicalObject())->setMovementMotor(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z, orient);
 		  ((PNOpalObject*)current_obj->getPhysicalObject())->addForce(current_obj->getUpdateTranslation(), DEFAULT_FORCE_MAGNITUDE, DEFAULT_FORCE_DURATION);
-		  //PNVector3f axis(6.0f, 8.0f, 2.0f);
-		  //((PNOpalObject*)current_obj->getPhysicalObject())->addTorque(axis, DEFAULT_FORCE_MAGNITUDE, DEFAULT_FORCE_DURATION);
-		  //opal::Vec3r vec;
-		  //vec.set(current_obj, 20.0, 0.0);
-		  //((PNOpalObject*)current_obj->getPhysicalObject())->getOpalSolid()->setLocalLinearVel(vec);
 		}
 	  }
 	  PNLOCK_END(current_obj);
 	}
   }
 
-  // run simulation
+  //run simulation
   if ((_sim->simulate(elapsedTime)) != true)
 	return;
 
@@ -270,11 +267,7 @@ void	PNOpal::pn2opal()
 	  {
 		const PNPoint3f& coord = current_obj->getCoord();
 		const PNQuatf& orient = current_obj->getOrient();
-		const PNPoint3f& offset = current_obj->getPhysicalObject()->getOffset();
-		current_obj->getPhysicalObject()->setCoord((coord.x + offset.x) * mpp,
-												  (coord.y + offset.y) * mpp,
-												  (coord.z + offset.z) * mpp);
-		current_obj->getPhysicalObject()->setOrient(orient);
+		current_obj->getPhysicalObject()->setTransform(coord, orient, mpp);
 	  }
 	  PNLOCK_END(current_obj);
 	}
@@ -292,22 +285,22 @@ void	PNOpal::opal2pn()
 	  return;
 
 	pnfloat mpp = PNGameInterface::getInstance()->getGameMap()->getMpp();
-
-	PN3DObject*	current_obj = it->second;
-	if (current_obj->getPhysicalObject())
+	PN3DObject* object = it->second;
+	PNPhysicalObject* physicalObject = object->getPhysicalObject();
+	if (physicalObject != NULL)
 	{
-	  PNLOCK_BEGIN(current_obj);
+	  PNLOCK_BEGIN(object);
 	  {
-		const PNPoint3f& coord = current_obj->getPhysicalObject()->getCoord();
-		const PNPoint3f& offset = current_obj->getPhysicalObject()->getOffset();
-		const PNQuatf& orient = current_obj->getPhysicalObject()->getOrient();
-
-		current_obj->setCoord((coord.x - offset.x) / mpp,
-							  (coord.y - offset.y) / mpp,
-							  (coord.z - offset.z) / mpp);
-		current_obj->setOrient(orient);
+		const PNPoint3f& coord = physicalObject->getCoord();
+		const PNPoint3f& offset = physicalObject->getOffset();
+		const PNQuatf& orient = physicalObject->getOrient();
+		
+		object->setCoord((coord.x - offset.x) / mpp,
+						(coord.y - offset.y) / mpp,
+						(coord.z - offset.z) / mpp);
+		object->setOrient(orient);
 	  }
-	  PNLOCK_END(current_obj);
+	  PNLOCK_END(object);
 	}
   }
 }

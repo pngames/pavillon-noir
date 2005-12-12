@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE entities SYSTEM "../entities.dtd">
-<entities mpp="0.5">
-<entity id="id_0" label="Ground" mdref="JiveImportPlan.pno" envtype="static" objtype="object" class="PN3DObject" x="0" y="0" z="0" xx="0" yy="0" zz="0" ww="1">
+<entities mpp="1.0">
+<entity id="id_0" label="Ground" mdref="JiveImportPlan.pno" envtype="static" objtype="object" class="PN3DObject" x="0" y="-10" z="0" xx="0" yy="0" zz="0" ww="1">
 </entity>
-<entity id="id_1" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="100" y="100" z="100" xx="0" yy="0" zz="0" ww="1">
+<entity id="id_6" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="21" z="0" xx="0.707107" yy="0" zz="0" ww="0.707107">
 </entity>
+<!-- entity id="id_7" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="17.3555" y="416.593" z="-92.6264" xx="-0.431469" yy="-0.583097" zz="0.409449" ww="0.553338">
+</entity -->
+<!-- entity id="id_8" label="CollideSphere" mdref="JiveImportSphere.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0.0" y="0.0" z="0.0" xx="0" yy="0" zz="0" ww="1">
+</entity -->
 </entities>
