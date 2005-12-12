@@ -58,6 +58,7 @@ PNBoolParameter.cpp
 PNFloatParameter.cpp
 PNIntParameter.cpp
 PNUIntParameter.cpp
+IPNLoadingProgess.cpp
 """.split()
 obj.target = 'libpncommon' + env['suffix']
 obj.vnum = env['package_version']
