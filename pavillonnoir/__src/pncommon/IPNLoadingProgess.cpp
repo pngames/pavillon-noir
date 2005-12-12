@@ -54,7 +54,7 @@ IPNLoadingProgess::reinit()
 {
   _stepMultiplier = 1.0f;
 
-  while (_stepStack.empty())
+  while (!_stepStack.empty())
 	_stepStack.pop();
 
   _label = "";
