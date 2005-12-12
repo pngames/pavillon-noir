@@ -110,29 +110,17 @@ void	PNFXMaterialListParameter::buildList(void)
   for (PN3DObject::VectorMaterial::iterator it = v->begin(); it != v->end(); ++it)
   {
 	PN3DMaterial*	material = *it;
-	/*
-	boost::filesystem::path* f = v->at(i)->getFile();
-	if (fs::exists(*f))
-	{
-	std::string s = f->string();
-	if (s.size() > 29)
-	s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
-	_listBox->appendItem(s.c_str(), NULL, v->at(i));
-	}
-	else
-	{
-	pnerror(PN_LOGLVL_WARNING, "Material does not exist.");
-	}
-	*/
 
-	std::string s = *material->getFile();
+	std::cout << material->getFile() << std::endl;
+
+	std::string s = material->getFile()->c_str();
 	if (s.size() > 29)
 	  s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
 	_listBox->appendItem(s.c_str(), NULL, material);
 
   }
 
-  _listBox->setNumVisible(_listBox->getNumItems()<5 ? _listBox->getNumItems() : 5);
+  _listBox->setNumVisible(_listBox->getNumItems() < 5 ? _listBox->getNumItems() : 5);
 }
 
 /*
