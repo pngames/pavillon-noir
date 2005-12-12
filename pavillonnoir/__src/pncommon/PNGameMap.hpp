@@ -61,8 +61,6 @@ protected:
   PN3DObject*					_player;
   std::string			  		_wpFile;
 
-  PNGameLoadStepsMapEventData	_eaLoadStep;
-
   pnint							_unserializeSkybox(xmlNode* node);
   pnint							_unserializeEntity(xmlNode* node);
   pnint							_unserializeNode(xmlNode* node);

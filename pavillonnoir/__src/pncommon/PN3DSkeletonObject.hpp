@@ -89,16 +89,16 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
   /// Retrieve animation list of skeleton object
-  AnimationVector&			getAnimations();
+  const AnimationVector&	getAnimations() const;
 
   /// Retrieve skeleton of skeleton object
-  PN3DSkeleton*				getSkeleton();
+  const PN3DSkeleton*		getSkeleton() const;
 
   //////////////////////////////////////////////////////////////////////////
   
 public:
   pnuint					setEnable(pnuint animId, pnbool enabled);
-  pnbool					isEnable(pnuint animId);
+  pnbool					isEnable(pnuint animId) const;
 
   pnuint					stopAnimation();
   pnuint					stopAnimation(pnuint animId);
