@@ -60,6 +60,8 @@ private:
 public:
   static PNWPModel*			getInstance();
 
+  std::string*				getFile();
+
   void						render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk = NULL);
   void						render(PN3DSkeleton* sk = NULL);
   void						renderLink(const PNPoint3f&p1, const PNPoint3f&p2, const pnfloat* color,

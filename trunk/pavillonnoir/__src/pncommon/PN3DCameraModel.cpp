@@ -68,6 +68,12 @@ PN3DCameraModel::getInstance()
   return _instance;
 }
 
+std::string*
+PN3DCameraModel::getFile()
+{
+  return NULL;
+}
+
 void
 PN3DCameraModel::render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk)
 {

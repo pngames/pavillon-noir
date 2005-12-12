@@ -57,6 +57,8 @@ private:
 public:
   static PN3DCameraModel*	getInstance();
 
+  std::string*				getFile();
+
   void						render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk = NULL);
   void						render(PN3DSkeleton* sk = NULL);
 

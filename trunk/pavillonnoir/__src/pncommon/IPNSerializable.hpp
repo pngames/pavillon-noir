@@ -46,12 +46,6 @@ protected:
   //////////////////////////////////////////////////////////////////////////
 
 public:
-  /*/// Object associated file for serialize/unserialize system
-  virtual boost::filesystem::path*	getFile();*/
-
-  /*/// Modify object associated file for serialize/unserialize system
-  virtual void						setFile(const boost::filesystem::path& file);*/
-
   std::string*						getPath();
   void								setPath(const std::string& path);
 
