@@ -32,6 +32,7 @@
 #include "PNGameEventData.hpp"
 
 #include "IPNLoadingProgess.hpp"
+#include "PNLoadingProgressEventData.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -82,7 +83,7 @@ IPNLoadingProgess::stepLoad(pnEventType type, PNObject* source, PNEventData* dat
   //Sleep(1000);
 #endif
 
-  PNGameLoadStepsMapEventData* stepData = (PNGameLoadStepsMapEventData*)data;
+  PNLoadingProgressEventData* stepData = (PNLoadingProgressEventData*)data;
 
   std::cout << "label=" << stepData->item << "step=" << stepData->progressVal;
 
@@ -90,13 +91,13 @@ IPNLoadingProgess::stepLoad(pnEventType type, PNObject* source, PNEventData* dat
   
   switch (stepData->cmd)
   {
-  case PNGameLoadStepsMapEventData::LSTATE_CMD_PUSH:
+  case PNLoadingProgressEventData::LSTATE_CMD_PUSH:
 	_stepStack.push(StackData(_base, stepData->progressVal));
 
 	_base = _step;
 	_stepMultiplier *= _stepStack.top().size;
 	break;
-  case PNGameLoadStepsMapEventData::LSTATE_CMD_POP:
+  case PNLoadingProgressEventData::LSTATE_CMD_POP:
 	if (!_stepStack.empty())
 	{
 	  _base = _stepStack.top().base;
