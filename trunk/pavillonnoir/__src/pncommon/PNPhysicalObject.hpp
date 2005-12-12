@@ -41,15 +41,14 @@ namespace PN {
 class PNPoint3f;
 class PNQuatf;
 
-class					PNPhysicalObject: public PNObject, public IPNImportedObject
+class						PNPhysicalObject: public PNObject, public IPNImportedObject
 {
 public:
   virtual ~PNPhysicalObject(void) {}
 
   //////////////////////////////////////////////////////////////////////////
 
-  virtual void			update(pnuint elapsed_time)=0;
-  virtual void			render()=0;
+  virtual void				render()=0;
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -59,13 +58,13 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  virtual void			setStatic(bool state)=0;
-  virtual bool			isStatic()=0;
-  virtual void			setTransform(const PNPoint3f& coord, const PNQuatf& orient, pnfloat scale)=0;
+  virtual void				setStatic(bool state)=0;
+  virtual bool				isStatic()=0;
+  virtual void				setTransform(const PNPoint3f& coord, const PNQuatf& orient, pnfloat scale)=0;
 
   //////////////////////////////////////////////////////////////////////////
 
-  virtual void			addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration)=0;
+  virtual void				addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration)=0;
 };
 
 //////////////////////////////////////////////////////////////////////////
