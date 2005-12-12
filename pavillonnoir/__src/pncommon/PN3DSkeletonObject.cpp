@@ -218,18 +218,13 @@ PN3DSkeletonObject::update(pnuint deltaTime)
   {
 	IPNAnimated::update(deltaTime);
 
-	for (AnimationSet::iterator it = _animsToPlay.begin(); it != _animsToPlay.end();)
+	AnimationSet  setTmp = _animsToPlay;
+
+	for (AnimationSet::iterator it = setTmp.begin(); it != setTmp.end(); ++it)
 	{
 	  PN3DSkeletonAnimation*  anim = *it;
 	  if (!anim->update(deltaTime))
-	  {
-		AnimationSet::iterator itmp = it;
-		++it;
-
-		_animsToPlay.erase(itmp);
-	  }
-	  else
-		++it;
+		_animsToPlay.erase(anim);
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -266,14 +261,14 @@ PN3DSkeletonObject::render()
 	_physicalObject->render();
 }
 
-PN3DSkeletonObject::AnimationVector&
-PN3DSkeletonObject::getAnimations()
+const PN3DSkeletonObject::AnimationVector&
+PN3DSkeletonObject::getAnimations() const
 {
   return _anims;
 }
 
-PN3DSkeleton*
-PN3DSkeletonObject::getSkeleton()
+const PN3DSkeleton*
+PN3DSkeletonObject::getSkeleton() const
 {
   return _skeleton;
 }
@@ -299,7 +294,7 @@ PN3DSkeletonObject::setEnable(pnuint animId, pnbool enabled)
 }
 
 pnbool
-PN3DSkeletonObject::isEnable(pnuint animId)
+PN3DSkeletonObject::isEnable(pnuint animId) const
 {
   if (animId < 0 || (pnuint)animId >= _anims.size())
 	return false;
@@ -370,9 +365,6 @@ PN3DSkeletonObject::setAnimSpeed(pnint animId, pnfloat speed)
   if (animId < 0 || (pnuint)animId >= _anims.size())
 	return PNEC_ERROR;
 
-  /*assert(animId >= 0 && (pnuint)animId < _anims.size()
-	&& "This animation does not exist.");*/
-
   _anims[animId]->speed = speed;
 
   return PNEC_SUCCESS;
@@ -396,8 +388,6 @@ PN3DSkeletonObject::setAnimWeight(pnint animId, pnfloat weight)
 
   if (animId < 0 || (pnuint)animId >= _anims.size())
 	return PNEC_ERROR;
-  /*assert(animId >= 0 && (pnuint)animId < _anims.size()
-	&& "This animation does not exist.");*/
 
   _anims[animId]->weight = weight;
 

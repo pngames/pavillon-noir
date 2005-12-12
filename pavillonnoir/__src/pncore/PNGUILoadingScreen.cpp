@@ -45,14 +45,12 @@ PNGUILoadingScreen*	PNGUILoadingScreen::_instance = NULL;
 
 PNGUILoadingScreen::PNGUILoadingScreen()
 {
-  pnuint t = (pnuint)time(0);
-  srand(t);
+  srand((pnuint)time(0));
 
   CEGUI::Imageset* imgSet = CEGUI::ImagesetManager::getSingleton().getImageset("LoadingScreenImages");
   CEGUI::Imageset::ImageIterator imgSetIte = imgSet->getIterator();
 
-
-  while( !imgSetIte.isAtEnd() )
+  while (!imgSetIte.isAtEnd())
   {
 	std::string tmp = (*imgSetIte).getName().c_str();
 	if (tmp != "LoadingScreenImages/chargement")
@@ -189,7 +187,8 @@ PNGUILoadingScreen::startGUI(pnEventType type, PNObject* source, PNEventData* da
   resetScreen();
   setRandomBackground();
   show();
-  //PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STEP, 0, NULL);
+
+  PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_END, 0, NULL);
 }
 
 void
@@ -200,30 +199,16 @@ PNGUILoadingScreen::resetGUI(pnEventType type, PNObject* source, PNEventData* da
 
 //////////////////////////////////////////////////////////////////////////
 
-/*void
-PNGUILoadingScreen::refreshScreen(float val, std::string update)
-{
-  _progBar->setProgress(val);
-
-  CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(update.c_str());
-  item->setSelectionBrushImage((CEGUI::utf8*)"Vanilla-Images", (CEGUI::utf8*)"GenericBrush");
-  item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
-
-  _listBox->addItem(item);
-  _listBox->ensureItemIsVisible(item);
-  _listBox->setShowVertScrollbar(false);
-}*/
-
 void
 PNGUILoadingScreen::refresh()
 {
   _progBar->setProgress(_step);
 
-  CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(_label.c_str());
+  /*CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(_label.c_str());
   item->setSelectionBrushImage((CEGUI::utf8*)"Vanilla-Images", (CEGUI::utf8*)"GenericBrush");
   item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
 
-  _listBox->addItem(item);
+  _listBox->addItem(item);*/
   _listBox->setShowVertScrollbar(false);
 
   PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_END, 0, NULL);

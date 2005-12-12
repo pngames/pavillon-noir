@@ -57,10 +57,25 @@ using namespace std;
 
 //////////////////////////////////////////////////////////////////////////
 
-#define _SEND_LOAD_STEP(eventData, name, step)	\
-  eventData.item = name;	\
-  eventData.progressVal = step;	\
-PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_STEP, this, &eventData);	\
+#define _SEND_LOADING_STEP(d_event, d_cmd, d_eventData, d_name, d_step)	\
+  (d_eventData).cmd = (d_cmd);			\
+  (d_eventData).item = (d_name);		\
+  (d_eventData).progressVal = (d_step);	\
+  PNEventManager::getInstance()->sendEvent(d_event, this, &(d_eventData));	\
+
+#define SEND_LOAD_STEP(d_eventData, d_name, d_step)	\
+  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNGameLoadStepsMapEventData::LSTATE_CMD_NONE, d_eventData, d_name, d_step)
+#define SEND_LOAD_STEP_POP(d_eventData, d_name, d_step)	\
+  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNGameLoadStepsMapEventData::LSTATE_CMD_POP, d_eventData, d_name, d_step)
+#define SEND_LOAD_STEP_PUSH(d_eventData, d_name, d_step)	\
+  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNGameLoadStepsMapEventData::LSTATE_CMD_PUSH, d_eventData, d_name, d_step)
+
+#define SEND_UNLOAD_STEP(d_eventData, d_name, d_step)	\
+  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNGameLoadStepsMapEventData::LSTATE_CMD_NONE, d_eventData, d_name, d_step)
+#define SEND_UNLOAD_STEP_POP(d_eventData, d_name, d_step)	\
+  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNGameLoadStepsMapEventData::LSTATE_CMD_POP, d_eventData, d_name, d_step)
+#define SEND_UNLOAD_STEP_PUSH(d_eventData, d_name, d_step)	\
+  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNGameLoadStepsMapEventData::LSTATE_CMD_PUSH, d_eventData, d_name, d_step)
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -97,8 +112,15 @@ PNGameMap::_unserializeSkybox(xmlNode* root)
 pnint
 PNGameMap::_unserializeEntity(xmlNode* node)
 {
+  PNGameLoadStepsMapEventData	eaLoadStep;
+  pnfloat						nbSteps = 5.0f;
+
+  //////////////////////////////////////////////////////////////////////////
+
   std::string id = (char *)xmlGetProp(node, PNXML_ID_ATTR);
   std::string className = (char *)xmlGetProp(node, PNXML_CLASS_ATTR);
+
+  SEND_LOAD_STEP(eaLoadStep, className + " " + id, 0.0f)
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -111,6 +133,8 @@ PNGameMap::_unserializeEntity(xmlNode* node)
 
   //////////////////////////////////////////////////////////////////////////
 
+  SEND_LOAD_STEP(eaLoadStep, className + " " + id + ": constructing", 1.0f / nbSteps)
+
   addToMap(className, id);
 
   PN3DObject*  object = _entityList[id];
@@ -119,6 +143,8 @@ PNGameMap::_unserializeEntity(xmlNode* node)
 	return PNEC_ERROR;
 
   //////////////////////////////////////////////////////////////////////////
+
+  SEND_LOAD_STEP(eaLoadStep, className + " " + id + ": parsing", 2.0f / nbSteps)
 
   pnint		error = -1;
 
@@ -144,6 +170,8 @@ PNGameMap::_unserializeEntity(xmlNode* node)
 
   //////////////////////////////////////////////////////////////////////////
 
+  SEND_LOAD_STEP(eaLoadStep, className + " " + id + ": initialising", 3.0f / nbSteps)
+
   // set coordinates
   pnfloat x = (pnfloat)(atof((const char *)(xmlGetProp(node, PNXML_COORDX_ATTR))));
   pnfloat y = (pnfloat)(atof((const char *)(xmlGetProp(node, PNXML_COORDY_ATTR))));
@@ -162,6 +190,8 @@ PNGameMap::_unserializeEntity(xmlNode* node)
   // physical settings
   if (object->getPhysicalObject() != NULL)
   {
+	SEND_LOAD_STEP(eaLoadStep, className + " " + id + ": initialising physics", 4.0f / nbSteps)
+
 	// set the object status (static/dynamic)
 	bool isStatic = (!strcmp((const char*)xmlGetProp(node, PNXML_ENVTYPE_ATTR), "dynamic")) ? false : true;
 	object->getPhysicalObject()->setStatic(isStatic);
@@ -170,6 +200,8 @@ PNGameMap::_unserializeEntity(xmlNode* node)
 	// set the physical object orientation
 	object->getPhysicalObject()->setOrient(object->getOrient());
   }
+
+  SEND_LOAD_STEP(eaLoadStep, className + " " + id + ": ending", 5.0f / nbSteps)
 
   return PNEC_SUCCESS;
 }
@@ -190,7 +222,9 @@ PNGameMap::_unserializeNode(xmlNode* node)
 pnint
 PNGameMap::unserializeFromXML(xmlNode* root)
 {
-  _SEND_LOAD_STEP(_eaLoadStep, _path, 0.0f)
+  PNGameLoadStepsMapEventData	eaLoadStep;
+
+  SEND_LOAD_STEP(eaLoadStep, _path, 0.0f)
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -206,14 +240,17 @@ PNGameMap::unserializeFromXML(xmlNode* root)
   if (xmlStrEqual(root->name, PNXML_LISTENTITIES_MKP) && root->children != NULL)
   {
 	pnuint	nbNodes = XMLUtils::xmlGetNbChilds(root);
+	pnuint	stepSize = XMLUtils::xmlGetNbChilds(root);
 
 	pnfloat	nb = 0.0f;
 
 	for (xmlNodePtr current = root->children; current != NULL; current = current->next)
 	{
-	  _eaLoadStep.progressVal = nb++ / nbNodes;
-
+	  SEND_LOAD_STEP_PUSH(eaLoadStep, _path, 1.0 / nbNodes)
 	  error = _unserializeNode(current);
+	  SEND_LOAD_STEP_POP(eaLoadStep, _path, 1.0 / nbNodes)
+
+	  SEND_LOAD_STEP(eaLoadStep, _path, ++nb / nbNodes)
 
 	  if (error != PNEC_SUCCESS)
 		break ;
@@ -221,8 +258,6 @@ PNGameMap::unserializeFromXML(xmlNode* root)
   }
 
   //////////////////////////////////////////////////////////////////////////
-
-  _SEND_LOAD_STEP(_eaLoadStep, _path, 1.0f)
 
   return error;
 }
@@ -290,9 +325,7 @@ PNGameMap::serializeInXML(xmlNode* root, pnbool isroot/* = false*/)
   _serializeSkybox(root);
 
   for (ObjMap::iterator	it = _entityList.begin(); it != _entityList.end(); ++it)
-  {
 	_serializeEntity(root, it->second);
-  }
 
   return PNEC_SUCCESS;
 }
@@ -325,8 +358,19 @@ void PNGameMap::addToMap(const std::string& entityName,const std::string& id)
 
 void PNGameMap::clear()
 {
+  PNGameLoadStepsMapEventData	eaLoadStep;
+
+  SEND_UNLOAD_STEP(eaLoadStep, _path, 0.0f)
+
   _entityList.clear();
+
+  SEND_UNLOAD_STEP(eaLoadStep, _path, 0.5f)
+
+  SEND_UNLOAD_STEP_PUSH(eaLoadStep, _path, 0.5f)
   PNImportManager::getInstance()->clean(); //fixeMe
+  SEND_UNLOAD_STEP_POP(eaLoadStep, _path, 0.5f)
+
+  SEND_UNLOAD_STEP(eaLoadStep, _path, 1.0f)
 }
 
 const std::string&	PNGameMap::getWpFile()

@@ -41,7 +41,16 @@ namespace PN {
 class PNAPI		IPNLoadingProgess
 {
 public:
-  typedef std::stack<pnfloat>		StepStack;
+  class			StackData
+  {
+  public:
+	pnfloat		base;
+	pnfloat		size;
+
+	StackData(pnfloat b, pnfloat s) : base(b), size(s) {}
+  };
+
+  typedef std::stack<StackData>		StepStack;
   typedef std::list<pnEventType>	EventList;
 protected:
   EventList		_events;
@@ -51,7 +60,7 @@ protected:
 
   std::string	_label;
   pnfloat		_step;
-  pnfloat		_oldStep;
+  pnfloat		_base;
 public:
   IPNLoadingProgess();
   ~IPNLoadingProgess();
