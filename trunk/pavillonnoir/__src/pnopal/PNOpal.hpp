@@ -80,6 +80,7 @@ public:
 private:
   void						_onFrame(pnEventType type, PNObject* source, PNEventData* data);
   void						_onMapLoad(pnEventType type, PNObject* source, PNEventData* data);
+  void						_onMapLoaded(pnEventType type, PNObject* source, PNEventData* data);
   void						_onMapUnload(pnEventType type, PNObject* source, PNEventData* data);
 
   //////////////////////////////////////////////////////////////////////////

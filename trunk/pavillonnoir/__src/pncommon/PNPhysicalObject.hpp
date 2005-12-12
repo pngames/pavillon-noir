@@ -61,11 +61,7 @@ public:
 
   virtual void			setStatic(bool state)=0;
   virtual bool			isStatic()=0;
-  virtual void			setCoord(const PNPoint3f& coord)=0;
-  virtual void			setCoord(pnfloat x, pnfloat y, pnfloat z)=0;
-  virtual void			setOrient(const PNQuatf& orient)=0;
-  virtual void			setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w)=0;
-  virtual void			setTransform(const PNPoint3f& coord, const PNQuatf& orient)=0;
+  virtual void			setTransform(const PNPoint3f& coord, const PNQuatf& orient, pnfloat scale)=0;
 
   //////////////////////////////////////////////////////////////////////////
 

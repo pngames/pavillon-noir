@@ -90,21 +90,19 @@ private:
   opal::Solid*					_solid;
   opal::Simulator*				_sim;
   opal::Force					_force;
+
+  /* motor */
   opal::SpringMotor*		  	_movementMotor;
   opal::SpringMotorData			_movementMotorData;
+
+  /* sensor */
   opal::AccelerationSensor*		_accelSensor;
   opal::AccelerationSensorData	_accelSensorData;
-
-  /* deprecated trimeshes data (or not at all) */
-  pnpoint3f*					_vertBuffer;
-  pnpoint2ui*					_idBuffer;
-  PNRendererObject*				_robject;
 
   /* rendering previously deprecated */
   pnfloat						_aabb[6];
   pndouble						_radius;
   PNPoint3f						_offset;
-  opaltypes						_type;
 
 public:
   PNOpalObject(opal::Simulator* sim);
@@ -120,14 +118,10 @@ public:
   opal::AccelerationSensor*		getAccelSensor();
 
   void							render();
-  void							update(pnuint elapsed_time);
-  void							setStatic(bool state);
+  void							update();
   bool							isStatic();
-  void							setCoord(const PNPoint3f& coord);
-  void							setCoord(pnfloat x, pnfloat y, pnfloat z);
-  void							setOrient(const PNQuatf& orient);
-  void							setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w);
-  void							setTransform(const PNPoint3f& coord, const PNQuatf& orient);
+  void							setStatic(bool state);
+  void							setTransform(const PNPoint3f& coord, const PNQuatf& orient, pnfloat scale);
 
   //////////////////////////////////////////////////////////////////////////
   // PNOpalObject specific
@@ -140,17 +134,18 @@ public:
   //////////////////////////////////////////////////////////////////////////
   // PNOpalObject specific (debug)
 
-  pnbool						linearAccel;
-  pnbool						angularAccel;
   void							printAccel();
+
+protected:
+  void							_createMeshEntity();
+  pnint							_parseTypePnm(const boost::filesystem::path& file);
+  pnint							_parseTypeOpal(const boost::filesystem::path& file);
+  pnint							_parsePhysics(xmlNode* node);
 
   ///////////////////////////////////////////////////////////////////////////
   // IPNXMLSerializable
 
 protected:
-  pnint							_parseTypePnm(const boost::filesystem::path& file);
-  pnint							_parseTypeOpal(const boost::filesystem::path& file);
-  pnint							_parseModel(xmlNode* node);
   pnint							_unserializeNode(xmlNode* node);
 
 public:

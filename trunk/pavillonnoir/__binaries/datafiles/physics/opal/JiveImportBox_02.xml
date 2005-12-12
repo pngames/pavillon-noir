@@ -7,7 +7,7 @@
 		</Offset>
 		<Shape type="box">
 			<Dimensions x="40.0" y="40.0" z="40.0"/>
-			<Material hardness="0.8" friction="0.5" bounciness="0.8" density="1.0"/>
+			<Material hardness="0.9" friction="0.3" bounciness="0.1" density="10.0"/>
 		</Shape>
 	</Solid>
 </OpalBlueprint>
