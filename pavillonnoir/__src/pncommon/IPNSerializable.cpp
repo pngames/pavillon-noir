@@ -48,30 +48,6 @@ IPNSerializable::IPNSerializable()
 
 //////////////////////////////////////////////////////////////////////////
 
-/**
- * @brief Get 3DObject associated file for serialize/unserialize system.
- *
- * @return File
- */
-/*boost::filesystem::path*
-IPNSerializable::getFile()
-{
-  return _hasFile ? &_file : NULL;
-}*/
-
-/**
- * @brief	Modify 3DObject associated file for serialize/unserialize system
- *
- * @param	file		File
- * @return	void
- */
-/*void
-IPNSerializable::setFile(const boost::filesystem::path& file)
-{
-  _file = file;
-  _hasFile = true;
-}*/
-
 std::string*
 IPNSerializable::getPath()
 {
@@ -81,6 +57,8 @@ IPNSerializable::getPath()
 void
 IPNSerializable::setPath(const std::string& path)
 {
+  _hasFile = true;
+
   _path = path;
 }
 
@@ -104,8 +82,6 @@ IPNSerializable::unserializeFromFile(const boost::filesystem::path& file)
   if (fs::is_directory(file))
 	return PNEC_NOT_A_FILE;
 
-  //setFile(file);
-
   ifstream	i(_path.c_str(), ifstream::binary);
 
   return unserializeFromStream(i);
@@ -116,7 +92,7 @@ IPNSerializable::unserializeFromPath(const std::string& path)
 {
   setPath(path);
 
-  return unserializeFromFile(fs::path(path, fs::native));
+  return unserializeFromFile(fs::path(path, fs::no_check));
 }
 
 /**
@@ -161,8 +137,6 @@ IPNSerializable::serializeInFile(const boost::filesystem::path& file)
 {
   if (fs::exists(file) && fs::is_directory(file))
 	return PNEC_NOT_A_FILE;
-
-  //setFile(file);
 
   ofstream	o(_path.c_str(), ofstream::binary);
 

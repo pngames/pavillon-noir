@@ -73,6 +73,12 @@ PNWPModel::getInstance()
   return _instance;
 }
 
+std::string*
+PNWPModel::getFile()
+{
+  return NULL;
+}
+
 void
 PNWPModel::render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk)
 {

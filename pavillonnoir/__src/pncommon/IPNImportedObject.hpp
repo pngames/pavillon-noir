@@ -44,7 +44,7 @@ protected:
 
 public:
   /// Object associated file for serialize/unserialize system
-  virtual std::string*	getFile() {return NULL;}
+  virtual std::string*	getFile()=0;
 };
 
 //////////////////////////////////////////////////////////////////////////
