@@ -38,29 +38,23 @@ namespace PN
 
 typedef enum
 {
-  PN_PARAMTYPE_INT,				// based on pnint
-  PN_PARAMTYPE_UINT,			// based on pnuint
-  PN_PARAMTYPE_REAL,			// based on pnfloat
-  PN_PARAMTYPE_STRING,			// based on std::string
-  PN_PARAMTYPE_FILE,			// based on std::string
-  PN_PARAMTYPE_DIR,				// based on std::string
+  PN_PARAMTYPE_INT,			// based on pnint
+  PN_PARAMTYPE_UINT,		// based on pnuint
+  PN_PARAMTYPE_REAL,		// based on pnfloat
+  PN_PARAMTYPE_STRING,		// based on std::string
+  PN_PARAMTYPE_FILE,		// based on std::string
+  PN_PARAMTYPE_DIR,			// based on std::string
   PN_PARAMTYPE_LINK,
   PN_PARAMTYPE_DIALX,
   PN_PARAMTYPE_DIALY,
   PN_PARAMTYPE_DIALZ,
-  PN_PARAMTYPE_BOOLEAN,			// based on bool
+  PN_PARAMTYPE_BOOLEAN,		// based on bool
   PN_PARAMTYPE_EVENTBOX,
+  PN_PARAMTYPE_MATERIAL,	// based on PNMaterial*
 
-  PN_PARAMTYPE_INTLIST,			// based on std:list<int>
-  PN_PARAMTYPE_REALLIST,		// based on std:list<float>
-  PN_PARAMTYPE_STRINGLIST,		// based on std:list<std::string>
-  PN_PARAMTYPE_FILELIST,		// based on std:list<std::string>
-  PN_PARAMTYPE_DIRLIST,			// based on std:list<std::string>
-  PN_PARAMTYPE_LINKLIST,
-  PN_PARAMTYPE_MATERIAL,		// based on PNMaterial*
-  PN_PARAMTYPE_MATERIALLIST,	// based on PN3DObject:VectorMaterial
-  PN_PARAMTYPE_ANIMLIST,		// based on PN3DSkeletonObject:AnimationVector
-  PN_PARAMTYPE_SCRIPTLIST
+  PN_PARAMTYPE_SCRIPTLIST,
+
+  PN_NB_PARAMTYPE			// number of parameters
 } pnparamtype;
 
 //////////////////////////////////////////////////////////////////////////
@@ -71,7 +65,7 @@ class PNAPI				PNConfigurableParameter
 {
 protected:
   PNConfigurableObject*	_p;
-  pnparamtype			_type;
+  pnuint				_type;
 
   std::string			_name;
   void*					_elem;
@@ -86,7 +80,7 @@ public:
   PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, pnbool editable = true, void* max = NULL, void* min = NULL);
   virtual ~PNConfigurableParameter();
 
-  pnparamtype			getType();
+  pnuint				getType();
 
   void*					getElem();
   void*					getMax();

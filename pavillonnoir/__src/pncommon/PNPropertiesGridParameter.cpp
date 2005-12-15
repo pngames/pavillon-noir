@@ -1,8 +1,8 @@
 /*
- * PNFXDirParameter.hpp
+ * PNPropertiesGridParameter.cpp
  * 
  * Description :
- * PNFXDirParameter declaration
+ * PNPropertiesGridParameter definition
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,48 +27,55 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#ifndef _PNFXDIRPARAMETER_HPP_
-# define _PNFXDIRPARAMETER_HPP_
+#include "pndefs.h"
 
-#include <fx.h>
+#include "PNConfigurableObject.hpp"
+#include "PNConfigurableParameter.hpp"
 
-#include "pnproperties.h"
-
-/*
- *	This widget is composed of a text field containing the path to the wanted 
- *  directory and a "browse" button to graphically select that directory
- */
+#include "PNPropertiesGridParameter.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNEDAPI				PNFXDirParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+PNPropertiesGridParameter::PNPropertiesGridParameter(PNConfigurableParameter* param)
+: _param(param)
 {
-  FXDECLARE(PNFXDirParameter);
+  
+}
 
-  FXTextField*				_field;
-  FXButton*					_button;
+PNPropertiesGridParameter::~PNPropertiesGridParameter() 
+{
+  
+}
 
-protected:
-  PNFXDirParameter() : PNPropertiesGridParameter(NULL) {}
-  PNFXDirParameter(PNFXDirParameter&) : PNPropertiesGridParameter(NULL) {}
-public:
-  PNFXDirParameter(FXComposite* p, PNConfigurableParameter* param);
-  ~PNFXDirParameter();
+//////////////////////////////////////////////////////////////////////////
 
-  void  create();
-  void  update();
+PNConfigurableParameter*
+PNPropertiesGridParameter::getParam()
+{
+  return _param;
+}
 
-  enum 
-  {
-	ID_BROWSE = FXHorizontalFrame::ID_LAST
-  };
+std::string
+PNPropertiesGridParameter::getStringValue()
+{
+  return "";
+}
 
-public:
-  long	onBrowse(FXObject*,FXSelector,void* ptr);
-};
+pnbool
+PNPropertiesGridParameter::setStringValue(const std::string& val)
+{
+  return false;
+}
+
+void
+PNPropertiesGridParameter::sendParamModif()
+{
+  if (_param->getConfigurableObject())
+	_param->getConfigurableObject()->update(_param);
+
+  _param->getConfigurableObject()->setModified();
+}
 
 //////////////////////////////////////////////////////////////////////////
 };
-
-#endif /*_PNFXDIRPARAMETER_HPP_*/

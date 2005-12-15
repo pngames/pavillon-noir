@@ -66,7 +66,7 @@ PNConfigurableParameter::~PNConfigurableParameter()
 
 //////////////////////////////////////////////////////////////////////////
 
-pnparamtype
+pnuint
 PNConfigurableParameter::getType()
 {
   return _type;

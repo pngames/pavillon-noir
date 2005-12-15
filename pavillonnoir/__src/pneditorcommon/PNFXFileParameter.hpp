@@ -51,8 +51,8 @@ class PNEDAPI				PNFXFileParameter : public FXHorizontalFrame, public PNProperti
   FXButton*					_button;
 
 protected:
-  PNFXFileParameter() {}
-  PNFXFileParameter(PNFXFileParameter&) {}
+  PNFXFileParameter() : PNPropertiesGridParameter(NULL) {}
+  PNFXFileParameter(PNFXFileParameter&) : PNPropertiesGridParameter(NULL) {}
 public:
   PNFXFileParameter(FXComposite* p, PNConfigurableParameter* param);
   ~PNFXFileParameter();

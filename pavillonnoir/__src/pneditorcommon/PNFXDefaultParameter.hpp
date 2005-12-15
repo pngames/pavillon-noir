@@ -46,8 +46,8 @@ class PNEDAPI PNFXDefaultParameter : public FXLabel, public PNPropertiesGridPara
   FXDECLARE(PNFXDefaultParameter);
 
 protected:
-  PNFXDefaultParameter() {}
-  PNFXDefaultParameter(PNFXDefaultParameter&) {}
+  PNFXDefaultParameter() : PNPropertiesGridParameter(NULL)  {}
+  PNFXDefaultParameter(PNFXDefaultParameter&) : PNPropertiesGridParameter(NULL) {}
 public:
   PNFXDefaultParameter(FXComposite* p, PNConfigurableParameter* param);
   ~PNFXDefaultParameter();

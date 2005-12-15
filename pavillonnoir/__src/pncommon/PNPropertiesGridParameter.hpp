@@ -30,31 +30,30 @@
 #ifndef _PNPROPERTIESGRIDPARAMETER_HPP_
 # define _PNPROPERTIESGRIDPARAMETER_HPP_
 
+#include <string>
+
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class /*PNAPI*/						PNPropertiesGridParameter
+class PNConfigurableParameter;
+
+class PNAPI							PNPropertiesGridParameter
 {
 protected:
   PNConfigurableParameter*			_param;
 
-  PNPropertiesGridParameter() : _param(NULL) {}
-  PNPropertiesGridParameter(PNConfigurableParameter* param) : _param(param) {}
-  virtual ~PNPropertiesGridParameter() {};
+  PNPropertiesGridParameter(PNConfigurableParameter* param);
+  virtual ~PNPropertiesGridParameter();
 
 public:
   virtual void						update()=0;
 
-  virtual PNConfigurableParameter*	getParam() { return _param; };
+  PNConfigurableParameter*			getParam();
 
-  virtual std::string				getStringValue() { return ""; }
-  virtual pnbool					setStringValue(const std::string& val) { return false; }
+  virtual std::string				getStringValue();
+  virtual pnbool					setStringValue(const std::string& val);
 
-  void								sendParamModif()
-  {
-	if (_param->getConfigurableObject())
-	  _param->getConfigurableObject()->update(_param);
-  }
+  void								sendParamModif();
 };
 
 //////////////////////////////////////////////////////////////////////////
