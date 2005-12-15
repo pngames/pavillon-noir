@@ -91,6 +91,9 @@ PNPropertiesGrid::setObject(PNConfigurableObject* object)
 	case PN_PARAMTYPE_STRING:
 	  _params.push_back(new PNFXStringParameter(this, current_param));
 	  break;
+	case PN_PARAMTYPE_BOOLEAN:
+	  _params.push_back(new PNFXCheckButtonParameter(this, current_param));
+	  break;
 	case PN_PARAMTYPE_INT:
 	  _params.push_back(new PNFXIntParameter(this, current_param));
 	  break;
@@ -114,21 +117,20 @@ PNPropertiesGrid::setObject(PNConfigurableObject* object)
 	case PN_PARAMTYPE_EVENTBOX:
 	  _params.push_back(new PNFXEventBoxParameter(this, current_param));
 	  break;
-	case PN_PARAMTYPE_ANIMLIST:
-	  _params.push_back(new PNFXAnimListParameter(this, current_param));
+
+	case PN_LISTPARAMTYPE_ANIM:
+	  _params.push_back(new PNFXAnimListParameter(this, (PNConfigurableParameterList*)current_param));
 	  break;
-	case PN_PARAMTYPE_MATERIALLIST:
-	  _params.push_back(new PNFXMaterialListParameter(this, current_param));
+	case PN_LISTPARAMTYPE_MATERIAL:
+	  _params.push_back(new PNFXMaterialListParameter(this, (PNConfigurableParameterList*)current_param));
 	  break;
 	case PN_PARAMTYPE_SCRIPTLIST:
-	  _params.push_back(new PNFXScriptListParameter(this, current_param));
+	  _params.push_back(new PNFXScriptListParameter(this, (PNConfigurableParameterList*)current_param));
 	  break;
-	case PN_PARAMTYPE_STRINGLIST:
-	  _params.push_back(new PNFXStringListParameter(this, current_param));
+	case PN_LISTPARAMTYPE_STRING:
+	  _params.push_back(new PNFXStringListParameter(this, (PNConfigurableParameterList*)current_param));
 	  break;
-	case PN_PARAMTYPE_BOOLEAN:
-	  _params.push_back(new PNFXCheckButtonParameter(this, current_param));
-	  break;
+
 	default:
 	  _params.push_back(new PNFXDefaultParameter(this, current_param));
 	  break;

@@ -1,8 +1,8 @@
 /*
- * PNFXDirParameter.hpp
+ * PNConfigurableParameterList.cpp
  * 
  * Description :
- * PNFXDirParameter declaration
+ * PNConfigurableParameterList definition
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,48 +27,59 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#ifndef _PNFXDIRPARAMETER_HPP_
-# define _PNFXDIRPARAMETER_HPP_
+#include "pndefs.h"
 
-#include <fx.h>
+#include "PNConfigurableParameterList.hpp"
 
-#include "pnproperties.h"
+using namespace std;
 
-/*
- *	This widget is composed of a text field containing the path to the wanted 
- *  directory and a "browse" button to graphically select that directory
- */
-
-namespace PN {
-//////////////////////////////////////////////////////////////////////////
-
-class PNEDAPI				PNFXDirParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+namespace PN
 {
-  FXDECLARE(PNFXDirParameter);
+//////////////////////////////////////////////////////////////////////////
 
-  FXTextField*				_field;
-  FXButton*					_button;
+PNConfigurableParameterList::PNConfigurableParameterList(PNConfigurableObject* p, 
+												 pnlistparamtype type, 
+                                                 void* elem, 
+                                                 const string& label, 
+                                                 const string& altText,
+												 pnbool choosable/* = true*/,
+												 pnbool editable,
+												 void* max,
+												 void* min) :
+PNConfigurableParameter(p, (pnparamtype)type, elem, label, altText, editable, max, min),
+_choosable(choosable)
+{
+}
 
-protected:
-  PNFXDirParameter() : PNPropertiesGridParameter(NULL) {}
-  PNFXDirParameter(PNFXDirParameter&) : PNPropertiesGridParameter(NULL) {}
-public:
-  PNFXDirParameter(FXComposite* p, PNConfigurableParameter* param);
-  ~PNFXDirParameter();
+PNConfigurableParameterList::~PNConfigurableParameterList()
+{
+}
 
-  void  create();
-  void  update();
+//////////////////////////////////////////////////////////////////////////
 
-  enum 
-  {
-	ID_BROWSE = FXHorizontalFrame::ID_LAST
-  };
+pnbool
+PNConfigurableParameterList::isChoosable()
+{
+  return _editable;
+}
 
-public:
-  long	onBrowse(FXObject*,FXSelector,void* ptr);
-};
+void
+PNConfigurableParameterList::setChoosable(pnbool choosable)
+{
+  _choosable = choosable;
+}
+
+void
+PNConfigurableParameterList::setChoise(pnuint choise)
+{
+  _choise = choise;
+}
+
+pnuint
+PNConfigurableParameterList::getChoise()
+{
+  return _choise;
+}
 
 //////////////////////////////////////////////////////////////////////////
 };
-
-#endif /*_PNFXDIRPARAMETER_HPP_*/

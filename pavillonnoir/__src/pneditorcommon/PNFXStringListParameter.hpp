@@ -43,7 +43,8 @@
 
 #include "pneditorcommon.h"
 #include "pnproperties.h"
-#include "PNConfigurableParameter.hpp"
+
+#include "PNFXListParameter.hpp"
 
 /////////////////////////////////////
 
@@ -54,32 +55,24 @@ typedef std::list<std::string> stringList;
 
 //////////////////////////////////////////////////////////////////////////
 
-class PNEDAPI PNFXStringListParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+class PNEDAPI				PNFXStringListParameter : public PNFXListParameter
 {
   FXDECLARE(PNFXStringListParameter);
-
-  FXComposite*				_parent;
-
-  FXListBox*				_listBox;
-  FXButton*					_buttonDelete;
-  FXButton*					_buttonAdd;
 
   int						_labelsNumChars;
   int						_numVisibleItems;
 
 protected:
   PNFXStringListParameter() {}
-  PNFXStringListParameter(PNFXStringListParameter&) {}
+  PNFXStringListParameter(PNFXStringListParameter& src) : PNFXListParameter(src) {}
 public:
-  PNFXStringListParameter(FXComposite* p, PNConfigurableParameter* param);
+  PNFXStringListParameter(FXComposite* p, PNConfigurableParameterList* param);
   ~PNFXStringListParameter();
 
   void						create();
 
 public:
-  long						onCmdListBox(FXObject*,FXSelector,void*);
-  void						buildList(void);
-  void						update(void);
+  long						onCmdListBox(FXObject*, FXSelector, void*);
 
   int						getNumVisibleItems() { return _numVisibleItems; }
   int						getLabelsNumChars() { return _labelsNumChars; }
@@ -96,6 +89,12 @@ public:
 	ID_LISTBOX_SEL = FXComposite::ID_LAST,
 	ID_LAST
   };
+protected:
+  void						_buildList();
+  void						_update();
+
+  bool						_deleteObject(FXint index);
+  bool						_addNewObject(FXint index);
 };
 
 //////////////////////////////////////////////////////////////////////////

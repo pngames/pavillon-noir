@@ -48,8 +48,8 @@ class PNEDAPI	PNFXTextFieldParameter : public FXTextField, public PNPropertiesGr
   FXDECLARE_ABSTRACT(PNFXTextFieldParameter);
 
 protected:
-  PNFXTextFieldParameter() {}
-  PNFXTextFieldParameter(PNFXTextFieldParameter&) {}
+  PNFXTextFieldParameter() : PNPropertiesGridParameter(NULL) {}
+  PNFXTextFieldParameter(PNFXTextFieldParameter&) : PNPropertiesGridParameter(NULL) {}
 public:
   PNFXTextFieldParameter(FXComposite* p, PNConfigurableParameter* param, FXint ncols, FXObject* tgt = NULL, FXSelector sel = 0, FXuint opts = TEXTFIELD_NORMAL);
   ~PNFXTextFieldParameter();

@@ -1,8 +1,8 @@
 /*
- * PNFXAnimListParameter
+ * PNFXListParameter.hpp
  * 
  * Description :
- * PNFXAnimListParameter declaration
+ * PNFXListParameter declaration
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -28,68 +28,65 @@
  */
 
 
-/////////////////////////////////////
+#ifndef _PNFXLISTPARAMETER_HPP_
+# define _PNFXLISTPARAMETER_HPP_
 
-#ifndef _PNFXAnimListPARAMETER_HPP_
-# define _PNFXAnimListPARAMETER_HPP_
+#include <fx.h>
+#include <map>
 
-/////////////////////////////////////
+#include "pneditorcommon.h"
 
-#include "pnproperties.h"
-
-#include "PN3DAnimation.hpp"
-#include "PN3DSkeletonAnimation.hpp"
-
-#include "PNFXListParameter.hpp"
-
-/////////////////////////////////////
+#include "PNConfigurableParameter.hpp"
+#include "PNPropertiesGridParameter.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 class PNIAGraph;
 
-class PNEDAPI				PNFXAnimListParameter : public PNFXListParameter
+class PNEDAPI				PNFXListParameter : public FXHorizontalFrame, public PNPropertiesGridParameterList
 {
-  FXDECLARE(PNFXAnimListParameter);
-
-  FXButton*					_buttonEdit;
-
-  FXDialogBox*				_animDialBox;
-  
-  PN3DSkeletonAnimation*	_skanim;
+  FXDECLARE_ABSTRACT(PNFXListParameter);
 
 protected:
-  PNFXAnimListParameter() {}
-  PNFXAnimListParameter(PNFXAnimListParameter&) {}
+  FXListBox*				_listBox;
+  FXButton*					_buttonDelete;
+  FXButton*					_buttonAdd;
+
+  bool						_changed;
+  //FXImage ? FXBouton avec image (cliquable = defaut) ?  // temoin de modification
+
+protected:
+  PNFXListParameter() : PNPropertiesGridParameterList(NULL) {}
+  PNFXListParameter(PNFXListParameter&) : PNPropertiesGridParameterList(NULL) {}
 public:
-  PNFXAnimListParameter(FXComposite* p, PNConfigurableParameterList* param);
-  ~PNFXAnimListParameter();
+  PNFXListParameter(FXComposite* p, PNConfigurableParameterList* param);
+  ~PNFXListParameter();
 
   void						create();
 
+  void						update();
+
   enum 
   {
-	ID_EDIT = PNFXListParameter::ID_LAST,
-	ID_DIAL_OK,
-	ID_DIAL_CANCEL
+	ID_ADD = FXHorizontalFrame::ID_LAST,
+	ID_DELETE,
+
+	ID_LAST
   };
 
-  void						showAnim(PNConfigurableObject* anim);
-  PN3DAnimation*			openAnim(void);
 protected:
-  bool						_deleteObject(FXint index);
-  bool						_addNewObject(FXint index);
+  virtual bool				_deleteObject(FXint index)=0;
+  virtual bool				_addNewObject(FXint index)=0;
 
-  void						_buildList();
-  void						_update();
+  virtual void				_buildList(void)=0;
+  virtual void				_update()=0;
 public:
-  long						onEdit(FXObject* obj,FXSelector sel,void* ptr);
-  long						onDialOK(FXObject* obj,FXSelector sel,void* ptr);
-  long						onDialCancel(FXObject* obj,FXSelector sel,void* ptr);
+  long						onDelete(FXObject*,FXSelector,void* ptr);
+  long						onAdd(FXObject* obj,FXSelector sel,void* ptr);
 };
 
 //////////////////////////////////////////////////////////////////////////
 };
 
-#endif /*_PNFXAnimListPARAMETER_HPP_*/
+#endif /*!_PNFXLISTPARAMETER_HPP_*/

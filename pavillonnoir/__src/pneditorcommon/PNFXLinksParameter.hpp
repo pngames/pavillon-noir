@@ -64,8 +64,8 @@ class PNEDAPI				PNFXLinksParameter : public FXHorizontalFrame, public PNPropert
   FXRadioButton*			_doubleLnk;
 
 protected:
-  PNFXLinksParameter() {}
-  PNFXLinksParameter(PNFXLinksParameter&) {}
+  PNFXLinksParameter() : PNPropertiesGridParameter(NULL) {}
+  PNFXLinksParameter(PNFXLinksParameter&) : PNPropertiesGridParameter(NULL) {}
 public:
   PNFXLinksParameter(FXComposite* p, PNConfigurableParameter* param);
   ~PNFXLinksParameter();

@@ -31,8 +31,10 @@
 # define _PNPROPERTIES_H_
 
 #include "PNConfigurableParameter.hpp"
+#include "PNConfigurableParameterList.hpp"
 #include "PNConfigurableObject.hpp"
 #include "PNPropertiesGridParameter.hpp"
+#include "PNPropertiesGridParameterList.hpp"
 
 #include "PNStringParameter.hpp"
 #include "PNIntParameter.hpp"

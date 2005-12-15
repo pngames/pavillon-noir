@@ -41,31 +41,31 @@ namespace PN {
 
 class PNIAGraph;
 
-class PNEDAPI PNFXScriptListParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+class PNEDAPI				PNFXScriptListParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
 {
   FXDECLARE(PNFXScriptListParameter);
 
   FXComposite*				_parent;
 
-  FXListBox*					_eventList;
+  FXListBox*				_eventList;
   FXTextField*				_event;
   FXButton*					_buttonDeleteEvent;
   FXButton*					_buttonAddEvent;
   FXButton*					_buttonEditScripts;
 
   FXDialogBox*				_dbox;
-  FXListBox*					_scriptList;
+  FXListBox*				_scriptList;
   FXButton*					_buttonDeleteScript;
   FXButton*					_buttonAddScript;
 
 protected:
-  PNFXScriptListParameter() {}
-  PNFXScriptListParameter(PNFXScriptListParameter&) {}
+  PNFXScriptListParameter() : PNPropertiesGridParameter(NULL) {}
+  PNFXScriptListParameter(PNFXScriptListParameter&) : PNPropertiesGridParameter(NULL) {}
 public:
   PNFXScriptListParameter(FXComposite* p, PNConfigurableParameter* param);
   ~PNFXScriptListParameter();
 
-  void	create();
+  void						create();
 
   enum 
   {
@@ -80,16 +80,16 @@ public:
   };
 
 public:
-  long	onCmdListBox(FXObject*,FXSelector,void*);
-  long	onDeleteEvent(FXObject*,FXSelector,void* ptr);
-  long	onAddEvent(FXObject* obj,FXSelector sel,void* ptr);
-  long	onAddEventOK(FXObject* obj,FXSelector sel,void* ptr);
-  long	onAddEventCancel(FXObject* obj,FXSelector sel,void* ptr);
-  long	onDeleteScript(FXObject*,FXSelector,void* ptr);
-  long	onAddScript(FXObject* obj,FXSelector sel,void* ptr);
-  long	onEditScripts(FXObject* obj,FXSelector sel,void* ptr);
-  void	buildList(void);
-  void	update(void);
+  long						onCmdListBox(FXObject*,FXSelector,void*);
+  long						onDeleteEvent(FXObject*,FXSelector,void* ptr);
+  long						onAddEvent(FXObject* obj,FXSelector sel,void* ptr);
+  long						onAddEventOK(FXObject* obj,FXSelector sel,void* ptr);
+  long						onAddEventCancel(FXObject* obj,FXSelector sel,void* ptr);
+  long						onDeleteScript(FXObject*,FXSelector,void* ptr);
+  long						onAddScript(FXObject* obj,FXSelector sel,void* ptr);
+  long						onEditScripts(FXObject* obj,FXSelector sel,void* ptr);
+  void						buildList(void);
+  void						update(void);
 };
 
 //////////////////////////////////////////////////////////////////////////

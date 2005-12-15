@@ -48,8 +48,8 @@ class PNEDAPI PNFXEventBoxParameter : public FXTextField, public PNPropertiesGri
   pnbool					_capture;
   std::string*				_current_text;
 protected:
-  PNFXEventBoxParameter() {}
-  PNFXEventBoxParameter(PNFXEventBoxParameter&) {}
+  PNFXEventBoxParameter() : PNPropertiesGridParameter(NULL) {}
+  PNFXEventBoxParameter(PNFXEventBoxParameter&) : PNPropertiesGridParameter(NULL) {}
 public:
   PNFXEventBoxParameter(FXComposite* p, PNConfigurableParameter* param);
   ~PNFXEventBoxParameter();

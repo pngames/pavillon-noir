@@ -58,43 +58,42 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 // Map
-FXDEFMAP(PNFXStringListParameter) PNFXStringListParameterMap[]={
-  FXMAPFUNC(SEL_COMMAND,PNFXStringListParameter::ID_LISTBOX_SEL,PNFXStringListParameter::onCmdListBox)
+FXDEFMAP(PNFXStringListParameter) PNFXStringListParameterMap[]=
+{
+  FXMAPFUNC(SEL_COMMAND, PNFXStringListParameter::ID_LISTBOX_SEL, PNFXStringListParameter::onCmdListBox)
 };
 
 //////////////////////////////////////////////////////////////////////////
-FXIMPLEMENT(PNFXStringListParameter,FXHorizontalFrame,PNFXStringListParameterMap,ARRAYNUMBER(PNFXStringListParameterMap))
+FXIMPLEMENT(PNFXStringListParameter, PNFXListParameter, PNFXStringListParameterMap, ARRAYNUMBER(PNFXStringListParameterMap))
 
-PNFXStringListParameter::PNFXStringListParameter(FXComposite* p, PNConfigurableParameter* param)
-: FXHorizontalFrame(p),
-PNPropertiesGridParameter(param)
+PNFXStringListParameter::PNFXStringListParameter(FXComposite* p, PNConfigurableParameterList* param)
+: PNFXListParameter(p, param)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXStringListParameter::PNFXStringListParameter(FXComposite* p, PNConfigurableParameter* param)");
-  _parent = p;
-  _listBox =  new FXListBox(this, NULL, 0, LAYOUT_FILL_X | FRAME_SUNKEN | FRAME_THICK, 0,0,50,0);
+  
   _labelsNumChars = 29;
   _numVisibleItems = 5;
-  buildList();
+
+  _buildList();
 }
 
 PNFXStringListParameter::~PNFXStringListParameter()
 {
-  delete _listBox;
+  
 }
 //////////////////////////////////////////////////////////////////////////
 
 void
 PNFXStringListParameter::create()
 {
-  FXHorizontalFrame::create();
-  _listBox->create();
+  PNFXListParameter::create();
 }
 
 /*
 *	Builds StringList list for current parameter.
 */
 void
-PNFXStringListParameter::buildList(void)
+PNFXStringListParameter::_buildList(void)
 {
   std::list<std::string>* l = (std::list<std::string>*)_param->getElem();
 
@@ -117,14 +116,11 @@ PNFXStringListParameter::buildList(void)
 	}
 	_listBox->appendItem(s.c_str(), NULL, NULL);
   }
+
   if (_numVisibleItems != 0 && _numVisibleItems != 0) 
-  {
 	_listBox->setNumVisible(_listBox->getNumItems() < _numVisibleItems ? _listBox->getNumItems() : _numVisibleItems);
-  }
   else
-  {
 	_listBox->setNumVisible(_listBox->getNumItems());
-  }
 
   pnerror(PN_LOGLVL_DEBUG, "End of PNFXStringListParameter::buildList");
 }
@@ -139,12 +135,8 @@ PNFXStringListParameter::onCmdListBox(FXObject*,FXSelector,void*)
 *	Updates StringList
 */
 void
-PNFXStringListParameter::update(void)
+PNFXStringListParameter::_update(void)
 {
-  pnerror(PN_LOGLVL_DEBUG, "PNFXStringListParameter::update");
-  buildList();
-  _param->getConfigurableObject()->update(_param);
-  _listBox->sortItems();
 }
 
 void
@@ -176,12 +168,25 @@ pnbool
 PNFXStringListParameter::setStringValue(const std::string& val)
 {
   int idx = _listBox->findItem(val.c_str());
+
   if (idx != -1)
   {
 	_listBox->setCurrentItem(idx);
 	return true;
   }
 
+  return false;
+}
+
+bool
+PNFXStringListParameter::_deleteObject(FXint index)
+{
+  return false;
+}
+
+bool
+PNFXStringListParameter::_addNewObject(FXint index)
+{
   return false;
 }
 

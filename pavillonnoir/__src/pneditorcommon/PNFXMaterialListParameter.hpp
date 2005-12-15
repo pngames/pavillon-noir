@@ -28,31 +28,23 @@
  */
 
 
-#ifndef _PNFXMaterialListPARAMETER_HPP_
-# define _PNFXMaterialListPARAMETER_HPP_
+#ifndef _PNFXMATERIALLISTPARAMETER_HPP_
+# define _PNFXMATERIALLISTPARAMETER_HPP_
 
-#include <fx.h>
 #include <map>
 
 #include "pneditorcommon.h"
 
-#include "PNConfigurableParameter.hpp"
-#include "PNPropertiesGridParameter.hpp"
+#include "PNFXListParameter.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 class PNIAGraph;
 
-class PNEDAPI PNFXMaterialListParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+class PNEDAPI				PNFXMaterialListParameter : public PNFXListParameter
 {
   FXDECLARE(PNFXMaterialListParameter);
-
-  FXComposite*				_parent;
-
-  FXListBox*				_listBox;
-  FXButton*					_buttonDelete;
-  FXButton*					_buttonAdd;
 
   bool						_changed;
   //FXImage ? FXBouton avec image (cliquable = defaut) ?  // temoin de modification
@@ -61,26 +53,19 @@ protected:
   PNFXMaterialListParameter() {}
   PNFXMaterialListParameter(PNFXMaterialListParameter&) {}
 public:
-  PNFXMaterialListParameter(FXComposite* p, PNConfigurableParameter* param);
+  PNFXMaterialListParameter(FXComposite* p, PNConfigurableParameterList* param);
   ~PNFXMaterialListParameter();
 
-  void	create();
+  void						create();
+protected:
+  bool						_deleteObject(FXint index);
+  bool						_addNewObject(FXint index);
 
-  enum 
-  {
-	ID_ADD = FXHorizontalFrame::ID_LAST,
-	ID_DELETE
-  };
-
-public:
-  long	onDelete(FXObject*,FXSelector,void* ptr);
-  long	onAdd(FXObject* obj,FXSelector sel,void* ptr);
-  long	onReset(FXObject* obj,FXSelector sel,void* ptr);
-  void	buildList(void);
-  void	update(void);
+  void						_buildList();
+  void						_update();
 };
 
 //////////////////////////////////////////////////////////////////////////
 };
 
-#endif /*_PNFXMaterialListPARAMETER_HPP_*/
+#endif /*_PNFXMATERIALLISTPARAMETER_HPP_*/

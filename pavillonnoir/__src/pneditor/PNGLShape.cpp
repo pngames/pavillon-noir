@@ -190,11 +190,11 @@ PNGLShape::buildParams()
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_DIALX, _obj, "Pitch", "Pitch"));
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_DIALY, _obj, "Yaw", "Yaw"));
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_DIALZ, _obj, "Roll", "Roll"));
-	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_MATERIALLIST, (void*)&_obj->getMaterials(), "Materials", "Materials"));
+	_params.push_back(new PNConfigurableParameterList(this, PN_LISTPARAMTYPE_MATERIAL, (void*)&_obj->getMaterials(), "Materials", "Materials"));
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_SCRIPTLIST, &_scripts, "Events & Scripts", "Events & Scripts"));
 
 	if (_obj->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ)
-	  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_ANIMLIST, (void*)&((PN3DSkeletonObject*)_obj)->getAnimations(), "Animations", "Animations"));
+	  _params.push_back(new PNConfigurableParameterList(this, PN_LISTPARAMTYPE_ANIM, (void*)&((PN3DSkeletonObject*)_obj)->getAnimations(), "Animations", "Animations"));
   }
 
   _panel->addObject(this);
