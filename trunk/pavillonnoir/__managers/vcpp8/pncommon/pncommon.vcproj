@@ -561,6 +561,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncommon\PNConfigurableParameterList.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNConfigurableParameterList.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\PNFloatParameter.cpp"
 				>
 			</File>
@@ -581,7 +589,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncommon\PNPropertiesGridParameter.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\PNPropertiesGridParameter.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNPropertiesGridParameterList.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNPropertiesGridParameterList.hpp"
 				>
 			</File>
 			<File

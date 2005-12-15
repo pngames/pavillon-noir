@@ -58,50 +58,41 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 // Map
-FXDEFMAP(PNFXMaterialListParameter) PNFXMaterialListParameterMap[]={
-  FXMAPFUNC(SEL_COMMAND,PNFXMaterialListParameter::ID_DELETE,PNFXMaterialListParameter::onDelete),
-  FXMAPFUNC(SEL_COMMAND,PNFXMaterialListParameter::ID_ADD,PNFXMaterialListParameter::onAdd)
+FXDEFMAP(PNFXMaterialListParameter) PNFXMaterialListParameterMap[]=
+{
+  FXMAPFUNC(SEL_COMMAND, PNFXMaterialListParameter::ID_DELETE, PNFXMaterialListParameter::onDelete),
+  FXMAPFUNC(SEL_COMMAND, PNFXMaterialListParameter::ID_ADD, PNFXMaterialListParameter::onAdd)
 };
 
 //////////////////////////////////////////////////////////////////////////
-FXIMPLEMENT(PNFXMaterialListParameter,FXHorizontalFrame,PNFXMaterialListParameterMap,ARRAYNUMBER(PNFXMaterialListParameterMap))
+FXIMPLEMENT(PNFXMaterialListParameter, PNFXListParameter, PNFXMaterialListParameterMap, ARRAYNUMBER(PNFXMaterialListParameterMap))
 
-PNFXMaterialListParameter::PNFXMaterialListParameter(FXComposite* p, PNConfigurableParameter* param)
-: FXHorizontalFrame(p),
-PNPropertiesGridParameter(param)
+PNFXMaterialListParameter::PNFXMaterialListParameter(FXComposite* p, PNConfigurableParameterList* param)
+: PNFXListParameter(p, param)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXMaterialListParameter::PNFXMaterialListParameter(FXComposite* p, PNConfigurableParameter* param)");
 
-  _parent = p;
   _changed = FALSE;
-  _listBox = new FXListBox(this, NULL, 0, LAYOUT_FILL_X | FRAME_SUNKEN | FRAME_THICK, 0,0,50,0);
-  _buttonAdd = new FXButton(this, "Add", NULL, this, ID_ADD,FRAME_RAISED|FRAME_THICK);
-  _buttonDelete = new FXButton(this, "Delete", NULL, this, ID_DELETE,FRAME_RAISED|FRAME_THICK);
 
   update();
 }
 
 PNFXMaterialListParameter::~PNFXMaterialListParameter()
 {
-  delete _buttonAdd;
-  delete _buttonDelete;
-  delete _listBox;
+  
 }
 //////////////////////////////////////////////////////////////////////////
 
 void	PNFXMaterialListParameter::create()
 {
-  FXHorizontalFrame::create();
-  _listBox->create();
-  _buttonDelete->create();
-  _buttonAdd->create();
-  return;
+  PNFXListParameter::create();
 }
 
 /*
 *	Builds MaterialList list for current parameter.
 */
-void	PNFXMaterialListParameter::buildList(void)
+void	
+PNFXMaterialListParameter::_buildList(void)
 {
   PN3DObject::VectorMaterial* v = (PN3DObject::VectorMaterial*)_param->getElem();
 
@@ -111,39 +102,24 @@ void	PNFXMaterialListParameter::buildList(void)
   {
 	PN3DMaterial*	material = *it;
 
-	std::cout << material->getFile() << std::endl;
-
-	std::string s = material->getFile()->c_str();
-	if (s.size() > 29)
-	  s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
-	_listBox->appendItem(s.c_str(), NULL, material);
-
+	_listBox->appendItem(FXFile::name(material->getFile()->c_str()), NULL, material);
   }
 
   _listBox->setNumVisible(_listBox->getNumItems() < 5 ? _listBox->getNumItems() : 5);
 }
 
-/*
-*	Deletes selected link.
-*/
-long	PNFXMaterialListParameter::onDelete(FXObject* obj,FXSelector sel,void* ptr)
+bool
+PNFXMaterialListParameter::_deleteObject(FXint index)
 {
-  pnerror(PN_LOGLVL_DEBUG, "PNFXMaterialListParameter::onDelete");
-  if (_listBox->getNumItems() != 0)
-  {
-	PN3DObject::VectorMaterial* v = (PN3DObject::VectorMaterial*)_param->getElem(); 
+  PN3DObject::VectorMaterial* v = (PN3DObject::VectorMaterial*)_param->getElem(); 
 
-	v->erase(v->begin() + _listBox->getCurrentItem());
+  v->erase(v->begin() + index);
 
-	PNConfigurableObject* co = _param->getConfigurableObject();
-	co->setModified();
-	update();
-  }
-
-  return 1;
+  return true;
 }
 
-long	PNFXMaterialListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
+bool
+PNFXMaterialListParameter::_addNewObject(FXint index)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXMaterialListParameter::onAdd");
   FXFileDialog fd(this, "Choose material file");
@@ -188,26 +164,16 @@ long	PNFXMaterialListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
 	  _param->getConfigurableObject()->update(_param);
 	}
   }
+
   return 1;
 }
-
-long	PNFXMaterialListParameter::onReset(FXObject* obj,FXSelector sel,void* ptr)
-{
-  return 1;
-}
-
 
 /*
 *	Updates MaterialListlist
 */
-void	PNFXMaterialListParameter::update(void)
+void
+PNFXMaterialListParameter::_update(void)
 {
-  pnerror(PN_LOGLVL_DEBUG, "PNFXMaterialListParameter::update");
-  PNConfigurableObject* co = _param->getConfigurableObject();
-  buildList();
-  co->update(_param);
-  _listBox->sortItems();
-  return;
 }
 
 //////////////////////////////////////////////////////////////////////////

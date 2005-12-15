@@ -48,8 +48,8 @@ class PNEDAPI	PNFXCheckButtonParameter : public FXCheckButton, public PNProperti
   /*int			_val;
   FXDataTarget	_valTarget;*/
 protected:
-  PNFXCheckButtonParameter() {}
-  PNFXCheckButtonParameter(PNFXCheckButtonParameter&) {}
+  PNFXCheckButtonParameter() : PNPropertiesGridParameter(NULL) {}
+  PNFXCheckButtonParameter(PNFXCheckButtonParameter&) : PNPropertiesGridParameter(NULL) {}
 public:
   PNFXCheckButtonParameter(FXComposite* p, PNConfigurableParameter* param);
   ~PNFXCheckButtonParameter();

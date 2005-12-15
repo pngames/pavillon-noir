@@ -58,53 +58,43 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 // Map
-FXDEFMAP(PNFXAnimListParameter) PNFXAnimListParameterMap[]={
-  FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_DELETE,PNFXAnimListParameter::onDelete),
-  FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_ADD,PNFXAnimListParameter::onAdd),
-  FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_EDIT,PNFXAnimListParameter::onEdit),
-  FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_DIAL_OK,PNFXAnimListParameter::onDialOK),
-  FXMAPFUNC(SEL_COMMAND,PNFXAnimListParameter::ID_DIAL_CANCEL,PNFXAnimListParameter::onDialCancel)
+FXDEFMAP(PNFXAnimListParameter) PNFXAnimListParameterMap[]=
+{
+  FXMAPFUNC(SEL_COMMAND, PNFXAnimListParameter::ID_EDIT, PNFXAnimListParameter::onEdit),
+  FXMAPFUNC(SEL_COMMAND, PNFXAnimListParameter::ID_DIAL_OK, PNFXAnimListParameter::onDialOK),
+  FXMAPFUNC(SEL_COMMAND, PNFXAnimListParameter::ID_DIAL_CANCEL, PNFXAnimListParameter::onDialCancel)
 };
 
 //////////////////////////////////////////////////////////////////////////
-FXIMPLEMENT(PNFXAnimListParameter,FXHorizontalFrame,PNFXAnimListParameterMap,ARRAYNUMBER(PNFXAnimListParameterMap))
+FXIMPLEMENT(PNFXAnimListParameter, PNFXListParameter, PNFXAnimListParameterMap, ARRAYNUMBER(PNFXAnimListParameterMap))
 
-PNFXAnimListParameter::PNFXAnimListParameter(FXComposite* p, PNConfigurableParameter* param)
-: FXHorizontalFrame(p),
-PNPropertiesGridParameter(param)
+PNFXAnimListParameter::PNFXAnimListParameter(FXComposite* p, PNConfigurableParameterList* param) :
+PNFXListParameter(p, param)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::PNFXAnimListParameter(FXComposite* p, PNConfigurableParameter* param)");
-  _parent = p;
-  _listBox =  new FXListBox(this, NULL, 0, LAYOUT_FILL_X | FRAME_SUNKEN | FRAME_THICK, 0,0,50,0);
-  _buttonAdd = new FXButton(this, "Add", NULL, this, ID_ADD,FRAME_RAISED|FRAME_THICK);
-  _buttonEdit = new FXButton(this, "Edit", NULL, this, ID_EDIT,FRAME_RAISED|FRAME_THICK);
-  _buttonDelete = new FXButton(this, "Delete", NULL, this, ID_DELETE,FRAME_RAISED|FRAME_THICK);
 
-  buildList();
+  _buttonEdit = new FXButton(this, "Edit", NULL, this, ID_EDIT,FRAME_RAISED|FRAME_THICK);
+
+  _buildList();
 }
 
 PNFXAnimListParameter::~PNFXAnimListParameter()
 {
-  delete _buttonAdd;
-  delete _buttonDelete;
-  delete _listBox;
 }
+
 //////////////////////////////////////////////////////////////////////////
 
 void
 PNFXAnimListParameter::create()
 {
-  FXHorizontalFrame::create();
-  _buttonDelete->create();
-  _buttonAdd->create();
-  _listBox->create();
+  PNFXListParameter::create();
 }
 
 /*
 *	Builds AnimList list for current parameter.
 */
 void
-PNFXAnimListParameter::buildList(void)
+PNFXAnimListParameter::_buildList(void)
 {
   PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem();
 
@@ -115,54 +105,38 @@ PNFXAnimListParameter::buildList(void)
   {
 	PN3DSkeletonAnimation*	skanim = *it;
 
-	std::string s = *skanim->anim->getFile();
-
-	if (s.size() > 29)
-	  s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
-
-	_listBox->appendItem(s.c_str(), NULL, skanim->anim);
+	_listBox->appendItem(FXFile::name(skanim->anim->getFile()->c_str()), NULL,  skanim->anim);
   }
 
   _listBox->setNumVisible(_listBox->getNumItems()< 5 ? _listBox->getNumItems() : 5);
   pnerror(PN_LOGLVL_DEBUG, "End of PNFXAnimListParameter::buildList");
 }
 
-/*
-*	Deletes selected link.
-*/
-long
-PNFXAnimListParameter::onDelete(FXObject* obj,FXSelector sel,void* ptr)
+bool
+PNFXAnimListParameter::_deleteObject(FXint index)
 {
-  pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::onDelete");
-  if (_listBox->getNumItems() != 0)
-  {
-	PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem(); 
+  PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem(); 
 
-	v->erase(v->begin() + _listBox->getCurrentItem());
-	PNConfigurableObject* co = _param->getConfigurableObject();
-	co->setModified();
-	update();
-  }
+  v->erase(v->begin() + index);
 
-  return 1;
+  return true;
 }
 
-
-long
-PNFXAnimListParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
+bool
+PNFXAnimListParameter::_addNewObject(FXint index)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::onAdd");
 
   PN3DAnimation* anim = this->openAnim();
   if (anim != NULL)
   {  
-    PN3DSkeletonAnimation* skanim = new PN3DSkeletonAnimation(anim, NULL);
-	this->_skanim = skanim;
-    this->showAnim(skanim);
+	PN3DSkeletonAnimation* skanim = new PN3DSkeletonAnimation(anim, NULL);
+	_skanim = skanim;
+	showAnim(skanim);
   }
-  return 1;
-}
 
+  return false;
+}
 
 PN3DAnimation*  
 PNFXAnimListParameter::openAnim(void)
@@ -220,15 +194,15 @@ PNFXAnimListParameter::onEdit(FXObject* obj,FXSelector sel,void* ptr)
 
   PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem();
   int i = 0;
-  for (PN3DSkeletonObject::AnimationVector::iterator it = v->begin(); it != v->end(); ++it)
+  for (PN3DSkeletonObject::AnimationVector::iterator it = v->begin(); it != v->end(); ++it, ++i)
   {
 	if (i == _listBox->getCurrentItem())
 	{
 	  showAnim(*it);
 	  break;
 	}
-	i++;
   }
+
   return 1;
 }
 
@@ -265,9 +239,11 @@ PNFXAnimListParameter::onDialOK(FXObject* obj,FXSelector sel,void* ptr)
 	v->push_back(_skanim);
 	_skanim = NULL;
   }
+
   _animDialBox->getApp()->stopModal(_animDialBox, TRUE);
   _animDialBox->close();
-  this->update();
+  update();
+
   return 1;
 }
 
@@ -277,6 +253,7 @@ PNFXAnimListParameter::onDialCancel(FXObject* obj,FXSelector sel,void* ptr)
 {
   _animDialBox->getApp()->stopModal(_animDialBox, TRUE);
   _animDialBox->close();
+
   return 1;
 }
 
@@ -285,13 +262,8 @@ PNFXAnimListParameter::onDialCancel(FXObject* obj,FXSelector sel,void* ptr)
 *	Updates AnimList
 */
 void
-PNFXAnimListParameter::update(void)
+PNFXAnimListParameter::_update(void)
 {
-  pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::update");
-  PNConfigurableObject* co = _param->getConfigurableObject();
-  buildList();
-  co->update(_param);
-  _listBox->sortItems();
 }
 
 //////////////////////////////////////////////////////////////////////////

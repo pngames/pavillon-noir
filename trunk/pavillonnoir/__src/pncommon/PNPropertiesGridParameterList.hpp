@@ -1,8 +1,8 @@
 /*
- * PNFXDirParameter.hpp
+ * PNPropertiesGridParameterList.hpp
  * 
  * Description :
- * PNFXDirParameter declaration
+ * PNPropertiesGridParameterList declaration
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,48 +27,27 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#ifndef _PNFXDIRPARAMETER_HPP_
-# define _PNFXDIRPARAMETER_HPP_
+#ifndef _PNPROPERTIESGRIDPARAMETERLIST_HPP_
+# define _PNPROPERTIESGRIDPARAMETERLIST_HPP_
 
-#include <fx.h>
-
-#include "pnproperties.h"
-
-/*
- *	This widget is composed of a text field containing the path to the wanted 
- *  directory and a "browse" button to graphically select that directory
- */
+#include "PNPropertiesGridParameter.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNEDAPI				PNFXDirParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+class PNConfigurableParameterList;
+
+class PNAPI								PNPropertiesGridParameterList : public PNPropertiesGridParameter
 {
-  FXDECLARE(PNFXDirParameter);
-
-  FXTextField*				_field;
-  FXButton*					_button;
-
 protected:
-  PNFXDirParameter() : PNPropertiesGridParameter(NULL) {}
-  PNFXDirParameter(PNFXDirParameter&) : PNPropertiesGridParameter(NULL) {}
-public:
-  PNFXDirParameter(FXComposite* p, PNConfigurableParameter* param);
-  ~PNFXDirParameter();
-
-  void  create();
-  void  update();
-
-  enum 
-  {
-	ID_BROWSE = FXHorizontalFrame::ID_LAST
-  };
+  PNPropertiesGridParameterList(PNConfigurableParameterList* param);
+  virtual ~PNPropertiesGridParameterList();
 
 public:
-  long	onBrowse(FXObject*,FXSelector,void* ptr);
+  PNConfigurableParameterList*			getParam();
 };
 
 //////////////////////////////////////////////////////////////////////////
 };
 
-#endif /*_PNFXDIRPARAMETER_HPP_*/
+#endif /* _PNPROPERTIESGRIDPARAMETERLIST_HPP_ */

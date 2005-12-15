@@ -235,6 +235,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXListParameter.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\__src\pneditorcommon\PNFXMaterialListParameter.cpp"
 					>
 				</File>
@@ -318,6 +322,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\__src\pneditorcommon\PNFXLinksParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXListParameter.hpp"
 					>
 				</File>
 				<File

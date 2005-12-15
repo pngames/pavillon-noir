@@ -33,6 +33,10 @@
 
 #include <SDL/SDL.h>
 
+#ifdef WIN32
+#include <Windows.h>
+#endif
+
 #include "pndefs.h"
 #include "pnevent.h"
 #include "PNGameEventData.hpp"
@@ -102,6 +106,32 @@ _pEnableTransparency(true, "Activer la transparence", "Activer la transparence",
 
   _converter[PN_T2F_N3F_V3F] = GL_T2F_N3F_V3F;
   _converter[PN_T2F_C4F_N3F_V3F] = GL_T2F_C4F_N3F_V3F;
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  SDL_Init(SDL_INIT_VIDEO);
+
+  SDL_Rect **modes = SDL_ListModes(NULL, SDL_FULLSCREEN|SDL_HWSURFACE);
+
+  /* Check is there are any modes available */
+  if (modes == NULL)
+  {
+	printf("No modes available!\n");
+	exit(-1);
+  }
+
+  /* Check if or resolution is restricted */
+  if (modes == (SDL_Rect **)-1)
+  {
+	printf("All resolutions available.\n");
+  }
+  else
+  {
+	/* Print valid modes */
+	printf("Available Modes\n");
+	for (int i = 0; modes[i]; ++i)
+	  printf("  %d x %d\n", modes[i]->w, modes[i]->h);
+  }
 
   //////////////////////////////////////////////////////////////////////////
   // configurabe implementation

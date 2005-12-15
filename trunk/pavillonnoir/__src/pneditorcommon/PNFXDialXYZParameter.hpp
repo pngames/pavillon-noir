@@ -46,8 +46,8 @@ class PNEDAPI PNFXDialXYZParameter : public FXHorizontalFrame, public PNProperti
   pnint						_oldValue;
 
 protected:
-  PNFXDialXYZParameter() {}
-  PNFXDialXYZParameter(PNFXDialXYZParameter&) {}
+  PNFXDialXYZParameter() : PNPropertiesGridParameter(NULL) {}
+  PNFXDialXYZParameter(PNFXDialXYZParameter&) : PNPropertiesGridParameter(NULL) {}
 public:
   PNFXDialXYZParameter(FXComposite* p, PNConfigurableParameter* param);
   ~PNFXDialXYZParameter();
