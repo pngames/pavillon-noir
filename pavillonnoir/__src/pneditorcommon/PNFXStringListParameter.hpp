@@ -71,9 +71,6 @@ public:
 
   void						create();
 
-public:
-  long						onCmdListBox(FXObject*, FXSelector, void*);
-
   int						getNumVisibleItems() { return _numVisibleItems; }
   int						getLabelsNumChars() { return _labelsNumChars; }
 
@@ -83,12 +80,6 @@ public:
   std::string				getStringValue();
   pnbool					setStringValue(const std::string& val);
 
-public:
-  enum {
-	// _objectsListBox selection changed
-	ID_LISTBOX_SEL = FXComposite::ID_LAST,
-	ID_LAST
-  };
 protected:
   void						_buildList();
   void						_update();

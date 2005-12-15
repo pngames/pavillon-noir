@@ -43,7 +43,8 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 // Map
-FXDEFMAP(PNFXEventBoxParameter) PNFXEventBoxParameterMap[]={
+FXDEFMAP(PNFXEventBoxParameter) PNFXEventBoxParameterMap[]=
+{
   FXMAPFUNC(SEL_KEYRELEASE,0,PNFXEventBoxParameter::onKeyRelease),
   FXMAPFUNC(SEL_KEYPRESS,0,PNFXEventBoxParameter::onKeyPress),
   FXMAPFUNC(SEL_LEFTBUTTONPRESS,0,PNFXEventBoxParameter::onLeftBtnPress)
@@ -61,7 +62,6 @@ PNPropertiesGridParameter(param)
   _current_text = (string*)_param->getElem();
   setText(_current_text->c_str());
   this->setEditable(false);
-  update();
 }
 
 
@@ -72,6 +72,8 @@ PNFXEventBoxParameter::~PNFXEventBoxParameter()
 void	PNFXEventBoxParameter::create()
 {
   FXTextField::create();
+
+  update();
 }
 
 void PNFXEventBoxParameter::update()
@@ -79,7 +81,6 @@ void PNFXEventBoxParameter::update()
   pnerror(PN_LOGLVL_DEBUG, "PNFXEventBoxParameter::onupdate()");
   string* str = (string*)_param->getElem();
   setText(str->c_str());
-  return;
 }
 
 /*! \brief Called on left button press event
@@ -92,7 +93,8 @@ long	PNFXEventBoxParameter::onLeftBtnPress(FXObject* obj,FXSelector sel, void* p
   pnerror(PN_LOGLVL_DEBUG, "PNFXEventBoxParameter::onLeftBtnPress");
   setText("???");
   setTextColor(0x0000FF);
-  _capture=true;
+  _capture = true;
+
   return 1;
 }
 

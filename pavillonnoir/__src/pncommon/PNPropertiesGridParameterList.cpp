@@ -44,10 +44,27 @@ PNPropertiesGridParameterList::~PNPropertiesGridParameterList()
 {  
 }
 
+//////////////////////////////////////////////////////////////////////////
+
 PNConfigurableParameterList*	
 PNPropertiesGridParameterList::getParam()
 {
   return (PNConfigurableParameterList*)_param;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void
+PNPropertiesGridParameterList::setChoise(pnuint choise)
+{
+  if (getParam()->isChoosable() && getChoise() != choise)
+	getParam()->setChoise(choise);
+}
+
+pnuint
+PNPropertiesGridParameterList::getChoise()
+{
+  return getParam()->getChoise();
 }
 
 //////////////////////////////////////////////////////////////////////////

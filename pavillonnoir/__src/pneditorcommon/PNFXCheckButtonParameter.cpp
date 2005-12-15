@@ -52,8 +52,6 @@ PNFXCheckButtonParameter::PNFXCheckButtonParameter(FXComposite* p, PNConfigurabl
 {
   target = this;
   message = ID_VALUE_CHANGED;
-
-  update();
 }
 
 PNFXCheckButtonParameter::~PNFXCheckButtonParameter()
@@ -64,6 +62,8 @@ void
 PNFXCheckButtonParameter::create()
 {
   FXCheckButton::create();
+
+  update();
 }
 
 void

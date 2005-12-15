@@ -45,6 +45,9 @@ protected:
 
 public:
   PNConfigurableParameterList*			getParam();
+
+  void									setChoise(pnuint choise);
+  pnuint								getChoise();
 };
 
 //////////////////////////////////////////////////////////////////////////

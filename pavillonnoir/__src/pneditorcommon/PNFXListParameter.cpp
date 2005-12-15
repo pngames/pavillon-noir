@@ -60,8 +60,9 @@ namespace PN {
 // Map
 FXDEFMAP(PNFXListParameter) PNFXListParameterMap[]=
 {
-  FXMAPFUNC(SEL_COMMAND,PNFXListParameter::ID_DELETE,PNFXListParameter::onDelete),
-  FXMAPFUNC(SEL_COMMAND,PNFXListParameter::ID_ADD,PNFXListParameter::onAdd)
+  FXMAPFUNC(SEL_COMMAND, PNFXListParameter::ID_DELETE, PNFXListParameter::onDelete),
+  FXMAPFUNC(SEL_COMMAND, PNFXListParameter::ID_ADD, PNFXListParameter::onAdd),
+  FXMAPFUNC(SEL_COMMAND, PNFXListParameter::ID_LISTBOX_SEL, PNFXListParameter::onCmdListBox)
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -73,9 +74,9 @@ PNFXListParameter::PNFXListParameter(FXComposite* p, PNConfigurableParameterList
   pnerror(PN_LOGLVL_DEBUG, "PNFXListParameter::PNFXListParameter(FXComposite* p, PNConfigurableParameter* param)");
 
   _changed = FALSE;
-  _listBox = new FXListBox(this, NULL, 0, LAYOUT_FILL_X | FRAME_SUNKEN | FRAME_THICK, 0,0,50,0);
-  _buttonAdd = new FXButton(this, "Add", NULL, this, ID_ADD,FRAME_RAISED|FRAME_THICK);
-  _buttonDelete = new FXButton(this, "Delete", NULL, this, ID_DELETE,FRAME_RAISED|FRAME_THICK);
+  _listBox = new FXListBox(this, this, ID_LISTBOX_SEL, LAYOUT_FILL_X | FRAME_SUNKEN | FRAME_THICK, 0, 0, 50, 0);
+  _buttonAdd = new FXButton(this, "Add", NULL, this, ID_ADD, FRAME_RAISED | FRAME_THICK);
+  _buttonDelete = new FXButton(this, "Delete", NULL, this, ID_DELETE, FRAME_RAISED | FRAME_THICK);
 }
 
 PNFXListParameter::~PNFXListParameter()
@@ -94,6 +95,8 @@ PNFXListParameter::create()
   _listBox->create();
   _buttonDelete->create();
   _buttonAdd->create();
+
+  update();
 }
 
 void
@@ -105,6 +108,17 @@ PNFXListParameter::update()
 
   _buildList();
   _listBox->sortItems();
+
+  if (_param->isEditable())
+  {
+	_buttonAdd->enable();
+	_buttonDelete->enable();
+  }
+  else
+  {
+	_buttonAdd->disable();
+	_buttonDelete->disable();
+  }
 }
 
 /*
@@ -113,10 +127,33 @@ PNFXListParameter::update()
 long
 PNFXListParameter::onDelete(FXObject* obj, FXSelector sel, void* ptr)
 {
-  pnerror(PN_LOGLVL_DEBUG, "PNFXListParameter::onDelete");
-
-  if (_deleteObject(_listBox->getNumItems() == 0 ? 0 : _listBox->getCurrentItem()))
+  if (_listBox->getNumItems() > 0)
   {
+	FXint	index = _listBox->getCurrentItem();
+
+	if (_deleteObject(index))
+	{
+	  if (index != 0 && index <= (FXint)getChoise())
+		setChoise(getChoise() - 1);
+
+	  sendParamModif();
+	  update();
+	}
+  }
+
+  return 1;
+}
+
+long
+PNFXListParameter::onAdd(FXObject* obj, FXSelector sel, void* ptr)
+{ 
+  FXint	index = _listBox->getCurrentItem();
+
+  if (_addNewObject(_listBox->getNumItems() == 0 ? 0 : index))
+  {
+	if (index >= (FXint)getChoise())
+	  setChoise(getChoise() + 1);
+
 	sendParamModif();
 	update();
   }
@@ -125,14 +162,14 @@ PNFXListParameter::onDelete(FXObject* obj, FXSelector sel, void* ptr)
 }
 
 long
-PNFXListParameter::onAdd(FXObject* obj, FXSelector sel, void* ptr)
+PNFXListParameter::onCmdListBox(FXObject* obj, FXSelector sel, void* ptr)
 {
-  pnerror(PN_LOGLVL_DEBUG, "PNFXListParameter::onAdd");
-  
-  if (_addNewObject(_listBox->getNumItems() == 0 ? 0 : _listBox->getCurrentItem()))
+  FXint	index = _listBox->getCurrentItem();
+
+  if (index != getChoise() && index > 0)
   {
+	setChoise(index);
 	sendParamModif();
-	update();
   }
 
   return 1;

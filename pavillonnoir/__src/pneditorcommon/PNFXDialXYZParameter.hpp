@@ -53,8 +53,7 @@ public:
   ~PNFXDialXYZParameter();
 
   void  create();
-  void  update(); // TODO : update
-  long  onUpdate(FXObject* sender, FXSelector sel, void *ptr);
+  void  update();
 };
 
 //////////////////////////////////////////////////////////////////////////

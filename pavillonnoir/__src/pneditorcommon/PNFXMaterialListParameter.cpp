@@ -57,30 +57,25 @@ namespace fs = boost::filesystem;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-// Map
+/*// Map
 FXDEFMAP(PNFXMaterialListParameter) PNFXMaterialListParameterMap[]=
 {
-  FXMAPFUNC(SEL_COMMAND, PNFXMaterialListParameter::ID_DELETE, PNFXMaterialListParameter::onDelete),
-  FXMAPFUNC(SEL_COMMAND, PNFXMaterialListParameter::ID_ADD, PNFXMaterialListParameter::onAdd)
-};
+  
+};*/
 
 //////////////////////////////////////////////////////////////////////////
-FXIMPLEMENT(PNFXMaterialListParameter, PNFXListParameter, PNFXMaterialListParameterMap, ARRAYNUMBER(PNFXMaterialListParameterMap))
+//FXIMPLEMENT(PNFXMaterialListParameter, PNFXListParameter, PNFXMaterialListParameterMap, ARRAYNUMBER(PNFXMaterialListParameterMap))
+FXIMPLEMENT(PNFXMaterialListParameter, PNFXListParameter, NULL, 0)
 
 PNFXMaterialListParameter::PNFXMaterialListParameter(FXComposite* p, PNConfigurableParameterList* param)
 : PNFXListParameter(p, param)
 {
-  pnerror(PN_LOGLVL_DEBUG, "PNFXMaterialListParameter::PNFXMaterialListParameter(FXComposite* p, PNConfigurableParameter* param)");
-
-  _changed = FALSE;
-
-  update();
 }
 
 PNFXMaterialListParameter::~PNFXMaterialListParameter()
 {
-  
 }
+
 //////////////////////////////////////////////////////////////////////////
 
 void	PNFXMaterialListParameter::create()

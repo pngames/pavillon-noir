@@ -70,8 +70,6 @@ PNPropertiesGridParameter(param)
   default:
 	break;
   }
-
-  update();
 }
 
 PNFXTextFieldParameter::~PNFXTextFieldParameter()
@@ -82,6 +80,8 @@ void
 PNFXTextFieldParameter::create()
 {
   FXTextField::create();
+
+  update();
 }
 
 void

@@ -55,7 +55,6 @@ FXIMPLEMENT(PNFXStringParameter, PNFXTextFieldParameter, NULL, 0)
 PNFXStringParameter::PNFXStringParameter(FXComposite* p, PNConfigurableParameter* param)
 : PNFXTextFieldParameter(p, param, 25)
 {
-  
 }
 
 PNFXStringParameter::~PNFXStringParameter()
@@ -65,7 +64,7 @@ PNFXStringParameter::~PNFXStringParameter()
 void
 PNFXStringParameter::create()
 {
-  FXTextField::create();
+  PNFXTextFieldParameter::create();
 }
 
 //////////////////////////////////////////////////////////////////////////
