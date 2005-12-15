@@ -33,21 +33,20 @@
 
 using namespace std;
 
-namespace PN
-{
+namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 PNConfigurableParameterList::PNConfigurableParameterList(PNConfigurableObject* p, 
-												 pnlistparamtype type, 
-                                                 void* elem, 
-                                                 const string& label, 
-                                                 const string& altText,
-												 pnbool choosable/* = true*/,
-												 pnbool editable,
-												 void* max,
-												 void* min) :
+														 pnlistparamtype type, 
+														 void* elem, 
+														 const string& label, 
+														 const string& altText,
+														 pnbool choosable/* = true*/,
+														 pnbool editable,
+														 void* max,
+														 void* min) :
 PNConfigurableParameter(p, (pnparamtype)type, elem, label, altText, editable, max, min),
-_choosable(choosable)
+_choosable(choosable), _choise(0)
 {
 }
 

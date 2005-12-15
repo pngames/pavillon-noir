@@ -54,7 +54,6 @@ FXIMPLEMENT(PNFXIntParameter, PNFXTextFieldParameter, NULL, 0)
 PNFXIntParameter::PNFXIntParameter(FXComposite* p, PNConfigurableParameter* param)
 : PNFXTextFieldParameter(p, param, 12)
 {
-  
 }
 
 PNFXIntParameter::~PNFXIntParameter()

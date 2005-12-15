@@ -45,7 +45,8 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 // Map
-FXDEFMAP(PNFXLinksParameter) PNFXLinksParameterMap[]={
+FXDEFMAP(PNFXLinksParameter) PNFXLinksParameterMap[]=
+{
   FXMAPFUNC(SEL_COMMAND,PNFXLinksParameter::ID_LISTBOX_SEL,PNFXLinksParameter::onCmdListBox),
   FXMAPFUNC(SEL_COMMAND,PNFXLinksParameter::ID_DELETE,PNFXLinksParameter::onDelete),
   FXMAPFUNC(SEL_COMMAND,PNFXLinksParameter::ID_ADD,PNFXLinksParameter::onAdd),
@@ -78,7 +79,6 @@ PNPropertiesGridParameter(param)
   _fieldCoef = new FXTextField(this, 8, NULL, 0, TEXTFIELD_REAL|FRAME_SUNKEN|FRAME_THICK|LAYOUT_SIDE_TOP);
   _buttonAdd = new FXButton(this, "Add", NULL, this, ID_ADD,FRAME_RAISED|FRAME_THICK);
   _buttonDelete = new FXButton(this, "Delete", NULL, this, ID_DELETE,FRAME_RAISED|FRAME_THICK);
-  update();
 }
 
 PNFXLinksParameter::~PNFXLinksParameter()
@@ -98,7 +98,7 @@ void	PNFXLinksParameter::create()
   _buttonAdd->create();
   _fieldCoef->create();
 
-  return;
+  update();
 }
 
 /*

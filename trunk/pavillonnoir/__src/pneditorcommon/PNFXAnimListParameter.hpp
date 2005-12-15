@@ -71,11 +71,11 @@ public:
   enum 
   {
 	ID_EDIT = PNFXListParameter::ID_LAST,
-	ID_DIAL_OK,
-	ID_DIAL_CANCEL
+
+	ID_LAST
   };
 
-  void						showAnim(PNConfigurableObject* anim);
+  FXuint					showAnim(PNConfigurableObject* anim);
   PN3DAnimation*			openAnim(void);
 protected:
   bool						_deleteObject(FXint index);
@@ -84,9 +84,9 @@ protected:
   void						_buildList();
   void						_update();
 public:
-  long						onEdit(FXObject* obj,FXSelector sel,void* ptr);
-  long						onDialOK(FXObject* obj,FXSelector sel,void* ptr);
-  long						onDialCancel(FXObject* obj,FXSelector sel,void* ptr);
+  long						onEdit(FXObject* obj, FXSelector sel, void* ptr);
+  long						onDialOK(FXObject* obj, FXSelector sel, void* ptr);
+  long						onDialCancel(FXObject* obj, FXSelector sel, void* ptr);
 };
 
 //////////////////////////////////////////////////////////////////////////

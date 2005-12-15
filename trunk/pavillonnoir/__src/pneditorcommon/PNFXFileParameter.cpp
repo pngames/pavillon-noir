@@ -46,8 +46,9 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 // Map
-FXDEFMAP(PNFXFileParameter) PNFXFileParameterMap[]={
-  FXMAPFUNC(SEL_COMMAND,PNFXFileParameter::ID_BROWSE,PNFXFileParameter::onBrowse),
+FXDEFMAP(PNFXFileParameter) PNFXFileParameterMap[]=
+{
+  FXMAPFUNC(SEL_COMMAND, PNFXFileParameter::ID_BROWSE, PNFXFileParameter::onBrowse),
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -58,7 +59,6 @@ PNFXFileParameter::PNFXFileParameter(FXComposite* p, PNConfigurableParameter* pa
 {
   _field = new FXTextField(this, 24, NULL, 0, TEXTFIELD_NORMAL|FRAME_SUNKEN|FRAME_THICK|LAYOUT_SIDE_TOP);
   _button = new FXButton(this, "Browse", NULL, this, ID_BROWSE,FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_X|LAYOUT_CENTER_Y);
-  update();
 }
 
 PNFXFileParameter::~PNFXFileParameter()
@@ -69,8 +69,11 @@ void
 PNFXFileParameter::create()
 {
   FXHorizontalFrame::create();
+  
   _field->create();
   _button->create();
+
+  update();
 }
 
 void

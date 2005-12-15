@@ -46,9 +46,6 @@ class PNEDAPI				PNFXMaterialListParameter : public PNFXListParameter
 {
   FXDECLARE(PNFXMaterialListParameter);
 
-  bool						_changed;
-  //FXImage ? FXBouton avec image (cliquable = defaut) ?  // temoin de modification
-
 protected:
   PNFXMaterialListParameter() {}
   PNFXMaterialListParameter(PNFXMaterialListParameter&) {}
