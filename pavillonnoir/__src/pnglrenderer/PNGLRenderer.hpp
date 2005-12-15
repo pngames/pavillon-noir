@@ -98,12 +98,10 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 private:
-  PNConfigurableParameter*	_pDefinition;
-  PNConfigurableParameter*	_pBpp;
-
   PNBoolParameter			_pFullScreen;
   PNStringParameter			_pTitle;
 
+  PNBoolParameter			_pEnableTransparency;
 public:
   void						update(PNConfigurableParameter* p);
 

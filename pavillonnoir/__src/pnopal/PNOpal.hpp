@@ -89,7 +89,7 @@ private:
 /*protected:
   typedef std::vector<PNConfigurableParameter*> ParametersVector;
   ParametersVector			_params;
-/*public:
+public:
 
   void						update(PNConfigurableParameter* p) {}
   int						getNbParameters() { return _params.size(); }

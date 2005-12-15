@@ -117,12 +117,7 @@ PNGLSceneGraph::render(pnuint deltaTime, pnuint time)
   PNEventManager::getInstance()->sendEvent(PN_EVENT_PU_START, 0, &gameUpdateData);
 
   ////////////////////////////////
-  // Initialise le buffer de rendu
-
-  glClearDepth(1.0);
-
-  glDepthMask(GL_TRUE);
-  glEnable(GL_DEPTH_TEST);
+  // Initialise render buffer
 
   glColor3f(1.0f, 1.0f, 1.0f);
 

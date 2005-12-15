@@ -42,6 +42,8 @@
 # include <xine/xineutils.h>
 #endif
 
+#include "pnproperties.h"
+
 #include "PNObject.hpp"
 #include "IPNAnimated.hpp"
 #include "IPNSerializable.hpp"
@@ -50,6 +52,9 @@ namespace PN {
 	
 class				PNGLVideo : public PNObject, public IPNAnimated, public IPNSerializable
 {
+  static PNStringParameter	_pMoviePlayer;
+public:
+  static PNStringParameter*  getPMoviePlayer();
 public:
   PNGLVideo();
   ~PNGLVideo();

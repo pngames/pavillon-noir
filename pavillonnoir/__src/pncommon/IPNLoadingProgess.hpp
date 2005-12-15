@@ -63,7 +63,7 @@ protected:
   pnfloat		_base;
 public:
   IPNLoadingProgess();
-  ~IPNLoadingProgess();
+  virtual ~IPNLoadingProgess();
 
   //////////////////////////////////////////////////////////////////////////
   
