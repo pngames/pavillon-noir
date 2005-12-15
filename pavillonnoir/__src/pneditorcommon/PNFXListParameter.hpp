@@ -71,6 +71,7 @@ public:
   {
 	ID_ADD = FXHorizontalFrame::ID_LAST,
 	ID_DELETE,
+	ID_LISTBOX_SEL,
 
 	ID_LAST
   };
@@ -82,8 +83,9 @@ protected:
   virtual void				_buildList(void)=0;
   virtual void				_update()=0;
 public:
-  long						onDelete(FXObject*,FXSelector,void* ptr);
-  long						onAdd(FXObject* obj,FXSelector sel,void* ptr);
+  long						onDelete(FXObject*, FXSelector, void* ptr);
+  long						onAdd(FXObject* obj, FXSelector sel, void* ptr);
+  long						onCmdListBox(FXObject*, FXSelector, void*);
 };
 
 //////////////////////////////////////////////////////////////////////////

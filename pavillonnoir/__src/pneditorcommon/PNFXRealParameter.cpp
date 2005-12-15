@@ -53,13 +53,11 @@ FXIMPLEMENT(PNFXRealParameter, PNFXTextFieldParameter, NULL, 0)
 
 PNFXRealParameter::PNFXRealParameter(FXComposite* p, PNConfigurableParameter* param)
 : PNFXTextFieldParameter(p, param, 12)
-{
-  
+{ 
 }
 
 PNFXRealParameter::~PNFXRealParameter()
 {
-
 }
 
 

@@ -38,7 +38,7 @@ using namespace std;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-FXIMPLEMENT(PNFXDefaultParameter,FXLabel,NULL,0)
+FXIMPLEMENT(PNFXDefaultParameter, FXLabel, NULL, 0)
 
 // Fixme : change text parameter
 PNFXDefaultParameter::PNFXDefaultParameter(FXComposite* p, PNConfigurableParameter* param) 

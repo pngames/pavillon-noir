@@ -69,12 +69,8 @@ FXIMPLEMENT(PNFXStringListParameter, PNFXListParameter, PNFXStringListParameterM
 PNFXStringListParameter::PNFXStringListParameter(FXComposite* p, PNConfigurableParameterList* param)
 : PNFXListParameter(p, param)
 {
-  pnerror(PN_LOGLVL_DEBUG, "PNFXStringListParameter::PNFXStringListParameter(FXComposite* p, PNConfigurableParameter* param)");
-  
   _labelsNumChars = 29;
   _numVisibleItems = 5;
-
-  _buildList();
 }
 
 PNFXStringListParameter::~PNFXStringListParameter()
@@ -97,7 +93,6 @@ PNFXStringListParameter::_buildList(void)
 {
   std::list<std::string>* l = (std::list<std::string>*)_param->getElem();
 
-  pnerror(PN_LOGLVL_DEBUG, "PNFXStringListParameter::buildList");
   _listBox->clearItems();
 
   if (l->size() == 0)
@@ -123,12 +118,6 @@ PNFXStringListParameter::_buildList(void)
 	_listBox->setNumVisible(_listBox->getNumItems());
 
   pnerror(PN_LOGLVL_DEBUG, "End of PNFXStringListParameter::buildList");
-}
-
-long
-PNFXStringListParameter::onCmdListBox(FXObject*,FXSelector,void*)
-{
-  return 1;
 }
 
 /*

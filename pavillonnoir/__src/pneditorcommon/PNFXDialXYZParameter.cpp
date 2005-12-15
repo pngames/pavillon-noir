@@ -42,17 +42,18 @@ using namespace std;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-// Map
-FXDEFMAP(PNFXDialXYZParameter) PNFXDialXYZParameterMap[]={
-  FXMAPFUNC(SEL_UPDATE,0,PNFXDialXYZParameter::onUpdate)
-};
+/*// Map
+FXDEFMAP(PNFXDialXYZParameter) PNFXDialXYZParameterMap[]=
+{
+  FXMAPFUNC(SEL_UPDATE, 0, PNFXDialXYZParameter::onUpdate)
+};*/
 
 //////////////////////////////////////////////////////////////////////////
-FXIMPLEMENT(PNFXDialXYZParameter,FXHorizontalFrame,PNFXDialXYZParameterMap,ARRAYNUMBER(PNFXDialXYZParameterMap))
+//FXIMPLEMENT(PNFXDialXYZParameter, FXHorizontalFrame, PNFXDialXYZParameterMap, ARRAYNUMBER(PNFXDialXYZParameterMap))
+FXIMPLEMENT(PNFXDialXYZParameter, FXHorizontalFrame, NULL, 0)
 
 PNFXDialXYZParameter::PNFXDialXYZParameter(FXComposite* p, PNConfigurableParameter* param)
-: FXHorizontalFrame(p),
-PNPropertiesGridParameter(param)
+: FXHorizontalFrame(p), PNPropertiesGridParameter(param)
 {
   PN3DObject* o = (PN3DObject*)_param->getElem();
   _dial = new FXDial(this, NULL, 0, FRAME_SUNKEN  |  FRAME_THICK  |  DIAL_CYCLIC  |  
@@ -93,16 +94,14 @@ PNFXDialXYZParameter::~PNFXDialXYZParameter()
 void	PNFXDialXYZParameter::create()
 {
   FXHorizontalFrame::create();
+
+  update();
 }
 
 void	PNFXDialXYZParameter::update()
 {
-  return;
-}
+  FXHorizontalFrame::update();
 
-long  PNFXDialXYZParameter::onUpdate(FXObject* sender, FXSelector sel, void *ptr)
-{
-  FXHorizontalFrame::onUpdate(sender,sel,ptr);
   pnfloat pos = (pnfloat)_dial->getValue();
 
   if (pos != _oldValue)
@@ -135,8 +134,7 @@ long  PNFXDialXYZParameter::onUpdate(FXObject* sender, FXSelector sel, void *ptr
 	_field->setText(oss.str().c_str());
 	_param->getConfigurableObject()->update(_param);
   }
-
-  return 1;
 }
+
 //////////////////////////////////////////////////////////////////////////
 };
