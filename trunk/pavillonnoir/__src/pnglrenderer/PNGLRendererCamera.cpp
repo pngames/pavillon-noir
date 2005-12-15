@@ -86,13 +86,13 @@ PNGLRendererCamera::setFov(pnfloat deg)
 
   if (ratio < 1.0)
   {
-	_viewHRadFov = DEGREE_TO_RADIAN_F(deg);
-	_viewVRadFov = DEGREE_TO_RADIAN_F(deg * ratio);
+	setHFov(DEGREE_TO_RADIAN_F(deg));
+	setVFov(DEGREE_TO_RADIAN_F(deg * ratio));
   }
   else
   {
-	_viewHRadFov = DEGREE_TO_RADIAN_F(deg * ratio);
-	_viewVRadFov = DEGREE_TO_RADIAN_F(deg);
+	setHFov(DEGREE_TO_RADIAN_F(deg * ratio));
+	setVFov(DEGREE_TO_RADIAN_F(deg));
   }
 
   setUpdateGLFov(true);

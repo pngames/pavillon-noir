@@ -84,9 +84,10 @@ PNGLRenderer*  PNGLRenderer::getInstance()
   return (PNGLRenderer*)_instance;
 }
 
-PNGLRenderer::PNGLRenderer()
-: _pFullScreen(false, "Plein ecran", "Plein ecran", true),
-_pTitle("Pavillon Noir", "Title", "Title", true)
+PNGLRenderer::PNGLRenderer() : 
+_pFullScreen(false, "Plein ecran", "Plein ecran", true),
+_pTitle("Pavillon Noir", "Title", "Title", true),
+_pEnableTransparency(true, "Activer la transparence", "Activer la transparence", true)
 {
   _guirenderer = NULL;
 
@@ -107,9 +108,16 @@ _pTitle("Pavillon Noir", "Title", "Title", true)
 
   _pTitle.setConfigurableObject(this);
   _pFullScreen.setConfigurableObject(this);
+  _pEnableTransparency.setConfigurableObject(this);
+
+  PNGLVideo::getPMoviePlayer()->setConfigurableObject(this);
 
   addParam(&_pTitle);
   addParam(&_pFullScreen);
+
+  addParam(&_pEnableTransparency);
+
+  addParam(PNGLVideo::getPMoviePlayer());
 }
 
 PNGLRenderer::~PNGLRenderer()
@@ -313,8 +321,11 @@ PNGLRenderer::initGL(GLsizei width, GLsizei height)
   glEnable(GL_CULL_FACE);
   glCullFace(GL_BACK);
 
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  if (_pEnableTransparency)
+  {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  }
 
   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
   glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);

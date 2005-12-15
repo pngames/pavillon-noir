@@ -38,7 +38,21 @@
 #include "PNGLVideo.hpp"
 
 namespace PN {
-	
+//////////////////////////////////////////////////////////////////////////
+
+#ifdef WIN32
+PNStringParameter	PNGLVideo::_pMoviePlayer("win32\\mplayer\\mplayer.exe -really-quiet -fs", "Movie Player", "Movie Player", true);
+#else
+PNStringParameter	PNGLVideo::_pMoviePlayer("xine --auto-play=Fhq", "Movie Player", "Movie Player", true);
+#endif
+
+PNStringParameter*  PNGLVideo::getPMoviePlayer()
+{
+  return &_pMoviePlayer;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 PNGLVideo::PNGLVideo()
 {
   _startedEventType = PN_EVENT_VIDEO_STARTED;
@@ -66,9 +80,9 @@ PNGLVideo::startAnimation()
     return err;
 
 #ifdef WIN32
-  _command = std::string("win32\\mplayer\\mplayer.exe -really-quiet -fs ") + _path;
+  _command = (std::string&)_pMoviePlayer + " " + _path;
 #else
-  _command = std::string("xine --auto-play=Fhq ") + _path;
+  _command = (std::string&)_pMoviePlayer + " " + _path;
 #endif
 
   boost::thread thrd(fastdelegate::FastDelegate0<void>(this, &PNGLVideo::_playVideo));
@@ -86,4 +100,5 @@ PNGLVideo::_playVideo()
   delete this;
 }
 
+//////////////////////////////////////////////////////////////////////////
 };
