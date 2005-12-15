@@ -52,7 +52,7 @@ private:
   CEGUI::Window*					_mainSheet;
   CEGUI::StaticImage*				_backGround;
   CEGUI::ProgressBar*				_progBar;
-  CEGUI::Listbox*					_listBox;
+  CEGUI::StaticText*					_staticText;
   CEGUI::StaticImage*				_statImg;
   typedef std::list<std::string>	listImagesetAll;
   listImagesetAll					_listImagesetAll;

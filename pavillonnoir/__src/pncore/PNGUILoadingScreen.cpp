@@ -61,8 +61,8 @@ PNGUILoadingScreen::PNGUILoadingScreen()
   _mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNLoadingScreen.layout");
   _backGround = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/Background");
   _progBar = (CEGUI::ProgressBar*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/ProgressBar");
-  _listBox = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/ListBox");
-  _listBox->setShowVertScrollbar(false);
+  _staticText = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/StaticText");
+  
 
   _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "LoadingScreenImages/randomBack");
   _mainSheet->addChildWindow(_statImg);
@@ -153,7 +153,7 @@ PNGUILoadingScreen::setRandomBackground()
   _statImg->setFrameEnabled(false);
   _statImg->setBackgroundEnabled(false);
   _statImg->disable();
-  _statImg->setAlpha(1.0f);
+  _statImg->show();
 }
 
 void 
@@ -162,8 +162,8 @@ PNGUILoadingScreen::resetScreen()
   reinit();
 
   _progBar->setProgress(_step);
-  _listBox->resetList();
-  _statImg->setAlpha(0.0f);
+  _statImg->hide();
+  _staticText->setText("");
 }
 
 void	
@@ -203,13 +203,7 @@ void
 PNGUILoadingScreen::refresh()
 {
   _progBar->setProgress(_step);
-
-  /*CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(_label.c_str());
-  item->setSelectionBrushImage((CEGUI::utf8*)"Vanilla-Images", (CEGUI::utf8*)"GenericBrush");
-  item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
-
-  _listBox->addItem(item);*/
-  _listBox->setShowVertScrollbar(false);
+  _staticText->setText(_label.c_str());
 
   PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_END, 0, NULL);
 }
