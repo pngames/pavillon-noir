@@ -30,27 +30,22 @@
 #ifndef _PNOBJECT_HPP_
 # define _PNOBJECT_HPP_
 
+#include <string>
+#include <vector>
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 /// Base object for all classes of pncommon
-class PNAPI PNObject
+class PNAPI						PNObject
 {
-  /// lock object* (unlocked in and of the scope)
-#define PNLOCK(obj)			boost::recursive_mutex::scoped_lock  sl((obj)->_mutex)
-#define PNLOCK_BEGIN(obj)	{ PNLOCK(obj)
-#define PNLOCK_END(obj)		}
-
-#define PNLOCKP(obj)		if ((obj)->_pmutex != NULL) boost::recursive_mutex::scoped_lock  sl(*((obj)->_pmutex))
-#define PNLOCKP_BEGIN(obj)	{ PNLOCKP(obj)
-#define PNLOCKP_END(obj)	}
-
-  //////////////////////////////////////////////////////////////////////////
-
 public:
   virtual ~PNObject() {}
+
+  virtual std::string			toString();
 };
+
+typedef std::vector<PNObject*>	PNVPPNObjectParameter;
 
 //////////////////////////////////////////////////////////////////////////
 };

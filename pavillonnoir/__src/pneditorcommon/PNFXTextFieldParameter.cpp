@@ -89,6 +89,8 @@ PNFXTextFieldParameter::update()
 {
   FXString  str;
 
+  string*	truc = (string*)_param->getElem();
+
   switch (_param->getType())
   {
   case PN_PARAMTYPE_STRING:

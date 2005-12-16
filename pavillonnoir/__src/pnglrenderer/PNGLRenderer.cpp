@@ -57,6 +57,7 @@
 
 #include "PNMatrix4f.hpp"
 #include "PNPoint3f.hpp"
+#include "PNPoint2f.hpp"
 #include "PNQuatf.hpp"
 #include "PN3DModel.hpp"
 #include "PNGLMaterial.hpp"
@@ -111,6 +112,8 @@ _pEnableTransparency(true, "Activer la transparence", "Activer la transparence",
   
   SDL_Init(SDL_INIT_VIDEO);
 
+  //////////////////////////////////////////////////////////////////////////
+
   SDL_Rect **modes = SDL_ListModes(NULL, SDL_FULLSCREEN|SDL_HWSURFACE);
 
   /* Check is there are any modes available */
@@ -120,6 +123,8 @@ _pEnableTransparency(true, "Activer la transparence", "Activer la transparence",
 	exit(-1);
   }
 
+  _pDefinitionsList = NULL;
+
   /* Check if or resolution is restricted */
   if (modes == (SDL_Rect **)-1)
   {
@@ -127,11 +132,29 @@ _pEnableTransparency(true, "Activer la transparence", "Activer la transparence",
   }
   else
   {
+	_pDefinitionsList = new PNConfigurableParameterList(this, PN_LISTPARAMTYPE_VPPNOBJECT, &_definitionsList, "Definition", "Definition", true, false);
+
 	/* Print valid modes */
 	printf("Available Modes\n");
 	for (int i = 0; modes[i]; ++i)
+	{
+	  if (modes[i]->w == 800 || modes[i]->h == 600)
+		_pDefinitionsList->setChoise(_definitionsList.size());
+
+	  _definitionsList.push_back(new PNPoint2f(modes[i]->w, modes[i]->h));
+
 	  printf("  %d x %d\n", modes[i]->w, modes[i]->h);
+	}
   }
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  _bppList.push_back(16);
+  _bppList.push_back(24);
+  _bppList.push_back(32);
+
+  _pBppList = new PNConfigurableParameterList(this, PN_LISTPARAMTYPE_UINT, &_bppList, "Bpp", "Bpp", true, false);
+  _pBppList->setChoise(2);
 
   //////////////////////////////////////////////////////////////////////////
   // configurabe implementation
@@ -145,7 +168,17 @@ _pEnableTransparency(true, "Activer la transparence", "Activer la transparence",
   addParam(&_pTitle);
   addParam(&_pFullScreen);
 
+  addParam(new PNConfigurableParameter(this, PN_PARAMTYPE_SEPARATOR, (void*)NULL, "Sep", "Sep"));
+
   addParam(&_pEnableTransparency);
+
+  addParam(new PNConfigurableParameter(this, PN_PARAMTYPE_SEPARATOR, (void*)NULL, "Sep", "Sep"));
+
+  if (_pDefinitionsList != NULL)
+	addParam(_pDefinitionsList);
+  addParam(_pBppList);
+
+  addParam(new PNConfigurableParameter(this, PN_PARAMTYPE_SEPARATOR, (void*)NULL, "Sep", "Sep"));
 
   addParam(PNGLVideo::getPMoviePlayer());
 }
@@ -232,10 +265,10 @@ PNGLRenderer::init()
 }
 
 void
-PNGLRenderer::initRender(pnuint widht, pnuint height, pnuint bpp)
+PNGLRenderer::initRender()
 {
-  initSDL(widht, height, bpp);
-  initGL(widht, height);
+  initSDL();
+  initGL();
 
   //////////////////////////////////////////////////////////////////////////
   // FIXME : TEST
@@ -313,17 +346,19 @@ String describes the SDL window title.
 Bool specifies the fullscreen state of the SDL window. 
 */
 void
-PNGLRenderer::initSDL(int widht, int height, int bpp)
+PNGLRenderer::initSDL()
 {
   std::cout << "--== SDL init start ==--" << std::endl;
 	  
   SDL_Surface		*screen = NULL;
   int				videoFlags;
 
-  SDL_Init(SDL_INIT_VIDEO);
   setSDLFlags(&videoFlags);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-  screen = SDL_SetVideoMode(widht, height, bpp, videoFlags);
+
+  PNPoint2f*	def = (PNPoint2f*)_definitionsList[_pDefinitionsList->getChoise()];
+
+  screen = SDL_SetVideoMode(def->x, def->y, _pBppList->getElementList(32), videoFlags);
   SDL_WM_SetCaption(_pTitle.getString().c_str(), NULL);
   SDL_EnableUNICODE(1);
  // SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
@@ -332,7 +367,7 @@ PNGLRenderer::initSDL(int widht, int height, int bpp)
 }
 
 void
-PNGLRenderer::initGL(GLsizei width, GLsizei height)
+PNGLRenderer::initGL()
 {
   std::cout << "--== OpenGL init start ==--" << std::endl;
 
@@ -345,7 +380,7 @@ PNGLRenderer::initGL(GLsizei width, GLsizei height)
   glEnable(GL_DEPTH_TEST);
   glDepthMask(GL_TRUE);
   glDepthFunc(GL_LEQUAL);
-  glDepthRange(0.0,1.0);
+  glDepthRange(0.0, 1.0);
   glClearDepth(1.0);
 
   glEnable(GL_CULL_FACE);
@@ -421,7 +456,9 @@ PNGLRenderer::initGL(GLsizei width, GLsizei height)
 
   //////////////////////////////////////////////////////////////////////////
   
-  _scene.resizeGLWindow(width, height);
+  PNPoint2f*	def = (PNPoint2f*)_definitionsList[_pDefinitionsList->getChoise()];
+
+  _scene.resizeGLWindow(def->x, def->y);
   
   std::cout << "--== OpenGL init end ==--" << std::endl;
 }

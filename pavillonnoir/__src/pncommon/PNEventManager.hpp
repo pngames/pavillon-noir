@@ -42,7 +42,7 @@
 #include <boost/thread/condition.hpp>
 #include <iostream>
 
-#include "PNObject.hpp"
+#include "PNLockableObject.hpp"
 #include "IPNSerializable.hpp"
 
 #include "PNCallBackList.hpp"
@@ -103,7 +103,7 @@ struct				pnevent
 *  // same thing for deleteCallback
 * }
 */
-class PNAPI						PNEventManager : public PNObject, public IPNSerializable
+class PNAPI						PNEventManager : public PNLockableObject, public IPNSerializable
 {
 private:
   /// Unique instance of events manager
@@ -133,7 +133,6 @@ private:
   typedef std::queue<pnevent>	STACKEVENTS;
   /// Events stack
   STACKEVENTS					_events;
-  boost::recursive_mutex		_mutex;
   /// Indicate if event manager running, used to stop it
   pnbool						_run;
 

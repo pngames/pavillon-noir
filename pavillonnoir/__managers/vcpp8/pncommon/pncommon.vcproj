@@ -237,6 +237,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncommon\PNLockableObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNLockableObject.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\PNObject.cpp"
 				>
 			</File>

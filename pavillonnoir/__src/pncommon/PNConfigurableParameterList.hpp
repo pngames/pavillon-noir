@@ -37,11 +37,16 @@ namespace PN {
 
 typedef enum
 {
-  PN_LISTPARAMTYPE_INT = PN_NB_PARAMTYPE,	// based on std:list<int>
-  PN_LISTPARAMTYPE_REAL,					// based on std:list<float>
+  PN_LISTPARAMTYPE_INT = PN_NB_PARAMTYPE,	// based on std:list<pnint>
+  PN_LISTPARAMTYPE_UINT,					// based on std:list<pnuint>
+  PN_LISTPARAMTYPE_REAL,					// based on std:list<pnfloat>
   PN_LISTPARAMTYPE_STRING,					// based on std:list<std::string>
   PN_LISTPARAMTYPE_FILE,					// based on std:list<std::string>
   PN_LISTPARAMTYPE_DIR,						// based on std:list<std::string>
+
+  PN_LISTPARAMTYPE_LPPNOBJECT,				// based on std:list<PNObject*>
+  PN_LISTPARAMTYPE_VPPNOBJECT,			  	// based on std:vector<PNObject*>
+
   PN_LISTPARAMTYPE_LINK,
   PN_LISTPARAMTYPE_MATERIAL,				// based on PN3DObject:VectorMaterial
   PN_LISTPARAMTYPE_ANIM,					// based on PN3DSkeletonObject:AnimationVector
@@ -66,6 +71,10 @@ public:
 
   void					setChoise(pnuint choise);
   pnuint				getChoise();
+
+  pnint					getElementList(pnint def);
+  pnuint				getElementList(pnuint def);
+  pnfloat				getElementList(pnfloat def);
 };
 
 //////////////////////////////////////////////////////////////////////////

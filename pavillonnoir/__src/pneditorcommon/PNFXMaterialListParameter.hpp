@@ -58,7 +58,6 @@ protected:
   bool						_deleteObject(FXint index);
   bool						_addNewObject(FXint index);
 
-  void						_buildList();
   void						_update();
 };
 

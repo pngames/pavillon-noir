@@ -27,6 +27,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+#include <list>
+
 #include "pndefs.h"
 
 #include "PNConfigurableParameterList.hpp"
@@ -78,6 +80,56 @@ pnuint
 PNConfigurableParameterList::getChoise()
 {
   return _choise;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+pnint		
+PNConfigurableParameterList::getElementList(pnint def)
+{
+  std::list<pnint>*	lst = (std::list<pnint>*)_elem;
+  std::list<pnint>::iterator	it = lst->begin();
+  for (int i = 0; it != lst->end(); ++i, ++it)
+  {
+	if  (i == _choise)
+	{
+	  return *it;
+	}
+  }
+
+  return def;
+}
+
+pnuint	
+PNConfigurableParameterList::getElementList(pnuint def)
+{
+  std::list<pnuint>*	lst = (std::list<pnuint>*)_elem;
+  std::list<pnuint>::iterator	it = lst->begin();
+  for (int i = 0; it != lst->end(); ++i, ++it)
+  {
+	if  (i == _choise)
+	{
+	  return *it;
+	}
+  }
+
+  return def;
+}
+
+pnfloat
+PNConfigurableParameterList::getElementList(pnfloat def)
+{
+  std::list<pnfloat>*	lst = (std::list<pnfloat>*)_elem;
+  std::list<pnfloat>::iterator	it = lst->begin();
+  for (int i = 0; it != lst->end(); ++i, ++it)
+  {
+	if  (i == _choise)
+	{
+	  return *it;
+	}
+  }
+
+  return def;
 }
 
 //////////////////////////////////////////////////////////////////////////
