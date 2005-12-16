@@ -35,14 +35,14 @@
 
 #include "pnmath.h"
 
-#include "PNObject.hpp"
-#include "IPNXMLSerializable.hpp"
-
 #include "PNPoint3f.hpp"
 #include "PNQuatf.hpp"
 #include "PNMatrixTR4f.hpp"
 #include "PNVector3f.hpp"
 #include "PNNormal3f.hpp"
+
+#include "PNLockableObject.hpp"
+#include "IPNXMLSerializable.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -53,22 +53,14 @@ class PNFace;
 class PNPhysicalObject;
 
 /// Base object for all object evolving in the scene
-class PNAPI							PN3DObject : public PNObject, public IPNXMLSerializable
+class PNAPI							PN3DObject : public PNLockableObject, public IPNXMLSerializable
 {
-public:
-  boost::recursive_mutex			_mutex;
-
 protected:
   ///object identifier
   std::string						_id;
 public:
   void								setId(const std::string& id);
   const std::string&				getId() const;
-
-  ///////////////////////////////////////////////////////////////////////////
-
-  void*								lock();
-  void								unlock(void *m);
 
   ///////////////////////////////////////////////////////////////////////////
 private:

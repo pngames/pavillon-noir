@@ -60,7 +60,6 @@ class PNEDAPI				PNFXStringListParameter : public PNFXListParameter
   FXDECLARE(PNFXStringListParameter);
 
   int						_labelsNumChars;
-  int						_numVisibleItems;
 
 protected:
   PNFXStringListParameter() {}
@@ -70,22 +69,8 @@ public:
   ~PNFXStringListParameter();
 
   void						create();
-
-  int						getNumVisibleItems() { return _numVisibleItems; }
-  int						getLabelsNumChars() { return _labelsNumChars; }
-
-  void						setNumVisibleItems(int numItems);
-  void						setLabelsNumChars(int numChars);
-
-  std::string				getStringValue();
-  pnbool					setStringValue(const std::string& val);
-
 protected:
-  void						_buildList();
   void						_update();
-
-  bool						_deleteObject(FXint index);
-  bool						_addNewObject(FXint index);
 };
 
 //////////////////////////////////////////////////////////////////////////

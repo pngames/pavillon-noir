@@ -199,6 +199,14 @@
 				Name="parameters"
 				>
 				<File
+					RelativePath="..\..\..\__src\pneditorcommon\pneditorcommon.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\pneditorcommon.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\__src\pneditorcommon\PNFXAnimListParameter.cpp"
 					>
 				</File>
@@ -251,6 +259,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXSeparatorParameter.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\__src\pneditorcommon\PNFXStringListParameter.cpp"
 					>
 				</File>
@@ -260,6 +272,14 @@
 				</File>
 				<File
 					RelativePath="..\..\..\__src\pneditorcommon\PNFXTextFieldParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXVPPNObjectParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNWaypoinsLinks.hpp"
 					>
 				</File>
 			</Filter>
@@ -341,6 +361,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXSeparatorParameter.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\__src\pneditorcommon\PNFXStringListParameter.hpp"
 					>
 				</File>
@@ -350,6 +374,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\__src\pneditorcommon\PNFXTextFieldParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pneditorcommon\PNFXVPPNObjectParameter.hpp"
 					>
 				</File>
 			</Filter>

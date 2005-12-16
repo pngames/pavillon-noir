@@ -32,12 +32,14 @@
 
 #include <string>
 
+#include "PNObject.hpp"
+
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 class PNConfigurableParameter;
 
-class PNAPI							PNPropertiesGridParameter
+class PNAPI							PNPropertiesGridParameter : public PNObject
 {
 protected:
   PNConfigurableParameter*			_param;

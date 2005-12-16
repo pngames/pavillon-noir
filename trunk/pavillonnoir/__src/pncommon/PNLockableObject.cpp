@@ -1,8 +1,8 @@
 /*
-* PNFXDefaultParameter.cpp
+* PNLockableObject.cpp
 * 
 * Description :
-* PNFXDefaultParameter definition
+* PNLockableObject definition
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,39 +27,27 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
+#include "pndefs.h"
 
-#include "pneditorcommon.h"
-#include "pnproperties.h"
+#include "PNLockableObject.hpp"
 
-#include "PNFXDefaultParameter.hpp"
-
-using namespace std;
+using namespace PN;
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-FXIMPLEMENT(PNFXDefaultParameter, FXLabel, NULL, 0)
-
-// Fixme : change text parameter
-PNFXDefaultParameter::PNFXDefaultParameter(FXComposite* p, PNConfigurableParameter* param) 
-: FXLabel(p, "unknown parameter type"),
-PNPropertiesGridParameter(param)
+void*
+PNLockableObject::lock()
 {
-  setTextColor(0x0000FF);
+  return new boost::recursive_mutex::scoped_lock(_mutex);
 }
 
-PNFXDefaultParameter::~PNFXDefaultParameter()
+void
+PNLockableObject::unlock(void *m)
 {
-}
+  boost::recursive_mutex::scoped_lock*	locker = (boost::recursive_mutex::scoped_lock*)m;
 
-void	PNFXDefaultParameter::create()
-{
-  FXLabel::create();
-}
-
-void PNFXDefaultParameter::update()
-{
-  return;
+  delete locker;
 }
 
 //////////////////////////////////////////////////////////////////////////

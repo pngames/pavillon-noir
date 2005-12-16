@@ -121,22 +121,6 @@ PN3DObject::getId() const
 
 //////////////////////////////////////////////////////////////////////////
 
-void*
-PN3DObject::lock()
-{
-  return new boost::recursive_mutex::scoped_lock(_mutex);
-}
-
-void
-PN3DObject::unlock(void *m)
-{
-  boost::recursive_mutex::scoped_lock*	locker = (boost::recursive_mutex::scoped_lock*)m;
-
-  delete locker;
-}
-
-//////////////////////////////////////////////////////////////////////////
-
 pnint
 PN3DObject::_parseMaterials(xmlNode* parent)
 {

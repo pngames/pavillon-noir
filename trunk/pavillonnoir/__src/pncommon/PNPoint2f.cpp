@@ -28,7 +28,7 @@
 */
 
 #include <iostream>
-#include <math.h>
+#include <sstream>
 
 #include "pndefs.h"
 #include "pnmath.h"
@@ -133,6 +133,37 @@ PNPoint2f::isEquals(pnfloat x, pnfloat y)
   PNPoint2f	u(x, y);
 
   return isEquals(u);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+std::string
+PNPoint2f::toString()
+{
+  return serialize();
+}
+
+std::string
+PNPoint2f::serialize() const
+{
+  std::ostringstream os;
+  os << x << " " << y;
+
+  return os.str();
+}
+
+void
+PNPoint2f::unserialize(const std::string& str)
+{
+  std::istringstream	is(str);
+
+  unserialize(is);
+}
+
+void
+PNPoint2f::unserialize(std::istream& is)
+{
+  is >> x >> y;
 }
 
 //////////////////////////////////////////////////////////////////////////

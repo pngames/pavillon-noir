@@ -33,7 +33,7 @@
 #include <set>
 #include <boost/thread/recursive_mutex.hpp>
 
-#include "PNObject.hpp"
+#include "PNLockableObject.hpp"
 #include "IPNSerializable.hpp"
 
 namespace PN {
@@ -43,10 +43,8 @@ class PNEventData;
 struct pnevent;
 
 /// Callback manager for one event type
-class PNAPI					PNCallBackList: public PNObject, public IPNSerializable
+class PNAPI					PNCallBackList: public PNLockableObject, public IPNSerializable
 {
-public:
-  boost::recursive_mutex	_mutex;
 private:
   /// Event callbacks list type
   typedef std::set<EventCallback>	CallbackSet;

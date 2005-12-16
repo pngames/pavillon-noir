@@ -88,7 +88,7 @@ PNImportManager::import(const std::string& path, importtype type, bool copy)
 {
   pnerror(PN_LOGLVL_INFO, "Import %s %i", path.c_str(), type);
 
-  fs::path	file(path, fs::native);
+  fs::path	file(path, fs::no_check);
 
   if (!fs::exists(file))
   {

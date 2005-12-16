@@ -76,6 +76,14 @@ public:
   bool						isEquals(pnfloat x, pnfloat y);
 
   //////////////////////////////////////////////////////////////////////////
+  
+  std::string				serialize() const;
+  void						unserialize(const std::string& str);
+  void						unserialize(std::istream& istr);
+
+  virtual std::string		toString();
+
+  //////////////////////////////////////////////////////////////////////////
 public:
 
   operator					const pnfloat*() const;

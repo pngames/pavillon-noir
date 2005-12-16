@@ -1,8 +1,8 @@
 /*
- * PNFXStringListParameter.cpp
+ * PNFXVPPNObjectParameter.cpp
  * 
  * Description :
- * PNFXStringListParameter definition
+ * PNFXVPPNObjectParameter definition
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -32,7 +32,7 @@
 
 #include "PNPropertiesGrid.hpp"
 
-#include "PNFXStringListParameter.hpp"
+#include "PNFXVPPNObjectParameter.hpp"
 
 using namespace std;
 
@@ -40,29 +40,28 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 /*// Map
-FXDEFMAP(PNFXStringListParameter) PNFXStringListParameterMap[]=
+FXDEFMAP(PNFXVPPNObjectParameter) PNFXVPPNObjectParameterMap[]=
 {
-  FXMAPFUNC(SEL_COMMAND, PNFXStringListParameter::ID_LISTBOX_SEL, PNFXStringListParameter::onCmdListBox)
+  FXMAPFUNC(SEL_COMMAND, PNFXVPPNObjectParameter::ID_LISTBOX_SEL, PNFXVPPNObjectParameter::onCmdListBox)
 };*/
 
 //////////////////////////////////////////////////////////////////////////
-//FXIMPLEMENT(PNFXStringListParameter, PNFXListParameter, PNFXStringListParameterMap, ARRAYNUMBER(PNFXStringListParameterMap))
-FXIMPLEMENT(PNFXStringListParameter, PNFXListParameter, NULL, 0)
+//FXIMPLEMENT(PNFXVPPNObjectParameter, PNFXListParameter, PNFXVPPNObjectParameterMap, ARRAYNUMBER(PNFXVPPNObjectParameterMap))
+FXIMPLEMENT(PNFXVPPNObjectParameter, PNFXListParameter, NULL, 0)
 
-PNFXStringListParameter::PNFXStringListParameter(FXComposite* p, PNConfigurableParameterList* param)
+PNFXVPPNObjectParameter::PNFXVPPNObjectParameter(FXComposite* p, PNConfigurableParameterList* param)
 : PNFXListParameter(p, param)
 {
-  _labelsNumChars = 29;
 }
 
-PNFXStringListParameter::~PNFXStringListParameter()
+PNFXVPPNObjectParameter::~PNFXVPPNObjectParameter()
 {
   
 }
 //////////////////////////////////////////////////////////////////////////
 
 void
-PNFXStringListParameter::create()
+PNFXVPPNObjectParameter::create()
 {
   PNFXListParameter::create();
 }
@@ -71,24 +70,34 @@ PNFXStringListParameter::create()
 *	Updates StringList
 */
 void
-PNFXStringListParameter::_update(void)
+PNFXVPPNObjectParameter::_update(void)
 {
-  std::list<std::string>* l = (std::list<std::string>*)_param->getElem();
+  PNVPPNObjectParameter*  list = (PNVPPNObjectParameter*)_param->getElem();
 
   _listBox->clearItems();
 
-  for (std::list<std::string>::iterator it = l->begin(); it != l->end(); it++)
+  for (PNVPPNObjectParameter::iterator it = list->begin(); it != list->end(); ++it)
   {
-	std::string s = (*it);
-	if (_labelsNumChars != 0 && _labelsNumChars != 0 && s.size() > (pnuint)_labelsNumChars)
-	{	
-	  int before = (_labelsNumChars-5)/5*2;
-	  int after = _labelsNumChars-5-before;
-	  s = s.substr(0, before) + "[...]" + s.substr(s.size()-after, s.size());
-	}
+	PNObject*	object = *it;
 
-	_listBox->appendItem(s.c_str(), NULL, NULL);
+	_listBox->appendItem(object->toString().c_str());
   }
+}
+
+bool
+PNFXVPPNObjectParameter::_deleteObject(FXint index)
+{
+  PNVPPNObjectParameter*  list = (PNVPPNObjectParameter*)_param->getElem();
+
+  list->erase(list->begin() + index);
+
+  return true;
+}
+
+bool
+PNFXVPPNObjectParameter::_addNewObject(FXint index)
+{
+  return false;
 }
 
 //////////////////////////////////////////////////////////////////////////

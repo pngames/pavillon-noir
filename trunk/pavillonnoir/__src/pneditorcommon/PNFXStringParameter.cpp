@@ -27,10 +27,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-
 #include <iostream>
-
-#include <fxkeys.h>
 
 #include "pneditorcommon.h"
 #include "pnproperties.h"

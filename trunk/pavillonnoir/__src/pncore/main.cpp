@@ -137,7 +137,7 @@ int	  main(int argc, char* argv[])
 
 	//////////////////////////////////////////////////////////////////////////
 
-	ri->initRender(800, 600, 32);
+	ri->initRender();
 
 	new CEGUI::System((CEGUI::Renderer*)ri->getGUIRenderer());
 	ri->initGUI();

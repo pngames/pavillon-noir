@@ -1,6 +1,6 @@
 Pavillon Noir, Le Jeu: 
 
-version 0.0.2 (2005/11/24)
+version 0.1 ()
 Big improvement of game framework. Starting game desing.
 
 	New Features:
@@ -13,7 +13,7 @@ Big improvement of game framework. Starting game desing.
 		- Add animation/displacement link for characters
 	* IA:
 		- Adding Path Finding system based on waypoints
-		- Start fight handling (terminal prints only)
+		- Adding basic fight handling
 	* GUI:
 		- Add auto generated plugins configuration panel base on PNConfigurable systeme created for editor
 		- New design based on CEGUI falagard system
@@ -24,16 +24,15 @@ Big improvement of game framework. Starting game desing.
 	* EDITOR:
 		- Add local modification for objects in map
 	* 3DS MAX Exporter:
-		- Add physical exporter (do nothing yet)
+		- Add physical exporter
 		- Can now create skeleton limited animation (for multi-animations management)
 		- Add physical exporter max script (based on Opal one) in /tools
 	* INSTALLER/PACKAGES:
 		- Add OpenAl installer into win32 installer
 		- Add Scons script for linux source package (see INSTALL file for howto use it)
 		- Updated Ubuntu Breezy and Debian Sid packages
-		- No more non free resources in the trunk
 	* SCRIPTING :
-		- Rewrite  module to work better with events
+		- Rewrite module to work better with events
 		- Externalize the virtual machine from the map
 
 	Bug Fixes:

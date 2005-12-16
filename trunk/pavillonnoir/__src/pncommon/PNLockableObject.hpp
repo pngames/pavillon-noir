@@ -1,8 +1,8 @@
 /*
-* PNFXDefaultParameter.cpp
+* PNLockableObject.hpp
 * 
 * Description :
-* PNFXDefaultParameter definition
+* PNLockableObject declaration
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,40 +27,39 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
+#ifndef _PNLOCKABLEOBJECT_HPP_
+# define _PNLOCKABLEOBJECT_HPP_
 
-#include "pneditorcommon.h"
-#include "pnproperties.h"
+#include <boost/thread/recursive_mutex.hpp>
 
-#include "PNFXDefaultParameter.hpp"
-
-using namespace std;
+#include "PNObject.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-FXIMPLEMENT(PNFXDefaultParameter, FXLabel, NULL, 0)
-
-// Fixme : change text parameter
-PNFXDefaultParameter::PNFXDefaultParameter(FXComposite* p, PNConfigurableParameter* param) 
-: FXLabel(p, "unknown parameter type"),
-PNPropertiesGridParameter(param)
+/// Base object for all lockable classes of pncommon
+class PNAPI					PNLockableObject : public PNObject
 {
-  setTextColor(0x0000FF);
-}
+  /// lock object* (unlocked in and of the scope)
+#define PNLOCK(obj)			boost::recursive_mutex::scoped_lock  sl((obj)->_mutex)
+#define PNLOCK_BEGIN(obj)	{ PNLOCK(obj)
+#define PNLOCK_END(obj)		}
 
-PNFXDefaultParameter::~PNFXDefaultParameter()
-{
-}
+#define PNLOCKP(obj)		if ((obj)->_pmutex != NULL) boost::recursive_mutex::scoped_lock  sl(*((obj)->_pmutex))
+#define PNLOCKP_BEGIN(obj)	{ PNLOCKP(obj)
+#define PNLOCKP_END(obj)	}
 
-void	PNFXDefaultParameter::create()
-{
-  FXLabel::create();
-}
+  //////////////////////////////////////////////////////////////////////////
+public:
+  boost::recursive_mutex	_mutex;
 
-void PNFXDefaultParameter::update()
-{
-  return;
-}
+  void*						lock();
+  static void				unlock(void *m);
+public:
+  virtual ~PNLockableObject() {}
+};
 
 //////////////////////////////////////////////////////////////////////////
 };
+
+#endif /*_PNOBJECT_HPP_*/
