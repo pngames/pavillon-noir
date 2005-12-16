@@ -176,6 +176,14 @@ function gameMap:fightAction(sourceId)
 
 	nbAS = source:getNBFightSuccess()
 	nbDS = target:getNBFightSuccess()
+	local localisation = 0
+	if (source.strikeLocalisation == LOCALISATION.RANDOM) then
+		localisation = self.die:getVal(6)
+	else
+		localisation = source.strikeLocalisation
+		nbAS = nbAS - 1
+	end
+
 	pnprint("nbAtackerSucces=" .. nbAS .. "nbDefenderSuccess=" .. nbDS .. "\n")
 	local success = nbAS - nbDS
 	local sAnim = 0
@@ -184,12 +192,12 @@ function gameMap:fightAction(sourceId)
 	if ((target.combat_state == COMBAT_STATE.ATTACK) and (self.fights[targetId] == sourceId)) then
 		pnprint(targetId .. " tries to counter!\n")
 		if (success > 0) then
-			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor)
+			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
 			--anim
 			sAnim = CHARACTER_ANIM.JUMP
 			tAnim = CHARACTER_ANIM.WALK_B
 		else
-			source:onDamage(-success + target.stats[target.selected_weapon.skill] + target.selected_weapon.modifier - source.armor)
+			source:onDamage(-success + target.stats[target.selected_weapon.skill] + target.selected_weapon.modifier - source.armor, self.die:getVal(6))
 			--anim
 			sAnim = CHARACTER_ANIM.WALK_B
 			tAnim = CHARACTER_ANIM.JUMP
@@ -198,7 +206,7 @@ function gameMap:fightAction(sourceId)
 	elseif (target.combat_state == COMBAT_STATE.DODGE) then
 		pnprint(targetId .. " tries to dodge!\n")
 		if (success > 0) then
-			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor)
+			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
 			--anim
 			sAnim = CHARACTER_ANIM.JUMP
 			tAnim = CHARACTER_ANIM.WALK_B
@@ -212,15 +220,17 @@ function gameMap:fightAction(sourceId)
 	elseif (target.combat_state == COMBAT_STATE.DEFENSE) then
 		pnprint(targetId .. " defending!\n")
 		if (success > 0) then
-			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor)
+			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
 			--anim
 			sAnim = CHARACTER_ANIM.JUMP
 			tAnim = CHARACTER_ANIM.WALK_B
+		else
+			--anim
 		end
 
 	else
 		pnprint(targetId .. " gonna get it loud!\n")
-		target:onDamage(nbAS + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor)
+		target:onDamage(nbAS + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
 		sAnim = CHARACTER_ANIM.JUMP
 		tAnim = CHARACTER_ANIM.WALK_B
 	end
@@ -244,5 +254,7 @@ function gameMap:onAttack(sourceId, targetId)
 	if (self.fights[targetId] ~= sourceId) then
 		--pnprint("addTask\n")
 		self.timer:addTask(self, "fightAction", 100, false, sourceId)
+	else
+		self.entities.all[sourceId].strikeLocalisation = LOCALISATION.RANDOM
 	end
 end
