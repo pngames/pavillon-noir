@@ -34,7 +34,7 @@
 #include <fstream>
 #include <boost/thread/recursive_mutex.hpp>
 
-#include "PNObject.hpp"
+#include "PNLockableObject.hpp"
 
 typedef int (*lua_library_register)(lua_State *lvm);
 
@@ -42,13 +42,11 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
-class						PNLuaVm: public PNObject
+class						PNLuaVm: public PNLockableObject
 {
 protected:
   lua_State*				_luaVm;
   bool						_debug;
-public:
-  boost::recursive_mutex	_mutex;
 
   //----------------------------CONSTRUCTORS/DESTRUCTOR----------------------
 public:

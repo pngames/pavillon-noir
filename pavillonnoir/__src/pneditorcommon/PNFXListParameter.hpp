@@ -49,12 +49,12 @@ class PNEDAPI				PNFXListParameter : public FXHorizontalFrame, public PNProperti
   FXDECLARE_ABSTRACT(PNFXListParameter);
 
 protected:
-  FXListBox*				_listBox;
-  FXButton*					_buttonDelete;
-  FXButton*					_buttonAdd;
+  FXint						_numVisibleItems;
 
-  bool						_changed;
-  //FXImage ? FXBouton avec image (cliquable = defaut) ?  // temoin de modification
+  FXListBox*				_listBox;
+  FXButton*					_buttonAdd;
+  FXButton*					_buttonDelete;
+  FXButton*					_buttonEdit;
 
 protected:
   PNFXListParameter() : PNPropertiesGridParameterList(NULL) {}
@@ -71,20 +71,37 @@ public:
   {
 	ID_ADD = FXHorizontalFrame::ID_LAST,
 	ID_DELETE,
+	ID_EDIT,
 	ID_LISTBOX_SEL,
 
 	ID_LAST
   };
 
 protected:
-  virtual bool				_deleteObject(FXint index)=0;
-  virtual bool				_addNewObject(FXint index)=0;
+  template<class _ListElement>
+  void						_deleteFromList(FXint index, std::list<_ListElement>& lst);
+  template<class _ListElement>
+  void						_addInList(FXint index, std::list<_ListElement>& lst);
 
-  virtual void				_buildList(void)=0;
-  virtual void				_update()=0;
+  void						_editElement(pnint& elem);
+  void						_editElement(pnuint& elem);
+  void						_editElement(pnfloat& elem);
+  void						_editElement(std::string& elem);
+ 
+  template<class _ListElement>
+  void						_editInList(FXint index, std::list<_ListElement>& lst);
+  template<class _ListElement>
+  void						_updateList(std::list<_ListElement>& lst);
+
+  virtual bool				_deleteObject(FXint index);
+  virtual bool				_addNewObject(FXint index);
+  virtual bool				_editObject(FXint index);
+
+  virtual void				_update();
 public:
   long						onDelete(FXObject*, FXSelector, void* ptr);
   long						onAdd(FXObject* obj, FXSelector sel, void* ptr);
+  long						onEdit(FXObject* obj, FXSelector sel, void* ptr);
   long						onCmdListBox(FXObject*, FXSelector, void*);
 };
 

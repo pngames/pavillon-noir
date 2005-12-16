@@ -38,6 +38,8 @@ namespace PN
 
 typedef enum
 {
+  PN_PARAMTYPE_SEPARATOR = -1,
+
   PN_PARAMTYPE_INT,			// based on pnint
   PN_PARAMTYPE_UINT,		// based on pnuint
   PN_PARAMTYPE_REAL,		// based on pnfloat
@@ -76,6 +78,10 @@ protected:
   std::string			_altText;
   pnbool				_editable;
 
+protected:
+  PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, const std::string& label, const std::string& altText, pnbool editable = true, void* max = NULL, void* min = NULL);
+
+  void					_init(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, pnbool editable, void* max, void* min);
 public:
   PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, pnbool editable = true, void* max = NULL, void* min = NULL);
   virtual ~PNConfigurableParameter();

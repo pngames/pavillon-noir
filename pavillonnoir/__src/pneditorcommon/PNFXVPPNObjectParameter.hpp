@@ -1,8 +1,8 @@
 /*
- * PNFXAnimListParameter
+ * PNFXVPPNObjectParameter
  * 
  * Description :
- * PNFXAnimListParameter declaration
+ * PNFXVPPNObjectParameter declaration
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -30,15 +30,17 @@
 
 /////////////////////////////////////
 
-#ifndef _PNFXAnimListPARAMETER_HPP_
-# define _PNFXAnimListPARAMETER_HPP_
+#ifndef _PNFXVPPPNOBJECTPARAMETER_HPP_
+# define _PNFXVPPPNOBJECTPARAMETER_HPP_
 
 /////////////////////////////////////
 
-#include "pnproperties.h"
+#include <fx.h>
 
-#include "PN3DAnimation.hpp"
-#include "PN3DSkeletonAnimation.hpp"
+/////////////////////////////////////
+
+#include "pneditorcommon.h"
+#include "pnproperties.h"
 
 #include "PNFXListParameter.hpp"
 
@@ -47,36 +49,27 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNIAGraph;
-
-class PNEDAPI				PNFXAnimListParameter : public PNFXListParameter
+class PNEDAPI				PNFXVPPNObjectParameter : public PNFXListParameter
 {
-  FXDECLARE(PNFXAnimListParameter);
-
-  FXDialogBox*				_animDialBox;
-  
-  PN3DSkeletonAnimation*	_skanim;
+  FXDECLARE(PNFXVPPNObjectParameter);
 
 protected:
-  PNFXAnimListParameter() {}
-  PNFXAnimListParameter(PNFXAnimListParameter&) {}
+  PNFXVPPNObjectParameter() {}
+  PNFXVPPNObjectParameter(PNFXVPPNObjectParameter& src) : PNFXListParameter(src) {}
 public:
-  PNFXAnimListParameter(FXComposite* p, PNConfigurableParameterList* param);
-  ~PNFXAnimListParameter();
+  PNFXVPPNObjectParameter(FXComposite* p, PNConfigurableParameterList* param);
+  ~PNFXVPPNObjectParameter();
 
   void						create();
 
-  FXuint					showAnim(PNConfigurableObject* anim);
-  PN3DAnimation*			openAnim(void);
 protected:
+  void						_update();
+
   bool						_deleteObject(FXint index);
   bool						_addNewObject(FXint index);
-  bool						_editObject(FXint index);
-
-  void						_update();
 };
 
 //////////////////////////////////////////////////////////////////////////
 };
 
-#endif /*_PNFXAnimListPARAMETER_HPP_*/
+#endif /*!_PNFXVPPPNOBJECTPARAMETER_HPP_*/

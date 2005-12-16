@@ -37,6 +37,17 @@ namespace PN
 {
 //////////////////////////////////////////////////////////////////////////
 
+PNConfigurableParameter::PNConfigurableParameter(PNConfigurableObject* p,
+												 pnparamtype type,
+												 const std::string& label,
+												 const std::string& altText,
+												 pnbool editable,
+												 void* max,
+												 void* min)
+{
+  _init(p, type, NULL, label, altText, editable, max, min);
+}
+
 PNConfigurableParameter::PNConfigurableParameter(PNConfigurableObject* p, 
 												 pnparamtype type, 
                                                  void* elem, 
@@ -45,7 +56,26 @@ PNConfigurableParameter::PNConfigurableParameter(PNConfigurableObject* p,
 												 pnbool editable,
 												 void* max,
 												 void* min)
-{	
+{
+  _init(p, type, elem, label, altText, editable, max, min);
+}
+
+PNConfigurableParameter::~PNConfigurableParameter()
+{
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void
+PNConfigurableParameter::_init(PNConfigurableObject* p, 
+							   pnparamtype type, 
+							   void* elem, 
+							   const std::string& label, 
+							   const std::string& altText,
+							   pnbool editable, 
+							   void* max, 
+							   void* min)
+{
   _p = p;
 
   _name = label;
@@ -58,10 +88,6 @@ PNConfigurableParameter::PNConfigurableParameter(PNConfigurableObject* p,
   _altText = altText;
   _type = type;
   _editable = editable;
-}
-
-PNConfigurableParameter::~PNConfigurableParameter()
-{
 }
 
 //////////////////////////////////////////////////////////////////////////

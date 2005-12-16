@@ -266,7 +266,7 @@ PNGameMap::unserializeFromFile(const fs::path& dir)
 
   //////////////////////////////////////////////////////////////////////////
   
-  fs::path file(dir.string() + "/entities.xml", fs::native);
+  fs::path file(dir.string() + "/entities.xml", fs::no_check);
 
   return IPNXMLSerializable::unserializeFromFile(file);
 }
@@ -334,7 +334,7 @@ PNGameMap::serializeInFile(const boost::filesystem::path& dir)
   //////////////////////////////////////////////////////////////////////////
   // Entities
 
-  fs::path file(dir.string() + "/entities.xml", fs::native);
+  fs::path file(dir.string() + "/entities.xml", fs::no_check);
 
   IPNXMLSerializable::serializeInFile(file);
 

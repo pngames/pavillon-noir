@@ -83,26 +83,6 @@ void	PNFXMaterialListParameter::create()
   PNFXListParameter::create();
 }
 
-/*
-*	Builds MaterialList list for current parameter.
-*/
-void	
-PNFXMaterialListParameter::_buildList(void)
-{
-  PN3DObject::VectorMaterial* v = (PN3DObject::VectorMaterial*)_param->getElem();
-
-  _listBox->clearItems();
-
-  for (PN3DObject::VectorMaterial::iterator it = v->begin(); it != v->end(); ++it)
-  {
-	PN3DMaterial*	material = *it;
-
-	_listBox->appendItem(FXFile::name(material->getFile()->c_str()), NULL, material);
-  }
-
-  _listBox->setNumVisible(_listBox->getNumItems() < 5 ? _listBox->getNumItems() : 5);
-}
-
 bool
 PNFXMaterialListParameter::_deleteObject(FXint index)
 {
@@ -169,6 +149,16 @@ PNFXMaterialListParameter::_addNewObject(FXint index)
 void
 PNFXMaterialListParameter::_update(void)
 {
+  PN3DObject::VectorMaterial* v = (PN3DObject::VectorMaterial*)_param->getElem();
+
+  _listBox->clearItems();
+
+  for (PN3DObject::VectorMaterial::iterator it = v->begin(); it != v->end(); ++it)
+  {
+	PN3DMaterial*	material = *it;
+
+	_listBox->appendItem(FXFile::name(material->getFile()->c_str()), NULL, material);
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////

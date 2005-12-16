@@ -94,7 +94,7 @@ public:
 
   void						init();
 
-  void						initRender(pnuint widht, pnuint height, pnuint bpp);
+  void						initRender();
 
   //////////////////////////////////////////////////////////////////////////
 private:
@@ -102,6 +102,12 @@ private:
   PNStringParameter			_pTitle;
 
   PNBoolParameter			_pEnableTransparency;
+
+  PNVPPNObjectParameter		_definitionsList;
+  PNConfigurableParameterList*	_pDefinitionsList;
+
+  std::list<pnuint>			_bppList;
+  PNConfigurableParameterList*	_pBppList;
 public:
   void						update(PNConfigurableParameter* p);
 
@@ -160,10 +166,10 @@ public:
   // MAIN
   //////////////////////////////////////////////////////////////////////////
 
-  void						initSDL(int widht, int height, int bpp);
+  void						initSDL();
   void						setSDLFlags(int *flags);
 
-  void						initGL(GLsizei width, GLsizei height);
+  void						initGL();
 
   //////////////////////////////////////////////////////////////////////////
   

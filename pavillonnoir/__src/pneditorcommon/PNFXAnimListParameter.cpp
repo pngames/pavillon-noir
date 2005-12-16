@@ -57,19 +57,19 @@ namespace fs = boost::filesystem;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-// Map
+/*// Map
 FXDEFMAP(PNFXAnimListParameter) PNFXAnimListParameterMap[]=
 {
   FXMAPFUNC(SEL_COMMAND, PNFXAnimListParameter::ID_EDIT, PNFXAnimListParameter::onEdit)
-};
+};*/
 
 //////////////////////////////////////////////////////////////////////////
-FXIMPLEMENT(PNFXAnimListParameter, PNFXListParameter, PNFXAnimListParameterMap, ARRAYNUMBER(PNFXAnimListParameterMap))
+//FXIMPLEMENT(PNFXAnimListParameter, PNFXListParameter, PNFXAnimListParameterMap, ARRAYNUMBER(PNFXAnimListParameterMap))
+FXIMPLEMENT(PNFXAnimListParameter, PNFXListParameter, NULL, 0)
 
 PNFXAnimListParameter::PNFXAnimListParameter(FXComposite* p, PNConfigurableParameterList* param) :
 PNFXListParameter(p, param)
-{
-  _buttonEdit = new FXButton(this, "Edit", NULL, this, ID_EDIT,FRAME_RAISED|FRAME_THICK);
+{ 
 }
 
 PNFXAnimListParameter::~PNFXAnimListParameter()
@@ -84,26 +84,6 @@ PNFXAnimListParameter::create()
   PNFXListParameter::create();
 }
 
-/*
-*	Builds AnimList list for current parameter.
-*/
-void
-PNFXAnimListParameter::_buildList(void)
-{
-  PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem();
-
-  _listBox->clearItems();
-
-  for (PN3DSkeletonObject::AnimationVector::iterator it = v->begin(); it != v->end(); ++it)
-  {
-	PN3DSkeletonAnimation*	skanim = *it;
-
-	_listBox->appendItem(FXFile::name(skanim->anim->getFile()->c_str()), NULL,  skanim->anim);
-  }
-
-  _listBox->setNumVisible(_listBox->getNumItems()< 5 ? _listBox->getNumItems() : 5);
-}
-
 bool
 PNFXAnimListParameter::_deleteObject(FXint index)
 {
@@ -112,27 +92,6 @@ PNFXAnimListParameter::_deleteObject(FXint index)
   v->erase(v->begin() + index);
 
   return true;
-}
-
-bool
-PNFXAnimListParameter::_addNewObject(FXint index)
-{
-  PN3DAnimation* anim = openAnim();
-
-  if (anim != NULL)
-  {  
-	PN3DSkeletonAnimation* skanim = new PN3DSkeletonAnimation(anim, NULL);
-
-	_skanim = skanim;
-	if (showAnim(skanim))
-	{
-	  PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem(); 
-
-	  v->insert(v->begin() + index, _skanim);
-	}
-  }
-
-  return false;
 }
 
 PN3DAnimation*  
@@ -167,17 +126,26 @@ PNFXAnimListParameter::openAnim()
   return NULL;
 }
 
-
-long
-PNFXAnimListParameter::onEdit(FXObject* obj, FXSelector sel, void* ptr)
+bool
+PNFXAnimListParameter::_addNewObject(FXint index)
 {
-  PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem();
+  PN3DAnimation* anim = openAnim();
 
-  showAnim((*v)[_listBox->getCurrentItem()]);
+  if (anim != NULL)
+  {  
+	PN3DSkeletonAnimation* skanim = new PN3DSkeletonAnimation(anim, NULL);
 
-  return 1;
+	_skanim = skanim;
+	if (showAnim(skanim))
+	{
+	  PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem(); 
+
+	  v->insert(v->begin() + index, _skanim);
+	}
+  }
+
+  return false;
 }
-
 
 FXuint
 PNFXAnimListParameter::showAnim(PNConfigurableObject* skanim)
@@ -201,12 +169,34 @@ PNFXAnimListParameter::showAnim(PNConfigurableObject* skanim)
   return _animDialBox->execute();
 }
 
+bool
+PNFXAnimListParameter::_editObject(FXint index)
+{
+  PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem();
+
+  showAnim((*v)[index]);
+
+  return true;
+}
+
 /*
 *	Updates AnimList
 */
 void
 PNFXAnimListParameter::_update(void)
 {
+  PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem();
+
+  _listBox->clearItems();
+
+  for (PN3DSkeletonObject::AnimationVector::iterator it = v->begin(); it != v->end(); ++it)
+  {
+	PN3DSkeletonAnimation*	skanim = *it;
+
+	_listBox->appendItem(FXFile::name(skanim->anim->getFile()->c_str()), NULL,  skanim->anim);
+  }
+
+  _listBox->setNumVisible(_listBox->getNumItems()< 5 ? _listBox->getNumItems() : 5);
 }
 
 //////////////////////////////////////////////////////////////////////////

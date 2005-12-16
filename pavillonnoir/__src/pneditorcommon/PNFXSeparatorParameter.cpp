@@ -1,8 +1,8 @@
 /*
-* PNFXDefaultParameter.cpp
+* PNFXSeparatorParameter.cpp
 * 
 * Description :
-* PNFXDefaultParameter definition
+* PNFXSeparatorParameter definition
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,37 +27,34 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-
 #include "pneditorcommon.h"
 #include "pnproperties.h"
 
-#include "PNFXDefaultParameter.hpp"
+#include "PNFXSeparatorParameter.hpp"
 
 using namespace std;
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-FXIMPLEMENT(PNFXDefaultParameter, FXLabel, NULL, 0)
+FXIMPLEMENT(PNFXSeparatorParameter, FXLabel, NULL, 0)
 
-// Fixme : change text parameter
-PNFXDefaultParameter::PNFXDefaultParameter(FXComposite* p, PNConfigurableParameter* param) 
-: FXLabel(p, "unknown parameter type"),
-PNPropertiesGridParameter(param)
+PNFXSeparatorParameter::PNFXSeparatorParameter(FXComposite* p, PNConfigurableParameter* param) 
+: FXLabel(p, ""), PNPropertiesGridParameter(param)
 {
-  setTextColor(0x0000FF);
+  
 }
 
-PNFXDefaultParameter::~PNFXDefaultParameter()
+PNFXSeparatorParameter::~PNFXSeparatorParameter()
 {
 }
 
-void	PNFXDefaultParameter::create()
+void	PNFXSeparatorParameter::create()
 {
   FXLabel::create();
 }
 
-void PNFXDefaultParameter::update()
+void PNFXSeparatorParameter::update()
 {
   return;
 }

@@ -43,7 +43,9 @@
 #include "PNFXScriptListParameter.hpp"
 #include "PNFXStringListParameter.hpp"
 #include "PNFXCheckButtonParameter.hpp"
+#include "PNFXVPPNObjectParameter.hpp"
 #include "PNFXDefaultParameter.hpp"
+#include "PNFXSeparatorParameter.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -78,12 +80,22 @@ PNPropertiesGrid::setObject(PNConfigurableObject* object)
   while (childAtRowCol(0,0) != NULL)
     delete childAtRowCol(0,0);
 
+  // FIXME: il faut faire un delete sur chaque element sinon ca fait une fuite de memoire monstrueuse
+
   _params.clear();
   _object = object;
   
   for (int idx = 0; idx < _object->getNbParameters(); idx++)
   {
-    PNConfigurableParameter* current_param = _object->getParameter(idx);
+	PNConfigurableParameter* current_param = _object->getParameter(idx);
+
+	if (current_param->getType() == PN_PARAMTYPE_SEPARATOR)
+	{
+	  new PNFXSeparatorParameter(this, current_param);
+	  new PNFXSeparatorParameter(this, current_param);
+	  continue;
+	}
+
     new FXLabel(this, current_param->getLabel().c_str(), NULL, JUSTIFY_LEFT|LAYOUT_FILL_X|LAYOUT_CENTER_Y);
 
 	switch (current_param->getType())
@@ -118,6 +130,11 @@ PNPropertiesGrid::setObject(PNConfigurableObject* object)
 	  _params.push_back(new PNFXEventBoxParameter(this, current_param));
 	  break;
 
+	case PN_LISTPARAMTYPE_INT:
+	case PN_LISTPARAMTYPE_UINT:
+	case PN_LISTPARAMTYPE_REAL:
+	  _params.push_back(new PNFXListParameter(this, (PNConfigurableParameterList*)current_param));
+	  break;
 	case PN_LISTPARAMTYPE_ANIM:
 	  _params.push_back(new PNFXAnimListParameter(this, (PNConfigurableParameterList*)current_param));
 	  break;
@@ -129,6 +146,9 @@ PNPropertiesGrid::setObject(PNConfigurableObject* object)
 	  break;
 	case PN_LISTPARAMTYPE_STRING:
 	  _params.push_back(new PNFXStringListParameter(this, (PNConfigurableParameterList*)current_param));
+	  break;
+	case PN_LISTPARAMTYPE_VPPNOBJECT:
+	  _params.push_back(new PNFXVPPNObjectParameter(this, (PNConfigurableParameterList*)current_param));
 	  break;
 
 	default:
