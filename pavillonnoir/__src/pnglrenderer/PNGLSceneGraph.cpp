@@ -154,8 +154,10 @@ PNGLSceneGraph::render(pnuint deltaTime, pnuint time)
   //////////////////////////////////////////////////////////////////////////
   // RENDER 3D OBJETCTS
   //////////////////////////////////////////////////////////////////////////
-
-  glDisable(GL_LIGHTING);
+pnfloat scolor[4] = {1.0f, 1.0f, 1.0f, 0.3f};
+PNPoint3f lpos(-200.0f, 9000.0f, 500.0f);
+//glDisable(GL_LIGHTING);
+PNRendererInterface::getInstance()->renderSphere(100.0, 20, 20, scolor, lpos);
 
   //glEnable(GL_LIGHTING);
   //glLightfv(GL_LIGHT0, GL_POSITION, Light1Pos);
