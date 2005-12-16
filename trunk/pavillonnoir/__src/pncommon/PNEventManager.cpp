@@ -31,6 +31,7 @@
 #include "pnevent.h"
 
 #include "PNEventManager.hpp"
+#include "PN3DSkeletonObject.hpp"
 
 namespace fs = boost::filesystem;
 using namespace PN;
@@ -328,15 +329,13 @@ PNEventManager::run()
 	  type = event.type;
 	  source = event.source;
 	  data = event.data;
+
+	  _events.pop();
 	}
 	PNLOCK_END(this);
 
 	sendEvent(type, source, data);
 
-	PNLOCK(this);
-
-    _events.pop();
-    
 	if (data != NULL && data->destructData)
       delete data;
   }
