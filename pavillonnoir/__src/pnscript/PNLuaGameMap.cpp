@@ -250,9 +250,9 @@ void  PNLuaGameMap::onAnimEnd(pnEventType evt, PNObject* source, PNEventData* da
 
   luaOrder << "gameMap.entities.all[\"";
   luaOrder << obj->getId();
-  luaOrder << "\"]:checkAnimEnd(\"";
+  luaOrder << "\"]:checkAnimEnd(";
   luaOrder << animData->playId;
-  luaOrder << "\")";
+  luaOrder << ")";
   pnerror(PN_LOGLVL_DEBUG, "%s", luaOrder.str().c_str());
   manageLuaError(_LVM.execString(luaOrder.str()));
 }

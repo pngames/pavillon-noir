@@ -19,7 +19,7 @@ function PNAICharacterClass(id)
 	OBJ.pathFinding:unserializeFromPath(gameMap:getWpFile())
 --	pnprint("pathFinding created\n")
 	OBJ.toReach = PN3DObject:new_local()
-	OBJ.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2, PN_IA_WAIT_ANIM_END = 3}
+	OBJ.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2, PN_IA_WAIT_ANIM_END = 3, PN_IA_COMA}
 	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
 	OBJ.elapsedTurns = 0
 	OBJ.pastStates = {}
@@ -196,8 +196,22 @@ Called when an object enters the frustrum of the character
 Called at the end of a Fight Action
 %--]]
 	OVERRIDE(OBJ, "onDamage")
-	function OBJ:onDamage(damage)
-		pnprint(self.id .. " gets " .. damage .. " as damage\n")
+	function OBJ:onDamage(damage, localisation)
+		pnprint(self.id .. " gets " .. damage .. " at localisation " .. localisation .. " as damage\n")
+		self.m_wounds[localisation] = self.m_wounds[localisation] + damage
+		if (self.m_wounds[localisation] > self.health_state) then
+			self.health_state = self.m_wounds[localisation]
+		end
+		if (self.health_state == HEALTH_STATE.COMA) then
+			self:setState(self.stateEnum.PN_IA_COMA)
+			--Anim Coma
+		elseif (self.health_state >= HEALTH_STATE.LETHAL) then
+			--Anim Death
+			self:startAnimation(CHARACTER_ANIM.DIE)
+			--Event Death
+			pnprint(self.id .. "is dead !\n")
+		end
+		
 	end
 --------------------------------------------------------
 --[[%
@@ -216,9 +230,9 @@ Checks if waited Animation is the one that ended
 %--]]
 	OVERRIDE(OBJ, "checkAnimEnd")
 	function OBJ:checkAnimEnd(anim)
-		pnprint("=> PNAICharacter:checkAnimEnd\n")
+		pnprint("=> PNAICharacter:checkAnimEnd(" .. anim .. ") and waited: " .. self.waitedAnim .. "\n")
 		if ((self.state == self.stateEnum.PN_IA_WAIT_ANIM_END) and (self.waitedAnim == anim)) then
-			restoreState()
+			self:restoreState()
 			if (self.state == self.stateEnum.PN_IA_FIGHTING and (self.combat_state == COMBAT_STATE.ATTACK)) then
 				self.combat_state = COMBAT_STATE.NEUTRAL
 			end

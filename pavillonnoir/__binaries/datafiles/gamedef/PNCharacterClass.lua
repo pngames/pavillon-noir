@@ -58,6 +58,15 @@ CHARACTER_DIR_LATE={NONE=0,
 				  	RIGHT=-1
 				    }
 
+LOCALISATION={RANDOM = 0,
+			  HEAD = 1,
+			  TORSO = 2,
+			  LARM = 3,
+			  RARM = 4,
+			  LLEG = 5,
+			  RLEG = 6
+			  }				    
+				    
 function PNCharacterClass(id)
 	----------inheritance-----------------
 	local OBJ = inheritFrom(PN3DSkeletonObjectClass(id))
@@ -87,15 +96,9 @@ function PNCharacterClass(id)
 	OBJ.items.weapons	=	{h2h=PNWeaponH2HClass("h2h")} --FIXME id de merde
 	--------------------------------------
 	-------LIST OF WOUNDS BY MEMBER-------
-	OBJ.m_wounds=	{head=0,
-							 torso=0,
-							 r_arm=0,
-							 l_arm=0,
-							 r_leg=0,
-							 l_leg=0
-							}
+	OBJ.m_wounds=	{0,0,0,0,0,0}
 	--------------------------------------
-	OBJ.health_state = 0
+	OBJ.health_state = HEALTH_STATE.OK
 	OBJ.selected_weapon = OBJ.items.weapons.h2h
 	OBJ.combat_state = COMBAT_STATE.NEUTRAL
 	OBJ.realCharacType = CHARACTER_TYPE.CIVILIAN
@@ -128,7 +131,7 @@ function PNCharacterClass(id)
 	OBJ.actualSpeed = OBJ.walkingSpeed
 	-----------------------------------------------------------
 	------------------- Jump Parameter ------------------------
-	OBJ.JumpHight= 0;
+	OBJ.JumpHeight= 0;
 	--------------- Animation parameters ---------------------- 
 	OBJ:setAnimSpeed(4.0)
 	OBJ.idleTime = 0
@@ -136,6 +139,7 @@ function PNCharacterClass(id)
 	----------------- Fight Management ------------------------ 
 	OBJ.armor = 0
 	gameMap.fights[OBJ.id] = -1
+	OBJ.strikeLocalisation = LOCALISATION.RANDOM
 -------------------------------------------------------------------------------
 ---------------------move order callback-----------------------
 --[[%
@@ -310,7 +314,7 @@ Add the entity in the seen_entities list
 	function OBJ:onInit()
     	pnprint("onInit()\n")
     	self:PN3DSkeletonObject_onInit()
-    	--self.JumpHight= (self:getMax().y - self:getMin().y ) /3
+    	--self.JumpHeight= (self:getMax().y - self:getMin().y ) /3
 		--self.attitude = CHARACTER_ATTITUDE.WALKING
 		--self.actualSpeed = self.walkingSpeed	
     end
@@ -322,9 +326,9 @@ Add the entity in the seen_entities list
 		self.view:update(deltaTime)
 		self:setMovingSpeed(self.actualSpeed)
 		self.idleTime = self.idleTime + deltaTime;
-		if (self.idleTime >= 10000 and self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.NONE)then
+		if (self.idleTime >= 10000 and self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.NONE) then
 			self:setEnableLoop(false)
-			self:startAnimation(CHARACTER_ANIM.IDLE, 0)
+			self:startAnimation(CHARACTER_ANIM.IDLE)
 			self.idleTime = 0
 		end
 		self:PN3DSkeletonObject_onUpdate(deltaTime)
@@ -378,7 +382,7 @@ Add the entity in the seen_entities list
 --[[%
 Overriden in PNAICharacterClass
 %--]]
-    function OBJ:onDamage(damage)
+    function OBJ:onDamage(damage, localisation)
 	end
 --------------------------------------------------------------------------------
 --[[%
@@ -523,7 +527,7 @@ Launches an Animation and waits for its end
 				-- nb success
 				for i = 1, nbDice do
 					--pnprint(self.id .. " throwing a die !\n")
-					if ((gameMap.die:getVal() + MDsuccess) <= self.skills[self.selected_weapon.type]) then
+					if ((gameMap.die:getVal(10) + MDsuccess) <= self.skills[self.selected_weapon.type]) then
 						--pnprint("\tsuccess !\n")
 						nbS = nbS + 1
 					end
