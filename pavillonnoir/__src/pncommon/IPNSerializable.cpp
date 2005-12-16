@@ -148,7 +148,7 @@ IPNSerializable::serializeInPath(const std::string& path)
 {
   setPath(path);
 
-  return serializeInFile(fs::path(path, fs::native));
+  return serializeInFile(fs::path(path, fs::no_check));
 }
 
 /**
