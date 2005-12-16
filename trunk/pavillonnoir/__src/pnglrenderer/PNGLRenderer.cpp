@@ -362,16 +362,62 @@ PNGLRenderer::initGL(GLsizei width, GLsizei height)
 
   //////////////////////////////////////////////////////////////////////////
   
-  float Light1Dif[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-  float Light1Spec[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-  float Light1Amb[4] = {0.5f, 0.5f, 0.5f, 1.0f};
+  //float Light1Dif[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+  //float Light1Spec[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+  //float Light1Amb[4] = {0.5f, 0.5f, 0.5f, 1.0f};
 
-  glLightfv(GL_LIGHT0, GL_DIFFUSE, Light1Dif);
-  glLightfv(GL_LIGHT0, GL_SPECULAR, Light1Spec);
-  glLightfv(GL_LIGHT0, GL_AMBIENT, Light1Amb);
-
-  glEnable(GL_LIGHTING);
+  //glLightfv(GL_LIGHT0, GL_DIFFUSE, Light1Dif);
+  //glLightfv(GL_LIGHT0, GL_SPECULAR, Light1Spec);
+  //glLightfv(GL_LIGHT0, GL_AMBIENT, Light1Amb);
+  
+  float ambient[4] = {0.7f, 0.7f, 0.7f, 1.0f};
+  float diffuse[4] = {0.8f, 0.8f, 0.8f, 1.0f};
+  float specular[4] = {0.0f, 0.0f, 0.0f, 1.0f};
+  // A modifier
+  float position[4] = {-200.0f, 9000.0f, 500.0f, 1.0f};
+  //
+  float direction[3] = {0.2f, -1.0f, 0.0f};
+  float exponent= 0.0f;                          // Light spot exponent
+  float cutoff= 180.0f;                          // Light spot cutoff
+  float c_attn= 1.0f;                            // Light constant attenuation
+  float l_attn= 0.0f;                            // Light linear attenuation
+  float q_attn= 0.0f;      
+  
+  // Light on
   glEnable(GL_LIGHT0);
+  glLightfv(GL_LIGHT0,GL_AMBIENT, ambient);
+  glLightfv(GL_LIGHT0,GL_DIFFUSE, diffuse);
+  glLightfv(GL_LIGHT0,GL_SPECULAR, specular);
+  glLightfv(GL_LIGHT0,GL_POSITION, position);
+  glLightfv(GL_LIGHT0,GL_SPOT_DIRECTION, direction);
+  glLightf(GL_LIGHT0,GL_SPOT_EXPONENT, exponent);
+  glLightf(GL_LIGHT0,GL_SPOT_CUTOFF, cutoff);
+  glLightf(GL_LIGHT0,GL_CONSTANT_ATTENUATION, c_attn);
+  glLightf(GL_LIGHT0,GL_LINEAR_ATTENUATION, l_attn);
+  glLightf(GL_LIGHT0,GL_QUADRATIC_ATTENUATION, q_attn);
+  glEnable(GL_LIGHTING);
+  
+  //// Viewer is close0
+  glLightModelfv(GL_LIGHT_MODEL_AMBIENT,ambient);
+//  glLightModeli(GL_LIGHT_MODEL_AMBIENT, TRUE);
+  glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER,TRUE);
+
+  //////////////////////////////////////////////////////////////////////////
+  // Material //////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////
+  //float mambient[4] = {0.2f, 0.2f, 0.2f, 1.0f};   // Material ambient reflectivity
+  //float mdiffuse[4] = {0.8f, 0.8f, 0.8f, 1.0f};   // Material diffuse reflectivity
+  //float mspecular[4] = {1.0f, 1.0f, 1.0f, 1.0f};  // Material specular reflectivity
+  //float memission[4] = {0.0f, 0.0f, 0.0f, 1.0f};  // Material emissivity
+  //float mshininess = 30.0f;                       // Material shininess
+
+  ////// Material colors
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT, mambient);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE, mdiffuse);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR, mspecular);
+  //glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION, memission);
+  //glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS, mshininess);
+
 
   //////////////////////////////////////////////////////////////////////////
   
