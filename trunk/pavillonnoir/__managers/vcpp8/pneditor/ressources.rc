@@ -13,7 +13,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Français (France) resources
+// French (France) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
 #ifdef _WIN32
@@ -80,12 +80,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Pavillon Noir"
             VALUE "FileDescription", "Application pneditor"
-            VALUE "FileVersion", "0, 0, 1, 0"
+            VALUE "FileVersion", "0, 1, 0, 0"
             VALUE "InternalName", "pneditor"
-            VALUE "LegalCopyright", "Copyright (C) 2005"
+            VALUE "LegalCopyright", "GPL 2"
             VALUE "OriginalFilename", "pneditor.exe"
-            VALUE "ProductName", "Application pneditor"
-            VALUE "ProductVersion", "0, 0, 1, 0"
+            VALUE "ProductName", "Pavillon-Noir editor"
+            VALUE "ProductVersion", "0, 1, 0, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -94,7 +94,7 @@ BEGIN
     END
 END
 
-#endif    // Français (France) resources
+#endif    // French (France) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

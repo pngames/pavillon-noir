@@ -260,6 +260,10 @@
 				RelativePath="..\..\..\__src\pncommon\PNVRef.hpp"
 				>
 			</File>
+			<File
+				RelativePath=".\resource.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="3D"
@@ -917,6 +921,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\pncommon.rc"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
