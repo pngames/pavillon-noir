@@ -3,12 +3,18 @@ Pavillon Noir, Le Jeu:
 version 0.1 ()
 Big improvement of game framework. Starting game desing.
 
+	GAME:
+	-----
+	* Starting movie:
+		- Adding first version of first scene video (pavillonnoir/__binaries/datafiles/videos)
+		- [Temporary] Adding button in main menu ("scene 1") to lauch video
+
+	* Level1:
+		- 
+
 	New Features:
 	-------------
 	* this Changelog
-	* GAME:
-		- Adding first version of first scene video (pavillonnoir/__binaries/datafiles/videos)
-		- [Temporary] Adding button in main menu ("scene 1") to lauch video
 	* GAMEPLAY:
 		- Add animation/displacement link for characters
 	* IA:
@@ -17,7 +23,7 @@ Big improvement of game framework. Starting game desing.
 	* GUI:
 		- Add auto generated plugins configuration panel base on PNConfigurable systeme created for editor
 		- New design based on CEGUI falagard system
-		- Add map loading panel
+		- Add map loading/unloading panel
 		- Console improvement:
 			- fade in / fade out
 			- add completion
@@ -30,9 +36,9 @@ Big improvement of game framework. Starting game desing.
 	* INSTALLER/PACKAGES:
 		- Add OpenAl installer into win32 installer
 		- Add Scons script for linux source package (see INSTALL file for howto use it)
-		- Updated Ubuntu Breezy and Debian Sid packages
+		- Updated Ubuntu and Debian Sid packages
 	* SCRIPTING :
-		- Rewrite module to work better with events
+		- Rewrite module to work better with events system
 		- Externalize the virtual machine from the map
 
 	Bug Fixes:
@@ -46,20 +52,26 @@ Big improvement of game framework. Starting game desing.
 
 	Common Libs:
 	------------
-	* Separate target system in two target: view target and position target
-	* Adding target modes for PN3DObjects:
-		- distance management (absolute and non-absolute)
-		- position management (absolute and non-absolute)
-		- orientation management
-	* Adding bone targeting for all modes
-	* Add frustrum test for characters cameras and render cameras to filter viewed objects and generate IN/OUT frustrum events
-	* Modif pno xml format to have "objet" node in root with a "modele" node in same level than materials, skeletton, etc...
-	* Adding physical object in 3dobjects based on xml definition object of Opal
-	* Add Skybox management in RendererInterface
 	* Add various functions in maths class
-	* Add new option in PNTExtures: can now choise to bing enlarged or repeated textures
-	* Importer auto-determine the textures binding repeat options
-	* Add multi-animations support
+	* 3d objects :
+		- Separate target system in two target: view target and position target
+		- Adding target modes for PN3DObjects:
+			- distance management (absolute and non-absolute)
+			- position management (absolute and non-absolute)
+			- orientation management
+		- Adding bone targeting for all modes		
+		- Adding physical object in 3dobjects based on xml definition object of Opal
+		- Modif pno xml format to have "objet" node in root with a "modele" node in same level than materials, skeletton, etc...
+		- Add multi-animations support
+	* Render :
+		- Add frustrum test for characters cameras and render cameras to filter viewed objects and generate IN/OUT frustrum events
+		- Add Skybox management in RendererInterface
+		- Add new option in PNTExtures: can now choise to bing enlarged or repeated textures
+		- Importer auto-determine the textures binding repeat options
+	* Configurable system :
+		- add lots of new windget in Fox implementation
+		- great improvement of Fox implementation by rewrite move clener lots of widgets
+		- add CEGUI implementation for int, bool, float and string parameters
 
 	Dependencies:
 	-------------
