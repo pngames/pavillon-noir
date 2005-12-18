@@ -218,7 +218,15 @@
 				RelativePath="..\..\..\__src\pnsound\PNSoundPlugDesc.hpp"
 				>
 			</File>
+			<File
+				RelativePath=".\resource.h"
+				>
+			</File>
 		</Filter>
+		<File
+			RelativePath=".\pnsound.rc"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

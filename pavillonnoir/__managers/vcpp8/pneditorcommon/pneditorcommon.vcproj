@@ -305,6 +305,10 @@
 				RelativePath="..\..\..\__src\pneditorcommon\PNPropertiesPopup.hpp"
 				>
 			</File>
+			<File
+				RelativePath=".\resource.h"
+				>
+			</File>
 			<Filter
 				Name="Parameters"
 				>
@@ -382,6 +386,10 @@
 				</File>
 			</Filter>
 		</Filter>
+		<File
+			RelativePath=".\pneditorcommon.rc"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

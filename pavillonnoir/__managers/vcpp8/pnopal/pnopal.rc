@@ -49,21 +49,12 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Icon
-//
-
-// Icon with lowest ID value placed first to ensure application icon
-// remains consistent on all systems.
-IDI_ICON1               ICON                    "pncore.ico"
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // Version
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,0,1,0
- PRODUCTVERSION 0,0,1,0
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -71,20 +62,18 @@ VS_VERSION_INFO VERSIONINFO
  FILEFLAGS 0x0L
 #endif
  FILEOS 0x4L
- FILETYPE 0x1L
+ FILETYPE 0x2L
  FILESUBTYPE 0x0L
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
         BLOCK "040c04b0"
         BEGIN
-            VALUE "CompanyName", "Pavillon Noir"
-            VALUE "FileDescription", "Application pncore"
+            VALUE "FileDescription", "pnopal Dynamic Link Library"
             VALUE "FileVersion", "0, 1, 0, 0"
-            VALUE "InternalName", "pncore"
+            VALUE "InternalName", "pnopal"
             VALUE "LegalCopyright", "GPL 2"
-            VALUE "OriginalFilename", "pncore.exe"
-            VALUE "ProductName", "Pavillon-Noir core"
+            VALUE "OriginalFilename", "pnopal.dll"
             VALUE "ProductVersion", "0, 1, 0, 0"
         END
     END
