@@ -59,7 +59,7 @@ PNI3DModel::dispose()
 //////////////////////////////////////////////////////////////////////////
 
 void
-PNI3DModel::render(std::vector<PN3DMaterial*>& mats, PN3DSkeleton* sk)
+PNI3DModel::render(std::vector<PN3DMaterial*>* mats, PN3DSkeleton* sk)
 {
   if (sk != NULL)
   {
@@ -82,35 +82,7 @@ PNI3DModel::render(std::vector<PN3DMaterial*>& mats, PN3DSkeleton* sk)
 
   for (LIST_3DMESH::iterator it = _meshes.begin(); it != _meshes.end(); ++it)
   {
-	(*it)->render(mats);
-  }
-}
-
-void
-PNI3DModel::render(PN3DSkeleton* sk)
-{
-  if (sk != NULL)
-  {
-	for (VECTOR_VERTEX::iterator it = _vertex.begin(); it != _vertex.end(); ++it)
-	{
-	  PNIVertex&  vert = *it;
-
-	  vert.transform(sk);
-
-	  _min.x = PNMIN(_min.x, vert.x); _max.x = PNMAX(_max.x, vert.x);
-	  _min.y = PNMIN(_min.y, vert.y); _max.y = PNMAX(_max.y, vert.y);
-	  _min.z = PNMIN(_min.z, vert.z); _max.z = PNMAX(_max.z, vert.z);
-	}
-
-	/*PNVector3f dim = PNVector3f(_min, _max);
-	dim /= 2;
-	_center = min;
-	_center += *dim;*/
-  }
-
-  for (LIST_3DMESH::iterator it = _meshes.begin(); it != _meshes.end(); ++it)
-  {
-	(*it)->render();
+	(*it)->render(mats, sk == NULL);
   }
 }
 

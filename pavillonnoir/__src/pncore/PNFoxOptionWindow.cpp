@@ -118,7 +118,7 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 		desc->getName(), desc->getVersion(), desc->getNbInterface()); 
 
     // creates a tab for each Interface
-    for (pnuint i = 0; i < desc->getNbInterface(); i++)
+    for (pnuint i = 0; i < desc->getNbInterface(); ++i)
     {
 	  PNInterface*	interf = desc->getInterface(i);
   	  if (interf == NULL)

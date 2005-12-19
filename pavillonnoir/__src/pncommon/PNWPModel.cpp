@@ -80,13 +80,7 @@ PNWPModel::getFile()
 }
 
 void
-PNWPModel::render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk)
-{
-  render(sk);
-}
-
-void
-PNWPModel::render(PN3DSkeleton* sk)
+PNWPModel::render(std::vector<PN3DMaterial*>* mat, PN3DSkeleton* sk)
 {
   PNRendererInterface* pnri = PNRendererInterface::getInstance();
   pnri->renderSphere(15.0f, 20, 20, _color);

@@ -42,13 +42,16 @@ class PNRenderMaterial;
 class			PNGLRendererObject : public PNRendererObject
 {
   friend		PNRendererObject*	PNGLRenderer::newObj();
+  friend		PNRendererObject*	PNGLRenderer::duplicateObj(PNRendererObject* obj);
   friend		void				PNGLRenderer::deleteObj(PNRendererObject* obj);
 private:
-  PNGLRenderer&	_renderer;
+  PNGLRenderer*	_renderer;
 
   void			_setBuffers();
+  void			_unsetBuffers();
 private:
-  PNGLRendererObject(PNGLRenderer& renderer);
+  PNGLRendererObject(PNGLRenderer* renderer);
+  PNGLRendererObject(const PNGLRendererObject& renderer);
   ~PNGLRendererObject();
 public:
   //////////////////////////////////////////////////////////////////////////
@@ -64,7 +67,7 @@ public:
 
   void			setInterleaveArray(void* array, pnuint size, pnrenderflag format = PN_T2F_C4F_N3F_V3F);
 
-  void			setIndexBuffer(pnuint* array, pnint nbIndex);
+  void			setIndexBuffer(pnuint* array, pnint nbIndex, pnbool compressed = false);
 
   //////////////////////////////////////////////////////////////////////////
   // Faces

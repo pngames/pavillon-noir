@@ -63,7 +63,7 @@ PN3DCameraModel*
 PN3DCameraModel::getInstance()
 {
   if (_instance == NULL)
-	_instance = new PN3DCameraModel;
+	_instance = new PN3DCameraModel();
 
   return _instance;
 }
@@ -75,13 +75,7 @@ PN3DCameraModel::getFile()
 }
 
 void
-PN3DCameraModel::render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk)
-{
-  render(sk);
-}
-
-void
-PN3DCameraModel::render(PN3DSkeleton* sk)
+PN3DCameraModel::render(std::vector<PN3DMaterial*>* mat, PN3DSkeleton* sk)
 {
   PNRendererInterface* pnri = PNRendererInterface::getInstance();
   pnri->renderSphere(15.0f, 20, 20, _color);

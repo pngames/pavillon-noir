@@ -1199,9 +1199,9 @@ PN3DObject::render()
   if (_model != NULL && _renderMode & RENDER_MODEL)
   {
 	if (_renderMode & RENDER_MATERIALS && _materials.size() > 0)
-	  _model->render(_materials);
+	  _model->render(&_materials);
 	else
-	  _model->render();
+	  _model->render(NULL);
   }
 
   if (_physicalObject != NULL && _renderMode & RENDER_PHYSICAL)

@@ -84,7 +84,8 @@ PNInterface::getLabel()
 void
 PNInterface::addParam(PNConfigurableParameter* p)
 {
-  _vectorParameters.push_back(p);
+  if (p != NULL)
+	_vectorParameters.push_back(p);
 }
 
 //////////////////////////////////////////////////////////////////////////

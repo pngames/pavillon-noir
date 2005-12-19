@@ -94,6 +94,8 @@ public:
 	pnfloat *colors, pnfloat *textures, pnuint nb_vert,
 	pnuint  *index, pnuint nb_index, pnrenderflag mode = PN_TRIANGLES)=0;
 
+  virtual PNRendererObject* duplicateObj(PNRendererObject* obj)=0;
+
   virtual void				deleteObj(PNRendererObject* obj)=0;
 
   //////////////////////////////////////////////////////////////////////////

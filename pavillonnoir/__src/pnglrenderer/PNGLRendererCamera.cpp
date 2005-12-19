@@ -190,7 +190,10 @@ void	PNGLRendererCamera::rotateRollRadians(pnfloat roll)
 
 void	PNGLRendererCamera::rotateYawRadians(pnfloat yaw)
 {
-  rotateYRadians(yaw);
+  if (getTopDirection().scalarProduct(_orient * getTopDirection().getVector()) >= 0)
+	rotateYRadians(yaw);
+  else
+	rotateYRadians(-yaw);
 }
 
 //////////////////////////////////////////////////////////////////////////
