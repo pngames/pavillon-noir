@@ -232,6 +232,12 @@ PNGLRenderer::getTicks()
   return SDL_GetTicks();
 }
 
+pnuint
+PNGLRenderer::getCurrentDelta()
+{
+  return _deltaTime;
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 void
@@ -477,7 +483,7 @@ PNGLRenderer::run()
   _isProgramLooping = true;
 
   pnuint		lastLoopDate = getTicks();
-  pnuint		deltaTime;
+  _deltaTime = 0;
   pnuint		currentLoopDate = getTicks();
   SDL_Event		event;
 
@@ -490,7 +496,7 @@ PNGLRenderer::run()
   {
     //timer
     currentLoopDate = getTicks();
-    deltaTime = currentLoopDate - lastLoopDate;
+    _deltaTime = currentLoopDate - lastLoopDate;
     lastLoopDate = currentLoopDate;
 
 	while (SDL_PollEvent(&event))
@@ -516,7 +522,7 @@ PNGLRenderer::run()
 	  // RENDER SCENE
 	  //////////////////////////////////////////////////////////////////////////
 
-	  _scene.render(deltaTime, currentLoopDate);
+	  _scene.render(_deltaTime, currentLoopDate);
 
 	  //////////////////////////////////////////////////////////////////////////
 	  // END

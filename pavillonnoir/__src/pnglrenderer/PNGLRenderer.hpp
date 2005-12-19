@@ -83,6 +83,8 @@ private:
   pnbool					_isProgramLooping;
   
   pnuint                    _lastRenderTime;
+
+  pnuint					_deltaTime;
 public:
   static PNGLRenderer*		getInstance();
 
@@ -119,6 +121,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
   
   pnuint					getTicks();
+  pnuint					getCurrentDelta();
 
   //////////////////////////////////////////////////////////////////////////
   
