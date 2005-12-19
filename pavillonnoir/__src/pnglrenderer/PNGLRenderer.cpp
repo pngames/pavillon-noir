@@ -39,6 +39,7 @@
 
 #include "pndefs.h"
 #include "pnevent.h"
+#include "pni10n.h"
 #include "PNGameEventData.hpp"
 #include "pnresources.h"
 #include "PNConf.hpp"
@@ -91,8 +92,9 @@ PNGLRenderer*  PNGLRenderer::getInstance()
 
 PNGLRenderer::PNGLRenderer() : 
 _pFullScreen(false, "Plein ecran", "Plein ecran", true),
-_pTitle("Pavillon Noir", "Title", "Title", true),
-_pEnableTransparency(true, "Activer la transparence", "Activer la transparence", true)
+_pTitle("Pavillon Noir", PNI10n::getString("title"), PNI10n::getString("title"), true),
+_pEnableTransparency(true, "Activer la transparence", "Activer la transparence", true),
+_pEnableGL_LEQUAL(false, "Activer profondeur egale", "Activer les test de profondeur en egalite", true)
 {
   _guirenderer = NULL;
 
@@ -138,16 +140,12 @@ _pEnableTransparency(true, "Activer la transparence", "Activer la transparence",
   {
 	_pDefinitionsList = new PNConfigurableParameterList(this, PN_LISTPARAMTYPE_VPPNOBJECT, &_definitionsList, "Definition", "Definition", true, false);
 
-	/* Print valid modes */
-	printf("Available Modes\n");
 	for (int i = 0; modes[i]; ++i)
 	{
 	  if (modes[i]->w == 800 || modes[i]->h == 600)
 		_pDefinitionsList->setChoise(_definitionsList.size());
 
 	  _definitionsList.push_back(new PNPoint2f(modes[i]->w, modes[i]->h));
-
-	  printf("  %d x %d\n", modes[i]->w, modes[i]->h);
 	}
   }
 
@@ -166,23 +164,29 @@ _pEnableTransparency(true, "Activer la transparence", "Activer la transparence",
   _pTitle.setConfigurableObject(this);
   _pFullScreen.setConfigurableObject(this);
   _pEnableTransparency.setConfigurableObject(this);
+  _pEnableGL_LEQUAL.setConfigurableObject(this);
 
   PNGLVideo::getPMoviePlayer()->setConfigurableObject(this);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  addParam("Fenetre");
 
   addParam(&_pTitle);
   addParam(&_pFullScreen);
 
-  addParam(new PNConfigurableParameter(this, PN_PARAMTYPE_SEPARATOR, (void*)NULL, "Sep", "Sep"));
-
-  addParam(&_pEnableTransparency);
-
-  addParam(new PNConfigurableParameter(this, PN_PARAMTYPE_SEPARATOR, (void*)NULL, "Sep", "Sep"));
+  addParam("Mode d'affichage");
 
   if (_pDefinitionsList != NULL)
 	addParam(_pDefinitionsList);
   addParam(_pBppList);
 
-  addParam(new PNConfigurableParameter(this, PN_PARAMTYPE_SEPARATOR, (void*)NULL, "Sep", "Sep"));
+  addParam("Options avancees");
+
+  addParam(&_pEnableTransparency);
+  addParam(&_pEnableGL_LEQUAL);
+
+  addParam("Cinematiques");
 
   addParam(PNGLVideo::getPMoviePlayer());
 }
@@ -391,7 +395,7 @@ PNGLRenderer::initGL()
 
   glEnable(GL_DEPTH_TEST);
   glDepthMask(GL_TRUE);
-  glDepthFunc(GL_LEQUAL);
+  glDepthFunc(_pEnableGL_LEQUAL ? GL_LEQUAL : GL_LESS);
   glDepthRange(0.0, 1.0);
   glClearDepth(1.0);
 

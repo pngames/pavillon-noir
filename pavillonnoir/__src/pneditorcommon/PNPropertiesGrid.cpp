@@ -93,6 +93,11 @@ PNPropertiesGrid::setObject(PNConfigurableObject* object)
 	{
 	  new PNFXSeparatorParameter(this, current_param);
 	  new PNFXSeparatorParameter(this, current_param);
+
+	  FXLabel* label = new FXLabel(this, current_param->getLabel().c_str());
+	  label->setTextColor(0x883333);
+	  new PNFXSeparatorParameter(this, current_param);
+
 	  continue;
 	}
 

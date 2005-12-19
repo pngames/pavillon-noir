@@ -282,9 +282,10 @@ PNFXListParameter::update()
 
   _update();
 
-  _listBox->setCurrentItem(getChoise());
+  if (_listBox->getNumItems() > 0)
+	_listBox->setCurrentItem(getChoise());
 
-  if (_numVisibleItems > 0) 
+  if (_numVisibleItems > 0)
 	_listBox->setNumVisible(_listBox->getNumItems() < _numVisibleItems ? _listBox->getNumItems() : _numVisibleItems);
   else
 	_listBox->setNumVisible(_listBox->getNumItems());
