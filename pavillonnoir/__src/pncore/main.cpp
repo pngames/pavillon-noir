@@ -47,6 +47,7 @@
 #include "pnevent.h"
 #include "pnresources.h"
 #include "pnmath.h"
+#include "pni10n.hpp"
 
 #include "PNQuatf.hpp"
 
@@ -105,6 +106,7 @@ int	  main(int argc, char* argv[])
   // Initialize configuration
  
   PNConf::initialize();
+  PNI10n::getInstance()->unserializeFromPath("datafiles/i10n/default.xml");
   
   //////////////////////////////////////////////////////////////////////////
   // Load Plugins
@@ -162,17 +164,9 @@ int	  main(int argc, char* argv[])
 	//////////////////////////////////////////////////////////////////////////
 	
 	ri->run();
-
-	//if (si != NULL)
-	  //delete si;
   }
-  ////////////////////////////////////////
-/*
-  char c;
 
-  std::cout << "Appuyez sur une touche pour continuer" << std::endl;
-  fread(&c, 1, 1, stdin);
-*/
+  ////////////////////////////////////////
 
   return 0;
 }

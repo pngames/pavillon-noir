@@ -104,6 +104,7 @@ private:
   PNStringParameter			_pTitle;
 
   PNBoolParameter			_pEnableTransparency;
+  PNBoolParameter			_pEnableGL_LEQUAL;
 
   PNVPPNObjectParameter		_definitionsList;
   PNConfigurableParameterList*	_pDefinitionsList;
