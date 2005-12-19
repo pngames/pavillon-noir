@@ -64,6 +64,11 @@ private:
   pnpoint2f_t*		_texCoordBuffer;
   pncolor_t*		_colorBuffer;
 
+  PNRendererObject*	_defaultrobject;
+
+  pnpoint3f_t*		_defaultVertBuffer;
+  pnpoint3f_t*		_defaultNormBuffer;
+
   pnpoint3ui*		_idBuffer;
 public:
   PNI3DMesh(PNI3DModel& parent);
@@ -73,8 +78,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  void				render(std::vector<PN3DMaterial*>& mat);
-  void				render();
+  void				render(std::vector<PN3DMaterial*>* mat, pnbool defaultRender);
 
   pnuint			getNbVerts() const;
   pnuint			getNbFaces() const;

@@ -53,9 +53,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
   
   /// Render model according to materials list and skeleton
-  virtual void				render(std::vector<PN3DMaterial*>& mat, PN3DSkeleton* sk = NULL)=0;
-  /// Render model according to skeleton
-  virtual void				render(PN3DSkeleton* sk = NULL)=0;
+  virtual void				render(std::vector<PN3DMaterial*>* mat, PN3DSkeleton* sk = NULL)=0;
 
   //////////////////////////////////////////////////////////////////////////
   

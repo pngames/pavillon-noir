@@ -110,7 +110,11 @@ _pEnableTransparency(true, "Activer la transparence", "Activer la transparence",
 
   //////////////////////////////////////////////////////////////////////////
   
-  SDL_Init(SDL_INIT_VIDEO);
+  if (SDL_Init(SDL_INIT_VIDEO) == -1)
+  {
+	pnerror(PN_LOGLVL_CRITICAL, "Error in SDL initialization!");
+	exit(-1);
+  }
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -119,7 +123,7 @@ _pEnableTransparency(true, "Activer la transparence", "Activer la transparence",
   /* Check is there are any modes available */
   if (modes == NULL)
   {
-	printf("No modes available!\n");
+	pnerror(PN_LOGLVL_CRITICAL, "No modes available!");
 	exit(-1);
   }
 
@@ -269,6 +273,8 @@ PNGLRenderer::initRender()
 {
   initSDL();
   initGL();
+
+  glewInit();
 
   //////////////////////////////////////////////////////////////////////////
   // FIXME : TEST
@@ -560,7 +566,7 @@ PNGLRenderer::endRendering()
 PNRendererObject*
 PNGLRenderer::newObj()
 {
-  return new PNGLRendererObject(*this);
+  return new PNGLRendererObject(this);
 }
 
 PNRendererObject*
@@ -601,6 +607,15 @@ PNGLRenderer::newObj(pnfloat *vertices, pnfloat *normals,
 	my_obj->setIndexBuffer(index, nbIndex);
 
   return my_obj;
+}
+
+PNRendererObject*
+PNGLRenderer::duplicateObj(PNRendererObject* obj)
+{
+  if (obj == NULL)
+	return NULL;
+
+  return new PNGLRendererObject(*((PNGLRendererObject*)obj));
 }
 
 void
