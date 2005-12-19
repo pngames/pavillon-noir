@@ -75,6 +75,7 @@ public:
 
 protected:
   void								addParam(PNConfigurableParameter* p);
+  void								addParam(const std::string& sepLabel);
 
   std::string						_label;
 

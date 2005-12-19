@@ -921,6 +921,34 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="i10n"
+			>
+			<File
+				RelativePath="..\..\..\__src\pncommon\i10n_format.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNI10n.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\pni10n.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNI10n.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNLocale.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNLocale.hpp"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\pncommon.rc"
 			>

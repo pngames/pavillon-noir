@@ -27,12 +27,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#include <boost/filesystem/path.hpp>
-
 #include "pndefs.h"
+#include "pnproperties.h"
+
 #include "PNInterface.hpp"
 
-namespace fs = boost::filesystem;
 using namespace PN;
 
 namespace PN {
@@ -86,6 +85,12 @@ PNInterface::addParam(PNConfigurableParameter* p)
 {
   if (p != NULL)
 	_vectorParameters.push_back(p);
+}
+
+void
+PNInterface::addParam(const std::string& sepLabel)
+{
+  addParam(new PNConfigurableParameter(this, PN_PARAMTYPE_SEPARATOR, (void*)NULL, sepLabel, sepLabel));
 }
 
 //////////////////////////////////////////////////////////////////////////
