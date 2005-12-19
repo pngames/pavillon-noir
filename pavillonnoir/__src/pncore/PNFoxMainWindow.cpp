@@ -174,6 +174,7 @@ long	PNFoxMainWindow::onCmdShowOption(FXObject*,FXSelector,void*)
 void	PNFoxMainWindow::create()
 {
   FXMainWindow::create();
+
   show(PLACEMENT_SCREEN);
 }
 

@@ -252,9 +252,9 @@ PN3DSkeletonObject::render()
   if (_model != NULL && _renderMode & RENDER_MODEL)
   {
 	if (_renderMode & RENDER_MATERIALS && _materials.size() > 0)
-	  _model->render(_materials, _skeleton);
+	  _model->render(&_materials, _skeleton);
 	else
-	  _model->render(_skeleton);
+	  _model->render(NULL, _skeleton);
   }
 
   if (_physicalObject != NULL && _renderMode & RENDER_PHYSICAL)

@@ -64,7 +64,7 @@ public:
 
   virtual void		setInterleaveArray(void* array, pnuint size, pnrenderflag format = PN_T2F_C4F_N3F_V3F)=0;
 
-  virtual void		setIndexBuffer(pnuint* array, pnint nbIndex)=0;
+  virtual void		setIndexBuffer(pnuint* array, pnint nbIndex, pnbool compressed = false)=0;
   
   //////////////////////////////////////////////////////////////////////////
   // FACES

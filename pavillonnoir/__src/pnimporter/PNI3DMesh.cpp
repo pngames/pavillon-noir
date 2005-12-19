@@ -43,8 +43,9 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 PNI3DMesh::PNI3DMesh(PNI3DModel& parent) :
-_parent(parent), _robject(NULL),
-_vertBuffer(NULL), _normBuffer(NULL), _texCoordBuffer(NULL), _colorBuffer(NULL)
+_parent(parent), _robject(NULL), _defaultrobject(NULL),
+_vertBuffer(NULL), _normBuffer(NULL), _texCoordBuffer(NULL), _colorBuffer(NULL), _idBuffer(NULL),
+_defaultVertBuffer(NULL), _defaultNormBuffer(NULL)
 {
   unserializeFromStream(*parent._istream);
 }
@@ -61,9 +62,17 @@ PNI3DMesh::dispose()
 	delete[] _vertBuffer;
   _vertBuffer = NULL;
 
+  if (_defaultVertBuffer != NULL)
+	delete[] _defaultVertBuffer;
+  _defaultVertBuffer = NULL;
+
   if (_normBuffer != NULL)
 	delete[] _normBuffer;
   _normBuffer = NULL;
+
+  if (_defaultNormBuffer != NULL)
+	delete[] _defaultNormBuffer;
+  _defaultNormBuffer = NULL;
 
   if (_colorBuffer != NULL)
 	delete[] _colorBuffer;
@@ -75,27 +84,24 @@ PNI3DMesh::dispose()
 
   PNRendererInterface::getInstance()->deleteObj(_robject);
   _robject = NULL;
+
+  PNRendererInterface::getInstance()->deleteObj(_defaultrobject);
+  _defaultrobject = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 void
-PNI3DMesh::render(std::vector<PN3DMaterial*>& mat)
+PNI3DMesh::render(std::vector<PN3DMaterial*>* mat, pnbool defaultRender)
 {
-  if (mat.size() > (pnuint)_header.materialIdx && mat[_header.materialIdx] != NULL)
-	_robject->setMaterial(mat[_header.materialIdx]->getRenderMaterial());
+  PNRendererObject*	robject = defaultRender ? _defaultrobject : _robject;
+
+  if (mat != NULL && mat->size() > (pnuint)_header.materialIdx && (*mat)[_header.materialIdx] != NULL)
+	robject->setMaterial((*mat)[_header.materialIdx]->getRenderMaterial());
   else
-	_robject->setMaterial(NULL);
+	robject->setMaterial(NULL);
 
-  _robject->render();
-}
-
-void
-PNI3DMesh::render()
-{
-  _robject->setMaterial(NULL);
-
-  _robject->render();
+  robject->render();
 }
 
 pnuint
@@ -190,14 +196,27 @@ PNI3DMesh::_parseVertices()
 
 	PNIVertex&		  ivert = _parent._vertex[vert.vertexIdx];
 
-	memcpy(&_vertBuffer[i], ivert, sizeof(_normBuffer[i]));
+	//////////////////////////////////////////////////////////////////////////
+	
+	_vertBuffer[i].x = ivert.x;
+	_vertBuffer[i].y = ivert.y;
+	_vertBuffer[i].z = ivert.z;
+
+	//////////////////////////////////////////////////////////////////////////
+
 	_normBuffer[i] = ivert.normale;
+
+	//////////////////////////////////////////////////////////////////////////
 
 	if (_header.materialIdx >= 0)
 	  _texCoordBuffer[i] = vert.texCoord;
 
+	//////////////////////////////////////////////////////////////////////////
+
 	if  (_header.colored)
 	  _colorBuffer[i] = ivert.color;
+
+	//////////////////////////////////////////////////////////////////////////
 
 	ivert.addIndex(this, i);
   }
@@ -220,6 +239,10 @@ PNI3DMesh::_parseFaces()
 pnint
 PNI3DMesh::unserializeFromStream(std::istream& i)
 {
+  dispose();
+
+  //////////////////////////////////////////////////////////////////////////
+  
   i.read((char*)&_header, sizeof(_header));
 
   cout << "nbVerts=" << _header.nbVerts << endl;
@@ -231,12 +254,18 @@ PNI3DMesh::unserializeFromStream(std::istream& i)
 
   _parseFaces();
 
+  //////////////////////////////////////////////////////////////////////////
+  
   _robject = PNRendererInterface::getInstance()->newObj();
+
+  //////////////////////////////////////////////////////////////////////////
 
   _robject->setNbVerts(_header.nbVerts);
 
   _robject->setBuffer(PN_VARRAY, (pnfloat*)_vertBuffer);
   _robject->setBuffer(PN_NARRAY, (pnfloat*)_normBuffer);
+
+  //////////////////////////////////////////////////////////////////////////
 
   if (_colorBuffer != NULL)
 	_robject->setBuffer(PN_CARRAY, (pnfloat*)_colorBuffer, true);
@@ -246,6 +275,7 @@ PNI3DMesh::unserializeFromStream(std::istream& i)
   if (_texCoordBuffer != NULL)
   {
 	_robject->setBuffer(PN_TCARRAY, (pnfloat*)_texCoordBuffer, true);
+
 	_robject->setTextureRepeat(false);
 
 	for (pnuint i = 0; i <  _header.nbVerts; ++i)
@@ -260,7 +290,22 @@ PNI3DMesh::unserializeFromStream(std::istream& i)
 
   //////////////////////////////////////////////////////////////////////////
 
-  _robject->setIndexBuffer((pnuint*)_idBuffer, _header.nbFaces * 3);
+  _robject->setIndexBuffer((pnuint*)_idBuffer, _header.nbFaces * 3, true);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  _defaultrobject = PNRendererInterface::getInstance()->duplicateObj(_robject);
+
+  _defaultVertBuffer = new pnpoint3f_t[_header.nbVerts];
+  _defaultNormBuffer = new pnpoint3f_t[_header.nbVerts];
+
+  memcpy(_defaultVertBuffer, _vertBuffer, sizeof(pnpoint3f_t) * _header.nbVerts);
+  memcpy(_defaultNormBuffer, _normBuffer, sizeof(pnpoint3f_t) * _header.nbVerts);
+
+  _defaultrobject->setBuffer(PN_VARRAY, (pnfloat*)_defaultVertBuffer, true);
+  _defaultrobject->setBuffer(PN_NARRAY, (pnfloat*)_defaultNormBuffer, true);
+  
+  _defaultrobject->setIndexBuffer((pnuint*)_idBuffer, _header.nbFaces * 3, true);
 
   return PNEC_SUCCESS;
 }

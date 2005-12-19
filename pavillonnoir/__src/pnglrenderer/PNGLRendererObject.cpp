@@ -42,7 +42,7 @@ using namespace PN;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-PNGLRendererObject::PNGLRendererObject(PNGLRenderer& renderer) : _renderer(renderer)
+PNGLRendererObject::PNGLRendererObject(PNGLRenderer* renderer) : _renderer(renderer)
 {
   _material = NULL;
 
@@ -71,6 +71,11 @@ PNGLRendererObject::PNGLRendererObject(PNGLRenderer& renderer) : _renderer(rende
   _color.g = 0.0f;
   _color.b = 0.0f;
   _color.a = 1.0f;
+}
+
+PNGLRendererObject::PNGLRendererObject(const PNGLRendererObject& obj)
+{
+  memcpy(this, &obj, sizeof(obj));
 }
 
 PNGLRendererObject::~PNGLRendererObject()
@@ -123,7 +128,7 @@ PNGLRendererObject::setBuffer(pnrenderarray flag_array, pnfloat *array, pnbool c
   static GLboolean	vertex_buffer_object_ENABLED = GLEW_ARB_vertex_buffer_object;
   
   GLuint			*id = NULL;
-  GLsizeiptrARB		buffSize = _nbVerts;
+  GLsizeiptrARB		buffSize = _nbVerts * sizeof(pnfloat);
 
   switch (flag_array)
   {
@@ -166,16 +171,15 @@ PNGLRendererObject::setBuffer(pnrenderarray flag_array, pnfloat *array, pnbool c
 
 	GLint	stmp = 0;
 	glGetBufferParameterivARB(GL_ARRAY_BUFFER_ARB, GL_BUFFER_SIZE_ARB, &stmp);
-	if (stmp <= 0 )
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
+
+	if (stmp <= 0)
 	{
-	  glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
 	  glDeleteBuffersARB(1, id);
 	  *id = (GLuint)-1;
 
 	  return;
 	}
-
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
   }
 }
 
@@ -189,10 +193,33 @@ PNGLRendererObject::setInterleaveArray(void* array, pnuint size, pnrenderflag fo
 }
 
 void
-PNGLRendererObject::setIndexBuffer(pnuint *array, pnint nbIndex)
+PNGLRendererObject::setIndexBuffer(pnuint *array, pnint nbIndex, pnbool compressed)
 {
   _indexArrays = array;
   _nbIndex = nbIndex;
+
+  static GLboolean	vertex_buffer_object_ENABLED = GLEW_ARB_vertex_buffer_object;
+
+  if (vertex_buffer_object_ENABLED && compressed && array != NULL)
+  {
+	if (_indexArraysId == (GLuint)-1)
+	  glGenBuffersARB(1, &_indexArraysId);
+
+	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, _indexArraysId);
+	glBufferDataARB(GL_ELEMENT_ARRAY_BUFFER_ARB, _nbIndex * sizeof(*_indexArrays), _indexArrays, GL_STATIC_DRAW_ARB);
+
+	GLint	stmp = 0;
+	glGetBufferParameterivARB(GL_ELEMENT_ARRAY_BUFFER_ARB, GL_BUFFER_SIZE_ARB, &stmp);
+	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
+
+	if (stmp <= 0)
+	{
+	  glDeleteBuffersARB(1, &_indexArraysId);
+	  _indexArraysId = (GLuint)-1;
+
+	  return;
+	}
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -232,10 +259,9 @@ PNGLRendererObject::render()
 	return ;
 
   _initAttrib();
+  _setBuffers();
 
   //////////////////////////////////////////////////////////////////////////
-
-  _setBuffers();
 
   if (_material != NULL)
   {
@@ -252,12 +278,22 @@ PNGLRendererObject::render()
   // Rend object by indices
 
   if (_indexArrays == NULL)
-	glDrawArrays(_renderer.convertFlag(_mode), 0, _nbIndex);
+	glDrawArrays(_renderer->convertFlag(_mode), 0, _nbIndex);
   else
-	glDrawElements(_renderer.convertFlag(_mode), _nbIndex, GL_UNSIGNED_INT, _indexArrays);
+  {
+	if (_indexArraysId != (GLuint)-1) 
+	{
+	  glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, _indexArraysId); 
+	  glDrawElements(_renderer->convertFlag(_mode), _nbIndex, GL_UNSIGNED_INT, NULL);
+	  glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0); 
+	}
+	else 
+	  glDrawElements(_renderer->convertFlag(_mode), _nbIndex, GL_UNSIGNED_INT, _indexArrays);
+  }
 
   //////////////////////////////////////////////////////////////////////////
 
+  _unsetBuffers();
   _restoreAttrib();
 }
 
@@ -278,8 +314,6 @@ PNGLRendererObject::renderAllFaces(pnbool clear)
   _initAttrib();
 
   //////////////////////////////////////////////////////////////////////////
-  
-  _setBuffers();
 
   PNGLMaterial* currentMaterial = NULL;
   PNGLTexture*	currentTexture = NULL;
@@ -381,7 +415,7 @@ PNGLRendererObject::_renderBuffer()
   if (_sizeFaceBuffer <= 0)
 	return PNEC_SUCCESS;
 
-  glDrawElements(_renderer.convertFlag(_mode), _sizeFaceBuffer, GL_UNSIGNED_INT, _facesBuffer);
+  glDrawElements(_renderer->convertFlag(_mode), _sizeFaceBuffer, GL_UNSIGNED_INT, _facesBuffer);
 
   _sizeFaceBuffer = 0;
 
@@ -395,6 +429,7 @@ PNGLRendererObject::_renderBuffer()
 { \
   glBindBufferARB(GL_ARRAY_BUFFER_ARB, id); \
   fct(GL_FLOAT, 0, NULL); \
+  glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0); \
 } \
 else \
   fct(GL_FLOAT, 0, array);
@@ -404,11 +439,13 @@ else \
 { \
   glBindBufferARB(GL_ARRAY_BUFFER_ARB, id); \
   fct(size, GL_FLOAT, 0, NULL); \
+  glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0); \
 } \
 else \
   fct(size, GL_FLOAT, 0, array);
 
-void	PNGLRendererObject::_setBuffers()
+void	
+PNGLRendererObject::_setBuffers()
 { 
   glColor4fv((const GLfloat *)&_color);
   glMaterialfv(GL_FRONT,  GL_DIFFUSE, (const GLfloat *)&_color);
@@ -418,7 +455,7 @@ void	PNGLRendererObject::_setBuffers()
 	//////////////////////////////////////////////////////////////////////////
 	// Set interleave
 
-	glInterleavedArrays(_renderer.convertFlag(_format), 0, _interleaveArrays);
+	glInterleavedArrays(_renderer->convertFlag(_format), 0, _interleaveArrays);
   }
   else
   {
@@ -454,5 +491,13 @@ void	PNGLRendererObject::_setBuffers()
   }
 }
 
+void
+PNGLRendererObject::_unsetBuffers()
+{
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_COLOR_ARRAY);
+  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
 //////////////////////////////////////////////////////////////////////////
 };

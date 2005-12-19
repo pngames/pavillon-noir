@@ -137,6 +137,8 @@ public:
 	pnfloat* colors, pnfloat* textures, pnuint nb_vert,
 	pnuint* index, pnuint nb_index, pnrenderflag mode = PN_TRIANGLES);
 
+  PNRendererObject*			duplicateObj(PNRendererObject* obj);
+
   void						deleteObj(PNRendererObject* obj);
 
   //////////////////////////////////////////////////////////////////////////
