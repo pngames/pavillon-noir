@@ -1,8 +1,8 @@
 /*
-* i10n_format.h
+* PNBool.cpp
 * 
 * Description :
-* Internationalization files format
+* PNBool definition
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,27 +27,47 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#ifndef _I10N_FORMAT_H_
-# define _I10N_FORMAT_H_
+#include <sstream>
 
-#include <string>
+#include "pndefs.h"
+
+#include "PNBool.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-#define I10N_EXT										"xml"
+PNBool::PNBool()
+{ }
 
-static const std::string	PNI10N_XMLDTD_NAME			= "i10n";
-static const std::string	PNI10N_XMLDTD				= PNI10N_XMLDTD_NAME + ".dtd";
-static const std::string	PNI10N_XMLNODE_ROOT			= PNI10N_XMLDTD;
+PNBool::PNBool(pnbool value) : _bool(value)
+{ }
 
-static const std::string	PNI10N_XMLNODE_STRING		= "string";
+PNBool::~PNBool()
+{ }
 
-#define						PNI10N_XMLPROP_KEY			(BAD_CAST "key")
-#define						PNI10N_XMLPROP_VALUE		(BAD_CAST "value")
-#define						PNI10N_XMLPROP_LOCALE		(BAD_CAST "locale")
+//////////////////////////////////////////////////////////////////////////
+
+std::string
+PNBool::toString()
+{
+  std::ostringstream os;
+  os << _bool;
+
+  return os.str();
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+pnbool
+PNBool::getBool()
+{
+  return _bool;
+}
+
+PNBool::operator	pnbool&()
+{
+  return _bool;
+}
 
 //////////////////////////////////////////////////////////////////////////
 };
-
-#endif /*!_I10N_FORMAT_H_*/

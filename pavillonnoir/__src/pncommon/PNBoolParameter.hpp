@@ -30,6 +30,7 @@
 #ifndef _PNBOOLPARAMETER_HPP_
 # define _PNBOOLPARAMETER_HPP_
 
+#include "PNBool.hpp"
 #include "PNConfigurableParameter.hpp"
 
 namespace PN {
@@ -37,21 +38,12 @@ namespace PN {
 
 class PNConfigurableObject;
 
-class PNAPI				PNBoolParameter : public PNConfigurableParameter
+class PNAPI				PNBoolParameter : public PNBool, public PNConfigurableParameter
 {
-private:
-  pnbool				_bool;
-
 public:
   PNBoolParameter(pnbool param, const std::string& label, const std::string& altText, bool editable = true);
   PNBoolParameter(PNConfigurableObject* p, pnbool param, const std::string& label, const std::string& altText, bool editable = true);
   virtual ~PNBoolParameter();
-
-  pnbool				getBool();
-
-  //////////////////////////////////////////////////////////////////////////
-  
-  operator				pnbool&();
 };
 
   //////////////////////////////////////////////////////////////////////////

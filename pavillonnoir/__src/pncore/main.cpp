@@ -47,7 +47,7 @@
 #include "pnevent.h"
 #include "pnresources.h"
 #include "pnmath.h"
-#include "pni10n.hpp"
+#include "pni18n.hpp"
 
 #include "PNQuatf.hpp"
 
@@ -106,7 +106,7 @@ int	  main(int argc, char* argv[])
   // Initialize configuration
  
   PNConf::initialize();
-  PNI10n::getInstance()->unserializeFromPath("datafiles/i10n/default.xml");
+  PNI18n::getInstance()->unserializeFromPath("datafiles/i18n/default.xml");
   
   //////////////////////////////////////////////////////////////////////////
   // Load Plugins

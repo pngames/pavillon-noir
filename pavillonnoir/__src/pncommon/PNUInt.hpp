@@ -1,8 +1,8 @@
 /*
-* PNFloatParameter.cpp
+* PNUInt.hpp
 * 
 * Description :
-* PNFloatParameter definition
+* PNUInt declaration
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,23 +27,38 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#include "pndefs.h"
+#ifndef _PNUINT_HPP_
+# define _PNUINT_HPP_
 
-#include "PNFloatParameter.hpp"
+#include "PNObject.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-PNFloatParameter::PNFloatParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_float, label, altText, editable)
-{ }
+class PNAPI				PNUInt : public PNObject
+{
+protected:
+  pnuint				_uint;
 
-PNFloatParameter::PNFloatParameter(PNConfigurableObject* p, pnfloat param, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNFloat(param), PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_float, label, altText, editable)
-{ }
+public:
+  PNUInt();
+  PNUInt(pnuint value);
+  virtual ~PNUInt();
 
-PNFloatParameter::~PNFloatParameter()
-{ }
+  //////////////////////////////////////////////////////////////////////////
+  
+  virtual std::string	toString();
 
-//////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////
+
+  pnuint				getUInt();
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  operator				pnuint&();
 };
+
+  //////////////////////////////////////////////////////////////////////////
+};
+
+#endif /*_PNUINT_HPP_*/
