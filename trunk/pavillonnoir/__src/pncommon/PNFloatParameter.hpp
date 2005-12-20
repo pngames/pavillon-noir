@@ -30,6 +30,7 @@
 #ifndef _PNFLOATPARAMETER_HPP_
 # define _PNFLOATPARAMETER_HPP_
 
+#include "PNFloat.hpp"
 #include "PNConfigurableParameter.hpp"
 
 namespace PN {
@@ -37,21 +38,12 @@ namespace PN {
 
 class PNConfigurableObject;
 
-class PNAPI				PNFloatParameter : public PNConfigurableParameter
+class PNAPI				PNFloatParameter : public PNFloat, public PNConfigurableParameter
 {
-private:
-  pnfloat					_float;
-
 public:
   PNFloatParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable = true);
   PNFloatParameter(PNConfigurableObject* p, pnfloat param, const std::string& label, const std::string& altText, bool editable = true);
   virtual ~PNFloatParameter();
-
-  pnfloat				getFloat();
-
-  //////////////////////////////////////////////////////////////////////////
-  
-  operator				pnfloat&();
 };
 
   //////////////////////////////////////////////////////////////////////////

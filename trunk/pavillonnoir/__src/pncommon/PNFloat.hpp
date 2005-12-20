@@ -1,8 +1,8 @@
 /*
-* PNFloatParameter.cpp
+* PNFloat.hpp
 * 
 * Description :
-* PNFloatParameter definition
+* PNFloat declaration
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,23 +27,38 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#include "pndefs.h"
+#ifndef _PNFLOAT_HPP_
+# define _PNFLOAT_HPP_
 
-#include "PNFloatParameter.hpp"
+#include "PNObject.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-PNFloatParameter::PNFloatParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_float, label, altText, editable)
-{ }
+class PNAPI				PNFloat : public PNObject
+{
+protected:
+  pnfloat				_float;
 
-PNFloatParameter::PNFloatParameter(PNConfigurableObject* p, pnfloat param, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNFloat(param), PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_float, label, altText, editable)
-{ }
+public:
+  PNFloat();
+  PNFloat(pnfloat value);
+  virtual ~PNFloat();
+  
+  //////////////////////////////////////////////////////////////////////////
 
-PNFloatParameter::~PNFloatParameter()
-{ }
+  virtual std::string	toString();
 
-//////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////
+  
+  pnfloat				getFloat();
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  operator				pnfloat&();
 };
+
+  //////////////////////////////////////////////////////////////////////////
+};
+
+#endif /*_PNFLOAT_HPP_*/

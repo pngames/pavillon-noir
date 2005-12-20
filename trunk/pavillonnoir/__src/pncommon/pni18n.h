@@ -1,8 +1,8 @@
 /*
-* PNFloatParameter.cpp
+* pni18n.hpp
 * 
 * Description :
-* PNFloatParameter definition
+* Internationnalisation system
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,23 +27,10 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#include "pndefs.h"
+#ifndef _PNI18N_H_
+# define _PNI18N_H_
 
-#include "PNFloatParameter.hpp"
+#include "PNLocale.hpp"
+#include "PNI18n.hpp"
 
-namespace PN {
-//////////////////////////////////////////////////////////////////////////
-
-PNFloatParameter::PNFloatParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_float, label, altText, editable)
-{ }
-
-PNFloatParameter::PNFloatParameter(PNConfigurableObject* p, pnfloat param, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNFloat(param), PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_float, label, altText, editable)
-{ }
-
-PNFloatParameter::~PNFloatParameter()
-{ }
-
-//////////////////////////////////////////////////////////////////////////
-};
+#endif /*!_PNI18N_H_*/

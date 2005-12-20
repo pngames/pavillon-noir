@@ -553,6 +553,14 @@
 			Name="properties"
 			>
 			<File
+				RelativePath="..\..\..\__src\pncommon\PNBool.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNBool.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\PNBoolParameter.cpp"
 				>
 			</File>
@@ -581,11 +589,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncommon\PNFloat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNFloat.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\PNFloatParameter.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNFloatParameter.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNInt.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNInt.hpp"
 				>
 			</File>
 			<File
@@ -622,6 +646,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNStringParameter.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNUInt.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNUInt.hpp"
 				>
 			</File>
 			<File
@@ -922,22 +954,22 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="i10n"
+			Name="i18n"
 			>
 			<File
-				RelativePath="..\..\..\__src\pncommon\i10n_format.h"
+				RelativePath="..\..\..\__src\pncommon\i18n_format.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncommon\PNI10n.cpp"
+				RelativePath="..\..\..\__src\pncommon\PNI18n.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncommon\pni10n.h"
+				RelativePath="..\..\..\__src\pncommon\pni18n.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncommon\PNI10n.hpp"
+				RelativePath="..\..\..\__src\pncommon\PNI18n.hpp"
 				>
 			</File>
 			<File

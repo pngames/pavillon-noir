@@ -1,8 +1,8 @@
 /*
-* PNFloatParameter.cpp
+* PNFloat.cpp
 * 
 * Description :
-* PNFloatParameter definition
+* PNFloat definition
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,23 +27,47 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
+#include <sstream>
+
 #include "pndefs.h"
 
-#include "PNFloatParameter.hpp"
+#include "PNFloat.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-PNFloatParameter::PNFloatParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_float, label, altText, editable)
+PNFloat::PNFloat()
 { }
 
-PNFloatParameter::PNFloatParameter(PNConfigurableObject* p, pnfloat param, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNFloat(param), PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_float, label, altText, editable)
+PNFloat::PNFloat(pnfloat value) : _float(value)
 { }
 
-PNFloatParameter::~PNFloatParameter()
+PNFloat::~PNFloat()
 { }
+
+//////////////////////////////////////////////////////////////////////////
+
+std::string
+PNFloat::toString()
+{
+  std::ostringstream os;
+  os << _float;
+
+  return os.str();
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+pnfloat
+PNFloat::getFloat()
+{
+  return _float;
+}
+
+PNFloat::operator	pnfloat&()
+{
+  return _float;
+}
 
 //////////////////////////////////////////////////////////////////////////
 };

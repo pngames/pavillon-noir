@@ -33,11 +33,11 @@
 
 #include "pndefs.h"
 
-#include "i10n_format.h"
+#include "i18n_format.h"
 
 #include "PNLocale.hpp"
 
-#include "PNI10n.hpp"
+#include "PNI18n.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -116,33 +116,33 @@ CountryMap::addString(const std::string& key, const std::string& value, const PN
 
 //////////////////////////////////////////////////////////////////////////
 
-PNI10n*			PNI10n::_instance = NULL;
+PNI18n*			PNI18n::_instance = NULL;
 
-PNI10n*			
-PNI10n::getInstance()
+PNI18n*			
+PNI18n::getInstance()
 {
   if (_instance == NULL)
-	_instance = new PNI10n();
+	_instance = new PNI18n();
 
   return _instance;
 }
 
-PNI10n::PNI10n()
+PNI18n::PNI18n()
 { }
 
-PNI10n::~PNI10n()
+PNI18n::~PNI18n()
 { }
 
 //////////////////////////////////////////////////////////////////////////
 
 void
-PNI10n::addString(const std::string& key, const std::string& value, const PNLocale& locale)
+PNI18n::addString(const std::string& key, const std::string& value, const PNLocale& locale)
 {
   (*this)[locale.getLanguage()].addString(key, value, locale);
 }
 
 const std::string&	
-PNI10n::_getString(const std::string& key, const PNLocale& locale)
+PNI18n::_getString(const std::string& key, const PNLocale& locale)
 {
   iterator	it = find(locale.getLanguage());
 
@@ -157,13 +157,13 @@ PNI10n::_getString(const std::string& key, const PNLocale& locale)
 }
 
 const std::string&	
-PNI10n::getString(const std::string& key)
+PNI18n::getString(const std::string& key)
 {
   return getString(key, PNLocale::defaultLocale());
 }
 
 const std::string&
-PNI10n::getString(const std::string& key, const PNLocale& locale)
+PNI18n::getString(const std::string& key, const PNLocale& locale)
 {
   return getInstance()->_getString(key, locale);
 }
@@ -171,53 +171,75 @@ PNI10n::getString(const std::string& key, const PNLocale& locale)
 //////////////////////////////////////////////////////////////////////////
 
 const std::string&
-PNI10n::getDTD() const
+PNI18n::getDTD() const
 {
-  return PNI10N_XMLDTD;
+  return PNI18N_XMLDTD;
 }
 
 const std::string&
-PNI10n::getDTDName() const
+PNI18n::getDTDName() const
 {
-  return PNI10N_XMLDTD_NAME;
+  return PNI18N_XMLDTD_NAME;
 }
 
 const std::string&
-PNI10n::getRootNodeName() const
+PNI18n::getRootNodeName() const
 {
-  return PNI10N_XMLNODE_ROOT;
+  return PNI18N_XMLNODE_ROOT;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 pnint
-PNI10n::_unserializeString(xmlNode* node)
+PNI18n::_unserializeString(xmlNode* node)
 {
-  std::string	key = (const char*)xmlGetProp(node, PNI10N_XMLPROP_KEY);
-  std::string	value = (const char*)xmlGetProp(node, PNI10N_XMLPROP_VALUE);
+  std::string	key = (const char*)xmlGetProp(node, PNI18N_XMLPROP_KEY);
+  std::string	value = (const char*)xmlGetProp(node, PNI18N_XMLPROP_VALUE);
 
-  PNLocale		locale("");
+  std::string language = "";
+  std::string country = "";
+  std::string variant = "";
 
-  xmlChar* attr = xmlGetProp(node, PNI10N_XMLPROP_LOCALE);
+  xmlChar* attr = xmlGetProp(node, PNI18N_XMLPROP_LOCALE);
   if (attr != NULL)
-	;
+  {
+	std::string sl = (const char*)attr;
 
-  addString(key, value, locale);
+	language = sl;
 
-  return PNEC_NOT_IMPLEMENTED;
+	std::string::size_type nb = language.find('_');
+	if (nb != std::string::npos)
+	{
+	  language = sl.substr(0, nb);
+	  sl = sl.erase(0, nb);
+
+	  country = sl;
+
+	  nb = country.find('_');
+	  if (nb != std::string::npos)
+	  {
+		country = sl.substr(0, nb);
+		variant = sl.erase(0, nb);
+	  }
+	}
+  }
+
+  addString(key, value, PNLocale(language, country, variant));
+
+  return PNEC_SUCCESS;
 }
 
 pnint
-PNI10n::_unserializeNode(xmlNode* node)
+PNI18n::_unserializeNode(xmlNode* node)
 {
-  if (PNI10N_XMLNODE_STRING == (const char*)node->name)
+  if (PNI18N_XMLNODE_STRING == (const char*)node->name)
 	_unserializeString(node);
 
   return PNEC_SUCCESS;
 }
 
 pnint
-PNI10n::unserializeFromXML(xmlNode* root)
+PNI18n::unserializeFromXML(xmlNode* root)
 {
   for (root = root->children ; root != NULL; root = root->next)
 	_unserializeNode(root);

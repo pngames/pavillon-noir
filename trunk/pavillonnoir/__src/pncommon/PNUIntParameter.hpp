@@ -30,6 +30,7 @@
 #ifndef _PNUINTPARAMETER_HPP_
 # define _PNUINTPARAMETER_HPP_
 
+#include "PNUInt.hpp"
 #include "PNConfigurableParameter.hpp"
 
 namespace PN {
@@ -37,21 +38,12 @@ namespace PN {
 
 class PNConfigurableObject;
 
-class PNAPI				PNUIntParameter : public PNConfigurableParameter
+class PNAPI				PNUIntParameter : public PNUInt, public PNConfigurableParameter
 {
-private:
-  pnuint				_uint;
-
 public:
-  PNUIntParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable = true);
+  PNUIntParameter(pnuint param, const std::string& label, const std::string& altText, bool editable = true);
   PNUIntParameter(PNConfigurableObject* p, pnuint param, const std::string& label, const std::string& altText, bool editable = true);
   virtual ~PNUIntParameter();
-
-  pnuint				getUInt();
-
-  //////////////////////////////////////////////////////////////////////////
-  
-  operator				pnuint&();
 };
 
   //////////////////////////////////////////////////////////////////////////
