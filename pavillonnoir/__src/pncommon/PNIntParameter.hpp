@@ -31,27 +31,19 @@
 # define _PNINTPARAMETER_HPP_
 
 #include "PNConfigurableParameter.hpp"
+#include "PNInt.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 class PNConfigurableObject;
 
-class PNAPI				PNIntParameter : public PNConfigurableParameter
+class PNAPI				PNIntParameter : public PNInt, public PNConfigurableParameter
 {
-private:
-  pnint					_int;
-
 public:
-  PNIntParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable = true);
+  PNIntParameter(pnint param, const std::string& label, const std::string& altText, bool editable = true);
   PNIntParameter(PNConfigurableObject* p, pnint param, const std::string& label, const std::string& altText, bool editable = true);
   virtual ~PNIntParameter();
-
-  pnint					getInt();
-
-  //////////////////////////////////////////////////////////////////////////
-  
-  operator				pnint&();
 };
 
   //////////////////////////////////////////////////////////////////////////

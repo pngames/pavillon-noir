@@ -1,8 +1,8 @@
 /*
-* PNFloatParameter.cpp
+* i10n_format.h
 * 
 * Description :
-* PNFloatParameter definition
+* Internationalization files format
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,23 +27,27 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#include "pndefs.h"
+#ifndef _I18N_FORMAT_H_
+# define _I18N_FORMAT_H_
 
-#include "PNFloatParameter.hpp"
+#include <string>
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-PNFloatParameter::PNFloatParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_float, label, altText, editable)
-{ }
+#define I18N_EXT										"xml"
 
-PNFloatParameter::PNFloatParameter(PNConfigurableObject* p, pnfloat param, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNFloat(param), PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_float, label, altText, editable)
-{ }
+static const std::string	PNI18N_XMLDTD_NAME			= "i18n";
+static const std::string	PNI18N_XMLDTD				= PNI18N_XMLDTD_NAME + ".dtd";
+static const std::string	PNI18N_XMLNODE_ROOT			= PNI18N_XMLDTD;
 
-PNFloatParameter::~PNFloatParameter()
-{ }
+static const std::string	PNI18N_XMLNODE_STRING		= "string";
+
+#define						PNI18N_XMLPROP_KEY			(BAD_CAST "key")
+#define						PNI18N_XMLPROP_VALUE		(BAD_CAST "value")
+#define						PNI18N_XMLPROP_LOCALE		(BAD_CAST "locale")
 
 //////////////////////////////////////////////////////////////////////////
 };
+
+#endif /*!_I18N_FORMAT_H_*/

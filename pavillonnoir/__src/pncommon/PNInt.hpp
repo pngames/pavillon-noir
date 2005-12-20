@@ -1,8 +1,8 @@
 /*
-* pni10n.hpp
+* PNInt.hpp
 * 
 * Description :
-* Internationnalisation system
+* PNInt declaration
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,10 +27,38 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#ifndef _PNI10N_H_
-# define _PNI10N_H_
+#ifndef _PNINT_HPP_
+# define _PNINT_HPP_
 
-#include "PNLocale.hpp"
-#include "PNI10n.hpp"
+#include "PNObject.hpp"
 
-#endif /*!_PNI10N_H_*/
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
+class PNAPI				PNInt : public PNObject
+{
+protected:
+  pnint					_int;
+
+public:
+  PNInt();
+  PNInt(pnint value);
+  virtual ~PNInt();
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  virtual std::string	toString();
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  pnint					getInt();
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  operator				pnint&();
+};
+
+  //////////////////////////////////////////////////////////////////////////
+};
+
+#endif /*_PNINT_HPP_*/

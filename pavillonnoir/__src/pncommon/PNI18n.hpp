@@ -1,5 +1,5 @@
 /*
-* PNI10n.hpp
+* PNI18n.hpp
 * 
 * Description :
 * Internationnalisation system
@@ -27,8 +27,8 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#ifndef _PNI10N_HPP_
-# define _PNI10N_HPP_
+#ifndef _PNI18N_HPP_
+# define _PNI18N_HPP_
 
 #include <string>
 #include <map>
@@ -61,16 +61,19 @@ public:
   void						addString(const std::string& key, const std::string& value, const PNLocale& locale);
 };
 
-class PNAPI					PNI10n : public std::map<std::string, CountryMap>, public IPNXMLSerializable
+class PNAPI					PNI18n : public std::map<std::string, CountryMap>, public IPNXMLSerializable
 {
-  static PNI10n*			_instance;
+  static PNI18n*			_instance;
 public:
-  static PNI10n*			getInstance();
+  static PNI18n*			getInstance();
 private:
-  PNI10n();
-  ~PNI10n();
+  PNI18n();
+  ~PNI18n();
 
   const std::string&		_getString(const std::string& key, const PNLocale& locale);
+
+  pnint						_unserializeString(xmlNode* node);
+  pnint						_unserializeNode(xmlNode* node);
 public:
   void						addString(const std::string& key, const std::string& value, const PNLocale& locale);
 
@@ -83,13 +86,10 @@ public:
   const std::string&		getDTDName() const;
   const std::string&		getRootNodeName() const;
 
-  pnint						_unserializeString(xmlNode* node);
-  pnint						_unserializeNode(xmlNode* node);
-
   pnint						unserializeFromXML(xmlNode* node);
 };
 
 //////////////////////////////////////////////////////////////////////////
 };
 
-#endif /*!_PNI10N_HPP_*/
+#endif /*!_PNI18N_HPP_*/

@@ -39,7 +39,7 @@
 
 #include "pndefs.h"
 #include "pnevent.h"
-#include "pni10n.h"
+#include "pni18n.h"
 #include "PNGameEventData.hpp"
 #include "pnresources.h"
 #include "PNConf.hpp"
@@ -92,9 +92,9 @@ PNGLRenderer*  PNGLRenderer::getInstance()
 
 PNGLRenderer::PNGLRenderer() : 
 _pFullScreen(false, "Plein ecran", "Plein ecran", true),
-_pTitle("Pavillon Noir", PNI10n::getString("title"), PNI10n::getString("title"), true),
+_pTitle("Pavillon Noir", PNI18n::getString("title"), PNI18n::getString("title"), true),
 _pEnableTransparency(true, "Activer la transparence", "Activer la transparence", true),
-_pEnableGL_LEQUAL(false, "Activer profondeur egale", "Activer les test de profondeur en egalite", true)
+_pEnableGL_LEQUAL(false, "Tester profondeur egale", "Activer les test de profondeur en egalite", true)
 {
   _guirenderer = NULL;
 
