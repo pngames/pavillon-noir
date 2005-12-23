@@ -177,13 +177,28 @@ function gameMap:fightAction(sourceId)
 	nbAS = source:getNBFightSuccess()
 	nbDS = target:getNBFightSuccess()
 	local localisation = 0
+	local strikeAnim = CHARACTER_ANIM.STRIKE_HEAD
 	if (source.strikeLocalisation == LOCALISATION.RANDOM) then
 		localisation = self.die:getVal(6)
 	else
 		localisation = source.strikeLocalisation
 		nbAS = nbAS - 1
 	end
-
+	-- set strikeAnim to corresponding location
+	if (localisation == LOCALISATION.HEAD) then
+		strikeAnim = CHARACTER_ANIM.STRIKE_HEAD
+	elseif (localisation == LOCALISATION.TORSO) then
+		strikeAnim = CHARACTER_ANIM.STRIKE_HEAD -- torso
+	elseif (localisation == LOCALISATION.LARM) then
+		strikeAnim = CHARACTER_ANIM.STRIKE_HEAD -- larm
+	elseif (localisation == LOCALISATION.RARM) then
+		strikeAnim = CHARACTER_ANIM.STRIKE_HEAD -- rarm
+	elseif (localisation == LOCALISATION.LLEG) then
+		strikeAnim = CHARACTER_ANIM.STRIKE_HEAD -- lleg
+	elseif (localisation == LOCALISATION.RLEG) then
+		strikeAnim = CHARACTER_ANIM.STRIKE_HEAD -- rleg
+	end
+		
 	pnprint("nbAtackerSucces=" .. nbAS .. "nbDefenderSuccess=" .. nbDS .. "\n")
 	local success = nbAS - nbDS
 	local sAnim = 0
@@ -194,13 +209,13 @@ function gameMap:fightAction(sourceId)
 		if (success > 0) then
 			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
 			--anim
-			sAnim = CHARACTER_ANIM.JUMP
+			sAnim = strikeAnim
 			tAnim = CHARACTER_ANIM.WALK_B
 		else
 			source:onDamage(-success + target.stats[target.selected_weapon.skill] + target.selected_weapon.modifier - source.armor, self.die:getVal(6))
 			--anim
 			sAnim = CHARACTER_ANIM.WALK_B
-			tAnim = CHARACTER_ANIM.JUMP
+			tAnim = strikeAnim
 		end
 
 	elseif (target.combat_state == COMBAT_STATE.DODGE) then
@@ -208,11 +223,11 @@ function gameMap:fightAction(sourceId)
 		if (success > 0) then
 			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
 			--anim
-			sAnim = CHARACTER_ANIM.JUMP
+			sAnim = strikeAnim
 			tAnim = CHARACTER_ANIM.WALK_B
 		else
 			--anim
-			sAnim = CHARACTER_ANIM.JUMP
+			sAnim = strikeAnim
 			tAnim = CHARACTER_ANIM.CROUCH
 			target.elapsedTurns = 1 --Cannot attack right after
 		end
@@ -222,7 +237,7 @@ function gameMap:fightAction(sourceId)
 		if (success > 0) then
 			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
 			--anim
-			sAnim = CHARACTER_ANIM.JUMP
+			sAnim = strikeAnim
 			tAnim = CHARACTER_ANIM.WALK_B
 		else
 			--anim
@@ -231,7 +246,7 @@ function gameMap:fightAction(sourceId)
 	else
 		pnprint(targetId .. " gonna get it loud!\n")
 		target:onDamage(nbAS + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
-		sAnim = CHARACTER_ANIM.JUMP
+		sAnim = strikeAnim
 		tAnim = CHARACTER_ANIM.WALK_B
 	end
 
@@ -257,4 +272,15 @@ function gameMap:onAttack(sourceId, targetId)
 	else
 		self.entities.all[sourceId].strikeLocalisation = LOCALISATION.RANDOM
 	end
+end
+
+function gameMap:onDeath(deadId)
+	pnprint("=> GameMap:onDeath(" .. deadId .. ")\n")
+	for id, entity in pairs(self.entities.className.PNAICharacter) do
+		pnprint(id .. "\n")
+		if (id ~= deadId) then
+			entity:isDead(deadId)
+		end
+	end
+	pnprint("<= GameMap:onDeath(" .. deadId .. ")\n")
 end

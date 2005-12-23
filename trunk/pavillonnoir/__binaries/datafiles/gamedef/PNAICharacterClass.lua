@@ -3,6 +3,10 @@ function PNAICharacterClass(id)
 	-- make inheritance -----
 	local OBJ = inheritFrom(PNCharacterClass(id))
 	OBJ.className = "PNAICharacter" 
+    if (gameMap.entities.className[OBJ.className] == nil) then
+		gameMap.entities.className[OBJ.className] = {}
+	end
+	gameMap.entities.className[OBJ.className][id] = OBJ
     -------------------------
     OBJ:setId(id)
     OBJ.id = id
@@ -24,6 +28,7 @@ function PNAICharacterClass(id)
 	OBJ.elapsedTurns = 0
 	OBJ.pastStates = {}
 	OBJ.ennemies = {}
+	OBJ:setTarget(nil)
 --	pnprint("PNCharacterClass creating 3\n")
 --------------------------------------------------------
 --[[%
@@ -169,7 +174,7 @@ If it is detected as an ennemy, the character switches to the fighting mode
 		if ((target:getId() ~= self.id) and (isInstanceOf(target, "PNCharacter"))) then
 			pnprint("J'ai cru voir un rominet !\n")
 			self.ennemies[target:getId()] = 1
-			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= CHARACTER_TYPE.CIVILIAN)) then
+			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= CHARACTER_TYPE.CIVILIAN) and (self:getViewTarget() == nil)) then
 				pnprint("Mais oui, j'ai bien vu un rominet !\n")
 				self:setTarget(target)
 				self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
@@ -208,7 +213,8 @@ Called at the end of a Fight Action
 		elseif (self.health_state >= HEALTH_STATE.LETHAL) then
 			--Anim Death
 			self:startAnimation(CHARACTER_ANIM.DIE)
-			--Event Death
+			self:setState(self.stateEnum.PN_IA_COMA)
+			gameMap:sendEventFromLua(self, 17) -- DeathEvent
 			pnprint(self.id .. "is dead !\n")
 		end
 		
@@ -250,12 +256,38 @@ Not used yet
 	end
 --------------------------------------------------------
 --[[%
-Call at destruction
+Called at destruction
 Not used yet
 %--]]
 	OVERRIDE(OBJ, "onDestroy")
 	function OBJ:onDestroy()
 		self:PNCharacter_onDestroy()
+	end
+--------------------------------------------------------
+--[[%
+Call at another Character's death
+Not used yet
+%--]]
+	function OBJ:isDead(deadId)
+		pnprint("=> " .. self.id .. ":isDead(" .. deadId .. ")\n")
+		if (self:getViewTarget():getId() == deadId) then
+			local newTargetId = -1
+			for id in self.ennemies do
+				if ((newTargetId == -1) or (self:getCoord():getDistance(gameMap.entities.all[newTargetId]:GetCoord()) > self:getCoord():getDistance(gameMap.entities.all[id]:GetCoord()))) then
+					newTargetId = id
+				end
+			end
+			if (newTargetId ~= -1) then
+				self:setTarget(gameMap.entities.all[newTargetId])
+			else
+				self:setTarget(nil)
+				self:restoreState()
+			end
+			if (self.ennemies[deadId] ~= NULL) then
+				self.ennemies[deadId] = NULL
+			end
+		end
+		pnprint("<= " .. self.id .. ":isDead(" .. deadId .. ")\n")
 	end
 --------------------------------------------------------
 	return OBJ
