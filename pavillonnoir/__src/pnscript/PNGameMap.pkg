@@ -4,6 +4,7 @@ class PNLuaGameMap
   public:	
 	void addToMap2(PNObject& entity, char* id);
 	const std::string&	getWpFile();
+	void sendEventFromLua(PNObject* source, pnint eventId);
 };
 
 

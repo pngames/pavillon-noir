@@ -879,6 +879,13 @@ PN3DObject::setTargetOrientation(const PNQuatf& quat)
 
   _targetOrientation = quat;
 }
+
+/// Sets View & Orient Target to NULL
+void
+PN3DObject::unsetTarget()
+{
+  setTarget(NULL);
+}
 //////////////////////////////////////////////////////////////////////////
 /// Get minimum x y z coordinate
 const PNPoint3f&	PN3DObject::getMin() const 

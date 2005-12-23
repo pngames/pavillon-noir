@@ -7,7 +7,7 @@ function PNAIPirateClass(id)
     OBJ:setId(id)
     OBJ.id = id
     pnprint("PNAIPirate creating 2\n")
-
+	
 	OBJ.realCharacType = CHARACTER_TYPE.PIRATE
 	OBJ.shownCharacType = CHARACTER_TYPE.PIRATE
 	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
@@ -34,7 +34,7 @@ Called while handling a fight
 	function OBJ:manageFight()
 	    --print("==>> PNAIPirate:manageFight()")
 	    --print(self)
-	    if (self.combat_state == COMBAT_STATE.ATTACK) then
+	    if (self.combat_state == COMBAT_STATE.ATTACK or self:getViewTarget() == nil) then
 	    	return
 	    end
 		if (self:getCoord():getDistance(self:getViewTarget():getCoord()) > self.selected_weapon.range) then
