@@ -246,6 +246,8 @@ public:
   void								setTargetDirection(const PNNormal3f& vec);
   /// Set Orientation depending on the target
   void								setTargetOrientation(const PNQuatf& quat);
+  // Sets View & Orient Target to NULL
+  void								unsetTarget();
   //////////////////////////////////////////////////////////////////////////
 
 public:

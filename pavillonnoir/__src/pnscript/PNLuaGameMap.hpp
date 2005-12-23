@@ -70,7 +70,8 @@ namespace PN
 	    void manageLuaError(int errorcode); 
 	    // register all the needed callbacks to the event manager.
         void registerInGameCallbacks();
-        void unregisterInGameCallbacks();
+		void unregisterInGameCallbacks();
+		void sendEventFromLua(PNObject* source, pnint eventId);
         ///////////////////////////////////////////////////////////////////
         //        game maps callbacks
         ///////////////////////////////////////////////////////////////////
@@ -86,7 +87,8 @@ namespace PN
         void onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* data);
 		void onAnimEnd(pnEventType evt, PNObject* source, PNEventData* data);
         void onMouseMove(pnEventType evt, PNObject* source, PNEventData* data);
-         ////////////////////////////////////////////////////////////////////////
+		void onDeath(pnEventType evt, PNObject* source, PNEventData* data);
+		////////////////////////////////////////////////////////////////////////
         void sendGameActionEvent(std::string eventName, PNGameActionEventData *eventData);
     };
 }
