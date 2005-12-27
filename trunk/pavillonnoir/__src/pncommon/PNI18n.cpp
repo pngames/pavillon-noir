@@ -196,35 +196,9 @@ PNI18n::_unserializeString(xmlNode* node)
   std::string	key = (const char*)xmlGetProp(node, PNI18N_XMLPROP_KEY);
   std::string	value = (const char*)xmlGetProp(node, PNI18N_XMLPROP_VALUE);
 
-  std::string language = "";
-  std::string country = "";
-  std::string variant = "";
-
   xmlChar* attr = xmlGetProp(node, PNI18N_XMLPROP_LOCALE);
-  if (attr != NULL)
-  {
-	std::string sl = (const char*)attr;
 
-	language = sl;
-
-	std::string::size_type nb = language.find('_');
-	if (nb != std::string::npos)
-	{
-	  language = sl.substr(0, nb);
-	  sl = sl.erase(0, nb);
-
-	  country = sl;
-
-	  nb = country.find('_');
-	  if (nb != std::string::npos)
-	  {
-		country = sl.substr(0, nb);
-		variant = sl.erase(0, nb);
-	  }
-	}
-  }
-
-  addString(key, value, PNLocale(language, country, variant));
+  addString(key, value, PNLocale(attr == NULL ? "" : (const char*)attr));
 
   return PNEC_SUCCESS;
 }
