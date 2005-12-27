@@ -46,8 +46,7 @@ private:
   std::string				_country;
   std::string				_variant;
 public:
-  PNLocale(const std::string& language);
-  PNLocale(const std::string& language, const std::string& country);
+  PNLocale(const std::string& str);
   PNLocale(const std::string& language, const std::string& country, const std::string& variant);
   PNLocale(const PNLocale& l);
 
