@@ -22,6 +22,9 @@ PNFXEventBoxParameter.cpp
 PNFXCheckButtonParameter.cpp
 PNFXDefaultParameter.cpp
 PNFXTextFieldParameter.cpp
+PNFXListParameter.cpp
+PNFXSeparatorParameter.cpp
+PNFXVPPNObjectParameter.cpp
 """.split()
 obj.target = 'libpneditorcommon' + env['suffix']
 obj.vnum = env['package_version']
