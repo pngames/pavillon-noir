@@ -56,15 +56,27 @@ const PNLocale	PNLocale::EN("en");
 
 //////////////////////////////////////////////////////////////////////////
 
-PNLocale::PNLocale(const std::string& language)
+PNLocale::PNLocale(const std::string& str)
 {
-  _language = language;
-}
+  std::string lstring = str;
 
-PNLocale::PNLocale(const std::string& language, const std::string& country)
-{
-  _language = language;
-  _country = country;
+  _language = lstring;
+
+  std::string::size_type nb = _language.find('_');
+  if (nb != std::string::npos)
+  {
+	_language = lstring.substr(0, nb);
+	lstring = lstring.erase(0, nb);
+
+	_country = lstring;
+
+	nb = _country.find('_');
+	if (nb != std::string::npos)
+	{
+	  _country = lstring.substr(0, nb);
+	  _variant = lstring.erase(0, nb);
+	}
+  }
 }
 
 PNLocale::PNLocale(const std::string& language, const std::string& country, const std::string& variant)
