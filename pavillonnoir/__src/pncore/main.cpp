@@ -47,7 +47,7 @@
 #include "pnevent.h"
 #include "pnresources.h"
 #include "pnmath.h"
-#include "pni18n.hpp"
+#include "pni18n.h"
 
 #include "PNQuatf.hpp"
 
