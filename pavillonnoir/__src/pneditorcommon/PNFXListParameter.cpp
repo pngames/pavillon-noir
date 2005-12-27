@@ -97,7 +97,7 @@ template<class _ListElement>
 void
 PNFXListParameter::_deleteFromList(FXint index, std::list<_ListElement>& lst)
 {
-  std::list<_ListElement>::iterator	it = lst.begin();
+  typename std::list<_ListElement>::iterator	it = lst.begin();
   for (int i = 0; it != lst.end(); ++i, ++it)
   {
 	if  (i == index)
@@ -152,7 +152,7 @@ template<class _ListElement>
 void
 PNFXListParameter::_addInList(FXint index, std::list<_ListElement>& lst)
 {
-  std::list<_ListElement>::iterator	it = lst.begin();
+  typename std::list<_ListElement>::iterator	it = lst.begin();
   for (int i = 0; it != lst.end(); ++i, ++it)
   {
 	if  (i == index)
@@ -171,7 +171,7 @@ template<class _ListElement>
 void
 PNFXListParameter::_editInList(FXint index, std::list<_ListElement>& lst)
 {
-  std::list<_ListElement>::iterator	it = lst.begin();
+  typename std::list<_ListElement>::iterator	it = lst.begin();
   for (int i = 0; it != lst.end(); ++i, ++it)
   {
 	if  (i == index)
@@ -188,7 +188,7 @@ PNFXListParameter::_updateList(std::list<_ListElement>& lst)
 {
   _listBox->clearItems();
 
-  for (std::list<_ListElement>::iterator it = lst.begin(); it != lst.end(); ++it)
+  for (typename std::list<_ListElement>::iterator it = lst.begin(); it != lst.end(); ++it)
   {
 	std::ostringstream os;
 	os << *it;
@@ -321,7 +321,7 @@ PNFXListParameter::onDelete(FXObject* obj, FXSelector sel, void* ptr)
   {
 	if (index != 0 && index <= (FXint)getChoise())
 	  setChoise(getChoise() - 1);
-
+	
 	sendParamModif();
 	update();
   }

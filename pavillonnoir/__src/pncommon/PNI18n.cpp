@@ -42,7 +42,7 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-static const std::string  default = "";
+static const std::string  _default = "";
 
 static const std::string  error = "!KEY DOES NOT EXIST!";
 static const std::string  errrorVariant = "!VARIANT DOES NOT EXIST!";
@@ -77,7 +77,7 @@ VarientMap::getString(const std::string& key, const PNLocale& locale)
 
   if (it == end())
   {
-	it = find(default);
+	it = find(_default);
 	if (it == end())
 	  return errrorVariant;
   }
@@ -100,7 +100,7 @@ CountryMap::getString(const std::string& key, const PNLocale& locale)
 
   if (it == end())
   {
-	it = find(default);
+	it = find(_default);
 	if (it == end())
 	  return errrorCountry;
   }
@@ -148,7 +148,7 @@ PNI18n::_getString(const std::string& key, const PNLocale& locale)
 
   if (it == end())
   {
-	it = find(default);
+	it = find(_default);
 	if (it == end())
 	  return errrorLanguage;
   }
