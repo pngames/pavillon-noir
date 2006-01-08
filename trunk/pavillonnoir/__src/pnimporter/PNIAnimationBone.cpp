@@ -209,16 +209,6 @@ pnbool		PNIAnimationBone::setRotation(pnuint time, PNQuatf& rot)
   return true;
 }
 
-pnbool		PNIAnimationBone::setRotation(pndouble rtime, const PNQuatf& lastRot, PNQuatf& rot)
-{
-  if (_rotations.size() <= 0)
-	return false;
-
-  rot.slerp(lastRot, _rotations.begin()->rot, (pnfloat)rtime);
-
-  return true;
-}
-
 pnbool		PNIAnimationBone::setPosition(pnuint time, PNPoint3f& pos)
 {
   if (_positions.size() <= 0)
@@ -248,18 +238,6 @@ pnbool		PNIAnimationBone::setPosition(pnuint time, PNPoint3f& pos)
 	pos.y = prevFrame.pos.y + (curFrame.pos.y - prevFrame.pos.y) * interpValue;
 	pos.z = prevFrame.pos.z + (curFrame.pos.z - prevFrame.pos.z) * interpValue;
   }
-
-  return true;
-}
-
-pnbool		PNIAnimationBone::setPosition(pndouble rtime, const PNPoint3f& lastPos, PNPoint3f& pos)
-{
-  if (_positions.size() <= 0)
-	return false;
-
-  pos.x = (pnfloat)(lastPos.x + (pos.x - lastPos.x) * rtime);
-  pos.y = (pnfloat)(lastPos.y + (pos.y - lastPos.y) * rtime);
-  pos.z = (pnfloat)(lastPos.z + (pos.z - lastPos.z) * rtime);
 
   return true;
 }

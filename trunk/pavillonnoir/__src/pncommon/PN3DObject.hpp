@@ -89,7 +89,7 @@ public:
   /// Sub Objects to render
   typedef enum
   {
-	RENDER_DIRECTIONS				= 0x000001,			/// Render 3D physical object
+	RENDER_DIRECTIONS				= 0x000001,			/// Render 3D object axis
 	RENDER_MODEL					= 0x000001 << 1,	/// Render 3D object model
 	RENDER_MATERIALS				= 0x000001 << 2,	/// Render 3D object materials (need RENDER_MODEL)
 	RENDER_PHYSICAL					= 0x000001 << 3,	/// Render 3D physical object
@@ -102,7 +102,7 @@ public:
   /// Translation and rotation states
   typedef enum
   {
-	STATE_NONE,									/// Do nothing
+	STATE_NONE,											/// Do nothing
 	STATE_T_RIGHT					= 0x000001,			/// Translate to the right
 	STATE_T_LEFT					= 0x000001 << 1,	/// Translate to the left
 	STATE_T_TOP						= 0x000001 << 2,	/// Translate to the top
@@ -365,9 +365,6 @@ public:
   /// Set 3D object coordinate in 3D scene
   virtual void					setCoord(pnfloat x, pnfloat y, pnfloat z);
 
-  /// Return 3D object center coordinate relive to his coordinate
-  virtual const PNPoint3f&		getCenter() const;
-
   /// Translate relative to object coordinate
   virtual void					move(PNPoint3f& coord);
   /// Translate on x relative to object coordinate
@@ -381,6 +378,14 @@ public:
   virtual const PNVector3f&		getUpdateTranslation() const;
   /// Set current update translation object
   virtual void					setUpdateTranslation(const PNVector3f& translation);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  /// Return 3D object center coordinate relative to his coordinate
+  const PNPoint3f&				getCenter() const;
+
+  /// Return 3D object radius relative to his coordinate
+  pnfloat						getRadius() const;
 
   //////////////////////////////////////////////////////////////////////////
 

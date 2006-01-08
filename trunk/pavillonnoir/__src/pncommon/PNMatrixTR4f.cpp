@@ -124,54 +124,54 @@ PNMatrixTR4f&		PNMatrixTR4f::preMultiply(const PNMatrixTR4f& matrix)
   return *this;
 }
 
-pnfloat*		PNMatrixTR4f::transform(pnfloat* vdest, const pnfloat* vsrc, pnfloat weight) const
+PNPoint3f&		PNMatrixTR4f::transform(PNPoint3f& vdest, const PNPoint3f& vsrc, pnfloat weight) const
 {
-  pnfloat v1 = weight * (vsrc[0] * _matrix[0] + vsrc[1] * _matrix[4] + vsrc[2] * _matrix[8] + _matrix[12]);
-  pnfloat v2 = weight * (vsrc[0] * _matrix[1] + vsrc[1] * _matrix[5] + vsrc[2] * _matrix[9] + _matrix[13]);
-  pnfloat v3 = weight * (vsrc[0] * _matrix[2] + vsrc[1] * _matrix[6] + vsrc[2] * _matrix[10] + _matrix[14]);
+  pnfloat v1 = weight * (vsrc.x * _matrix[0] + vsrc.y * _matrix[4] + vsrc.z * _matrix[8] + _matrix[12]);
+  pnfloat v2 = weight * (vsrc.x * _matrix[1] + vsrc.y * _matrix[5] + vsrc.z * _matrix[9] + _matrix[13]);
+  pnfloat v3 = weight * (vsrc.x * _matrix[2] + vsrc.y * _matrix[6] + vsrc.z * _matrix[10] + _matrix[14]);
 
-  vdest[0] = v1;
-  vdest[1] = v2;
-  vdest[2] = v3;
+  vdest.x = v1;
+  vdest.y = v2;
+  vdest.z = v3;
 
   return vdest;
 }
 
-pnfloat*		PNMatrixTR4f::transform(pnfloat* vec) const
+PNPoint3f&		PNMatrixTR4f::transform(PNPoint3f& vec) const
 {
-  pnfloat v1 = vec[0] * _matrix[0] + vec[1] * _matrix[4] + vec[2] * _matrix[8] + _matrix[12];
-  pnfloat v2 = vec[0] * _matrix[1] + vec[1] * _matrix[5] + vec[2] * _matrix[9] + _matrix[13];
-  pnfloat v3 = vec[0] * _matrix[2] + vec[1] * _matrix[6] + vec[2] * _matrix[10] + _matrix[14];
+  pnfloat v1 = vec.x * _matrix[0] + vec.y * _matrix[4] + vec.z * _matrix[8] + _matrix[12];
+  pnfloat v2 = vec.x * _matrix[1] + vec.y * _matrix[5] + vec.z * _matrix[9] + _matrix[13];
+  pnfloat v3 = vec.x * _matrix[2] + vec.y * _matrix[6] + vec.z * _matrix[10] + _matrix[14];
 
-  vec[0] = v1;
-  vec[1] = v2;
-  vec[2] = v3;
+  vec.x = v1;
+  vec.y = v2;
+  vec.z = v3;
 
   return (vec);
 }
 
-pnfloat*		PNMatrixTR4f::transform3(pnfloat* vdest, const pnfloat* vsrc, pnfloat weight) const
+PNPoint3f&		PNMatrixTR4f::transform3(PNPoint3f& vdest, const PNPoint3f& vsrc, pnfloat weight) const
 {
-  pnfloat v1 = weight * (vsrc[0] * _matrix[0] + vsrc[1] * _matrix[4] + vsrc[2] * _matrix[8]);
-  pnfloat v2 = weight * (vsrc[0] * _matrix[1] + vsrc[1] * _matrix[5] + vsrc[2] * _matrix[9]);
-  pnfloat v3 = weight * (vsrc[0] * _matrix[2] + vsrc[1] * _matrix[6] + vsrc[2] * _matrix[10]);
+  pnfloat v1 = weight * (vsrc.x * _matrix[0] + vsrc.y * _matrix[4] + vsrc.z * _matrix[8]);
+  pnfloat v2 = weight * (vsrc.x * _matrix[1] + vsrc.y * _matrix[5] + vsrc.z * _matrix[9]);
+  pnfloat v3 = weight * (vsrc.x * _matrix[2] + vsrc.y * _matrix[6] + vsrc.z * _matrix[10]);
 
-  vdest[0] = v1;
-  vdest[1] = v2;
-  vdest[2] = v3;
+  vdest.x = v1;
+  vdest.y = v2;
+  vdest.z = v3;
 
   return vdest;
 }
 
-pnfloat			*PNMatrixTR4f::transform3(pnfloat* vec) const
+PNPoint3f&		PNMatrixTR4f::transform3(PNPoint3f& vec) const
 {
-  pnfloat v1 = vec[0] * _matrix[0] + vec[1] * _matrix[4] + vec[2] * _matrix[8];
-  pnfloat v2 = vec[0] * _matrix[1] + vec[1] * _matrix[5] + vec[2] * _matrix[9];
-  pnfloat v3 = vec[0] * _matrix[2] + vec[1] * _matrix[6] + vec[2] * _matrix[10];
+  pnfloat v1 = vec.x * _matrix[0] + vec[1] * _matrix[4] + vec.z * _matrix[8];
+  pnfloat v2 = vec.x * _matrix[1] + vec[1] * _matrix[5] + vec.z * _matrix[9];
+  pnfloat v3 = vec.x * _matrix[2] + vec[1] * _matrix[6] + vec.z * _matrix[10];
 
-  vec[0] = v1;
-  vec[1] = v2;
-  vec[2] = v3;
+  vec.x = v1;
+  vec.y = v2;
+  vec.z = v3;
 
   return (vec);
 }
