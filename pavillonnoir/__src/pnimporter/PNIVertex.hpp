@@ -45,18 +45,18 @@ class PN3DSkeleton;
 class			PNIVertex : public PNPoint3f
 {
 public:
-  typedef std::list<pnmBoneID_t>	LIST_BONES;
+  typedef std::vector<pnmBoneID_t>		BonesVector;
 
   typedef std::pair<PNI3DMesh*, pnuint>	PAIR_INDEX;
-  typedef std::list<PAIR_INDEX>			LIST_INDEXES;
+  typedef std::vector<PAIR_INDEX>		IndexesVector;
 public:
-  pnpoint3f_t	normale;
+  PNPoint3f		normale;
   pncolor_t		color;
 
 private:
-  LIST_BONES	_bones;
+  BonesVector	_bones;
 
-  LIST_INDEXES	_indexes;
+  IndexesVector	_indexes;
 public:
   PNIVertex(pnmVertex_t& vert, pnmBoneID_t* bonesId);
   ~PNIVertex();
@@ -67,7 +67,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   
-  void	transform(PN3DSkeleton* sk);
+  void	transform(const PN3DSkeleton* sk);
 };
 
   //////////////////////////////////////////////////////////////////////////

@@ -190,25 +190,25 @@ PN3DCamera::_isPointVisile(const PNPoint3f& point, const PNPlane& plane1, const 
 pnbool
 PN3DCamera::_isBoxSpeedVisible()
 {
-  PNVector3f	targetVector1 = _point1 + _tTargetVector;
-  PNVector3f	targetVector2 = _point2 + _tTargetVector;
-  PNVector3f	targetVector3 = _point3 + _tTargetVector;
-  PNVector3f	targetVector4 = _point4 + _tTargetVector;
-  PNVector3f	targetVector5 = _point5 + _tTargetVector;
-  PNVector3f	targetVector6 = _point6 + _tTargetVector;
-  PNVector3f	targetVector7 = _point7 + _tTargetVector;
-  PNVector3f	targetVector8 = _point8 + _tTargetVector;
+  PNVector3f	targetVector1 = _tTargetVector + _point1;
+  PNVector3f	targetVector2 = _tTargetVector + _point2;
+  PNVector3f	targetVector3 = _tTargetVector + _point3;
+  PNVector3f	targetVector4 = _tTargetVector + _point4;
+  PNVector3f	targetVector5 = _tTargetVector + _point5;
+  PNVector3f	targetVector6 = _tTargetVector + _point6;
+  PNVector3f	targetVector7 = _tTargetVector + _point7;
+  PNVector3f	targetVector8 = _tTargetVector + _point8;
 
   //////////////////////////////////////////////////////////////////////////
 
-  pnfloat	  norm1 = targetVector1.getNorm();
-  pnfloat	  norm2 = targetVector2.getNorm();
-  pnfloat	  norm3 = targetVector3.getNorm();
-  pnfloat	  norm4 = targetVector4.getNorm();
-  pnfloat	  norm5 = targetVector5.getNorm();
-  pnfloat	  norm6 = targetVector6.getNorm();
-  pnfloat	  norm7 = targetVector7.getNorm();
-  pnfloat	  norm8 = targetVector8.getNorm();
+  pnfloat		norm1 = targetVector1.getNorm();
+  pnfloat		norm2 = targetVector2.getNorm();
+  pnfloat		norm3 = targetVector3.getNorm();
+  pnfloat		norm4 = targetVector4.getNorm();
+  pnfloat		norm5 = targetVector5.getNorm();
+  pnfloat		norm6 = targetVector6.getNorm();
+  pnfloat		norm7 = targetVector7.getNorm();
+  pnfloat		norm8 = targetVector8.getNorm();
 
   //////////////////////////////////////////////////////////////////////////
   // FOV
@@ -272,32 +272,19 @@ PN3DCamera::_isBoxSpeedVisible()
   // NEAR-FAR
   //////////////////////////////////////////////////////////////////////////
 
-  PNPoint3f	nearCoord(
-	_tCoord.x + (_tFrontDirection.x * _viewNear),
-	_tCoord.y + (_tFrontDirection.y * _viewNear),
-	_tCoord.z + (_tFrontDirection.z * _viewNear));
-
-  PNPoint3f	farCoord(
-	_tCoord.x + (_tFrontDirection.x * _viewFar),
-	_tCoord.y + (_tFrontDirection.y * _viewFar),
-	_tCoord.z + (_tFrontDirection.z * _viewFar));
-
-  PNPlane near(nearCoord, -_tFrontDirection);
-  PNPlane far(farCoord, _tFrontDirection);
-
-  _firstInTest1 = near.getDistanceFromPlane(targetVector1) < 0;
-  _firstInTest2 = far.getDistanceFromPlane(targetVector1) < 0;
+  _firstInTest1 = _tNearPlane.getDistanceFromPlane(targetVector1) < 0;
+  _firstInTest2 = _tFarPlane.getDistanceFromPlane(targetVector1) < 0;
   _isIn1 = _isIn2 = false;
 
   pnbool	inNearFar = 
-	_isPointVisile(_point1, near, far) ||
-	_isPointVisile(_point2, near, far) ||
-	_isPointVisile(_point3, near, far) ||
-	_isPointVisile(_point4, near, far) ||
-	_isPointVisile(_point5, near, far) ||
-	_isPointVisile(_point6, near, far) ||
-	_isPointVisile(_point7, near, far) ||
-	_isPointVisile(_point8, near, far);
+	_isPointVisile(_point1, _tNearPlane, _tFarPlane) ||
+	_isPointVisile(_point2, _tNearPlane, _tFarPlane) ||
+	_isPointVisile(_point3, _tNearPlane, _tFarPlane) ||
+	_isPointVisile(_point4, _tNearPlane, _tFarPlane) ||
+	_isPointVisile(_point5, _tNearPlane, _tFarPlane) ||
+	_isPointVisile(_point6, _tNearPlane, _tFarPlane) ||
+	_isPointVisile(_point7, _tNearPlane, _tFarPlane) ||
+	_isPointVisile(_point8, _tNearPlane, _tFarPlane);
 
   return inNearFar;
 }
@@ -333,6 +320,79 @@ PN3DCamera::_isBoxVisible()
 pnbool
 PN3DCamera::_isSphereVisible()
 {
+  PNQuatf	invertOrient = _testedObj->getOrient().getInvert();
+
+  PNPoint3f	center = _testedObj->getCenter();
+  pnfloat radius = _testedObj->getRadius();
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  _tRightDirection = _orient * _rightDirection.getVector();
+  _tRightDirection = invertOrient * _tRightDirection;
+  _tRightDirection.setNorm(1.0f);
+  
+  _tRightFov.set(PNQuatf(_tTopDirection, _viewRightFov) * _tFrontDirection);
+  _tRightPlane.setPlane(_tCoord, _tRightFov);
+
+  if (_tRightPlane.getDistanceFromPlane(center) > radius)
+	return false;
+
+  //////////////////////////////////////////////////////////////////////////
+
+  _tLeftFov.set(PNQuatf(_tTopDirection, _viewLeftFov) * _tFrontDirection);
+  _tLeftPlane.setPlane(_tCoord, _tLeftFov);
+
+  if (_tLeftPlane.getDistanceFromPlane(center) > radius)
+	return false;
+
+  //////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////
+
+  _tTopDirection = _orient * _topDirection.getVector();
+  _tTopDirection = invertOrient * _tTopDirection;
+  _tTopDirection.setNorm(1.0f);
+
+  _tTopFov.set(PNQuatf(_tRightDirection, _viewTopFov) * _tFrontDirection);
+  _tTopPlane.setPlane(_tCoord, _tTopFov);
+
+  if (_tTopPlane.getDistanceFromPlane(center) > radius)
+	return false;
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  _tBackFov.set(PNQuatf(_tRightDirection, _viewBackFov) * _tFrontDirection);
+  _tBackPlane.setPlane(_tCoord, _tBackFov);
+
+  if (_tBackPlane.getDistanceFromPlane(center) > radius)
+	return false;
+
+  //////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////
+  
+  PNPoint3f	nearCoord(
+	_tCoord.x + (_tFrontDirection.x * _viewNear),
+	_tCoord.y + (_tFrontDirection.y * _viewNear),
+	_tCoord.z + (_tFrontDirection.z * _viewNear));
+
+  _tNearPlane.setPlane(nearCoord, -_tFrontDirection);
+
+  if (_tNearPlane.getDistanceFromPlane(center) > radius)
+	return false;
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  PNPoint3f	farCoord(
+	_tCoord.x + (_tFrontDirection.x * _viewFar),
+	_tCoord.y + (_tFrontDirection.y * _viewFar),
+	_tCoord.z + (_tFrontDirection.z * _viewFar));
+
+  _tFarPlane.setPlane(farCoord, _tFrontDirection);
+
+  if (_tFarPlane.getDistanceFromPlane(center) > radius)
+	return false;
+
+  //////////////////////////////////////////////////////////////////////////
+
   return true;
 }
 
@@ -346,35 +406,19 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   if (_testedObj->get3DModel() == NULL || _testedObj->getRenderMode() == 0)
 	return false;
 
+  PNQuatf	invertOrient = _testedObj->getOrient().getInvert();
+
   //////////////////////////////////////////////////////////////////////////
 
   _tFrontDirection = _orient * _frontDirection.getVector();
-  _tRightDirection = _orient * _rightDirection.getVector();
-  _tTopDirection = _orient * _topDirection.getVector();
-
+  _tFrontDirection = invertOrient * _tFrontDirection;
   _tFrontDirection.setNorm(1.0f);
-  _tRightDirection.setNorm(1.0f);
-  _tTopDirection.setNorm(1.0f);
 
   //////////////////////////////////////////////////////////////////////////
   
   _tCoord = _coord - _testedObj->getCoord();
-
-  PNQuatf	invertOrient = _testedObj->getOrient().getInvert();
-
   _tCoord = invertOrient * _tCoord;
-  _tFrontDirection = invertOrient * _tFrontDirection;
-  _tRightDirection = invertOrient * _tRightDirection;
-  _tTopDirection = invertOrient * _tTopDirection;
-
   _tTargetVector = -_tCoord;
-
-  //////////////////////////////////////////////////////////////////////////
-
-  _tRightFov.set(PNQuatf(_tTopDirection, _viewRightFov) * _tFrontDirection);
-  _tLeftFov.set(PNQuatf(_tTopDirection, _viewLeftFov) * _tFrontDirection);
-  _tTopFov.set(PNQuatf(_tRightDirection, _viewTopFov) * _tFrontDirection);
-  _tBackFov.set(PNQuatf(_tRightDirection, _viewBackFov) * _tFrontDirection);
 
   //////////////////////////////////////////////////////////////////////////
 

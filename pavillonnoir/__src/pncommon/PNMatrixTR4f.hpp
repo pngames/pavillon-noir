@@ -62,14 +62,14 @@ public:
   PNMatrixTR4f&	postMultiply(const PNMatrixTR4f& matrix);
   PNMatrixTR4f&	preMultiply(const PNMatrixTR4f& matrix);
 
-  pnfloat*		transform(pnfloat* vdest, const pnfloat* vsrc, pnfloat weight) const;
-  pnfloat*		transform3(pnfloat* vdest, const pnfloat* vsrc, pnfloat weight) const;
+  PNPoint3f&	transform(PNPoint3f& vdest, const PNPoint3f& vsrc, pnfloat weight) const;
+  PNPoint3f&	transform3(PNPoint3f& vdest, const PNPoint3f& vsrc, pnfloat weight) const;
 
-  pnfloat*		transform(pnfloat* vdest, const pnfloat* vsrc) const;
-  pnfloat*		transform3(pnfloat* vdest, const pnfloat* vsrc) const;
+  PNPoint3f&	transform(PNPoint3f& vdest, const PNPoint3f& vsrc) const;
+  PNPoint3f&	transform3(PNPoint3f& vdest, const PNPoint3f& vsrc) const;
 
-  pnfloat*		transform(pnfloat* vec) const;
-  pnfloat*		transform3(pnfloat* vec) const;
+  PNPoint3f&	transform(PNPoint3f& vec) const;
+  PNPoint3f&	transform3(PNPoint3f& vec) const;
 
   //////////////////////////////////////////////////////////////////////////
   

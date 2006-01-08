@@ -65,6 +65,7 @@ private:
   PNPoint3f					_min;
   PNPoint3f					_max;
   PNPoint3f					_center;
+  pnfloat					_radius;
 public:
   PNI3DModel();
   ~PNI3DModel();
@@ -90,6 +91,8 @@ public:
   const PNPoint3f&			getMin() const;
   const PNPoint3f&			getMax() const;
   const PNPoint3f&			getCenter() const;
+  /// Get bounding sphere radius
+  pnfloat					getRadius() const;
 
   //////////////////////////////////////////////////////////////////////////
   

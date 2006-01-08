@@ -36,6 +36,7 @@
 
 #include "PNPoint3f.hpp"
 #include "PNVector3f.hpp"
+#include "PNPlane.hpp"
 
 #include "PN3DObject.hpp"
 
@@ -137,6 +138,13 @@ protected:
   PNVector3f				_tLeftFov;
   PNVector3f				_tTopFov;
   PNVector3f				_tBackFov;
+
+  PNPlane					_tRightPlane;
+  PNPlane					_tLeftPlane;
+  PNPlane					_tTopPlane;
+  PNPlane					_tBackPlane;
+  PNPlane					_tNearPlane;
+  PNPlane					_tFarPlane;
 
   pnbool					_is3DObjVisible(PN3DObject* obj);
 

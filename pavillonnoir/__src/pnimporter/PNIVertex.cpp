@@ -55,7 +55,11 @@ void
 PNIVertex::initVert(pnmVertex_t& vert, pnmBoneID_t* bonesId)
 {
   set(vert.coord);
-  normale = vert.normale;
+
+  normale.x = vert.normale.x;
+  normale.y = vert.normale.y;
+  normale.z = vert.normale.z;
+
   color = vert.color;
 
   for (pnuint i = 0; i < vert.nbBones; ++i)
@@ -75,16 +79,16 @@ PNIVertex::addIndex(PNI3DMesh* mesh, pnuint index)
 //////////////////////////////////////////////////////////////////////////
 
 void
-PNIVertex::transform(PN3DSkeleton* sk)
+PNIVertex::transform(const PN3DSkeleton* sk)
 {
   if (_bones.size() == 0)
 	return ;
 
-  LIST_INDEXES::iterator it = _indexes.begin();
+  IndexesVector::iterator it = _indexes.begin();
 
   PAIR_INDEX&		index = *it;
 
-  static pnfloat	tmp[3];
+  static PNPoint3f	tmp;
 
   pnpoint3f_t&		vtmp = index.first->_vertBuffer[index.second];
   pnpoint3f_t&		ntmp = index.first->_normBuffer[index.second];
@@ -92,23 +96,24 @@ PNIVertex::transform(PN3DSkeleton* sk)
   memset(&vtmp, 0, sizeof(vtmp));
   memset(&ntmp, 0, sizeof(ntmp));
 
-  for (LIST_BONES::iterator itb = _bones.begin(); itb != _bones.end(); ++itb)
+  for (BonesVector::iterator itb = _bones.begin(); itb != _bones.end(); ++itb)
   {
-	pnmBoneID_t& bone = *itb;
+	pnmBoneID_t&		bone = *itb;
+	const PNMatrixTR4f&	matrix = sk->getMatrix(bone.boneIdx);
 
-	sk->getMatrix(bone.boneIdx).transform(tmp, &x, bone.weight);
+	matrix.transform(tmp, *this, bone.weight);
 
-	vtmp.x += tmp[0];
-	vtmp.y += tmp[1];
-	vtmp.z += tmp[2];
+	vtmp.x += tmp.x;
+	vtmp.y += tmp.y;
+	vtmp.z += tmp.z;
 
 	//////////////////////////////////////////////////////////////////////////
 
-	sk->getMatrix(bone.boneIdx).transform3(tmp, &normale.x, bone.weight);
+	matrix.transform3(tmp, normale, bone.weight);
 
-	ntmp.x += tmp[0];
-	ntmp.y += tmp[1];
-	ntmp.z += tmp[2];
+	ntmp.x += tmp.x;
+	ntmp.y += tmp.y;
+	ntmp.z += tmp.z;
   }
 
   PNVector3f::setNorm(&ntmp.x, 1.0f);
@@ -118,15 +123,8 @@ PNIVertex::transform(PN3DSkeleton* sk)
 
   for (++it; it != _indexes.end(); ++it)
   {
-	PAIR_INDEX&	index = *it;
-
-	index.first->_vertBuffer[index.second].x = vtmp.x;
-	index.first->_vertBuffer[index.second].y = vtmp.y;
-	index.first->_vertBuffer[index.second].z = vtmp.z;
-
-	index.first->_normBuffer[index.second].x = ntmp.x;
-	index.first->_normBuffer[index.second].y = ntmp.y;
-	index.first->_normBuffer[index.second].z = ntmp.z;
+	it->first->_vertBuffer[it->second] = vtmp;
+	it->first->_normBuffer[it->second] = ntmp;
   }
 }
 

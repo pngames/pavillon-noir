@@ -74,10 +74,11 @@ PNI3DModel::render(std::vector<PN3DMaterial*>* mats, PN3DSkeleton* sk)
 	  _min.z = PNMIN(_min.z, vert.z); _max.z = PNMAX(_max.z, vert.z);
 	}
 
-	/*PNVector3f dim = PNVector3f(_min, _max);
-	dim /= 2;
-	_center = min;
-	_center += *dim;*/
+	PNVector3f dim = PNVector3f(_min, _max);
+	dim /= 2.0f;
+	_center = _min;
+	_center += dim;
+	_radius = dim.getNorm();
   }
 
   for (LIST_3DMESH::iterator it = _meshes.begin(); it != _meshes.end(); ++it)
@@ -130,6 +131,13 @@ const PNPoint3f&
 PNI3DModel::getCenter() const
 {
   return _center;
+}
+
+/// Get bounding sphere radius
+pnfloat	
+PNI3DModel::getRadius() const
+{
+  return _radius;
 }
 
 //////////////////////////////////////////////////////////////////////////
