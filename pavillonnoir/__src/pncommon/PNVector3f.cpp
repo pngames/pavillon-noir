@@ -309,54 +309,6 @@ PNVector3f::multiply(pnfloat constant)
 }
 
 /**
- * \return	the norm of the vector
- */
-pnfloat
-PNVector3f::getNorm() const
-{
-  return (sqrtf(x * x + y * y + z * z));
-}
-
-pnfloat
-PNVector3f::getNorm(pnfloat* v)
-{
-  return (sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]));
-}
-
-/**
- * \brief Scales the vector to fit the specified new norm. 
- * Note: It is an error to call this method on a vector whoose norm is lesser than
- * EPSILON. An assertion will be broken in DEBUG mode, but in release mode, calling
- * this method on a null vector may result in an undefined behavior.
- * 
- * \param	newNorm		the new norm of the vector
- * \return	void
- */
-void
-PNVector3f::setNorm(pnfloat newNorm)
-{
-  pnfloat	factor;
-
-  assert(!this->isNull() && "FATAL-ERROR: You try to normalize a null vector... bug ?");
-
-  factor = newNorm / this->getNorm();
-  x *= factor;
-  y *= factor;
-  z *= factor;
-}
-
-void
-PNVector3f::setNorm(pnfloat* v, pnfloat newNorm)
-{
-  pnfloat	factor;
-
-  factor = newNorm / getNorm(v);
-  v[0] *= factor;
-  v[1] *= factor;
-  v[2] *= factor;
-}
-
-/**
  * \return the scalar product with the specified vector
  */
 pnfloat
@@ -385,9 +337,9 @@ PNVector3f::scalarProduct(pnfloat vX, pnfloat vY, pnfloat vZ) const
 void
 PNVector3f::crossProduct(const PNVector3f &u, const PNVector3f &v)
 {
-  pnfloat	r_x;
-  pnfloat	r_y;
-  pnfloat	r_z;
+  register pnfloat	r_x;
+  register pnfloat	r_y;
+  register pnfloat	r_z;
 	
   r_x = u.y * v.z - u.z * v.y;
   r_y = u.z * v.x - u.x * v.z;

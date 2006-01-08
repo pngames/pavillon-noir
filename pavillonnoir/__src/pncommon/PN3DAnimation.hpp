@@ -59,12 +59,8 @@ public:
 
   /// Calculate quaternion (rotation) for bone \c id and at time \c time
   virtual pnbool	setRotation(pnint id, pnuint time, PNQuatf& rot)=0;
-  /// Calculate interpolation quaternion (rotation) between \c lastrot and \c rot for bone \c id and at relative time \c rtime
-  virtual pnbool	setRotation(pnint id, pndouble rtime, const PNQuatf& lastRot, PNQuatf& rot)=0;
   /// Calculate position for bone \c id and at time \c time
   virtual pnbool	setPosition(pnint id, pnuint time, PNPoint3f& pos)=0;
-  /// Calculate interpolation position between \c lastrot and \c rot for bone \c id and at relative time \c rtime
-  virtual pnbool	setPosition(pnint id, pndouble rtime, const PNPoint3f& lastPos, PNPoint3f& pos)=0;
 };
 
 //////////////////////////////////////////////////////////////////////////

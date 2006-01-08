@@ -90,6 +90,7 @@ PNI3DModel::parseVertexes()
   dim /= 2.0f;
   _center = _min;
   _center += dim;
+  _radius = dim.getNorm();
 
   return PNEC_SUCCESS;
 }

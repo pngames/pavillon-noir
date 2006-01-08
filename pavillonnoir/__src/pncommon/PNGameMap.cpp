@@ -243,9 +243,9 @@ PNGameMap::unserializeFromXML(xmlNode* root)
 
 	for (xmlNodePtr current = root->children; current != NULL; current = current->next)
 	{
-	  SEND_LOAD_STEP_PUSH(eaLoadStep, _path, 1.0 / nbNodes)
+	  SEND_LOAD_STEP_PUSH(eaLoadStep, _path, 1.0f / nbNodes)
 	  error = _unserializeNode(current);
-	  SEND_LOAD_STEP_POP(eaLoadStep, _path, 1.0 / nbNodes)
+	  SEND_LOAD_STEP_POP(eaLoadStep, _path, 1.0f / nbNodes)
 
 	  SEND_LOAD_STEP(eaLoadStep, _path, ++nb / nbNodes)
 

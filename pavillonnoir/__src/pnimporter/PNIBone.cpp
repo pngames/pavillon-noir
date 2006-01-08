@@ -109,9 +109,6 @@ PNIBone::update(const AnimationSet& anims)
 
   pnfloat	weight = 0.0f;
 
-  PNQuatf	lastRot;
-  PNPoint3f	lastPos;
-
   for (AnimationSet::const_iterator  it = anims.begin(); it != anims.end(); ++it)
   {
 	PN3DSkeletonAnimation*  anim = *it;
@@ -126,32 +123,30 @@ PNIBone::update(const AnimationSet& anims)
 	  if (anim->anim->setRotation(_id, anim->step, rot))
 	  {
 		if (rotUpdated)
-		  lastRot.slerp(lastRot, PNQuatf(rot), anim->weight / (weight + anim->weight));
+		  _lastRot.slerp(_lastRot, PNQuatf(rot), anim->weight / (weight + anim->weight));
 		else
-		  lastRot = rot;
+		  _lastRot = rot;
 
 		weight += anim->weight;
 		rotUpdated = true;
 	  }
+
 	  if (anim->anim->setPosition(_id, anim->step, pos))
 	  {
 		if (posUpdated)
 		{
-		  lastPos.x = (lastPos.x * weight + pos.x * anim->weight) / (weight + anim->weight);
-		  lastPos.y = (lastPos.y * weight + pos.y * anim->weight) / (weight + anim->weight);
-		  lastPos.z = (lastPos.z * weight + pos.z * anim->weight) / (weight + anim->weight);
+		  _lastPos.x = (_lastPos.x * weight + pos.x * anim->weight) / (weight + anim->weight);
+		  _lastPos.y = (_lastPos.y * weight + pos.y * anim->weight) / (weight + anim->weight);
+		  _lastPos.z = (_lastPos.z * weight + pos.z * anim->weight) / (weight + anim->weight);
 		}
 		else
-		  lastPos = pos;
+		  _lastPos = pos;
 		
 		weight += anim->weight;
 		posUpdated = true;
 	  }
 	}
   }
-
-  _lastRot = lastRot;
-  _lastPos = lastPos;
 
   if (rotUpdated)
 	transform.setRotationQuaternion(_lastRot);
@@ -195,7 +190,7 @@ PNIBone::update(pndouble rtime, const AnimationSet& anims)
 
 	if (anim != NULL && anim->anim != NULL)
 	{
-	  if (anim->anim->setRotation(_id, rtime, lastRot, rot))
+	  if (anim->anim->setRotation(_id, 0, rot))
 	  {
 		if (rotUpdated)
 		  lastRot.slerp(lastRot, PNQuatf(rot), anim->weight / (weight + anim->weight));
@@ -206,7 +201,7 @@ PNIBone::update(pndouble rtime, const AnimationSet& anims)
 		rotUpdated = true;
 	  }
 
-	  if (anim->anim->setPosition(_id, rtime, lastPos, pos))
+	  if (anim->anim->setPosition(_id, 0, pos))
 	  {
 		if (posUpdated)
 		{
@@ -223,7 +218,11 @@ PNIBone::update(pndouble rtime, const AnimationSet& anims)
 	}
   }
 
-  _lastRot = lastRot;
+  _lastRot.slerp(_lastRot, lastRot, (pnfloat)rtime);
+  _lastPos.x = (pnfloat)((_lastPos.x + lastPos.x) / rtime);
+  _lastPos.y = (pnfloat)((_lastPos.y + lastPos.y) / rtime);
+  _lastPos.z = (pnfloat)((_lastPos.z + lastPos.z) / rtime);
+
   _lastPos = lastPos;
 
   if (rotUpdated)

@@ -41,11 +41,6 @@ namespace PN {
 
 PNRendererInterface*  PNRendererInterface::_instance = NULL;
 
-PNRendererInterface*  PNRendererInterface::getInstance()
-{
-  return _instance;
-}
-
 //////////////////////////////////////////////////////////////////////////
 
 PNRendererInterface::PNRendererInterface()
@@ -61,7 +56,8 @@ PNRendererInterface::~PNRendererInterface()
 
 //////////////////////////////////////////////////////////////////////////
 
-plugintypes		PNRendererInterface::getType()
+plugintypes		
+PNRendererInterface::getType()
 {
   return PN_PLUGIN_RENDERER;
 }

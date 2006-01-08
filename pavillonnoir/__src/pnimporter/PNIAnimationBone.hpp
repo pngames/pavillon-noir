@@ -82,9 +82,7 @@ public:
   pnuint			setTransformation(pnuint time, PNMatrixTR4f& transform);
 
   pnbool			setRotation(pnuint time, PNQuatf& rot);
-  pnbool			setRotation(pndouble rtime, const PNQuatf& lastRot, PNQuatf& rot);
   pnbool			setPosition(pnuint time, PNPoint3f& pos);
-  pnbool			setPosition(pndouble rtime, const PNPoint3f& lastPos, PNPoint3f& pos);
 };
 
 //////////////////////////////////////////////////////////////////////////

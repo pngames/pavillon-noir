@@ -119,6 +119,12 @@ PN3DObject::getId() const
   return _id;
 }
 
+PN3DObject::objType
+PN3DObject::getObjType() const
+{
+  return _objType;
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 pnint
@@ -315,12 +321,6 @@ PN3DObject::getCoord() const
   return _coord;
 }
 
-const PNPoint3f&
-PN3DObject::getCenter() const
-{
-  return _model != NULL ? _model->getCenter() : PNPoint3f::ZERO;
-}
-
 const PNQuatf&
 PN3DObject::getOrient() const
 {
@@ -359,11 +359,22 @@ PN3DObject::getZ() const
   return _coord.z;
 }
 
-PN3DObject::objType
-PN3DObject::getObjType() const
+//////////////////////////////////////////////////////////////////////////
+
+const PNPoint3f&
+PN3DObject::getCenter() const
 {
-  return _objType;
+  return _model != NULL ? _model->getCenter() : PNPoint3f::ZERO;
 }
+
+/// Return 3D object radius relative to his coordinate
+pnfloat		
+PN3DObject::getRadius() const
+{
+  return _model != NULL ? _model->getRadius() : -1;
+}
+
+//////////////////////////////////////////////////////////////////////////
 
 void
 PN3DObject::setCoord(const PNPoint3f& coord)

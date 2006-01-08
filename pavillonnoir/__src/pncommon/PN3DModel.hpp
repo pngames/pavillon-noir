@@ -94,7 +94,9 @@ public:
   /// Get maximum x y z coordinate
   virtual const PNPoint3f&	getMax() const=0;
   /// Get center scene coordinate used for rotations
-  virtual const PNPoint3f&	getCenter() const=0;
+  virtual const	PNPoint3f&	getCenter() const=0;
+  /// Get bounding sphere radius
+  virtual pnfloat			getRadius() const=0;
 };
 
 //////////////////////////////////////////////////////////////////////////
