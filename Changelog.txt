@@ -37,6 +37,7 @@ Big improvement of game framework. Starting game desing.
 		- Add OpenAl installer into win32 installer
 		- Add Scons script for linux source package (see INSTALL file for howto use it)
 		- Updated Ubuntu and Debian Sid packages
+		- Add bacground image to win32 installer
 	* SCRIPTING :
 		- Rewrite module to work better with events system
 		- Externalize the virtual machine from the map
@@ -69,9 +70,10 @@ Big improvement of game framework. Starting game desing.
 		- Add new option in PNTExtures: can now choise to bing enlarged or repeated textures
 		- Importer auto-determine the textures binding repeat options
 	* Configurable system :
-		- add lots of new windget in Fox implementation
-		- great improvement of Fox implementation by rewrite move clener lots of widgets
+		- add lots of new widgets in Fox implementation
+		- great improvement of Fox implementation by rewrite cleaner lots of widgets
 		- add CEGUI implementation for int, bool, float and string parameters
+	* Internationnalization system based on xml files (see: http://pavillon-noir.org/wiki/doku.php?id=doxtech:i18n)
 
 	Dependencies:
 	-------------
@@ -80,7 +82,7 @@ Big improvement of game framework. Starting game desing.
 	* Updates:
 		- CEGUI: 0.4
 		- boost: 1.33
-		- Opal: CVS version (provided)
+		- Opal: 0.3.1
 		- tolua++: 1.0.6
 		- OpenAl: 1.1
 
