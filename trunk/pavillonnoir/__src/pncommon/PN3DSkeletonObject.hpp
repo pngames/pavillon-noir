@@ -100,25 +100,28 @@ public:
   pnuint					setEnable(pnuint animId, pnbool enabled);
   pnbool					isEnable(pnuint animId) const;
 
+  /// Stop current animation and reset position
   pnuint					stopAnimation();
   pnuint					stopAnimation(pnuint animId);
 
   pnuint					startAnimation();
   pnuint					startAnimation(pnuint animId);
 
+  /// Set speed for current animation, ex: 2.0f = 2 times normal speed
   pnuint					setAnimSpeed(pnfloat speed);
   pnuint					setAnimSpeed(pnint animId, pnfloat speed);
 
   pnuint					setAnimWeight(pnfloat weight);
   pnuint					setAnimWeight(pnint animId, pnfloat weight);
 
+  /// Set the automatic looping of animation enable or disable
   pnuint					setEnableLoop(pnbool loop);
   pnuint					setEnableLoop(pnint animId, pnbool loop);
 
   //////////////////////////////////////////////////////////////////////////
 
   /// Set animation to play and the time used to make the transition between last animation and this
-  virtual pnuint			startAnimation(pnint animation, pnuint transTime);
+  PNDEPRECATED(startAnimation(pnuint animId)) pnuint	startAnimation(pnint animation, pnuint transTime);
 
   /// Empty animation list to play
   void						clearAnimationIds();
