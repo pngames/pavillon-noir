@@ -83,8 +83,12 @@ protected:
   pnbool				_looping;
 
   pnuint				_animTimeCurrent;
+
   /// Transition time between two animations
   pnuint				_animTransTime;
+  /// Transition step between two animations
+  pnfloat				_animTransitionStep;
+
   /// Animation speed
   pndouble				_animSpeed;
 };

@@ -257,5 +257,21 @@ PNIBone::reinit()
   _mFinal.postMultiply(_mICourse);
 }
 
+void
+PNIBone::reinit(pndouble rtime)
+{
+  /// TODO: faire le calcul en fonction de rtime comme dans "update(pndouble rtime, const AnimationSet& anims)"
+  if (_parent == NULL)
+	_mCourse = _mRelativ;
+  else
+  {
+	_mCourse = _parent->_mCourse;
+	_mCourse.postMultiply(_mRelativ);
+  }
+
+  _mFinal = _mCourse;
+  _mFinal.postMultiply(_mICourse);
+}
+
 //////////////////////////////////////////////////////////////////////////
 }

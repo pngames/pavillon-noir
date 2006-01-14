@@ -60,6 +60,7 @@ public:
   virtual void					update(pndouble rtime, const AnimationSet& anims)=0;
 
   virtual void					reinit()=0;
+  virtual void					reinit(pndouble rtime)=0;
 
   //////////////////////////////////////////////////////////////////////////
   
