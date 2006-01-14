@@ -85,7 +85,9 @@ public:
 public:
   void					update(const AnimationSet& anims);
   void					update(pndouble rtime, const AnimationSet& anims);
+
   void					reinit();
+  void					reinit(pndouble rtime);
 };
 
 //////////////////////////////////////////////////////////////////////////

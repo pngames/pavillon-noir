@@ -124,6 +124,16 @@ PNI3DSkeleton::reinit()
   }
 }
 
+void
+PNI3DSkeleton::reinit(pndouble rtime)
+{
+  for (BoneList::iterator it = _bones.begin(); it != _bones.end(); ++it)
+  {
+	it->reinit();
+	memcpy(_vertBuffer[it->getId()], it->getCourse().getMatrix() + 12, sizeof(pnpoint3f));
+  }
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 std::string*

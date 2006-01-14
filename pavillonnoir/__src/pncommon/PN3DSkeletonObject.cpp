@@ -213,10 +213,17 @@ PN3DSkeletonObject::update(pnuint deltaTime)
   if (_skeleton == NULL)
 	return ;
 
-  if (_running)
-  {
-	IPNAnimated::update(deltaTime);
+  IPNAnimated::update(deltaTime);
 
+  if (_animTransitionStep < 1.0)
+  {
+	if (_animsToPlay.size() > 0)
+	  _skeleton->update(_animTransitionStep, _animsToPlay);
+	else
+	  _skeleton->reinit(_animTransitionStep);
+  }
+  else
+  {
 	AnimationSet  setTmp = _animsToPlay;
 
 	for (AnimationSet::iterator it = setTmp.begin(); it != setTmp.end(); ++it)
@@ -229,12 +236,7 @@ PN3DSkeletonObject::update(pnuint deltaTime)
 	//////////////////////////////////////////////////////////////////////////
 
 	if (_animsToPlay.size() > 0)
-	{
-	  if (_animTransTime > 0)
-		_skeleton->update(_animTimeCurrent / (double)_animTransTime, _animsToPlay);
-	  else
-		_skeleton->update(_animsToPlay);
-	}
+	  _skeleton->update(_animsToPlay);
 	else
 	  _skeleton->reinit();
   }

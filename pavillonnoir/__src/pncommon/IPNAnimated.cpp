@@ -48,6 +48,8 @@ IPNAnimated::IPNAnimated()
   _looping = false;
 
   _animTransTime = 0;
+  _animTransitionStep = 1.0f;
+
   _animSpeed = 1.0f;
 
   _startedEventType = -1;
@@ -131,6 +133,9 @@ void
 IPNAnimated::update(pnuint deltaTime)
 {
   _animTimeCurrent += (pnuint)(_animSpeed * deltaTime);
+
+  if (_animTransitionStep < 1.0)
+	_animTransitionStep += deltaTime / (pnfloat)_animTransTime;
 }
 
 //////////////////////////////////////////////////////////////////////////
