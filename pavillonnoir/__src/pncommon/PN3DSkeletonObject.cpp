@@ -111,7 +111,6 @@ PN3DSkeletonObject::_parseAnimations(xmlNode* parent)
 	  startAnimation((pnuint)_anims.size() - 1);
 
 	skanim->unserializeFromXML(node);
-
   }
 
   return PNEC_SUCCESS;
@@ -236,9 +235,9 @@ PN3DSkeletonObject::update(pnuint deltaTime)
 	  else
 		_skeleton->update(_animsToPlay);
 	}
+	else
+	  _skeleton->reinit();
   }
-  else
-	_skeleton->reinit();
 }
 
 void

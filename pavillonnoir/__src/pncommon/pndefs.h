@@ -205,6 +205,19 @@ namespace PN {
 #endif
 
 //////////////////////////////////////////////////////////////////////////
+// DEPREDATED
+
+#ifdef WIN32
+# if _MSC_VER >= 1400
+#  define PNDEPRECATED(_Replacement) _CRT_INSECURE_DEPRECATE(_Replacement)
+# else
+#  define PNDEPRECATED(_Replacement)
+# endif
+#else
+#  define PNDEPRECATED(_Replacement)
+#endif
+
+//////////////////////////////////////////////////////////////////////////
 
 #include "pnerror.h"
 

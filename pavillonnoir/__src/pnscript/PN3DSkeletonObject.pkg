@@ -10,22 +10,29 @@ public:
 
 //////////////////////////////////////////////////////////////////////////
   
-  pnuint					startAnimation();
-  pnuint					startAnimation(pnuint animId);
-  /// Set animation to play and the time used to make the transition between last animation and this
-   unsigned int			startAnimation(int animation, unsigned int transTime);
-  /// Stop current animation and reset position
-   unsigned int			stopAnimation();
+  pnuint				startAnimation();
+  pnuint				startAnimation(pnuint animId);
 
-  /// Pause current animation
-   void					pause();
+  /// Stop current animation and reset position
+  pnuint				stopAnimation();
+  pnuint				stopAnimation(pnuint animId);
 
   /// Set speed for current animation, ex: 2.0f = 2 times normal speed
-   unsigned int			setAnimSpeed(double speed);
+  pnuint				setAnimSpeed(pnfloat speed);
+  pnuint				setAnimSpeed(pnint animId, pnfloat speed);
+  
+  pnuint				setAnimWeight(pnfloat weight);
+  pnuint				setAnimWeight(pnint animId, pnfloat weight);
+  
   /// Set the automatic looping of animation enable or disable
-   unsigned int			setEnableLoop(bool enabled);
+  pnuint				setEnableLoop(pnbool enabled);
+  pnuint				setEnableLoop(pnint animId, pnbool loop);
+  
+  //////////////////////////////////////////////////////////////////////////
+  
+  pnuint				startAnimation(pnint animation, pnuint transTime);		/// deprecated
 
-//////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////
 
 public:
   PN3DSkeletonObject();

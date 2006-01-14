@@ -727,15 +727,6 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
 	std::cout << "PageDown";
 	break;
 
-  case CEGUI::Key::Return : // key Return start animation
-	std::cout << "Return";
-	if (obj != NULL && obj->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ)
-	{
-	  PN3DSkeletonObject*	sk = (PN3DSkeletonObject*)obj;
-	  sk->startAnimation(0, 0);
-	}
-	break;
-
   default:
 	std::cout << "not managed key";
 	break;
