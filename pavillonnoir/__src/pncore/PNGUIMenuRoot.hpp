@@ -98,6 +98,8 @@ namespace PN{
 
 	void						setModified() {}
 	void						setUnmodified() {}
+
+	const std::string&	        getName() { return _label; }
 	const std::string&	        getLabel() { return _label; }
 
 	/************************************************************************/

@@ -156,7 +156,7 @@ PN3DSkeletonAnimation::getParameter(pnint idx)
 }
 
 const std::string&
-PN3DSkeletonAnimation::getLabel()
+PN3DSkeletonAnimation::getName()
 {
   return *anim->getFile();
 }

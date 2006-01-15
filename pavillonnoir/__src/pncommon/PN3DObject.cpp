@@ -242,12 +242,12 @@ PN3DObject::unserializeFromXML(xmlNode* root)
 }
 
 pnint
-PN3DObject::serializeInXML(xmlNode* node, pnbool isroot)
+PN3DObject::serializeInXML(xmlNode* root, pnbool isroot)
 {
-  xmlNode* root = node;
+  PNLOCK(this);
 
-  if (isroot == false)
-	root = xmlNewChild(node, NULL, BAD_CAST getRootNodeName().c_str(), NULL);
+  if (!isroot)
+	root = xmlNewChild(root, NULL, BAD_CAST getRootNodeName().c_str(), NULL);
 
   _serializeContent(root);
 

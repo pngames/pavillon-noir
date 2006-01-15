@@ -1,0 +1,22 @@
+<!--
+     http://www.pavillon-noir.org/
+     XML DTD for pcf xml files
+-->
+
+<!ELEMENT configuration (configurable_object?)>
+
+<!-- configurable objects -->
+<!ELEMENT configurable_object (parameter?)>
+
+<!ATTLIST configurable_object name CDATA #REQUIRED>
+
+<!-- parameters -->
+<!ELEMENT parameter (value?)>
+
+<!ATTLIST parameter name CDATA #REQUIRED>
+
+<!-- values -->
+
+<!ELEMENT value EMPTY>
+
+<!ATTLIST value data CDATA #REQUIRED>

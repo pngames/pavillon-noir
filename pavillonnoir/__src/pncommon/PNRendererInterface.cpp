@@ -47,7 +47,7 @@ PNRendererInterface::PNRendererInterface()
 {
   _instance = this;
 
-  _label = "Renderer";
+  _name = _label = "Renderer";
 }
 
 PNRendererInterface::~PNRendererInterface()

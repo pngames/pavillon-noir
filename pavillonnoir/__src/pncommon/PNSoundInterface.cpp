@@ -38,7 +38,7 @@ PNSoundInterface::PNSoundInterface()
 {
   _instance = this;
 
-  _label = "Sound";
+  _name = _label = "Sound";
 }
 
 //////////////////////////////////////////////////////////////////////////
