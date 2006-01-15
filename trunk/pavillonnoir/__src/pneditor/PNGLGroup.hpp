@@ -51,7 +51,7 @@ class PNPropertiesPanel;
 class PNGLShape;
 class PNEditor;
 
-class					PNGLGroup : public FXGLGroup, public IPNXMLSerializable, public PNConfigurableObject
+class					PNGLGroup : public FXGLGroup, public PNConfigurableObject
 {
   FXDECLARE(PNGLGroup);
 
@@ -144,6 +144,7 @@ public:
   int						getNbParameters() { return _params.size(); }
   PNConfigurableParameter*	getParameter(int idx) { return _params[idx]; }
 
+  const std::string&		getName() { return _label; }
   const std::string&		getLabel() { return _label; }
 
   //bool						modified() { return _modified; }

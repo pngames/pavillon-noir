@@ -31,6 +31,8 @@
 
 #include "pndefs.h"
 
+#include "pcf_format.h"
+
 #include "PNConfigurableParameterList.hpp"
 
 using namespace std;

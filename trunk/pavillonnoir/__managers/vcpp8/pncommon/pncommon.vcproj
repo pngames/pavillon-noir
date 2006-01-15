@@ -553,19 +553,11 @@
 			Name="properties"
 			>
 			<File
-				RelativePath="..\..\..\__src\pncommon\PNBool.cpp"
+				RelativePath="..\..\..\__src\pncommon\pcf_format.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncommon\PNBool.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNBoolParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNBoolParameter.hpp"
+				RelativePath="..\..\..\__src\pncommon\PNConfigurableObject.cpp"
 				>
 			</File>
 			<File
@@ -589,38 +581,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncommon\PNFloat.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNFloat.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNFloatParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNFloatParameter.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNInt.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNInt.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNIntParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNIntParameter.hpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pncommon\pnproperties.h"
 				>
 			</File>
@@ -640,30 +600,86 @@
 				RelativePath="..\..\..\__src\pncommon\PNPropertiesGridParameterList.hpp"
 				>
 			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNStringParameter.cpp"
+			<Filter
+				Name="parameters"
 				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNStringParameter.hpp"
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNBoolParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNBoolParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNFloatParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNFloatParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNIntParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNIntParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNStringParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNStringParameter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNUIntParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNUIntParameter.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="types"
 				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNUInt.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNUInt.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNUIntParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\PNUIntParameter.hpp"
-				>
-			</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNBool.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNBool.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNFloat.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNFloat.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNInt.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNInt.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNUInt.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNUInt.hpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="import"

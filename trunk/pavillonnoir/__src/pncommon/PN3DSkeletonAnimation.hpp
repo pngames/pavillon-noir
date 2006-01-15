@@ -46,7 +46,7 @@ class PN3DSkeletonObject;
 
 //////////////////////////////////////////////////////////////////////////
 
-class PNAPI							PN3DSkeletonAnimation : PNObject, IPNXMLSerializable, public PNConfigurableObject
+class PNAPI							PN3DSkeletonAnimation : public PNObject, public PNConfigurableObject
 {
   PN3DSkeletonObject*				_object;
 public:
@@ -92,7 +92,8 @@ public:
   void								update(PNConfigurableParameter* p);
   pnint								getNbParameters();
   virtual PNConfigurableParameter*	getParameter(pnint idx);
-  virtual const std::string&		getLabel();
+
+  virtual const std::string&		getName();
 };
 
 //////////////////////////////////////////////////////////////////////////

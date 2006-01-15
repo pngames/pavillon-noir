@@ -261,6 +261,8 @@ void
 PNIBone::reinit(pndouble rtime)
 {
   /// TODO: faire le calcul en fonction de rtime comme dans "update(pndouble rtime, const AnimationSet& anims)"
+  PNDEBUG_TODO("faire le calcul en fonction de rtime comme dans \"update(pndouble rtime, const AnimationSet& anims)\"");
+
   if (_parent == NULL)
 	_mCourse = _mRelativ;
   else

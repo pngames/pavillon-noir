@@ -32,6 +32,8 @@
 
 #include <string>
 
+#include "IPNXMLSerializable.hpp"
+
 namespace PN
 {
 //////////////////////////////////////////////////////////////////////////	
@@ -63,44 +65,57 @@ typedef enum
 
 class PNConfigurableObject;
 
-class PNAPI				PNConfigurableParameter
+class PNAPI					  PNConfigurableParameter : public IPNXMLSerializable
 {
 protected:
-  PNConfigurableObject*	_p;
-  pnuint				_type;
+  PNConfigurableObject*		  _p;
+  pnuint					  _type;
 
-  std::string			_name;
-  void*					_elem;
-  void*					_max;
-  void*					_min;
+  std::string				  _name;
+  void*						  _elem;
+  void*						  _max;
+  void*						  _min;
 
-  std::string			_label;
-  std::string			_altText;
-  pnbool				_editable;
+  std::string				  _label;
+  std::string				  _altText;
+  pnbool					  _editable;
 
 protected:
   PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, const std::string& label, const std::string& altText, pnbool editable = true, void* max = NULL, void* min = NULL);
 
-  void					_init(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, pnbool editable, void* max, void* min);
+  void						  _init(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, pnbool editable, void* max, void* min);
 public:
   PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, pnbool editable = true, void* max = NULL, void* min = NULL);
   virtual ~PNConfigurableParameter();
 
-  pnuint				getType();
+  pnuint						getType();
 
-  void*					getElem();
-  void*					getMax();
-  void*					getMin();
+  void*							getElem();
+  void*							getMax();
+  void*							getMin();
 
-  const std::string&	getLabel();
-  const std::string&	getAltText();
-  pnbool				isEditable();
+  const std::string&			getName();
+  const std::string&			getLabel();
+  const std::string&			getAltText();
+  pnbool						isEditable();
 
-  PNConfigurableObject*	getConfigurableObject();
-  void					setConfigurableObject(PNConfigurableObject* object);
+  PNConfigurableObject*			getConfigurableObject();
+  void							setConfigurableObject(PNConfigurableObject* object);
 
   // for tests only
-  void					dump();
+  void							dump();
+
+  //////////////////////////////////////////////////////////////////////////
+
+  virtual const std::string&	getDTDName() const;
+  virtual const std::string&	getRootNodeName() const;
+
+protected:
+  virtual pnint					_serializeContent(xmlNode* node);
+
+public:
+  virtual pnint					unserializeFromXML(xmlNode* node);
+  virtual pnint					serializeInXML(xmlNode* node, pnbool root = false);
 };
 
 //////////////////////////////////////////////////////////////////////////

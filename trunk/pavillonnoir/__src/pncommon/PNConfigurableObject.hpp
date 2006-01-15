@@ -32,29 +32,47 @@
 
 #include <string>
 
+#include "IPNXMLSerializable.hpp"
+
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 class PNConfigurableParameter;
 
-class /*PNAPI*/						PNConfigurableObject
+class PNAPI							PNConfigurableObject : public IPNXMLSerializable
 {
 public:
-  virtual ~PNConfigurableObject() {};
+  virtual ~PNConfigurableObject();
 
   virtual void						update(PNConfigurableParameter* p) = 0;
 
-  virtual const std::string&		getLabel() = 0;
+  virtual const std::string&		getName()=0;
+  virtual const std::string&		getLabel();
 
-  virtual pnbool					modified() { return false; }
-  virtual void						setModified() { }
-  virtual void						setUnmodified() { }
+  virtual pnbool					modified();
+  virtual void						setModified();
+  virtual void						setUnmodified();
 
   //////////////////////////////////////////////////////////////////////////
 
 public:
   virtual pnint						getNbParameters() = 0;
   virtual PNConfigurableParameter*	getParameter(pnint idx) = 0;
+
+  //////////////////////////////////////////////////////////////////////////
+
+public:
+  virtual const std::string&		getDTD() const;
+  virtual const std::string&		getDTDName() const;
+  virtual const std::string&		getRootNodeName() const;
+
+protected:
+  virtual pnint						_unserializeNode(xmlNode* node);
+  virtual pnint						_serializeContent(xmlNode* node);
+
+public:
+  virtual pnint						unserializeFromXML(xmlNode* node);
+  virtual pnint						serializeInXML(xmlNode* node, pnbool isroot = false);
 };
 
 //////////////////////////////////////////////////////////////////////////

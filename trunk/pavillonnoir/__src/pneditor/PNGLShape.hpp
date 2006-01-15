@@ -63,7 +63,7 @@ namespace EDITOR {
 class PNEditor;
 class PNPropertiesPanel;
 
-class						PNGLShape : public FXGLShape, public PNConfigurableObject, public IPNXMLSerializable
+class						PNGLShape : public FXGLShape, public PNConfigurableObject
 {
   FXDECLARE_ABSTRACT(PNGLShape);
 
@@ -136,6 +136,7 @@ public:
   void						setModified() {_modified = TRUE;}
   void						setUnmodified() {_modified = FALSE;}
 
+  const std::string&		getName() {return _label;}
   const std::string&		getLabel() {return _label;}
 
   //////////////////////////////////////////////////////////////////////////

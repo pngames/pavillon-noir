@@ -38,7 +38,7 @@ namespace PN {
 
 PNExportInterface::PNExportInterface()
 {
-  _label = "Exporter";
+  _name = _label = "Exporter";
 }
 
 PNExportInterface::~PNExportInterface()
