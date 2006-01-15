@@ -102,6 +102,8 @@ namespace PN{
 	int							getNbParameters();
 	PNConfigurableParameter*	getParameter(int idx);
 	//void						reset();
+
+	const std::string&			getName() {return _label;}
 	const std::string&			getLabel() {return _label;}
 	
 	/*/////////////////////////////////////////////////////////////////////////////

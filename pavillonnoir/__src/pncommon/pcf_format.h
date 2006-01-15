@@ -1,8 +1,8 @@
 /*
- * PNInterface.cpp
+ * pcf_format.h
  * 
  * Description :
- * PNInterface definition
+ * Configurable Objects files format
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,77 +27,37 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#include "pndefs.h"
-#include "pnproperties.h"
+#ifndef _PCF_FORMAT_H_
+# define _PCF_FORMAT_H_
 
-#include "PNInterface.hpp"
+#include <string>
 
-using namespace PN;
+#define PCF_EXT											"pcf"
 
-namespace PN {
-//////////////////////////////////////////////////////////////////////////
-
-PNInterface::PNInterface()
-{
-  _name = _label = "PNInterface";
-}
-
-PNInterface::~PNInterface()
-{}
+static const std::string	PCF_XMLDTD_NAME				= "configuration";
+static const std::string	PCF_XMLDTD					= PCF_XMLDTD_NAME + ".dtd";
+static const std::string	PCF_XMLNODE_ROOT			= PCF_XMLDTD_NAME;
 
 //////////////////////////////////////////////////////////////////////////
 
-plugintypes
-PNInterface::getType()
-{
-  return PN_PLUGIN_DEFAULT;
-}
+static const std::string	PCF_OBJECT_XMLDTD_NAME		= "configurable_object";
+static const std::string	PCF_OBJECT_XMLDTD			= PCF_XMLDTD_NAME + ".dtd";
+static const std::string	PCF_OBJECT_XMLNODE_ROOT		= PCF_XMLDTD_NAME;
+
+#define						PCF_XMLPROP_NAME			(BAD_CAST "name")
 
 //////////////////////////////////////////////////////////////////////////
 
-void
-PNInterface::update(PNConfigurableParameter* p)
-{}
+static const std::string	PCF_PARAM_XMLDTD_NAME		= "parameter";
+static const std::string	PCF_PARAM_XMLNODE_ROOT		= PCF_PARAM_XMLDTD_NAME;
 
-pnint
-PNInterface::getNbParameters()
-{
-  return (int)_vectorParameters.size();
-}
-
-PNConfigurableParameter*
-PNInterface::getParameter(pnint idx)
-{
-  if (idx < 0 || idx >= (int)_vectorParameters.size())
-	return NULL;
-
-  return _vectorParameters[idx];
-}
-
-const std::string&
-PNInterface::getLabel()
-{
-  return _label;
-}
-
-const std::string&
-PNInterface::getName()
-{
-  return _name;
-}
-
-void
-PNInterface::addParam(PNConfigurableParameter* p)
-{
-  if (p != NULL)
-	_vectorParameters.push_back(p);
-}
-
-void
-PNInterface::addParam(const std::string& sepLabel)
-{
-  addParam(new PNConfigurableParameter(this, PN_PARAMTYPE_SEPARATOR, (void*)NULL, sepLabel, sepLabel));
-}
+#define						PCF_XMLPROP_NAME			(BAD_CAST "name")
 
 //////////////////////////////////////////////////////////////////////////
-};
+
+static const std::string	PCF_PARAMV_XMLDTD_NAME		= "value";
+static const std::string	PCF_PARAMV_XMLNODE_ROOT		= PCF_PARAMV_XMLDTD_NAME;
+
+#define						PCF_XMLPROP_DATA			(BAD_CAST "data")
+
+#endif /*_PCF_FORMAT_H_*/

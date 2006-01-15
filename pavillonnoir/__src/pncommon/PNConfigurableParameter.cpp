@@ -27,14 +27,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+#include <libxml/xmlreader.h>
+
 #include "pndefs.h"
+
+#include "pcf_format.h"
 
 #include "PNConfigurableParameter.hpp"
 
 using namespace std;
 
-namespace PN
-{
+namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 PNConfigurableParameter::PNConfigurableParameter(PNConfigurableObject* p,
@@ -117,6 +120,12 @@ PNConfigurableParameter::getMin()
 }
 
 const string&
+PNConfigurableParameter::getName()
+{
+  return _name;
+}
+
+const string&
 PNConfigurableParameter::getLabel()
 {
   return _label;
@@ -158,6 +167,51 @@ PNConfigurableParameter::dump()
     std::cout << "_elem=NULL" << std::endl;
   std::cout << "_label=" << getLabel() << std::endl;
   std::cout << "_altText=" << getAltText() << std::endl;*/
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+const std::string&
+PNConfigurableParameter::getDTDName() const
+{
+  return PCF_PARAM_XMLDTD_NAME;
+}
+
+const std::string&
+PNConfigurableParameter::getRootNodeName() const
+{
+  return PCF_PARAM_XMLNODE_ROOT;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+pnint
+PNConfigurableParameter::unserializeFromXML(xmlNode* node)
+{
+  PNDEBUG_TODO("make unserialize");
+
+  return PNEC_NOT_IMPLEMENTED;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+pnint
+PNConfigurableParameter::_serializeContent(xmlNode* node)
+{
+  xmlNewProp(node, PCF_XMLPROP_NAME, BAD_CAST getName().c_str());
+
+  PNDEBUG_TODO("make serialize");
+
+  return PNEC_NOT_IMPLEMENTED;
+}
+
+pnint
+PNConfigurableParameter::serializeInXML(xmlNode* root, pnbool isroot/* = false*/)
+{
+  if (!isroot)
+	root = xmlNewChild(root, NULL, BAD_CAST getRootNodeName().c_str(), NULL);
+
+  return _serializeContent(root);
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,11 @@
+	* copy __binaries\datafiles\configuration content to user configuration the first time is required by he game
+[function to implement]
+pncommon:
+	* PNImportManager::import(const std::string& path, importtype type, bool copy) : "Faire une copie de l'objet"
+	* PNConfigurableParameter::unserializeFromXML(xmlNode* node) : "make unserialize"
+	* PNConfigurableParameter::_serializeContent(xmlNode* node) : "make serialize"
+pnimporter:
+	* PNIBone::reinit(pndouble rtime) : faire le calcul en fonction de rtime comme dans "update(pndouble rtime, const AnimationSet& anims)"
+pnglrenderer:
+	* PNGLRenderer::renderLink(const PNPoint3f& p1, const PNPoint3f& p2, const pnfloat* color, pnuint direction, pnfloat thickness): "draw right arrow"
+	* PNGLRenderer::renderLink(const PNPoint3f& p1, const PNPoint3f& p2, const pnfloat* color, pnuint direction, pnfloat thickness): "draw left arrow"

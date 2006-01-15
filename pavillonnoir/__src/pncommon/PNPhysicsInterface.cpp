@@ -56,7 +56,7 @@ PNPhysicsInterface::PNPhysicsInterface()
 {
   _instance = this;
 
-  _label = "Physics";
+  _name = _label = "Physics";
 }
 
 PNPhysicsInterface::~PNPhysicsInterface()

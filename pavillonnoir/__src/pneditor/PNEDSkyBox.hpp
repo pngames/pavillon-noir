@@ -56,7 +56,7 @@ namespace EDITOR {
 class PNEditor;
 class PN3DMaterial;
 
-class						PNEDSkybox : public FXGLShape, public PNConfigurableObject, public IPNXMLSerializable
+class						PNEDSkybox : public FXGLShape, public PNConfigurableObject
 {
   FXDECLARE_ABSTRACT(PNEDSkybox);
 
@@ -107,6 +107,7 @@ public:
   PNConfigurableParameter*	getParameter(int idx);
   void						reset();
 
+  const std::string&		getName() {return _label;}
   const std::string&		getLabel() {return _label;}
 
   //////////////////////////////////////////////////////////////////////////

@@ -38,7 +38,7 @@ namespace PN {
 
 PNImportInterface::PNImportInterface()
 {
-  _label = "Importer";
+  _name = _label = "Importer";
 }
 
 PNImportInterface::~PNImportInterface()

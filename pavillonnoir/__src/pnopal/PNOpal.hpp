@@ -45,7 +45,7 @@ typedef std::list<PN3DObject *> PN3DObjList;
 
 class PNOpalCommonEventHandler;
 
-class				PNOpal : public PNPhysicsInterface, public IPNXMLSerializable
+class						PNOpal : public PNPhysicsInterface
 {
 private:
   opal::Simulator*			_sim;

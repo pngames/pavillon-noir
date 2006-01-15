@@ -72,12 +72,14 @@ public:
   PNConfigurableParameter*			getParameter(pnint idx);
 
   const std::string&				getLabel();
+  const std::string&				getName();
 
 protected:
   void								addParam(PNConfigurableParameter* p);
   void								addParam(const std::string& sepLabel);
 
   std::string						_label;
+  std::string						_name;
 
 private:
   typedef std::vector<PNConfigurableParameter*>	VECTOR_PARAMETERS;
