@@ -87,7 +87,7 @@ PN3DSkeletonObject::_parseAnimations(xmlNode* parent)
 
 	//////////////////////////////////////////////////////////////////////////
 	
-	xmlChar*	  attr = xmlGetProp(node, (const xmlChar *)PNO_XMLPROP_PATH);
+	xmlChar*	  attr = xmlGetProp(node, PNO_XMLPROP_PATH);
 
 	PN3DAnimation*	anim = NULL;
 

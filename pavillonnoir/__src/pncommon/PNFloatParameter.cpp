@@ -35,11 +35,11 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 PNFloatParameter::PNFloatParameter(PNConfigurableObject* p, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_float, label, altText, editable)
+: PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_value, label, altText, editable)
 { }
 
 PNFloatParameter::PNFloatParameter(PNConfigurableObject* p, pnfloat param, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNFloat(param), PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_float, label, altText, editable)
+: PNFloat(param), PNConfigurableParameter(p, PN_PARAMTYPE_REAL, &_value, label, altText, editable)
 { }
 
 PNFloatParameter::~PNFloatParameter()

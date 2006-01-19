@@ -49,10 +49,10 @@ typedef enum
   PN_PARAMTYPE_FILE,		// based on std::string
   PN_PARAMTYPE_DIR,			// based on std::string
   PN_PARAMTYPE_LINK,
-  PN_PARAMTYPE_DIALX,
-  PN_PARAMTYPE_DIALY,
-  PN_PARAMTYPE_DIALZ,
-  PN_PARAMTYPE_BOOLEAN,		// based on bool
+  PN_PARAMTYPE_DIALX,		// based on pnfloat
+  PN_PARAMTYPE_DIALY,		// based on pnfloat
+  PN_PARAMTYPE_DIALZ,		// based on pnfloat
+  PN_PARAMTYPE_BOOLEAN,		// based on pnbool
   PN_PARAMTYPE_EVENTBOX,
   PN_PARAMTYPE_MATERIAL,	// based on PNMaterial*
 
@@ -65,25 +65,25 @@ typedef enum
 
 class PNConfigurableObject;
 
-class PNAPI					  PNConfigurableParameter : public IPNXMLSerializable
+class PNAPI						PNConfigurableParameter : public IPNXMLSerializable
 {
 protected:
-  PNConfigurableObject*		  _p;
-  pnuint					  _type;
+  PNConfigurableObject*			_p;
+  pnuint						_type;
 
-  std::string				  _name;
-  void*						  _elem;
-  void*						  _max;
-  void*						  _min;
+  std::string					_name;
+  void*							_elem;
+  void*							_max;
+  void*							_min;
 
-  std::string				  _label;
-  std::string				  _altText;
-  pnbool					  _editable;
+  std::string					_label;
+  std::string					_altText;
+  pnbool						_editable;
 
 protected:
   PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, const std::string& label, const std::string& altText, pnbool editable = true, void* max = NULL, void* min = NULL);
 
-  void						  _init(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, pnbool editable, void* max, void* min);
+  void							_init(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, pnbool editable, void* max, void* min);
 public:
   PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, pnbool editable = true, void* max = NULL, void* min = NULL);
   virtual ~PNConfigurableParameter();
@@ -102,8 +102,10 @@ public:
   PNConfigurableObject*			getConfigurableObject();
   void							setConfigurableObject(PNConfigurableObject* object);
 
-  // for tests only
-  void							dump();
+  //////////////////////////////////////////////////////////////////////////
+  
+  virtual std::string			toString();
+  virtual void					fromString(const std::string& str);
 
   //////////////////////////////////////////////////////////////////////////
 

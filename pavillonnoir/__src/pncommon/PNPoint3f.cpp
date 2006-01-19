@@ -70,7 +70,7 @@ PNPoint3f::PNPoint3f(const PNPoint3f& p)
 
 PNPoint3f::PNPoint3f(const std::string& str)
 {
-  unserialize(str);
+  fromString(str);
 }
 
 PNPoint3f::~PNPoint3f(void)
@@ -157,7 +157,7 @@ PNPoint3f::isEquals(pnfloat x, pnfloat y, pnfloat z)
 //////////////////////////////////////////////////////////////////////////
 
 std::string
-PNPoint3f::serialize() const
+PNPoint3f::toString() const
 {
   std::ostringstream os;
   os << x << " " << y << " " << z;
@@ -166,16 +166,10 @@ PNPoint3f::serialize() const
 }
 
 void
-PNPoint3f::unserialize(const std::string& str)
+PNPoint3f::fromString(const std::string& str)
 {
   std::istringstream	is(str);
-	
-  unserialize(is);
-}
 
-void
-PNPoint3f::unserialize(std::istream& is)
-{
   is >> x >> y >> z;
 }
 
