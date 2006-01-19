@@ -1,8 +1,8 @@
 /*
-* PNBool.cpp
+* pnobject_base_types.h
 * 
 * Description :
-* PNBool definition
+* Meta-include for base types based on PNObject
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,47 +27,14 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#include <sstream>
+#ifndef _PNOBJECT_BASE_TYPES_H_
+# define _PNOBJECT_BASE_TYPES_H_
 
-#include "pndefs.h"
+#include "PNBaseValue.hpp"
 
 #include "PNBool.hpp"
+#include "PNFloat.hpp"
+#include "PNInt.hpp"
+#include "PNUInt.hpp"
 
-namespace PN {
-//////////////////////////////////////////////////////////////////////////
-
-PNBool::PNBool()
-{ }
-
-PNBool::PNBool(pnbool value) : _bool(value)
-{ }
-
-PNBool::~PNBool()
-{ }
-
-//////////////////////////////////////////////////////////////////////////
-
-std::string
-PNBool::toString()
-{
-  std::ostringstream os;
-  os << _bool;
-
-  return os.str();
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-pnbool
-PNBool::getBool()
-{
-  return _bool;
-}
-
-PNBool::operator	pnbool&()
-{
-  return _bool;
-}
-
-//////////////////////////////////////////////////////////////////////////
-};
+#endif /*!_PNOBJECT_BASE_TYPES_H_*/

@@ -80,9 +80,8 @@ public:
   
   //////////////////////////////////////////////////////////////////////////
 public:
-  std::string				serialize() const;
-  void						unserialize(const std::string& str);
-  void						unserialize(std::istream& istr);
+  virtual std::string		toString() const;
+  virtual void				fromString(const std::string& str);
 
   //////////////////////////////////////////////////////////////////////////
 public:

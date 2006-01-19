@@ -76,12 +76,9 @@ public:
   bool						isEquals(pnfloat x, pnfloat y);
 
   //////////////////////////////////////////////////////////////////////////
-  
-  std::string				serialize() const;
-  void						unserialize(const std::string& str);
-  void						unserialize(std::istream& istr);
 
-  virtual std::string		toString();
+  virtual std::string		toString() const;
+  virtual void				fromString(const std::string& str);
 
   //////////////////////////////////////////////////////////////////////////
 public:

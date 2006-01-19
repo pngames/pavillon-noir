@@ -30,32 +30,52 @@
 #ifndef _PNBOOL_HPP_
 # define _PNBOOL_HPP_
 
-#include "PNObject.hpp"
+#include "PNBaseValue.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNAPI				PNBool : public PNObject
+class 					PNBool : public PNBaseValue<pnbool>
 {
-protected:
-  pnbool				_bool;
-
 public:
   PNBool();
-  PNBool(pnbool value);
-  virtual ~PNBool();
-
-  //////////////////////////////////////////////////////////////////////////
-  
-  virtual std::string	toString();
+  PNBool(pnbool value) : PNBaseValue<pnbool>(value) {}
+  virtual ~PNBool() {}
 
   //////////////////////////////////////////////////////////////////////////
 
-  pnbool				getBool();
+  static std::string	saticToString(pnbool value)
+  {
+	return value ? "true" : "false";
+  }
+
+  static pnbool			staticToValue(const std::string& str)
+  {
+	return str == "true";
+  }
+
+  static pnbool			staticToValue(const std::string& str, pnbool def)
+  {
+	if (str == "true")
+	  return true;
+
+	if (str == "false")
+	  return false
+
+	return def;
+  }
 
   //////////////////////////////////////////////////////////////////////////
-  
-  operator				pnbool&();
+
+  PNBool&				operator=(pnbool value)
+  {
+	return (PNBool&)PNBaseValue<pnbool>::operator =(value);
+  }
+
+  PNBool&				operator=(const std::string& str)
+  {
+	return (PNBool&)PNBaseValue<pnbool>::operator =(str);
+  }
 };
 
   //////////////////////////////////////////////////////////////////////////

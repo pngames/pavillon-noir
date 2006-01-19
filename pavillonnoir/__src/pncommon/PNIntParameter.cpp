@@ -35,13 +35,13 @@ namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 PNIntParameter::PNIntParameter(pnint param, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNInt(param), PNConfigurableParameter(NULL, PN_PARAMTYPE_INT, &_int, label, altText, editable)
+: PNInt(param), PNConfigurableParameter(NULL, PN_PARAMTYPE_INT, &_value, label, altText, editable)
 {
 
 }
 
 PNIntParameter::PNIntParameter(PNConfigurableObject* p, pnint param, const std::string& label, const std::string& altText, bool editable/* = true*/)
-: PNInt(param), PNConfigurableParameter(p, PN_PARAMTYPE_INT, &_int, label, altText, editable)
+: PNInt(param), PNConfigurableParameter(p, PN_PARAMTYPE_INT, &_value, label, altText, editable)
 {
   
 }
