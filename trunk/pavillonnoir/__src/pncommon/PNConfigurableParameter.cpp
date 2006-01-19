@@ -31,6 +31,7 @@
 
 #include "pndefs.h"
 
+#include "pnobject_base_types.h"
 #include "pcf_format.h"
 
 #include "PNConfigurableParameter.hpp"
@@ -157,16 +158,77 @@ PNConfigurableParameter::setConfigurableObject(PNConfigurableObject* object)
 
 //////////////////////////////////////////////////////////////////////////
 
-void
-PNConfigurableParameter::dump()
+std::string
+PNConfigurableParameter::toString()
 {
-/*  std::cout << "_type=" << _type << std::endl;
-  if (_elem != NULL) 
-    std::cout << _elem << std::endl;
-  else
-    std::cout << "_elem=NULL" << std::endl;
-  std::cout << "_label=" << getLabel() << std::endl;
-  std::cout << "_altText=" << getAltText() << std::endl;*/
+  switch (_type)
+  {
+  case PN_PARAMTYPE_BOOLEAN:
+	return *((PNBool*)_elem);
+  case PN_PARAMTYPE_INT:
+  	return *((PNInt*)_elem);
+  case PN_PARAMTYPE_UINT:
+	return *((PNUInt*)_elem);
+  case PN_PARAMTYPE_REAL:
+  case PN_PARAMTYPE_DIALX:
+  case PN_PARAMTYPE_DIALY:
+  case PN_PARAMTYPE_DIALZ:
+	return *((PNFloat*)_elem);
+  case PN_PARAMTYPE_STRING:
+  case PN_PARAMTYPE_FILE:
+  case PN_PARAMTYPE_DIR:
+	return *((std::string*)_elem);
+  case PN_PARAMTYPE_LINK:
+	break;
+  case PN_PARAMTYPE_EVENTBOX:
+	break;
+  case PN_PARAMTYPE_MATERIAL:
+	break;
+  case PN_PARAMTYPE_SCRIPTLIST:
+	break;
+  default:
+	break;
+  }
+
+  return "";
+}
+
+void
+PNConfigurableParameter::fromString(const std::string& str)
+{
+  switch (_type)
+  {
+  case PN_PARAMTYPE_BOOLEAN:
+	*((PNBool*)_elem) = str;
+	break;
+  case PN_PARAMTYPE_INT:
+	*((PNInt*)_elem) = str;
+	break;
+  case PN_PARAMTYPE_UINT:
+	*((PNUInt*)_elem) = str;
+	break;
+  case PN_PARAMTYPE_REAL:
+  case PN_PARAMTYPE_DIALX:
+  case PN_PARAMTYPE_DIALY:
+  case PN_PARAMTYPE_DIALZ:
+	*((PNFloat*)_elem) = str;
+	break;
+  case PN_PARAMTYPE_STRING:
+  case PN_PARAMTYPE_FILE:
+  case PN_PARAMTYPE_DIR:
+	*((std::string*)_elem) = str;
+	break;
+  case PN_PARAMTYPE_LINK:
+	break;
+  case PN_PARAMTYPE_EVENTBOX:
+	break;
+  case PN_PARAMTYPE_MATERIAL:
+	break;
+  case PN_PARAMTYPE_SCRIPTLIST:
+	break;
+  default:
+	break;
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -188,9 +250,16 @@ PNConfigurableParameter::getRootNodeName() const
 pnint
 PNConfigurableParameter::unserializeFromXML(xmlNode* node)
 {
-  PNDEBUG_TODO("make unserialize");
+  for (xmlNodePtr child = node->children ; child != NULL; child = child->next)
+	if (PCF_PARAMV_XMLDTD_NAME == (const char*)child->name)
+	{
+	  xmlChar* attr = xmlGetProp(node, PCF_XMLPROP_DATA);
+	  if (attr != NULL)
+		fromString((const char*)attr);
+	  break;
+	}
 
-  return PNEC_NOT_IMPLEMENTED;
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -200,9 +269,10 @@ PNConfigurableParameter::_serializeContent(xmlNode* node)
 {
   xmlNewProp(node, PCF_XMLPROP_NAME, BAD_CAST getName().c_str());
 
-  PNDEBUG_TODO("make serialize");
+  xmlNodePtr valueNode = xmlNewChild(node, NULL, BAD_CAST PCF_PARAMV_XMLDTD_NAME.c_str(), NULL);
+  xmlNewProp(valueNode, PCF_XMLPROP_DATA, BAD_CAST toString().c_str());
 
-  return PNEC_NOT_IMPLEMENTED;
+  return PNEC_SUCCESS;
 }
 
 pnint

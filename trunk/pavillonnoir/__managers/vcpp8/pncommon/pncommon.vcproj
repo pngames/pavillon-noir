@@ -264,6 +264,34 @@
 				RelativePath=".\resource.h"
 				>
 			</File>
+			<Filter
+				Name="types"
+				>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNBaseValue.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNBool.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNFloat.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNInt.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\pnobject_base_types.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\__src\pncommon\PNUInt.hpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="3D"
@@ -641,42 +669,6 @@
 				</File>
 				<File
 					RelativePath="..\..\..\__src\pncommon\PNUIntParameter.hpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="types"
-				>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNBool.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNBool.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNFloat.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNFloat.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNInt.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNInt.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNUInt.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pncommon\PNUInt.hpp"
 					>
 				</File>
 			</Filter>

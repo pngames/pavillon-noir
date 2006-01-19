@@ -138,13 +138,7 @@ PNPoint2f::isEquals(pnfloat x, pnfloat y)
 //////////////////////////////////////////////////////////////////////////
 
 std::string
-PNPoint2f::toString()
-{
-  return serialize();
-}
-
-std::string
-PNPoint2f::serialize() const
+PNPoint2f::toString() const
 {
   std::ostringstream os;
   os << x << " " << y;
@@ -153,16 +147,10 @@ PNPoint2f::serialize() const
 }
 
 void
-PNPoint2f::unserialize(const std::string& str)
+PNPoint2f::fromString(const std::string& str)
 {
   std::istringstream	is(str);
 
-  unserialize(is);
-}
-
-void
-PNPoint2f::unserialize(std::istream& is)
-{
   is >> x >> y;
 }
 

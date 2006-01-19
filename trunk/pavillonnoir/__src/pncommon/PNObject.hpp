@@ -42,7 +42,8 @@ class PNAPI						PNObject
 public:
   virtual ~PNObject() {}
 
-  virtual std::string			toString();
+  virtual std::string			toString() const;
+  virtual void					fromString(const std::string& str);
 };
 
 typedef std::vector<PNObject*>	PNVPPNObjectParameter;
