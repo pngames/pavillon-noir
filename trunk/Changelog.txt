@@ -1,7 +1,7 @@
 Pavillon Noir, Le Jeu: 
 
 version 0.1 ()
-Big improvement of game framework. Starting game desing.
+	Title : Big improvement of game framework. Starting game desing.
 
 	GAME:
 	-----
@@ -54,6 +54,10 @@ Big improvement of game framework. Starting game desing.
 	Common Libs:
 	------------
 	* Add various functions in maths class
+	* base :
+		- PNObject contains now toString and fromStrong virtual functions
+		- Add PNBaseValue base type PNObject implementation based on template
+		- Adding PNBool, PNInt, PNUint and PNFloat based on PNBaseValue
 	* 3d objects :
 		- Separate target system in two target: view target and position target
 		- Adding target modes for PN3DObjects:
@@ -93,7 +97,7 @@ Big improvement of game framework. Starting game desing.
 	
 	Know issues:
 	----------
-	* Not a bug but physics not activated for now then objects pass through ground and don't fall
+	* Physics not activated for now then objects pass through ground and don't fall
 
 version 0.0.1 (2005/07/29):
 	* First Release ! Technical demonstration of Pavillon Noir engine (3D rendering, physics, scripting...)
