@@ -591,7 +591,7 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
   std::cout << "pressed: ";
   std::string playerid = "";
 
-  if (PNGameInterface::getInstance()->getGameMap()->getPlayer() != 0)
+  if (PNGameInterface::getInstance()->getGameMap()->getPlayer() != NULL)
 	playerid = PNGameInterface::getInstance()->getGameMap()->getPlayer()->getId();
   //TODO : utiliser un vector pour stocker la liste des touches et leur correspondance ascii : DONE
 
@@ -600,13 +600,9 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
   mBufferedKeysDown.insert(static_cast<CEGUI::Key::Scan>(me->scancode));
 
   PN3DCamera*	cam = PN3DCamera::getRenderCam();
-
   PN3DObject*	obj = NULL;
-  
   if (PNGameInterface::getInstance()->getGameMap()->getEntityList().size() > 0)
-  {
 	obj = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin()->second;
-  }
 
   PNVector3f axis(1.0f, 0.0f, 0.0f);
   pnfloat phi;
@@ -703,6 +699,11 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
 
 	//////////////////////////////////////////////////////////////////////////
 	// LOCK
+  case CEGUI::Key::P :
+	cam->addTargetMode(PN3DObject::TMODE_VIEW_ABS_LOCKED);
+	cam->setTarget(obj);
+	break;
+
   case CEGUI::Key::LeftControl :
   case CEGUI::Key::RightControl :
 	std::cout << "Control";
@@ -752,7 +753,10 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
   // Update keydown map
   mBufferedKeysDown.erase(static_cast<CEGUI::Key::Scan>(me->scancode));
 
-  PN3DCamera* cam = PN3DCamera::getRenderCam();
+  PN3DCamera*	cam = PN3DCamera::getRenderCam();
+  PN3DObject*	obj = NULL;
+  if (PNGameInterface::getInstance()->getGameMap()->getEntityList().size() > 0)
+	obj = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin()->second;
 
   //std::cout << me->scancode << " " << CEGUI::Key::W;
 
@@ -842,6 +846,11 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
 
 	//////////////////////////////////////////////////////////////////////////
 	// LOCK
+  case CEGUI::Key::P :
+	cam->subTargetMode(PN3DObject::TMODE_VIEW_ABS_LOCKED);
+	cam->setTarget(NULL);
+	break;
+
   case CEGUI::Key::LeftControl :
   case CEGUI::Key::RightControl :
 	std::cout << "Control";

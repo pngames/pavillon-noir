@@ -57,7 +57,6 @@ public:
 protected:
   pnfloat						_mpp;
   ObjMap						_entityList;
-  PN3DCamera*					_camera;
   PN3DObject*					_player;
   std::string			  		_wpFile;
 
