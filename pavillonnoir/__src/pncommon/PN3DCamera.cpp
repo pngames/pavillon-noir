@@ -157,7 +157,7 @@ PN3DCamera::render()
 
   pnfloat color[] = {1.0f, 0.0f, 0.0f, 1.0f};
 
-  pnri->renderSphere(15.0f, 20, 20, color, _coord);
+  //pnri->renderSphere(15.0f, 20, 20, color, _coord);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -327,15 +327,15 @@ PN3DCamera::_isSphereVisible()
 
   //////////////////////////////////////////////////////////////////////////
   
-  _tRightDirection = _orient * _rightDirection.getVector();
-  _tRightDirection = invertOrient * _tRightDirection;
-  _tRightDirection.setNorm(1.0f);
+  _tTopDirection = _orient * _topDirection.getVector();
+  _tTopDirection = invertOrient * _tTopDirection;
+  _tTopDirection.setNorm(1.0f);
   
   _tRightFov.set(PNQuatf(_tTopDirection, _viewRightFov) * _tFrontDirection);
   _tRightPlane.setPlane(_tCoord, _tRightFov);
 
   if (_tRightPlane.getDistanceFromPlane(center) > radius)
-	;//return false;
+	return false;
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -343,20 +343,20 @@ PN3DCamera::_isSphereVisible()
   _tLeftPlane.setPlane(_tCoord, _tLeftFov);
 
   if (_tLeftPlane.getDistanceFromPlane(center) > radius)
-	;//return false;
+	return false;
 
   //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
 
-  _tTopDirection = _orient * _topDirection.getVector();
-  _tTopDirection = invertOrient * _tTopDirection;
-  _tTopDirection.setNorm(1.0f);
+  _tRightDirection = _orient * _rightDirection.getVector();
+  _tRightDirection = invertOrient * _tRightDirection;
+  _tRightDirection.setNorm(1.0f);
 
   _tTopFov.set(PNQuatf(_tRightDirection, _viewTopFov) * _tFrontDirection);
   _tTopPlane.setPlane(_tCoord, _tTopFov);
 
   if (_tTopPlane.getDistanceFromPlane(center) > radius)
-	;//return false;
+	return false;
 
   //////////////////////////////////////////////////////////////////////////
   
@@ -364,7 +364,7 @@ PN3DCamera::_isSphereVisible()
   _tBackPlane.setPlane(_tCoord, _tBackFov);
 
   if (_tBackPlane.getDistanceFromPlane(center) > radius)
-	;//return false;
+	return false;
 
   //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
@@ -377,7 +377,7 @@ PN3DCamera::_isSphereVisible()
   _tNearPlane.setPlane(nearCoord, -_tFrontDirection);
 
   if (_tNearPlane.getDistanceFromPlane(center) > radius)
-	;//return false;
+	return false;
 
   //////////////////////////////////////////////////////////////////////////
   
@@ -389,7 +389,7 @@ PN3DCamera::_isSphereVisible()
   _tFarPlane.setPlane(farCoord, _tFrontDirection);
 
   if (_tFarPlane.getDistanceFromPlane(center) > radius)
-	;//return false;
+	return false;
 
   //////////////////////////////////////////////////////////////////////////
 
