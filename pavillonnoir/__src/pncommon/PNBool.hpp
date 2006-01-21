@@ -60,7 +60,7 @@ public:
 	  return true;
 
 	if (str == "false")
-	  return false
+	  return false;
 
 	return def;
   }
