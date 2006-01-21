@@ -82,6 +82,7 @@ using namespace std;
 
 PNGameMap::PNGameMap()
 {
+  _player = NULL;
 }
 
 PNGameMap::~PNGameMap()
