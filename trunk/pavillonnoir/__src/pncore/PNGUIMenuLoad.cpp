@@ -123,7 +123,7 @@ namespace PN
 		  entitiesPath = PN::DEF::mapsFilePath + dir_itr->leaf();
 		  entitiesPath += "/entities.xml";
 
-		  if (fs::exists(entitiesPath) == true)
+		  if (fs::exists(fs::path(entitiesPath, fs::no_check)) == true)
 		  {
 			++dir_count;
 			CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(dir_itr->leaf().c_str());
