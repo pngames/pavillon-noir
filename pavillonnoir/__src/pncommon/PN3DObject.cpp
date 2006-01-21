@@ -943,6 +943,7 @@ PN3DObject::setPhysicalObject(PNPhysicalObject* physical_object)
   PNLOCK(this);
 
   _physicalObject = physical_object;
+
   return true;
 }
 
@@ -1047,8 +1048,6 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
 		addMovingState(STATE_T_BACK);
 	}
   }
-
-  return;
 }
 
 void
