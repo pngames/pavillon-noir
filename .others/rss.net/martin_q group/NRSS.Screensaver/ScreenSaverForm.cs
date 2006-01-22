@@ -163,7 +163,7 @@ namespace NRSS.Screensaver
       if (feedList.Count == 0)
       {
         DateTime date = new DateTime();
-        date = DateTime.Now - DateTime.Parse("24h");
+        //date = DateTime.Now - DateTime.Parse("24h");
       }
       /*
       feedList = new ArrayList();
