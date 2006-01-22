@@ -106,10 +106,12 @@ namespace RSSReader
                     break;
                 tried++;
             }
+
             if (err == true)
                  System.Windows.Forms.MessageBox.Show("Erreur dans la mise a jour des flux.", "RssReader", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
         }
 
+    
         private void RSSReaderMain_Shown(object sender, EventArgs e)
         {
 
@@ -221,7 +223,6 @@ namespace RSSReader
                 ListView.SelectedListViewItemCollection itemCol = flux_listView.SelectedItems;
                 if (itemCol.Count == 1)
                 {
-
                     vocalSynthFlux_toolStripButton.Enabled = true;
                     fluxRead_toolStripButton.Enabled = true;
                     updateNewsList((ListViewItem)itemCol[0]);
@@ -294,8 +295,9 @@ namespace RSSReader
                     newsDate_label.Text = itemSel.PubDate.ToString();
                     newsFrom_label.Text = itemSel.Author.ToString();
                     newsWebSite_linkLabel.Text = itemSel.Link.ToString();
-                    //item.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
-                    //itemSel.isRead = true;
+                    
+                    item.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
+                    itemSel.IsRead = true;
                 }
                 vocalSynthNews_toolStripButton.Enabled = true;
                 newsRead_toolStripButton.Enabled = true;
@@ -378,10 +380,10 @@ namespace RSSReader
                 item1.SubItems.Add(nwsItem.PubDate.ToString());
                 item1.SubItems.Add(nwsItem.Author.ToString());
                 item1.ToolTipText = createNewsTooltip(nwsItem);
-            /*    if (nwsItem.isRead == true)
+               if (nwsItem.IsRead == true)
                     item1.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
                 else
-                    item1.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold);*/
+                    item1.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold);
 
                 item1.Tag = nwsItem;
                 news_listView.Items.Add(item1);
