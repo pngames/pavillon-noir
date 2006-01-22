@@ -89,5 +89,23 @@ public class Service : System.Web.Services.WebService
 
   //////////////////////////////////////////////////////////////////////////
 
+  [WebMethod]
+  public void setAsRead(string uid, Item item)
+  {
+	UserManager.Instance.validate(uid);
 
+	User user = UserManager.Instance.getUser(uid);
+
+	BaseDataAccess mgr = new BaseDataAccess();
+	item = mgr.Get(typeof(Item), "Id", item.Id) as Item;
+
+	if (item.Read && !user.ReadItems.Contains(item))
+	  user.ReadItems.Add(item);
+	else if (!item.Read && user.ReadItems.Contains(item))
+	  user.ReadItems.Remove(item);
+
+	mgr.Save(user);
+  }
+
+  //////////////////////////////////////////////////////////////////////////
 }

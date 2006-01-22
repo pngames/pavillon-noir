@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 namespace NRSS.mapping
 {
-  [Serializable()]
   public class User
   {
 	#region constructor

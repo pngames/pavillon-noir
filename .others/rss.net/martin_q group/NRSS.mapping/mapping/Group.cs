@@ -6,7 +6,6 @@ using System.Collections;
 
 namespace NRSS.mapping
 {
-  [Serializable()]
   public class Group
   {
 	#region constructor

@@ -7,7 +7,6 @@ using System.Xml.Serialization;
 
 namespace NRSS.mapping
 {
-  [Serializable()]
   public class Item
   {
 	#region constructor
@@ -100,6 +99,16 @@ namespace NRSS.mapping
 	{
 	  get { return _readerUsers; }
 	  set { _readerUsers = value; }
+	}
+	#endregion
+
+	#region session specifics
+	private bool _read;
+
+	public bool Read
+	{
+	  get { return _read; }
+	  set { _read = value; }
 	}
 	#endregion
   }

@@ -7,7 +7,6 @@ using System.Xml.Serialization;
 
 namespace NRSS.mapping
 {
-  [Serializable()]
   public class Feed
   {
 	#region constructor

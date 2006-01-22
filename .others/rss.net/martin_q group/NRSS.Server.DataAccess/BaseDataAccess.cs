@@ -10,7 +10,13 @@ namespace NRSS.Server.DataAccess
   /// <summary> Summary description for BaseDataAccess. </summary>
   public class BaseDataAccess
   {
-	protected ISession m_session;
+	private ISession m_session;
+
+	public ISession Session
+	{
+	  get { return m_session; }
+	  set { m_session = value; }
+	}
 
 	public BaseDataAccess()
 	{
