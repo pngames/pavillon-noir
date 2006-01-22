@@ -28,13 +28,13 @@ namespace winformclient
 	/// </summary>
 	private void InitializeComponent()
 	{
-        System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("RSS Test 1");
-        System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("RSS Test 2");
-        System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("RSS Test 3");
-        System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("RSS", new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode6,
-            treeNode7});
+        System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("RSS Test 1");
+        System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("RSS Test 2");
+        System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("RSS Test 3");
+        System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("RSS", new System.Windows.Forms.TreeNode[] {
+            treeNode13,
+            treeNode14,
+            treeNode15});
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
         this.LeftTreeMenu = new System.Windows.Forms.TreeView();
         this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -83,16 +83,16 @@ namespace winformclient
         this.LeftTreeMenu.Dock = System.Windows.Forms.DockStyle.Fill;
         this.LeftTreeMenu.Location = new System.Drawing.Point(0, 0);
         this.LeftTreeMenu.Name = "LeftTreeMenu";
-        treeNode5.Name = "RSSTest1";
-        treeNode5.Text = "RSS Test 1";
-        treeNode6.Name = "RSSTest2";
-        treeNode6.Text = "RSS Test 2";
-        treeNode7.Name = "RSSTest3";
-        treeNode7.Text = "RSS Test 3";
-        treeNode8.Name = "RssFeeds";
-        treeNode8.Text = "RSS";
+        treeNode13.Name = "RSSTest1";
+        treeNode13.Text = "RSS Test 1";
+        treeNode14.Name = "RSSTest2";
+        treeNode14.Text = "RSS Test 2";
+        treeNode15.Name = "RSSTest3";
+        treeNode15.Text = "RSS Test 3";
+        treeNode16.Name = "RssFeeds";
+        treeNode16.Text = "RSS";
         this.LeftTreeMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode8});
+            treeNode16});
         this.LeftTreeMenu.Size = new System.Drawing.Size(215, 646);
         this.LeftTreeMenu.TabIndex = 0;
         this.LeftTreeMenu.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.LeftTreeMenu_AfterSelect);
@@ -382,6 +382,7 @@ namespace winformclient
         this.Controls.Add(this.splitContainer1);
         this.Controls.Add(this.toolStrip1);
         this.Controls.Add(this.menuStrip1);
+        this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
         this.MainMenuStrip = this.menuStrip1;
         this.Name = "Form1";
         this.Text = "NRSS Client";

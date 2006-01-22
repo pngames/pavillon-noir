@@ -32,6 +32,11 @@ namespace winformclient
             InitializeComponent();
             // French voice init
             voice.Voice = voice.GetVoices("Name=LH Pierre", "Language=40C").Item(0);
+            // Left menu
+            Feed rssFeed;
+            rssFeed = serviceAdd.testRSS();
+            LeftTreeMenu.Nodes[0].Nodes[0].Text = rssFeed.Name;
+            
         }
 
 
@@ -89,11 +94,15 @@ namespace winformclient
                 foreach (Item item in chan.Items)
                 {
                     title = item.Title;
-                    author =  item.Author;
+                    author = item.Author;// item.Author;
                     date = item.Date.ToLongTimeString();
                     description = item.Description;
                     link = item.Link;
-
+                    
+                    if (author.Length == 0)
+                    {
+                        author = "N/A";
+                    }
                     System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
                         author,
                         title,
@@ -118,8 +127,6 @@ namespace winformclient
                   SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFPurgeBeforeSpeak);
                 ////////////////////////////////////////////////////////////////////////////
             }
-
-            // RightListView.Items.Count;
         }
     }
 
