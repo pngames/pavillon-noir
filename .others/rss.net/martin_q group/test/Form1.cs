@@ -10,6 +10,8 @@ namespace test
 {
   public partial class Form1 : Form
   {
+	test.nrss.Service serviceAdd = new test.nrss.Service();
+
 	public Form1()
 	{
 	  InitializeComponent();
