@@ -20,6 +20,8 @@ namespace NRSS.mapping
 
 	private string _title;
 	private string _description;
+	private string _language;
+	private string _link;
 
 	public int Id
 	{
@@ -37,6 +39,18 @@ namespace NRSS.mapping
 	{
 	  get { return _description; }
 	  set { _description = value; }
+	}
+
+	public string Language
+	{
+	  get { return _language; }
+	  set { _language = value; }
+	}
+
+	public string Link
+	{
+	  get { return _link; }
+	  set { _link = value; }
 	}
 	#endregion
 

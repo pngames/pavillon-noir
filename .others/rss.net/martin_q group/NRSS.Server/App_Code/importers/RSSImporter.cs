@@ -41,23 +41,39 @@ internal class RSSImporter : Importer
 
 	if (feed.Chans == null)
 	  feed.Chans = new ArrayList();
-	feed.Chans.Clear();
+
+	Dictionary<string, Chan> chanMap = new Dictionary<string, Chan>();
+
+	foreach (Chan chan in feed.Chans)
+	  chanMap[chan.Link] = chan;
 
 	foreach (RssChannel rsschan in rssFeed.Channels)
 	{
+	  if (chanMap.ContainsKey(rsschan.Link.ToString()))
+		continue;
+
 	  Chan chan = new Chan();
 
 	  chan.Feed = feed;
 
 	  chan.Title = rsschan.Title;
 	  chan.Description = rsschan.Description;
+	  chan.Language = rsschan.Language;
+	  chan.Link = rsschan.Link.ToString();
 
 	  if (chan.Items == null)
 		chan.Items = new ArrayList();
-	  chan.Items.Clear();
+
+	  Dictionary<string, Item> itemMap = new Dictionary<string, Item>();
+
+	  foreach (Item item in chan.Items)
+		itemMap[item.Link] = item;
 
 	  foreach (RssItem rssitem in rsschan.Items)
 	  {
+		if (itemMap.ContainsKey(rssitem.Link.ToString()))
+		  continue;
+
 		Item item = new Item();
 
 		item.Chan = chan;

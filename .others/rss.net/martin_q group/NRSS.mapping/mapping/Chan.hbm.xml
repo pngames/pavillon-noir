@@ -7,6 +7,8 @@
 
     <property name="Title" type="String" />
     <property name="Description" type="String" />
+    <property name="Language" type="String" />
+    <property name="Link" type="String" />
 
     <many-to-one name="Feed" column="feed_id" class="NRSS.mapping.Feed, NRSS.mapping"/>
     
