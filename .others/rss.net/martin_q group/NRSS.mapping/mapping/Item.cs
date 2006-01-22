@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Iesi.Collections;
 using System.Collections;
+using System.Xml.Serialization;
 
 namespace NRSS.mapping
 {
@@ -24,7 +25,7 @@ namespace NRSS.mapping
 	private string _title;
 	private string _description;
 	private string _content;
-	private Uri _link;
+	private string _link;
 
 	public int Id
 	{
@@ -68,7 +69,7 @@ namespace NRSS.mapping
 	  set { _content = value; }
 	}
 
-	public Uri Link
+	public string Link
 	{
 	  get { return _link; }
 	  set { _link = value; }
@@ -87,12 +88,14 @@ namespace NRSS.mapping
 	  set { _parent = value; }
 	}
 
+	[XmlIgnore]
 	public Chan Chan
 	{
 	  get { return _chan; }
 	  set { _chan = value; }
 	}
 
+	[XmlIgnore]
 	public IList ReaderUsers
 	{
 	  get { return _readerUsers; }

@@ -11,6 +11,7 @@ using Iesi.Collections;
 using System.Configuration;
 using NRSS;
 using NRSS.errors;
+using System.Xml.Serialization;
 
 [WebService(Namespace = "http://nrss.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
@@ -36,14 +37,12 @@ public class Service : System.Web.Services.WebService
   }
 
   [WebMethod]
-  public Feed TestRSS()
+  [XmlInclude(typeof(Chan)), XmlInclude(typeof(Item))]
+  public Feed testRSS()
   {
 	//SchemaUtility.ExportSchema();
 
 	//////////////////////////////////////////////////////////////////////////
-	
-	NRSSConfProxy.Instance.ProxyLogin = "mortag_t";
-	NRSSConfProxy.Instance.ProxyPass = "=q^vo?br";
 
 	RSSImporter	importer = new RSSImporter();
 

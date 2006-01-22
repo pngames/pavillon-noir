@@ -66,7 +66,7 @@ internal class RSSImporter : Importer
 		item.Date = rssitem.PubDate;
 		item.Title = rssitem.Title;
 		item.Description = rssitem.Description;
-		item.Link = rssitem.Link;
+		item.Link = rssitem.Link.ToString();
 
 		//item.Content = rssitem.;
 

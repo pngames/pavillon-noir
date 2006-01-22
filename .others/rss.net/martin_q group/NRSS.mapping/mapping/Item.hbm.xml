@@ -11,7 +11,7 @@
     <property name="Title" type="String" />
     <property name="Description" type="String" />
     <property name="Content" type="String" />
-    <property name="Link" type="Serializable" />
+    <property name="Link" type="String" />
 
     <many-to-one name="Chan" column="chan_id" class="NRSS.mapping.Chan, NRSS.mapping"/>
     <many-to-one name="Parent" column="parent_id" class="NRSS.mapping.Item, NRSS.mapping"/>

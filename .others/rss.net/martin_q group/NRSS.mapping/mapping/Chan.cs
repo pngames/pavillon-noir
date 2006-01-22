@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections;
 using Iesi.Collections;
+using System.Xml.Serialization;
 
 namespace NRSS.mapping
 {
@@ -45,6 +46,7 @@ namespace NRSS.mapping
 
 	private IList _groups;
 
+	[XmlIgnore]
 	public Feed Feed
 	{
 	  get { return _feed; }
@@ -57,6 +59,7 @@ namespace NRSS.mapping
 	  set { _items = value; }
 	}
 
+	[XmlIgnore]
 	public IList Groups
 	{
 	  get { return _groups; }
