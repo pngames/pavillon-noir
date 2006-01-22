@@ -28,24 +28,15 @@ namespace winformclient
 	/// </summary>
 	private void InitializeComponent()
 	{
+        System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("RSS Test 1");
+        System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("RSS Test 2");
+        System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("RSS Test 3");
+        System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("RSS", new System.Windows.Forms.TreeNode[] {
+            treeNode5,
+            treeNode6,
+            treeNode7});
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-        
-        /* Test */
-        //////////////////////////////////////////////////////////////////////////
-        System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("RSS Test 1");
-        System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("RSS Test 2");
-        System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("RSS Test 3");
-        System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("RSS Feeds", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
-        System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Sujet",
-            "From:",
-            "25/02/2006"}, -1);
-        //////////////////////////////////////////////////////////////////////////
-        
-        
+        this.LeftTreeMenu = new System.Windows.Forms.TreeView();
         this.menuStrip1 = new System.Windows.Forms.MenuStrip();
         this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.newFeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,12 +60,13 @@ namespace winformclient
         this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
         this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
         this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-        this.treeView1 = new System.Windows.Forms.TreeView();
         this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-        this.listView1 = new System.Windows.Forms.ListView();
+        this.RightListView = new System.Windows.Forms.ListView();
         this.columnSubject = new System.Windows.Forms.ColumnHeader();
         this.columnSender = new System.Windows.Forms.ColumnHeader();
         this.columnDate = new System.Windows.Forms.ColumnHeader();
+        this.columnDescription = new System.Windows.Forms.ColumnHeader();
+        this.columnLink = new System.Windows.Forms.ColumnHeader();
         this.webBrowser1 = new System.Windows.Forms.WebBrowser();
         this.menuStrip1.SuspendLayout();
         this.toolStrip1.SuspendLayout();
@@ -85,6 +77,25 @@ namespace winformclient
         this.splitContainer2.Panel2.SuspendLayout();
         this.splitContainer2.SuspendLayout();
         this.SuspendLayout();
+        // 
+        // LeftTreeMenu
+        // 
+        this.LeftTreeMenu.Dock = System.Windows.Forms.DockStyle.Fill;
+        this.LeftTreeMenu.Location = new System.Drawing.Point(0, 0);
+        this.LeftTreeMenu.Name = "LeftTreeMenu";
+        treeNode5.Name = "RSSTest1";
+        treeNode5.Text = "RSS Test 1";
+        treeNode6.Name = "RSSTest2";
+        treeNode6.Text = "RSS Test 2";
+        treeNode7.Name = "RSSTest3";
+        treeNode7.Text = "RSS Test 3";
+        treeNode8.Name = "RssFeeds";
+        treeNode8.Text = "RSS";
+        this.LeftTreeMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode8});
+        this.LeftTreeMenu.Size = new System.Drawing.Size(215, 646);
+        this.LeftTreeMenu.TabIndex = 0;
+        this.LeftTreeMenu.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.LeftTreeMenu_AfterSelect);
         // 
         // menuStrip1
         // 
@@ -277,32 +288,14 @@ namespace winformclient
         // 
         // splitContainer1.Panel1
         // 
-        this.splitContainer1.Panel1.Controls.Add(this.treeView1);
+        this.splitContainer1.Panel1.Controls.Add(this.LeftTreeMenu);
         // 
         // splitContainer1.Panel2
         // 
         this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
         this.splitContainer1.Size = new System.Drawing.Size(866, 646);
-        this.splitContainer1.SplitterDistance = 251;
+        this.splitContainer1.SplitterDistance = 215;
         this.splitContainer1.TabIndex = 2;
-        // 
-        // treeView1
-        // 
-        this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-        this.treeView1.Location = new System.Drawing.Point(0, 0);
-        this.treeView1.Name = "treeView1";
-        treeNode1.Name = "RSSTest1";
-        treeNode1.Text = "RSS Test 1";
-        treeNode2.Name = "RSSTest2";
-        treeNode2.Text = "RSS Test 2";
-        treeNode3.Name = "RSSTest3";
-        treeNode3.Text = "RSS Test 3";
-        treeNode4.Name = "RssFeeds";
-        treeNode4.Text = "RSS Feeds";
-        this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4});
-        this.treeView1.Size = new System.Drawing.Size(251, 646);
-        this.treeView1.TabIndex = 0;
         // 
         // splitContainer2
         // 
@@ -315,58 +308,71 @@ namespace winformclient
         // 
         // splitContainer2.Panel1
         // 
-        this.splitContainer2.Panel1.Controls.Add(this.listView1);
+        this.splitContainer2.Panel1.Controls.Add(this.RightListView);
         // 
         // splitContainer2.Panel2
         // 
         this.splitContainer2.Panel2.Controls.Add(this.webBrowser1);
-        this.splitContainer2.Size = new System.Drawing.Size(611, 646);
-        this.splitContainer2.SplitterDistance = 251;
+        this.splitContainer2.Size = new System.Drawing.Size(647, 646);
+        this.splitContainer2.SplitterDistance = 197;
         this.splitContainer2.TabIndex = 0;
         // 
-        // listView1
+        // RightListView
         // 
-        this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+        this.RightListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnSubject,
             this.columnSender,
-            this.columnDate});
-        this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-        this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
-        this.listView1.Location = new System.Drawing.Point(0, 0);
-        this.listView1.Name = "listView1";
-        this.listView1.Size = new System.Drawing.Size(607, 247);
-        this.listView1.TabIndex = 0;
-        this.listView1.UseCompatibleStateImageBehavior = false;
-        this.listView1.View = System.Windows.Forms.View.Details;
+            this.columnDate,
+            this.columnDescription,
+            this.columnLink});
+        this.RightListView.Dock = System.Windows.Forms.DockStyle.Fill;
+        this.RightListView.Location = new System.Drawing.Point(0, 0);
+        this.RightListView.MultiSelect = false;
+        this.RightListView.Name = "RightListView";
+        this.RightListView.Size = new System.Drawing.Size(643, 193);
+        this.RightListView.TabIndex = 0;
+        this.RightListView.UseCompatibleStateImageBehavior = false;
+        this.RightListView.View = System.Windows.Forms.View.Details;
+        this.RightListView.SelectedIndexChanged += new System.EventHandler(this.RightListView_SelectedIndexChanged);
         // 
         // columnSubject
         // 
         this.columnSubject.Name = "columnSubject";
-        this.columnSubject.Text = "Subject";
+        this.columnSubject.Text = "Author";
         this.columnSubject.Width = 70;
         // 
         // columnSender
         // 
         this.columnSender.Name = "columnSender";
-        this.columnSender.Text = "Sender";
-        this.columnSender.Width = 244;
+        this.columnSender.Text = "Title";
+        this.columnSender.Width = 114;
         // 
         // columnDate
         // 
         this.columnDate.Name = "columnDate";
         this.columnDate.Text = "Date";
-        this.columnDate.Width = 189;
+        this.columnDate.Width = 113;
+        // 
+        // columnDescription
+        // 
+        this.columnDescription.Name = "columnDescription";
+        this.columnDescription.Text = "Description";
+        this.columnDescription.Width = 190;
+        // 
+        // columnLink
+        // 
+        this.columnLink.Name = "columnLink";
+        this.columnLink.Text = "Link";
         // 
         // webBrowser1
         // 
-        this.webBrowser1.AllowNavigation = false;
         this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
         this.webBrowser1.Location = new System.Drawing.Point(0, 0);
         this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
         this.webBrowser1.Name = "webBrowser1";
-        this.webBrowser1.Size = new System.Drawing.Size(607, 387);
+        this.webBrowser1.Size = new System.Drawing.Size(643, 441);
         this.webBrowser1.TabIndex = 0;
+        this.webBrowser1.Navigated += new System.Windows.Forms.WebBrowserNavigatedEventHandler(this.webBrowser1_Navigated);
         // 
         // Form1
         // 
@@ -421,11 +427,15 @@ namespace winformclient
       private System.Windows.Forms.SplitContainer splitContainer1;
       private System.Windows.Forms.SplitContainer splitContainer2;
       private System.Windows.Forms.WebBrowser webBrowser1;
-      private System.Windows.Forms.TreeView treeView1;
-      private System.Windows.Forms.ListView listView1;
+      private System.Windows.Forms.ListView RightListView;
+      private System.Windows.Forms.ColumnHeader columnAuthor;
+      private System.Windows.Forms.ColumnHeader columnTitle;
+      private System.Windows.Forms.ColumnHeader columnDate;
+      private System.Windows.Forms.ColumnHeader columnDescription;
+      private System.Windows.Forms.ColumnHeader columnLink;
+      private System.Windows.Forms.TreeView LeftTreeMenu;
       private System.Windows.Forms.ColumnHeader columnSubject;
       private System.Windows.Forms.ColumnHeader columnSender;
-      private System.Windows.Forms.ColumnHeader columnDate;
 
 }
 }
