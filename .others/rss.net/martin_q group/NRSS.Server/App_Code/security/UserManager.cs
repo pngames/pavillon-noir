@@ -7,6 +7,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using NRSS.Server.DataAccess;
+using NRSS.mapping;
+using NRSS.errors;
 
 /// <summary>Summary description for UserManager</summary>
 public class UserManager
@@ -35,15 +38,15 @@ public class UserManager
 
   bool	validate(string validationString)
   {
-
+	return false;
   }
 
   string validate(string user, string pass)
   {
-
+	return null;
   }
 
-  string validate(string validationString)
+  void activate(string hash)
   {
 	BaseDataAccess mgr = new BaseDataAccess();
 

@@ -24,7 +24,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\NRSS.Server\", "NRSS
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "1830"
+		VWDPort = "1456"
 	EndProjectSection
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\NRSS.Webclient\", "NRSS.Webclient\", "{8B6AE4A0-EE43-4C7C-ACC7-DCDE1EA2B311}"
@@ -43,7 +43,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\NRSS.Webclient\", "N
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "1836"
+		VWDPort = "1459"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRSS.Screensaver", "NRSS.Screensaver\NRSS.Screensaver.csproj", "{6E341CAD-6097-4886-B069-2EA532E44075}"
@@ -54,7 +54,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSS.NET", "..\RSS.NET\RSS.N
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7CDD31C2-5818-4B42-BE19-8C7D1886A410}"
 	ProjectSection(SolutionItems) = preProject
-		nrss.db = nrss.db
+		nrss2.db = nrss2.db
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NNTP", "..\Smilla.NNTP\NNTP\NNTP.csproj", "{165140DE-2CA5-4EA7-A875-9FE653A56419}"

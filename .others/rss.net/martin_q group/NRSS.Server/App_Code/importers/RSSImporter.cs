@@ -15,7 +15,7 @@ using System.Collections;
 using Iesi.Collections;
 
 /// <summary>Summary description for RSSImporter</summary>
-public class RSSImporter : Importer
+internal class RSSImporter : Importer
 {
   public RSSImporter()
   {

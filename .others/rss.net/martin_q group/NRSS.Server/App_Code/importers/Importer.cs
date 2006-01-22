@@ -15,8 +15,7 @@ using NRSS;
 /// <summary> Summary description for Importer </summary>
 public abstract class Importer
 {
-  protected ImportType _type;
-  protected int _defaultPort;
+  protected ImportType _type = new ImportType();
 
   protected Importer()
   { }
@@ -36,11 +35,25 @@ public abstract class Importer
 
   //////////////////////////////////////////////////////////////////////////
 
-  private static Dictionary<string, Importer> _importers = new Dictionary<string, Importer>();
+  private static Dictionary<string, Importer> _importers = null;
 
   public static Dictionary<string, Importer> Importers
   {
-	get { return Importer._importers; }
+	get
+	{
+	  if (_importers == null)
+	  {
+		_importers = new Dictionary<string, Importer>();
+
+		NNTPImporter nntp = new NNTPImporter();
+		RSSImporter rss = new RSSImporter();
+
+		_importers[nntp.Type.Name] = nntp;
+		_importers[rss.Type.Name] = rss;
+	  }
+
+	  return Importer._importers;
+	}
 	set { Importer._importers = value; }
   }
 }

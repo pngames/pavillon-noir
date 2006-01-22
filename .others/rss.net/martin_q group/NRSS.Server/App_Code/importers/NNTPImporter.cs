@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Collections;
 
 /// <summary>Summary description for NNTPImporter</summary>
-public class NNTPImporter : Importer
+internal class NNTPImporter : Importer
 {
   public NNTPImporter()
   {

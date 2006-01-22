@@ -32,42 +32,19 @@ public class Service : System.Web.Services.WebService
   [WebMethod]
   public string HelloWorld()
   {
-	SchemaUtility.ExportSchema();
-
-	/*BaseDataAccess mgr = new BaseDataAccess();
-
-	DBUser user = new DBUser();
-	user.Id = "joe_cool";
-	user.UserName = "Joseph Cool";
-	user.Password = "abc123";
-	user.EmailAddress = "joe@cool.com";
-	user.LastLogon = DateTime.Now;
-
-	try
-	{
-	  mgr.Save(user);
-	}
-	catch (Exception)
-	{
-
-	  //throw;
-	}
-
-	/*foreach (DBUser user in mgr.Get(typeof(DBUser)))
-	{
-	  
-	}*/
-
 	return "Hello World";
   }
 
   [WebMethod]
-  public void TestRSS()
+  public Feed TestRSS()
   {
-	SchemaUtility.ExportSchema();
+	//SchemaUtility.ExportSchema();
 
 	//////////////////////////////////////////////////////////////////////////
 	
+	NRSSConfProxy.Instance.ProxyLogin = "mortag_t";
+	NRSSConfProxy.Instance.ProxyPass = "=q^vo?br";
+
 	RSSImporter	importer = new RSSImporter();
 
 	Feed  feed = new Feed();
@@ -79,10 +56,7 @@ public class Service : System.Web.Services.WebService
 	
 	Importer.updateFeed(feed);
 
-	//////////////////////////////////////////////////////////////////////////
-
-	BaseDataAccess mgr = new BaseDataAccess();
-	mgr.Save(feed);
+	return feed;
   }
 
   [WebMethod]
@@ -121,7 +95,7 @@ public class Service : System.Web.Services.WebService
   [WebMethod]
   public ArrayList createUser(User user)
   {
-	user.Id = Guid.NewGuid();
+	user.Id = Guid.NewGuid().ToString();
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -140,7 +114,7 @@ public class Service : System.Web.Services.WebService
   {
 	BaseDataAccess mgr = new BaseDataAccess();
 
-	User user = mgr.Get(typeof(User), "Id", new Guid(hash)) as User;
+	User user = mgr.Get(typeof(User), "Id", hash) as User;
 
 	//////////////////////////////////////////////////////////////////////////
 

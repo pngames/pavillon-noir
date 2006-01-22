@@ -16,14 +16,14 @@ namespace NRSS.mapping
 	#endregion
 
 	#region datas
-	private Guid _id;
+	private string _id;
 	private string _email;
 	private string _passwd;
 	private bool _confirmed;
 	private string _creation;
 	private string _lastLogon;
 
-	public Guid Id
+	public string Id
 	{
 	  get { return _id; }
 	  set { _id = value; }

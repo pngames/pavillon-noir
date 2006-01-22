@@ -3,6 +3,8 @@ using System.Web;
 using NHibernate;
 using NHibernate.Cfg;
 using System.Reflection;
+using System.IO;
+using NHibernate.Tool.hbm2ddl;
 
 namespace NRSS.Server.DataAccess
 {
@@ -73,11 +75,24 @@ namespace NRSS.Server.DataAccess
 	  config = new Configuration();
 
 	  if (config == null)
-	  {
 		throw new InvalidOperationException("NHibernate configuration is null.");
-	  }
 
-	  config.Configure();
+	  if (!File.Exists(@".\nrss.db"))
+	  {
+		config.SetProperty(@"hibernate.connection.connection_string", @"Data Source=.\nrss.db;Version=3;New=True");
+
+		config.Configure();
+
+		SchemaExport exporter = new SchemaExport(config);
+		exporter.Drop(true, true);
+		exporter.Create(true, true);
+	  }
+	  else
+	  {
+		config.SetProperty(@"hibernate.connection.connection_string", @"Data Source=.\nrss.db;Version=3");
+
+		config.Configure();
+	  }
 
 	  factory = config.BuildSessionFactory();
 
