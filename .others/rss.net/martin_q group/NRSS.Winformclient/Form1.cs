@@ -39,8 +39,6 @@ namespace winformclient
             
         }
 
-
-
         #region Web Browser related code
 
         private void Navigate(String address)
@@ -95,7 +93,7 @@ namespace winformclient
                 {
                     title = item.Title;
                     author = item.Author;// item.Author;
-                    date = item.Date.ToLongTimeString();
+                    date = item.Date.ToShortDateString() + " " + item.Date.ToShortTimeString();
                     description = item.Description;
                     link = item.Link;
                     
