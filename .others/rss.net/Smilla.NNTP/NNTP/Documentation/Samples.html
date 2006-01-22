@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<HTML>
+	<HEAD>
+		<TITLE></TITLE>
+		<META NAME="GENERATOR" Content="Microsoft FrontPage 5.0">
+	</HEAD>
+	<BODY>
+		<h1>Smilla .NET Communication Library Samples</h1>
+		<h2>Introduction</h2>
+		<p>There are two sample applications that ship with Smilla .NET Communication 
+			Library. One is written using Windows Forms (Smilla News Reader) and another 
+			using ASP.NET.</p>
+		<h2>Windows Forms Sample Application - Smilla News Reader</h2>
+		<p>Smilla News Reader is a sample application that is supposed to demonstrate ways 
+			of using Smilla .NET Communication Library. It shows usage of the library's 
+			main features as well as some common techniques that you can use in your 
+			application. These are some suggestions.</p>
+		<ul>
+			<li>
+			This sample application is not intended to be a production-ready software. For 
+			example you'll probably don't want to get a whole list of newsgroups each time 
+			you work with some server. Instead you may hold this list locally and get only 
+			new newsgroups each time you connect.
+			<li>
+			Smilla News Reader uses ThreadPool object for time-consuming operations such as 
+			getting articles list. Please refer to .NET Framework documentation for 
+			detailed information on threading.
+			<li>
+				We use WebBrowser ActiveX control (actually Internet Explorer) for displaying 
+				articles. It makes possible to display both plain-text and HTML messages. 
+				Please pay attention to the method of displaying embedded images in HTML.</li>
+		</ul>
+		<h2>ASP.NET Sample Application - Smilla Web Reader</h2>
+		<p>
+			Smilla Web Reader is a simple web application that can connect to the specified 
+			news server, get list of articles and read them. Smilla Web Reader is also not 
+			an example of a perfect news reader. In web environment you would probably 
+			rather cache newsgroups information periodically somewhere in a database than 
+			receive it every time from a remote news server. But Smilla Web Reader gives an 
+			idea of using Smilla .NET Communication Library&nbsp;with ASP.NET.</p>
+	</BODY>
+</HTML>

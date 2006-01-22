@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="NRSS.mapping.Feed, NRSS.mapping" table="db_feed">
+    <id name="Id" type="Int32">
+      <generator class="native" />
+    </id>
+
+    <property name="Type" type="String" />
+    
+    <property name="Name" type="String" />
+    
+    <property name="Fils" type="String" />
+    <property name="FilsPort" type="Int32" />
+    <property name="FilsUser" type="String" />
+    <property name="FilsPass" type="String" />
+
+    <bag name="Chans" inverse="true" cascade="all" order-by="Title">
+      <key column="feed_id" />
+      <one-to-many class="NRSS.mapping.Item, NRSS.mapping" />
+    </bag>
+
+    <bag name="Groups" table="group_feed" lazy="true">
+      <key column="feed_id" />
+      <many-to-many class="NRSS.mapping.Feed, NRSS.mapping" column="Id" />
+    </bag>
+  </class>
+</hibernate-mapping>

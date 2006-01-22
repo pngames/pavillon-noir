@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="NRSS.mapping.Item, NRSS.mapping" table="db_item">
+    <id name="Id" type="Int32">
+      <generator class="native" />
+    </id>
+
+    <property name="MessageID" type="String" />
+    <property name="Author" type="String" />
+    <property name="Date" type="DateTime" />
+    <property name="Title" type="String" />
+    <property name="Description" type="String" />
+    <property name="Content" type="String" />
+    <property name="Link" type="Serializable" />
+
+    <many-to-one name="Chan" column="chan_id" class="NRSS.mapping.Chan, NRSS.mapping"/>
+    <many-to-one name="Parent" column="parent_id" class="NRSS.mapping.Item, NRSS.mapping"/>
+
+    <bag name="ReaderUsers" table="item_read" inverse="true" lazy="true">
+      <key column="item_id" />
+      <many-to-many class="NRSS.mapping.Item, NRSS.mapping" column="Id" />
+    </bag>
+  </class>
+</hibernate-mapping>

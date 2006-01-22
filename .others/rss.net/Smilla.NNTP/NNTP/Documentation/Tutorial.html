@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<HTML>
+	<HEAD>
+		<TITLE></TITLE>
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+		<META content="Microsoft Visual Studio 7.0" name="GENERATOR">
+	</HEAD>
+	<BODY>
+		<H1>Smilla .NET Communication Library</H1>
+		<H2>Introduction</H2>
+		<P>Welcome to Smilla .NET Communication Library. Unfortunately, .NET Framework 
+			lacks support of some important Internet protocols, for example NNTP and POP3. 
+			Smilla .NET Communication Library is intended to improve the situation. For 
+			now, NNTP protocol is implemented, and there are also plans for POP3 and may be 
+			some other protocols.
+		</P>
+		<P>Smilla .NET Communication Library is written in C# and doesn't use any 3rd-party 
+			components. It is distributed under the terms of the GNU Lesser General Public 
+			License.</P>
+		<H2>Working with news servers.</H2>
+		<P>Smilla .NET Communication Library supports both reading and posting articles. It 
+			can read the most common MIME article types, supports attachments, HTML 
+			articles with embedded graphics and so on. Posting is limited to composing 
+			simple text articles for now, but in the near future rich posting features will 
+			be implemented.</P>
+		<P>The namespace that contains classes for working with NNTP news servers is called 
+			Smilla.Net.NNTPClient and resides in assembly Smilla.NNTP.dll. To start working 
+			with news you have to add reference to this assembly in VS.NET.</P>
+		<P>
+			The main classes you will need are Session, NewsGroup and Article. Here are 
+			some examples.</P>
+		<P>First of all you have to establish session with the news server</P>
+		<pre>Session session = new Session("msnews.microsoft.com", 119); </pre>
+		<P>Then you can get a list of newsgroups at this server</P>
+		<pre>
+NewsGroupCollection groups = session.GetNewsGroups();
+NewsGroup group = groups["microsoft.test"];
+</pre>
+		<P>or directly retrieve only specified newsgroup from the server.</P>
+		<pre>NewsGroup group = session.GetNewsGroup("microsoft.test"); </pre>
+		<P>
+			After that you can get articles from the server. For example, this&nbsp;code 
+			gets 300 latest articles from the server, but retrieves only headers:</P>
+		<pre>ArticleCollection articles = group.GetArticles(true, 300); </pre>
+		<P>Then you can select the particular article from the collection by it's number or 
+			by message ID:</P>
+		<PRE>Article article = articles[0];</PRE>
+		<P>When you want to read specified article, you retrieve article's body first</P>
+		<pre>article.RetrieveBody(); </pre>
+		<P>and then you can read this article's text for example in such way:</P>
+		<PRE>
+Console.WriteLine(String.Format("From: {0}", article.Header.From));
+Console.WriteLine(String.Format("Subject: {0}", article.Header.Subject));
+Console.WriteLine("-------------------------------------------------");
+Console.WriteLine(article.Body.TextBodyPart.DecodedText);
+</PRE>
+		<P>Posting is also quite simple. First of all, create a new article using 
+			Session.CreateArticle method:</P>
+		<PRE>Article newArticle = session.CreateArticle();</PRE>
+		<P>Then fill the main header fields and compose body text:</P>
+		<PRE>
+newArticle.Header.From = "d_krakhmalnik@users.sf.net";
+newArticle.Header.Subject = "test posting";
+newArticle.Header.NewsGroups = new String[] {"microsoft.test"};
+newArticle.Body.Text = "Post from Smilla .NET Communication Library";
+</PRE>
+		<p>And after that post article to the server:</p>
+		<pre>
+session.PostArticle(newArticle);
+</pre>
+		<p>That's all!</p>
+	</BODY>
+</HTML>

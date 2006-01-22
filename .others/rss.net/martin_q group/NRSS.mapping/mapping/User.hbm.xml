@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="NRSS.mapping.User, NRSS.mapping" table="db_user">
+    <id name="Id" type="Guid">
+      <generator class="assigned" />
+    </id>
+    
+    <property name="Email" type="String" />
+    <property name="Passwd" type="String" />
+    <property name="Confirmed" type="Boolean" />
+    <property name="Creation" type="DateTime" />
+    <property name="LastLogon" type="DateTime" />
+
+    <bag name="Groups" table="group_user" inverse="true" lazy="true">
+      <key column="user_id" />
+      <many-to-many class="NRSS.mapping.User, NRSS.mapping" column="Id" />
+    </bag>
+
+    <bag name="ReadItems" table="item_read" lazy="true">
+      <key column="user_id" />
+      <many-to-many class="NRSS.mapping.User, NRSS.mapping" column="Id" />
+    </bag>
+  </class>
+</hibernate-mapping>

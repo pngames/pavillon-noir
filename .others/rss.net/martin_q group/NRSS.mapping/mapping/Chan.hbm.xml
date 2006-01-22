@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="NRSS.mapping.Chan, NRSS.mapping" table="db_chan">
+    <id name="Id" type="Int32">
+      <generator class="native" />
+    </id>
+
+    <property name="Title" type="String" />
+    <property name="Description" type="String" />
+
+    <many-to-one name="Feed" column="feed_id" class="NRSS.mapping.Feed, NRSS.mapping"/>
+    
+    <bag name="Items" inverse="true" cascade="all" order-by="Date asc">
+      <key column="chan_id" />
+      <one-to-many class="NRSS.mapping.Item, NRSS.mapping" />
+    </bag>
+
+    <bag name="Groups" table="group_chan" lazy="true">
+      <key column="chan_id" />
+      <many-to-many class="NRSS.mapping.Chan, NRSS.mapping" column="Id" />
+    </bag>
+  </class>
+</hibernate-mapping>
