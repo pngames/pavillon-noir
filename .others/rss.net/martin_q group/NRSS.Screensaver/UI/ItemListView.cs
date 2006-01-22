@@ -2,6 +2,9 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Collections;
+using Iesi.Collections;
+using NRSS.mapping;
 
 namespace NRSS.Screensaver.UI
 {
@@ -9,7 +12,7 @@ namespace NRSS.Screensaver.UI
   /// Encapsulates the rendering of a list of items.  Each item's description is shown in a list, and a single item is selected.
   /// </summary>
   /// <typeparam name="T">The type of item that this ItemListView will draw.</typeparam>
-  public class ItemListView<T> : IDisposable where T : IItem
+  public class ItemListView : IDisposable
   {
 	private const float percentOfArticleDisplayBoxToFillWithText = 0.5f;
 	private const float percentOfFontHeightForSelectionBox = 1.5f;
@@ -33,7 +36,7 @@ namespace NRSS.Screensaver.UI
 	// An index of the currently selected item
 	private int selectedIndex = 0;
 	// The list of items to draw
-	private IList<T> items;
+	private IList items;
 	// The maximum number of articles that will be displayed
 	private int maxItemsToShow;
 	// The minimum number of articles that will be displayed
@@ -56,8 +59,9 @@ namespace NRSS.Screensaver.UI
 	public Color SelectedBackColor { get { return selectedBackColor; } set { selectedBackColor = value; } }
 	public int MaxItemsToShow { get { return maxItemsToShow; } set { maxItemsToShow = value; } }
 	public int MinItemsToShow { get { return minItemsToShow; } set { minItemsToShow = value; } }
-	public int SelectedIndex { get { return selectedIndex; } }
-	public T SelectedItem { get { return items[selectedIndex]; } }
+    public int SelectedIndex { get { return selectedIndex; } }
+    public int NumItems { get { return items.Count; } }
+    public Item SelectedItem { get { return items[selectedIndex] as Item; } }
 
 	public int RowHeight
 	{
@@ -89,7 +93,7 @@ namespace NRSS.Screensaver.UI
 	  {
 		// Choose a font for the title text.
 		// This font will be twice as big as the ItemFont
-		float titleFontHeight = (float)(percentOfArticleDisplayBoxToFillWithText * 2 * RowHeight);
+		float titleFontHeight = Math.Min((float)(percentOfArticleDisplayBoxToFillWithText * 2 * RowHeight), 30);
 		if (titleFont == null || titleFont.Size != titleFontHeight)
 		{
 		  titleFont = new Font("Microsoft Sans Serif", titleFontHeight, GraphicsUnit.Pixel);
@@ -100,7 +104,7 @@ namespace NRSS.Screensaver.UI
 
 	public void NextArticle()
 	{
-	  if (selectedIndex < NumArticles - 1)
+	  if (selectedIndex < items.Count - 1)
 		selectedIndex++;
 	  else
 		selectedIndex = 0;
@@ -111,10 +115,10 @@ namespace NRSS.Screensaver.UI
 	  if (selectedIndex > 0)
 		selectedIndex--;
 	  else
-		selectedIndex = NumArticles - 1;
+		selectedIndex = items.Count - 1;
 	}
 
-	public ItemListView(string title, IList<T> items)
+	public ItemListView(string title, IList items)
 	{
 	  if (items == null)
 		throw new ArgumentException("Items cannot be null", "items");
@@ -171,7 +175,7 @@ namespace NRSS.Screensaver.UI
 
 	  // Select color and draw border if current index is selected
 	  Color textBrushColor = ForeColor;
-	  if (index == SelectedIndex)
+      if ((SelectedIndex >= MaxItemsToShow ? (index + SelectedIndex - MaxItemsToShow + 1) : index) == SelectedIndex)
 	  {
 		textBrushColor = SelectedForeColor;
 		using (Brush backBrush = new SolidBrush(SelectedBackColor))
@@ -181,7 +185,7 @@ namespace NRSS.Screensaver.UI
 	  }
 
 	  // Draw the title of the item
-	  string textToDraw = items[index].Title;
+	  string textToDraw = (items[SelectedIndex >= MaxItemsToShow ? (index + SelectedIndex - MaxItemsToShow + 1) : index] as Item).Title;
 	  using (Brush textBrush = new SolidBrush(textBrushColor))
 	  {
 		g.DrawString(textToDraw, ItemFont, textBrush, articleRect, stringFormat);
@@ -194,7 +198,7 @@ namespace NRSS.Screensaver.UI
 	/// <param name="g">The Graphics object to draw onto</param>
 	private void DrawTitle(Graphics g)
 	{
-	  Point titleLocation = new Point(Location.X + padding, Location.Y + Size.Height - (RowHeight) - padding);
+	  Point titleLocation = new Point(Location.X + padding, Location.Y + Size.Height - (RowHeight) - (padding / 2));
 	  Size titleSize = new Size(Size.Width - (2 * padding), 2 * RowHeight);
 	  Rectangle titleRectangle = new Rectangle(titleLocation, titleSize);
 
@@ -210,7 +214,7 @@ namespace NRSS.Screensaver.UI
 	  titleFormat.Trimming = StringTrimming.EllipsisCharacter;
 	  using (Brush titleBrush = new SolidBrush(TitleForeColor))
 	  {
-		g.DrawString(title, titleFont, titleBrush, titleRectangle, titleFormat);
+		g.DrawString("Message on channel: " + SelectedItem.Chan.Title, titleFont, titleBrush, titleRectangle, titleFormat);
 	  }
 	}
 

@@ -40,9 +40,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Iesi.Collections, Version=1.0.0.1, Culture=neutral, PublicKeyToken=154fdcb44c4484fc">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_libs\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Service, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_libs\Service.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -52,6 +61,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\FeedListView.cs" />
     <Compile Include="UI\IItem.cs" />
     <Compile Include="Properties\Settings.designer.cs">
       <AutoGen>True</AutoGen>
@@ -74,6 +84,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="OptionsForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -96,6 +110,8 @@
     <Content Include="Documentation\Images\topjump-vc.gif" />
     <Content Include="Documentation\Images\top-vc.gif" />
     <Content Include="Documentation\Images\screensaver_thumbnail.png" />
+    <None Include="Resources\Blue_Light_by_Infinite705.jpg" />
+    <Content Include="Resources\Wake_Me_Up_by_crushxmex.jpg" />
     <None Include="Resources\SSaverBackground2.jpg" />
     <None Include="Resources\SSaverBackground.jpg" />
   </ItemGroup>
@@ -105,6 +121,12 @@
       <ProductName>.NET Framework 2.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NRSS.mapping\NRSS.mapping.csproj">
+      <Project>{27D6E4B4-7893-4369-9CAF-4E625B0146A9}</Project>
+      <Name>NRSS.mapping</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

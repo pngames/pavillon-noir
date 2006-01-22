@@ -8,7 +8,7 @@ namespace NRSS.Screensaver.UI
   /// Encapsulates the rendering of the description of an item.
   /// </summary>
   /// <typeparam name="T">The type of item that this ItemDescriptionView will draw.</typeparam>
-  public class ItemDescriptionView<T> : IDisposable where T : IItem
+  public class ItemDescriptionView<T> : IDisposable where T : NRSS.mapping.Item
   {
 	private Point location;
 	private Size size;

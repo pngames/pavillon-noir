@@ -15,9 +15,10 @@
 	  if (disposing && (components != null))
 	  {
 		components.Dispose();
-		rssDescriptionView.Dispose();
-		rssView.Dispose();
-	  }
+        feedView.Dispose();
+        rssDescriptionView.Dispose();
+        rssView.Dispose();
+      }
 	  base.Dispose(disposing);
 	}
 
@@ -68,7 +69,6 @@
 	  this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ScreenSaverForm_MouseDown);
 	  this.ResumeLayout(false);
 	  this.PerformLayout();
-
 	}
 
 	#endregion
