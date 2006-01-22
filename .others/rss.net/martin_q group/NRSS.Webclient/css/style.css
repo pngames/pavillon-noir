@@ -1,0 +1,63 @@
+/* html */
+body 
+{
+	font-family: tahoma; 
+	font-size: 12px
+	}
+	
+hr 
+{
+	border: solid 1px #cdcdcd; 
+	}
+
+/* master */
+.leftcol 
+{
+	float: left; 
+	width: 25%; 
+	}
+	
+.rightcol 
+{
+	float: left; 
+	width: 75%; 
+	}
+	
+.spacer { clear: both; }
+.content { border: solid 1px #cdcdcd; background-color: #ffffff; }
+.title {width: 100%; background-color: #cdcdcd; color: #ffffff; line-height: 150%; font-weight: bold;}
+.menu { margin: 5px 5px 5px 5px; background-color: cornflowerblue; border: solid 1px #cdcdcd; 
+color: #add8e6; line-height: 150%; font-weight: bold;}
+.logo { margin: 5px 5px 5px 5px; background-color: #33cc00; border: solid 1px #cdcdcd; 
+color: white; line-height: 150%; font-weight: bold;}
+.menu a:link, .menu a:visited {text-decoration: none; color:white; background:transparent;}
+.menu a:hover {color:#cdcdcd; background:transparent;}
+.user { position: relative; right: 70px; margin-right: 5px; }
+
+/* home */
+.rssfeed {margin: 5px 5px 5px 5px; background-color: #fff; }
+.rssitem {margin: 5px 5px 5px 5px; background-color: #fff; }
+.rssfeed .content, .rssitem .content { line-height: 150%;}
+.itemcontent {margin: 5px 5px 5px 5px; background-color: #fff; }
+.itemcontent .content {padding: 10px;}
+
+#OpacityLayer
+{
+position: absolute;
+top: 0px;
+left: 0px;
+width: 100%;
+height: 100%;
+visibility: hidden;}
+
+#LoginBox {
+position: absolute;
+top: 60px;
+left: 80px;
+width: 270px;
+visibility: hidden;
+border: 1px solid #add8e6;
+background-color: #ffffff;
+font-size: 10px;
+}
+#LoginBox a {text-decoration: none;}

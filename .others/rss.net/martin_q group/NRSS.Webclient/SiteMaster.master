@@ -1,0 +1,89 @@
+<%@ Master CodeFile="SiteMaster.master.cs" Inherits="SiteMaster" %>
+<html>
+<head id="Head1" runat="server">
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script type="text/javascript">
+
+function toggleBox(szDivID, iState) // 1 visible, 0 hidden
+{
+  if(document.layers)  // NN4
+  {
+    document.layers[szDivID].visibility = iState ? "show" : "hide";
+    document.layers["OpacityLayer"].visibility = iState ? "show" : "hide";
+  }
+  else if(document.getElementById) // gecko(NN6) + IE5+
+  {
+    var obj = document.getElementById(szDivID);
+    var opacity = document.getElementById("OpacityLayer");
+    obj.style.visibility = iState ? "visible" : "hidden";
+    opacity.style.visibility = iState ? "visible" : "hidden";
+  }
+  else if(document.all) //IE 4
+  {
+    document.all[szDivID].style.visibility = iState ? "visible" : "hidden";
+    document.all["OpacityLayer"].style.visibility = iState ? "visible" : "hidden";
+  }
+}
+
+</script>
+<script language="C#" runat=server>
+    void Signout_Click(Object sender, EventArgs E) {
+
+      FormsAuthentication.SignOut();
+      Response.Redirect("Default.aspx");
+    }
+</script>
+</head>
+<body  bgColor="#ffffff" style="background-image: url('../img/bg.gif')">
+    <form id="form1" runat="server">
+        <div class="logo">
+            &nbsp;<span style="font-size: 14px;">NRSS</span>&nbsp;
+        </div>
+        <div class="menu">
+            &nbsp;<asp:LoginName ID="LoginName1" runat="server" />
+            - 
+            <a href="Home.aspx">Mes Flux</a> - 
+            <a href="#" onClick="toggleBox('LoginBox',1); return false;"> Ajouter un flux</a> - 
+            <a href="MyProfile.aspx">Mon profil</a> - 
+            <a id="A1" href="#" OnClick="Signout_Click" runat=server>Déconnexion</a>
+        </div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+        
+        <hr/> 
+        <span style="font-size: 7pt; color: buttonshadow; font-family: Tahoma">bordon_m - drean_j
+            - martin_q - mortag_t</span>
+    
+    <!-- ajouter un flux -->
+    <div id="OpacityLayer" style="background-image: url('../img/opacity.gif');"></div>
+    <div id="LoginBox">
+        <table>
+            <tr>
+                <td colspan="2"><span style="font-size:12px; font-weight:bold;">Ajouter un flux</span></td>
+                <td>
+                    <a href="#" onClick="toggleBox('LoginBox',0); return false;"><asp:Button ID="CancelAddFeed" runat="server" Text="annuler" style="margin:0px;" /></a>
+                </td>
+            </tr>
+            <tr>
+                <td><span style="font-size:10px;">RSS</span></td>
+                <td width="50%">
+                    <asp:TextBox ID="RSSFEED" runat="server"></asp:TextBox>
+                </td>
+                <td>
+                    <asp:Button ID="AddFeedButton" runat="server" Text="ok" />
+                </td>
+            </tr>
+            <tr>
+                <td><span style="font-size:10px;">NNTP</span></td>
+                <td width="50%">
+                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                </td>
+                <td>
+                    <asp:Button ID="Button1" runat="server" Text="ok" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>
