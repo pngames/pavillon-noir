@@ -57,6 +57,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NNTP", "..\Smilla.NNTP\NNTP\NNTP.csproj", "{165140DE-2CA5-4EA7-A875-9FE653A56419}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{F8C59512-5204-4549-B300-B6EC7F07C1D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5CBC3F2A-2AA9-4071-AAB9-47CB3A49EEBC} = {5CBC3F2A-2AA9-4071-AAB9-47CB3A49EEBC}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

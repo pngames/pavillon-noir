@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using test.nrss;
 
 namespace test
 {
@@ -15,6 +16,16 @@ namespace test
 	public Form1()
 	{
 	  InitializeComponent();
+	}
+
+	private void button1_Click(object sender, EventArgs e)
+	{
+	  User user = new User();
+
+	  user.Email = this.t_user.Text;
+	  user.Passwd = this.t_pass.Text;
+
+	  this.t_hash.Text = serviceAdd.createUser(user);
 	}
   }
 }

@@ -27,7 +27,7 @@ internal class RSSImporter : Importer
   protected override void _updateFeed(Feed feed)
   {
 	RssFeed rssFeed = null;
-	int tries = 10;
+	int tries = 20;
 
   Retry:
 	try
@@ -47,6 +47,8 @@ internal class RSSImporter : Importer
 	{
 	  if (--tries > 0)
 		goto Retry;
+	  else
+		return;
 	}
 
 	if (feed.Chans == null)

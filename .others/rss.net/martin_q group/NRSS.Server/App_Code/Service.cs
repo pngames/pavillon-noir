@@ -70,9 +70,9 @@ public class Service : System.Web.Services.WebService
   // User management
 
   [WebMethod]
-  public void createUser(User user)
+  public string createUser(User user)
   {
-	UserManager.Instance.createUser(user);
+	return UserManager.Instance.createUser(user);
   }
 
   [WebMethod]

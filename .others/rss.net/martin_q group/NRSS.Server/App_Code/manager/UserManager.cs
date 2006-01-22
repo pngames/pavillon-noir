@@ -37,7 +37,7 @@ public class UserManager
   }
   #endregion
 
-  public void createUser(User user)
+  public string createUser(User user)
   {
 	user.Id = Guid.NewGuid().ToString();
 
@@ -49,6 +49,8 @@ public class UserManager
 	//////////////////////////////////////////////////////////////////////////
 
 	//envoyer un mail
+
+	return user.Id;
   }
 
   public User logon(string email, string pass)
