@@ -107,6 +107,53 @@ namespace Rss
 			get { return encoding; }
 			set { encoding = value; }
 		}
+
+        /// <summary>Reads the specified RSS feed from a string</summary>
+        /// <param name="str">The string to read</param>
+        /// <returns>The contents of the feed</returns>
+        public static RssFeed ReadFromString(string str)
+        {
+            RssFeed feed = new RssFeed();
+            RssElement element = null;
+            Stream stream = null;
+  
+            
+            ASCIIEncoding myEncoder = new ASCIIEncoding();
+            byte[] strByte = myEncoder.GetBytes(str);
+            MemoryStream memStream = new MemoryStream(strByte);
+          
+
+            stream = memStream;
+
+            if (stream != null)
+            {
+                RssReader reader = null;
+                try
+                {
+                    reader = new RssReader(stream);
+                    do
+                    {
+                        element = reader.Read();
+                        if (element is RssChannel)
+                            feed.Channels.Add((RssChannel)element);
+                    }
+                    while (element != null);
+                    feed.rssVersion = reader.Version;
+                }
+                finally
+                {
+                    feed.exceptions = reader.Exceptions;
+                    reader.Close();
+                }
+            }
+            else
+                throw new ApplicationException("Not a valid Url");
+
+            return feed;
+        }
+        /************************************************************************/
+
+
 		/// <summary>Reads the specified RSS feed</summary>
 		/// <param name="url">The url or filename of the RSS feed</param>
 		/// <returns>The contents of the feed</returns>
