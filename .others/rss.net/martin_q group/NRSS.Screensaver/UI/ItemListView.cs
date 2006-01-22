@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Collections;
 using Iesi.Collections;
-using NRSS.mapping;
+using NRSS.mapping.NRSSWebService;
 
 namespace NRSS.Screensaver.UI
 {
@@ -78,7 +78,7 @@ namespace NRSS.Screensaver.UI
 	  {
 		// Choose a font for each of the item titles that will fit all numItems 
 		// of them (plus some slack for the title) in the control 
-		itemFontHeight = (float)(percentOfArticleDisplayBoxToFillWithText * RowHeight);
+		itemFontHeight = (float)Math.Min((percentOfArticleDisplayBoxToFillWithText * RowHeight), 30);
 		if (itemFont == null || itemFont.Size != itemFontHeight)
 		{
 		  itemFont = new Font("Microsoft Sans Serif", itemFontHeight, GraphicsUnit.Pixel);
@@ -93,7 +93,7 @@ namespace NRSS.Screensaver.UI
 	  {
 		// Choose a font for the title text.
 		// This font will be twice as big as the ItemFont
-		float titleFontHeight = Math.Min((float)(percentOfArticleDisplayBoxToFillWithText * 2 * RowHeight), 30);
+		float titleFontHeight = Math.Min((float)(percentOfArticleDisplayBoxToFillWithText * 2 * RowHeight), 35);
 		if (titleFont == null || titleFont.Size != titleFontHeight)
 		{
 		  titleFont = new Font("Microsoft Sans Serif", titleFontHeight, GraphicsUnit.Pixel);
@@ -214,8 +214,9 @@ namespace NRSS.Screensaver.UI
 	  titleFormat.Trimming = StringTrimming.EllipsisCharacter;
 	  using (Brush titleBrush = new SolidBrush(TitleForeColor))
 	  {
-		g.DrawString("Message on channel: " + SelectedItem.Chan.Title, titleFont, titleBrush, titleRectangle, titleFormat);
-	  }
+        //g.DrawString("Channel: " + SelectedItem.Chan.Title, titleFont, titleBrush, titleRectangle, titleFormat);
+        g.DrawString("NRSS Messages", titleFont, titleBrush, titleRectangle, titleFormat);
+      }
 	}
 
 	/// <summary>

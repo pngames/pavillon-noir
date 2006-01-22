@@ -28,6 +28,7 @@ namespace NRSS.Screensaver
 		  case "/s":
 			// Show screensaver form
 			ShowScreenSaver();
+            //ShowOptions();
 			break;
 		  default:
 			MessageBox.Show("Invalid command line argument :" + arg, "Invalid Command Line Argument", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -38,6 +39,7 @@ namespace NRSS.Screensaver
 	  {
 		// If no arguments were passed in, show the screensaver
 		ShowScreenSaver();
+        //ShowOptions();
 	  }
 	}
 

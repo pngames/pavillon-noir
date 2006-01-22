@@ -35,13 +35,12 @@ namespace NRSS.Screensaver
       this.rssFeedLabel = new System.Windows.Forms.Label();
       this.rssFeedTextBox = new System.Windows.Forms.TextBox();
       this.imageGroupBox = new System.Windows.Forms.GroupBox();
-      this.browseButton = new System.Windows.Forms.Button();
-      this.backgroundImageFolderTextBox = new System.Windows.Forms.TextBox();
+      this.PasswordTextBox = new System.Windows.Forms.TextBox();
+      this.label1 = new System.Windows.Forms.Label();
       this.backgroundImageLabel = new System.Windows.Forms.Label();
-      this.backgroundImageOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-      this.backgroundImageFolderBrowser = new System.Windows.Forms.FolderBrowserDialog();
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+      this.LoginTextBox = new System.Windows.Forms.TextBox();
       this.rssGroupBox.SuspendLayout();
       this.imageGroupBox.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
@@ -121,8 +120,9 @@ namespace NRSS.Screensaver
       // 
       // imageGroupBox
       // 
-      this.imageGroupBox.Controls.Add(this.browseButton);
-      this.imageGroupBox.Controls.Add(this.backgroundImageFolderTextBox);
+      this.imageGroupBox.Controls.Add(this.LoginTextBox);
+      this.imageGroupBox.Controls.Add(this.PasswordTextBox);
+      this.imageGroupBox.Controls.Add(this.label1);
       this.imageGroupBox.Controls.Add(this.backgroundImageLabel);
       this.imageGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
       this.imageGroupBox.Location = new System.Drawing.Point(3, 124);
@@ -130,39 +130,36 @@ namespace NRSS.Screensaver
       this.imageGroupBox.Size = new System.Drawing.Size(315, 115);
       this.imageGroupBox.TabIndex = 5;
       this.imageGroupBox.TabStop = false;
-      this.imageGroupBox.Text = "Background Image";
+      this.imageGroupBox.Text = "Connection";
       // 
-      // browseButton
+      // PasswordTextBox
       // 
-      this.browseButton.Location = new System.Drawing.Point(7, 68);
-      this.browseButton.Name = "browseButton";
-      this.browseButton.Size = new System.Drawing.Size(75, 23);
-      this.browseButton.TabIndex = 2;
-      this.browseButton.Text = "Browse...";
-      this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
+      this.PasswordTextBox.BackColor = System.Drawing.SystemColors.Window;
+      this.PasswordTextBox.ForeColor = System.Drawing.Color.Black;
+      this.PasswordTextBox.Location = new System.Drawing.Point(7, 86);
+      this.PasswordTextBox.Name = "PasswordTextBox";
+      this.PasswordTextBox.PasswordChar = '*';
+      this.PasswordTextBox.Size = new System.Drawing.Size(301, 20);
+      this.PasswordTextBox.TabIndex = 3;
+      this.PasswordTextBox.TextChanged += new System.EventHandler(this.PasswordTextBox_TextChanged);
       // 
-      // backgroundImageFolderTextBox
+      // label1
       // 
-      this.backgroundImageFolderTextBox.BackColor = System.Drawing.SystemColors.Window;
-      this.backgroundImageFolderTextBox.ForeColor = System.Drawing.Color.Black;
-      this.backgroundImageFolderTextBox.Location = new System.Drawing.Point(7, 41);
-      this.backgroundImageFolderTextBox.Name = "backgroundImageFolderTextBox";
-      this.backgroundImageFolderTextBox.Size = new System.Drawing.Size(301, 20);
-      this.backgroundImageFolderTextBox.TabIndex = 1;
-      this.backgroundImageFolderTextBox.TextChanged += new System.EventHandler(this.backgroundImageFolderTextBox_TextChanged);
+      this.label1.AutoSize = true;
+      this.label1.Location = new System.Drawing.Point(7, 66);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(59, 13);
+      this.label1.TabIndex = 2;
+      this.label1.Text = "Password :";
       // 
       // backgroundImageLabel
       // 
       this.backgroundImageLabel.AutoSize = true;
       this.backgroundImageLabel.Location = new System.Drawing.Point(7, 20);
       this.backgroundImageLabel.Name = "backgroundImageLabel";
-      this.backgroundImageLabel.Size = new System.Drawing.Size(166, 13);
+      this.backgroundImageLabel.Size = new System.Drawing.Size(39, 13);
       this.backgroundImageLabel.TabIndex = 0;
-      this.backgroundImageLabel.Text = "Background image directory path:";
-      // 
-      // backgroundImageFolderBrowser
-      // 
-      this.backgroundImageFolderBrowser.RootFolder = System.Environment.SpecialFolder.MyPictures;
+      this.backgroundImageLabel.Text = "Login :";
       // 
       // tableLayoutPanel1
       // 
@@ -199,6 +196,16 @@ namespace NRSS.Screensaver
       this.tableLayoutPanel2.Size = new System.Drawing.Size(315, 30);
       this.tableLayoutPanel2.TabIndex = 6;
       // 
+      // LoginTextBox
+      // 
+      this.LoginTextBox.BackColor = System.Drawing.SystemColors.Window;
+      this.LoginTextBox.ForeColor = System.Drawing.Color.Black;
+      this.LoginTextBox.Location = new System.Drawing.Point(7, 41);
+      this.LoginTextBox.Name = "LoginTextBox";
+      this.LoginTextBox.Size = new System.Drawing.Size(301, 20);
+      this.LoginTextBox.TabIndex = 4;
+      this.LoginTextBox.TextChanged += new System.EventHandler(this.LoginTextBox_TextChanged);
+      // 
       // OptionsForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -223,18 +230,17 @@ namespace NRSS.Screensaver
 
 	private System.Windows.Forms.Button applyButton;
 	private System.Windows.Forms.Button cancelButton;
-	private System.Windows.Forms.Button okButton;
-	private System.Windows.Forms.OpenFileDialog backgroundImageOpenFileDialog;
+    private System.Windows.Forms.Button okButton;
 	private System.Windows.Forms.GroupBox rssGroupBox;
 	private System.Windows.Forms.TextBox rssFeedTextBox;
 	private System.Windows.Forms.GroupBox imageGroupBox;
 	private System.Windows.Forms.Button validateButton;
-	private System.Windows.Forms.Label rssFeedLabel;
-	private System.Windows.Forms.Button browseButton;
-	private System.Windows.Forms.TextBox backgroundImageFolderTextBox;
-	private System.Windows.Forms.Label backgroundImageLabel;
-	private System.Windows.Forms.FolderBrowserDialog backgroundImageFolderBrowser;
+    private System.Windows.Forms.Label rssFeedLabel;
+    private System.Windows.Forms.Label backgroundImageLabel;
 	private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 	private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+    private System.Windows.Forms.TextBox PasswordTextBox;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.TextBox LoginTextBox;
   }
 }

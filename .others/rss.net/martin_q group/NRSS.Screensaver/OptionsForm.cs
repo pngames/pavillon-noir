@@ -16,9 +16,11 @@ namespace NRSS.Screensaver
 	  // Load the text boxes from the current settings
 	  try
 	  {
-		backgroundImageFolderTextBox.Text = Properties.Settings.Default.BackgroundImagePath;
-		rssFeedTextBox.Text = Properties.Settings.Default.RssFeedUri;
-	  }
+		//backgroundImageFolderTextBox.Text = Properties.Settings.Default.BackgroundImagePath;
+        rssFeedTextBox.Text = Properties.Settings.Default.RssFeedUri;
+        LoginTextBox.Text = Properties.Settings.Default.Login;
+        PasswordTextBox.Text = Properties.Settings.Default.Password;
+      }
 	  catch
 	  {
 		MessageBox.Show("There was a problem reading in the settings for your screen saver.");
@@ -29,8 +31,9 @@ namespace NRSS.Screensaver
 	// have been made since apply was last pressed
 	private void UpdateApply()
 	{
-	  if (Properties.Settings.Default.BackgroundImagePath != backgroundImageFolderTextBox.Text
-			|| Properties.Settings.Default.RssFeedUri != rssFeedTextBox.Text)
+	  if (Properties.Settings.Default.Login != LoginTextBox.Text
+			|| Properties.Settings.Default.RssFeedUri != rssFeedTextBox.Text
+            || Properties.Settings.Default.Password != PasswordTextBox.Text)
 		applyButton.Enabled = true;
 	  else
 		applyButton.Enabled = false;
@@ -39,9 +42,11 @@ namespace NRSS.Screensaver
 	// Apply all the changes since apply button was last pressed
 	private void ApplyChanges()
 	{
-	  Properties.Settings.Default.BackgroundImagePath = backgroundImageFolderTextBox.Text;
-	  Properties.Settings.Default.RssFeedUri = rssFeedTextBox.Text;
-	  Properties.Settings.Default.Save();
+	  //Properties.Settings.Default.BackgroundImagePath = backgroundImageFolderTextBox.Text;
+      Properties.Settings.Default.RssFeedUri = rssFeedTextBox.Text;
+      Properties.Settings.Default.Login = LoginTextBox.Text;
+      Properties.Settings.Default.Password = PasswordTextBox.Text;
+      Properties.Settings.Default.Save();
 	}
 
 	private void btnOK_Click(object sender, EventArgs e)
@@ -87,26 +92,36 @@ namespace NRSS.Screensaver
 	  MessageBox.Show("Valid RSS feed.", "Valid RSS feed.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 	}
 
-	private void browseButton_Click(object sender, EventArgs e)
-	{
-	  // Open a file open dialog to choose an image
+    //private void browseButton_Click(object sender, EventArgs e)
+    //{
+    //  // Open a file open dialog to choose an image
 
-	  DialogResult result = backgroundImageFolderBrowser.ShowDialog();
-	  if (result == DialogResult.OK)
-	  {
-		backgroundImageFolderTextBox.Text = backgroundImageFolderBrowser.SelectedPath;
-		UpdateApply();
-	  }
-	}
+    //  DialogResult result = backgroundImageFolderBrowser.ShowDialog();
+    //  if (result == DialogResult.OK)
+    //  {
+    //    backgroundImageFolderTextBox.Text = backgroundImageFolderBrowser.SelectedPath;
+    //    UpdateApply();
+    //  }
+    //}
 
 	private void rssFeedTextBox_TextChanged(object sender, EventArgs e)
 	{
 	  UpdateApply();
 	}
 
-	private void backgroundImageFolderTextBox_TextChanged(object sender, EventArgs e)
-	{
-	  UpdateApply();
-	}
+    private void LoginTextBox_TextChanged(object sender, EventArgs e)
+    {
+      UpdateApply();
+    }
+
+    private void PasswordTextBox_TextChanged(object sender, EventArgs e)
+    {
+      UpdateApply();
+    }
+
+    //private void backgroundImageFolderTextBox_TextChanged(object sender, EventArgs e)
+    //{
+    //  UpdateApply();
+    //}
   }
 }

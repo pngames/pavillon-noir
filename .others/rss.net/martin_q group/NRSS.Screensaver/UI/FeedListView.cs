@@ -4,12 +4,12 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Collections;
 using Iesi.Collections;
-using NRSS.mapping;
+using NRSS.mapping.NRSSWebService;
 
 namespace NRSS.Screensaver.UI
 {
   /// <summary>
-  /// Encapsulates the rendering of a list of feeds.  Each feed's description is shown in a list, and a single feed is selected.
+  /// Encapsulates the rendering of a list of chans.  Each feed's description is shown in a list, and a single feed is selected.
   /// </summary>
   /// <typeparam name="T">The type of feed that this FeedListView will draw.</typeparam>
   public class FeedListView : IDisposable
@@ -35,17 +35,17 @@ namespace NRSS.Screensaver.UI
     private float feedFontHeight;
     // An index of the currently selected feed
     private int selectedIndex;
-    // The list of feeds to draw
-    private IList feeds;
+    // The list of chans to draw
+    private IList chans;
     // The maximum number of articles that will be displayed
-    private int maxFeedsToShow;
+    private int maxChansToShow;
     // The minimum number of articles that will be displayed
-    // If there are less feeds than this in the RSS feednel
+    // If there are less chans than this in the RSS feednel
     // then there will be blank space in the display
-    private int minFeedsToShow;
+    private int minChansToShow;
 
-    private int NumArticles { get { return Math.Min(feeds.Count, maxFeedsToShow); } }
-    private int NumArticleRows { get { return Math.Max(NumArticles, minFeedsToShow); } }
+    private int NumArticles { get { return Math.Min(chans.Count, maxChansToShow); } }
+    private int NumArticleRows { get { return Math.Max(NumArticles, minChansToShow); } }
 
     public Point Location { get { return location; } set { location = value; } }
     public Size Size { get { return size; } set { size = value; } }
@@ -57,11 +57,11 @@ namespace NRSS.Screensaver.UI
     public Color TitleBackColor { get { return titleBackColor; } set { titleBackColor = value; } }
     public Color SelectedForeColor { get { return selectedForeColor; } set { selectedForeColor = value; } }
     public Color SelectedBackColor { get { return selectedBackColor; } set { selectedBackColor = value; } }
-    public int MaxFeedsToShow { get { return maxFeedsToShow; } set { maxFeedsToShow = value; } }
-    public int MinFeedsToShow { get { return minFeedsToShow; } set { minFeedsToShow = value; } }
+    public int MaxChansToShow { get { return maxChansToShow; } set { maxChansToShow = value; } }
+    public int MinChansToShow { get { return minChansToShow; } set { minChansToShow = value; } }
     public int SelectedIndex { get { return selectedIndex; } }
-    public int numFeeds { get { return feeds.Count; } }
-    public Feed SelectedFeed { get { return feeds[selectedIndex] as Feed; } }
+    public int numchans { get { return chans.Count; } }
+    public Chan SelectedChan { get { return chans[selectedIndex] as Chan; } }
 
     public int RowHeight
     {
@@ -76,9 +76,9 @@ namespace NRSS.Screensaver.UI
     {
       get
       {
-        // Choose a font for each of the feed titles that will fit all numfeeds 
+        // Choose a font for each of the feed titles that will fit all numchans 
         // of them (plus some slack for the title) in the control 
-        feedFontHeight = (float)(percentOfArticleDisplayBoxToFillWithText * RowHeight);
+        feedFontHeight = (float)Math.Min((percentOfArticleDisplayBoxToFillWithText * RowHeight), 30);
         if (feedFont == null || feedFont.Size != feedFontHeight)
         {
           feedFont = new Font("Microsoft Sans Serif", feedFontHeight, GraphicsUnit.Pixel);
@@ -93,7 +93,7 @@ namespace NRSS.Screensaver.UI
       {
         // Choose a font for the title text.
         // This font will be twice as big as the FeedFont
-        float titleFontHeight = (float)(percentOfArticleDisplayBoxToFillWithText * 2 * RowHeight);
+        float titleFontHeight = (float)Math.Min((percentOfArticleDisplayBoxToFillWithText * 2 * RowHeight), 35);
         if (titleFont == null || titleFont.Size != titleFontHeight)
         {
           titleFont = new Font("Microsoft Sans Serif", titleFontHeight, GraphicsUnit.Pixel);
@@ -104,7 +104,7 @@ namespace NRSS.Screensaver.UI
 
     public void NextArticle()
     {
-      if (SelectedIndex < feeds.Count - 1)
+      if (SelectedIndex < chans.Count - 1)
         selectedIndex++;
       else
         selectedIndex = 0;
@@ -115,15 +115,15 @@ namespace NRSS.Screensaver.UI
       if (SelectedIndex > 0)
         selectedIndex--;
       else
-        selectedIndex = feeds.Count - 1;
+        selectedIndex = chans.Count - 1;
     }
 
-    public FeedListView(string title, IList feeds)
+    public FeedListView(string title, IList chans)
     {
-      if (feeds == null)
-        throw new ArgumentException("feeds cannot be null", "feeds");
+      if (chans == null)
+        throw new ArgumentException("chans cannot be null", "chans");
 
-      this.feeds = feeds;
+      this.chans = chans;
       this.title = title;
     }
 
@@ -138,7 +138,7 @@ namespace NRSS.Screensaver.UI
       DrawBackground(g);
 
       // Draw each article's description
-      for (int index = 0; index < feeds.Count && index < maxFeedsToShow; index++)
+      for (int index = 0; index < chans.Count && index < maxChansToShow; index++)
       {
         DrawFeedTitle(g, index);
       }
@@ -148,7 +148,7 @@ namespace NRSS.Screensaver.UI
     }
 
     /// <summary>
-    /// Draws a box and border ontop of which the text of the feeds can be drawn.
+    /// Draws a box and border ontop of which the text of the chans can be drawn.
     /// </summary>
     /// <param name="g">The Graphics object to draw onto</param>
     private void DrawBackground(Graphics g)
@@ -175,7 +175,7 @@ namespace NRSS.Screensaver.UI
 
       // Select color and draw border if current index is selected
       Color textBrushColor = ForeColor;
-      if ((SelectedIndex >= MaxFeedsToShow ? (index + SelectedIndex - MaxFeedsToShow + 1) : index) == SelectedIndex)
+      if ((SelectedIndex >= MaxChansToShow ? (index + SelectedIndex - MaxChansToShow + 1) : index) == SelectedIndex)
       {
         textBrushColor = SelectedForeColor;
         using (Brush backBrush = new SolidBrush(SelectedBackColor))
@@ -185,7 +185,7 @@ namespace NRSS.Screensaver.UI
       }
 
       // Draw the title of the feed
-      string textToDraw = (feeds[SelectedIndex >= MaxFeedsToShow ? (index + SelectedIndex - MaxFeedsToShow + 1) : index] as Feed).Name;
+      string textToDraw = (chans[SelectedIndex >= MaxChansToShow ? (index + SelectedIndex - MaxChansToShow + 1) : index] as Chan).Title;
       using (Brush textBrush = new SolidBrush(textBrushColor))
       {
         g.DrawString(textToDraw, FeedFont, textBrush, articleRect, stringFormat);

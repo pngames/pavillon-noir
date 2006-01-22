@@ -6,9 +6,9 @@ using System.IO;
 using System.Collections;
 using Iesi.Collections;
 using System.Windows.Forms;
-using NRSS.mapping;
 using NRSS.Screensaver.UI;
 using NRSS.Screensaver.Rss;
+using NRSS.mapping.NRSSWebService;
 
 namespace NRSS.Screensaver
 {
@@ -16,6 +16,7 @@ namespace NRSS.Screensaver
   {
     // The RssFeed to display articles from
     private IList feedList;
+    private IList chanList;
     private IList itemList;
     private Feed rssFeed;
     private Feed rssFeed1;
@@ -29,6 +30,8 @@ namespace NRSS.Screensaver
     private Feed rssFeed9;
     private Feed rssFeed10;
 
+    private string login;
+    private string password;
     private ItemListView rssView;
     private ItemDescriptionView<Item> rssDescriptionView;
     private FeedListView feedView;
@@ -48,19 +51,25 @@ namespace NRSS.Screensaver
     public ScreenSaverForm()
     {
       serv = new Service();
+      login = Properties.Settings.Default.Login;
+      password = Properties.Settings.Default.Password;
+
       InitializeComponent();
 
       SetupScreenSaver();
       LoadBackgroundImage();
       LoadRssFeeds();
 
-      feedView = new FeedListView("NRSS feeds", feedList);
+      chanList = new ArrayList();
+      foreach (Feed tempFeed in feedList)
+        foreach (Chan tempChan in tempFeed.Chans)
+          chanList.Add(tempChan);
+      feedView = new FeedListView("NRSS feeds", chanList);
       InitializeFeedView();
 
       itemList = new ArrayList();
-      foreach (Chan tempChan in feedView.SelectedFeed.Chans)
-        foreach (Item tempItem in tempChan.Items)
-          itemList.Add(tempItem);
+      foreach (Item tempItem in feedView.SelectedChan.Items)
+        itemList.Add(tempItem);
       rssView = new ItemListView("NRSS messages", itemList);
       InitializeRssView();
 
@@ -149,24 +158,20 @@ namespace NRSS.Screensaver
 
     private void LoadRssFeeds()
     {
-      /*try
+      feedList = new ArrayList();
+      feedList.Add(serv.testRSS());
+      if (feedList.Count == 0)
       {
-        // Try to get it from the users settings
-        rssFeed = RssFeed.FromUri(Properties.Settings.Default.RssFeedUri);
+        DateTime date = new DateTime();
+        date = DateTime.Now - DateTime.Parse("24h");
       }
-      catch
-      {
-        // If there is any problem loading the RSS load an error message RSS feed
-        rssFeed = RssFeed.FromText(Properties.Resources.DefaultRSSText);
-        //rssFeed = RssFeed.FromText(serv.HelloWorld());
-      }*/
-
+      /*
       feedList = new ArrayList();
       rssFeed = new Feed();
-      rssFeed.Chans = new HashedSet();
+      rssFeed.Chans = new ArrayList();
       rssFeed.Chans.Clear();
 
-      for (int i = 0; i < 3; i++)
+      for (int i = 0; i < 1; i++)
       {
         Chan chan = new Chan();
 
@@ -238,7 +243,7 @@ namespace NRSS.Screensaver
       feedList.Add(rssFeed7);
       feedList.Add(rssFeed8);
       feedList.Add(rssFeed9);
-      feedList.Add(rssFeed10);
+      feedList.Add(rssFeed10);*/
     }
 
     /// <summary>
@@ -286,8 +291,8 @@ namespace NRSS.Screensaver
       feedView.SelectedForeColor = Color.AliceBlue;
       feedView.TitleBackColor = Color.Empty;
       feedView.TitleForeColor = Color.Navy;
-      feedView.MaxFeedsToShow = 10;
-      feedView.MinFeedsToShow = 1;
+      feedView.MaxChansToShow = 10;
+      feedView.MinChansToShow = 1;
       feedView.Location = new Point(Width / 10, 7 * Height / 10);
       feedView.Size = new Size(Width / 2, Height / 4);
     }
@@ -354,9 +359,8 @@ namespace NRSS.Screensaver
         rssView.NextArticle();
         feedView.NextArticle();
         itemList.Clear();
-        foreach (Chan tempChan in feedView.SelectedFeed.Chans)
-          foreach (Item tempItem in tempChan.Items)
-            itemList.Add(tempItem);
+        foreach (Item tempItem in feedView.SelectedChan.Items)
+          itemList.Add(tempItem);
         //rssView.Dispose();
         //rssView = new ItemListView("NRSS messages list", itemList);
         //InitializeRssView();

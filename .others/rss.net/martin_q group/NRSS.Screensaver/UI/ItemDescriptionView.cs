@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using System.Drawing;
+using NRSS.mapping.NRSSWebService;
 
 namespace NRSS.Screensaver.UI
 {
@@ -8,7 +9,7 @@ namespace NRSS.Screensaver.UI
   /// Encapsulates the rendering of the description of an item.
   /// </summary>
   /// <typeparam name="T">The type of item that this ItemDescriptionView will draw.</typeparam>
-  public class ItemDescriptionView<T> : IDisposable where T : NRSS.mapping.Item
+  public class ItemDescriptionView<T> : IDisposable where T : Item
   {
 	private Point location;
 	private Size size;
