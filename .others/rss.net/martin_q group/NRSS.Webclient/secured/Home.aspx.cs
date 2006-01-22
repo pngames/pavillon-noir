@@ -86,9 +86,6 @@ public partial class Home : System.Web.UI.Page
 
         _feed.Chans.Add(chan);
 
-
-
-
         doItemTree();
     }
 
@@ -100,14 +97,13 @@ public partial class Home : System.Web.UI.Page
             x = new TreeNode();
             x.Text = chan.Title;
             ItemTree.Nodes.AddAt(0, x);
-            /*foreach (NRSS.mapping.Item item in chan.Items)
+            foreach (NRSS.mapping.Item item in chan.Items)
             {
-                TreeNode xx;
-                xx = new TreeNode();
+                TreeNode xx = new TreeNode();
                 xx.Text = item.Title;
                 xx.NavigateUrl = "http://www.eggheadcafe.com/";
-                ItemTree.Nodes[0].Nodes.Add(xx);
-            }*/
+                x.ChildNodes.Add(xx);
+            }
         }
     }
 

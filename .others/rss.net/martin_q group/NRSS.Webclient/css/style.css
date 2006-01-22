@@ -15,15 +15,19 @@ hr
 {
 	float: left; 
 	width: 25%; 
-	}
+}
 	
 .rightcol 
 {
 	float: left; 
 	width: 75%; 
-	}
+}
 	
-.spacer { clear: both; }
+.spacer 
+{ 
+	lear: both; 
+}
+
 .content { border: solid 1px #cdcdcd; background-color: #ffffff; }
 .title {width: 100%; background-color: #cdcdcd; color: #ffffff; line-height: 150%; font-weight: bold;}
 .menu { margin: 5px 5px 5px 5px; background-color: cornflowerblue; border: solid 1px #cdcdcd; 
@@ -34,12 +38,28 @@ color: white; line-height: 150%; font-weight: bold;}
 .menu a:hover {color:#cdcdcd; background:transparent;}
 .user { position: relative; right: 70px; margin-right: 5px; }
 
+.rssfeed a:link, .rssfeed a:visited {text-decoration: none; color:cornflowerblue; background:transparent;}
+.rssfeed a:hover {color:#cdcdcd; background:transparent;}
+
+.rssfeed a:link, .rssfeed a:visited, .rssfeed a:hover  {
+	display: list-item;
+	list-style-type: none;
+	background-image: url('../img/feed.gif');
+	background-repeat: no-repeat;
+	background-position: 0px 5px;
+	padding-left: 20px;
+	padding-top: 4px;
+	margin-left: 2px;
+	font-weight: bold;
+}
+
+
 /* home */
 .rssfeed {margin: 5px 5px 5px 5px; background-color: #fff; }
 .rssitem {margin: 5px 5px 5px 5px; background-color: #fff; }
 .rssfeed .content, .rssitem .content { line-height: 150%;}
 .itemcontent {margin: 5px 5px 5px 5px; background-color: #fff; }
-.itemcontent .content {padding: 10px;}
+.itemcontent .content {padding: 0px;}
 
 #OpacityLayer
 {

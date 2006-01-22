@@ -4,6 +4,7 @@
         <div class="leftcol">
             <div class="rssfeed"><div class="content"><div class="title">&nbsp;Flux</div>
                 <a href=""><% Response.Write(this._feed.Name); %></a>
+                <a href=""><% Response.Write(this._feed.Name); %></a>
              </div></div>
         </div>
         <div class="rightcol">
@@ -12,13 +13,15 @@
                     <ParentNodeStyle Font-Bold="False" />
                     <HoverNodeStyle Font-Underline="True" />
                     <SelectedNodeStyle Font-Underline="True" HorizontalPadding="0px" VerticalPadding="0px" />
-                    <NodeStyle Font-Names="Tahoma" Font-Size="10px" ForeColor="Black" HorizontalPadding="5px"
-                        NodeSpacing="0px" VerticalPadding="0px" />
+                    <NodeStyle Font-Names="Tahoma" Font-Size="12px" ForeColor="Black" HorizontalPadding="5px"
+                        NodeSpacing="2px" VerticalPadding="0px" />
                 </asp:TreeView>
              </div></div>
-             <div class="itemcontent" style="margin-top: 10px;"><div class="content">
-                test<br/>
-                test<br/>
+             <div class="itemcontent" style="margin-top: 10px;"><div class="content"><div class="title">&nbsp;Titre du billet</div>
+                <div style="padding:10px;">
+                    test<br/>
+                    test<br/>
+                </div>
              </div></div>
         </div>
         <div class="spacer"></div>
