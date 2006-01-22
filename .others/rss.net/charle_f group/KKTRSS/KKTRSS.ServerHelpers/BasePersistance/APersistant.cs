@@ -10,7 +10,7 @@ using NHibernate;
 namespace KKTRSS.Server.Helpers.Persistance
 {
     [Serializable()]
-    public class APersistant : NHibernate.IValidatable, NHibernate.ILifecycle
+    public class APersistant : IValidatable, ILifecycle
     {
         public APersistant()
         {
@@ -55,14 +55,6 @@ namespace KKTRSS.Server.Helpers.Persistance
             return false;
         }
 
-        #region IValidatable Members
-
-        public void Validate()
-        {
-          
-        }
-
-        #endregion
 
         #region ILifecycle Members
 
@@ -71,21 +63,22 @@ namespace KKTRSS.Server.Helpers.Persistance
             return LifecycleVeto.NoVeto;
         }
 
-        public void OnLoad(NHibernate.ISession s, object id)
+        public virtual void OnLoad(NHibernate.ISession s, object id)
         {
             this.Id = (long)id;
         }
 
-        public LifecycleVeto OnSave(NHibernate.ISession s)
+        public virtual LifecycleVeto OnSave(NHibernate.ISession s)
         {
             LastUpdate = DateTime.Now;
-            if (CreationDate == null){
+            if (CreationDate == null)
+            {
                 CreationDate = LastUpdate;
             }
             return LifecycleVeto.NoVeto;
         }
 
-        public LifecycleVeto OnUpdate(NHibernate.ISession s)
+        public virtual LifecycleVeto OnUpdate(NHibernate.ISession s)
         {
             LastUpdate = DateTime.Now;
             return LifecycleVeto.NoVeto;
@@ -93,5 +86,14 @@ namespace KKTRSS.Server.Helpers.Persistance
 
         #endregion
 
+
+        #region IValidatable Members
+
+        public virtual void Validate()
+        {
+            
+        }
+
+        #endregion
     }
 }

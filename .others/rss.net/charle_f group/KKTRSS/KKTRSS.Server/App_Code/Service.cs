@@ -6,6 +6,7 @@ using KKTRSS.Server.Model;
 using KKTRSS.Server.Helpers.DataAccess;
 using NHibernate;
 using System.Collections;
+using System.Collections.Generic;
 
 
 [WebService(Namespace = "http://tempuri.org/")]
@@ -162,6 +163,7 @@ public class Service : System.Web.Services.WebService
     }
 
     [WebMethod]
+    [System.Xml.Serialization.XmlInclude(typeof(KKTRSS.Server.Model.Group))]
     public IList GetGroupList(string sessionId)
     {
         ISession s = NHibernateHttpModule.CreateSession();
@@ -169,7 +171,7 @@ public class Service : System.Web.Services.WebService
         IList ret = null;
         try
         {
-            if (IsRegistered(sessionId))
+            if (IsRegistered(sessionId) == false)
                 return ret;
             ret = s.CreateQuery("FROM Group").List();
             tx.Commit();

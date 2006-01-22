@@ -106,7 +106,7 @@ namespace KKTRSS.Server.Model
         #endregion
 
 
-        public NHibernate.LifecycleVeto OnSave(NHibernate.ISession s)
+        public override LifecycleVeto OnSave(NHibernate.ISession s)
         {
             Guid uid = Guid.NewGuid();
             Autologin = uid.ToString();
@@ -116,14 +116,13 @@ namespace KKTRSS.Server.Model
             grp.Privacy = true;
             grp.Owner = this;
             s.Save(grp);
-            grp.Accounts.Add(this);
+            if (this.Groups == null)
+                this.Groups = new ListSet();
             this.Groups.Add(grp);
-           
-            s.Flush();
             return base.OnSave(s);
-        }
+        }  
 
-         public void Validate()
+        void Validate()
          {
              if (Email == null || Email.Length > 0)
                  throw new NHibernate.ValidationFailure("Email must be specified\n");
