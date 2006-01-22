@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="KKTRSS.Server.Model.ReadRssItem, KKTRSS.ServerModel" table="read_rss_item">
+    <id name="Id" type="Int64" column="read_rss_item_id">
+      <generator class="hilo">
+        <param name="table">hi_read_rss_item_id</param>
+        <param name="column">next_value</param>
+        <param name="max_lo">100</param>
+      </generator>
+    </id>
+
+    <property name="HashCode" type="String"/>
+
+    <property name="CreationDate" type="DateTime" />
+    <property name="LastUpdate" type="DateTime" />
+
+    <many-to-one name="Account"   class="KKTRSS.Server.Model.Account, KKTRSS.ServerModel" column="fk_account_id"/>
+    <many-to-one name="RssFeedRef"  class="KKTRSS.Server.Model.RssFeedRef, KKTRSS.ServerModel" column="fk_rss_feed_ref_id"/>
+
+
+  </class>
+</hibernate-mapping>
