@@ -31,10 +31,17 @@ internal class NNTPImporter : Importer
 
 	if (feed.Chans == null)
 	  feed.Chans = new ArrayList();
-	feed.Chans.Clear();
+
+	Dictionary<string, Chan> chanMap = new Dictionary<string, Chan>();
+
+	foreach (Chan chan in feed.Chans)
+	  chanMap[chan.Title] = chan;
 
 	foreach (NewsGroup group in groups)
 	{
+	  if (chanMap.ContainsKey(group.Name))
+		continue;
+
 	  Chan chan = new Chan();
 
 	  chan.Feed = feed;
@@ -44,11 +51,18 @@ internal class NNTPImporter : Importer
 
 	  if (chan.Items == null)
 		chan.Items = new ArrayList();
-	  chan.Items.Clear();
+
+	  Dictionary<string, Item> itemMap = new Dictionary<string, Item>();
+
+	  foreach (Item item in chan.Items)
+		itemMap[item.MessageID] = item;
 
 	  Dictionary<string, Item> articleItem = new Dictionary<string, Item>();
 	  foreach (Article article in group.GetArticles(false))
 	  {
+		if (itemMap.ContainsKey(article.Header.MessageID))
+		  continue;
+
 		Item item = new Item();
 
 		item.Chan = chan;

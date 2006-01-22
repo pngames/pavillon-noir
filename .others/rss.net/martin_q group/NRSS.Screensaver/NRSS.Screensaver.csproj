@@ -106,7 +106,6 @@
     <Content Include="Documentation\Images\topjump-vc.gif" />
     <Content Include="Documentation\Images\top-vc.gif" />
     <Content Include="Documentation\Images\screensaver_thumbnail.png" />
-    <None Include="app.config" />
     <None Include="Resources\Blue_Light_by_Infinite705.jpg" />
     <Content Include="Resources\Wake_Me_Up_by_crushxmex.jpg" />
     <None Include="Resources\SSaverBackground2.jpg" />
