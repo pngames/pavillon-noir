@@ -10,6 +10,7 @@ using System.Web.UI.HtmlControls;
 using NRSS.Server.DataAccess;
 using NRSS.mapping;
 using NRSS.errors;
+using System.Collections;
 
 /// <summary>Summary description for UserManager</summary>
 public class UserManager
@@ -36,17 +37,36 @@ public class UserManager
   }
   #endregion
 
-  bool	validate(string validationString)
+  public void createUser(User user)
   {
-	return false;
+	user.Id = Guid.NewGuid().ToString();
+
+	//////////////////////////////////////////////////////////////////////////
+
+	BaseDataAccess mgr = new BaseDataAccess();
+	mgr.Save(user);
+
+	//////////////////////////////////////////////////////////////////////////
+
+	//envoyer un mail
   }
 
-  string validate(string user, string pass)
+  public User logon(string email, string pass)
   {
-	return null;
+	BaseDataAccess mgr = new BaseDataAccess();
+
+	User user = mgr.Get(typeof(User), "Email", email, "Passwd", pass) as User;
+
+	if (user == null)
+	  throw new NRSSException("L'email ou le mot de passe n'existe pas !");
+
+	if (!user.Confirmed)
+	  throw new NRSSException("Le compte n'a pas ete active !");
+
+	return user;
   }
 
-  void activate(string hash)
+  public void activate(string hash)
   {
 	BaseDataAccess mgr = new BaseDataAccess();
 

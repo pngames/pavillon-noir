@@ -29,21 +29,12 @@ public class Service : System.Web.Services.WebService
   { }
 
   //////////////////////////////////////////////////////////////////////////
-  
-  [WebMethod]
-  public string HelloWorld()
-  {
-	return "Hello World";
-  }
 
+  #region tests
   [WebMethod]
   [XmlInclude(typeof(Chan)), XmlInclude(typeof(Item))]
   public Feed testRSS()
   {
-	//SchemaUtility.ExportSchema();
-
-	//////////////////////////////////////////////////////////////////////////
-
 	RSSImporter	importer = new RSSImporter();
 
 	Feed  feed = new Feed();
@@ -57,24 +48,10 @@ public class Service : System.Web.Services.WebService
 
 	return feed;
   }
-
-  [WebMethod]
-  public User testSerializationUser()
-  {
-	User toto = new User();
-
-	toto.Groups = new ArrayList();
-
-	toto.Groups.Add(15);
-
-	return toto;
-  }
+  #endregion
 
   //////////////////////////////////////////////////////////////////////////
-
-
-
-  //////////////////////////////////////////////////////////////////////////
+  // Supported types
 
   [WebMethod]
   public List<ImportType> getSupportedTypes()
@@ -90,43 +67,27 @@ public class Service : System.Web.Services.WebService
   }
 
   //////////////////////////////////////////////////////////////////////////
+  // User management
 
   [WebMethod]
-  public ArrayList createUser(User user)
+  public void createUser(User user)
   {
-	user.Id = Guid.NewGuid().ToString();
-
-	//////////////////////////////////////////////////////////////////////////
-
-	BaseDataAccess mgr = new BaseDataAccess();
-	mgr.Save(user);
-
-	//////////////////////////////////////////////////////////////////////////
-	
-	//envoyer un mail
-
-	return new ArrayList();
+	UserManager.Instance.createUser(user);
   }
 
   [WebMethod]
   public void validateUser(string hash)
   {
-	BaseDataAccess mgr = new BaseDataAccess();
-
-	User user = mgr.Get(typeof(User), "Id", hash) as User;
-
-	//////////////////////////////////////////////////////////////////////////
-
-	if (user == null)
-	  throw new NRSSException("La chaine ne correspond a aucun utilisateur");
-
-	//////////////////////////////////////////////////////////////////////////
-
-	if (user.Confirmed)
-	  throw new NRSSException("La compte utilisateur est deja valide");
-
-	user.Confirmed = true;
-
-	mgr.Save(user);
+	UserManager.Instance.activate(hash);
   }
+
+  [WebMethod]
+  public User logon(string user, string pass)
+  {
+	return UserManager.Instance.logon(user, pass);
+  }
+
+  //////////////////////////////////////////////////////////////////////////
+
+
 }
