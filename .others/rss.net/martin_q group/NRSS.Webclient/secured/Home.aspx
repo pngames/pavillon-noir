@@ -1,4 +1,4 @@
-<%@ Page MasterPageFile="~/SiteMaster.master" CodeFile="Home.aspx.cs" Inherits="Home" Title="NRSS Home" %>
+<%@ Page MasterPageFile="~/SiteMaster.master" CodeFile="Home.aspx.cs" Inherits="secured_Home" Title="NRSS Home" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
         <div class="leftcol">

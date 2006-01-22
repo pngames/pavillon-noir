@@ -90,6 +90,39 @@ public class Service : System.Web.Services.WebService
   //////////////////////////////////////////////////////////////////////////
 
   [WebMethod]
+  [XmlInclude(typeof(Chan)), XmlInclude(typeof(Item))]
+  public List<Feed> getFeeds(string uid)
+  {
+	List<Feed> feeds = new List<Feed>();
+
+	UserManager.Instance.validate(uid);
+
+	User user = UserManager.Instance.getUser(uid);
+
+	foreach (Group group in user.Groups)
+	{
+	  foreach (Feed feed in group.Feeds)
+	  {
+		if (!feeds.Contains(feed))
+		{
+		  Importer.updateFeed(feed);
+		  feeds.Add(feed);
+
+		  foreach (Chan chan in feed.Chans)
+			foreach (Item item in chan.Items)
+			{
+			  item.Read = item.ReaderUsers.Contains(user);
+			}
+		}
+	  }
+	}
+
+	return feeds;
+  }
+
+  //////////////////////////////////////////////////////////////////////////
+
+  [WebMethod]
   public void setAsRead(string uid, Item item)
   {
 	UserManager.Instance.validate(uid);

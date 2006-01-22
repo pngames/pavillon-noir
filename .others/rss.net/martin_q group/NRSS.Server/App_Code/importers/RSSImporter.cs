@@ -26,18 +26,28 @@ internal class RSSImporter : Importer
 
   protected override void _updateFeed(Feed feed)
   {
-	HttpWebRequest request = null;
+	RssFeed rssFeed = null;
+	int tries = 10;
 
-	request = (HttpWebRequest)WebRequest.Create(feed.Fils);
-
-	if (NRSSConfProxy.Instance.ProxyEnabled)
+  Retry:
+	try
 	{
-	  WebProxy proxy = new WebProxy(NRSSConfProxy.Instance.ProxyUrl, NRSSConfProxy.Instance.ProxyPort);
-	  proxy.Credentials = new NetworkCredential(NRSSConfProxy.Instance.ProxyLogin, NRSSConfProxy.Instance.ProxyPass);
-	  request.Proxy = proxy;
-	}
+	  HttpWebRequest request = (HttpWebRequest)WebRequest.Create(feed.Fils);
 
-	RssFeed rssFeed = RssFeed.Read(request);
+	  if (NRSSConfProxy.Instance.ProxyEnabled)
+	  {
+		WebProxy proxy = new WebProxy(NRSSConfProxy.Instance.ProxyUrl, NRSSConfProxy.Instance.ProxyPort);
+		proxy.Credentials = new NetworkCredential(NRSSConfProxy.Instance.ProxyLogin, NRSSConfProxy.Instance.ProxyPass);
+		request.Proxy = proxy;
+	  }
+
+	  rssFeed = RssFeed.Read(request);
+	}
+	catch (Exception)
+	{
+	  if (--tries > 0)
+		goto Retry;
+	}
 
 	if (feed.Chans == null)
 	  feed.Chans = new ArrayList();
