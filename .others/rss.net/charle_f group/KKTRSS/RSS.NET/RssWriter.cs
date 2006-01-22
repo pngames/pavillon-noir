@@ -175,6 +175,8 @@ namespace Rss
 			WriteElement("title", channel.Title, true);
 			WriteElement("description", channel.Description, true);
 			WriteElement("link", channel.Link, true);
+            WriteElement("hashid", channel.HashID, true);
+            WriteElement("isread", channel.IsRead, true);
 			if (channel.Image != null)
 			{
 				writer.WriteStartElement("image");
@@ -319,6 +321,9 @@ namespace Rss
 			BeginDocument();
 
 			writer.WriteStartElement("item");
+            WriteElement("hashid", item.HashID, true);
+            WriteElement("isread", item.IsRead, true);
+			
 			switch (rssVersion)
 			{
 				case RssVersion.RSS090:

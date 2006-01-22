@@ -448,20 +448,31 @@ namespace Rss
 								case "item":
 								switch (childElementName)
 								{
+                                    case "hashid":
+                                        item.HashID = elementText.ToString();
+                                        break;
+                                    case "isread":
+                                        item.IsRead = Convert.ToBoolean(elementText.ToString());
+                                        break;
 									case "title":
 										item.Title = elementText.ToString();
+                                        item.setHashID();
 										break;
 									case "link":
 										item.Link = new Uri(elementText.ToString());
+                                        item.setHashID();
 										break;
 									case "description":
 										item.Description = elementText.ToString();
+                                        item.setHashID();
 										break;
 									case "author":
 										item.Author = elementText.ToString();
+                                        item.setHashID();
 										break;
 									case "comments":
 										item.Comments = elementText.ToString();
+                                        item.setHashID();
 										break;
 									case "pubdate":
 										try
@@ -481,14 +492,23 @@ namespace Rss
 											exceptions.Add(e);
 											}
 										}
+                                        item.setHashID();
 										break;
 								}
+
 									break;
 								case "channel":
 								switch (childElementName)
 								{
+                                    case "hashid":
+                                        channel.HashID = elementText.ToString();
+                                        break;
+                                    case "isread":
+                                        channel.IsRead = Convert.ToBoolean(elementText.ToString());
+                                        break;
 									case "title":
 										channel.Title = elementText.ToString();
+                                        channel.setHashID();
 										break;
 									case "link":
 										try
@@ -499,24 +519,31 @@ namespace Rss
 										{
 											exceptions.Add(e);
 										}
+                                        channel.setHashID();
 										break;
 									case "description":
 										channel.Description = elementText.ToString();
+                                        channel.setHashID();
 										break;
 									case "language":
 										channel.Language = elementText.ToString();
+                                        channel.setHashID();
 										break;
 									case "copyright":
 										channel.Copyright = elementText.ToString();
+                                        channel.setHashID();
 										break;
 									case "managingeditor":
 										channel.ManagingEditor = elementText.ToString();
+                                        channel.setHashID();
 										break;
 									case "webmaster":
 										channel.WebMaster = elementText.ToString();
+                                        channel.setHashID();
 										break;
 									case "rating":
 										channel.Rating = elementText.ToString();
+                                        channel.setHashID();
 										break;
 									case "pubdate":
 										try
@@ -527,6 +554,7 @@ namespace Rss
 										{
 											exceptions.Add(e);
 										}
+                                        channel.setHashID();
 										break;
 									case "lastbuilddate":
 										try
@@ -537,12 +565,15 @@ namespace Rss
 										{
 											exceptions.Add(e);
 										}
+                                        channel.setHashID();
 										break;
 									case "generator":
 										channel.Generator = elementText.ToString();
+                                        channel.setHashID();
 										break;
 									case "docs":
 										channel.Docs = elementText.ToString();
+                                        channel.setHashID();
 										break;
 									case "ttl":
 										try
@@ -553,6 +584,7 @@ namespace Rss
 										{
 											exceptions.Add(e);
 										}
+                                        channel.setHashID();
 										break;
 								}
 									break;

@@ -46,6 +46,11 @@ namespace Rss
 		private RssGuid guid = null;
 		private DateTime pubDate = RssDefault.DateTime;
 		private RssSource source = null;
+        private bool isRead = false;
+        private string hashID = RssDefault.String;
+
+     
+
 		/// <summary>Initialize a new instance of the RssItem class</summary>
 		public RssItem() {}
 		/// <summary>Returns a string representation of the current Object.</summary>
@@ -122,5 +127,36 @@ namespace Rss
 			get { return pubDate; }
 			set { pubDate = value; }
 		}
+        /// <summary>
+        /// Return/set the reading status of the item
+        /// </summary>
+        public bool IsRead
+        {
+            get { return isRead; }
+            set { isRead = value; }
+        }
+        /// <summary>
+        /// Return/set the unique ID of the item
+        /// </summary>
+        public string HashID
+        {
+            get { return hashID; }
+            set { hashID = value; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public void setHashID()
+        {
+            string data = this.Author + this.Description + this.PubDate.ToUniversalTime().ToShortTimeString() + this.Title;
+
+            System.Security.Cryptography.MD5CryptoServiceProvider x = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            byte[] bs = System.Text.Encoding.UTF8.GetBytes(data);
+            bs = x.ComputeHash(bs);
+            System.Text.StringBuilder s = new System.Text.StringBuilder();
+            foreach (byte b in bs)
+                s.Append(b.ToString("x2").ToLower());
+            this.HashID = s.ToString();
+        }
 	}
 }
