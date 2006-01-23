@@ -19,7 +19,8 @@ namespace winformclient
     public partial class Form1 : Form
     {
         #region Voice
-
+        bool voice_flag = false;
+        string cur_speech;
         SpVoice voice = new SpVoice();
 
         #endregion
@@ -32,11 +33,11 @@ namespace winformclient
             InitializeComponent();
             // French voice init
             voice.Voice = voice.GetVoices("Name=LH Pierre", "Language=40C").Item(0);
+            voice.Volume = 0;
             // Left menu
             Feed rssFeed;
             rssFeed = serviceAdd.testRSS();
             LeftTreeMenu.Nodes[0].Nodes[0].Text = rssFeed.Name;
-            
         }
 
         #region Web Browser related code
@@ -99,7 +100,7 @@ namespace winformclient
                     
                     if (author.Length == 0)
                     {
-                        author = "N/A";
+                        author = chan.Title + " " + chan.Language; 
                     }
                     System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
                         author,
@@ -107,7 +108,10 @@ namespace winformclient
                         date,
                         description,
                         link}, -1);
-                                this.RightListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+
+                    listViewItem1.Font = new Font(listViewItem1.Font, listViewItem1.Font.Style | FontStyle.Bold);
+
+                    this.RightListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
                         listViewItem1});
                 }
             }
@@ -118,12 +122,36 @@ namespace winformclient
 
             foreach ( ListViewItem item in  RightListView.SelectedItems )
             {
+                labelTitleContent.Text = item.SubItems[1].Text;
+                linkLabel.Text = item.SubItems[4].Text;
+                labelDateContent.Text = item.SubItems[2].Text;
+                labelFromContent.Text = item.SubItems[0].Text;
+
+                item.Font = new Font(item.Font, FontStyle.Regular);
+                item.EnsureVisible();
                 Navigate(item.SubItems[4].Text);
                 ////////////////////////////////////////////////////////////////////////////
                 //// Voice 
-                voice.Speak(item.SubItems[3].Text,
-                  SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFPurgeBeforeSpeak);
+                cur_speech = item.SubItems[3].Text;
+                voice.Speak(cur_speech,
+                    SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFPurgeBeforeSpeak);
                 ////////////////////////////////////////////////////////////////////////////
+            }
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            if (voice_flag == true)
+            {
+                voice.Volume = 0;
+                voice_flag = false;
+            }
+            else
+            {
+                voice.Volume = 100;
+                voice_flag = true;
+                voice.Speak(cur_speech,
+                        SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFPurgeBeforeSpeak);
             }
         }
     }
