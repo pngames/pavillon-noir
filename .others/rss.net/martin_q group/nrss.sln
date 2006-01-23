@@ -24,7 +24,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\NRSS.Server\", "NRSS
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "1919"
+		VWDPort = "1277"
 	EndProjectSection
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\NRSS.Webclient\", "NRSS.Webclient\", "{8B6AE4A0-EE43-4C7C-ACC7-DCDE1EA2B311}"
@@ -43,7 +43,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\NRSS.Webclient\", "N
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "1922"
+		VWDPort = "1280"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRSS.Screensaver", "NRSS.Screensaver\NRSS.Screensaver.csproj", "{6E341CAD-6097-4886-B069-2EA532E44075}"

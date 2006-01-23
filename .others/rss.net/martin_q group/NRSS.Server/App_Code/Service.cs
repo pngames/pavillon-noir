@@ -169,6 +169,117 @@ public class Service : System.Web.Services.WebService
 
 	return feedsToSend;
   }
+
+  [WebMethod]
+  [XmlInclude(typeof(Chan))]
+  public Feed updateFeed(string uid, Feed oldFeed)
+  {
+	UserManager.Instance.validate(uid);
+
+	//////////////////////////////////////////////////////////////////////////
+
+	ITransaction tx = null;
+
+	BaseDataAccess mgr = new BaseDataAccess();
+	Feed feed = null;
+
+	try
+	{
+	  tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
+
+	  feed = mgr.Get(typeof(Feed), oldFeed.Id) as Feed;
+
+	  if (feed == null)
+		return null;
+
+	  Importer.updateFeed(feed);
+
+	  tx.Commit();
+	}
+	catch (Exception ex)
+	{
+	  if (tx != null)
+		tx.Rollback();
+
+	  throw ex;
+	}
+
+	return feed;
+  }
+
+  [WebMethod]
+  [XmlInclude(typeof(Chan))]
+  public Chan updateChan(string uid, Chan oldChan)
+  {
+	UserManager.Instance.validate(uid);
+
+	//////////////////////////////////////////////////////////////////////////
+
+	ITransaction tx = null;
+
+	BaseDataAccess mgr = new BaseDataAccess();
+	Chan chan = null;
+
+	try
+	{
+	  tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
+
+	  chan = mgr.Get(typeof(Chan), oldChan.Id) as Chan;
+
+	  if (chan == null)
+		return null;
+
+	  Importer.updateChan(chan);
+
+	  tx.Commit();
+	}
+	catch (Exception ex)
+	{
+	  if (tx != null)
+		tx.Rollback();
+
+	  throw ex;
+	}
+
+	return chan;
+  }
+
+  [WebMethod]
+  [XmlInclude(typeof(Chan))]
+  public Item updateItem(string uid, Item oldItem)
+  {
+	UserManager.Instance.validate(uid);
+
+	//////////////////////////////////////////////////////////////////////////
+
+	ITransaction tx = null;
+
+	BaseDataAccess mgr = new BaseDataAccess();
+	Item item = null;
+
+	try
+	{
+	  tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
+
+	  item = mgr.Get(typeof(Item), oldItem.Id) as Item;
+
+	  if (item == null)
+		return null;
+
+	  Importer.updateItem(item);
+
+	  tx.Commit();
+	}
+	catch (Exception ex)
+	{
+	  if (tx != null)
+		tx.Rollback();
+
+	  throw ex;
+	}
+
+	return item;
+  }
   #endregion
 
   #region subscribing

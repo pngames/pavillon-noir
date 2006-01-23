@@ -29,6 +29,16 @@ public abstract class Importer
 	Importers[feed.Type]._updateFeed(feed);
   }
 
+  public static void updateChan(Chan chan)
+  {
+	Importers[chan.Feed.Type]._updateChan(chan);
+  }
+
+  public static void updateItem(Item item)
+  {
+	Importers[item.Chan.Feed.Type]._updateItem(item);
+  }
+
   public ImportType Type
   {
 	get { return _type; }
