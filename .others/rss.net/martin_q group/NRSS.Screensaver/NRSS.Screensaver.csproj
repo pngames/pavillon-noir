@@ -47,6 +47,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -97,6 +98,11 @@
     </Compile>
     <Compile Include="Rss\RssFeed.cs" />
     <Compile Include="UI\ItemListView.cs" />
+    <Compile Include="Web References\NRSSWebService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\App.ico" />
@@ -106,10 +112,26 @@
     <Content Include="Documentation\Images\topjump-vc.gif" />
     <Content Include="Documentation\Images\top-vc.gif" />
     <Content Include="Documentation\Images\screensaver_thumbnail.png" />
+    <None Include="app.config" />
     <None Include="Resources\Blue_Light_by_Infinite705.jpg" />
     <Content Include="Resources\Wake_Me_Up_by_crushxmex.jpg" />
+    <None Include="Web References\NRSSWebService\Feed.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\NRSSWebService\ImportType.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\NRSSWebService\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\NRSSWebService\Service.disco" />
     <None Include="Resources\SSaverBackground2.jpg" />
     <None Include="Resources\SSaverBackground.jpg" />
+    <None Include="Web References\NRSSWebService\Service.wsdl" />
+    <None Include="Web References\NRSSWebService\User.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -119,10 +141,20 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NRSS.mapping\NRSS.mapping.csproj">
-      <Project>{27D6E4B4-7893-4369-9CAF-4E625B0146A9}</Project>
-      <Name>NRSS.mapping</Name>
-    </ProjectReference>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://localhost:1919/NRSS.Server/Service.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\NRSSWebService\</RelPath>
+      <UpdateFromURL>http://localhost:1919/NRSS.Server/Service.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>NRSS_Screensaver_NRSSWebService_Service</CachedSettingsPropName>
+    </WebReferenceUrl>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

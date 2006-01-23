@@ -17,7 +17,7 @@ namespace NRSS.Screensaver
 	  try
 	  {
 		//backgroundImageFolderTextBox.Text = Properties.Settings.Default.BackgroundImagePath;
-        rssFeedTextBox.Text = Properties.Settings.Default.RssFeedUri;
+        //rssFeedTextBox.Text = Properties.Settings.Default.RssFeedUri;
         LoginTextBox.Text = Properties.Settings.Default.Login;
         PasswordTextBox.Text = Properties.Settings.Default.Password;
       }
@@ -32,7 +32,7 @@ namespace NRSS.Screensaver
 	private void UpdateApply()
 	{
 	  if (Properties.Settings.Default.Login != LoginTextBox.Text
-			|| Properties.Settings.Default.RssFeedUri != rssFeedTextBox.Text
+			//|| Properties.Settings.Default.RssFeedUri != rssFeedTextBox.Text
             || Properties.Settings.Default.Password != PasswordTextBox.Text)
 		applyButton.Enabled = true;
 	  else
@@ -43,7 +43,7 @@ namespace NRSS.Screensaver
 	private void ApplyChanges()
 	{
 	  //Properties.Settings.Default.BackgroundImagePath = backgroundImageFolderTextBox.Text;
-      Properties.Settings.Default.RssFeedUri = rssFeedTextBox.Text;
+      //Properties.Settings.Default.RssFeedUri = rssFeedTextBox.Text;
       Properties.Settings.Default.Login = LoginTextBox.Text;
       Properties.Settings.Default.Password = PasswordTextBox.Text;
       Properties.Settings.Default.Save();
@@ -76,21 +76,21 @@ namespace NRSS.Screensaver
 	  applyButton.Enabled = false;
 	}
 
-	// Check whether the user provided URI points to a valid RSS feed
-	private void validateButton_Click(object sender, EventArgs e)
-	{
-	  try
-	  {
-		RssFeed.FromUri(rssFeedTextBox.Text);
-	  }
-	  catch
-	  {
-		MessageBox.Show("Not a valid RSS feed.", "Not a valid RSS feed.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-		return;
-	  }
+    //// Check whether the user provided URI points to a valid RSS feed
+    //private void validateButton_Click(object sender, EventArgs e)
+    //{
+    //  try
+    //  {
+    //    RssFeed.FromUri(rssFeedTextBox.Text);
+    //  }
+    //  catch
+    //  {
+    //    MessageBox.Show("Not a valid RSS feed.", "Not a valid RSS feed.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    //    return;
+    //  }
 
-	  MessageBox.Show("Valid RSS feed.", "Valid RSS feed.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-	}
+    //  MessageBox.Show("Valid RSS feed.", "Valid RSS feed.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+    //}
 
     //private void browseButton_Click(object sender, EventArgs e)
     //{
@@ -104,10 +104,10 @@ namespace NRSS.Screensaver
     //  }
     //}
 
-	private void rssFeedTextBox_TextChanged(object sender, EventArgs e)
-	{
-	  UpdateApply();
-	}
+    //private void rssFeedTextBox_TextChanged(object sender, EventArgs e)
+    //{
+    //  UpdateApply();
+    //}
 
     private void LoginTextBox_TextChanged(object sender, EventArgs e)
     {

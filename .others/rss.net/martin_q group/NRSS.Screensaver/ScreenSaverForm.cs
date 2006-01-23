@@ -8,7 +8,7 @@ using Iesi.Collections;
 using System.Windows.Forms;
 using NRSS.Screensaver.UI;
 using NRSS.Screensaver.Rss;
-using NRSS.mapping.NRSSWebService;
+using NRSS.Screensaver.NRSSWebService;
 
 namespace NRSS.Screensaver
 {
@@ -58,12 +58,9 @@ namespace NRSS.Screensaver
 
       SetupScreenSaver();
       LoadBackgroundImage();
+      chanList = new ArrayList();
       LoadRssFeeds();
 
-      chanList = new ArrayList();
-      foreach (Feed tempFeed in feedList)
-        foreach (Chan tempChan in tempFeed.Chans)
-          chanList.Add(tempChan);
       feedView = new FeedListView("NRSS feeds", chanList);
       InitializeFeedView();
 
@@ -158,12 +155,56 @@ namespace NRSS.Screensaver
 
     private void LoadRssFeeds()
     {
-      feedList = new ArrayList();
-      feedList.Add(serv.testRSS());
-      if (feedList.Count == 0)
+      ArrayList chansToRemove = new ArrayList();
+      //feedList = serv.getFeedList(login, password);
+
+      foreach (Feed tempFeed in feedList)
       {
-        DateTime date = new DateTime();
-        //date = DateTime.Now - DateTime.Parse("24h");
+        ArrayList tempChans = new ArrayList(tempFeed.Chans);
+        chanList.Add(tempChans);
+      }
+
+      foreach (Chan tempChan in chanList)
+      {
+        ArrayList itemsToRemove = new ArrayList();
+        foreach (Item tempItem in tempChan.Items)
+          if (/*tempItem.isRead*/true)
+            itemsToRemove.Add(tempItem);
+
+        foreach (Item tempItem in itemsToRemove)
+          (tempChan.Items as IList).Remove(tempItem);
+
+        if ((tempChan.Items as IList).Count == 0)
+          chansToRemove.Add(tempChan);
+      }
+
+      foreach (Chan tempChan in chansToRemove)
+        chanList.Remove(tempChan);
+      chansToRemove.Clear();
+
+      //if no unread messages found, get the ones posted within last 24h
+      if (chanList.Count == 0)
+      {
+        TimeSpan aDay = new TimeSpan(24, 0, 0);
+        DateTime yesterday = new DateTime();
+        yesterday = DateTime.Now - aDay;
+
+        foreach (Feed tempFeed in feedList)
+          chanList.Add(tempFeed.Chans);
+
+        foreach (Chan tempChan in chanList)
+        {
+          ArrayList itemsToRemove = new ArrayList();
+          foreach (Item tempItem in tempChan.Items)
+            if (tempItem.Date < yesterday)
+              itemsToRemove.Add(tempItem);
+
+          foreach (Item tempItem in itemsToRemove)
+            (tempChan.Items as IList).Remove(tempItem);
+
+          if ((tempChan.Items as IList).Count == 0)
+            chansToRemove.Add(tempChan);
+        }
       }
       /*
       feedList = new ArrayList();
@@ -320,7 +361,6 @@ namespace NRSS.Screensaver
     private void ScreenSaverForm_KeyDown(object sender, KeyEventArgs e)
     {
       Close();
-
     }
 
     private void ScreenSaverForm_MouseDown(object sender, MouseEventArgs e)
@@ -354,10 +394,15 @@ namespace NRSS.Screensaver
 
     void rssItemView_FadingComplete(object sender, EventArgs e)
     {
+      rssView.NextArticle();
       if (rssView.SelectedIndex == (rssView.NumItems - 1))
       {
-        rssView.NextArticle();
         feedView.NextArticle();
+        if (feedView.SelectedIndex == (feedView.NumChans - 1))
+        {
+          chanList.Clear();
+          LoadRssFeeds();
+        }
         itemList.Clear();
         foreach (Item tempItem in feedView.SelectedChan.Items)
           itemList.Add(tempItem);
@@ -365,8 +410,6 @@ namespace NRSS.Screensaver
         //rssView = new ItemListView("NRSS messages list", itemList);
         //InitializeRssView();
       }
-      else
-        rssView.NextArticle();
       rssDescriptionView.DisplayItem = rssView.SelectedItem;
     }
   }

@@ -26,30 +26,6 @@ namespace NRSS.Screensaver.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string BackgroundImagePath {
-            get {
-                return ((string)(this["BackgroundImagePath"]));
-            }
-            set {
-                this["BackgroundImagePath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://go.microsoft.com/fwlink/?LinkId=49535")]
-        public string RssFeedUri {
-            get {
-                return ((string)(this["RssFeedUri"]));
-            }
-            set {
-                this["RssFeedUri"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string Login {
             get {
                 return ((string)(this["Login"]));
@@ -68,6 +44,28 @@ namespace NRSS.Screensaver.Properties {
             }
             set {
                 this["Password"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BackgroundImagePath {
+            get {
+                return ((string)(this["BackgroundImagePath"]));
+            }
+            set {
+                this["BackgroundImagePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:1919/NRSS.Server/Service.asmx")]
+        public string NRSS_Screensaver_NRSSWebService_Service {
+            get {
+                return ((string)(this["NRSS_Screensaver_NRSSWebService_Service"]));
             }
         }
     }

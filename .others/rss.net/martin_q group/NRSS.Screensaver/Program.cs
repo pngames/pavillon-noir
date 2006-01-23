@@ -38,8 +38,8 @@ namespace NRSS.Screensaver
 	  else
 	  {
 		// If no arguments were passed in, show the screensaver
-		ShowScreenSaver();
-        //ShowOptions();
+		//ShowScreenSaver();
+        ShowOptions();
 	  }
 	}
 

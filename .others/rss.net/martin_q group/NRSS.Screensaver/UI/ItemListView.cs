@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Collections;
 using Iesi.Collections;
-using NRSS.mapping.NRSSWebService;
+using NRSS.Screensaver.NRSSWebService;
 
 namespace NRSS.Screensaver.UI
 {

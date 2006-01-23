@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 using System.Drawing;
-using NRSS.mapping.NRSSWebService;
+using NRSS.Screensaver.NRSSWebService;
 
 namespace NRSS.Screensaver.UI
 {

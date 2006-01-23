@@ -33,15 +33,5 @@ namespace NRSS.mapping.Properties {
                 return ((string)(this["Database1ConnectionString"]));
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:1774/NRSS.Server/Service.asmx")]
-        public string NRSS_mapping_NRSSWebService_Service {
-            get {
-                return ((string)(this["NRSS_mapping_NRSSWebService_Service"]));
-            }
-        }
     }
 }

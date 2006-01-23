@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Collections;
 using Iesi.Collections;
-using NRSS.mapping.NRSSWebService;
+using NRSS.Screensaver.NRSSWebService;
 
 namespace NRSS.Screensaver.UI
 {
@@ -60,7 +60,7 @@ namespace NRSS.Screensaver.UI
     public int MaxChansToShow { get { return maxChansToShow; } set { maxChansToShow = value; } }
     public int MinChansToShow { get { return minChansToShow; } set { minChansToShow = value; } }
     public int SelectedIndex { get { return selectedIndex; } }
-    public int numchans { get { return chans.Count; } }
+    public int NumChans { get { return chans.Count; } }
     public Chan SelectedChan { get { return chans[selectedIndex] as Chan; } }
 
     public int RowHeight
