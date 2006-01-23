@@ -3,6 +3,7 @@ using System.Data;
 using System.Configuration;
 using Iesi.Collections;
 using System.Collections;
+using System.Xml.Serialization;
 
 namespace NRSS.mapping
 {
@@ -43,18 +44,37 @@ namespace NRSS.mapping
 	private IList _feeds;
 	private IList _chans;
 
-	public IList Users
+	[XmlIgnore]
+	public IList iUsers
 	{
 	  get { return _users; }
 	  set { _users = value; }
 	}
 
+	[XmlElement(Type = typeof(Group))]
+	public ArrayList Users
+	{
+	  get
+	  {
+		if (_users == null)
+		  return null;
+
+		if (_users is ArrayList)
+		  return (ArrayList)_users;
+
+		return new ArrayList(_users);
+	  }
+	  set { _users = value; }
+	}
+
+	[XmlIgnore]
 	public IList Feeds
 	{
 	  get { return _feeds; }
 	  set { _feeds = value; }
 	}
 
+	[XmlIgnore]
 	public IList Chans
 	{
 	  get { return _chans; }

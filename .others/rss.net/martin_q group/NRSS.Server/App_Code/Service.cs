@@ -100,9 +100,15 @@ public class Service : System.Web.Services.WebService
   }
 
   [WebMethod]
-  public User logon(string user, string pass)
+  public User logon(string email, string pass)
   {
-	return UserManager.Instance.logon(user, pass);
+	User user = UserManager.Instance.logon(email, pass);
+
+	if (user.iGroups != null)
+	  foreach (Group group in user.iGroups)
+		group.iUsers = null;
+
+	return user;
   }
 
   //////////////////////////////////////////////////////////////////////////

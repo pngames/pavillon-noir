@@ -8,7 +8,7 @@
     <property name="Name" type="String" />
     <property name="Creation" type="DateTime" />
 
-    <bag name="Users" table="group_user" lazy="true">
+    <bag name="iUsers" table="group_user" lazy="true">
       <key column="group_id" />
       <many-to-many class="NRSS.mapping.User, NRSS.mapping" column="user_id" />
     </bag>
