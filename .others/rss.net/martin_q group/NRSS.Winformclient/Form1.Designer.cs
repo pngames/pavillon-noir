@@ -28,17 +28,19 @@ namespace winformclient
 	/// </summary>
 	private void InitializeComponent()
 	{
-        System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("RSS Test 1");
-        System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("RSS Test 2");
-        System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("RSS Test 3");
-        System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("RSS", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+        this.components = new System.ComponentModel.Container();
+        System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("RSS Test 1");
+        System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("RSS Test 2");
+        System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("RSS Test 3");
+        System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("RSS", new System.Windows.Forms.TreeNode[] {
+            treeNode9,
+            treeNode10,
+            treeNode11});
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
         this.LeftTreeMenu = new System.Windows.Forms.TreeView();
         this.menuStrip1 = new System.Windows.Forms.MenuStrip();
         this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+        this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.editionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.allMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +69,8 @@ namespace winformclient
         this.ToolBar = new System.Windows.Forms.ToolStrip();
         this.ReadText = new System.Windows.Forms.ToolStripButton();
         this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-        this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+        this.toolStripButtonSubscribe = new System.Windows.Forms.ToolStripButton();
+        this.systrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
         this.menuStrip1.SuspendLayout();
         this.splitContainer1.Panel1.SuspendLayout();
         this.splitContainer1.Panel2.SuspendLayout();
@@ -86,16 +89,16 @@ namespace winformclient
         this.LeftTreeMenu.Dock = System.Windows.Forms.DockStyle.Fill;
         this.LeftTreeMenu.Location = new System.Drawing.Point(0, 0);
         this.LeftTreeMenu.Name = "LeftTreeMenu";
-        treeNode1.Name = "RSSTest1";
-        treeNode1.Text = "RSS Test 1";
-        treeNode2.Name = "RSSTest2";
-        treeNode2.Text = "RSS Test 2";
-        treeNode3.Name = "RSSTest3";
-        treeNode3.Text = "RSS Test 3";
-        treeNode4.Name = "RssFeeds";
-        treeNode4.Text = "RSS";
+        treeNode9.Name = "RSSTest1";
+        treeNode9.Text = "RSS Test 1";
+        treeNode10.Name = "RSSTest2";
+        treeNode10.Text = "RSS Test 2";
+        treeNode11.Name = "RSSTest3";
+        treeNode11.Text = "RSS Test 3";
+        treeNode12.Name = "RssFeeds";
+        treeNode12.Text = "RSS";
         this.LeftTreeMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4});
+            treeNode12});
         this.LeftTreeMenu.Size = new System.Drawing.Size(215, 646);
         this.LeftTreeMenu.TabIndex = 0;
         this.LeftTreeMenu.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.LeftTreeMenu_AfterSelect);
@@ -120,6 +123,14 @@ namespace winformclient
         this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
         this.fichierToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
         this.fichierToolStripMenuItem.Text = "File";
+        // 
+        // quitToolStripMenuItem
+        // 
+        this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+        this.quitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+        this.quitToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+        this.quitToolStripMenuItem.Text = "Quit";
+        this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
         // 
         // editionToolStripMenuItem
         // 
@@ -374,7 +385,8 @@ namespace winformclient
         // 
         this.ToolBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ReadText,
-            this.toolStripSeparator1});
+            this.toolStripSeparator1,
+            this.toolStripButtonSubscribe});
         this.ToolBar.Location = new System.Drawing.Point(0, 24);
         this.ToolBar.Name = "ToolBar";
         this.ToolBar.Size = new System.Drawing.Size(866, 25);
@@ -398,13 +410,23 @@ namespace winformclient
         this.toolStripSeparator1.Name = "toolStripSeparator1";
         this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
         // 
-        // quitToolStripMenuItem
+        // toolStripButtonSubscribe
         // 
-        this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-        this.quitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-        this.quitToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-        this.quitToolStripMenuItem.Text = "Quit";
-        this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
+        this.toolStripButtonSubscribe.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        this.toolStripButtonSubscribe.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSubscribe.Image")));
+        this.toolStripButtonSubscribe.ImageTransparentColor = System.Drawing.Color.Magenta;
+        this.toolStripButtonSubscribe.Name = "toolStripButtonSubscribe";
+        this.toolStripButtonSubscribe.Size = new System.Drawing.Size(23, 22);
+        this.toolStripButtonSubscribe.Text = "toolStripButtonSubscribe";
+        this.toolStripButtonSubscribe.ToolTipText = "Subscribe to RSS feeds";
+        this.toolStripButtonSubscribe.Click += new System.EventHandler(this.toolStripButtonSubscribe_Click);
+        // 
+        // systrayIcon
+        // 
+        this.systrayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("systrayIcon.Icon")));
+        this.systrayIcon.Text = "NRSS";
+        this.systrayIcon.Visible = false;
+        this.systrayIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.systrayIcon_MouseDoubleClick);
         // 
         // Form1
         // 
@@ -417,6 +439,7 @@ namespace winformclient
         this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
         this.MainMenuStrip = this.menuStrip1;
         this.Name = "Form1";
+        this.ShowInTaskbar = false;
         this.Text = "NRSS Client";
         this.Load += new System.EventHandler(this.Form1_Load);
         this.menuStrip1.ResumeLayout(false);
@@ -474,6 +497,8 @@ namespace winformclient
       private System.Windows.Forms.Label labelFromContent;
       private System.Windows.Forms.Label labelDateContent;
       private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
+      private System.Windows.Forms.ToolStripButton toolStripButtonSubscribe;
+      private System.Windows.Forms.NotifyIcon systrayIcon;
 
 }
 }

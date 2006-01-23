@@ -70,6 +70,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subscribe.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Subscribe.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserLogin.resx">
       <SubType>Designer</SubType>
       <DependentUpon>UserLogin.cs</DependentUpon>
@@ -87,6 +91,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Subscribe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subscribe.Designer.cs">
+      <DependentUpon>Subscribe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TaskbarNotifier.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UserLogin.cs">
       <SubType>Form</SubType>
@@ -111,7 +124,9 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="close.bmp" />
     <Content Include="rss.ico" />
+    <EmbeddedResource Include="skin.bmp" />
     <None Include="Web References\NRSSServer\Feed.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>

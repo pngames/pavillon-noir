@@ -32,5 +32,29 @@ namespace NRSS.Winformclient.Properties {
                 return ((string)(this["NRSS_Winformclient_NRSSServer_Service"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UserLogin {
+            get {
+                return ((string)(this["UserLogin"]));
+            }
+            set {
+                this["UserLogin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UserPasswd {
+            get {
+                return ((string)(this["UserPasswd"]));
+            }
+            set {
+                this["UserPasswd"] = value;
+            }
+        }
     }
 }

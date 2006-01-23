@@ -14,6 +14,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Net;
 using NRSS.Winformclient.NRSSServer;
 using NRSS.Winformclient;
+using CustomUIControls;
 
 namespace winformclient
 {
@@ -28,6 +29,8 @@ namespace winformclient
 
         // Instanciation de la classe permettant l'appel distant au Webservice
         NRSS.Winformclient.NRSSServer.Service serviceAdd = new NRSS.Winformclient.NRSSServer.Service();
+
+        TaskbarNotifier NRSSTaskbar = new TaskbarNotifier();
 
         public Form1()
         {
@@ -154,19 +157,68 @@ namespace winformclient
         {
             UserLogin Userbox = new UserLogin();
 
+            NRSSTaskbar.SetBackgroundBitmap("skin.bmp", Color.FromArgb(255, 0, 255));
+            NRSSTaskbar.SetCloseBitmap("close.bmp", Color.FromArgb(255, 0, 255), new Point(127, 8));
+            NRSSTaskbar.TitleRectangle = new Rectangle(55, 9, 70, 25);
+            NRSSTaskbar.ContentRectangle = new Rectangle(8, 41, 133, 68);
+            NRSSTaskbar.TitleClick += new EventHandler(TitleClick);
+            NRSSTaskbar.ContentClick += new EventHandler(ContentClick);
+            NRSSTaskbar.CloseClick += new EventHandler(CloseClick);
+
+
             // French voice init
             voice.Voice = voice.GetVoices("Name=LH Pierre", "Language=40C").Item(0);
+            SpeakCompleteEvent
             voice.Volume = 0;
 
             if (Userbox.ShowDialog() == DialogResult.Cancel)
-                Close();   
+                Close();
+            this.systrayIcon.Visible = true;
         }
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-    }
+
+        private void toolStripButtonSubscribe_Click(object sender, EventArgs e)
+        {
+            Subscribe subscribeDialog = new Subscribe();
+
+            subscribeDialog.ShowDialog();
+        }
+
+        private void systrayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.WindowState = FormWindowState.Normal;
+
+
+            NRSSTaskbar.CloseClickable = true;
+            NRSSTaskbar.TitleClickable = false;
+            NRSSTaskbar.ContentClickable = true;
+            NRSSTaskbar.EnableSelectionRectangle = true;
+            NRSSTaskbar.KeepVisibleOnMousOver = true;	// Added Rev 002
+            NRSSTaskbar.ReShowOnMouseOver = false;			// Added Rev 002
+            NRSSTaskbar.Show("Nouveau\nmessage!", "Cliquez ici!", 500, 3000, 500);
+
+        }
+
+        void CloseClick(object obj, EventArgs ea)
+        {
+            MessageBox.Show("Closed was Clicked");
+        }
+
+        void TitleClick(object obj, EventArgs ea)
+        {
+            MessageBox.Show("Title was Clicked");
+        }
+
+        void ContentClick(object obj, EventArgs ea)
+        {
+            MessageBox.Show("Content was Clicked");
+        }
+
+}
 
         #endregion
 }

@@ -17,6 +17,12 @@ namespace NRSS.Winformclient
         public UserLogin()
         {
             InitializeComponent();
+            if (Properties.Settings.Default.UserLogin.Length != 0 && Properties.Settings.Default.UserPasswd.Length != 0)
+            {
+                checkBox1.CheckState = CheckState.Checked;
+                textBoxUser.Text = Properties.Settings.Default.UserLogin;
+                textBoxPasswd.Text = Properties.Settings.Default.UserPasswd;
+            }
         }
 
         private void buttonOk_Click(object sender, EventArgs e)
@@ -35,9 +41,21 @@ namespace NRSS.Winformclient
                 labelError.Visible = true;
                 labelError.Text = "Error: Invalid user or password";
             }
-                if (user.Confirmed == true)
+                if (user.Confirmed == false)
                 {
-                    this.DialogResult = DialogResult.OK;
+                    if (checkBox1.CheckState == CheckState.Checked)
+                    {
+                        Properties.Settings.Default.UserLogin = textBoxUser.Text;
+                        Properties.Settings.Default.UserPasswd = textBoxPasswd.Text;
+                        Properties.Settings.Default.Save();
+                    }
+                    else
+                    {
+                        Properties.Settings.Default.UserLogin = "";
+                        Properties.Settings.Default.UserPasswd = "";
+                        Properties.Settings.Default.Save();
+                    }
+                        this.DialogResult = DialogResult.OK;
                     Close();
                 }
         }

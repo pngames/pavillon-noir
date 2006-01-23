@@ -39,6 +39,7 @@ namespace NRSS.Winformclient
             this.labelError = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonCreateAccount = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // textBoxUser
@@ -86,9 +87,9 @@ namespace NRSS.Winformclient
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(190, 121);
+            this.buttonCancel.Location = new System.Drawing.Point(233, 150);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.Size = new System.Drawing.Size(43, 23);
             this.buttonCancel.TabIndex = 6;
             this.buttonCancel.Text = "Exit";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -127,13 +128,23 @@ namespace NRSS.Winformclient
             // 
             // buttonCreateAccount
             // 
-            this.buttonCreateAccount.Location = new System.Drawing.Point(127, 150);
+            this.buttonCreateAccount.Location = new System.Drawing.Point(109, 150);
             this.buttonCreateAccount.Name = "buttonCreateAccount";
             this.buttonCreateAccount.Size = new System.Drawing.Size(117, 23);
             this.buttonCreateAccount.TabIndex = 10;
             this.buttonCreateAccount.Text = "New account";
             this.buttonCreateAccount.UseVisualStyleBackColor = true;
             this.buttonCreateAccount.Click += new System.EventHandler(this.buttonCreateAccount_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(190, 127);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(94, 17);
+            this.checkBox1.TabIndex = 11;
+            this.checkBox1.Text = "Remember me";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // UserLogin
             // 
@@ -142,6 +153,7 @@ namespace NRSS.Winformclient
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(320, 208);
             this.ControlBox = false;
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.buttonCreateAccount);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelError);
@@ -176,5 +188,6 @@ namespace NRSS.Winformclient
         private System.Windows.Forms.Label labelError;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonCreateAccount;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
