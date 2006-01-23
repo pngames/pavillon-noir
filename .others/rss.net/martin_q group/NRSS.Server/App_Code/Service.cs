@@ -81,6 +81,7 @@ public class Service : System.Web.Services.WebService
   //////////////////////////////////////////////////////////////////////////
   // User management
 
+  #region users
   [WebMethod]
   public void createUser(User user)
   {
@@ -110,10 +111,13 @@ public class Service : System.Web.Services.WebService
   {
 	return UserManager.Instance.getUser(hash);
   }
+  #endregion
 
   //////////////////////////////////////////////////////////////////////////
   // Feeds
 
+  #region feeds
+  #region gets
   [WebMethod]
   [XmlInclude(typeof(Chan)), XmlInclude(typeof(Item))]
   public List<Feed> getFeeds(string uid)
@@ -145,6 +149,37 @@ public class Service : System.Web.Services.WebService
 	return feeds;
   }
 
+  #region add
+  [WebMethod]
+  public void addFeed(string uid, Feed feed)
+  {
+	UserManager.Instance.validate(uid);
+
+	BaseDataAccess mgr = new BaseDataAccess();
+	User user = UserManager.Instance.getUser(uid);
+	Group mygroup = mgr.Get(typeof(Group), "Name", user.Email) as Group;
+
+	feed.Groups = new ArrayList();
+	feed.Groups.Add(mygroup);
+
+	mgr.Save(feed);
+  }
+
+  [WebMethod]
+  public void delFeed(string uid, Feed feed)
+  {
+	UserManager.Instance.validate(uid);
+
+	BaseDataAccess mgr = new BaseDataAccess();
+	feed = mgr.Get(typeof(Feed), "Id", feed.Id) as Feed;
+
+	mgr.Delete(feed);
+  }
+
+  #endregion
+  #endregion
+
+  #region subscribing
   [WebMethod]
   [XmlInclude(typeof(Feed))]
   public IList getAllFeeds(string uid)
@@ -249,6 +284,8 @@ public class Service : System.Web.Services.WebService
 	  }
 	}
   }
+  #endregion
+  #endregion
 
   //////////////////////////////////////////////////////////////////////////
 
