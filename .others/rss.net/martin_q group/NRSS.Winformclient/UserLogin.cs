@@ -31,15 +31,15 @@ namespace NRSS.Winformclient
             bool done = false;
             string user = "";
 
-            try
-            {
+            //try
+            //{
                 user = serviceAdd.logon(textBoxUser.Text, textBoxPasswd.Text);
-            }
-            catch (SoapException)
-            {
-                labelError.Visible = true;
-                labelError.Text = "Error: Invalid user or password";
-            }
+            //}
+            //catch (SoapException exe)
+            //{
+            //    labelError.Visible = true;
+            //    labelError.Text = "Error: Invalid user or password";
+            //}
             if (user.Length != 0)
             {
                 if (checkBox1.CheckState == CheckState.Checked)

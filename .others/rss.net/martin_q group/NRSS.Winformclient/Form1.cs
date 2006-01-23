@@ -82,8 +82,9 @@ namespace winformclient
             Feed rssFeed;
             rssFeed = serviceAdd.testRSS();
             LeftTreeMenu.Nodes[0].Nodes[0].Text = rssFeed.Name;
+            this.systrayIcon.Visible = true;
 
-            if (rssFeed.Chans == null)
+           if (rssFeed.Chans == null)
                 return;
             RightListView.Items.Clear();
             foreach (Chan chan in rssFeed.Chans)
@@ -172,7 +173,6 @@ namespace winformclient
 
             if (Userbox.ShowDialog() == DialogResult.Cancel)
                 Close();
-            this.systrayIcon.Visible = true;
         }
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)

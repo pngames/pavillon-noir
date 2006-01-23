@@ -15,11 +15,11 @@
       <s:complexType name="Feed">
         <s:sequence>
           <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Fils" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="FilsPort" type="s:int" />
           <s:element minOccurs="0" maxOccurs="1" name="FilsUser" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="FilsPort" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Fils" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="FilsPass" type="s:string" />
           <s:element minOccurs="0" maxOccurs="unbounded" name="Chans" type="tns:Chan" />
           <s:element minOccurs="1" maxOccurs="1" name="Selected" type="s:boolean" />
@@ -29,9 +29,9 @@
         <s:sequence>
           <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
           <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
           <s:element minOccurs="0" maxOccurs="unbounded" name="Items" type="tns:Item" />
           <s:element minOccurs="1" maxOccurs="1" name="Selected" type="s:boolean" />
         </s:sequence>
@@ -39,13 +39,13 @@
       <s:complexType name="Item">
         <s:sequence>
           <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="MessageID" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Author" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="Date" type="s:dateTime" />
           <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MessageID" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Parent" type="tns:Item" />
           <s:element minOccurs="1" maxOccurs="1" name="Read" type="s:boolean" />
         </s:sequence>
@@ -66,11 +66,11 @@
       <s:complexType name="User">
         <s:sequence>
           <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Passwd" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="Confirmed" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="Creation" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="LastLogon" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Creation" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastLogon" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Passwd" type="s:string" />
           <s:element minOccurs="0" maxOccurs="unbounded" name="Groups" type="tns:Group" />
         </s:sequence>
       </s:complexType>
