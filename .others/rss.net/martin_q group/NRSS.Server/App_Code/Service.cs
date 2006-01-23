@@ -51,14 +51,14 @@ public class Service : System.Web.Services.WebService
   }
 
   [WebMethod]
-  public string testCreateUser()
+  public void testCreateUser()
   {
 	User user = new User();
 
 	user.Email = "ttttt";
 	user.Passwd = "ppppp";
 
-	return createUser(user);
+	createUser(user);
   }
 
   [WebMethod]
@@ -88,9 +88,9 @@ public class Service : System.Web.Services.WebService
   // User management
 
   [WebMethod]
-  public string createUser(User user)
+  public void createUser(User user)
   {
-	return UserManager.Instance.createUser(user);
+	UserManager.Instance.createUser(user);
   }
 
   [WebMethod]
@@ -100,7 +100,7 @@ public class Service : System.Web.Services.WebService
   }
 
   [WebMethod]
-  public User logon(string email, string pass)
+  public string logon(string email, string pass)
   {
 	User user = UserManager.Instance.logon(email, pass);
 
@@ -108,18 +108,25 @@ public class Service : System.Web.Services.WebService
 	  foreach (Group group in user.iGroups)
 		group.iUsers = null;
 
-	return user;
+	return user.AutoLog;
+  }
+
+  [WebMethod]
+  public User getUser(string hash)
+  {
+	return UserManager.Instance.getUser(hash);
   }
 
   //////////////////////////////////////////////////////////////////////////
+  // Feeds
 
   [WebMethod]
   [XmlInclude(typeof(Chan)), XmlInclude(typeof(Item))]
   public List<Feed> getFeeds(string uid)
   {
-	List<Feed> feeds = new List<Feed>();
-
 	UserManager.Instance.validate(uid);
+
+	List<Feed> feeds = new List<Feed>();
 
 	User user = UserManager.Instance.getUser(uid);
 
@@ -143,6 +150,98 @@ public class Service : System.Web.Services.WebService
 
 	return feeds;
   }
+
+  [WebMethod]
+  [XmlInclude(typeof(Feed))]
+  public IList getAllFeeds(string uid)
+  {
+	UserManager.Instance.validate(uid);
+
+	BaseDataAccess mgr = new BaseDataAccess();
+	IList feeds = mgr.Get(typeof(Feed));
+
+	User user = UserManager.Instance.getUser(uid);
+	IList mygroups = user.iGroups;
+
+	foreach (Feed feed in feeds)
+	{
+	  Importer.updateFeed(feed);
+
+	  #region chans
+	  foreach (Chan chan in feed.iChans)
+	  {
+		foreach (Group group in chan.Groups)
+		{
+		  if (mygroups.Contains(group))
+		  {
+			chan.Selected = true;
+			break;
+		  }
+
+		  chan.Selected = false;
+		}
+
+		chan.iItems = null;
+	  }
+	  #endregion
+
+	  foreach (Group group in feed.Groups)
+	  {
+		if (mygroups.Contains(group))
+		{
+		  feed.Selected = true;
+		  break;
+		}
+
+		feed.Selected = false;
+	  }
+	}
+
+	return feeds;
+  }
+
+  /*[WebMethod]
+  [XmlInclude(typeof(Feed))]
+  public void updateFeedsSubscibe(string uid, ArrayList Feeds)
+  {
+	UserManager.Instance.validate(uid);
+
+	foreach (Feed feed in feeds)
+	{
+	  Importer.updateFeed(feed);
+
+	  #region chans
+	  foreach (Chan chan in feed.iChans)
+	  {
+		foreach (Group group in chan.Groups)
+		{
+		  if (mygroups.Contains(group))
+		  {
+			chan.Selected = true;
+			break;
+		  }
+
+		  chan.Selected = false;
+		}
+
+		chan.iItems = null;
+	  }
+	  #endregion
+
+	  foreach (Group group in feed.Groups)
+	  {
+		if (mygroups.Contains(group))
+		{
+		  feed.Selected = true;
+		  break;
+		}
+
+		feed.Selected = false;
+	  }
+	}
+
+	return feeds;
+  }*/
 
   //////////////////////////////////////////////////////////////////////////
 
