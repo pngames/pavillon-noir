@@ -21,6 +21,8 @@ public abstract class Importer
   { }
 
   protected abstract void _updateFeed(Feed feed);
+  protected abstract void _updateChan(Chan chan);
+  protected abstract void _updateItem(Item item);
 
   public static void updateFeed(Feed feed)
   {

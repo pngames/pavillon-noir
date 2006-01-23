@@ -18,7 +18,7 @@ internal class NNTPImporter : Importer
 {
   public NNTPImporter()
   {
-	_type.DefaultPort = 115;
+	_type.DefaultPort = 119;
 	_type.Name = "nntp";
 	_type.Description = "News groups protocol retriever";
   }
@@ -39,12 +39,34 @@ internal class NNTPImporter : Importer
 
 	foreach (string groupname in groups)
 	{
+	  if (chanMap.ContainsKey(groupname))
+		continue;
+
 	  NewsGroup group = groups[groupname];
-	  Chan chan = chanMap.ContainsKey(groupname) ? chanMap[groupname] : new Chan();
 
-	  chan.Feed = feed;
-
+	  Chan chan = new Chan();
 	  chan.Title = group.Name;
+
+	  feed.Chans.Add(chan);
+	}
+  }
+
+  protected override void _updateChan(Chan chan)
+  {
+	Session session = new Session(chan.Feed.Fils, chan.Feed.FilsPort);
+	NewsGroupCollection groups = session.GetNewsGroups();
+
+	//////////////////////////////////////////////////////////////////////////
+
+	foreach (string groupname in groups)
+	{
+	  if (chan.Title != groupname)
+		continue;
+
+	  NewsGroup group = groups[groupname];
+
+	  ArticleCollection articles = group.GetArticles(true, 100);
+
 	  chan.Description = group.Name;
 
 	  if (chan.Items == null)
@@ -56,32 +78,36 @@ internal class NNTPImporter : Importer
 		itemMap[item.MessageID] = item;
 
 	  Dictionary<string, Item> articleItem = new Dictionary<string, Item>();
-	  foreach (Article article in group.GetArticles(false))
+	  foreach (string messageID in articles)
 	  {
-		if (itemMap.ContainsKey(article.Header.MessageID))
+		if (itemMap.ContainsKey(articles[messageID].Header.MessageID))
 		  continue;
 
 		Item item = new Item();
 
 		item.Chan = chan;
 
-		item.MessageID = article.Header.MessageID;
-		item.Author = article.Header.From;
-		item.Date = article.Header.Date;
-		item.Title = article.Header.Subject;
-		item.Description = article.Header.Summary;
+		item.MessageID = articles[messageID].Header.MessageID;
+		item.Author = articles[messageID].Header.From;
+		item.Date = articles[messageID].Header.Date;
+		item.Title = articles[messageID].Header.Subject;
+		item.Description = articles[messageID].Header.Summary;
 		//item.Link = article.Header.Organization;
 
-		item.Content = article.Body.ToString();
+		//item.Content = articles[messageID].Body.ToString();
 
-		if (article.Header.References != null && article.Header.References.Length > 0)
-		  item.Parent = articleItem[article.Header.References[article.Header.References.Length-1]];
+		if (articles[messageID].Header.References != null && articles[messageID].Header.References.Length > 0 &&
+		  articleItem.ContainsKey(articles[messageID].Header.References[articles[messageID].Header.References.Length - 1]))
+		  item.Parent = articleItem[articles[messageID].Header.References[articles[messageID].Header.References.Length - 1]];
 
 		chan.Items.Add(item);
 		articleItem[item.MessageID] = item;
 	  }
-
-	  feed.Chans.Add(chan);
 	}
+  }
+
+  protected override void _updateItem(Item item)
+  { 
+
   }
 }

@@ -57,7 +57,7 @@ public class Service : System.Web.Services.WebService
   [WebMethod]
   public List<Feed> testGetAllFeeds()
   {
-	return getAllFeeds("a2e75e11-d05f-49da-b8d3-e156d50b723d");
+	return getAllFeeds("cebb43c1-557b-4e5f-828e-e3c08fb01d76");
   }
   #endregion
 
@@ -227,8 +227,6 @@ public class Service : System.Web.Services.WebService
 
 	  foreach (Feed feed in feeds)
 	  {
-		Importer.updateFeed(feed);
-
 		if (feed.Groups == null || feed.Groups.Count == 0)
 		  feedsToSend.Add(feed);
 		else

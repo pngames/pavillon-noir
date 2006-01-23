@@ -104,4 +104,13 @@ internal class RSSImporter : Importer
 	  feed.Chans.Add(chan);
 	}
   }
+
+  protected override void _updateChan(Chan chan)
+  {
+
+  }
+
+  protected override void _updateItem(Item item)
+  {
+  }
 }
