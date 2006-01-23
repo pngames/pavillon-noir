@@ -15,12 +15,12 @@
 
     <bag name="iGroups" table="group_user" inverse="true" lazy="true">
       <key column="user_id" />
-      <many-to-many class="NRSS.mapping.User, NRSS.mapping" column="Id" />
+      <many-to-many class="NRSS.mapping.Group, NRSS.mapping" column="group_id" />
     </bag>
 
     <bag name="ReadItems" table="item_read" lazy="true">
       <key column="user_id" />
-      <many-to-many class="NRSS.mapping.User, NRSS.mapping" column="Id" />
+      <many-to-many class="NRSS.mapping.Item, NRSS.mapping" column="item_id" />
     </bag>
   </class>
 </hibernate-mapping>

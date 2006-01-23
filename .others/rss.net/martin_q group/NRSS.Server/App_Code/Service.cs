@@ -44,13 +44,27 @@ public class Service : System.Web.Services.WebService
 	
 	Importer.updateFeed(feed);
 
+	BaseDataAccess mgr = new BaseDataAccess();
+	mgr.Save(feed);
+
 	return feed;
   }
 
   [WebMethod]
-  public User testCreateUser()
+  public string testCreateUser()
   {
-	return logon("user", "pass");
+	User user = new User();
+
+	user.Email = "ttttt";
+	user.Passwd = "ppppp";
+
+	return createUser(user);
+  }
+
+  [WebMethod]
+  public void testAbonnement()
+  {
+	
   }
   #endregion
 

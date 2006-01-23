@@ -10,17 +10,17 @@
 
     <bag name="Users" table="group_user" lazy="true">
       <key column="group_id" />
-      <many-to-many class="NRSS.mapping.Group, NRSS.mapping" column="Id" />
+      <many-to-many class="NRSS.mapping.User, NRSS.mapping" column="user_id" />
     </bag>
 
     <bag name="Feeds" table="group_feed" lazy="true">
       <key column="group_id" />
-      <many-to-many class="NRSS.mapping.Group, NRSS.mapping" column="Id" />
+      <many-to-many class="NRSS.mapping.Feed, NRSS.mapping" column="feed_id" />
     </bag>
 
     <bag name="Chans" table="group_chan" lazy="true">
       <key column="group_id" />
-      <many-to-many class="NRSS.mapping.Group, NRSS.mapping" column="Id" />
+      <many-to-many class="NRSS.mapping.Chan, NRSS.mapping" column="chan_id" />
     </bag>
   </class>
 </hibernate-mapping>

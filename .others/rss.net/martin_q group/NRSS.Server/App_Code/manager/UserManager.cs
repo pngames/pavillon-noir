@@ -43,7 +43,23 @@ public class UserManager
 
 	//////////////////////////////////////////////////////////////////////////
 
+	Group group = new Group();
+
+	group.Name = user.Email;
+
 	BaseDataAccess mgr = new BaseDataAccess();
+	mgr.Save(user);
+	mgr.Save(group);
+
+	//////////////////////////////////////////////////////////////////////////
+
+	group.Users = new ArrayList();
+	user.iGroups = new ArrayList();
+
+	group.Users.Add(user);
+	user.iGroups.Add(group);
+
+	mgr.Save(group);
 	mgr.Save(user);
 
 	//////////////////////////////////////////////////////////////////////////
