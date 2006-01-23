@@ -73,13 +73,6 @@ namespace NRSS.mapping
 	  get { return _feeds; }
 	  set { _feeds = value; }
 	}
-
-	[XmlIgnore]
-	public IList Chans
-	{
-	  get { return _chans; }
-	  set { _chans = value; }
-	}
 	#endregion
   }
 }

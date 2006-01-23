@@ -88,13 +88,6 @@ namespace NRSS.mapping
 	  }
 	  set { _items = value; }
 	}
-
-	[XmlIgnore]
-	public IList Groups
-	{
-	  get { return _groups; }
-	  set { _groups = value; }
-	}
 	#endregion
 
 	#region specifics

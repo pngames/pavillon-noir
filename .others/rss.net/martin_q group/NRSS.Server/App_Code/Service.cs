@@ -172,24 +172,6 @@ public class Service : System.Web.Services.WebService
 	{
 	  Importer.updateFeed(feed);
 
-	  #region chans
-	  foreach (Chan chan in feed.iChans)
-	  {
-		foreach (Group group in chan.Groups)
-		{
-		  if (mygroups.Contains(group))
-		  {
-			chan.Selected = true;
-			break;
-		  }
-
-		  chan.Selected = false;
-		}
-
-		chan.iItems = null;
-	  }
-	  #endregion
-
 	  foreach (Group group in feed.Groups)
 	  {
 		if (mygroups.Contains(group))
@@ -200,6 +182,8 @@ public class Service : System.Web.Services.WebService
 
 		feed.Selected = false;
 	  }
+
+	  feed.Chans = null;
 	}
 
 	return feeds;
@@ -231,22 +215,6 @@ public class Service : System.Web.Services.WebService
 	foreach (Feed feed in myfeeds)
 	{
 	  Importer.updateFeed(feed);
-
-	  #region chans
-	  foreach (Chan chan in feed.iChans)
-	  {
-		if (chan.Selected)
-		{
-		  if (chan.Groups == null)
-			chan.Groups = new ArrayList();
-		  chan.Groups.Add(mygroup);
-		}
-		else if (chan.Groups != null && chan.Groups.Contains(mygroup))
-		{
-		  chan.Groups.Remove(mygroup);
-		}
-	  }
-	  #endregion
 
 	  if (feed.Selected)
 	  {

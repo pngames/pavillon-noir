@@ -39,7 +39,6 @@ public class UserManager
 
   public string createUser(User user)
   {
-	user.AutoLog = Guid.NewGuid().ToString();
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -48,22 +47,9 @@ public class UserManager
 	if (mgr.Get(typeof(User), "email", user.Email) != null)
 	  throw new NRSSException("L'utilisateur existe deja !");
 
-	Group group = new Group();
-
-	group.Name = user.Email;
-
-	mgr.Save(user);
-	mgr.Save(group);
-
 	//////////////////////////////////////////////////////////////////////////
 
-	group.Users = new ArrayList();
-	user.iGroups = new ArrayList();
-
-	group.Users.Add(user);
-	user.iGroups.Add(group);
-
-	mgr.Save(group);
+	user.AutoLog = Guid.NewGuid().ToString();
 	mgr.Save(user);
 
 	//////////////////////////////////////////////////////////////////////////

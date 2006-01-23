@@ -16,10 +16,5 @@
       <key column="chan_id" />
       <one-to-many class="NRSS.mapping.Item, NRSS.mapping" />
     </bag>
-
-    <bag name="Groups" table="group_chan" lazy="true">
-      <key column="chan_id" />
-      <many-to-many class="NRSS.mapping.Chan, NRSS.mapping" column="Id" />
-    </bag>
   </class>
 </hibernate-mapping>
