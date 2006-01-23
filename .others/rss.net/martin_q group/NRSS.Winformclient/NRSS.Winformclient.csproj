@@ -130,9 +130,6 @@
     <None Include="Web References\NRSSServer\Feed.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\NRSSServer\ImportType.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
     <None Include="Web References\NRSSServer\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

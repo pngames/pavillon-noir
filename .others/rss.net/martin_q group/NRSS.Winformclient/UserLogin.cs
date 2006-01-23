@@ -29,35 +29,34 @@ namespace NRSS.Winformclient
         {
             /// Verif user/passwd
             bool done = false;
-            User user = new User();
+            string user = "";
 
             try
             {
                 user = serviceAdd.logon(textBoxUser.Text, textBoxPasswd.Text);
             }
-            catch (SoapException exep)
+            catch (SoapException)
             {
-                exep.Message.ToLowerInvariant();
                 labelError.Visible = true;
                 labelError.Text = "Error: Invalid user or password";
             }
-                if (user.Confirmed == false)
+            if (user.Length != 0)
+            {
+                if (checkBox1.CheckState == CheckState.Checked)
                 {
-                    if (checkBox1.CheckState == CheckState.Checked)
-                    {
-                        Properties.Settings.Default.UserLogin = textBoxUser.Text;
-                        Properties.Settings.Default.UserPasswd = textBoxPasswd.Text;
-                        Properties.Settings.Default.Save();
-                    }
-                    else
-                    {
-                        Properties.Settings.Default.UserLogin = "";
-                        Properties.Settings.Default.UserPasswd = "";
-                        Properties.Settings.Default.Save();
-                    }
-                        this.DialogResult = DialogResult.OK;
-                    Close();
+                    Properties.Settings.Default.UserLogin = textBoxUser.Text;
+                    Properties.Settings.Default.UserPasswd = textBoxPasswd.Text;
+                    Properties.Settings.Default.Save();
                 }
+                else
+                {
+                    Properties.Settings.Default.UserLogin = "";
+                    Properties.Settings.Default.UserPasswd = "";
+                    Properties.Settings.Default.Save();
+                }
+                this.DialogResult = DialogResult.OK;
+                Close();
+            }
         }
 
         private void buttonCreateAccount_Click(object sender, EventArgs e)
