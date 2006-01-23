@@ -37,12 +37,10 @@ internal class NNTPImporter : Importer
 	foreach (Chan chan in feed.Chans)
 	  chanMap[chan.Title] = chan;
 
-	foreach (NewsGroup group in groups)
+	foreach (string groupname in groups)
 	{
-	  if (chanMap.ContainsKey(group.Name))
-		continue;
-
-	  Chan chan = new Chan();
+	  NewsGroup group = groups[groupname];
+	  Chan chan = chanMap.ContainsKey(groupname) ? chanMap[groupname] : new Chan();
 
 	  chan.Feed = feed;
 

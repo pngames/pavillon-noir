@@ -11,6 +11,7 @@ using NRSS.Server.DataAccess;
 using NRSS.mapping;
 using NRSS.errors;
 using System.Collections;
+using NHibernate;
 
 /// <summary>Summary description for UserManager</summary>
 public class UserManager
@@ -41,8 +42,24 @@ public class UserManager
   {
 	BaseDataAccess mgr = new BaseDataAccess();
 
-	if (mgr.Get(typeof(User), "Email", user.Email) != null)
-	  throw new NRSSException("L'utilisateur existe deja !");
+	ITransaction tx = null;
+
+	try
+	{
+	  tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
+
+	  if (mgr.Get(typeof(User), "Email", user.Email) != null)
+		throw new NRSSException("L'utilisateur existe deja !");
+
+	  tx.Commit();
+	}
+	catch (Exception ex)
+	{
+	  if (tx != null)
+		tx.Rollback();
+
+	  throw ex;
+	}
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -60,7 +77,24 @@ public class UserManager
   {
 	BaseDataAccess mgr = new BaseDataAccess();
 
-	User user = mgr.Get(typeof(User), "Email", email, "Passwd", pass) as User;
+	ITransaction tx = null;
+	User user = null;
+
+	try
+	{
+	  tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
+
+	  user = mgr.Get(typeof(User), "Email", email, "Passwd", pass) as User;
+	  
+	  tx.Commit();
+	}
+	catch (Exception ex)
+	{
+	  if (tx != null)
+		tx.Rollback();
+
+	  throw ex;
+	}
 
 	if (user == null)
 	  throw new NRSSException("L'email ou le mot de passe n'existe pas !");
@@ -75,7 +109,24 @@ public class UserManager
   {
 	BaseDataAccess mgr = new BaseDataAccess();
 
-	User user = mgr.Get(typeof(User), "AutoLog", hash) as User;
+	ITransaction tx = null;
+	User user = null;
+
+	try
+	{
+	  tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
+
+	  user = mgr.Get(typeof(User), "AutoLog", hash) as User;
+	  
+	  tx.Commit();
+	}
+	catch (Exception ex)
+	{
+	  if (tx != null)
+		tx.Rollback();
+
+	  throw ex;
+	}
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -96,7 +147,24 @@ public class UserManager
   {
 	BaseDataAccess mgr = new BaseDataAccess();
 
-	User user = mgr.Get(typeof(User), "Id", new Guid(hash)) as User;
+	ITransaction tx = null;
+	User user = null;
+
+	try
+	{
+	  tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
+
+	  user = mgr.Get(typeof(User), "AutoLog", hash) as User;
+
+	  tx.Commit();
+	}
+	catch (Exception ex)
+	{
+	  if (tx != null)
+		tx.Rollback();
+
+	  throw ex;
+	}
 
 	if (user == null)
 	  throw new NRSSException("La validation de la chaine de connection automatique a echouee");
@@ -106,6 +174,10 @@ public class UserManager
   {
 	BaseDataAccess mgr = new BaseDataAccess();
 
-	return mgr.Get(typeof(User), "Id", new Guid(hash)) as User;
+	return mgr.Get(typeof(User), "AutoLog", hash) as User;
   }
+
+  //////////////////////////////////////////////////////////////////////////
+
+
 }

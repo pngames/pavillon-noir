@@ -225,22 +225,13 @@ namespace NRSS.Server.DataAccess
 	private IList GetByType(Type type)
 	{
 	  IList items = null;
-	  ITransaction tx = null;
 
 	  try
 	  {
-		tx = m_session.BeginTransaction();
-
-		items = m_session.CreateCriteria(type).List();
-
-		tx.Commit();
-
-		return items;
+		return m_session.CreateCriteria(type).List();
 	  }
 	  catch (Exception ex)
 	  {
-		if (tx != null) tx.Rollback();
-
 		throw ex;
 	  }
 	}

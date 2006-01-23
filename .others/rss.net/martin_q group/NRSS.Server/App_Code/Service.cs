@@ -12,6 +12,7 @@ using System.Configuration;
 using NRSS;
 using NRSS.errors;
 using System.Xml.Serialization;
+using NHibernate;
 
 [WebService(Namespace = "http://nrss.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
@@ -52,6 +53,12 @@ public class Service : System.Web.Services.WebService
 
 	createUser(user);
   }
+
+  [WebMethod]
+  public List<Feed> testGetAllFeeds()
+  {
+	return getAllFeeds("a2e75e11-d05f-49da-b8d3-e156d50b723d");
+  }
   #endregion
 
   //////////////////////////////////////////////////////////////////////////
@@ -85,6 +92,22 @@ public class Service : System.Web.Services.WebService
   [WebMethod]
   public User getUser(string hash)
   {
+	ITransaction tx = null;
+
+	try
+	{
+	  tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
+
+	  tx.Commit();
+	}
+	catch (Exception ex)
+	{
+	  if (tx != null)
+		tx.Rollback();
+
+	  throw ex;
+	}
+
 	return UserManager.Instance.getUser(hash);
   }
   #endregion
@@ -100,30 +123,52 @@ public class Service : System.Web.Services.WebService
   {
 	UserManager.Instance.validate(uid);
 
-	BaseDataAccess mgr = new BaseDataAccess();
+	//////////////////////////////////////////////////////////////////////////
+
+	ITransaction tx = null;
 	List<Feed> feedsToSend = new List<Feed>();
-	IList feeds = mgr.Get(typeof(Feed));
 
-	User user = UserManager.Instance.getUser(uid);
-	IList mygroups = user.iGroups;
+	BaseDataAccess mgr = new BaseDataAccess();
 
-	foreach (Feed feed in feeds)
+	try
 	{
-	  Importer.updateFeed(feed);
+	  tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
 
-	  if (feed.Groups == null || feed.Groups.Count == 0)
-		feedsToSend.Add(feed);
-	  else
-		foreach (Group group in feed.Groups)
-		{
-		  if (mygroups.Contains(group))
+	  //////////////////////////////////////////////////////////////////////////
+
+	  feedsToSend = new List<Feed>();
+	  IList feeds = mgr.Get(typeof(Feed));
+
+	  User user = UserManager.Instance.getUser(uid);
+	  IList mygroups = user.iGroups;
+
+	  foreach (Feed feed in feeds)
+	  {
+		Importer.updateFeed(feed);
+
+		if (feed.Groups == null || feed.Groups.Count == 0)
+		  feedsToSend.Add(feed);
+		else
+		  foreach (Group group in feed.Groups)
 		  {
-			feedsToSend.Add(feed);
-			break;
+			if (mygroups.Contains(group))
+			{
+			  feedsToSend.Add(feed);
+			  break;
+			}
 		  }
-		}
 
-	  feed.Selected = user.Feeds != null && user.Feeds.Contains(feed);
+		feed.Selected = user.Feeds != null && user.Feeds.Contains(feed);
+	  }
+
+	  tx.Commit();
+	}
+	catch (Exception ex)
+	{
+	  if (tx != null)
+		tx.Rollback();
+
+	  throw ex;
 	}
 
 	return feedsToSend;
@@ -166,31 +211,52 @@ public class Service : System.Web.Services.WebService
   {
 	UserManager.Instance.validate(uid);
 
-	BaseDataAccess mgr = new BaseDataAccess();
+	//////////////////////////////////////////////////////////////////////////
+
+	ITransaction tx = null;
 	List<Feed> feedsToSend = new List<Feed>();
-	IList feeds = mgr.Get(typeof(Feed));
 
-	User user = UserManager.Instance.getUser(uid);
-	IList mygroups = user.iGroups;
+	BaseDataAccess mgr = new BaseDataAccess();
 
-	foreach (Feed feed in feeds)
+	try
 	{
-	  Importer.updateFeed(feed);
+	  tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
 
-	  if (feed.Groups == null || feed.Groups.Count == 0)
-		feedsToSend.Add(feed);
-	  else
-		foreach (Group group in feed.Groups)
-		{
-		  if (mygroups.Contains(group))
+	  //////////////////////////////////////////////////////////////////////////
+
+	  IList feeds = mgr.Get(typeof(Feed));
+
+	  User user = UserManager.Instance.getUser(uid);
+	  IList mygroups = user.iGroups;
+
+	  foreach (Feed feed in feeds)
+	  {
+		Importer.updateFeed(feed);
+
+		if (feed.Groups == null || feed.Groups.Count == 0)
+		  feedsToSend.Add(feed);
+		else
+		  foreach (Group group in feed.Groups)
 		  {
-			feedsToSend.Add(feed);
-			break;
+			if (mygroups.Contains(group))
+			{
+			  feedsToSend.Add(feed);
+			  break;
+			}
 		  }
-		}
 
-	  feed.Selected = user.Feeds != null && user.Feeds.Contains(feed);
-	  feed.Chans = null;
+		feed.Selected = user.Feeds != null && user.Feeds.Contains(feed);
+		feed.Chans = null;
+	  }
+
+	  tx.Commit();
+	}
+	catch (Exception ex)
+	{
+	  if (tx != null)
+		tx.Rollback();
+
+	  throw ex;
 	}
 
 	return feedsToSend;
@@ -201,6 +267,8 @@ public class Service : System.Web.Services.WebService
   public void updateFeedsSubscribe(string uid, ArrayList feeds)
   {
 	UserManager.Instance.validate(uid);
+
+	//////////////////////////////////////////////////////////////////////////
 
 	Dictionary<string, Feed> feedMap = new Dictionary<string,Feed>();
 
@@ -237,6 +305,8 @@ public class Service : System.Web.Services.WebService
   public void setAsRead(string uid, Item item)
   {
 	UserManager.Instance.validate(uid);
+
+	//////////////////////////////////////////////////////////////////////////
 
 	User user = UserManager.Instance.getUser(uid);
 
