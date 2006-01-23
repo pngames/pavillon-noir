@@ -14,7 +14,6 @@ using NRSSService;
 
 public partial class Home : System.Web.UI.Page
 {
-    /*public Feed _feed;*/
     NRSSService.Service NRSSS;
     public Feed rssFeed;
 
@@ -22,12 +21,14 @@ public partial class Home : System.Web.UI.Page
     {
         NRSSS = new NRSSService.Service();
         rssFeed = NRSSS.testRSS();
-
-        doItemTree();
+       
+        //doItemTree();
     }
-   
-    protected void doItemTree()
+
+    protected void doItemTree(object sender, EventArgs e)
     {
+        
+        if (rssFeed.Chans != null) {
         int i = 0;
         foreach (Chan chan in rssFeed.Chans)
         {
@@ -45,5 +46,10 @@ public partial class Home : System.Web.UI.Page
             }
         }
     }
+    }
 
+    protected void clearItemTree(object sender, EventArgs e)
+    {
+        
+    }
 }

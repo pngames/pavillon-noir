@@ -12,35 +12,54 @@
         <div class="rightcol">
             <div class="rssitem"><div class="content"><div class="title">&nbsp;Billets</div>
                 <div style="overflow:auto; height:180px;">
-                <asp:TreeView ID="ItemTree" runat="server" ExpandDepth="1" ImageSet="News" NodeIndent="10" Width="95%">
+                <% if (rssFeed.Chans != null)
+                   { %>
+                <asp:TreeView ID="ItemTree" runat="server" ExpandDepth="1" ImageSet="News" NodeIndent="10" Width="95%" OnLoad="doItemTree" OnUnload="clearItemTree">
                     <ParentNodeStyle Font-Bold="False" />
                     <HoverNodeStyle Font-Underline="False" Font-Bold="False" ForeColor="CornflowerBlue" />
                     <SelectedNodeStyle Font-Underline="False" HorizontalPadding="0px" VerticalPadding="0px" Font-Bold="True" />
                     <NodeStyle Font-Names="Tahoma" Font-Size="12px" ForeColor="Black" HorizontalPadding="5px"
                         NodeSpacing="2px" VerticalPadding="0px" />
                 </asp:TreeView>
+                <% }
+                   else
+                   {
+                       Response.Write("<div style=\"padding:10px;\">Connexion au serveur impossible</div>");
+                   } 
+                  %>
                 </div>
              </div></div>
              <div class="itemcontent" style="margin-top: 10px;"><div class="content"><div class="title">&nbsp;Contenu du billet</div>
                 <div style="padding:10px;">
-                    <% 
-                        int i = 0;
-                        foreach (NRSSService.Chan chan in rssFeed.Chans)
-                            foreach (NRSSService.Item item in chan.Items)
-                            {
-                                Response.Write("<div id=\"item");
-                                Response.Write(i);
-                                Response.Write("\" class=\"anitem\">");
+                    <% if (rssFeed.Chans != null)
+                       {
+                           int i = 0;
+                           foreach (NRSSService.Chan chan in rssFeed.Chans)
+                               foreach (NRSSService.Item item in chan.Items)
+                               {
+                                   Response.Write("<div id=\"item");
+                                   Response.Write(i);
+                                   Response.Write("\" class=\"anitem\">");
                     %>
-                                <div class="itemtitle"><span><% Response.Write(item.Title); %></span> <% Response.Write(item.Date.ToLongDateString()); %></div>
+                    
+                                <div class="itemtitle"><span><% Response.Write(item.Title); %></span> Le
+                                <% Response.Write(item.Date.ToLongDateString());
+                                   if (item.Author != "")
+                                   {
+                                    Response.Write(" par " + item.Author);
+                                   }
+                                   %></div>
                                 <div class="itemdesc"> <% Response.Write(item.Description); %></div>                                
-                                <div class="itemlink"><a href="<% Response.Write(item.Link); %>"> <% Response.Write(item.Link); %></a></div>
+                                <div class="itemlink"><a href="<% Response.Write(item.Link); %>" target="_blank"> <% Response.Write(item.Link); %></a></div>
                                 <div class="itemcontent"> <% Response.Write(item.Content); %></div>
                     <%           
                                 Response.Write("</div>");
                                 Response.Write("");
                                 i++;
-                            }    
+                                }
+                        } else {
+                                Response.Write("Connexion au serveur impossible");
+                       }
                     %>
                 </div>
              </div></div>

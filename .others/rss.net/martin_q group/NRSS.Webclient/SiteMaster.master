@@ -27,6 +27,7 @@ function toggleBox(szDivID, iState) // 1 visible, 0 hidden
 }
 
 </script>
+<!-- toggle item -->
 <script type="text/javascript">
 function toggleItem(szDivID)
 {    
@@ -63,13 +64,11 @@ function toggleItem(szDivID)
   lastseen = szDivID;
 }
 </script>
-
 <!-- logout -->
 <script language="C#" runat=server>
     void Signout_Click(Object sender, EventArgs E) {
-
       FormsAuthentication.SignOut();
-      Response.Redirect("Default.aspx");
+      FormsAuthentication.RedirectToLoginPage();
     }
 </script>
 </head>
@@ -82,10 +81,11 @@ function toggleItem(szDivID)
             &nbsp;<asp:LoginName ID="LoginName1" runat="server" />
             - 
             <a href="Home.aspx">Mes Flux</a> - 
-            <a href="#" onClick="toggleBox('LoginBox',1); return false;"> Ajouter un flux</a> - 
+            <!-- a href="#" onClick="toggleBox('LoginBox',1); return false;"> Ajouter un flux</a> - -->
             <a href="MyProfile.aspx">Mon profil</a> - 
             <a id="A1" href="#" OnClick="Signout_Click" runat=server>Déconnexion</a>
         </div>
+        
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
         

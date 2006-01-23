@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using NRSSService;
 
 public partial class secured_MyProfile : System.Web.UI.Page
 {

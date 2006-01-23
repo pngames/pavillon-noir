@@ -22,19 +22,6 @@ color: #add8e6; line-height: 150%; font-weight: bold;}
 color: white; line-height: 150%; font-weight: bold;}
 .login {margin: 5px 5px 5px 5px; background-color: #000000;}
 </style>
-<script language="C#" runat=server>
-void Login_Click(Object sender, EventArgs E)
-    {
-        if ((UserEmail.Value == "jv") && (UserPass.Value == "toto"))
-        {
-            FormsAuthentication.RedirectFromLoginPage(UserEmail.Value, PersistCookie.Checked);
-        }
-        else
-        {
-            Msg.Text = "Echec de l'authentification";
-        }
-    }
-</script>
 </head>
 <body  bgColor="#ffffff" style="background-image: url(img/bg.gif)">
 <form id="form1" runat="server">
@@ -57,7 +44,7 @@ void Login_Click(Object sender, EventArgs E)
         </tr>
         <tr>
           <td>Se rappeller de moi:</td>
-          <td><ASP:CheckBox id=PersistCookie runat="server" /> </td>
+          <td><ASP:CheckBox id="PersistCookie" runat="server" /> </td>
           <td></td>
         </tr>
       </table>
