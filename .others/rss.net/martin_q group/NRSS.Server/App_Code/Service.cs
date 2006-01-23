@@ -148,21 +148,29 @@ public class Service : System.Web.Services.WebService
 
 	  foreach (Feed feed in feeds)
 	  {
-		Importer.updateFeed(feed);
-
 		tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
 		if (feed.Groups == null || feed.Groups.Count == 0)
-		  feedsToSend.Add(feed);
+		{
+		  if (user.Feeds != null && user.Feeds.Contains(feed))
+		  {
+			Importer.updateFeed(feed);
+			feedsToSend.Add(feed);
+		  }
+		}
 		else
 		  foreach (Group group in feed.Groups)
 		  {
 			if (mygroups.Contains(group))
 			{
-			  feedsToSend.Add(feed);
+			  if (user.Feeds != null && user.Feeds.Contains(feed))
+			  {
+				Importer.updateFeed(feed);
+				feedsToSend.Add(feed);
+			  }
 			  break;
 			}
 		  }
-		feed.Selected = user.Feeds != null && user.Feeds.Contains(feed);
+
 		tx.Commit();
 
 		mgr.Save(feed);
