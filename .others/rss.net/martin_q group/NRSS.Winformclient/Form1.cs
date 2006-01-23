@@ -32,14 +32,6 @@ namespace winformclient
         public Form1()
         {
             InitializeComponent();
-            
-            // French voice init
-            voice.Voice = voice.GetVoices("Name=LH Pierre", "Language=40C").Item(0);
-            voice.Volume = 0;
-            // Left menu
-            Feed rssFeed;
-            rssFeed = serviceAdd.testRSS();
-            LeftTreeMenu.Nodes[0].Nodes[0].Text = rssFeed.Name;
         }
 
         #region Web Browser related code
@@ -86,9 +78,10 @@ namespace winformclient
             // Load RSS feed
             Feed rssFeed;
             rssFeed = serviceAdd.testRSS();
-            rssFeed.Chans.ToString();
-            LeftTreeMenu.SelectedNode.Text.ToString();
+            LeftTreeMenu.Nodes[0].Nodes[0].Text = rssFeed.Name;
 
+            if (rssFeed.Chans == null)
+                return;
             RightListView.Items.Clear();
             foreach (Chan chan in rssFeed.Chans)
             {
@@ -160,8 +153,18 @@ namespace winformclient
         private void Form1_Load(object sender, EventArgs e)
         {
             UserLogin Userbox = new UserLogin();
+
+            // French voice init
+            voice.Voice = voice.GetVoices("Name=LH Pierre", "Language=40C").Item(0);
+            voice.Volume = 0;
+
             if (Userbox.ShowDialog() == DialogResult.Cancel)
-                Close();
+                Close();   
+        }
+
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 

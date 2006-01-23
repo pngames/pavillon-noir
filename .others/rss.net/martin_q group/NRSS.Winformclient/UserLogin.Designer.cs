@@ -38,18 +38,19 @@ namespace NRSS.Winformclient
             this.labelPlease = new System.Windows.Forms.Label();
             this.labelError = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonCreateAccount = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxUser
             // 
-            this.textBoxUser.Location = new System.Drawing.Point(109, 71);
+            this.textBoxUser.Location = new System.Drawing.Point(109, 69);
             this.textBoxUser.Name = "textBoxUser";
             this.textBoxUser.Size = new System.Drawing.Size(156, 20);
             this.textBoxUser.TabIndex = 1;
             // 
             // textBoxPasswd
             // 
-            this.textBoxPasswd.Location = new System.Drawing.Point(109, 97);
+            this.textBoxPasswd.Location = new System.Drawing.Point(109, 95);
             this.textBoxPasswd.Name = "textBoxPasswd";
             this.textBoxPasswd.Size = new System.Drawing.Size(156, 20);
             this.textBoxPasswd.TabIndex = 2;
@@ -57,16 +58,16 @@ namespace NRSS.Winformclient
             // labelLogin
             // 
             this.labelLogin.AutoSize = true;
-            this.labelLogin.Location = new System.Drawing.Point(32, 74);
+            this.labelLogin.Location = new System.Drawing.Point(32, 72);
             this.labelLogin.Name = "labelLogin";
-            this.labelLogin.Size = new System.Drawing.Size(32, 13);
+            this.labelLogin.Size = new System.Drawing.Size(35, 13);
             this.labelLogin.TabIndex = 3;
-            this.labelLogin.Text = "User:";
+            this.labelLogin.Text = "Email:";
             // 
             // labelPasswd
             // 
             this.labelPasswd.AutoSize = true;
-            this.labelPasswd.Location = new System.Drawing.Point(32, 100);
+            this.labelPasswd.Location = new System.Drawing.Point(32, 98);
             this.labelPasswd.Name = "labelPasswd";
             this.labelPasswd.Size = new System.Drawing.Size(56, 13);
             this.labelPasswd.TabIndex = 4;
@@ -74,7 +75,7 @@ namespace NRSS.Winformclient
             // 
             // buttonOk
             // 
-            this.buttonOk.Location = new System.Drawing.Point(109, 123);
+            this.buttonOk.Location = new System.Drawing.Point(109, 121);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(75, 23);
             this.buttonOk.TabIndex = 5;
@@ -85,7 +86,7 @@ namespace NRSS.Winformclient
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(190, 123);
+            this.buttonCancel.Location = new System.Drawing.Point(190, 121);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 6;
@@ -96,7 +97,7 @@ namespace NRSS.Winformclient
             // 
             this.labelPlease.AutoSize = true;
             this.labelPlease.Font = new System.Drawing.Font("Monotype Corsiva", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPlease.Location = new System.Drawing.Point(22, 9);
+            this.labelPlease.Location = new System.Drawing.Point(22, 13);
             this.labelPlease.Name = "labelPlease";
             this.labelPlease.Size = new System.Drawing.Size(250, 22);
             this.labelPlease.TabIndex = 7;
@@ -105,11 +106,11 @@ namespace NRSS.Winformclient
             // labelError
             // 
             this.labelError.AutoSize = true;
-            this.labelError.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelError.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelError.ForeColor = System.Drawing.Color.Tomato;
-            this.labelError.Location = new System.Drawing.Point(1, 152);
+            this.labelError.Location = new System.Drawing.Point(22, 174);
             this.labelError.Name = "labelError";
-            this.labelError.Size = new System.Drawing.Size(296, 24);
+            this.labelError.Size = new System.Drawing.Size(265, 24);
             this.labelError.TabIndex = 8;
             this.labelError.Text = "Error: Invalid user or password";
             this.labelError.Visible = false;
@@ -118,19 +119,30 @@ namespace NRSS.Winformclient
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Tahoma", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(2, 41);
+            this.label1.Location = new System.Drawing.Point(32, 48);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(104, 18);
             this.label1.TabIndex = 9;
             this.label1.Text = "Please login:";
+            // 
+            // buttonCreateAccount
+            // 
+            this.buttonCreateAccount.Location = new System.Drawing.Point(127, 150);
+            this.buttonCreateAccount.Name = "buttonCreateAccount";
+            this.buttonCreateAccount.Size = new System.Drawing.Size(117, 23);
+            this.buttonCreateAccount.TabIndex = 10;
+            this.buttonCreateAccount.Text = "New account";
+            this.buttonCreateAccount.UseVisualStyleBackColor = true;
+            this.buttonCreateAccount.Click += new System.EventHandler(this.buttonCreateAccount_Click);
             // 
             // UserLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(302, 185);
+            this.ClientSize = new System.Drawing.Size(320, 208);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonCreateAccount);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelError);
             this.Controls.Add(this.labelPlease);
@@ -163,5 +175,6 @@ namespace NRSS.Winformclient
         private System.Windows.Forms.Label labelPlease;
         private System.Windows.Forms.Label labelError;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonCreateAccount;
     }
 }

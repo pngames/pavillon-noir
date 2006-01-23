@@ -39,9 +39,6 @@ namespace winformclient
         this.LeftTreeMenu = new System.Windows.Forms.TreeView();
         this.menuStrip1 = new System.Windows.Forms.MenuStrip();
         this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.newFeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.rSSFeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.nNTPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.editionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.allMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,6 +67,7 @@ namespace winformclient
         this.ToolBar = new System.Windows.Forms.ToolStrip();
         this.ReadText = new System.Windows.Forms.ToolStripButton();
         this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+        this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.menuStrip1.SuspendLayout();
         this.splitContainer1.Panel1.SuspendLayout();
         this.splitContainer1.Panel2.SuspendLayout();
@@ -118,31 +116,10 @@ namespace winformclient
         // fichierToolStripMenuItem
         // 
         this.fichierToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newFeedToolStripMenuItem});
+            this.quitToolStripMenuItem});
         this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
         this.fichierToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
         this.fichierToolStripMenuItem.Text = "File";
-        // 
-        // newFeedToolStripMenuItem
-        // 
-        this.newFeedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.rSSFeedToolStripMenuItem,
-            this.nNTPToolStripMenuItem});
-        this.newFeedToolStripMenuItem.Name = "newFeedToolStripMenuItem";
-        this.newFeedToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
-        this.newFeedToolStripMenuItem.Text = "New";
-        // 
-        // rSSFeedToolStripMenuItem
-        // 
-        this.rSSFeedToolStripMenuItem.Name = "rSSFeedToolStripMenuItem";
-        this.rSSFeedToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-        this.rSSFeedToolStripMenuItem.Text = "RSS feed";
-        // 
-        // nNTPToolStripMenuItem
-        // 
-        this.nNTPToolStripMenuItem.Name = "nNTPToolStripMenuItem";
-        this.nNTPToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-        this.nNTPToolStripMenuItem.Text = "NNTP";
         // 
         // editionToolStripMenuItem
         // 
@@ -421,6 +398,14 @@ namespace winformclient
         this.toolStripSeparator1.Name = "toolStripSeparator1";
         this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
         // 
+        // quitToolStripMenuItem
+        // 
+        this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+        this.quitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+        this.quitToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+        this.quitToolStripMenuItem.Text = "Quit";
+        this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
+        // 
         // Form1
         // 
         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -459,9 +444,6 @@ namespace winformclient
       private System.Windows.Forms.ToolStripMenuItem fichierToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem editionToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-      private System.Windows.Forms.ToolStripMenuItem newFeedToolStripMenuItem;
-      private System.Windows.Forms.ToolStripMenuItem rSSFeedToolStripMenuItem;
-      private System.Windows.Forms.ToolStripMenuItem nNTPToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem selectToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem allMessagesToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
@@ -491,6 +473,7 @@ namespace winformclient
       private System.Windows.Forms.Label labelTitleContent;
       private System.Windows.Forms.Label labelFromContent;
       private System.Windows.Forms.Label labelDateContent;
+      private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
 
 }
 }
