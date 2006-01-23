@@ -32,6 +32,7 @@ namespace test
 	  this.t_user = new System.Windows.Forms.TextBox();
 	  this.t_pass = new System.Windows.Forms.TextBox();
 	  this.t_hash = new System.Windows.Forms.TextBox();
+	  this.t_id = new System.Windows.Forms.TextBox();
 	  this.SuspendLayout();
 	  // 
 	  // button1
@@ -66,11 +67,19 @@ namespace test
 	  this.t_hash.Size = new System.Drawing.Size(100, 20);
 	  this.t_hash.TabIndex = 3;
 	  // 
+	  // t_id
+	  // 
+	  this.t_id.Location = new System.Drawing.Point(180, 12);
+	  this.t_id.Name = "t_id";
+	  this.t_id.Size = new System.Drawing.Size(100, 20);
+	  this.t_id.TabIndex = 4;
+	  // 
 	  // Form1
 	  // 
 	  this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 	  this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 	  this.ClientSize = new System.Drawing.Size(292, 273);
+	  this.Controls.Add(this.t_id);
 	  this.Controls.Add(this.t_hash);
 	  this.Controls.Add(this.t_pass);
 	  this.Controls.Add(this.t_user);
@@ -88,6 +97,7 @@ namespace test
 	private System.Windows.Forms.TextBox t_user;
 	private System.Windows.Forms.TextBox t_pass;
 	private System.Windows.Forms.TextBox t_hash;
+	private System.Windows.Forms.TextBox t_id;
   }
 }
 

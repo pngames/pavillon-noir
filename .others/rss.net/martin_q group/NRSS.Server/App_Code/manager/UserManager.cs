@@ -39,7 +39,7 @@ public class UserManager
 
   public string createUser(User user)
   {
-	user.Id = Guid.NewGuid().ToString();
+	user.AutoLog = Guid.NewGuid().ToString();
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -50,7 +50,7 @@ public class UserManager
 
 	//envoyer un mail
 
-	return user.Id;
+	return user.AutoLog;
   }
 
   public User logon(string email, string pass)
@@ -72,7 +72,7 @@ public class UserManager
   {
 	BaseDataAccess mgr = new BaseDataAccess();
 
-	User user = mgr.Get(typeof(User), "Id", new Guid(hash)) as User;
+	User user = mgr.Get(typeof(User), "AutoLog", hash) as User;
 
 	//////////////////////////////////////////////////////////////////////////
 

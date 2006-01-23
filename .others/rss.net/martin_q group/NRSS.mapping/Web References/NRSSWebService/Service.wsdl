@@ -29,16 +29,6 @@
           <s:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
         </s:sequence>
       </s:complexType>
-      <s:complexType name="Chan">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Items" type="tns:ArrayOfAnyType" />
-        </s:sequence>
-      </s:complexType>
       <s:complexType name="Item">
         <s:sequence>
           <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
@@ -50,6 +40,17 @@
           <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Parent" type="tns:Item" />
+          <s:element minOccurs="1" maxOccurs="1" name="Read" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Chan">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Items" type="tns:ArrayOfAnyType" />
         </s:sequence>
       </s:complexType>
       <s:element name="getSupportedTypes">
@@ -90,11 +91,14 @@
           <s:element minOccurs="0" maxOccurs="1" name="Creation" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="LastLogon" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Groups" type="tns:ArrayOfAnyType" />
-          <s:element minOccurs="0" maxOccurs="1" name="ReadItems" type="tns:ArrayOfAnyType" />
         </s:sequence>
       </s:complexType>
       <s:element name="createUserResponse">
-        <s:complexType />
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="createUserResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="validateUser">
         <s:complexType>
@@ -120,6 +124,36 @@
             <s:element minOccurs="0" maxOccurs="1" name="logonResult" type="tns:User" />
           </s:sequence>
         </s:complexType>
+      </s:element>
+      <s:element name="getFeeds">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="uid" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfFeed">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Feed" nillable="true" type="tns:Feed" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="getFeedsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getFeedsResult" type="tns:ArrayOfFeed" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setAsRead">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="uid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="item" type="tns:Item" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setAsReadResponse">
+        <s:complexType />
       </s:element>
     </s:schema>
   </wsdl:types>
@@ -153,6 +187,18 @@
   <wsdl:message name="logonSoapOut">
     <wsdl:part name="parameters" element="tns:logonResponse" />
   </wsdl:message>
+  <wsdl:message name="getFeedsSoapIn">
+    <wsdl:part name="parameters" element="tns:getFeeds" />
+  </wsdl:message>
+  <wsdl:message name="getFeedsSoapOut">
+    <wsdl:part name="parameters" element="tns:getFeedsResponse" />
+  </wsdl:message>
+  <wsdl:message name="setAsReadSoapIn">
+    <wsdl:part name="parameters" element="tns:setAsRead" />
+  </wsdl:message>
+  <wsdl:message name="setAsReadSoapOut">
+    <wsdl:part name="parameters" element="tns:setAsReadResponse" />
+  </wsdl:message>
   <wsdl:portType name="ServiceSoap">
     <wsdl:operation name="testRSS">
       <wsdl:input message="tns:testRSSSoapIn" />
@@ -173,6 +219,14 @@
     <wsdl:operation name="logon">
       <wsdl:input message="tns:logonSoapIn" />
       <wsdl:output message="tns:logonSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getFeeds">
+      <wsdl:input message="tns:getFeedsSoapIn" />
+      <wsdl:output message="tns:getFeedsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setAsRead">
+      <wsdl:input message="tns:setAsReadSoapIn" />
+      <wsdl:output message="tns:setAsReadSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
@@ -222,6 +276,24 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getFeeds">
+      <soap:operation soapAction="http://nrss.org/getFeeds" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setAsRead">
+      <soap:operation soapAction="http://nrss.org/setAsRead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -263,6 +335,24 @@
     </wsdl:operation>
     <wsdl:operation name="logon">
       <soap12:operation soapAction="http://nrss.org/logon" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFeeds">
+      <soap12:operation soapAction="http://nrss.org/getFeeds" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setAsRead">
+      <soap12:operation soapAction="http://nrss.org/setAsRead" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

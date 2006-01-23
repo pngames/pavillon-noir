@@ -72,9 +72,26 @@ namespace NRSS.mapping
 	private IList _chans;
 	private IList _groups;
 
-	public IList Chans
+	[XmlIgnore]
+	public IList iChans
 	{
 	  get { return _chans; }
+	  set { _chans = value; }
+	}
+
+	[XmlElement(Type = typeof(Chan))]
+	public ArrayList Chans
+	{
+	  get
+	  {
+		if (_chans == null)
+		  return null;
+
+		if (_chans is ArrayList)
+		  return (ArrayList)_chans;
+
+		return new ArrayList(_chans);
+	  }
 	  set { _chans = value; }
 	}
 

@@ -27,7 +27,6 @@ namespace NRSS.mapping.NRSSWebService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="ServiceSoap", Namespace="http://nrss.org/")]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Item))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Chan))]
     public partial class Service : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
@@ -40,6 +39,10 @@ namespace NRSS.mapping.NRSSWebService {
         private System.Threading.SendOrPostCallback validateUserOperationCompleted;
         
         private System.Threading.SendOrPostCallback logonOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback getFeedsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback setAsReadOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -93,6 +96,12 @@ namespace NRSS.mapping.NRSSWebService {
         
         /// <remarks/>
         public event logonCompletedEventHandler logonCompleted;
+        
+        /// <remarks/>
+        public event getFeedsCompletedEventHandler getFeedsCompleted;
+        
+        /// <remarks/>
+        public event setAsReadCompletedEventHandler setAsReadCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://nrss.org/testRSS", RequestNamespace="http://nrss.org/", ResponseNamespace="http://nrss.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -150,9 +159,10 @@ namespace NRSS.mapping.NRSSWebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://nrss.org/createUser", RequestNamespace="http://nrss.org/", ResponseNamespace="http://nrss.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void createUser(User user) {
-            this.Invoke("createUser", new object[] {
+        public string createUser(User user) {
+            object[] results = this.Invoke("createUser", new object[] {
                         user});
+            return ((string)(results[0]));
         }
         
         /// <remarks/>
@@ -172,7 +182,7 @@ namespace NRSS.mapping.NRSSWebService {
         private void OncreateUserOperationCompleted(object arg) {
             if ((this.createUserCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.createUserCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.createUserCompleted(this, new createUserCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -232,6 +242,65 @@ namespace NRSS.mapping.NRSSWebService {
             if ((this.logonCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.logonCompleted(this, new logonCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://nrss.org/getFeeds", RequestNamespace="http://nrss.org/", ResponseNamespace="http://nrss.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Feed[] getFeeds(string uid) {
+            object[] results = this.Invoke("getFeeds", new object[] {
+                        uid});
+            return ((Feed[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void getFeedsAsync(string uid) {
+            this.getFeedsAsync(uid, null);
+        }
+        
+        /// <remarks/>
+        public void getFeedsAsync(string uid, object userState) {
+            if ((this.getFeedsOperationCompleted == null)) {
+                this.getFeedsOperationCompleted = new System.Threading.SendOrPostCallback(this.OngetFeedsOperationCompleted);
+            }
+            this.InvokeAsync("getFeeds", new object[] {
+                        uid}, this.getFeedsOperationCompleted, userState);
+        }
+        
+        private void OngetFeedsOperationCompleted(object arg) {
+            if ((this.getFeedsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.getFeedsCompleted(this, new getFeedsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://nrss.org/setAsRead", RequestNamespace="http://nrss.org/", ResponseNamespace="http://nrss.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void setAsRead(string uid, Item item) {
+            this.Invoke("setAsRead", new object[] {
+                        uid,
+                        item});
+        }
+        
+        /// <remarks/>
+        public void setAsReadAsync(string uid, Item item) {
+            this.setAsReadAsync(uid, item, null);
+        }
+        
+        /// <remarks/>
+        public void setAsReadAsync(string uid, Item item, object userState) {
+            if ((this.setAsReadOperationCompleted == null)) {
+                this.setAsReadOperationCompleted = new System.Threading.SendOrPostCallback(this.OnsetAsReadOperationCompleted);
+            }
+            this.InvokeAsync("setAsRead", new object[] {
+                        uid,
+                        item}, this.setAsReadOperationCompleted, userState);
+        }
+        
+        private void OnsetAsReadOperationCompleted(object arg) {
+            if ((this.setAsReadCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.setAsReadCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -381,8 +450,6 @@ namespace NRSS.mapping.NRSSWebService {
         
         private object[] groupsField;
         
-        private object[] readItemsField;
-        
         /// <remarks/>
         public string Id {
             get {
@@ -452,16 +519,6 @@ namespace NRSS.mapping.NRSSWebService {
                 this.groupsField = value;
             }
         }
-        
-        /// <remarks/>
-        public object[] ReadItems {
-            get {
-                return this.readItemsField;
-            }
-            set {
-                this.readItemsField = value;
-            }
-        }
     }
     
     /// <remarks/>
@@ -515,6 +572,87 @@ namespace NRSS.mapping.NRSSWebService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://nrss.org/")]
+    public partial class Chan {
+        
+        private int idField;
+        
+        private string titleField;
+        
+        private string descriptionField;
+        
+        private string languageField;
+        
+        private string linkField;
+        
+        private object[] itemsField;
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Title {
+            get {
+                return this.titleField;
+            }
+            set {
+                this.titleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Language {
+            get {
+                return this.languageField;
+            }
+            set {
+                this.languageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Link {
+            get {
+                return this.linkField;
+            }
+            set {
+                this.linkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public object[] Items {
+            get {
+                return this.itemsField;
+            }
+            set {
+                this.itemsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.42")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://nrss.org/")]
     public partial class Item {
         
         private int idField;
@@ -534,6 +672,8 @@ namespace NRSS.mapping.NRSSWebService {
         private string linkField;
         
         private Item parentField;
+        
+        private bool readField;
         
         /// <remarks/>
         public int Id {
@@ -624,85 +764,14 @@ namespace NRSS.mapping.NRSSWebService {
                 this.parentField = value;
             }
         }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.42")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://nrss.org/")]
-    public partial class Chan {
-        
-        private int idField;
-        
-        private string titleField;
-        
-        private string descriptionField;
-        
-        private string languageField;
-        
-        private string linkField;
-        
-        private object[] itemsField;
         
         /// <remarks/>
-        public int Id {
+        public bool Read {
             get {
-                return this.idField;
+                return this.readField;
             }
             set {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Title {
-            get {
-                return this.titleField;
-            }
-            set {
-                this.titleField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Language {
-            get {
-                return this.languageField;
-            }
-            set {
-                this.languageField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Link {
-            get {
-                return this.linkField;
-            }
-            set {
-                this.linkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public object[] Items {
-            get {
-                return this.itemsField;
-            }
-            set {
-                this.itemsField = value;
+                this.readField = value;
             }
         }
     }
@@ -761,7 +830,29 @@ namespace NRSS.mapping.NRSSWebService {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
-    public delegate void createUserCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    public delegate void createUserCompletedEventHandler(object sender, createUserCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class createUserCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal createUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
@@ -792,6 +883,36 @@ namespace NRSS.mapping.NRSSWebService {
             }
         }
     }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
+    public delegate void getFeedsCompletedEventHandler(object sender, getFeedsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class getFeedsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal getFeedsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Feed[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Feed[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
+    public delegate void setAsReadCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
 }
 
 #pragma warning restore 1591

@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Collections;
 using Iesi.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace NRSS.mapping
 {
@@ -15,17 +16,26 @@ namespace NRSS.mapping
 	#endregion
 
 	#region datas
-	private string _id;
+	private int _id;
+	private string _autoLog;
+
 	private string _email;
 	private string _passwd;
 	private bool _confirmed;
 	private string _creation;
 	private string _lastLogon;
 
-	public string Id
+	public int Id
 	{
 	  get { return _id; }
 	  set { _id = value; }
+	}
+
+	[XmlIgnore]
+	public string AutoLog
+	{
+	  get { return _autoLog; }
+	  set { _autoLog = value; }
 	}
 
 	public string Email
@@ -63,16 +73,34 @@ namespace NRSS.mapping
 	private IList _groups;
 	private IList _readItems;
 
-	public IList Groups
+	[XmlIgnore]
+	public IList iGroups
 	{
 	  get { return _groups; }
 	  set { _groups = value; }
 	}
 
+	[XmlIgnore]
 	public IList ReadItems
 	{
 	  get { return _readItems; }
 	  set { _readItems = value; }
+	}
+
+	[XmlElement(Type = typeof(Group))]
+	public ArrayList Groups
+	{
+	  get
+	  {
+		if (_groups == null)
+		  return null;
+
+		if (_groups is ArrayList)
+		  return (ArrayList)_groups;
+
+		return new ArrayList(_groups);
+	  }
+	  set { _groups = value; }
 	}
 	#endregion
   }

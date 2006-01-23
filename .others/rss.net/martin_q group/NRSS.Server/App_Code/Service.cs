@@ -32,11 +32,9 @@ public class Service : System.Web.Services.WebService
 
   #region tests
   [WebMethod]
-  [XmlInclude(typeof(Chan)), XmlInclude(typeof(Item))]
+  [XmlInclude(typeof(Chan)), SoapInclude(typeof(Item))]
   public Feed testRSS()
   {
-	RSSImporter	importer = new RSSImporter();
-
 	Feed  feed = new Feed();
 
 	feed.Type = "rss";
@@ -47,6 +45,12 @@ public class Service : System.Web.Services.WebService
 	Importer.updateFeed(feed);
 
 	return feed;
+  }
+
+  [WebMethod]
+  public User testCreateUser()
+  {
+	return logon("user", "pass");
   }
   #endregion
 

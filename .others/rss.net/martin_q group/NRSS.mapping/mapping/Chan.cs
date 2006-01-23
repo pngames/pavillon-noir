@@ -66,9 +66,26 @@ namespace NRSS.mapping
 	  set { _feed = value; }
 	}
 
-	public IList Items
+	[XmlIgnore]
+	public IList iItems
 	{
 	  get { return _items; }
+	  set { _items = value; }
+	}
+
+	[XmlElement(Type = typeof(Item))]
+	public ArrayList Items
+	{
+	  get
+	  {
+		if (_items == null)
+		  return null;
+
+		if (_items is ArrayList)
+		  return (ArrayList)_items;
+
+		return new ArrayList(_items);
+	  }
 	  set { _items = value; }
 	}
 

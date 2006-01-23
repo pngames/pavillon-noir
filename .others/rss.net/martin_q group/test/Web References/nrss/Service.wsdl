@@ -21,12 +21,7 @@
           <s:element minOccurs="1" maxOccurs="1" name="FilsPort" type="s:int" />
           <s:element minOccurs="0" maxOccurs="1" name="FilsUser" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="FilsPass" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Chans" type="tns:ArrayOfAnyType" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ArrayOfAnyType">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Chans" type="tns:Chan" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="Chan">
@@ -36,7 +31,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Items" type="tns:ArrayOfAnyType" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Items" type="tns:Item" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="Item">
@@ -51,6 +46,42 @@
           <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Parent" type="tns:Item" />
           <s:element minOccurs="1" maxOccurs="1" name="Read" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="testCreateUser">
+        <s:complexType />
+      </s:element>
+      <s:element name="testCreateUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="testCreateUserResult" type="tns:User" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="User">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Passwd" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Confirmed" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Creation" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastLogon" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Groups" type="tns:Group" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Group">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Creation" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Users" type="tns:ArrayOfAnyType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Feeds" type="tns:ArrayOfAnyType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Chans" type="tns:ArrayOfAnyType" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAnyType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
         </s:sequence>
       </s:complexType>
       <s:element name="getSupportedTypes">
@@ -82,18 +113,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="User">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Passwd" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="Confirmed" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="Creation" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="LastLogon" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Groups" type="tns:ArrayOfAnyType" />
-          <s:element minOccurs="0" maxOccurs="1" name="ReadItems" type="tns:ArrayOfAnyType" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="createUserResponse">
         <s:complexType>
           <s:sequence>
@@ -164,6 +183,12 @@
   <wsdl:message name="testRSSSoapOut">
     <wsdl:part name="parameters" element="tns:testRSSResponse" />
   </wsdl:message>
+  <wsdl:message name="testCreateUserSoapIn">
+    <wsdl:part name="parameters" element="tns:testCreateUser" />
+  </wsdl:message>
+  <wsdl:message name="testCreateUserSoapOut">
+    <wsdl:part name="parameters" element="tns:testCreateUserResponse" />
+  </wsdl:message>
   <wsdl:message name="getSupportedTypesSoapIn">
     <wsdl:part name="parameters" element="tns:getSupportedTypes" />
   </wsdl:message>
@@ -205,6 +230,10 @@
       <wsdl:input message="tns:testRSSSoapIn" />
       <wsdl:output message="tns:testRSSSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="testCreateUser">
+      <wsdl:input message="tns:testCreateUserSoapIn" />
+      <wsdl:output message="tns:testCreateUserSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="getSupportedTypes">
       <wsdl:input message="tns:getSupportedTypesSoapIn" />
       <wsdl:output message="tns:getSupportedTypesSoapOut" />
@@ -234,6 +263,15 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="testRSS">
       <soap:operation soapAction="http://nrss.org/testRSS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="testCreateUser">
+      <soap:operation soapAction="http://nrss.org/testCreateUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -300,6 +338,15 @@
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="testRSS">
       <soap12:operation soapAction="http://nrss.org/testRSS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="testCreateUser">
+      <soap12:operation soapAction="http://nrss.org/testCreateUser" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

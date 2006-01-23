@@ -27,10 +27,12 @@ namespace test.nrss {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="ServiceSoap", Namespace="http://nrss.org/")]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Chan))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(object[]))]
     public partial class Service : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
         private System.Threading.SendOrPostCallback testRSSOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback testCreateUserOperationCompleted;
         
         private System.Threading.SendOrPostCallback getSupportedTypesOperationCompleted;
         
@@ -86,6 +88,9 @@ namespace test.nrss {
         public event testRSSCompletedEventHandler testRSSCompleted;
         
         /// <remarks/>
+        public event testCreateUserCompletedEventHandler testCreateUserCompleted;
+        
+        /// <remarks/>
         public event getSupportedTypesCompletedEventHandler getSupportedTypesCompleted;
         
         /// <remarks/>
@@ -127,6 +132,33 @@ namespace test.nrss {
             if ((this.testRSSCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.testRSSCompleted(this, new testRSSCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://nrss.org/testCreateUser", RequestNamespace="http://nrss.org/", ResponseNamespace="http://nrss.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public User testCreateUser() {
+            object[] results = this.Invoke("testCreateUser", new object[0]);
+            return ((User)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void testCreateUserAsync() {
+            this.testCreateUserAsync(null);
+        }
+        
+        /// <remarks/>
+        public void testCreateUserAsync(object userState) {
+            if ((this.testCreateUserOperationCompleted == null)) {
+                this.testCreateUserOperationCompleted = new System.Threading.SendOrPostCallback(this.OntestCreateUserOperationCompleted);
+            }
+            this.InvokeAsync("testCreateUser", new object[0], this.testCreateUserOperationCompleted, userState);
+        }
+        
+        private void OntestCreateUserOperationCompleted(object arg) {
+            if ((this.testCreateUserCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.testCreateUserCompleted(this, new testCreateUserCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -345,7 +377,7 @@ namespace test.nrss {
         
         private string filsPassField;
         
-        private object[] chansField;
+        private Chan[] chansField;
         
         /// <remarks/>
         public int Id {
@@ -418,7 +450,8 @@ namespace test.nrss {
         }
         
         /// <remarks/>
-        public object[] Chans {
+        [System.Xml.Serialization.XmlElementAttribute("Chans")]
+        public Chan[] Chans {
             get {
                 return this.chansField;
             }
@@ -434,26 +467,22 @@ namespace test.nrss {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://nrss.org/")]
-    public partial class User {
+    public partial class Chan {
         
-        private string idField;
+        private int idField;
         
-        private string emailField;
+        private string titleField;
         
-        private string passwdField;
+        private string descriptionField;
         
-        private bool confirmedField;
+        private string languageField;
         
-        private string creationField;
+        private string linkField;
         
-        private string lastLogonField;
-        
-        private object[] groupsField;
-        
-        private object[] readItemsField;
+        private Item[] itemsField;
         
         /// <remarks/>
-        public string Id {
+        public int Id {
             get {
                 return this.idField;
             }
@@ -463,97 +492,12 @@ namespace test.nrss {
         }
         
         /// <remarks/>
-        public string Email {
+        public string Title {
             get {
-                return this.emailField;
+                return this.titleField;
             }
             set {
-                this.emailField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Passwd {
-            get {
-                return this.passwdField;
-            }
-            set {
-                this.passwdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool Confirmed {
-            get {
-                return this.confirmedField;
-            }
-            set {
-                this.confirmedField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Creation {
-            get {
-                return this.creationField;
-            }
-            set {
-                this.creationField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string LastLogon {
-            get {
-                return this.lastLogonField;
-            }
-            set {
-                this.lastLogonField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public object[] Groups {
-            get {
-                return this.groupsField;
-            }
-            set {
-                this.groupsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public object[] ReadItems {
-            get {
-                return this.readItemsField;
-            }
-            set {
-                this.readItemsField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.42")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://nrss.org/")]
-    public partial class ImportType {
-        
-        private string nameField;
-        
-        private string descriptionField;
-        
-        private int defaultPortField;
-        
-        /// <remarks/>
-        public string Name {
-            get {
-                return this.nameField;
-            }
-            set {
-                this.nameField = value;
+                this.titleField = value;
             }
         }
         
@@ -568,12 +512,33 @@ namespace test.nrss {
         }
         
         /// <remarks/>
-        public int DefaultPort {
+        public string Language {
             get {
-                return this.defaultPortField;
+                return this.languageField;
             }
             set {
-                this.defaultPortField = value;
+                this.languageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Link {
+            get {
+                return this.linkField;
+            }
+            set {
+                this.linkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Items")]
+        public Item[] Items {
+            get {
+                return this.itemsField;
+            }
+            set {
+                this.itemsField = value;
             }
         }
     }
@@ -713,37 +678,21 @@ namespace test.nrss {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://nrss.org/")]
-    public partial class Chan {
+    public partial class ImportType {
         
-        private int idField;
-        
-        private string titleField;
+        private string nameField;
         
         private string descriptionField;
         
-        private string languageField;
-        
-        private string linkField;
-        
-        private object[] itemsField;
+        private int defaultPortField;
         
         /// <remarks/>
-        public int Id {
+        public string Name {
             get {
-                return this.idField;
+                return this.nameField;
             }
             set {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Title {
-            get {
-                return this.titleField;
-            }
-            set {
-                this.titleField = value;
+                this.nameField = value;
             }
         }
         
@@ -758,32 +707,187 @@ namespace test.nrss {
         }
         
         /// <remarks/>
-        public string Language {
+        public int DefaultPort {
             get {
-                return this.languageField;
+                return this.defaultPortField;
             }
             set {
-                this.languageField = value;
+                this.defaultPortField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.42")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://nrss.org/")]
+    public partial class Group {
+        
+        private int idField;
+        
+        private string nameField;
+        
+        private string creationField;
+        
+        private object[] usersField;
+        
+        private object[] feedsField;
+        
+        private object[] chansField;
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
             }
         }
         
         /// <remarks/>
-        public string Link {
+        public string Name {
             get {
-                return this.linkField;
+                return this.nameField;
             }
             set {
-                this.linkField = value;
+                this.nameField = value;
             }
         }
         
         /// <remarks/>
-        public object[] Items {
+        public string Creation {
             get {
-                return this.itemsField;
+                return this.creationField;
             }
             set {
-                this.itemsField = value;
+                this.creationField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public object[] Users {
+            get {
+                return this.usersField;
+            }
+            set {
+                this.usersField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public object[] Feeds {
+            get {
+                return this.feedsField;
+            }
+            set {
+                this.feedsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public object[] Chans {
+            get {
+                return this.chansField;
+            }
+            set {
+                this.chansField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.42")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://nrss.org/")]
+    public partial class User {
+        
+        private int idField;
+        
+        private string emailField;
+        
+        private string passwdField;
+        
+        private bool confirmedField;
+        
+        private string creationField;
+        
+        private string lastLogonField;
+        
+        private Group[] groupsField;
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Email {
+            get {
+                return this.emailField;
+            }
+            set {
+                this.emailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Passwd {
+            get {
+                return this.passwdField;
+            }
+            set {
+                this.passwdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Confirmed {
+            get {
+                return this.confirmedField;
+            }
+            set {
+                this.confirmedField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Creation {
+            get {
+                return this.creationField;
+            }
+            set {
+                this.creationField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string LastLogon {
+            get {
+                return this.lastLogonField;
+            }
+            set {
+                this.lastLogonField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Groups")]
+        public Group[] Groups {
+            get {
+                return this.groupsField;
+            }
+            set {
+                this.groupsField = value;
             }
         }
     }
@@ -810,6 +914,32 @@ namespace test.nrss {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((Feed)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
+    public delegate void testCreateUserCompletedEventHandler(object sender, testCreateUserCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class testCreateUserCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal testCreateUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public User Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((User)(this.results[0]));
             }
         }
     }

@@ -86,13 +86,13 @@ namespace NRSS.Server.DataAccess
 		SchemaExport exporter = new SchemaExport(config);
 		exporter.Drop(true, true);
 		exporter.Create(true, true);
-	  }
-	  else
-	  {
-		config.SetProperty(@"hibernate.connection.connection_string", @"Data Source=.\nrss.db;Version=3");
 
-		config.Configure();
+		config = new Configuration();
 	  }
+
+	  config.SetProperty(@"hibernate.connection.connection_string", @"Data Source=.\nrss.db;Version=3");
+
+	  config.Configure();
 
 	  factory = config.BuildSessionFactory();
 
