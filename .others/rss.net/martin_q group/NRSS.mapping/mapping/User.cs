@@ -22,8 +22,8 @@ namespace NRSS.mapping
 	private string _email;
 	private string _passwd;
 	private bool _confirmed;
-	private string _creation;
-	private string _lastLogon;
+	private DateTime _creation;
+	private DateTime _lastLogon;
 
 	public int Id
 	{
@@ -56,13 +56,13 @@ namespace NRSS.mapping
 	  set { _confirmed = value; }
 	}
 
-	public string Creation
+	public DateTime Creation
 	{
 	  get { return _creation; }
 	  set { _creation = value; }
 	}
 
-	public string LastLogon
+	public DateTime LastLogon
 	{
 	  get { return _lastLogon; }
 	  set { _lastLogon = value; }
