@@ -30,8 +30,8 @@ namespace NRSS.Winformclient
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Subscribe));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -58,6 +58,16 @@ namespace NRSS.Winformclient
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 0;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Monotype Corsiva", 18F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(23, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(410, 28);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Please check the feeds you want to subscribe to";
+            // 
             // checkedListBox1
             // 
             this.checkedListBox1.CheckOnClick = true;
@@ -70,16 +80,6 @@ namespace NRSS.Winformclient
             this.checkedListBox1.TabIndex = 1;
             this.checkedListBox1.ThreeDCheckBoxes = true;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Monotype Corsiva", 18F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(23, 3);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(410, 28);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Please check the feeds you want to subscribe to";
             // 
             // Subscribe
             // 

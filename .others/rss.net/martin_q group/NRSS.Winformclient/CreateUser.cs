@@ -30,12 +30,13 @@ namespace NRSS.Winformclient
                 {
                     serviceAdd.createUser(newUser);
                 }
-                catch (Exception)
+                catch (Exception exe)
                 {
+                    exe.Message.ToLower();
                     labelError.Visible = true;
-                    labelError.Text = "Error: Cannot create account";
+                    labelError.Text = exe.Message.ToLower();  //"Error: Cannot create account";
                 }
-                this.Close();
+                //this.Close();
             }
             else {
                 labelError.Text = "Error: Passwords are different";

@@ -122,11 +122,11 @@ namespace NRSS.Winformclient
             // labelError
             // 
             this.labelError.AutoSize = true;
-            this.labelError.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelError.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelError.ForeColor = System.Drawing.Color.Tomato;
             this.labelError.Location = new System.Drawing.Point(12, 186);
             this.labelError.Name = "labelError";
-            this.labelError.Size = new System.Drawing.Size(265, 24);
+            this.labelError.Size = new System.Drawing.Size(172, 15);
             this.labelError.TabIndex = 17;
             this.labelError.Text = "Error: Invalid user or password";
             this.labelError.Visible = false;
@@ -148,7 +148,6 @@ namespace NRSS.Winformclient
             this.Controls.Add(this.labelLogin);
             this.Controls.Add(this.textBoxPasswd1);
             this.Controls.Add(this.textBoxEmail);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CreateUser";
             this.Text = "CreateUser";
