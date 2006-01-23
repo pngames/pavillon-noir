@@ -80,15 +80,6 @@ namespace winformclient
             string date;
             string link;
 
-
-            Feed[] feedslist = serviceAdd.getFeeds(Form1.uid);
-
-            for (int i = 0; i != feedslist.Length; i++)
-            {
-                FeedContainer myFeedContainer = new FeedContainer(feedslist[i]);
-                checkedListBox1.Items.Add(myFeedContainer, !feedslist[i].Selected ? CheckState.Unchecked : CheckState.Checked);
-            }
-
             // Load RSS feed
             Feed rssFeed;
             rssFeed = serviceAdd.testRSS();

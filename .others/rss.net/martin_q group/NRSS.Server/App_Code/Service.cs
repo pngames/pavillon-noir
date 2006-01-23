@@ -169,35 +169,6 @@ public class Service : System.Web.Services.WebService
 
 	return feedsToSend;
   }
-
-  #region add
-  [WebMethod]
-  public void addFeed(string uid, Feed feed)
-  {
-	UserManager.Instance.validate(uid);
-
-	BaseDataAccess mgr = new BaseDataAccess();
-	User user = UserManager.Instance.getUser(uid);
-	Group mygroup = mgr.Get(typeof(Group), "Name", user.Email) as Group;
-
-	feed.Groups = new ArrayList();
-	feed.Groups.Add(mygroup);
-
-	mgr.Save(feed);
-  }
-
-  [WebMethod]
-  public void delFeed(string uid, Feed feed)
-  {
-	UserManager.Instance.validate(uid);
-
-	BaseDataAccess mgr = new BaseDataAccess();
-	feed = mgr.Get(typeof(Feed), "Id", feed.Id) as Feed;
-
-	mgr.Delete(feed);
-  }
-
-  #endregion
   #endregion
 
   #region subscribing
@@ -287,7 +258,8 @@ public class Service : System.Web.Services.WebService
 		{
 		  if (feed.Users == null)
 			feed.Users = new ArrayList();
-		  feed.Users.Add(user);
+		  if (!feed.Users.Contains(user))
+			feed.Users.Add(user);
 		}
 		else if (feed.Users != null && feed.Users.Contains(user))
 		{
@@ -324,7 +296,7 @@ public class Service : System.Web.Services.WebService
 	{
 	  tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
 
-	  feed = mgr.Get(typeof(Feed), "Fils", modifiedFeed.Fils) as Feed;
+	  feed = mgr.Get(typeof(Feed), modifiedFeed.Id) as Feed;
 	  User user = UserManager.Instance.getUser(uid);
 
 	  if (feed == null)
@@ -334,7 +306,8 @@ public class Service : System.Web.Services.WebService
 	  {
 		if (feed.Users == null)
 		  feed.Users = new ArrayList();
-		feed.Users.Add(user);
+		if (!feed.Users.Contains(user))
+		  feed.Users.Add(user);
 	  }
 	  else if (feed.Users != null && feed.Users.Contains(user))
 	  {
