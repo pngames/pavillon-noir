@@ -82,10 +82,6 @@ public class Service : System.Web.Services.WebService
   {
 	User user = UserManager.Instance.logon(email, pass);
 
-	if (user.iGroups != null)
-	  foreach (Group group in user.iGroups)
-		group.iUsers = null;
-
 	return user.AutoLog;
   }
 
