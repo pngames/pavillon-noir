@@ -56,7 +56,6 @@ namespace RSSReader
             this.fluxRead_toolStripButton = new System.Windows.Forms.ToolStripButton();
             this.newsRead_toolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.vocalSynthFlux_toolStripButton = new System.Windows.Forms.ToolStripButton();
             this.vocalSynthNews_toolStripButton = new System.Windows.Forms.ToolStripButton();
             this.pause_resumeVocalSynth_toolStripButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -244,7 +243,6 @@ namespace RSSReader
             this.fluxRead_toolStripButton,
             this.newsRead_toolStripButton,
             this.toolStripSeparator3,
-            this.vocalSynthFlux_toolStripButton,
             this.vocalSynthNews_toolStripButton,
             this.pause_resumeVocalSynth_toolStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
@@ -309,17 +307,6 @@ namespace RSSReader
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 36);
-            // 
-            // vocalSynthFlux_toolStripButton
-            // 
-            this.vocalSynthFlux_toolStripButton.Enabled = false;
-            this.vocalSynthFlux_toolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("vocalSynthFlux_toolStripButton.Image")));
-            this.vocalSynthFlux_toolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.vocalSynthFlux_toolStripButton.Name = "vocalSynthFlux_toolStripButton";
-            this.vocalSynthFlux_toolStripButton.Size = new System.Drawing.Size(51, 33);
-            this.vocalSynthFlux_toolStripButton.Text = "Lire Flux";
-            this.vocalSynthFlux_toolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.vocalSynthFlux_toolStripButton.Click += new System.EventHandler(this.vocalSynthFlux_toolStripButton_Click);
             // 
             // vocalSynthNews_toolStripButton
             // 
@@ -629,7 +616,6 @@ namespace RSSReader
         private System.Windows.Forms.ToolStripButton fluxRead_toolStripButton;
         private System.Windows.Forms.ToolStripButton newsRead_toolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripButton vocalSynthFlux_toolStripButton;
         private System.Windows.Forms.ToolStripPanel BottomToolStripPanel;
         private System.Windows.Forms.ToolStripPanel TopToolStripPanel;
         private System.Windows.Forms.ToolStripPanel RightToolStripPanel;

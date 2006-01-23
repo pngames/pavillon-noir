@@ -145,7 +145,7 @@ namespace RSSReader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool useProxy {
             get {
                 return ((bool)(this["useProxy"]));
@@ -176,6 +176,18 @@ namespace RSSReader.Properties {
             }
             set {
                 this["rememberMe"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool nextNewsRead {
+            get {
+                return ((bool)(this["nextNewsRead"]));
+            }
+            set {
+                this["nextNewsRead"] = value;
             }
         }
     }

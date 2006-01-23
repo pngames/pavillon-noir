@@ -30,7 +30,7 @@ namespace RSSReader
                 try
                 {
                     SpVoice voix = new SpVoice();
-                    SpeechVoiceSpeakFlags flags = SpeechVoiceSpeakFlags.SVSFlagsAsync;
+                    SpeechVoiceSpeakFlags flags = SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFPurgeBeforeSpeak;
                    // voix.Voice = voix.GetVoices("", "").Item(Convert.ToInt32(voice_numericUpDown.Value));
 
                     voix.Speak(prononce_textBox.Text, flags);
@@ -46,6 +46,8 @@ namespace RSSReader
         {
             Properties.Settings.Default.synthVolume = Convert.ToInt32(volume_numericUpDown.Value);
             Properties.Settings.Default.synthVoice = Convert.ToInt32(voice_numericUpDown.Value);
+            Properties.Settings.Default.nextNewsRead = nextNewsRead_checkBox.Checked;
+        
             Properties.Settings.Default.Save();
             this.Close();
         }
@@ -54,6 +56,7 @@ namespace RSSReader
         {
             volume_numericUpDown.Value = Properties.Settings.Default.synthVolume;
             voice_numericUpDown.Value = Properties.Settings.Default.synthVoice;
+            nextNewsRead_checkBox.Checked = Properties.Settings.Default.nextNewsRead;
         }
     }
 }

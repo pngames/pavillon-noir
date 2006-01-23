@@ -22,7 +22,7 @@ namespace RSSReader
     
         private Connexion connexionWin = new Connexion();
         private bool _isConnected = false;
-        SpVoice mainVoice = new SpVoice();
+        private SpVoice mainVoice = new SpVoice();
 
         public bool IsConnected
         {
@@ -40,6 +40,7 @@ namespace RSSReader
         private RssFeed _rssFeed = new RssFeed();
         private List<fluxItem> _fluxList = new List<fluxItem>();
         private bool _isUpdating = false;
+        private bool _readStop = false;
        
         #endregion
 
@@ -54,7 +55,7 @@ namespace RSSReader
         private void updateOptions()
         {
             useSystray();
-            main_timer.Interval = Properties.Settings.Default.updateTime * 60 * 1000;
+            main_timer.Interval = Properties.Settings.Default.updateTime * 600 * 1000;
         }
 
         private void RSSReaderMain_Load(object sender, EventArgs e)
@@ -72,6 +73,7 @@ namespace RSSReader
                 connexionWin.FormParent = this;
                 connexionWin.ShowDialog();
             }
+            updateOptions();
         }
 
         private void fillRSSFeed()
@@ -93,14 +95,11 @@ namespace RSSReader
                     }
 
                     _rssFeed = RssFeed.Read(request);
-
-                    //   monItem.Title = System.Web.HttpUtility.HtmlDecode(monItem.Title);
                     err = false;
                 }
                 catch (Exception ex)
                 {
                     err = true;
-                   // System.Windows.Forms.MessageBox.Show(_fluxUrl + " : " + ex.Message, "RssReader", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                 }
                 if (tried > 10)
                     break;
@@ -204,11 +203,11 @@ namespace RSSReader
                 viewItem.Tag = chan;
                 viewItem.Text = chan.Title.ToString();
                 flux_listView.Items.Add(viewItem);
-             
-               /* if (flxItem.isRead == true)
-                    node.NodeFont = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
+
+                if (chan.IsRead == true)
+                    viewItem.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
                 else
-                    node.NodeFont = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold);*/
+                    viewItem.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold);
             }
          //   flux_listView.Items[_lastSelectedFlux.Text].Selected = true;
             status_label.Text = "Status : en attente...";
@@ -223,7 +222,7 @@ namespace RSSReader
                 ListView.SelectedListViewItemCollection itemCol = flux_listView.SelectedItems;
                 if (itemCol.Count == 1)
                 {
-                    vocalSynthFlux_toolStripButton.Enabled = true;
+                  
                     fluxRead_toolStripButton.Enabled = true;
                     updateNewsList((ListViewItem)itemCol[0]);
                 }
@@ -237,7 +236,7 @@ namespace RSSReader
                     newsWebSite_linkLabel.Text = "";
 
                     vocalSynthNews_toolStripButton.Enabled = false;
-                    vocalSynthFlux_toolStripButton.Enabled = true;
+               
                     newsRead_toolStripButton.Enabled = false;
                     fluxRead_toolStripButton.Enabled = true;
                 }
@@ -252,7 +251,7 @@ namespace RSSReader
                     newsWebSite_linkLabel.Text = "";
 
                     vocalSynthNews_toolStripButton.Enabled = false;
-                    vocalSynthFlux_toolStripButton.Enabled = false;
+                
                     newsRead_toolStripButton.Enabled = false;
                     fluxRead_toolStripButton.Enabled = false;
                 }
@@ -377,8 +376,12 @@ namespace RSSReader
             {
                 ListViewItem item1 = new ListViewItem(nwsItem.Title.ToString());
              //   nwsItem.newsListItem = item1;
-                item1.SubItems.Add(nwsItem.PubDate.ToString());
-                item1.SubItems.Add(nwsItem.Author.ToString());
+
+                item1.SubItems.Add(nwsItem.PubDate.ToShortDateString());
+                if (nwsItem.Author.ToString() != "")
+                    item1.SubItems.Add(nwsItem.Author.ToString());
+                else
+                    item1.SubItems.Add("non renseigné");
                 item1.ToolTipText = createNewsTooltip(nwsItem);
                if (nwsItem.IsRead == true)
                     item1.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
@@ -438,50 +441,111 @@ namespace RSSReader
         }
 
         #region Vocal synth
+        private RssChannel getChannelOfItem(RssItem item)
+        {
+            foreach (RssChannel chan in _rssFeed.Channels)
+            {
+                foreach(RssItem items in chan.Items)
+                {
+                    if (items == item)
+                    {
+                        return chan;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private RssChannel getNextChannel(RssChannel chan)
+        {
+            bool tmp = false;
+            foreach (RssChannel chans in _rssFeed.Channels)
+            {
+                if (tmp == true)
+                    return chans;
+                if (chans == chan)
+                {
+                    tmp = true;
+                }
+            }
+            return _rssFeed.Channels[0];
+        }
+
+        private RssItem getNextItem(RssItem item)
+        {
+            RssChannel chan = getChannelOfItem(item);
+            bool tmp = false;
+            foreach (RssItem items in chan.Items)
+            {
+                if (tmp == true)
+                    return items;
+                if (items == item)
+                {
+                    tmp = true;
+                }
+            }
+             chan = getNextChannel(chan);
+            return chan.Items[0];
+        }
+
+        private string readNewsItem(RssItem rssItem)
+        {
+            string sentence = "";
+            if (rssItem.Title != "")
+                sentence += "Titre " + System.Web.HttpUtility.HtmlDecode(rssItem.Title) + ". ";
+            if (rssItem.Author != "")
+                sentence += "Auteur " + System.Web.HttpUtility.HtmlDecode(rssItem.Author) + ". ";
+            if (rssItem.Description != "")
+                sentence += "Description " + System.Web.HttpUtility.HtmlDecode(rssItem.Description) + ". ";
+            if (rssItem.PubDate.ToString() != "")
+                sentence += "Date " + rssItem.PubDate.ToShortDateString() + ". ";
+            return sentence;
+        }
+
         private void vocal_ParseNews(ListView.SelectedListViewItemCollection newsSel)
         {
             string sentence = "";
             bool first = false;
 
-            foreach (ListViewItem item in newsSel)
+            if (newsSel.Count == 1 && Properties.Settings.Default.nextNewsRead == true)
             {
-                RssItem rssItem = (RssItem)item.Tag;
-                if (first == true)
-                    sentence += "News suivante. ";
-                if (rssItem.Title != "")
-                    sentence += "Titre " + System.Web.HttpUtility.HtmlDecode(rssItem.Title) + ". ";
-                if (rssItem.Author != "")
-                    sentence += "Auteur " + System.Web.HttpUtility.HtmlDecode(rssItem.Author) + ". ";
-                if (rssItem.Description != "")
-                    sentence += "Description " + System.Web.HttpUtility.HtmlDecode(rssItem.Description) + ". ";
-                if (rssItem.PubDate.ToString() != "")
-                    sentence += "Date " + rssItem.PubDate.ToShortDateString() + ". ";
-                first = true;
+                RssItem tmpItem = (RssItem)newsSel[0].Tag;
+            //    System.Threading.Thread myThread = new System.Threading.Thread(new System.Threading.ThreadStart(vocal_SpellText(readNewsItem(tmpItem))));
+            //    myThread.Start();
+               // vocal_SpellText(readNewsItem(tmpItem));
+
+                while (_readStop == false)
+                {
+                     vocal_SpellText(readNewsItem(getNextItem(tmpItem)));
+                }
+              
             }
+            else
+            {
+                foreach (ListViewItem item in newsSel)
+                {
+                    RssItem rssItem = (RssItem)item.Tag;
+                    if (first == true)
+                        sentence += "News suivante. ";
+                    sentence = readNewsItem(rssItem);
+                    first = true;
+                }
 
-            vocal_SpellText(sentence);
-          
-        }
-
-        private void vocal_ParseFlux(ListView.SelectedListViewItemCollection fluxSel)
-        {
-
+                vocal_SpellText(sentence);
+            }
         }
 
         private void vocal_SpellText(string text)
         {
             try
             {
-               
                 SpeechVoiceSpeakFlags flags = SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFPurgeBeforeSpeak;
-               // flags = SpeechVoiceSpeakFlags.SVSFPurgeBeforeSpeak;
-                //flags = SpeechVoiceSpeakFlags.SVSFNLPSpeakPunc;
-
                 mainVoice.Volume = Properties.Settings.Default.synthVolume;
-               // voix.Voice = voix.GetVoices("", "").Item(_synthVoice);
-
                 mainVoice.Speak(text, flags);
-              
+
+                int lngHandle = mainVoice.SpeakCompleteEvent();
+                bool lngRtn = mainVoice.WaitUntilDone(System.Threading.Timeout.Infinite);
+                
             }
             catch
             {
@@ -567,12 +631,7 @@ namespace RSSReader
             vocal_ParseNews(itemCol);
         }
 
-        private void vocalSynthFlux_toolStripButton_Click(object sender, EventArgs e)
-        {
-            ListView.SelectedListViewItemCollection itemCol = flux_listView.SelectedItems;
-            vocal_ParseFlux(itemCol);
-        }
-
+      
         private void fluxRead_toolStripButton_Click(object sender, EventArgs e)
         {
 
@@ -602,7 +661,7 @@ namespace RSSReader
             update_toolStripButton.Enabled = false;
             fluxRead_toolStripButton.Enabled = false;
             newsRead_toolStripButton.Enabled = false;
-            vocalSynthFlux_toolStripButton.Enabled = false;
+           
             vocalSynthNews_toolStripButton.Enabled = false;
             webBrowser1.Url = new Uri("about:blank");
             newsSubject_label.Text = "";

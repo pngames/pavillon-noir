@@ -36,6 +36,8 @@ namespace RSSReader
             this.voice_numericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.nextNewsRead_checkBox = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.volume_numericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.voice_numericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -45,13 +47,13 @@ namespace RSSReader
             this.prononce_textBox.Location = new System.Drawing.Point(15, 30);
             this.prononce_textBox.Multiline = true;
             this.prononce_textBox.Name = "prononce_textBox";
-            this.prononce_textBox.Size = new System.Drawing.Size(253, 98);
+            this.prononce_textBox.Size = new System.Drawing.Size(376, 98);
             this.prononce_textBox.TabIndex = 0;
             this.prononce_textBox.Text = "Hello, you are in the configuration window of the vocal synthetiseur.";
             // 
             // prononce_button
             // 
-            this.prononce_button.Location = new System.Drawing.Point(288, 62);
+            this.prononce_button.Location = new System.Drawing.Point(397, 76);
             this.prononce_button.Name = "prononce_button";
             this.prononce_button.Size = new System.Drawing.Size(75, 23);
             this.prononce_button.TabIndex = 1;
@@ -61,7 +63,7 @@ namespace RSSReader
             // 
             // valid_button
             // 
-            this.valid_button.Location = new System.Drawing.Point(288, 105);
+            this.valid_button.Location = new System.Drawing.Point(397, 105);
             this.valid_button.Name = "valid_button";
             this.valid_button.Size = new System.Drawing.Size(75, 23);
             this.valid_button.TabIndex = 2;
@@ -71,7 +73,7 @@ namespace RSSReader
             // 
             // volume_numericUpDown
             // 
-            this.volume_numericUpDown.Location = new System.Drawing.Point(162, 152);
+            this.volume_numericUpDown.Location = new System.Drawing.Point(112, 152);
             this.volume_numericUpDown.Name = "volume_numericUpDown";
             this.volume_numericUpDown.Size = new System.Drawing.Size(75, 20);
             this.volume_numericUpDown.TabIndex = 3;
@@ -93,6 +95,7 @@ namespace RSSReader
             // 
             // voice_numericUpDown
             // 
+            this.voice_numericUpDown.Enabled = false;
             this.voice_numericUpDown.Location = new System.Drawing.Point(15, 152);
             this.voice_numericUpDown.Maximum = new decimal(new int[] {
             3,
@@ -100,7 +103,7 @@ namespace RSSReader
             0,
             0});
             this.voice_numericUpDown.Name = "voice_numericUpDown";
-            this.voice_numericUpDown.Size = new System.Drawing.Size(75, 20);
+            this.voice_numericUpDown.Size = new System.Drawing.Size(88, 20);
             this.voice_numericUpDown.TabIndex = 5;
             this.voice_numericUpDown.Value = new decimal(new int[] {
             2,
@@ -112,7 +115,7 @@ namespace RSSReader
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(159, 136);
+            this.label2.Location = new System.Drawing.Point(109, 136);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 13);
             this.label2.TabIndex = 6;
@@ -121,6 +124,7 @@ namespace RSSReader
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Enabled = false;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(12, 136);
             this.label3.Name = "label3";
@@ -128,11 +132,32 @@ namespace RSSReader
             this.label3.TabIndex = 7;
             this.label3.Text = "Voix à utiliser :";
             // 
+            // nextNewsRead_checkBox
+            // 
+            this.nextNewsRead_checkBox.AutoSize = true;
+            this.nextNewsRead_checkBox.Location = new System.Drawing.Point(201, 154);
+            this.nextNewsRead_checkBox.Name = "nextNewsRead_checkBox";
+            this.nextNewsRead_checkBox.Size = new System.Drawing.Size(15, 14);
+            this.nextNewsRead_checkBox.TabIndex = 8;
+            this.nextNewsRead_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(222, 154);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(255, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Passer automatiquement à la news suivante";
+            // 
             // VocalOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(391, 191);
+            this.ClientSize = new System.Drawing.Size(484, 191);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.nextNewsRead_checkBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.voice_numericUpDown);
@@ -166,5 +191,7 @@ namespace RSSReader
         private System.Windows.Forms.NumericUpDown voice_numericUpDown;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox nextNewsRead_checkBox;
+        private System.Windows.Forms.Label label4;
     }
 }
