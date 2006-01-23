@@ -240,7 +240,7 @@ namespace Rss
         /// </summary>
         public void setHashID()
         {
-            string data = this.WebMaster + this.Rating + this.Generator + this.Docs + this.Description + this.Language + this.PubDate.ToUniversalTime().ToShortTimeString() + this.Title;
+            string data = this.WebMaster + this.Rating + this.Generator + this.Docs + this.Description + this.Language + /*this.PubDate.ToUniversalTime().ToShortTimeString() +*/ this.Title;
             System.Security.Cryptography.MD5CryptoServiceProvider x = new System.Security.Cryptography.MD5CryptoServiceProvider();
             byte[] bs = System.Text.Encoding.UTF8.GetBytes(data);
             bs = x.ComputeHash(bs);

@@ -148,7 +148,7 @@ namespace Rss
         /// </summary>
         public void setHashID()
         {
-            string data = this.Author + this.Description + this.PubDate.ToUniversalTime().ToShortTimeString() + this.Title;
+            string data = this.Author + this.Description /*+ this.PubDate.ToUniversalTime().ToShortTimeString()*/ + this.Title;
 
             System.Security.Cryptography.MD5CryptoServiceProvider x = new System.Security.Cryptography.MD5CryptoServiceProvider();
             byte[] bs = System.Text.Encoding.UTF8.GetBytes(data);
