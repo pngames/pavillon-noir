@@ -18,30 +18,36 @@ namespace RSSReader
     public partial class RSSReaderMain : Form
     {
         #region Private Var
-       
-    
+
+        private KKTRSS_service.Service _mainWebService = new KKTRSS_service.Service();
+
+        private string _sessionID = "";
         private Connexion connexionWin = new Connexion();
         private bool _isConnected = false;
         private SpVoice mainVoice = new SpVoice();
+        private string _fluxUrl = "http://bluegloup.free.fr/news.xml";
+        private ListViewItem _lastSelectedFlux = null;
+        private ListViewItem _lastSelectedNews = null;
+        private RssFeed _rssFeed = new RssFeed();
+        private List<fluxItem> _fluxList = new List<fluxItem>();
+        private bool _isUpdating = false;
+        private bool _readStop = false;
 
         public bool IsConnected
         {
             get { return _isConnected; }
             set { _isConnected = value; }
         }
-     
-
-
-        private string _fluxUrl = "http://bluegloup.free.fr/news.xml";
-
-        private ListViewItem _lastSelectedFlux = null;
-        private ListViewItem _lastSelectedNews = null;
-     
-        private RssFeed _rssFeed = new RssFeed();
-        private List<fluxItem> _fluxList = new List<fluxItem>();
-        private bool _isUpdating = false;
-        private bool _readStop = false;
-       
+        public string SessionID
+        {
+            get { return _sessionID; }
+            set { _sessionID = value; }
+        }
+        public KKTRSS_service.Service MainWebService
+        {
+            get { return _mainWebService; }
+            set { _mainWebService = value; }
+        }
         #endregion
 
 
@@ -73,7 +79,21 @@ namespace RSSReader
                 connexionWin.FormParent = this;
                 connexionWin.ShowDialog();
             }
+
             updateOptions();
+
+            if (_isConnected == true)
+            {
+                statusCnx_toolStripLabel.Text = Properties.Settings.Default.login;
+                update_toolStripButton.Enabled = true;
+                ListFluxToolStripMenuItem.Enabled = true;
+
+                main_timer.Start();
+                main_timer.Tick += new EventHandler(Timer_Tick);
+               
+
+                updateFluxList();
+            }
         }
 
         private void fillRSSFeed()
@@ -82,7 +102,7 @@ namespace RSSReader
             bool err = true;
             int tried = 0;
 
-            while (err == true)
+          /*  while (err == true)
             {
                 try
                 {
@@ -104,10 +124,11 @@ namespace RSSReader
                 if (tried > 10)
                     break;
                 tried++;
-            }
-
-            if (err == true)
-                 System.Windows.Forms.MessageBox.Show("Erreur dans la mise a jour des flux.", "RssReader", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }*/
+            string tmp = _mainWebService.GetMyRssFeed(_sessionID);
+            _rssFeed = RssFeed.ReadFromString(tmp);
+          //  if (err == true)
+           //      System.Windows.Forms.MessageBox.Show("Erreur dans la mise a jour des flux.", "RssReader", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
         }
 
     
@@ -118,7 +139,21 @@ namespace RSSReader
 
         public bool connectionToServer(string login, string mdp)
         {
-            if ((login == "t" && mdp == "t") || (login == "a" && mdp == "a"))
+           _sessionID = _mainWebService.Login(login, mdp);
+            if (_sessionID == null || _sessionID == "")
+                return false;
+            else
+            {
+                _isConnected = true;
+                Properties.Settings.Default.login = login;
+                Properties.Settings.Default.pass = mdp;
+                Properties.Settings.Default.Save();
+              
+                return true;
+            }
+
+
+         /*   if ((login == "t" && mdp == "t") || (login == "a" && mdp == "a"))
             {
                 _isConnected = true;
                 Properties.Settings.Default.login = login;
@@ -137,7 +172,7 @@ namespace RSSReader
             else
             {
                 return false;
-            }
+            }*/
         }
 
         public void Timer_Tick(object sender, EventArgs eArgs)
@@ -192,7 +227,7 @@ namespace RSSReader
              {
                  _lastSelectedFlux = itemCol[0];
              }
-           // news_listView.Items.Clear();
+            news_listView.Items.Clear();
              flux_listView.Items.Clear();
 
             ListViewItem viewItem = null;
@@ -294,9 +329,12 @@ namespace RSSReader
                     newsDate_label.Text = itemSel.PubDate.ToString();
                     newsFrom_label.Text = itemSel.Author.ToString();
                     newsWebSite_linkLabel.Text = itemSel.Link.ToString();
-                    
-                    item.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
-                    itemSel.IsRead = true;
+
+                    if (_mainWebService.MarkAsRead(_sessionID, itemSel.HashID) == true)
+                    {
+                        item.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
+                        itemSel.IsRead = true;
+                    }
                 }
                 vocalSynthNews_toolStripButton.Enabled = true;
                 newsRead_toolStripButton.Enabled = true;
@@ -382,8 +420,10 @@ namespace RSSReader
                     item1.SubItems.Add(nwsItem.Author.ToString());
                 else
                     item1.SubItems.Add("non renseigné");
+
                 item1.ToolTipText = createNewsTooltip(nwsItem);
-               if (nwsItem.IsRead == true)
+              
+                if (nwsItem.IsRead == true)
                     item1.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
                 else
                     item1.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold);
@@ -585,7 +625,11 @@ namespace RSSReader
         {
             connexionWin.FormParent = this;
             connexionWin.ShowDialog();
-            
+
+            statusCnx_toolStripLabel.Text = Properties.Settings.Default.login;
+            update_toolStripButton.Enabled = true;
+            ListFluxToolStripMenuItem.Enabled = true;
+            updateFluxList();
         }
 
         private void vocalSynth_toolStripButton_Click(object sender, EventArgs e)
@@ -634,12 +678,33 @@ namespace RSSReader
       
         private void fluxRead_toolStripButton_Click(object sender, EventArgs e)
         {
+            ListView.SelectedListViewItemCollection fluxCol = flux_listView.SelectedItems;
+            foreach (ListViewItem flux in fluxCol)
+            {
+                flux.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
+                RssChannel tmpFlux = (RssChannel)flux.Tag;
+                tmpFlux.IsRead = true;
+                foreach (RssItem item in tmpFlux.Items)
+                {
+                    // TODO get listViewItem by RssItem
+                    //item.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
+                    item.IsRead = true;
+                }
+            }
 
         }
 
         private void newsRead_toolStripButton_Click(object sender, EventArgs e)
         {
+            ListView.SelectedListViewItemCollection itemCol = news_listView.SelectedItems;
 
+            foreach (ListViewItem item in itemCol)
+            {
+                // TODO tester toutes les news affichees et si elles sont toutes lues marquer le flux comme lu 
+                item.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
+                RssItem tmpItem = (RssItem)item.Tag;
+                tmpItem.IsRead = true;
+            }
         }
 
      
@@ -652,6 +717,7 @@ namespace RSSReader
                 Properties.Settings.Default.login = "";
             }
             Properties.Settings.Default.Save();
+            
         }
 
         private void deconnexionToolStripMenuItem_Click(object sender, EventArgs e)

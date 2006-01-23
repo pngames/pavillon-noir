@@ -20,6 +20,7 @@ namespace RSSScreenSaver
                 {
                     case "/c":
                         // Show the options dialog
+                        Application.EnableVisualStyles();
                         ShowOptions();
                         break;
                     case "/p":

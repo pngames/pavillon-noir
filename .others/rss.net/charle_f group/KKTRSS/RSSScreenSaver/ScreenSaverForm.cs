@@ -142,12 +142,13 @@ namespace RSSScreenSaver
 
         private bool connectToServer(string log, string pass)
         {
-            bool err = true;
-            if (log != "t")
-                err = false;
-            if (pass != "t")
-                err = false;
-            return err;
+            KKTRSS_service.Service service = new KKTRSS_service.Service();
+            if (service.Login(log, pass) != "")
+            {
+                return true;
+            }
+            else
+                return false;
         }
 
         private void LoadRssFeed()

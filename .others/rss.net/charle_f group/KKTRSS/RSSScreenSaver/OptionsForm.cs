@@ -7,8 +7,16 @@ using System.Windows.Forms;
 
 namespace RSSScreenSaver
 {
-    partial class OptionsForm : Form
+    public partial class OptionsForm : Form
     {
+        private KKTRSS_service.Service _mainWebService = new KKTRSS_service.Service();
+
+        public KKTRSS_service.Service MainWebService
+        {
+            get { return _mainWebService; }
+            set { _mainWebService = value; }
+        }
+
         public OptionsForm()
         {
             InitializeComponent();
@@ -22,11 +30,11 @@ namespace RSSScreenSaver
         // Apply all the changes since apply button was last pressed
         private bool ApplyChanges()
         {
-           
-                Properties.Settings.Default.Login = login_textBox.Text;
-                Properties.Settings.Default.Pass = pass_textBox.Text;
 
-                Properties.Settings.Default.FadeTime = Convert.ToInt32(fade_numericUpDown.Value);
+            Properties.Settings.Default.Login = login_textBox.Text;
+            Properties.Settings.Default.Pass = pass_textBox.Text;
+
+            Properties.Settings.Default.FadeTime = Convert.ToInt32(fade_numericUpDown.Value);
             Properties.Settings.Default.UseProxy = useProxy_checkBox.Checked;
             bool err = false;
             if (useProxy_checkBox.Checked == true)
@@ -74,11 +82,11 @@ namespace RSSScreenSaver
 
         private void OptionsForm_Load(object sender, EventArgs e)
         {
-         
-                login_textBox.Text = Properties.Settings.Default.Login;
-                pass_textBox.Text = Properties.Settings.Default.Pass;
-                fade_numericUpDown.Value = Properties.Settings.Default.FadeTime;
-           
+
+            login_textBox.Text = Properties.Settings.Default.Login;
+            pass_textBox.Text = Properties.Settings.Default.Pass;
+            fade_numericUpDown.Value = Properties.Settings.Default.FadeTime;
+
 
             useProxy_checkBox.Checked = Properties.Settings.Default.UseProxy;
             proxyLogin_textBox.Text = Properties.Settings.Default.ProxyLogin;
@@ -134,6 +142,51 @@ namespace RSSScreenSaver
                 label3.Enabled = false;
                 label4.Enabled = false;
                 label5.Enabled = false;
+            }
+        }
+
+        private void testConn_button_Click(object sender, EventArgs e)
+        {
+            if (login_textBox.Text != "" && pass_textBox.Text != "")
+            {
+               
+                if (_mainWebService.Login(login_textBox.Text, pass_textBox.Text) == "")
+                {
+                    string caption = "Information incorrecte.";
+                    string message = "Votre Email est incorrect ou votre mot de passe ne correspond pas.";
+
+                    MessageBoxButtons buttons = MessageBoxButtons.OK;
+                    MessageBox.Show(message, caption, buttons);
+                }
+                else
+                {
+                    string caption = "Informations correctes.";
+                    string message = "Votre compte marche correctement.";
+
+                    MessageBoxButtons buttons = MessageBoxButtons.OK;
+                    MessageBox.Show(message, caption, buttons);
+                }
+            }
+        }
+
+        private void newAccount_button_Click(object sender, EventArgs e)
+        {
+            Register registerWin = new Register();
+            registerWin.FormParent = this;
+            registerWin.ShowDialog();
+        }
+
+        public bool connectionToServer(string login, string pass)
+        {
+            if (_mainWebService.Login(login, pass) == "")
+            {
+                return false;
+            }
+            else
+            {
+                login_textBox.Text = login;
+                pass_textBox.Text = pass;
+                return true;
             }
         }
     }

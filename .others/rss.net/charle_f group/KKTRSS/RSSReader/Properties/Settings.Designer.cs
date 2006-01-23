@@ -145,7 +145,7 @@ namespace RSSReader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool useProxy {
             get {
                 return ((bool)(this["useProxy"]));
@@ -188,6 +188,16 @@ namespace RSSReader.Properties {
             }
             set {
                 this["nextNewsRead"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:3527/KKTRSS.Server/Service.asmx")]
+        public string RSSReader_KKTRSS_service_Service {
+            get {
+                return ((string)(this["RSSReader_KKTRSS_service_Service"]));
             }
         }
     }

@@ -47,8 +47,10 @@ namespace RSSScreenSaver
             this.label3 = new System.Windows.Forms.Label();
             this.proxyLogin_textBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.fade_numericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
+            this.fade_numericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.testConn_button = new System.Windows.Forms.Button();
+            this.newAccount_button = new System.Windows.Forms.Button();
             this.account_groupBox.SuspendLayout();
             this.proxy_groupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -58,7 +60,7 @@ namespace RSSScreenSaver
             // okButton
             // 
             this.okButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.okButton.Location = new System.Drawing.Point(266, 298);
+            this.okButton.Location = new System.Drawing.Point(291, 260);
             this.okButton.Margin = new System.Windows.Forms.Padding(3, 3, 2, 3);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
@@ -69,7 +71,7 @@ namespace RSSScreenSaver
             // cancelButton
             // 
             this.cancelButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.cancelButton.Location = new System.Drawing.Point(185, 298);
+            this.cancelButton.Location = new System.Drawing.Point(210, 260);
             this.cancelButton.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
@@ -84,13 +86,15 @@ namespace RSSScreenSaver
             // account_groupBox
             // 
             this.account_groupBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.account_groupBox.Controls.Add(this.newAccount_button);
+            this.account_groupBox.Controls.Add(this.testConn_button);
             this.account_groupBox.Controls.Add(this.label1);
             this.account_groupBox.Controls.Add(this.pass_textBox);
             this.account_groupBox.Controls.Add(this.login_label);
             this.account_groupBox.Controls.Add(this.login_textBox);
-            this.account_groupBox.Location = new System.Drawing.Point(11, 12);
+            this.account_groupBox.Location = new System.Drawing.Point(11, 1);
             this.account_groupBox.Name = "account_groupBox";
-            this.account_groupBox.Size = new System.Drawing.Size(356, 77);
+            this.account_groupBox.Size = new System.Drawing.Size(355, 77);
             this.account_groupBox.TabIndex = 5;
             this.account_groupBox.TabStop = false;
             this.account_groupBox.Text = "Compte";
@@ -109,7 +113,7 @@ namespace RSSScreenSaver
             this.pass_textBox.Location = new System.Drawing.Point(85, 45);
             this.pass_textBox.Name = "pass_textBox";
             this.pass_textBox.PasswordChar = '*';
-            this.pass_textBox.Size = new System.Drawing.Size(155, 20);
+            this.pass_textBox.Size = new System.Drawing.Size(132, 20);
             this.pass_textBox.TabIndex = 3;
             // 
             // login_label
@@ -125,7 +129,7 @@ namespace RSSScreenSaver
             // 
             this.login_textBox.Location = new System.Drawing.Point(85, 19);
             this.login_textBox.Name = "login_textBox";
-            this.login_textBox.Size = new System.Drawing.Size(155, 20);
+            this.login_textBox.Size = new System.Drawing.Size(132, 20);
             this.login_textBox.TabIndex = 0;
             // 
             // proxy_groupBox
@@ -140,9 +144,9 @@ namespace RSSScreenSaver
             this.proxy_groupBox.Controls.Add(this.proxyPass_textBox);
             this.proxy_groupBox.Controls.Add(this.label3);
             this.proxy_groupBox.Controls.Add(this.proxyLogin_textBox);
-            this.proxy_groupBox.Location = new System.Drawing.Point(12, 95);
+            this.proxy_groupBox.Location = new System.Drawing.Point(12, 87);
             this.proxy_groupBox.Name = "proxy_groupBox";
-            this.proxy_groupBox.Size = new System.Drawing.Size(356, 100);
+            this.proxy_groupBox.Size = new System.Drawing.Size(355, 100);
             this.proxy_groupBox.TabIndex = 6;
             this.proxy_groupBox.TabStop = false;
             this.proxy_groupBox.Text = "Proxy";
@@ -227,12 +231,21 @@ namespace RSSScreenSaver
             // 
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.fade_numericUpDown);
-            this.groupBox1.Location = new System.Drawing.Point(12, 201);
+            this.groupBox1.Location = new System.Drawing.Point(12, 197);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(355, 91);
+            this.groupBox1.Size = new System.Drawing.Size(355, 54);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Divers";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(194, 23);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(79, 13);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Fade Time (ms)";
             // 
             // fade_numericUpDown
             // 
@@ -261,20 +274,31 @@ namespace RSSScreenSaver
             0,
             0});
             // 
-            // label6
+            // testConn_button
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(194, 23);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(79, 13);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Fade Time (ms)";
+            this.testConn_button.Location = new System.Drawing.Point(234, 17);
+            this.testConn_button.Name = "testConn_button";
+            this.testConn_button.Size = new System.Drawing.Size(105, 23);
+            this.testConn_button.TabIndex = 5;
+            this.testConn_button.Text = "Tester";
+            this.testConn_button.UseVisualStyleBackColor = true;
+            this.testConn_button.Click += new System.EventHandler(this.testConn_button_Click);
+            // 
+            // newAccount_button
+            // 
+            this.newAccount_button.Location = new System.Drawing.Point(234, 43);
+            this.newAccount_button.Name = "newAccount_button";
+            this.newAccount_button.Size = new System.Drawing.Size(105, 23);
+            this.newAccount_button.TabIndex = 6;
+            this.newAccount_button.Text = "Nouveau compte";
+            this.newAccount_button.UseVisualStyleBackColor = true;
+            this.newAccount_button.Click += new System.EventHandler(this.newAccount_button_Click);
             // 
             // OptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(379, 329);
+            this.ClientSize = new System.Drawing.Size(379, 295);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.account_groupBox);
             this.Controls.Add(this.proxy_groupBox);
@@ -282,6 +306,7 @@ namespace RSSScreenSaver
             this.Controls.Add(this.okButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "OptionsForm";
             this.Padding = new System.Windows.Forms.Padding(9);
             this.ShowIcon = false;
@@ -322,5 +347,7 @@ namespace RSSScreenSaver
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.NumericUpDown fade_numericUpDown;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button newAccount_button;
+        private System.Windows.Forms.Button testConn_button;
     }
 }

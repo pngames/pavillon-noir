@@ -64,8 +64,19 @@ namespace RSSReader
 
             if (err == false)
             {
-                Configuration.Instance.IsConnected = true;
-                this.Close();
+                if (frmParent.MainWebService.Register(email_textBox.Text, mdp_textBox.Text) != "")
+                {
+                    if (frmParent.connectionToServer(email_textBox.Text, mdp_textBox.Text) == false)
+                    {
+                        string caption = "Compte non active.";
+                        string message = "Votre compte n'est pas encore active.";
+
+                        MessageBoxButtons buttons = MessageBoxButtons.OK;
+                        MessageBox.Show(message, caption, buttons);
+                    }
+                    else
+                        this.Close();
+                }
             }
         }
     }

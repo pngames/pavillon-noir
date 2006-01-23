@@ -32,5 +32,8 @@
     <Setting Name="FadeTime" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
+    <Setting Name="RSSScreenSaver_KKTRSS_service_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost:2047/KKTRSS.Server/Service.asmx</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

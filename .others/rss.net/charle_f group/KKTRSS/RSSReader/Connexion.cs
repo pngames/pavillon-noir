@@ -76,9 +76,11 @@ namespace RSSReader
                 else
                 {
                     Properties.Settings.Default.rememberMe = rememberMe_checkBox.Checked;
+                    Properties.Settings.Default.Save();
                     this.Close();
                 }
             }
+            
         }
 
         public void register_button_Click(object sender, EventArgs e)

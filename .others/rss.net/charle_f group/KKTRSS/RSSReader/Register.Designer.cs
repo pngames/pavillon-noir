@@ -42,7 +42,7 @@ namespace RSSReader
             // 
             this.valid_button.Location = new System.Drawing.Point(174, 112);
             this.valid_button.Name = "valid_button";
-            this.valid_button.Size = new System.Drawing.Size(75, 23);
+            this.valid_button.Size = new System.Drawing.Size(91, 23);
             this.valid_button.TabIndex = 3;
             this.valid_button.Text = "S\'enregistrer";
             this.valid_button.UseVisualStyleBackColor = true;
