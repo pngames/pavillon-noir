@@ -199,36 +199,29 @@ public class Service : System.Web.Services.WebService
 	UserManager.Instance.validate(uid);
 
 	Dictionary<string, Feed> feedMap = new Dictionary<string,Feed>();
-	Dictionary<string, Chan> chanMap = new Dictionary<string, Chan>();
 
 	foreach (Feed feed in feeds)
-	{
-	  if (feed.Chans != null)
-		foreach (Chan chan in feed.Chans)
-		  chanMap[chan.Title] = chan;
-
 	  feedMap[feed.Fils] = feed;
-	}
 
 	BaseDataAccess mgr = new BaseDataAccess();
 	User user = UserManager.Instance.getUser(uid);
-	Group mygroup = mgr.Get(typeof(Group), "Name", user.Email) as Group;
-	IList myfeeds = mgr.Get(typeof(Feed));
 
-	foreach (Feed feed in myfeeds)
+	foreach (Feed feed in mgr.Get(typeof(Feed)))
 	{
-	  Importer.updateFeed(feed);
+	  feed.Selected = feedMap[feed.Fils].Selected;
 
 	  if (feed.Selected)
 	  {
-		if (feed.Groups == null)
-		  feed.Groups = new ArrayList();
-		feed.Groups.Add(mygroup);
+		if (feed.Users == null)
+		  feed.Users = new ArrayList();
+		feed.Users.Add(user);
 	  }
-	  else if (feed.Groups != null && feed.Groups.Contains(mygroup))
+	  else if (feed.Users != null && feed.Users.Contains(user))
 	  {
-		feed.Groups.Remove(mygroup);
+		feed.Users.Remove(user);
 	  }
+
+	  mgr.Save(feed);
 	}
   }
   #endregion
