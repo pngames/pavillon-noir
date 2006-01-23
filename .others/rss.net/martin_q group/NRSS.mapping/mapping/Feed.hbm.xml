@@ -16,12 +16,17 @@
 
     <bag name="iChans" inverse="true" cascade="all" order-by="Title">
       <key column="feed_id" />
-      <one-to-many class="NRSS.mapping.Item, NRSS.mapping" />
+      <one-to-many class="NRSS.mapping.Chan, NRSS.mapping" />
     </bag>
 
     <bag name="Groups" table="group_feed" lazy="true">
       <key column="feed_id" />
-      <many-to-many class="NRSS.mapping.Feed, NRSS.mapping" column="Id" />
+      <many-to-many class="NRSS.mapping.Group, NRSS.mapping" column="group_id" />
+    </bag>
+
+    <bag name="Users" table="user_feed" lazy="true">
+      <key column="feed_id" />
+      <many-to-many class="NRSS.mapping.User, NRSS.mapping" column="user_id" />
     </bag>
   </class>
 </hibernate-mapping>

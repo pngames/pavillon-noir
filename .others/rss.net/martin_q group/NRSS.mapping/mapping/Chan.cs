@@ -57,8 +57,6 @@ namespace NRSS.mapping
 	private Feed _feed;
 	private IList _items;
 
-	private IList _groups;
-
 	[XmlIgnore]
 	public Feed Feed
 	{

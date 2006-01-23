@@ -42,7 +42,6 @@ namespace NRSS.mapping
 	private IList _users;
 
 	private IList _feeds;
-	private IList _chans;
 
 	[XmlIgnore]
 	public IList iUsers

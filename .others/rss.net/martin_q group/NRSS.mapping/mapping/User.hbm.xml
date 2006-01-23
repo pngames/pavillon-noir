@@ -22,5 +22,10 @@
       <key column="user_id" />
       <many-to-many class="NRSS.mapping.Item, NRSS.mapping" column="item_id" />
     </bag>
+
+    <bag name="Feeds" table="user_feed" lazy="true">
+      <key column="user_id" />
+      <many-to-many class="NRSS.mapping.Feed, NRSS.mapping" column="feed_id" />
+    </bag>
   </class>
 </hibernate-mapping>

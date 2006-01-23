@@ -158,11 +158,12 @@ public class Service : System.Web.Services.WebService
   #region subscribing
   [WebMethod]
   [XmlInclude(typeof(Feed))]
-  public IList getAllFeeds(string uid)
+  public List<Feed> getAllFeeds(string uid)
   {
 	UserManager.Instance.validate(uid);
 
 	BaseDataAccess mgr = new BaseDataAccess();
+	List<Feed> feedsToSend = new List<Feed>();
 	IList feeds = mgr.Get(typeof(Feed));
 
 	User user = UserManager.Instance.getUser(uid);
@@ -176,6 +177,7 @@ public class Service : System.Web.Services.WebService
 	  {
 		if (mygroups.Contains(group))
 		{
+		  feedsToSend.Add(feed);
 		  feed.Selected = true;
 		  break;
 		}
@@ -186,7 +188,7 @@ public class Service : System.Web.Services.WebService
 	  feed.Chans = null;
 	}
 
-	return feeds;
+	return feedsToSend;
   }
 
   [WebMethod]
