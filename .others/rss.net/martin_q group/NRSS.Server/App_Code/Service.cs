@@ -60,12 +60,6 @@ public class Service : System.Web.Services.WebService
 
 	createUser(user);
   }
-
-  [WebMethod]
-  public void testAbonnement()
-  {
-	
-  }
   #endregion
 
   //////////////////////////////////////////////////////////////////////////
@@ -200,48 +194,61 @@ public class Service : System.Web.Services.WebService
 	return feeds;
   }
 
-  /*[WebMethod]
+  [WebMethod]
   [XmlInclude(typeof(Feed))]
-  public void updateFeedsSubscibe(string uid, ArrayList Feeds)
+  public void updateFeedsSubscibe(string uid, ArrayList feeds)
   {
 	UserManager.Instance.validate(uid);
 
+	Dictionary<string, Feed> feedMap = new Dictionary<string,Feed>();
+	Dictionary<string, Chan> chanMap = new Dictionary<string, Chan>();
+
 	foreach (Feed feed in feeds)
+	{
+	  if (feed.Chans != null)
+		foreach (Chan chan in feed.Chans)
+		  chanMap[chan.Title] = chan;
+
+	  feedMap[feed.Fils] = feed;
+	}
+
+	BaseDataAccess mgr = new BaseDataAccess();
+	User user = UserManager.Instance.getUser(uid);
+	Group mygroup = mgr.Get(typeof(Group), "Name", user.Email) as Group;
+	IList myfeeds = mgr.Get(typeof(Feed));
+
+	foreach (Feed feed in myfeeds)
 	{
 	  Importer.updateFeed(feed);
 
 	  #region chans
 	  foreach (Chan chan in feed.iChans)
 	  {
-		foreach (Group group in chan.Groups)
+		if (chan.Selected)
 		{
-		  if (mygroups.Contains(group))
-		  {
-			chan.Selected = true;
-			break;
-		  }
-
-		  chan.Selected = false;
+		  if (chan.Groups == null)
+			chan.Groups = new ArrayList();
+		  chan.Groups.Add(mygroup);
 		}
-
-		chan.iItems = null;
+		else if (chan.Groups != null && chan.Groups.Contains(mygroup))
+		{
+		  chan.Groups.Remove(mygroup);
+		}
 	  }
 	  #endregion
 
-	  foreach (Group group in feed.Groups)
+	  if (feed.Selected)
 	  {
-		if (mygroups.Contains(group))
-		{
-		  feed.Selected = true;
-		  break;
-		}
-
-		feed.Selected = false;
+		if (feed.Groups == null)
+		  feed.Groups = new ArrayList();
+		feed.Groups.Add(mygroup);
+	  }
+	  else if (feed.Groups != null && feed.Groups.Contains(mygroup))
+	  {
+		feed.Groups.Remove(mygroup);
 	  }
 	}
-
-	return feeds;
-  }*/
+  }
 
   //////////////////////////////////////////////////////////////////////////
 
