@@ -61,6 +61,10 @@
       <Project>{BDB112DD-018D-4D7A-B4D9-898111D373CE}</Project>
       <Name>KKTRSS.ServerHelpers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RSS.NET\RSS.NET.csproj">
+      <Project>{C42FC014-7E12-4FAF-9BC9-79BF1529440D}</Project>
+      <Name>RSS.NET</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Account.hbm.xml" />

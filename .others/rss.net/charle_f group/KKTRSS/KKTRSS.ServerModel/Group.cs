@@ -46,6 +46,7 @@ namespace KKTRSS.Server.Model
         }
         /*********************************************************************/
         private IList _rssFeedRefs;
+        [XmlIgnore]
         public IList RssFeedRefs
         {
             get { return _rssFeedRefs; }

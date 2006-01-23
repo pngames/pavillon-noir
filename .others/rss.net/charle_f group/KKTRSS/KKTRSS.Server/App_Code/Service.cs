@@ -8,13 +8,17 @@ using NHibernate;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using Rss;
+using System.Net;
+using System.IO;
 
 
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 public class Service : System.Web.Services.WebService
 {
-    public Service () {
+    public Service()
+    {
 
         //Uncomment the following line if using designed components 
         //InitializeComponent(); 
@@ -26,7 +30,7 @@ public class Service : System.Web.Services.WebService
         Account acc = null;
         try
         {
-            acc = (Account) NHibernateHttpModule.CurrentSession
+            acc = (Account)NHibernateHttpModule.CurrentSession
                 .CreateQuery("FROM Account acc WHERE acc.Autologin=?")
                 .SetString(0, anAutologin)
                 .UniqueResult();
@@ -38,7 +42,7 @@ public class Service : System.Web.Services.WebService
         return (acc != null);
     }
 
-    private Account  GetRegistered(string anAutologin)
+    private Account GetRegistered(string anAutologin)
     {
         Account acc = null;
         try
@@ -56,10 +60,13 @@ public class Service : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public string GenerateShema() {
-        KKTRSS.Server.Helpers.DataAccess.SchemaUtility.ExportSchema() ;
+    public string GenerateShema()
+    {
+        KKTRSS.Server.Helpers.DataAccess.SchemaUtility.ExportSchema();
+        Register("default", "kkt");
+
         return "Generation successfull";
-        
+
     }
 
     [WebMethod]
@@ -99,42 +106,98 @@ public class Service : System.Web.Services.WebService
         {
             throw e;
         }
-        
+
         if (acc == null)
             return "";
         return acc.Autologin;
     }
 
     [WebMethod]
-    public int[] ListAvailableRssFeedsInGroup(string sessionId, int groupId)
-    {
-        int[] ret = {1, 2};
-        return ret;
-    }
-
-    [WebMethod]
-    public int[] ListAvailableRssFeeds(string sessionId)
-    {
-        return ListAvailableRssFeedsInGroup(sessionId, 0);
-    }
-
-    [WebMethod]
-    public System.Collections.ArrayList RssFeedSubscribe(string sessionId, int RssRlowId)
-    {
-        return new System.Collections.ArrayList();
-    }
-
-    [WebMethod]
-    public bool RssFeedUnSubscribe(string sessionId, int RssFeedId)
-    {
-        return false;
-    }
-
-    [WebMethod]
-    public int[] GetMyRssFeedIdList(string sessionId)
+    public IList ListAvailableRssFeedsInGroup(string sessionId, int groupId)
     {
         int[] ret = { 1, 2 };
         return ret;
+    }
+
+    [WebMethod]
+    [System.Xml.Serialization.XmlInclude(typeof(KKTRSS.Server.Model.RssFeedRef))]
+    public IList ListAvailableRssFeeds(string sessionId)
+    {
+        if (IsRegistered(sessionId) == false)
+            return null;
+        IList feedList = null;
+        feedList = NHibernateHttpModule.CurrentSession
+        .CreateQuery("from RssFeedRef rfr where rfr.Group=?")
+        .SetEntity(0, GetDefaultGroup())
+        .List();
+        foreach (RssFeedRef it in feedList)
+        {
+            it.RssCache = "";
+        }
+        return feedList;
+    }
+
+
+
+    [WebMethod]
+    public bool RssFeedSubscribe(string sessionId, long RssFeedId)
+    {
+        Account acc = GetRegistered(sessionId);
+        if (acc == null)
+            return false;
+        try
+        {
+
+            NHibernateHttpModule.BeginTranaction();
+            RssFeedRef rfr = new RssFeedRef();
+            NHibernateHttpModule.CurrentSession.Load(rfr, RssFeedId);
+            if (rfr == null)
+            {
+                NHibernateHttpModule.RollbackTransaction();
+                return false;
+            }
+            acc.SubscribedRssFeeds.Add(rfr);
+            NHibernateHttpModule.CurrentSession.Update(acc);
+            NHibernateHttpModule.CommitTranction();
+        }
+        catch(HibernateException e)
+        {
+            NHibernateHttpModule.RollbackTransaction();
+            return false;
+        }
+        return true;
+    }
+
+    [WebMethod]
+    public string GetMyRssFeed(string sessionId)
+    {
+        Account acc = GetRegistered(sessionId);
+        if (acc == null)
+            return null;
+        RssFeed MyFeed = new RssFeed();
+        IList myRssFeeds = acc.SubscribedRssFeeds;
+        foreach (RssFeedRef it in myRssFeeds)
+        {
+            RssFeed tmp = RssFeed.ReadFromString(it.RssCache);
+            foreach (RssChannel chan in tmp.Channels)
+            {
+                MyFeed.Channels.Add(chan);
+            }
+        }
+        MyFeed.Write(@"" + acc.Autologin + "temp.file");
+        StreamReader sr = new StreamReader(@"" + acc.Autologin + "temp.file");
+        MemoryStream ms = new MemoryStream();
+        MyFeed.Write(ms);
+        string line = sr.ReadLine();
+        while (sr.EndOfStream == false)
+        {
+            line += sr.ReadLine();
+        }
+
+        sr.Close();
+
+        return line;
+
     }
 
     [WebMethod]
@@ -156,6 +219,7 @@ public class Service : System.Web.Services.WebService
     }
 
     [WebMethod]
+    [System.Xml.Serialization.XmlInclude(typeof(KKTRSS.Server.Model.Group))]
     public IList GetMyGroupList(string sessionId)
     {
         IList ret = null;
@@ -164,7 +228,7 @@ public class Service : System.Web.Services.WebService
         {
             if ((acc = GetRegistered(sessionId)) == null)
                 return ret;
-            ret = (IList)acc.Groups;
+            ret = new ArrayList(acc.Groups);
         }
         catch (HibernateException e)
         {
@@ -180,6 +244,64 @@ public class Service : System.Web.Services.WebService
         return ret;
     }
 
+    [WebMethod]
+    public Boolean ImportRssFeed(string autologin, string url, string name, string grpId, Boolean isPrivate)
+    {
+        if (autologin == null || autologin == "" || url == null || url == "")
+            return false;
+        Account acc = null;
+        RssFeedRef rssRef = new RssFeedRef();
+        Group grp = null;
+        try
+        {
+            NHibernateHttpModule.BeginTranaction();
+            if (grpId == null || grpId == "")
+            {
+                acc = (Account)NHibernateHttpModule.CurrentSession
+                  .CreateQuery("from Account acc where acc.Autologin=?")
+                  .SetString(0, autologin)
+                  .UniqueResult();
 
+                if (isPrivate == false)
+                {
+                    grp = GetDefaultGroup();
+                }
+                else
+                {
+                    grp = GetMainUserGroup(acc.Email);
+                }
+            }
+            else
+            {
+                grp = GetDefaultGroup();
+            }
+            rssRef.Group = grp;
+            rssRef.Url = url;
+            rssRef.Name = name;
+            NHibernateHttpModule.CurrentSession.Save(rssRef);
+            NHibernateHttpModule.CommitTranction();
+        }
+        catch (HibernateException e)
+        {
+            NHibernateHttpModule.RollbackTransaction();
+            return false;
+        }
+        return true;
+    }
+
+    private Group GetDefaultGroup()
+    {
+        return (Group)NHibernateHttpModule.CurrentSession
+                       .CreateQuery("from Group grp where grp.Name='default'")
+                       .UniqueResult();
+    }
+
+    private Group GetMainUserGroup(string email)
+    {
+        return (Group)NHibernateHttpModule.CurrentSession
+                       .CreateQuery("from Group grp where grp.Name=?")
+                       .SetString(0, email)
+                       .UniqueResult();
+    }
 
 }

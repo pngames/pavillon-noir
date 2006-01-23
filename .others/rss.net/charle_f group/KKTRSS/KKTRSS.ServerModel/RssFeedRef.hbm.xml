@@ -14,6 +14,7 @@
     <property name="CreationDate" type="DateTime" />
     <property name="LastUpdate" type="DateTime" />
     <property name="Url" type="String" />
+    <property name="RssCache" type="StringClob" />
     
     <many-to-one name="Group" class="KKTRSS.Server.Model.Group, KKTRSS.ServerModel" column="fk_group_id"/>
 
