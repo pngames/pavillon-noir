@@ -17,14 +17,6 @@ using System.Xml.Serialization;
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 public class Service : System.Web.Services.WebService
 {
-  public AuthHeader Authentication;
-
-  public class AuthHeader : SoapHeader
-  {
-	public string Username;
-	public string Password;
-  }
-
   public Service()
   { }
 
@@ -55,28 +47,12 @@ public class Service : System.Web.Services.WebService
   {
 	User user = new User();
 
-	user.Email = "ttttt";
-	user.Passwd = "ppppp";
+	user.Email = "user";
+	user.Passwd = "pass";
 
 	createUser(user);
   }
   #endregion
-
-  //////////////////////////////////////////////////////////////////////////
-  // Supported types
-
-  [WebMethod]
-  public List<ImportType> getSupportedTypes()
-  {
-	List<ImportType> types = new List<ImportType>();
-
-	foreach (KeyValuePair<string, Importer> pair in Importer.Importers)
-	{
-	  types.Add(pair.Value.Type);
-	}
-
-	return types;
-  }
 
   //////////////////////////////////////////////////////////////////////////
   // User management

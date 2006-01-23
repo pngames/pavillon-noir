@@ -5,6 +5,7 @@ using NHibernate.Cfg;
 using System.Reflection;
 using System.IO;
 using NHibernate.Tool.hbm2ddl;
+using NRSS.mapping;
 
 namespace NRSS.Server.DataAccess
 {
@@ -13,6 +14,7 @@ namespace NRSS.Server.DataAccess
   {
 	// this is only used if not running in HttpModule mode
 	protected static ISessionFactory m_factory;
+	protected static bool _newbdd = false;
 
 	// this is only used if not running in HttpModule mode
 	private static ISession m_session;
@@ -79,6 +81,8 @@ namespace NRSS.Server.DataAccess
 
 	  if (!File.Exists(@".\nrss.db"))
 	  {
+		_newbdd = true;
+
 		config.SetProperty(@"hibernate.connection.connection_string", @"Data Source=.\nrss.db;Version=3;New=True");
 
 		config.Configure();
@@ -149,6 +153,8 @@ namespace NRSS.Server.DataAccess
 	  ISessionFactory factory;
 	  ISession session;
 
+	  _newbdd = false;
+
 	  factory = NHibernateHttpModule.CurrentFactory;
 
 	  if (factory == null)
@@ -161,6 +167,43 @@ namespace NRSS.Server.DataAccess
 	  if (session == null)
 	  {
 		throw new InvalidOperationException("Call to factory.OpenSession() returned null.");
+	  }
+
+	  if (_newbdd)
+	  {
+		ITransaction tx = null;
+
+		try
+		{
+		  tx = session.BeginTransaction();
+
+		  Feed feed1 = new Feed();
+		  feed1.Type = "rss";
+		  feed1.Fils = "http://pisani.blog.lemonde.fr/pisani/index.rdf";
+		  feed1.FilsPort = 80;
+		  Feed feed2 = new Feed();
+		  feed2.Type = "rss";
+		  feed2.Fils = "http://standblog.org/dotclear/rss.php";
+		  feed2.FilsPort = 80;
+
+		  Feed feed3 = new Feed();
+		  feed3.Type = "nntp";
+		  feed3.Fils = "news.epita.fr";
+		  feed3.FilsPort = 115;
+
+		  session.Save(feed1);
+		  session.Save(feed2);
+		  session.Save(feed3);
+
+		  tx.Commit();
+		}
+		catch (Exception ex)
+		{
+		  if (tx != null)
+			tx.Rollback();
+
+		  throw ex;
+		}
 	  }
 
 	  return session;
