@@ -57,7 +57,7 @@ public class Service : System.Web.Services.WebService
   [WebMethod]
   public List<Feed> testGetAllFeeds()
   {
-	return getAllFeeds("cebb43c1-557b-4e5f-828e-e3c08fb01d76");
+	return getFeeds("a30a0298-b1b4-472e-aa93-4c56bc86389c");
   }
   #endregion
 
@@ -155,9 +155,8 @@ public class Service : System.Web.Services.WebService
 		  }
 
 		feed.Selected = user.Feeds != null && user.Feeds.Contains(feed);
+		tx.Commit();
 	  }
-
-	  tx.Commit();
 	}
 	catch (Exception ex)
 	{
@@ -165,6 +164,11 @@ public class Service : System.Web.Services.WebService
 		tx.Rollback();
 
 	  throw ex;
+	}
+
+	foreach (Feed feed in feedsToSend)
+	{
+	  mgr.Save(feed);
 	}
 
 	return feedsToSend;

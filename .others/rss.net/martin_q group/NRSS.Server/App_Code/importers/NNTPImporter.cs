@@ -34,7 +34,7 @@ internal class NNTPImporter : Importer
 
 	Dictionary<string, Chan> chanMap = new Dictionary<string, Chan>();
 
-	foreach (Chan chan in feed.Chans)
+	foreach (Chan chan in feed.iChans)
 	  chanMap[chan.Title] = chan;
 
 	foreach (string groupname in groups)
@@ -47,7 +47,7 @@ internal class NNTPImporter : Importer
 	  Chan chan = new Chan();
 	  chan.Title = group.Name;
 
-	  feed.Chans.Add(chan);
+	  feed.iChans.Add(chan);
 	}
   }
 

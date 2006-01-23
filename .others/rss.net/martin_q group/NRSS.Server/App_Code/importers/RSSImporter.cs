@@ -51,12 +51,12 @@ internal class RSSImporter : Importer
 		return;
 	}
 
-	if (feed.Chans == null)
-	  feed.Chans = new ArrayList();
+	if (feed.iChans == null)
+	  feed.iChans = new ArrayList();
 
 	Dictionary<string, Chan> chanMap = new Dictionary<string, Chan>();
 
-	foreach (Chan chan in feed.Chans)
+	foreach (Chan chan in feed.iChans)
 	  chanMap[chan.Link] = chan;
 
 	foreach (RssChannel rsschan in rssFeed.Channels)
@@ -73,12 +73,12 @@ internal class RSSImporter : Importer
 	  chan.Language = rsschan.Language;
 	  chan.Link = rsschan.Link.ToString();
 
-	  if (chan.Items == null)
-		chan.Items = new ArrayList();
+	  if (chan.iItems == null)
+		chan.iItems = new ArrayList();
 
 	  Dictionary<string, Item> itemMap = new Dictionary<string, Item>();
 
-	  foreach (Item item in chan.Items)
+	  foreach (Item item in chan.iItems)
 		itemMap[item.Link] = item;
 
 	  foreach (RssItem rssitem in rsschan.Items)
@@ -98,10 +98,10 @@ internal class RSSImporter : Importer
 
 		//item.Content = rssitem.;
 
-		chan.Items.Add(item);
+		chan.iItems.Add(item);
 	  }
 
-	  feed.Chans.Add(chan);
+	  feed.iChans.Add(chan);
 	}
   }
 
