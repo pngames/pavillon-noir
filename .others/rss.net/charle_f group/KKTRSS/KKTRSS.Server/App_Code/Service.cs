@@ -137,7 +137,21 @@ public class Service : System.Web.Services.WebService
         return feedList;
     }
 
-
+    [WebMethod]
+    [System.Xml.Serialization.XmlInclude(typeof(KKTRSS.Server.Model.RssFeedRef))]
+    public IList ListSubscribedRssFeeds(string sessionId)
+    {
+        Account acc = GetRegistered(sessionId);
+        if (acc == null)
+            return null;
+        IList feedList = null;
+        feedList = new ArrayList(acc.SubscribedRssFeeds);
+        foreach (RssFeedRef it in feedList)
+        {
+            it.RssCache = "";
+        }
+        return feedList;
+    }
 
     [WebMethod]
     public bool RssFeedSubscribe(string sessionId, long RssFeedId)
@@ -289,6 +303,17 @@ public class Service : System.Web.Services.WebService
         return true;
     }
 
+    [WebMethod]
+    public bool MarkAsRead(string session, string ItemHashCode)
+    {
+        Account acc = GetRegistered(session);
+        if (acc == null)
+        {
+            return false;
+        }
+        ReadRssItem rri = new ReadRssItem();
+        rri.HashCode = ItemHashCode;
+    }
     private Group GetDefaultGroup()
     {
         return (Group)NHibernateHttpModule.CurrentSession
@@ -303,5 +328,7 @@ public class Service : System.Web.Services.WebService
                        .SetString(0, email)
                        .UniqueResult();
     }
+
+
 
 }
