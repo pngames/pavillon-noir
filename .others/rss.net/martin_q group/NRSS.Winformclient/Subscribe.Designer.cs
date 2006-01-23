@@ -40,6 +40,7 @@ namespace NRSS.Winformclient
             // splitContainer1
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Margin = new System.Windows.Forms.Padding(0);
             this.splitContainer1.Name = "splitContainer1";
@@ -54,7 +55,7 @@ namespace NRSS.Winformclient
             // 
             this.splitContainer1.Panel2.Controls.Add(this.checkedListBox1);
             this.splitContainer1.Size = new System.Drawing.Size(464, 442);
-            this.splitContainer1.SplitterDistance = 38;
+            this.splitContainer1.SplitterDistance = 44;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -76,10 +77,11 @@ namespace NRSS.Winformclient
             this.checkedListBox1.Location = new System.Drawing.Point(0, 0);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.checkedListBox1.Size = new System.Drawing.Size(460, 394);
+            this.checkedListBox1.Size = new System.Drawing.Size(460, 379);
             this.checkedListBox1.TabIndex = 1;
             this.checkedListBox1.ThreeDCheckBoxes = true;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
             // 
             // Subscribe
             // 

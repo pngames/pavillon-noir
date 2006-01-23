@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using NRSS.Winformclient.NRSSServer;
 using NRSS.Winformclient;
 using System.Web.Services.Protocols;
+using winformclient;
 
 namespace NRSS.Winformclient
 {
@@ -29,18 +30,17 @@ namespace NRSS.Winformclient
         {
             /// Verif user/passwd
             bool done = false;
-            string user = "";
 
-            //try
-            //{
-                user = serviceAdd.logon(textBoxUser.Text, textBoxPasswd.Text);
-            //}
-            //catch (SoapException exe)
-            //{
-            //    labelError.Visible = true;
-            //    labelError.Text = "Error: Invalid user or password";
-            //}
-            if (user.Length != 0)
+            try
+            {
+                Form1.uid = serviceAdd.logon(textBoxUser.Text, textBoxPasswd.Text);
+            }
+            catch (SoapException)
+            {
+                labelError.Visible = true;
+                labelError.Text = "Error: Invalid user or password";
+            }
+            if (Form1.uid.Length != 0)
             {
                 if (checkBox1.CheckState == CheckState.Checked)
                 {

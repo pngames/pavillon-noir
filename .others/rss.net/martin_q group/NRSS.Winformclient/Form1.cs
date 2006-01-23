@@ -20,6 +20,8 @@ namespace winformclient
 {
     public partial class Form1 : Form
     {
+        public static string uid;
+
         #region Voice
         bool voice_flag = false;
         string cur_speech;
@@ -78,6 +80,15 @@ namespace winformclient
             string date;
             string link;
 
+
+            Feed[] feedslist = serviceAdd.getFeeds(Form1.uid);
+
+            for (int i = 0; i != feedslist.Length; i++)
+            {
+                FeedContainer myFeedContainer = new FeedContainer(feedslist[i]);
+                checkedListBox1.Items.Add(myFeedContainer, !feedslist[i].Selected ? CheckState.Unchecked : CheckState.Checked);
+            }
+
             // Load RSS feed
             Feed rssFeed;
             rssFeed = serviceAdd.testRSS();
@@ -99,7 +110,7 @@ namespace winformclient
                     
                     if (author.Length == 0)
                     {
-                        author = chan.Title + " " + chan.Language; 
+                        author = chan.Title; 
                     }
                     System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
                         author,
@@ -218,6 +229,24 @@ namespace winformclient
         }
 
 }
+    public class FeedContainer
+    {
+        private Feed myFeed;
 
+        public Feed MyFeed
+        {
+            get { return myFeed; }
+        }
+
+        public FeedContainer(Feed newFeed)
+        {
+            myFeed = newFeed;
+        }
+
+        public override string ToString()
+        {
+            return myFeed.Fils;
+        }
+    }
         #endregion
 }

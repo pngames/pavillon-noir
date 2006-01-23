@@ -53,6 +53,7 @@ namespace NRSS.Winformclient
             // 
             this.textBoxPasswd.Location = new System.Drawing.Point(109, 95);
             this.textBoxPasswd.Name = "textBoxPasswd";
+            this.textBoxPasswd.PasswordChar = '*';
             this.textBoxPasswd.Size = new System.Drawing.Size(156, 20);
             this.textBoxPasswd.TabIndex = 2;
             // 
