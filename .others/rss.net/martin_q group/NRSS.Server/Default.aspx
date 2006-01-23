@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <form id="form1" runat="server">
+    <input name="group" type="hidden" id="groupe" value="">
     <div style="font-weight: bold">
       <table>
         <tr>
@@ -15,7 +16,7 @@
     </div>
 
     <asp:ListBox ID="ListBox1" runat="server" Height="178px" Width="168px">
-    </asp:ListBox>&nbsp;&nbsp;<asp:Button ID="Editer" runat=server Text="Editer" />
+    </asp:ListBox>&nbsp;&nbsp;<asp:Button ID="Editer" runat=server Text="Editer" OnClick="GroupEdit" />
     <asp:Button ID="Supprimer" runat=server Text="Supprimer" OnClick="GroupSuppr" />
     
     

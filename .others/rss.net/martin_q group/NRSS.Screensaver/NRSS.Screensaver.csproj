@@ -115,7 +115,13 @@
     <None Include="app.config" />
     <None Include="Resources\Blue_Light_by_Infinite705.jpg" />
     <Content Include="Resources\Wake_Me_Up_by_crushxmex.jpg" />
+    <None Include="Web References\NRSSWebService\Chan.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
     <None Include="Web References\NRSSWebService\Feed.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\NRSSWebService\Item.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\NRSSWebService\Reference.map">
@@ -141,10 +147,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://localhost:1919/NRSS.Server/Service.asmx">
+    <WebReferenceUrl Include="http://localhost:1277/NRSS.Server/Service.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\NRSSWebService\</RelPath>
-      <UpdateFromURL>http://localhost:1919/NRSS.Server/Service.asmx</UpdateFromURL>
+      <UpdateFromURL>http://localhost:1277/NRSS.Server/Service.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

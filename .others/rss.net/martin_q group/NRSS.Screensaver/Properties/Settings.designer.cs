@@ -62,7 +62,7 @@ namespace NRSS.Screensaver.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:1919/NRSS.Server/Service.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:1277/NRSS.Server/Service.asmx")]
         public string NRSS_Screensaver_NRSSWebService_Service {
             get {
                 return ((string)(this["NRSS_Screensaver_NRSSWebService_Service"]));

@@ -58,4 +58,12 @@ public partial class _Default : System.Web.UI.Page
         break;
       }
   }
+  protected void GroupEdit(object sender, EventArgs e)
+  {
+    if (ListBox1.SelectedIndex > 0)
+    {
+      //ResolveClientUrl("GroupEdit.aspx?group=" + ListBox1.SelectedItem.Text);
+      Editer.PostBackUrl = "GroupProperties.aspx?group=" + ListBox1.SelectedItem.Text;
+    }
+  }
 }

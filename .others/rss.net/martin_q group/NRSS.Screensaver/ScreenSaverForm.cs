@@ -18,6 +18,7 @@ namespace NRSS.Screensaver
     private IList feedList;
     private IList chanList;
     private IList itemList;
+    private bool survivalMode;
 /*    private Feed rssFeed;
     private Feed rssFeed1;
     private Feed rssFeed2;
@@ -54,6 +55,7 @@ namespace NRSS.Screensaver
       serv = new Service();
       login = Properties.Settings.Default.Login;
       password = Properties.Settings.Default.Password;
+      survivalMode = false;
 
       InitializeComponent();
 
@@ -164,8 +166,11 @@ namespace NRSS.Screensaver
 
       foreach (Feed tempFeed in feedList)
       {
-        ArrayList tempChans = new ArrayList(tempFeed.Chans);
-        chanList.Add(tempChans);
+        if (tempFeed.Chans != null)
+        {
+          ArrayList tempChans = new ArrayList(tempFeed.Chans);
+          chanList.Add(tempChans);
+        }
       }
 
       foreach (Chan tempChan in chanList)
@@ -194,7 +199,8 @@ namespace NRSS.Screensaver
         yesterday = DateTime.Now - aDay;
 
         foreach (Feed tempFeed in feedList)
-          chanList.Add(tempFeed.Chans);
+          if (tempFeed.Chans != null)
+            chanList.Add(tempFeed.Chans);
 
         foreach (Chan tempChan in chanList)
         {
@@ -210,6 +216,19 @@ namespace NRSS.Screensaver
             chansToRemove.Add(tempChan);
         }
       }
+      if (chanList.Count == 0)
+      {
+        Chan tempChan = new Chan();
+        tempChan.Description = "There is no news for you !";
+        tempChan.Title = "There is no news for you !";
+        tempChan.Items = new Item[1];
+        Item tempItem = new Item();
+        tempItem.Title = "Impossible to find messages";
+        tempItem.Description = "Maybe you should check your settings and / or Internet connection";
+        tempChan.Items[0] = tempItem;
+        chanList.Add(tempChan);
+      }
+
       /*
       feedList = new ArrayList();
       rssFeed = new Feed();
@@ -398,23 +417,26 @@ namespace NRSS.Screensaver
 
     void rssItemView_FadingComplete(object sender, EventArgs e)
     {
-      rssView.NextArticle();
-      if (rssView.SelectedIndex == (rssView.NumItems - 1))
+      if (!survivalMode)
       {
-        feedView.NextArticle();
-        if (feedView.SelectedIndex == (feedView.NumChans - 1))
+        rssView.NextArticle();
+        if (rssView.SelectedIndex == (rssView.NumItems - 1))
         {
-          chanList.Clear();
-          LoadRssFeeds();
+          feedView.NextArticle();
+          if (feedView.SelectedIndex == (feedView.NumChans - 1))
+          {
+            chanList.Clear();
+            LoadRssFeeds();
+          }
+          itemList.Clear();
+          foreach (Item tempItem in feedView.SelectedChan.Items)
+            itemList.Add(tempItem);
+          //rssView.Dispose();
+          //rssView = new ItemListView("NRSS messages list", itemList);
+          //InitializeRssView();
         }
-        itemList.Clear();
-        foreach (Item tempItem in feedView.SelectedChan.Items)
-          itemList.Add(tempItem);
-        //rssView.Dispose();
-        //rssView = new ItemListView("NRSS messages list", itemList);
-        //InitializeRssView();
+        rssDescriptionView.DisplayItem = rssView.SelectedItem;
       }
-      rssDescriptionView.DisplayItem = rssView.SelectedItem;
     }
   }
 }
