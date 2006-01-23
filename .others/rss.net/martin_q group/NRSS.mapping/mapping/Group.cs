@@ -17,7 +17,7 @@ namespace NRSS.mapping
 	#region datas
 	private int _id;
 	private string _name;
-	private string _creation;
+	private DateTime _creation;
 
 	public int Id
 	{
