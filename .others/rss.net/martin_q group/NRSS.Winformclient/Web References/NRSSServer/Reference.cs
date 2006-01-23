@@ -46,6 +46,12 @@ namespace NRSS.Winformclient.NRSSServer {
         
         private System.Threading.SendOrPostCallback getFeedsOperationCompleted;
         
+        private System.Threading.SendOrPostCallback updateFeedOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback updateChanOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback updateItemOperationCompleted;
+        
         private System.Threading.SendOrPostCallback getAllFeedsOperationCompleted;
         
         private System.Threading.SendOrPostCallback updateFeedsSubscribeOperationCompleted;
@@ -115,6 +121,15 @@ namespace NRSS.Winformclient.NRSSServer {
         
         /// <remarks/>
         public event getFeedsCompletedEventHandler getFeedsCompleted;
+        
+        /// <remarks/>
+        public event updateFeedCompletedEventHandler updateFeedCompleted;
+        
+        /// <remarks/>
+        public event updateChanCompletedEventHandler updateChanCompleted;
+        
+        /// <remarks/>
+        public event updateItemCompletedEventHandler updateItemCompleted;
         
         /// <remarks/>
         public event getAllFeedsCompletedEventHandler getAllFeedsCompleted;
@@ -350,6 +365,99 @@ namespace NRSS.Winformclient.NRSSServer {
             if ((this.getFeedsCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.getFeedsCompleted(this, new getFeedsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://nrss.org/updateFeed", RequestNamespace="http://nrss.org/", ResponseNamespace="http://nrss.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Feed updateFeed(string uid, Feed oldFeed) {
+            object[] results = this.Invoke("updateFeed", new object[] {
+                        uid,
+                        oldFeed});
+            return ((Feed)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void updateFeedAsync(string uid, Feed oldFeed) {
+            this.updateFeedAsync(uid, oldFeed, null);
+        }
+        
+        /// <remarks/>
+        public void updateFeedAsync(string uid, Feed oldFeed, object userState) {
+            if ((this.updateFeedOperationCompleted == null)) {
+                this.updateFeedOperationCompleted = new System.Threading.SendOrPostCallback(this.OnupdateFeedOperationCompleted);
+            }
+            this.InvokeAsync("updateFeed", new object[] {
+                        uid,
+                        oldFeed}, this.updateFeedOperationCompleted, userState);
+        }
+        
+        private void OnupdateFeedOperationCompleted(object arg) {
+            if ((this.updateFeedCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.updateFeedCompleted(this, new updateFeedCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://nrss.org/updateChan", RequestNamespace="http://nrss.org/", ResponseNamespace="http://nrss.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Chan updateChan(string uid, Chan oldChan) {
+            object[] results = this.Invoke("updateChan", new object[] {
+                        uid,
+                        oldChan});
+            return ((Chan)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void updateChanAsync(string uid, Chan oldChan) {
+            this.updateChanAsync(uid, oldChan, null);
+        }
+        
+        /// <remarks/>
+        public void updateChanAsync(string uid, Chan oldChan, object userState) {
+            if ((this.updateChanOperationCompleted == null)) {
+                this.updateChanOperationCompleted = new System.Threading.SendOrPostCallback(this.OnupdateChanOperationCompleted);
+            }
+            this.InvokeAsync("updateChan", new object[] {
+                        uid,
+                        oldChan}, this.updateChanOperationCompleted, userState);
+        }
+        
+        private void OnupdateChanOperationCompleted(object arg) {
+            if ((this.updateChanCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.updateChanCompleted(this, new updateChanCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://nrss.org/updateItem", RequestNamespace="http://nrss.org/", ResponseNamespace="http://nrss.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Item updateItem(string uid, Item oldItem) {
+            object[] results = this.Invoke("updateItem", new object[] {
+                        uid,
+                        oldItem});
+            return ((Item)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void updateItemAsync(string uid, Item oldItem) {
+            this.updateItemAsync(uid, oldItem, null);
+        }
+        
+        /// <remarks/>
+        public void updateItemAsync(string uid, Item oldItem, object userState) {
+            if ((this.updateItemOperationCompleted == null)) {
+                this.updateItemOperationCompleted = new System.Threading.SendOrPostCallback(this.OnupdateItemOperationCompleted);
+            }
+            this.InvokeAsync("updateItem", new object[] {
+                        uid,
+                        oldItem}, this.updateItemOperationCompleted, userState);
+        }
+        
+        private void OnupdateItemOperationCompleted(object arg) {
+            if ((this.updateItemCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.updateItemCompleted(this, new updateItemCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -1122,6 +1230,84 @@ namespace NRSS.Winformclient.NRSSServer {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((Feed[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
+    public delegate void updateFeedCompletedEventHandler(object sender, updateFeedCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class updateFeedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal updateFeedCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Feed Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Feed)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
+    public delegate void updateChanCompletedEventHandler(object sender, updateChanCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class updateChanCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal updateChanCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Chan Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Chan)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
+    public delegate void updateItemCompletedEventHandler(object sender, updateItemCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class updateItemCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal updateItemCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Item Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Item)(this.results[0]));
             }
         }
     }

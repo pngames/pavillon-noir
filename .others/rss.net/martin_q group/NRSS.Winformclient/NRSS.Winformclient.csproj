@@ -127,7 +127,13 @@
     <EmbeddedResource Include="close.bmp" />
     <Content Include="rss.ico" />
     <EmbeddedResource Include="skin.bmp" />
+    <None Include="Web References\NRSSServer\Chan.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
     <None Include="Web References\NRSSServer\Feed.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\NRSSServer\Item.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\NRSSServer\Reference.map">
@@ -145,10 +151,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://localhost:1919/NRSS.Server/Service.asmx">
+    <WebReferenceUrl Include="http://localhost:1277/NRSS.Server/Service.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\NRSSServer\</RelPath>
-      <UpdateFromURL>http://localhost:1919/NRSS.Server/Service.asmx</UpdateFromURL>
+      <UpdateFromURL>http://localhost:1277/NRSS.Server/Service.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

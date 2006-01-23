@@ -153,6 +153,51 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="updateFeed">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="uid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="oldFeed" type="tns:Feed" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="updateFeedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="updateFeedResult" type="tns:Feed" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="updateChan">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="uid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="oldChan" type="tns:Chan" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="updateChanResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="updateChanResult" type="tns:Chan" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="updateItem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="uid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="oldItem" type="tns:Item" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="updateItemResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="updateItemResult" type="tns:Item" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="getAllFeeds">
         <s:complexType>
           <s:sequence>
@@ -255,6 +300,24 @@
   <wsdl:message name="getFeedsSoapOut">
     <wsdl:part name="parameters" element="tns:getFeedsResponse" />
   </wsdl:message>
+  <wsdl:message name="updateFeedSoapIn">
+    <wsdl:part name="parameters" element="tns:updateFeed" />
+  </wsdl:message>
+  <wsdl:message name="updateFeedSoapOut">
+    <wsdl:part name="parameters" element="tns:updateFeedResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateChanSoapIn">
+    <wsdl:part name="parameters" element="tns:updateChan" />
+  </wsdl:message>
+  <wsdl:message name="updateChanSoapOut">
+    <wsdl:part name="parameters" element="tns:updateChanResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateItemSoapIn">
+    <wsdl:part name="parameters" element="tns:updateItem" />
+  </wsdl:message>
+  <wsdl:message name="updateItemSoapOut">
+    <wsdl:part name="parameters" element="tns:updateItemResponse" />
+  </wsdl:message>
   <wsdl:message name="getAllFeedsSoapIn">
     <wsdl:part name="parameters" element="tns:getAllFeeds" />
   </wsdl:message>
@@ -311,6 +374,18 @@
     <wsdl:operation name="getFeeds">
       <wsdl:input message="tns:getFeedsSoapIn" />
       <wsdl:output message="tns:getFeedsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="updateFeed">
+      <wsdl:input message="tns:updateFeedSoapIn" />
+      <wsdl:output message="tns:updateFeedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="updateChan">
+      <wsdl:input message="tns:updateChanSoapIn" />
+      <wsdl:output message="tns:updateChanSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="updateItem">
+      <wsdl:input message="tns:updateItemSoapIn" />
+      <wsdl:output message="tns:updateItemSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="getAllFeeds">
       <wsdl:input message="tns:getAllFeedsSoapIn" />
@@ -396,6 +471,33 @@
     </wsdl:operation>
     <wsdl:operation name="getFeeds">
       <soap:operation soapAction="http://nrss.org/getFeeds" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateFeed">
+      <soap:operation soapAction="http://nrss.org/updateFeed" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateChan">
+      <soap:operation soapAction="http://nrss.org/updateChan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateItem">
+      <soap:operation soapAction="http://nrss.org/updateItem" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -514,6 +616,33 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="updateFeed">
+      <soap12:operation soapAction="http://nrss.org/updateFeed" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateChan">
+      <soap12:operation soapAction="http://nrss.org/updateChan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateItem">
+      <soap12:operation soapAction="http://nrss.org/updateItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getAllFeeds">
       <soap12:operation soapAction="http://nrss.org/getAllFeeds" style="document" />
       <wsdl:input>
@@ -553,10 +682,10 @@
   </wsdl:binding>
   <wsdl:service name="Service">
     <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
-      <soap:address location="http://localhost:1919/NRSS.Server/Service.asmx" />
+      <soap:address location="http://localhost:1277/NRSS.Server/Service.asmx" />
     </wsdl:port>
     <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
-      <soap12:address location="http://localhost:1919/NRSS.Server/Service.asmx" />
+      <soap12:address location="http://localhost:1277/NRSS.Server/Service.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -57,7 +57,7 @@ public class Service : System.Web.Services.WebService
   [WebMethod]
   public List<Feed> testGetAllFeeds()
   {
-	return getFeeds("a30a0298-b1b4-472e-aa93-4c56bc86389c");
+	return getFeeds("5a082510-e69c-4a15-a54e-e1ee874dfb45");
   }
   #endregion
 
@@ -138,10 +138,13 @@ public class Service : System.Web.Services.WebService
 	  User user = UserManager.Instance.getUser(uid);
 	  IList mygroups = user.iGroups;
 
+	  tx.Commit();
+
 	  foreach (Feed feed in feeds)
 	  {
 		Importer.updateFeed(feed);
 
+		tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
 		if (feed.Groups == null || feed.Groups.Count == 0)
 		  feedsToSend.Add(feed);
 		else
@@ -153,9 +156,10 @@ public class Service : System.Web.Services.WebService
 			  break;
 			}
 		  }
-
 		feed.Selected = user.Feeds != null && user.Feeds.Contains(feed);
 		tx.Commit();
+
+		mgr.Save(feed);
 	  }
 	}
 	catch (Exception ex)
@@ -164,11 +168,6 @@ public class Service : System.Web.Services.WebService
 		tx.Rollback();
 
 	  throw ex;
-	}
-
-	foreach (Feed feed in feedsToSend)
-	{
-	  mgr.Save(feed);
 	}
 
 	return feedsToSend;
@@ -207,6 +206,8 @@ public class Service : System.Web.Services.WebService
 
 	  throw ex;
 	}
+
+	mgr.Save(feed);
 
 	return feed;
   }
