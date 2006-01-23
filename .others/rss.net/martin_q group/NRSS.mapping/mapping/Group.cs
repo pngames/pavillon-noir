@@ -31,7 +31,7 @@ namespace NRSS.mapping
 	  set { _name = value; }
 	}
 
-	public string Creation
+	public DateTime Creation
 	{
 	  get { return _creation; }
 	  set { _creation = value; }
