@@ -190,11 +190,21 @@ public class Service : System.Web.Services.WebService
             return null;
         RssFeed MyFeed = new RssFeed();
         IList myRssFeeds = acc.SubscribedRssFeeds;
-        foreach (RssFeedRef it in myRssFeeds)
+        foreach (RssFeedRef anRssfeedRef in myRssFeeds)
         {
-            RssFeed tmp = RssFeed.ReadFromString(it.RssCache);
-            foreach (RssChannel chan in tmp.Channels)
+            RssFeed feed = RssFeed.ReadFromString(anRssfeedRef.RssCache);
+            foreach (RssChannel chan in feed.Channels)
             {
+                foreach(RssItem it in chan.Items)
+                {
+                   if( NHibernateHttpModule.CurrentSession
+                     .CreateQuery("from ReadRssFeed rrf where rrf.HashCode=? and rrf.Account")
+                     .SetString(0, it.HashID)
+                     .SetEntity(1, acc).List().Count > 0)
+                   {
+                       it.IsRead = true;
+                   }
+                }
                 MyFeed.Channels.Add(chan);
             }
         }
@@ -311,8 +321,21 @@ public class Service : System.Web.Services.WebService
         {
             return false;
         }
-        ReadRssItem rri = new ReadRssItem();
-        rri.HashCode = ItemHashCode;
+        try
+        {
+            NHibernateHttpModule.BeginTranaction();
+            ReadRssItem rri = new ReadRssItem();
+            rri.HashCode = ItemHashCode;
+            rri.Account = acc;
+            NHibernateHttpModule.CurrentSession.Save(rri);
+            NHibernateHttpModule.CommitTranction();
+        }
+        catch(HibernateException e)
+        {
+            NHibernateHttpModule.RollbackTransaction();
+            return false;
+        }
+        return true;
     }
     private Group GetDefaultGroup()
     {
