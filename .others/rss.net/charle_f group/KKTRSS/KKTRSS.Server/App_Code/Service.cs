@@ -23,7 +23,6 @@ public class Service : System.Web.Services.WebService
 
     private Boolean IsRegistered(string anAutologin)
     {
-        NHibernateHttpModule.BeginTranaction();
         Account acc = null;
         try
         {
@@ -31,12 +30,9 @@ public class Service : System.Web.Services.WebService
                 .CreateQuery("FROM Account acc WHERE acc.Autologin=?")
                 .SetString(0, anAutologin)
                 .UniqueResult();
-
-            NHibernateHttpModule.CommitTranction();
         }
         catch (NHibernate.HibernateException e)
         {
-            NHibernateHttpModule.RollbackTransaction();
             throw e;
         }
         return (acc != null);
@@ -44,7 +40,6 @@ public class Service : System.Web.Services.WebService
 
     private Account  GetRegistered(string anAutologin)
     {
-        NHibernateHttpModule.BeginTranaction();
         Account acc = null;
         try
         {
@@ -52,11 +47,9 @@ public class Service : System.Web.Services.WebService
                 .CreateQuery("FROM Account acc WHERE acc.Autologin=?")
                 .SetString(0, anAutologin)
                 .UniqueResult();
-            NHibernateHttpModule.CommitTranction();
         }
         catch (NHibernate.HibernateException e)
         {
-            NHibernateHttpModule.RollbackTransaction();
             throw e;
         }
         return acc;
@@ -92,7 +85,6 @@ public class Service : System.Web.Services.WebService
     [WebMethod]
     public string Login(string email, string password)
     {
-        NHibernateHttpModule.BeginTranaction();
         Account acc = null;
         IList list = null;
         try
@@ -102,11 +94,9 @@ public class Service : System.Web.Services.WebService
                 .SetString(0, email)
                 .SetString(1, password)
                 .UniqueResult();
-           NHibernateHttpModule.CommitTranction();
         }
         catch (NHibernate.HibernateException e)
         {
-            NHibernateHttpModule.RollbackTransaction();
             throw e;
         }
         
@@ -156,14 +146,10 @@ public class Service : System.Web.Services.WebService
             return ret;
         try
         {
-
-            NHibernateHttpModule.BeginTranaction();
             ret = NHibernateHttpModule.CurrentSession.CreateQuery("FROM Group").List();
-            NHibernateHttpModule.CommitTranction();
         }
         catch (HibernateException e)
         {
-            NHibernateHttpModule.RollbackTransaction();
             throw e;
         }
         return ret;
@@ -172,7 +158,6 @@ public class Service : System.Web.Services.WebService
     [WebMethod]
     public IList GetMyGroupList(string sessionId)
     {
-        NHibernateHttpModule.BeginTranaction();
         IList ret = null;
         Account acc = null;
         try
@@ -180,11 +165,9 @@ public class Service : System.Web.Services.WebService
             if ((acc = GetRegistered(sessionId)) == null)
                 return ret;
             ret = (IList)acc.Groups;
-            NHibernateHttpModule.CommitTranction();
         }
         catch (HibernateException e)
         {
-            NHibernateHttpModule.RollbackTransaction();
             throw e;
         }
         return ret;

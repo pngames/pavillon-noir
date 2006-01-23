@@ -127,7 +127,6 @@ namespace KKTRSS.Server.Model
         {
             if (Email == null || Email.Length <= 0)
                 throw new NHibernate.ValidationFailure("Email must be specified\n");
-            NHibernateHttpModule.BeginTranaction();
             Account acc = null;
             try
             {
@@ -137,14 +136,11 @@ namespace KKTRSS.Server.Model
                     .UniqueResult();
                 if (acc != null)
                 {
-                    NHibernateHttpModule.RollbackTransaction();
                     throw new NHibernate.ValidationFailure("Email: '" + Email + "' already exists\n");
                 }
-                NHibernateHttpModule.CommitTranction();
             }
             catch (HibernateException e)
             {
-                NHibernateHttpModule.RollbackTransaction();
                 throw e;
             }
         }

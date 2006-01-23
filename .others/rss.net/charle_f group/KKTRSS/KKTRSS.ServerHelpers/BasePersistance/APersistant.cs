@@ -70,7 +70,7 @@ namespace KKTRSS.Server.Helpers.Persistance
 
         public virtual LifecycleVeto OnSave(NHibernate.ISession s)
         {   
-            if (CreationDate == null)
+            if (CreationDate == DateTime.MinValue)
             {
                 CreationDate = DateTime.Now;
             }
