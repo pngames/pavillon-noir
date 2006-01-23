@@ -198,7 +198,7 @@ public class Service : System.Web.Services.WebService
                 foreach(RssItem it in chan.Items)
                 {
                    if( NHibernateHttpModule.CurrentSession
-                     .CreateQuery("from ReadRssFeed rrf where rrf.HashCode=? and rrf.Account")
+                     .CreateQuery("from ReadRssItem rri where rri.HashCode=? and rri.Account=?")
                      .SetString(0, it.HashID)
                      .SetEntity(1, acc).List().Count > 0)
                    {
