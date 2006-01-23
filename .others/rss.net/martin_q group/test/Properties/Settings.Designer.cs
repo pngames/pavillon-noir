@@ -26,7 +26,7 @@ namespace test.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:1774/NRSS.Server/Service.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:1919/NRSS.Server/Service.asmx")]
         public string test_nrss_Service {
             get {
                 return ((string)(this["test_nrss_Service"]));
