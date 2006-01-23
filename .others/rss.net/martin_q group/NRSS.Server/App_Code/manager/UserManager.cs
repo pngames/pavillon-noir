@@ -43,11 +43,15 @@ public class UserManager
 
 	//////////////////////////////////////////////////////////////////////////
 
+	BaseDataAccess mgr = new BaseDataAccess();
+
+	if (mgr.Get(typeof(User), "email", user.Email) != null)
+	  throw new NRSSException("L'utilisateur existe deja !");
+
 	Group group = new Group();
 
 	group.Name = user.Email;
 
-	BaseDataAccess mgr = new BaseDataAccess();
 	mgr.Save(user);
 	mgr.Save(group);
 
