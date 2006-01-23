@@ -3,7 +3,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
         <div class="leftcol">
             <div class="rssfeed"><div class="content"><div class="title">&nbsp;Flux</div>
-                <a href=""><% Response.Write(rssFeed.Name); %></a>
+                <div style="margin:4px;">
+                    <a href="">Le monde.fr</a>
+                    <a href="">Le monde.fr</a>
+                </div>
              </div></div>
         </div>
         <div class="rightcol">
@@ -11,8 +14,8 @@
                 <div style="overflow:auto; height:180px;">
                 <asp:TreeView ID="ItemTree" runat="server" ExpandDepth="1" ImageSet="News" NodeIndent="10" Width="95%">
                     <ParentNodeStyle Font-Bold="False" />
-                    <HoverNodeStyle Font-Underline="True" />
-                    <SelectedNodeStyle Font-Underline="True" HorizontalPadding="0px" VerticalPadding="0px" />
+                    <HoverNodeStyle Font-Underline="False" Font-Bold="False" ForeColor="CornflowerBlue" />
+                    <SelectedNodeStyle Font-Underline="False" HorizontalPadding="0px" VerticalPadding="0px" Font-Bold="True" />
                     <NodeStyle Font-Names="Tahoma" Font-Size="12px" ForeColor="Black" HorizontalPadding="5px"
                         NodeSpacing="2px" VerticalPadding="0px" />
                 </asp:TreeView>

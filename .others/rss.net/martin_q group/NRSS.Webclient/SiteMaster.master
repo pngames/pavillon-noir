@@ -90,7 +90,7 @@ function toggleItem(szDivID)
         </asp:ContentPlaceHolder>
         
         <hr/> 
-        <span style="font-size: 7pt; color: buttonshadow; font-family: Tahoma">bordon_m - drean_j
+        <span style="font-size: 7pt; color: black; font-family: Tahoma">bordon_m - drean_j
             - martin_q - mortag_t</span>
     
     <!-- ajouter un flux -->
