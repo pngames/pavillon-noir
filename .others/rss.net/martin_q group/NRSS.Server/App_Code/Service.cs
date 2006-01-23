@@ -173,18 +173,19 @@ public class Service : System.Web.Services.WebService
 	{
 	  Importer.updateFeed(feed);
 
-	  foreach (Group group in feed.Groups)
-	  {
-		if (mygroups.Contains(group))
+	  if (feed.Groups == null || feed.Groups.Count == 0)
+		feedsToSend.Add(feed);
+	  else
+		foreach (Group group in feed.Groups)
 		{
-		  feedsToSend.Add(feed);
-		  feed.Selected = true;
-		  break;
+		  if (mygroups.Contains(group))
+		  {
+			feedsToSend.Add(feed);
+			break;
+		  }
 		}
 
-		feed.Selected = false;
-	  }
-
+	  feed.Selected = user.Feeds != null && user.Feeds.Contains(feed);
 	  feed.Chans = null;
 	}
 
@@ -193,7 +194,7 @@ public class Service : System.Web.Services.WebService
 
   [WebMethod]
   [XmlInclude(typeof(Feed))]
-  public void updateFeedsSubscibe(string uid, ArrayList feeds)
+  public void updateFeedsSubscribe(string uid, ArrayList feeds)
   {
 	UserManager.Instance.validate(uid);
 

@@ -71,6 +71,7 @@ namespace NRSS.mapping
 	#region links
 	private IList _chans;
 	private IList _groups;
+	private IList _users;
 
 	[XmlIgnore]
 	public IList iChans
@@ -100,6 +101,13 @@ namespace NRSS.mapping
 	{
 	  get { return _groups; }
 	  set { _groups = value; }
+	}
+
+	[XmlIgnore]
+	public IList Users
+	{
+	  get { return _users; }
+	  set { _users = value; }
 	}
 	#endregion
 

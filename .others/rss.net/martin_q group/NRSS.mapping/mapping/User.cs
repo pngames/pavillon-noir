@@ -72,6 +72,7 @@ namespace NRSS.mapping
 	#region links
 	private IList _groups;
 	private IList _readItems;
+	private IList _feeds;
 
 	[XmlIgnore]
 	public IList iGroups
@@ -101,6 +102,13 @@ namespace NRSS.mapping
 		return new ArrayList(_groups);
 	  }
 	  set { _groups = value; }
+	}
+
+	[XmlIgnore]
+	public IList Feeds
+	{
+	  get { return _feeds; }
+	  set { _feeds = value; }
 	}
 	#endregion
   }
