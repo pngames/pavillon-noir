@@ -3,6 +3,8 @@ using System.Data;
 using System.Configuration;
 using KKTRSS.Server.Helpers.Persistance;
 using Iesi.Collections;
+using System.Collections;
+using System.Xml.Serialization;
 
 /// <summary>
 /// Summary description for Group
@@ -34,17 +36,17 @@ namespace KKTRSS.Server.Model
             set { _privacy = value; }
         }
         /*********************************************************************/
-        private ISet _accounts;
-
-        public ISet Accounts
+        
+        private IList _accounts;
+        [XmlIgnore]
+        public IList Accounts
         {
             get { return _accounts; }
             set { _accounts = value; }
         }
         /*********************************************************************/
-        private ISet _rssFeedRefs;
-
-        public ISet RssFeedRefs
+        private IList _rssFeedRefs;
+        public IList RssFeedRefs
         {
             get { return _rssFeedRefs; }
             set { _rssFeedRefs = value; }

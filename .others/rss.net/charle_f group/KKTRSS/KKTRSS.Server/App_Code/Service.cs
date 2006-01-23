@@ -7,6 +7,7 @@ using KKTRSS.Server.Helpers.DataAccess;
 using NHibernate;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 
 
 [WebService(Namespace = "http://tempuri.org/")]
@@ -22,48 +23,41 @@ public class Service : System.Web.Services.WebService
 
     private Boolean IsRegistered(string anAutologin)
     {
-        ISession s = NHibernateHttpModule.CreateSession();
-        ITransaction tx = s.BeginTransaction();
+        NHibernateHttpModule.BeginTranaction();
         Account acc = null;
         try
         {
-            acc = (Account)s.CreateQuery("FROM Account acc WHERE acc.Autologin=?")
+            acc = (Account) NHibernateHttpModule.CurrentSession
+                .CreateQuery("FROM Account acc WHERE acc.Autologin=?")
                 .SetString(0, anAutologin)
                 .UniqueResult();
-            tx.Commit();
+
+            NHibernateHttpModule.CommitTranction();
         }
         catch (NHibernate.HibernateException e)
         {
-            tx.Rollback();
+            NHibernateHttpModule.RollbackTransaction();
             throw e;
-        }
-        finally
-        {
-            s.Close();
         }
         return (acc != null);
     }
 
     private Account  GetRegistered(string anAutologin)
     {
-        ISession s = NHibernateHttpModule.CreateSession();
-        ITransaction tx = s.BeginTransaction();
+        NHibernateHttpModule.BeginTranaction();
         Account acc = null;
         try
         {
-            acc = (Account)s.CreateQuery("FROM Account acc WHERE acc.Autologin=?")
+            acc = (Account)NHibernateHttpModule.CurrentSession
+                .CreateQuery("FROM Account acc WHERE acc.Autologin=?")
                 .SetString(0, anAutologin)
                 .UniqueResult();
-            tx.Commit();
+            NHibernateHttpModule.CommitTranction();
         }
         catch (NHibernate.HibernateException e)
         {
-            tx.Rollback();
+            NHibernateHttpModule.RollbackTransaction();
             throw e;
-        }
-        finally
-        {
-            s.Close();
         }
         return acc;
     }
@@ -78,24 +72,19 @@ public class Service : System.Web.Services.WebService
     [WebMethod]
     public string Register(string email, string password)
     {
-        ISession s = NHibernateHttpModule.CreateSession();
-        ITransaction tx =  s.BeginTransaction();
+        NHibernateHttpModule.BeginTranaction();
         Account acc = new Account();
         try
         {
             acc.Email = email;
             acc.Password = password;
-            s.Save(acc);
-            tx.Commit();
+            NHibernateHttpModule.CurrentSession.Save(acc);
+            NHibernateHttpModule.CommitTranction();
         }
         catch (NHibernate.HibernateException e)
         {
-            tx.Rollback();
+            NHibernateHttpModule.RollbackTransaction();
             throw e;
-        }
-        finally
-        {
-            s.Close();
         }
         return acc.Autologin;
     }
@@ -103,26 +92,22 @@ public class Service : System.Web.Services.WebService
     [WebMethod]
     public string Login(string email, string password)
     {
-        ISession s = NHibernateHttpModule.CreateSession();
-        ITransaction tx = s.BeginTransaction();
+        NHibernateHttpModule.BeginTranaction();
         Account acc = null;
         IList list = null;
         try
         {
-           acc = (Account)s.CreateQuery("FROM Account acc WHERE acc.Email=? AND acc.Password=?")
-                             .SetString(0, email)
-                             .SetString(1, password)
-                             .UniqueResult();
-            tx.Commit();
+            acc = (Account)NHibernateHttpModule.CurrentSession
+                .CreateQuery("FROM Account acc WHERE acc.Email=? AND acc.Password=?")
+                .SetString(0, email)
+                .SetString(1, password)
+                .UniqueResult();
+           NHibernateHttpModule.CommitTranction();
         }
         catch (NHibernate.HibernateException e)
         {
-            tx.Rollback();
+            NHibernateHttpModule.RollbackTransaction();
             throw e;
-        }
-        finally
-        {
-            s.Close();
         }
         
         if (acc == null)
@@ -166,24 +151,20 @@ public class Service : System.Web.Services.WebService
     [System.Xml.Serialization.XmlInclude(typeof(KKTRSS.Server.Model.Group))]
     public IList GetGroupList(string sessionId)
     {
-        ISession s = NHibernateHttpModule.CreateSession();
-        ITransaction tx = s.BeginTransaction();
         IList ret = null;
+        if (IsRegistered(sessionId) == false)
+            return ret;
         try
         {
-            if (IsRegistered(sessionId) == false)
-                return ret;
-            ret = s.CreateQuery("FROM Group").List();
-            tx.Commit();
+
+            NHibernateHttpModule.BeginTranaction();
+            ret = NHibernateHttpModule.CurrentSession.CreateQuery("FROM Group").List();
+            NHibernateHttpModule.CommitTranction();
         }
         catch (HibernateException e)
         {
-            tx.Rollback();
+            NHibernateHttpModule.RollbackTransaction();
             throw e;
-        }
-        finally
-        {
-            s.Close();
         }
         return ret;
     }
@@ -191,25 +172,20 @@ public class Service : System.Web.Services.WebService
     [WebMethod]
     public IList GetMyGroupList(string sessionId)
     {
-        ISession s = NHibernateHttpModule.CreateSession();
-        ITransaction tx = s.BeginTransaction();
+        NHibernateHttpModule.BeginTranaction();
         IList ret = null;
         Account acc = null;
         try
         {
             if ((acc = GetRegistered(sessionId)) == null)
                 return ret;
-            ret = (IList)  acc.Groups;
-            tx.Commit();
+            ret = (IList)acc.Groups;
+            NHibernateHttpModule.CommitTranction();
         }
         catch (HibernateException e)
         {
-            tx.Rollback();
+            NHibernateHttpModule.RollbackTransaction();
             throw e;
-        }
-        finally
-        {
-            s.Close();
         }
         return ret;
     }

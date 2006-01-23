@@ -69,12 +69,12 @@ namespace KKTRSS.Server.Helpers.Persistance
         }
 
         public virtual LifecycleVeto OnSave(NHibernate.ISession s)
-        {
-            LastUpdate = DateTime.Now;
+        {   
             if (CreationDate == null)
             {
-                CreationDate = LastUpdate;
+                CreationDate = DateTime.Now;
             }
+            LastUpdate = DateTime.Now;
             return LifecycleVeto.NoVeto;
         }
 

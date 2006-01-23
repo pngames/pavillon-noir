@@ -17,25 +17,25 @@
     <property name="CreationDate" type="DateTime" />
     <property name="LastUpdate" type="DateTime" />
 
-    <set name="ReadRssItems" inverse="true" lazy="true">
+    <bag name="ReadRssItems" inverse="true" lazy="false">
       <key column="fk_account_id" />
       <one-to-many class="KKTRSS.Server.Model.ReadRssItem, KKTRSS.ServerModel" />
-    </set>
+    </bag>
 
-    <set name="OwnedGroups" inverse="true" lazy="true">
+    <bag name="OwnedGroups" inverse="true" lazy="false">
       <key column="fk_account_id" />
       <one-to-many class="KKTRSS.Server.Model.Group, KKTRSS.ServerModel" />
-    </set>
+    </bag>
 
-    <set name="Groups" table="account_in_group"  lazy="true">
+    <bag name="Groups" table="account_in_group"  lazy="false">
       <key column="fk_account_id" />
       <many-to-many class="KKTRSS.Server.Model.Group, KKTRSS.ServerModel" column="fk_group_id"/>
-    </set>
+    </bag>
 
-    <set name="SubscribedRssFeeds" table="subscribed_rss_feed" lazy="true">
+    <bag name="SubscribedRssFeeds" table="subscribed_rss_feed" lazy="false">
       <key column="fk_account_id" />
       <many-to-many class="KKTRSS.Server.Model.RssFeedRef, KKTRSS.ServerModel" column="fk_rss_feed_ref_id"/>
-    </set>
+    </bag>
     
   </class>
 </hibernate-mapping>

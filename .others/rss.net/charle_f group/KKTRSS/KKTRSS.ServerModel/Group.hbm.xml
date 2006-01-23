@@ -17,15 +17,15 @@
 
     <many-to-one name="Owner" class="KKTRSS.Server.Model.Account, KKTRSS.ServerModel" column="fk_account_id" />
     
-    <set name="Accounts" table="account_in_group"  lazy="true">
+    <bag name="Accounts" table="account_in_group"  lazy="false">
       <key column="fk_group_id" />
       <many-to-many class="KKTRSS.Server.Model.Account, KKTRSS.ServerModel" column="fk_account_id"/>
-    </set>
+    </bag>
 
-    <set name="RssFeedRefs" inverse="true" lazy="true">
+    <bag name="RssFeedRefs" inverse="true" lazy="false">
       <key column="fk_group_id" />
       <one-to-many class="KKTRSS.Server.Model.RssFeedRef, KKTRSS.ServerModel" />
-    </set>
+    </bag>
 
   </class>
 </hibernate-mapping>

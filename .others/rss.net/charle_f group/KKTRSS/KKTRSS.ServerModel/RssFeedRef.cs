@@ -3,6 +3,7 @@ using System.Data;
 using System.Configuration;
 using KKTRSS.Server.Helpers.Persistance;
 using Iesi.Collections;
+using System.Collections;
 
 
 /// <summary>
@@ -43,9 +44,9 @@ namespace KKTRSS.Server.Model
             set { _group = value; }
         }
         /*********************************************************************/
-        private ISet _accounts;
+        private IList _accounts;
 
-        public ISet Accounts
+        public IList Accounts
         {
             get { return _accounts; }
             set { _accounts = value; }

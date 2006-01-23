@@ -4,7 +4,8 @@ using System.Configuration;
 using KKTRSS.Server.Helpers.Persistance;
 using KKTRSS.Server.Helpers.DataAccess;
 using NHibernate;
-using Iesi.Collections;
+using System.Collections;
+using System.Xml.Serialization;
 /// <summary>
 /// Summary description for Account
 /// </summary>
@@ -63,9 +64,9 @@ namespace KKTRSS.Server.Model
         #endregion
         /*********************************************************************/
         #region ReadRssItems
-        private ISet _readRssItems;
+        private IList _readRssItems;
 
-        public ISet ReadRssItems
+        public IList ReadRssItems
         {
             get { return _readRssItems; }
             set { _readRssItems = value; }
@@ -73,9 +74,9 @@ namespace KKTRSS.Server.Model
         #endregion
         /*********************************************************************/
         #region SubscribedRssFeeds
-        private ISet _subscribedRssFeeds;
+        private IList _subscribedRssFeeds;
 
-        public ISet SubscribedRssFeeds
+        public IList SubscribedRssFeeds
         {
             get { return _subscribedRssFeeds; }
             set { _subscribedRssFeeds = value; }
@@ -83,9 +84,9 @@ namespace KKTRSS.Server.Model
         #endregion
         /*********************************************************************/
         #region Groups
-        private ISet _groups;
-
-        public ISet Groups
+        private IList _groups;
+        [XmlIgnore]
+        public IList Groups
         {
             get { return _groups; }
             set { _groups = value; }
@@ -94,9 +95,9 @@ namespace KKTRSS.Server.Model
         /*********************************************************************/
         /*********************************************************************/
         #region OwnedGroups
-        private ISet _ownedGroups;
-
-        public ISet OwnedGroups
+        private IList _ownedGroups;
+        [XmlIgnore]
+        public IList OwnedGroups
         {
             get { return _ownedGroups; }
             set { _ownedGroups = value; }
@@ -117,21 +118,36 @@ namespace KKTRSS.Server.Model
             grp.Owner = this;
             s.Save(grp);
             if (this.Groups == null)
-                this.Groups = new ListSet();
+                this.Groups = new ArrayList();
             this.Groups.Add(grp);
             return base.OnSave(s);
-        }  
+        }
 
-        void Validate()
-         {
-             if (Email == null || Email.Length > 0)
-                 throw new NHibernate.ValidationFailure("Email must be specified\n");
-             ISession s = NHibernateHttpModule.CreateSession();
-             if (s.CreateQuery("FROM Accout acc WHERE acc.Email=?")
-                  .SetString(0,Email)
-                  .UniqueResult() != null)
-                 throw new NHibernate.ValidationFailure("Email: '" + Email + "' already exists\n");
-         }
+        public override void Validate()
+        {
+            if (Email == null || Email.Length <= 0)
+                throw new NHibernate.ValidationFailure("Email must be specified\n");
+            NHibernateHttpModule.BeginTranaction();
+            Account acc = null;
+            try
+            {
+                acc = (Account) NHibernateHttpModule.CurrentSession
+                    .CreateQuery("FROM Account acc WHERE acc.Email=?")
+                    .SetString(0, Email)
+                    .UniqueResult();
+                if (acc != null)
+                {
+                    NHibernateHttpModule.RollbackTransaction();
+                    throw new NHibernate.ValidationFailure("Email: '" + Email + "' already exists\n");
+                }
+                NHibernateHttpModule.CommitTranction();
+            }
+            catch (HibernateException e)
+            {
+                NHibernateHttpModule.RollbackTransaction();
+                throw e;
+            }
+        }
 
     }
 }

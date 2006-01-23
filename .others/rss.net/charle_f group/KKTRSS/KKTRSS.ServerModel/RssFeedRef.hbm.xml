@@ -17,10 +17,10 @@
     
     <many-to-one name="Group" class="KKTRSS.Server.Model.Group, KKTRSS.ServerModel" column="fk_group_id"/>
 
-    <set name="Accounts" table="subscibed_rss_feed"  lazy="true">
+    <bag name="Accounts" table="subscibed_rss_feed"  lazy="false">
       <key column="fk_rss_feed_ref_id" />
       <many-to-many class="KKTRSS.Server.Model.Account, KKTRSS.ServerModel" column="fk_account_id"/>
-    </set>
+    </bag>
     
   </class>
 </hibernate-mapping>

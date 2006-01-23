@@ -342,6 +342,11 @@
             <summary>Returns a string representation of the current Object.</summary>
             <returns>The item's title, description, or "RssItem" if the title and description are blank.</returns>
         </member>
+        <member name="M:Rss.RssItem.setHashID">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:Rss.RssItem.Title">
             <summary>Title of the item</summary>
             <remarks>Maximum length is 100 (For RSS 0.91)</remarks>
@@ -374,6 +379,16 @@
         </member>
         <member name="P:Rss.RssItem.PubDate">
             <summary>Indicates when the item was published</summary>
+        </member>
+        <member name="P:Rss.RssItem.IsRead">
+            <summary>
+            Return/set the reading status of the item
+            </summary>
+        </member>
+        <member name="P:Rss.RssItem.HashID">
+            <summary>
+            Return/set the unique ID of the item
+            </summary>
         </member>
         <member name="T:Rss.RssFeedCollection">
             <summary>A strongly typed collection of <see cref="T:Rss.RssFeed"/> objects</summary>
@@ -1121,6 +1136,11 @@
             <summary>Returns a string representation of the current Object.</summary>
             <returns>The channel's title, description, or "RssChannel" if the title and description are blank.</returns>
         </member>
+        <member name="M:Rss.RssChannel.setHashID">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:Rss.RssChannel.Title">
             <summary>The name of the channel</summary>
             <remarks>Maximum length is 100 characters (For RSS 0.91)</remarks>
@@ -1208,6 +1228,16 @@
         </member>
         <member name="P:Rss.RssChannel.Items">
             <summary>All items within the channel</summary>
+        </member>
+        <member name="P:Rss.RssChannel.IsRead">
+            <summary>
+             Return the reading status of the channel
+            </summary>
+        </member>
+        <member name="P:Rss.RssChannel.HashID">
+            <summary>
+            Return/set the unique ID of the channel
+            </summary>
         </member>
         <member name="T:Rss.RssChannelCollection">
             <summary>A strongly typed collection of <see cref="T:Rss.RssChannel"/> objects</summary>
