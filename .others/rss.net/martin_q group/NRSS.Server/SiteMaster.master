@@ -1,0 +1,27 @@
+<%@ Master CodeFile="SiteMaster.master.cs" Inherits="SiteMaster" %>
+<html>
+<head id="Head1" runat="server">
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<!-- logout -->
+<script language="C#" runat=server>
+    void Signout_Click(Object sender, EventArgs E) {
+      FormsAuthentication.SignOut();
+      FormsAuthentication.RedirectToLoginPage();
+    }
+</script>
+</head>
+<body  bgColor="#ffffff" style="background-image: url('img/bg.gif')">
+        <div class="logo">
+            &nbsp;<span style="font-size: 14px;">NRSS Admin</span>&nbsp;
+        </div>
+        <div class="menu">
+            &nbsp;<asp:LoginName ID="LoginName1" runat="server" />
+            - 
+            <a href="Default.aspx">Groupes</a>
+        </div>
+        <div class="pagecontent"><div class="content"><div class="title">&nbsp;</div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+        <div></div>
+</body>
+</html>

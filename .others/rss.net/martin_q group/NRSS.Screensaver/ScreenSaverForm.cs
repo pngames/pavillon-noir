@@ -18,7 +18,7 @@ namespace NRSS.Screensaver
     private IList feedList;
     private IList chanList;
     private IList itemList;
-    private Feed rssFeed;
+/*    private Feed rssFeed;
     private Feed rssFeed1;
     private Feed rssFeed2;
     private Feed rssFeed3;
@@ -28,10 +28,11 @@ namespace NRSS.Screensaver
     private Feed rssFeed7;
     private Feed rssFeed8;
     private Feed rssFeed9;
-    private Feed rssFeed10;
+    private Feed rssFeed10;*/
 
     private string login;
     private string password;
+    private string hash;
     private ItemListView rssView;
     private ItemDescriptionView<Item> rssDescriptionView;
     private FeedListView feedView;
@@ -58,6 +59,9 @@ namespace NRSS.Screensaver
 
       SetupScreenSaver();
       LoadBackgroundImage();
+
+      hash = serv.logon(login, password);
+
       chanList = new ArrayList();
       LoadRssFeeds();
 
@@ -156,7 +160,7 @@ namespace NRSS.Screensaver
     private void LoadRssFeeds()
     {
       ArrayList chansToRemove = new ArrayList();
-      //feedList = serv.getFeedList(login, password);
+      feedList = serv.getFeeds(hash);
 
       foreach (Feed tempFeed in feedList)
       {
