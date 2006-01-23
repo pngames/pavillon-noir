@@ -55,9 +55,15 @@ public class Service : System.Web.Services.WebService
   }
 
   [WebMethod]
+  public string testLogon()
+  { 
+	return logon("user", "pass");
+  }
+
+  [WebMethod]
   public List<Feed> testGetAllFeeds()
   {
-	return getFeeds("5a082510-e69c-4a15-a54e-e1ee874dfb45");
+	return getFeeds("081c3921-41cc-46ec-a24d-181958d24f95");
   }
   #endregion
 

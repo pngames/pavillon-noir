@@ -26,16 +26,16 @@ namespace NRSS.Winformclient
             if (textBoxPasswd1.Text == textBoxPasswdConf.Text)
             {
                 newUser.Passwd = textBoxPasswd1.Text;
-                try
+                //try
                 {
                     serviceAdd.createUser(newUser);
                 }
-                catch (Exception exe)
+                /*catch (Exception exe)
                 {
                     exe.Message.ToLower();
                     labelError.Visible = true;
                     labelError.Text = exe.Message.ToLower();  //"Error: Cannot create account";
-                }
+                }*/
                 this.Close();
             }
             else {

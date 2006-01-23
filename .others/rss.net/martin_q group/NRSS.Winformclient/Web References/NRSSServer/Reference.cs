@@ -34,6 +34,8 @@ namespace NRSS.Winformclient.NRSSServer {
         
         private System.Threading.SendOrPostCallback testCreateUserOperationCompleted;
         
+        private System.Threading.SendOrPostCallback testLogonOperationCompleted;
+        
         private System.Threading.SendOrPostCallback testGetAllFeedsOperationCompleted;
         
         private System.Threading.SendOrPostCallback createUserOperationCompleted;
@@ -103,6 +105,9 @@ namespace NRSS.Winformclient.NRSSServer {
         
         /// <remarks/>
         public event testCreateUserCompletedEventHandler testCreateUserCompleted;
+        
+        /// <remarks/>
+        public event testLogonCompletedEventHandler testLogonCompleted;
         
         /// <remarks/>
         public event testGetAllFeedsCompletedEventHandler testGetAllFeedsCompleted;
@@ -193,6 +198,33 @@ namespace NRSS.Winformclient.NRSSServer {
             if ((this.testCreateUserCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.testCreateUserCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://nrss.org/testLogon", RequestNamespace="http://nrss.org/", ResponseNamespace="http://nrss.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string testLogon() {
+            object[] results = this.Invoke("testLogon", new object[0]);
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void testLogonAsync() {
+            this.testLogonAsync(null);
+        }
+        
+        /// <remarks/>
+        public void testLogonAsync(object userState) {
+            if ((this.testLogonOperationCompleted == null)) {
+                this.testLogonOperationCompleted = new System.Threading.SendOrPostCallback(this.OntestLogonOperationCompleted);
+            }
+            this.InvokeAsync("testLogon", new object[0], this.testLogonOperationCompleted, userState);
+        }
+        
+        private void OntestLogonOperationCompleted(object arg) {
+            if ((this.testLogonCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.testLogonCompleted(this, new testLogonCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -609,15 +641,15 @@ namespace NRSS.Winformclient.NRSSServer {
         
         private int idField;
         
-        private string typeField;
-        
         private string nameField;
         
-        private string filsField;
+        private string filsUserField;
         
         private int filsPortField;
         
-        private string filsUserField;
+        private string filsField;
+        
+        private string typeField;
         
         private string filsPassField;
         
@@ -636,16 +668,6 @@ namespace NRSS.Winformclient.NRSSServer {
         }
         
         /// <remarks/>
-        public string Type {
-            get {
-                return this.typeField;
-            }
-            set {
-                this.typeField = value;
-            }
-        }
-        
-        /// <remarks/>
         public string Name {
             get {
                 return this.nameField;
@@ -656,12 +678,12 @@ namespace NRSS.Winformclient.NRSSServer {
         }
         
         /// <remarks/>
-        public string Fils {
+        public string FilsUser {
             get {
-                return this.filsField;
+                return this.filsUserField;
             }
             set {
-                this.filsField = value;
+                this.filsUserField = value;
             }
         }
         
@@ -676,12 +698,22 @@ namespace NRSS.Winformclient.NRSSServer {
         }
         
         /// <remarks/>
-        public string FilsUser {
+        public string Fils {
             get {
-                return this.filsUserField;
+                return this.filsField;
             }
             set {
-                this.filsUserField = value;
+                this.filsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Type {
+            get {
+                return this.typeField;
+            }
+            set {
+                this.typeField = value;
             }
         }
         
@@ -729,11 +761,11 @@ namespace NRSS.Winformclient.NRSSServer {
         
         private string titleField;
         
-        private string descriptionField;
-        
         private string languageField;
         
         private string linkField;
+        
+        private string descriptionField;
         
         private Item[] itemsField;
         
@@ -760,16 +792,6 @@ namespace NRSS.Winformclient.NRSSServer {
         }
         
         /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
         public string Language {
             get {
                 return this.languageField;
@@ -786,6 +808,16 @@ namespace NRSS.Winformclient.NRSSServer {
             }
             set {
                 this.linkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
             }
         }
         
@@ -821,19 +853,19 @@ namespace NRSS.Winformclient.NRSSServer {
         
         private int idField;
         
-        private string messageIDField;
-        
         private string authorField;
         
         private System.DateTime dateField;
         
         private string titleField;
         
-        private string descriptionField;
+        private string messageIDField;
         
         private string contentField;
         
         private string linkField;
+        
+        private string descriptionField;
         
         private Item parentField;
         
@@ -846,16 +878,6 @@ namespace NRSS.Winformclient.NRSSServer {
             }
             set {
                 this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string MessageID {
-            get {
-                return this.messageIDField;
-            }
-            set {
-                this.messageIDField = value;
             }
         }
         
@@ -890,12 +912,12 @@ namespace NRSS.Winformclient.NRSSServer {
         }
         
         /// <remarks/>
-        public string Description {
+        public string MessageID {
             get {
-                return this.descriptionField;
+                return this.messageIDField;
             }
             set {
-                this.descriptionField = value;
+                this.messageIDField = value;
             }
         }
         
@@ -916,6 +938,16 @@ namespace NRSS.Winformclient.NRSSServer {
             }
             set {
                 this.linkField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
             }
         }
         
@@ -1008,15 +1040,15 @@ namespace NRSS.Winformclient.NRSSServer {
         
         private int idField;
         
-        private string emailField;
-        
-        private string passwdField;
-        
         private bool confirmedField;
+        
+        private string emailField;
         
         private System.DateTime creationField;
         
         private System.DateTime lastLogonField;
+        
+        private string passwdField;
         
         private Group[] groupsField;
         
@@ -1031,32 +1063,22 @@ namespace NRSS.Winformclient.NRSSServer {
         }
         
         /// <remarks/>
-        public string Email {
-            get {
-                return this.emailField;
-            }
-            set {
-                this.emailField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Passwd {
-            get {
-                return this.passwdField;
-            }
-            set {
-                this.passwdField = value;
-            }
-        }
-        
-        /// <remarks/>
         public bool Confirmed {
             get {
                 return this.confirmedField;
             }
             set {
                 this.confirmedField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Email {
+            get {
+                return this.emailField;
+            }
+            set {
+                this.emailField = value;
             }
         }
         
@@ -1077,6 +1099,16 @@ namespace NRSS.Winformclient.NRSSServer {
             }
             set {
                 this.lastLogonField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Passwd {
+            get {
+                return this.passwdField;
+            }
+            set {
+                this.passwdField = value;
             }
         }
         
@@ -1121,6 +1153,32 @@ namespace NRSS.Winformclient.NRSSServer {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
     public delegate void testCreateUserCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
+    public delegate void testLogonCompletedEventHandler(object sender, testLogonCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class testLogonCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal testLogonCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.42")]
