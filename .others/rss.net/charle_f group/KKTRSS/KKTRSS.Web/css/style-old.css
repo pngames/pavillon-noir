@@ -38,10 +38,10 @@ ul {
 }
 #header div.app {
 	background-color: #BABABA;
-	border-bottom: solid 2px #EBEEBEB;
-	border-left: solid 2px #EBEEBEB;
-	border-right: solid 2px #EBEEBEB;
-	border-top: solid 2px #EBEEBEB;
+	border-bottom: solid 2px #EBEBEB;
+	border-left: solid 2px #EBEBEB;
+	border-right: solid 2px #EBEBEB;
+	border-top: solid 2px #EBEBEB;
 	font-size: medium;
 	padding: 2px 5px 2px 5px;
 	margin: 0 auto;
@@ -73,10 +73,10 @@ ul {
 }
 #footer .foot {
 	background-color: #BABABA;
-	border-bottom: solid 2px #EBEEBEB;
-	border-left: solid 2px #EBEEBEB;
-	border-right: solid 2px #EBEEBEB;
-	border-top: solid 2px #EBEEBEB;
+	border-bottom: solid 2px #EBEBEB;
+	border-left: solid 2px #EBEBEB;
+	border-right: solid 2px #EBEBEB;
+	border-top: solid 2px #EBEBEB;
 	font-size: small;
 	padding: 2px 5px 2px 5px;
 	margin: 0 auto;
@@ -129,21 +129,34 @@ div#nav span.separator {
 }
 
 /* Channels list */
-ul#channelslist {
+ul#channels_list {
   background-color: #FFFFFF;
   color: #000000;
 /*  clear: left;
   width: 280px;
   float: left;*/
 }
-ul#channelslist a {
+ul#channels_list a {
   color: #000000;
 }
-ul#channelslist li#channelslabel {
+ul#channels_list li#channels_label {
   color: #BA4423;
 }
-ul#channelslist li {
+ul#channels_list li {
   /*display: inline;*/
+  margin: 10px;
+}
+
+/* Channels actions */
+ul#channels_actions {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+ul#channels_list a {
+  color: #000000;
+}
+ul#channels_list li {
+  display: inline;
   margin: 10px;
 }
  

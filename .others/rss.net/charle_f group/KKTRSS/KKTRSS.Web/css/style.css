@@ -22,9 +22,12 @@
 	-moz-border-radius-topleft: 8px; */
 
 
-/* GENERAL */
+/** GENERAL */
 
-html, body, td, p, th, a  { padding: 0; }
+html, body, td, p, th, a, img { 
+  padding: 0; 
+  border: none;
+}
 
 a { text-decoration: none; color: #000; }
 
@@ -48,7 +51,7 @@ ul {
   padding: 0;
 }
 
-/* -- */
+/** -- */
 
 #header {
   display: none;
@@ -63,10 +66,10 @@ ul {
 }
 #header div.app {
   background-color: #BABABA;
-  border-bottom: solid 2px #EBEEBEB;
-  border-left: solid 2px #EBEEBEB;
-  border-right: solid 2px #EBEEBEB;
-  border-top: solid 2px #EBEEBEB;
+  border-bottom: solid 2px #EBEBEB;
+  border-left: solid 2px #EBEBEB;
+  border-right: solid 2px #EBEBEB;
+  border-top: solid 2px #EBEBEB;
   font-size: medium;
   padding: 2px 5px 2px 5px;
   margin: 0 auto;
@@ -98,10 +101,10 @@ ul {
 }
 #footer .foot {
   background-color: #BABABA;
-  border-bottom: solid 2px #EBEEBEB;
-  border-left: solid 2px #EBEEBEB;
-  border-right: solid 2px #EBEEBEB;
-  border-top: solid 2px #EBEEBEB;
+  border-bottom: solid 2px #EBEBEB;
+  border-left: solid 2px #EBEBEB;
+  border-right: solid 2px #EBEBEB;
+  border-top: solid 2px #EBEBEB;
   font-size: small;
   padding: 2px 5px 2px 5px;
   margin: 0 auto;
@@ -117,7 +120,7 @@ div#KKT {
   width: 200px;
 }
 
-/* Login */
+/** Login */
 div#loginbox {
   background-color: #9AAAB5;
   border: solid 2px #000000;
@@ -150,6 +153,7 @@ input.btn {
   background: #FFFFFF;
 }
 
+/** Form */
 div.row {
   clear: both;
   margin-left: 10px;
@@ -173,7 +177,7 @@ div.row span.btn {
 
 
 
-/* Nav */
+/** Nav */
 div#nav {  
 }
 div#nav a {
@@ -201,10 +205,10 @@ div#nav li.separator {
 }
 
 
-/* Channels box */
-div#channelsbox {
-  background-color: #9AAAB5;
-  border: 1px solid #000000;
+/** Channels box */
+div#channels_box {
+  /*background-color: #9AAAB5;
+  border: 1px solid #000000;*/
   clear:left;
   color: #FFFFFF;
   float: left;
@@ -214,21 +218,64 @@ div#channelsbox {
   width: 170px;
   -moz-border-radius: 8px;
 }
-div#channelsbox h3#channelslabel {
+div#channels_box h3#channels_label {
   font-size: medium;
+  display: none;
+}
+div#channels_box a {
+  color: #000000; 
+  /*color: #FFFFFF; */
+}
+
+/** Channels list */
+ul#channels_list {
+  background-color: #FFFFFF;
+  color: #000000;
+/*  clear: left;
+  width: 280px;
+  float: left;*/
+}
+ul#channels_list a {
+  color: #000000;
+}
+ul#channels_list li#channels_label {
+  color: #BA4423;
+}
+ul#channels_list li {
+  /*display: inline;*/
+  margin: 10px;
+}
+
+/** Channels Actions */
+ul#channels_actions {
+  background-color: #FFFFFF;
+  color: #000000;
+  font-size: small;
+  text-align: center;
+}
+ul#channels_actions li {
+  display: inline;
+  margin: 0px;
+}
+
+
+/** Channels input box */
+div#channels_suscribe_box {
+  border: groove 1px #9AAAB5;
+  padding: 5px;
+  visibility: hidden;
+  -moz-border-radius: 8px;
+}
+div#channels_suscribe_box ul {
+}
+div#channels_suscribe_box li {
   display: block;
 }
-div#channelsbox a {
-/*  color: #000000; */
-  color: #FFFFFF; 
+div#channels_suscribe_box .chanact_cancel {
+  float: right;
 }
-div#channelsbox span.plus {
-}
-div#channelsbox span.minus {
-}
- 
 
-/* Feeds */
+/** Feeds */
 div.feed {
   float: left;
   margin: 0 auto;
@@ -239,26 +286,35 @@ div.feed {
   max-width: 600px;
 }
 
-/* Channel */
+/** Channel */
 div.channel {
   margin: 0;
   padding: 0;
   position: relative;
 }
+div.channel img.favico {
+  border: none;
+  /*float: left;*/
+  margin: 2px 5px 2px 5px;
+}
 div.channel h3 {
 }
 
-/* Item */
+/** Item */
 div.item {
   background-color: #FFFFFF;
   border: 1px solid #000000;
-  /*border-bottom: solid 2px #9AAAB5;*/
   color: #000000;
   margin: 10px 10px 20px 10px;
   padding: 0 0 1px 0;
   position: relative;
   text-align: justify;
   -moz-border-radius: 8px;
+}
+div.item img.favico {
+  border: solid 1px #FFFFFF;
+  float: right;
+  margin: 2px 5px 2px 5px;
 }
 div.item a {
   color: #FFFFFF;
@@ -271,7 +327,7 @@ div.item h4 {
   -moz-border-radius-topright: 8px;
   -moz-border-radius-topleft: 8px;
 }
-div.item h4 .read {
+div.item .read {
   background-color: #79868F;
 }
 div.item .desc {
@@ -304,6 +360,7 @@ div.item ul#actions li {
   margin-right: 10px;
 }
 
+/** HASH */
 span.itemid {
   font-size: x-small;
 }
