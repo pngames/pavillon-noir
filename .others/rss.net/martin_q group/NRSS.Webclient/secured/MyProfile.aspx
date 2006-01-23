@@ -1,4 +1,4 @@
-<%@ Page MasterPageFile="~/SiteMaster.master" CodeFile="MyProfile.aspx.cs" Inherits="secured_MyProfile" Title="NRSS Profile" %>
+<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/SiteMaster.master" CodeFile="MyProfile.aspx.cs" Inherits="secured_MyProfile" Title="NRSS Profile" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
   
