@@ -133,10 +133,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://localhost:1774/NRSS.Server/Service.asmx">
+    <WebReferenceUrl Include="http://localhost:1919/NRSS.Server/Service.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\NRSSServer\</RelPath>
-      <UpdateFromURL>http://localhost:1774/NRSS.Server/Service.asmx</UpdateFromURL>
+      <UpdateFromURL>http://localhost:1919/NRSS.Server/Service.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

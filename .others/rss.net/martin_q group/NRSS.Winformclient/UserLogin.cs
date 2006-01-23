@@ -29,8 +29,9 @@ namespace NRSS.Winformclient
             {
                 user = serviceAdd.logon(textBoxUser.Text, textBoxPasswd.Text);
             }
-            catch (SoapException)
+            catch (SoapException exep)
             {
+                exep.Message.ToLowerInvariant();
                 labelError.Visible = true;
                 labelError.Text = "Error: Invalid user or password";
             }
@@ -46,8 +47,6 @@ namespace NRSS.Winformclient
             CreateUser CreateUserDialog = new CreateUser();
 
             CreateUserDialog.ShowDialog();
-
-            //this.DialogResult = DialogResult.OK;
         }
     }
 }
