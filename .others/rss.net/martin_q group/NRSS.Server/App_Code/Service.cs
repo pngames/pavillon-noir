@@ -100,29 +100,33 @@ public class Service : System.Web.Services.WebService
   {
 	UserManager.Instance.validate(uid);
 
-	List<Feed> feeds = new List<Feed>();
+	BaseDataAccess mgr = new BaseDataAccess();
+	List<Feed> feedsToSend = new List<Feed>();
+	IList feeds = mgr.Get(typeof(Feed));
 
 	User user = UserManager.Instance.getUser(uid);
+	IList mygroups = user.iGroups;
 
-	foreach (Group group in user.Groups)
+	foreach (Feed feed in feeds)
 	{
-	  foreach (Feed feed in group.Feeds)
-	  {
-		if (!feeds.Contains(feed))
-		{
-		  Importer.updateFeed(feed);
-		  feeds.Add(feed);
+	  Importer.updateFeed(feed);
 
-		  foreach (Chan chan in feed.Chans)
-			foreach (Item item in chan.Items)
-			{
-			  item.Read = item.ReaderUsers.Contains(user);
-			}
+	  if (feed.Groups == null || feed.Groups.Count == 0)
+		feedsToSend.Add(feed);
+	  else
+		foreach (Group group in feed.Groups)
+		{
+		  if (mygroups.Contains(group))
+		  {
+			feedsToSend.Add(feed);
+			break;
+		  }
 		}
-	  }
+
+	  feed.Selected = user.Feeds != null && user.Feeds.Contains(feed);
 	}
 
-	return feeds;
+	return feedsToSend;
   }
 
   #region add

@@ -25,9 +25,9 @@ namespace test
 	  user.Email = this.t_user.Text;
 	  user.Passwd = this.t_pass.Text;
 
-	  //this.t_hash.Text = serviceAdd.createUser(user);
-	  //serviceAdd.validateUser(this.t_hash.Text);
-	  user = serviceAdd.logon(this.t_user.Text, this.t_pass.Text);
+	  /*this.t_hash.Text = serviceAdd.createUser(user);*/
+	  /*serviceAdd.validateUser(this.t_hash.Text);
+	  user = serviceAdd.logon(this.t_user.Text, this.t_pass.Text);*/
 
 	  this.t_user.Text = user.Email;
 	  this.t_pass.Text = user.Passwd;

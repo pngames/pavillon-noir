@@ -39,12 +39,9 @@ public class UserManager
 
   public string createUser(User user)
   {
-
-	//////////////////////////////////////////////////////////////////////////
-
 	BaseDataAccess mgr = new BaseDataAccess();
 
-	if (mgr.Get(typeof(User), "email", user.Email) != null)
+	if (mgr.Get(typeof(User), "Email", user.Email) != null)
 	  throw new NRSSException("L'utilisateur existe deja !");
 
 	//////////////////////////////////////////////////////////////////////////

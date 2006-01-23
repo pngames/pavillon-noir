@@ -167,7 +167,7 @@ namespace winformclient
 
 
             // French voice init
-            voice.Voice = voice.GetVoices("Name=LH Pierre", "Language=40C").Item(0);
+            voice.Voice = voice.GetVoices("Name=Microsoft Sam", "Language=409").Item(0);
             voice.Volume = 0;
 
             if (Userbox.ShowDialog() == DialogResult.Cancel)

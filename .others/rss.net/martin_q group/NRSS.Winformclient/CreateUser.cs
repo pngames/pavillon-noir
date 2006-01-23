@@ -36,7 +36,7 @@ namespace NRSS.Winformclient
                     labelError.Visible = true;
                     labelError.Text = exe.Message.ToLower();  //"Error: Cannot create account";
                 }
-                //this.Close();
+                this.Close();
             }
             else {
                 labelError.Text = "Error: Passwords are different";
