@@ -28,13 +28,13 @@ namespace winformclient
 	/// </summary>
 	private void InitializeComponent()
 	{
-        System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("RSS Test 1");
-        System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("RSS Test 2");
-        System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("RSS Test 3");
-        System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("RSS", new System.Windows.Forms.TreeNode[] {
-            treeNode29,
-            treeNode30,
-            treeNode31});
+        System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("RSS Test 1");
+        System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("RSS Test 2");
+        System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("RSS Test 3");
+        System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("RSS", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2,
+            treeNode3});
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
         this.LeftTreeMenu = new System.Windows.Forms.TreeView();
         this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -58,18 +58,18 @@ namespace winformclient
         this.columnDescription = new System.Windows.Forms.ColumnHeader();
         this.columnLink = new System.Windows.Forms.ColumnHeader();
         this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+        this.labelTitleContent = new System.Windows.Forms.Label();
+        this.labelFromContent = new System.Windows.Forms.Label();
+        this.labelDateContent = new System.Windows.Forms.Label();
+        this.linkLabel = new System.Windows.Forms.LinkLabel();
+        this.labelLink = new System.Windows.Forms.Label();
+        this.labelDate = new System.Windows.Forms.Label();
+        this.labelFrom = new System.Windows.Forms.Label();
+        this.labelTitle = new System.Windows.Forms.Label();
         this.webBrowser1 = new System.Windows.Forms.WebBrowser();
         this.ToolBar = new System.Windows.Forms.ToolStrip();
         this.ReadText = new System.Windows.Forms.ToolStripButton();
         this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-        this.labelTitle = new System.Windows.Forms.Label();
-        this.labelFrom = new System.Windows.Forms.Label();
-        this.labelDate = new System.Windows.Forms.Label();
-        this.labelLink = new System.Windows.Forms.Label();
-        this.linkLabel = new System.Windows.Forms.LinkLabel();
-        this.labelDateContent = new System.Windows.Forms.Label();
-        this.labelFromContent = new System.Windows.Forms.Label();
-        this.labelTitleContent = new System.Windows.Forms.Label();
         this.menuStrip1.SuspendLayout();
         this.splitContainer1.Panel1.SuspendLayout();
         this.splitContainer1.Panel2.SuspendLayout();
@@ -88,16 +88,16 @@ namespace winformclient
         this.LeftTreeMenu.Dock = System.Windows.Forms.DockStyle.Fill;
         this.LeftTreeMenu.Location = new System.Drawing.Point(0, 0);
         this.LeftTreeMenu.Name = "LeftTreeMenu";
-        treeNode29.Name = "RSSTest1";
-        treeNode29.Text = "RSS Test 1";
-        treeNode30.Name = "RSSTest2";
-        treeNode30.Text = "RSS Test 2";
-        treeNode31.Name = "RSSTest3";
-        treeNode31.Text = "RSS Test 3";
-        treeNode32.Name = "RssFeeds";
-        treeNode32.Text = "RSS";
+        treeNode1.Name = "RSSTest1";
+        treeNode1.Text = "RSS Test 1";
+        treeNode2.Name = "RSSTest2";
+        treeNode2.Text = "RSS Test 2";
+        treeNode3.Name = "RSSTest3";
+        treeNode3.Text = "RSS Test 3";
+        treeNode4.Name = "RssFeeds";
+        treeNode4.Text = "RSS";
         this.LeftTreeMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode32});
+            treeNode4});
         this.LeftTreeMenu.Size = new System.Drawing.Size(215, 646);
         this.LeftTreeMenu.TabIndex = 0;
         this.LeftTreeMenu.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.LeftTreeMenu_AfterSelect);
@@ -306,6 +306,84 @@ namespace winformclient
         this.splitContainer3.SplitterDistance = 70;
         this.splitContainer3.TabIndex = 0;
         // 
+        // labelTitleContent
+        // 
+        this.labelTitleContent.AutoSize = true;
+        this.labelTitleContent.Location = new System.Drawing.Point(45, 5);
+        this.labelTitleContent.Name = "labelTitleContent";
+        this.labelTitleContent.Size = new System.Drawing.Size(27, 13);
+        this.labelTitleContent.TabIndex = 7;
+        this.labelTitleContent.Text = "N/A";
+        // 
+        // labelFromContent
+        // 
+        this.labelFromContent.AutoSize = true;
+        this.labelFromContent.Location = new System.Drawing.Point(45, 21);
+        this.labelFromContent.Name = "labelFromContent";
+        this.labelFromContent.Size = new System.Drawing.Size(27, 13);
+        this.labelFromContent.TabIndex = 6;
+        this.labelFromContent.Text = "N/A";
+        // 
+        // labelDateContent
+        // 
+        this.labelDateContent.AutoSize = true;
+        this.labelDateContent.Location = new System.Drawing.Point(45, 38);
+        this.labelDateContent.Name = "labelDateContent";
+        this.labelDateContent.Size = new System.Drawing.Size(27, 13);
+        this.labelDateContent.TabIndex = 5;
+        this.labelDateContent.Text = "N/A";
+        // 
+        // linkLabel
+        // 
+        this.linkLabel.AutoSize = true;
+        this.linkLabel.CausesValidation = false;
+        this.linkLabel.Location = new System.Drawing.Point(46, 55);
+        this.linkLabel.Name = "linkLabel";
+        this.linkLabel.Size = new System.Drawing.Size(27, 13);
+        this.linkLabel.TabIndex = 4;
+        this.linkLabel.TabStop = true;
+        this.linkLabel.Text = "N/A";
+        // 
+        // labelLink
+        // 
+        this.labelLink.AutoSize = true;
+        this.labelLink.Font = new System.Drawing.Font("Garamond", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.labelLink.Location = new System.Drawing.Point(3, 55);
+        this.labelLink.Name = "labelLink";
+        this.labelLink.Size = new System.Drawing.Size(36, 14);
+        this.labelLink.TabIndex = 3;
+        this.labelLink.Text = "Link:";
+        // 
+        // labelDate
+        // 
+        this.labelDate.AutoSize = true;
+        this.labelDate.Font = new System.Drawing.Font("Garamond", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.labelDate.Location = new System.Drawing.Point(3, 38);
+        this.labelDate.Name = "labelDate";
+        this.labelDate.Size = new System.Drawing.Size(36, 14);
+        this.labelDate.TabIndex = 2;
+        this.labelDate.Text = "Date:";
+        // 
+        // labelFrom
+        // 
+        this.labelFrom.AutoSize = true;
+        this.labelFrom.Font = new System.Drawing.Font("Garamond", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.labelFrom.Location = new System.Drawing.Point(3, 21);
+        this.labelFrom.Name = "labelFrom";
+        this.labelFrom.Size = new System.Drawing.Size(41, 14);
+        this.labelFrom.TabIndex = 1;
+        this.labelFrom.Text = "From:";
+        // 
+        // labelTitle
+        // 
+        this.labelTitle.AutoSize = true;
+        this.labelTitle.Font = new System.Drawing.Font("Garamond", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.labelTitle.Location = new System.Drawing.Point(3, 4);
+        this.labelTitle.Name = "labelTitle";
+        this.labelTitle.Size = new System.Drawing.Size(37, 14);
+        this.labelTitle.TabIndex = 0;
+        this.labelTitle.Text = "Title:";
+        // 
         // webBrowser1
         // 
         this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -343,84 +421,6 @@ namespace winformclient
         this.toolStripSeparator1.Name = "toolStripSeparator1";
         this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
         // 
-        // labelTitle
-        // 
-        this.labelTitle.AutoSize = true;
-        this.labelTitle.Font = new System.Drawing.Font("Garamond", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.labelTitle.Location = new System.Drawing.Point(3, 4);
-        this.labelTitle.Name = "labelTitle";
-        this.labelTitle.Size = new System.Drawing.Size(37, 14);
-        this.labelTitle.TabIndex = 0;
-        this.labelTitle.Text = "Title:";
-        // 
-        // labelFrom
-        // 
-        this.labelFrom.AutoSize = true;
-        this.labelFrom.Font = new System.Drawing.Font("Garamond", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.labelFrom.Location = new System.Drawing.Point(3, 21);
-        this.labelFrom.Name = "labelFrom";
-        this.labelFrom.Size = new System.Drawing.Size(41, 14);
-        this.labelFrom.TabIndex = 1;
-        this.labelFrom.Text = "From:";
-        // 
-        // labelDate
-        // 
-        this.labelDate.AutoSize = true;
-        this.labelDate.Font = new System.Drawing.Font("Garamond", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.labelDate.Location = new System.Drawing.Point(3, 38);
-        this.labelDate.Name = "labelDate";
-        this.labelDate.Size = new System.Drawing.Size(36, 14);
-        this.labelDate.TabIndex = 2;
-        this.labelDate.Text = "Date:";
-        // 
-        // labelLink
-        // 
-        this.labelLink.AutoSize = true;
-        this.labelLink.Font = new System.Drawing.Font("Garamond", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.labelLink.Location = new System.Drawing.Point(3, 55);
-        this.labelLink.Name = "labelLink";
-        this.labelLink.Size = new System.Drawing.Size(36, 14);
-        this.labelLink.TabIndex = 3;
-        this.labelLink.Text = "Link:";
-        // 
-        // linkLabel
-        // 
-        this.linkLabel.AutoSize = true;
-        this.linkLabel.CausesValidation = false;
-        this.linkLabel.Location = new System.Drawing.Point(46, 55);
-        this.linkLabel.Name = "linkLabel";
-        this.linkLabel.Size = new System.Drawing.Size(27, 13);
-        this.linkLabel.TabIndex = 4;
-        this.linkLabel.TabStop = true;
-        this.linkLabel.Text = "N/A";
-        // 
-        // labelDateContent
-        // 
-        this.labelDateContent.AutoSize = true;
-        this.labelDateContent.Location = new System.Drawing.Point(45, 38);
-        this.labelDateContent.Name = "labelDateContent";
-        this.labelDateContent.Size = new System.Drawing.Size(27, 13);
-        this.labelDateContent.TabIndex = 5;
-        this.labelDateContent.Text = "N/A";
-        // 
-        // labelFromContent
-        // 
-        this.labelFromContent.AutoSize = true;
-        this.labelFromContent.Location = new System.Drawing.Point(45, 21);
-        this.labelFromContent.Name = "labelFromContent";
-        this.labelFromContent.Size = new System.Drawing.Size(27, 13);
-        this.labelFromContent.TabIndex = 6;
-        this.labelFromContent.Text = "N/A";
-        // 
-        // labelTitleContent
-        // 
-        this.labelTitleContent.AutoSize = true;
-        this.labelTitleContent.Location = new System.Drawing.Point(45, 5);
-        this.labelTitleContent.Name = "labelTitleContent";
-        this.labelTitleContent.Size = new System.Drawing.Size(27, 13);
-        this.labelTitleContent.TabIndex = 7;
-        this.labelTitleContent.Text = "N/A";
-        // 
         // Form1
         // 
         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -433,6 +433,7 @@ namespace winformclient
         this.MainMenuStrip = this.menuStrip1;
         this.Name = "Form1";
         this.Text = "NRSS Client";
+        this.Load += new System.EventHandler(this.Form1_Load);
         this.menuStrip1.ResumeLayout(false);
         this.menuStrip1.PerformLayout();
         this.splitContainer1.Panel1.ResumeLayout(false);

@@ -13,6 +13,7 @@ using System.Web.Services.Protocols;
 using System.Security.Cryptography.X509Certificates;
 using System.Net;
 using NRSS.Winformclient.NRSSServer;
+using NRSS.Winformclient;
 
 namespace winformclient
 {
@@ -31,6 +32,7 @@ namespace winformclient
         public Form1()
         {
             InitializeComponent();
+            
             // French voice init
             voice.Voice = voice.GetVoices("Name=LH Pierre", "Language=40C").Item(0);
             voice.Volume = 0;
@@ -153,6 +155,13 @@ namespace winformclient
                 voice.Speak(cur_speech,
                         SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFPurgeBeforeSpeak);
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            UserLogin Userbox = new UserLogin();
+            if (Userbox.ShowDialog() == DialogResult.Cancel)
+                Close();
         }
     }
 
