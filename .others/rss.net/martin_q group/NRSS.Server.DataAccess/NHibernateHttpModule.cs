@@ -189,7 +189,7 @@ namespace NRSS.Server.DataAccess
 		  Feed feed3 = new Feed();
 		  feed3.Type = "nntp";
 		  feed3.Fils = "news.epita.fr";
-		  feed3.FilsPort = 115;
+		  feed3.FilsPort = 119;
 
 		  session.Save(feed1);
 		  session.Save(feed2);
