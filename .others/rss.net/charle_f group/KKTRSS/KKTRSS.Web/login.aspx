@@ -22,9 +22,7 @@
 	  <div id="KKT">
 		KKT.RSS
 	  </div>
-    
-      <p><asp:Label id="Msg" forecolor="red" font-names="Verdana" font-size="10" runat="server" /></p>	
-      
+        
 	  <div id="loginbox">
       
 		<div id="infosform">
@@ -38,7 +36,7 @@
 		  <div class="row">
 			<span class="label">password:</span>
 			<span class="formw">
-			  <input id="UserPass" type="text" runat="server" title="koin"/>
+			  <input id="UserPass" type="password" runat="server" title="koin"/>
 			</span>
 			<asp:RequiredFieldValidator id="RequiredFieldValidator2" ControlToValidate="UserPass" Display="Static" ErrorMessage="*" runat="server" />
 		  </div>
@@ -65,9 +63,11 @@
 			</span>
 		  </div>
 		</div>
-		
+      	  
 	  </div> <!-- !loginbox -->
-  
+	  
+	  <p class="msg"><asp:Label id="Msg" runat="server" /></p>
+	  
 	</div> <!-- !content -->
   
   </form>

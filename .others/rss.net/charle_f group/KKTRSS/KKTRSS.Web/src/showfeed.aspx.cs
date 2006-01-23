@@ -13,37 +13,60 @@ using System.Web.UI.HtmlControls;
 using System.Net;
 using System.Threading;
 
-
+namespace KKTRSS.Web
+{
 
 public partial class src_showfeed : System.Web.UI.Page
 {
 
   /* QS Parameters */
   static public string DSP_NB_ITEMS = "dspnbitems";
-  static public string DSP_ONLY_UNREAD = "dsponlyunread"; // true|false || 1|0
+  static public string DSP_ONLY_UNREAD = "dsponlyunread";
   static public string FEED_ID = "feedid";
   static public string PROXY_MODE = "proxymode";
+  static public string UID = "uid";
 
   /* QS values */
   protected int dspnbitems = 0;
   protected Boolean dsponlyread = false;
   protected Boolean proxymode = true;
-  
+ 
   /* proxy variables */
   string _proxy_url = "proxies.epitech.net";
   int _proxy_port = 3128;
   string _proxy_user = "valy_m"; 
   string _proxy_pass = "pufCjnc[";
   string _proxy_output_file = @"c:\output-showfeed.aspx.txt";
-  
+
   private static Hashtable feedsmap; // source feeds
   private Rss.RssFeed currentfeed;
-  protected System.Collections.Specialized.NameValueCollection qs;
   protected ArrayList readitems;
+
+  protected Rss.RssFeed myfeed;
+  private Rss.RssFeed currentfeed;
+  protected System.Collections.Specialized.NameValueCollection qs;
+  protected kktserver.Service service = new kktserver.Service();
+  protected string uid = null;
   
   # region Accessors
-    protected static Hashtable Feedsmap
-    {
+	[AjaxPro.AjaxProperty]
+	protected Boolean Dsponlyread
+	{
+	  get { return dsponlyread; }
+	  set { dsponlyread = value; }
+	}
+	protected int Dspnbitems
+	{
+	  get { return dspnbitems; }
+	  set { dspnbitems = value; }
+	}
+	protected Boolean Proxymode
+	{
+	  get { return proxymode; }
+	  set { proxymode = value; }
+	}
+	protected static Hashtable Feedsmap
+	{
         get { return src_showfeed.feedsmap; }
         set { src_showfeed.feedsmap = value; }
     }
@@ -57,58 +80,29 @@ public partial class src_showfeed : System.Web.UI.Page
         get { return qs; }
         set { qs = value; }
     }
-    #endregion
+  #endregion
   
+
   protected void Page_Load(object sender, EventArgs e)
   {
-	AjaxPro.Utility.RegisterTypeForAjax(typeof(src_showfeed));
-
+	qs = Request.QueryString; 
 	if (qs != null)
 	{
+	  uid = qs[UID];
 	  dspnbitems = (qs[DSP_NB_ITEMS] != null ? Convert.ToInt32(qs[DSP_NB_ITEMS]) : dspnbitems);
 	  dsponlyread = (qs[DSP_ONLY_UNREAD] != null ? Convert.ToBoolean(qs[DSP_ONLY_UNREAD]) : dsponlyread);
 	  proxymode = (qs[PROXY_MODE] != null ? Convert.ToBoolean(qs[PROXY_MODE]) : proxymode);
 	}
-	readitems = new ArrayList();
-	markItemRead("9304ebff1a1a96453a32de19df544c6f");
-	markItemRead("856ba38c9e6c6d220d092dcbc81587d5");
-	markItemRead("9dd698ecdb7b8c8cd5bf2e000aa9da38");
-	markItemRead("310c8b8f792e9043e83ced4ccc7ca9cd");
-	markItemRead("a202415de95b4ea4c79175c6cf82d90a");
-	
-	currentfeed = new RssFeed();
-    initFeedsMap();
-	
-	qs = Request.QueryString;
-    HttpWebRequest request = null;
-	
-	if (qs[FEED_ID] != null && feedsmap.Contains(qs[FEED_ID]))
-    {
-	  request = getFeed(qs[FEED_ID], request);
-    }
-  }
 
-  private static void initFeedsMap()
-  {
-	// Sets some feeds
-    feedsmap = new Hashtable();
-    feedsmap.Add("1", new KKTFeed("pcinpact.com", "http://www.pcinpact.com/include/news.xml"));
-    feedsmap.Add("2", new KKTFeed("lemonde.fr", "http://www.lemonde.fr/rss/sequence/0,2-3208,1-0,0.xml"));
-    feedsmap.Add("3", new KKTFeed("digg.com", "http://digg.com/rss/index.xml"));
-  }
-
-  protected string getItemID(RssItem item)
-  {
-	string time = item.PubDate.ToUniversalTime().ToShortTimeString();
-	string data = item.Author + item.Description + item.PubDate.ToUniversalTime().ToShortTimeString() + item.Title;
-	
-	System.Security.Cryptography.MD5CryptoServiceProvider x = new System.Security.Cryptography.MD5CryptoServiceProvider();
-	byte[] bs = System.Text.Encoding.UTF8.GetBytes(data);
-	bs = x.ComputeHash(bs);
-	System.Text.StringBuilder s = new System.Text.StringBuilder();
-	foreach (byte b in bs)
-	  s.Append(b.ToString("x2").ToLower());
-	return s.ToString();
+	if (uid != null)
+	{
+	  myfeed = RssFeed.ReadFromString(service.GetMyRssFeed());
+	  HttpWebRequest request = null;
+	}
+	else
+	{
+	  Response.Redirect("login.aspx");
+	}
   }
 
   protected string getFavico(string url) 
@@ -184,17 +178,23 @@ public partial class src_showfeed : System.Web.UI.Page
 	return request;
   }
 
-  [AjaxPro.AjaxMethod]
-  protected void markItemRead(string id)
+  [AjaxPro.AjaxMethod()]
+  public void markItemRead(string id)
   {
 	readitems.Add(id);
 	System.Console.WriteLine("id is " + id);
   }
 
-  [AjaxPro.AjaxMethod]
-  protected void markItemNotRead(string id)
+  [AjaxPro.AjaxMethod()]
+  public void markItemNotRead(string id)
   {
 	readitems.Remove(id);
   }
+  [AjaxPro.AjaxMethod()]
+  public int gettest()
+  {
+	return (dsponlyread ? 1 : 0);
+  }
+}
 
 }

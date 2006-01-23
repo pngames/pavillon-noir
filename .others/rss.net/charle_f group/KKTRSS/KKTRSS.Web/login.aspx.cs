@@ -14,6 +14,8 @@ public partial class login : System.Web.UI.Page
   
   protected System.Collections.Specialized.NameValueCollection qs;
   protected Boolean signout = false;
+  protected kktserver.Service service = new kktserver.Service();
+  protected string uid = null;
 
   protected void Page_Load(object sender, EventArgs e)
   {
@@ -24,6 +26,14 @@ public partial class login : System.Web.UI.Page
 	  Signout();
   }
   
+  private void Signin(string uid)
+  {
+	if (uid != "")
+	  FormsAuthentication.RedirectFromLoginPage(UserEmail.Value, PersistCookie.Checked);
+	else
+	  Msg.Text = "Invalid Identifiers: Please try again";
+  }
+  
   private void Signout()
   {
 	FormsAuthentication.SignOut();
@@ -32,30 +42,14 @@ public partial class login : System.Web.UI.Page
 
   protected void Login_Click(Object sender, EventArgs E) 
   {
-	// authenticate user: this samples accepts only one user with
-    // a name of kkt and a password of 'koin'
-    if ((UserEmail.Value == "kkt") && (UserPass.Value == "koin")) 
-	{
-	  FormsAuthentication.RedirectFromLoginPage(UserEmail.Value, PersistCookie.Checked);
-    } 
-	else 
-	{
-	  Msg.Text = "Invalid Credentials: Please try again";
-    }
+	uid = service.Login(UserEmail.Value, UserPass.Value);
+	Signin(uid);
   }
 
   protected void Login_Register(Object sender, EventArgs E)
   {
-	// authenticate user: this samples accepts only one user with
-	// a name of kkt and a password of 'koin'
-	if ((UserEmail.Value == "kkt") && (UserPass.Value == "koin"))
-	{
-	  FormsAuthentication.RedirectFromLoginPage(UserEmail.Value, PersistCookie.Checked);
-	}
-	else
-	{
-	  Msg.Text = "Invalid Credentials: Please try again";
-	}
+	uid = service.Register(UserEmail.Value, UserPass.Value);
+	Signin(uid);
   }
 
   protected void Signout_Click(Object sender, EventArgs E)

@@ -120,6 +120,7 @@ div#KKT {
   width: 200px;
 }
 
+
 /** Login */
 div#loginbox {
   background-color: #9AAAB5;
@@ -152,6 +153,15 @@ input.btn {
   border: solid 1px #000000;
   background: #FFFFFF;
 }
+p.msg {
+  color: #FF0000;
+  font-weight: bold;
+  margin: 10px auto;
+  padding: 5px;
+  text-align: center;
+  width: 500px;
+}
+
 
 /** Form */
 div.row {
@@ -174,7 +184,6 @@ div.row span.btn {
   width: 100px;
   margin: 5px 5px 5px 45px;
 } 
-
 
 
 /** Nav */
@@ -260,19 +269,46 @@ ul#channels_actions li {
 
 
 /** Channels input box */
-div#channels_suscribe_box {
-  border: groove 1px #9AAAB5;
+div#channels_suscribe_box { /* suscribe */
+  border: solid 1px #9AAAB5;
+  display: none;
   padding: 5px;
-  visibility: hidden;
+  /*visibility: hidden;*/
   -moz-border-radius: 8px;
-}
-div#channels_suscribe_box ul {
 }
 div#channels_suscribe_box li {
   display: block;
+  background: none;
+  padding-left: 20px;
+  margin: 0;
 }
-div#channels_suscribe_box .chanact_cancel {
+div#channels_unsuscribe_box { /* unsuscribe */
+  border: solid 1px #9AAAB5;
+  display: none;
+  padding: 5px;
+  /*visibility: hidden;*/
+  -moz-border-radius: 8px;
+}
+div#channels_unsuscribe_box li {
+  display: block;
+  background: none;
+  padding-left: 20px;
+  margin: 0;
+}
+.chanact_cancel { /* close button */
+  /*top: 2px;
+  right: 2px;*/
+  position: relative;
   float: right;
+}
+.boxtitle {
+  background: url("/KKTRSS.Web/img/cancel.png") no-repeat bottom right;
+  color: #000000;
+  display: none;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0;
+  width: 100%;
 }
 
 /** Feeds */
