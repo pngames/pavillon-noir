@@ -266,19 +266,73 @@ public class Service : System.Web.Services.WebService
 
 	//////////////////////////////////////////////////////////////////////////
 
-	Dictionary<string, Feed> feedMap = new Dictionary<string,Feed>();
-
-	foreach (Feed feed in feeds)
-	  feedMap[feed.Fils] = feed;
+	ITransaction tx = null;
 
 	BaseDataAccess mgr = new BaseDataAccess();
-	User user = UserManager.Instance.getUser(uid);
 
-	foreach (Feed feed in mgr.Get(typeof(Feed)))
+	try
 	{
-	  feed.Selected = feedMap[feed.Fils].Selected;
+	  tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
 
-	  if (feed.Selected)
+	  Dictionary<string, Feed> feedMap = new Dictionary<string, Feed>();
+
+	  foreach (Feed feed in feeds)
+		feedMap[feed.Fils] = feed;
+
+	  User user = UserManager.Instance.getUser(uid);
+
+	  foreach (Feed feed in mgr.Get(typeof(Feed)))
+	  {
+		feed.Selected = feedMap[feed.Fils].Selected;
+
+		if (feed.Selected)
+		{
+		  if (feed.Users == null)
+			feed.Users = new ArrayList();
+		  feed.Users.Add(user);
+		}
+		else if (feed.Users != null && feed.Users.Contains(user))
+		{
+		  feed.Users.Remove(user);
+		}
+
+		mgr.Save(feed);
+	  }
+
+	  tx.Commit();
+	}
+	catch (Exception ex)
+	{
+	  if (tx != null)
+		tx.Rollback();
+
+	  throw ex;
+	}
+  }
+
+  [WebMethod]
+  public void subscribe(string uid, Feed modifiedFeed)
+  {
+	UserManager.Instance.validate(uid);
+
+	//////////////////////////////////////////////////////////////////////////
+
+	ITransaction tx = null;
+
+	BaseDataAccess mgr = new BaseDataAccess();
+	Feed feed = null;
+
+	try
+	{
+	  tx = NHibernateHttpModule.CurrentSession.BeginTransaction();
+
+	  feed = mgr.Get(typeof(Feed), "Fils", modifiedFeed.Fils) as Feed;
+	  User user = UserManager.Instance.getUser(uid);
+
+	  if (feed == null)
+		return;
+
+	  if (modifiedFeed.Selected)
 	  {
 		if (feed.Users == null)
 		  feed.Users = new ArrayList();
@@ -289,8 +343,18 @@ public class Service : System.Web.Services.WebService
 		feed.Users.Remove(user);
 	  }
 
-	  mgr.Save(feed);
+	  tx.Commit();
 	}
+	catch (Exception ex)
+	{
+	  if (tx != null)
+		tx.Rollback();
+
+	  throw ex;
+	}
+
+	if (feed != null)
+	  mgr.Save(feed);
   }
   #endregion
   #endregion
