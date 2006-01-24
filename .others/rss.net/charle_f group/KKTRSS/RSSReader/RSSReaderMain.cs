@@ -11,10 +11,13 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Xml;
 using Rss;
+using System.Threading;
 
 
 namespace RSSReader
 {
+    public delegate void DelegateVocalThreadFinished();
+
     public partial class RSSReaderMain : Form
     {
         #region Private Var
@@ -26,9 +29,15 @@ namespace RSSReader
         private bool _isConnected = false;
         private SpVoice mainVoice = new SpVoice();
         private string _fluxUrl = "http://bluegloup.free.fr/news.xml";
+
         private ListViewItem _lastSelectedFlux = null;
         private ListViewItem _lastSelectedNews = null;
+
+        private NotifyWindow nw = null;
+
         private RssFeed _rssFeed = new RssFeed();
+        private RssFeed _previousFeed = new RssFeed();
+
         private List<fluxItem> _fluxList = new List<fluxItem>();
         private bool _isUpdating = false;
         private bool _readStop = false;
@@ -61,7 +70,8 @@ namespace RSSReader
         private void updateOptions()
         {
             useSystray();
-            main_timer.Interval = Properties.Settings.Default.updateTime * 600 * 1000;
+            //main_timer.Interval = Properties.Settings.Default.updateTime * 60 * 1000;
+            main_timer.Interval = Properties.Settings.Default.updateTime * 10 * 1000;
         }
 
         private void RSSReaderMain_Load(object sender, EventArgs e)
@@ -88,11 +98,30 @@ namespace RSSReader
                 update_toolStripButton.Enabled = true;
                 ListFluxToolStripMenuItem.Enabled = true;
 
-                main_timer.Start();
+           
                 main_timer.Tick += new EventHandler(Timer_Tick);
+                main_timer.Start();
+
                
 
                 updateFluxList();
+            }
+        }
+
+        private void setFluxIsRead()
+        {
+            bool returnVal = false;
+
+            foreach (RssChannel chan in _rssFeed.Channels)
+            {
+                returnVal = true;
+                foreach (RssItem item in chan.Items)
+                {
+                    if (item.IsRead == false)
+                        returnVal = false;
+                }
+                if (returnVal == true)
+                    chan.IsRead = true;
             }
         }
 
@@ -102,31 +131,11 @@ namespace RSSReader
             bool err = true;
             int tried = 0;
 
-          /*  while (err == true)
-            {
-                try
-                {
-                    request = (HttpWebRequest)WebRequest.Create(new Uri(_fluxUrl));
-                    if (Properties.Settings.Default.useProxy == true)
-                    {
-                        WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyUrl, Properties.Settings.Default.proxyPort);
-                        proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyLogin, Properties.Settings.Default.proxyPass);
-                        request.Proxy = proxy;
-                    }
-
-                    _rssFeed = RssFeed.Read(request);
-                    err = false;
-                }
-                catch (Exception ex)
-                {
-                    err = true;
-                }
-                if (tried > 10)
-                    break;
-                tried++;
-            }*/
             string tmp = _mainWebService.GetMyRssFeed(_sessionID);
+            _previousFeed = _rssFeed;
             _rssFeed = RssFeed.ReadFromString(tmp);
+            setFluxIsRead();
+            useTooltipMSN();
           //  if (err == true)
            //      System.Windows.Forms.MessageBox.Show("Erreur dans la mise a jour des flux.", "RssReader", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
         }
@@ -151,28 +160,6 @@ namespace RSSReader
               
                 return true;
             }
-
-
-         /*   if ((login == "t" && mdp == "t") || (login == "a" && mdp == "a"))
-            {
-                _isConnected = true;
-                Properties.Settings.Default.login = login;
-                Properties.Settings.Default.pass = mdp;
-
-                statusCnx_toolStripLabel.Text = Properties.Settings.Default.login;
-                update_toolStripButton.Enabled = true;
-
-                main_timer.Start();
-                main_timer.Tick += new EventHandler(Timer_Tick);
-                ListFluxToolStripMenuItem.Enabled = true;
-                
-                updateFluxList();
-                return true;
-            }
-            else
-            {
-                return false;
-            }*/
         }
 
         public void Timer_Tick(object sender, EventArgs eArgs)
@@ -183,7 +170,7 @@ namespace RSSReader
                 if (_lastSelectedFlux != null)
                     updateNewsList(_lastSelectedFlux);
 
-              //TODO : a appeler que si ya une nouvelle news
+          
                 useTooltipMSN();
                
             }
@@ -407,7 +394,7 @@ namespace RSSReader
 
         private void updateNewsList(ListViewItem fluxSel)
         {
-            news_listView.Items.Clear();
+        
             RssChannel fluxFeed = (RssChannel)fluxSel.Tag;
 
             foreach (RssItem nwsItem in fluxFeed.Items)
@@ -433,17 +420,95 @@ namespace RSSReader
             }
         }
 
+        private void selFluxAndItemByItem(RssItem itemToSel)
+        {
+            lock (this)
+            {
+                RssChannel chanToSel = new RssChannel();
+                chanToSel = getChannelOfItem(itemToSel);
+
+                foreach (ListViewItem items in flux_listView.Items)
+                {
+                    if ((RssChannel)items.Tag == chanToSel)
+                        items.Selected = true;
+                    else
+                        items.Selected = false;
+                }
+                foreach (ListViewItem items in news_listView.Items)
+                {
+                    if ((RssItem)items.Tag == itemToSel)
+                        items.Selected = true;
+                    else
+                        items.Selected = false;
+                }
+            }
+        }
+
         # region Systeme de reduction dans la systray
+
+        private RssItem getLastArrivedItem()
+        {
+            RssItem lastPrevItem = new RssItem();
+            DateTime prevDate = new DateTime();
+
+            RssItem lastCurItem = new RssItem();
+            DateTime curDate = new DateTime();
+
+            foreach (RssChannel chan in _previousFeed.Channels)
+            {
+                foreach (RssItem item in chan.Items)
+                {
+                    if (item.PubDate > prevDate)
+                    {
+                        lastPrevItem = item;
+                        prevDate = item.PubDate;
+                    }
+                }
+            }
+            foreach (RssChannel chan in _rssFeed.Channels)
+            {
+                foreach (RssItem item in chan.Items)
+                {
+                    if (item.PubDate > curDate)
+                    {
+                        lastCurItem = item;
+                        curDate = item.PubDate;
+                    }
+                }
+            }
+
+            if (curDate >= prevDate)
+                return lastCurItem;
+            else
+                return null;
+        }
 
         private void useTooltipMSN()
         {
             if (Properties.Settings.Default.systray == true && Properties.Settings.Default.tooltip == true && this.WindowState == FormWindowState.Minimized)
             {
-                NotifyWindow nw = new NotifyWindow("RSSReader !", "test value");
-                nw.WaitTime = 10000;
-                // nw.TextClicked += new System.EventHandler(textClick);
-                nw.Notify();
+                RssItem item = new RssItem();
+                item = getLastArrivedItem();
+                if (getLastArrivedItem() != null)
+                {
+                    nw = new NotifyWindow("Nouvelle news", item.Title);
+                    nw.WaitTime = 1000;
+                    nw.Tag = item;
+                    nw.TextClicked += new System.EventHandler(nwTextClick);
+                    nw.TitleClicked += new System.EventHandler(nwTextClick);
+                    nw.Notify();
+                }
             }
+        }
+
+        private void nwTextClick(object sender, System.EventArgs e)
+        {
+            this.ShowInTaskbar = true;
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+
+            RssItem selItem = (RssItem)nw.Tag;
+            selFluxAndItemByItem(selItem);
         }
 
         private void useSystray()
@@ -483,49 +548,58 @@ namespace RSSReader
         #region Vocal synth
         private RssChannel getChannelOfItem(RssItem item)
         {
-            foreach (RssChannel chan in _rssFeed.Channels)
+            lock (this)
             {
-                foreach(RssItem items in chan.Items)
+                foreach (RssChannel chan in _rssFeed.Channels)
                 {
-                    if (items == item)
+                    foreach (RssItem items in chan.Items)
                     {
-                        return chan;
+                        if (items == item)
+                        {
+                            return chan;
+                        }
                     }
                 }
+                return null;
             }
-            return null;
         }
 
         private RssChannel getNextChannel(RssChannel chan)
         {
-            bool tmp = false;
-            foreach (RssChannel chans in _rssFeed.Channels)
+            lock (this)
             {
-                if (tmp == true)
-                    return chans;
-                if (chans == chan)
+                bool tmp = false;
+                foreach (RssChannel chans in _rssFeed.Channels)
                 {
-                    tmp = true;
+                    if (tmp == true)
+                        return chans;
+                    if (chans == chan)
+                    {
+                        tmp = true;
+                    }
                 }
+                return _rssFeed.Channels[0];
             }
-            return _rssFeed.Channels[0];
         }
 
         private RssItem getNextItem(RssItem item)
         {
-            RssChannel chan = getChannelOfItem(item);
-            bool tmp = false;
-            foreach (RssItem items in chan.Items)
+            lock (this)
             {
-                if (tmp == true)
-                    return items;
-                if (items == item)
+                RssChannel chan = getChannelOfItem(item);
+                bool tmp = false;
+                foreach (RssItem items in chan.Items)
                 {
-                    tmp = true;
+                    if (tmp == true)
+                        return items;
+                    if (items == item)
+                    {
+                        tmp = true;
+                    }
                 }
+                chan = getNextChannel(chan);
+                return chan.Items[0];
             }
-             chan = getNextChannel(chan);
-            return chan.Items[0];
         }
 
         private string readNewsItem(RssItem rssItem)
@@ -542,14 +616,107 @@ namespace RSSReader
             return sentence;
         }
 
+
+        Thread m_WorkerThread;
+        ManualResetEvent m_EventStopThread;
+        ManualResetEvent m_EventThreadStopped;
+        public DelegateVocalThreadFinished m_DelegateThreadFinished;
+
+        private RssItem _itemToRead = new RssItem();
+        private bool _continueToRead = false;
+
+
+        private void stop_VocalSynth_toolStripButton_Click(object sender, EventArgs e)
+        {
+            _continueToRead = false;
+            if (m_WorkerThread != null && m_WorkerThread.IsAlive)  // thread is active
+            {
+                m_EventStopThread.Set();
+                while (m_WorkerThread.IsAlive)
+                {
+                    if (WaitHandle.WaitAll((new ManualResetEvent[] { m_EventThreadStopped }), 10, true))
+                        break;
+                    Application.DoEvents();
+                }
+            }
+            main_timer.Start();
+        }
+
+        private void stop_Thread()
+        {
+            if (m_WorkerThread != null && m_WorkerThread.IsAlive)  // thread is active
+            {
+                m_EventStopThread.Set();
+                while (m_WorkerThread.IsAlive)
+                {
+                    if (WaitHandle.WaitAll((new ManualResetEvent[] { m_EventThreadStopped }), 10, true))
+                        break;
+                    Application.DoEvents();
+                }
+            }
+           
+        }
+    
+        private void WorkerThreadFunction()
+        {
+            VocalThread vocalThread;
+            vocalThread = new VocalThread(m_EventStopThread, m_EventThreadStopped, this, _itemToRead);
+            vocalThread.run();
+        }
+
+        private void ThreadFinished()
+        {
+            lock (this)
+            {
+                if (Properties.Settings.Default.nextNewsRead == true && _continueToRead == true)
+                {
+                    _itemToRead = getNextItem(_itemToRead);
+                    selFluxAndItemByItem(_itemToRead);
+                    m_EventStopThread.Reset();
+                    m_EventThreadStopped.Reset();
+
+                    m_WorkerThread = new Thread(new ThreadStart(this.WorkerThreadFunction));
+                    m_WorkerThread.Name = "Vocal thread";
+                    m_WorkerThread.Start();
+
+                }
+                else if (Properties.Settings.Default.nextNewsRead == false && _continueToRead == true)
+                {
+                    _continueToRead = false;
+                    main_timer.Start();
+                }
+            }
+        }
+
         private void vocal_ParseNews(ListView.SelectedListViewItemCollection newsSel)
         {
-            string sentence = "";
-            bool first = false;
+             if (newsSel.Count == 1 )
+             {
+                 main_timer.Stop();
+                 _continueToRead = true;
+                 _itemToRead = (RssItem)newsSel[0].Tag;
 
-            if (newsSel.Count == 1 && Properties.Settings.Default.nextNewsRead == true)
+                 m_DelegateThreadFinished = new DelegateVocalThreadFinished(this.ThreadFinished);
+
+
+                 m_EventStopThread = new ManualResetEvent(false);
+                 m_EventThreadStopped = new ManualResetEvent(false);
+
+
+                 m_EventStopThread.Reset();
+                 m_EventThreadStopped.Reset();
+
+
+                 m_WorkerThread = new Thread(new ThreadStart(this.WorkerThreadFunction));
+                 m_WorkerThread.Name = "Vocal thread";
+                 //  while (_continueToRead == true)
+                 m_WorkerThread.Start();
+             }
+
+        /*    if (newsSel.Count == 1 && Properties.Settings.Default.nextNewsRead == true)
             {
-                RssItem tmpItem = (RssItem)newsSel[0].Tag;
+
+               _itemToRead = (RssItem)newsSel[0].Tag;
             //    System.Threading.Thread myThread = new System.Threading.Thread(new System.Threading.ThreadStart(vocal_SpellText(readNewsItem(tmpItem))));
             //    myThread.Start();
                // vocal_SpellText(readNewsItem(tmpItem));
@@ -572,7 +739,7 @@ namespace RSSReader
                 }
 
                 vocal_SpellText(sentence);
-            }
+            }*/
         }
 
         private void vocal_SpellText(string text)
@@ -675,7 +842,8 @@ namespace RSSReader
             vocal_ParseNews(itemCol);
         }
 
-      
+        
+
         private void fluxRead_toolStripButton_Click(object sender, EventArgs e)
         {
             ListView.SelectedListViewItemCollection fluxCol = flux_listView.SelectedItems;
@@ -688,7 +856,11 @@ namespace RSSReader
                 {
                     // TODO get listViewItem by RssItem
                     //item.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
-                    item.IsRead = true;
+                    if (item.IsRead == false)
+                    {
+                        item.IsRead = true;
+                        _mainWebService.MarkAsRead(_sessionID, item.HashID);
+                    }
                 }
             }
 
@@ -703,11 +875,13 @@ namespace RSSReader
                 // TODO tester toutes les news affichees et si elles sont toutes lues marquer le flux comme lu 
                 item.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular);
                 RssItem tmpItem = (RssItem)item.Tag;
-                tmpItem.IsRead = true;
+                if (tmpItem.IsRead == false)
+                {
+                    tmpItem.IsRead = true;
+                    _mainWebService.MarkAsRead(_sessionID, tmpItem.HashID);
+                }
             }
         }
-
-     
 
         private void RSSReaderMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -738,6 +912,13 @@ namespace RSSReader
             news_listView.Items.Clear();
 
         }
+
+        private void RSSReaderMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            stop_Thread();
+        }
+
+        
     }
 
     public class newsItem

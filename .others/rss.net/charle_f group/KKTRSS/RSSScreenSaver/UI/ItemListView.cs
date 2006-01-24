@@ -230,7 +230,7 @@ namespace RSSScreenSaver.UI
             string textToDraw = items[virtualIndex].Title;
             using (Brush textBrush = new SolidBrush(textBrushColor))
             {
-                g.DrawString(textToDraw, ItemFont, textBrush, articleRect, stringFormat);
+                g.DrawString(System.Web.HttpUtility.HtmlDecode(textToDraw), ItemFont, textBrush, articleRect, stringFormat);
             }
         }
 
@@ -256,7 +256,7 @@ namespace RSSScreenSaver.UI
             titleFormat.Trimming = StringTrimming.EllipsisCharacter;
             using (Brush titleBrush = new SolidBrush(TitleForeColor))
             {
-                g.DrawString(title, TitleFont, titleBrush, titleRectangle, titleFormat);
+                g.DrawString(System.Web.HttpUtility.HtmlDecode(title), TitleFont, titleBrush, titleRectangle, titleFormat);
             }
         }
 

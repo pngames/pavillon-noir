@@ -194,7 +194,7 @@ namespace RSSReader.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:3527/KKTRSS.Server/Service.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:5551/KKTRSS.Server/Service.asmx")]
         public string RSSReader_KKTRSS_service_Service {
             get {
                 return ((string)(this["RSSReader_KKTRSS_service_Service"]));

@@ -21,13 +21,15 @@ namespace RSSScreenSaver
     partial class ScreenSaverForm : Form
     {
         private RssFeed _rssFeed = new RssFeed();
-
+        private RssFeed _rssNewFeed = new RssFeed();
         // The RssFeed to display articles from
        // private RssFeed rssFeed;
 
         // Objects for displaying RSS contents
-        private ItemListView/*<RssItem>*/ rssView;
-        private ItemDescriptionView/*<RssItem>*/ rssDescriptionView;
+        private string _sessionID = "";
+        private KKTRSS_service.Service _mainService = new KKTRSS_service.Service();
+        private ItemListView rssView;
+        private ItemDescriptionView rssDescriptionView;
         private ChannelListView channelView;
 
         // The images to display in the background
@@ -42,6 +44,98 @@ namespace RSSScreenSaver
 
         private List<string> imageExtensions = new List<string>(new string[] { "*.bmp", "*.gif", "*.png", "*.jpg", "*.jpeg" });
 
+        private bool isChanRead(RssChannel chan)
+        {
+            bool returnVal = true;
+            foreach(RssItem item in chan.Items)
+            {
+                if (item.IsRead == false)
+                    returnVal = false;
+            }
+            return returnVal;
+        }
+
+        private void preParseRssFeed()
+        {
+            foreach(RssChannel chan in _rssFeed.Channels)
+            {
+                if (isChanRead(chan) == true)
+                    chan.IsRead = true;
+            }
+        }
+
+        private bool isAllChanRead()
+        {
+            bool returnVal = true;
+            foreach (RssChannel chan in _rssFeed.Channels)
+            {
+                if (chan.IsRead == false)
+                    returnVal = false;
+            }
+            return returnVal;
+        }
+
+        private void updateWithLastDay()
+        {
+            foreach (RssChannel chan in _rssFeed.Channels)
+            {
+                chan.IsRead = false;
+                foreach (RssItem item in chan.Items)
+                {
+                    item.IsRead = false;
+                }
+            }
+
+            foreach (RssChannel chan in _rssFeed.Channels)
+            {
+                foreach (RssItem item in chan.Items)
+                {
+                    DateTime itemDat = item.PubDate;
+                    if (itemDat.AddHours(24) < DateTime.Now)
+                        item.IsRead = true;
+                }
+                if (isChanRead(chan) == true)
+                    chan.IsRead = true;
+            }
+
+            if (isAllChanRead() == true)
+            {
+                foreach (RssChannel chan in _rssFeed.Channels)
+                {
+                    chan.IsRead = false;
+                    foreach (RssItem item in chan.Items)
+                    {
+                        item.IsRead = false;
+                    }
+                }
+            }
+        }
+
+
+        private void metaRssFeed()
+        {
+           IList<int> newsReadPos = new List<int>();
+           
+            int i = 0;
+           foreach (RssChannel chan in _rssFeed.Channels)
+           {
+               i = 0;
+               foreach (RssItem item in chan.Items)
+               {
+                   if (item.IsRead == true)
+                       newsReadPos.Add(i);
+                    i++;
+               }
+               for (int j = newsReadPos.Count - 1; j >= 0; j-- )
+               {
+                   chan.Items.RemoveAt(newsReadPos[j]);
+               }
+          
+               newsReadPos.Clear();
+           }
+      
+        }
+
         public ScreenSaverForm()
         {
             InitializeComponent();
@@ -49,8 +143,12 @@ namespace RSSScreenSaver
             SetupScreenSaver();
             LoadBackgroundImage();
             LoadRssFeed();
+            preParseRssFeed();
+            if (isAllChanRead() == true)
+                updateWithLastDay();
+            metaRssFeed();
 
-            rssView = new ItemListView(/*_rssFeed.Channels[0].Title, _rssFeed.Channels[0].Items*/);
+            rssView = new ItemListView();
             InitializeRssView();
 
             channelView = new ChannelListView(_rssFeed.Channels, ref rssView);
@@ -142,8 +240,10 @@ namespace RSSScreenSaver
 
         private bool connectToServer(string log, string pass)
         {
-            KKTRSS_service.Service service = new KKTRSS_service.Service();
-            if (service.Login(log, pass) != "")
+          //  KKTRSS_service.Service service = new KKTRSS_service.Service();
+            _sessionID =  _mainService.Login(log, pass);
+         
+            if (_sessionID != "")
             {
                 return true;
             }
@@ -157,11 +257,11 @@ namespace RSSScreenSaver
             bool err = true;
             
             //_rssFeed = RssFeed.ReadFromString(Properties.Resources.DefaultRSSText);
-            if (connectToServer(Properties.Settings.Default.Login, Properties.Settings.Default.Login) == false)
+            if (connectToServer(Properties.Settings.Default.Login, Properties.Settings.Default.Pass) == false)
                 _rssFeed = RssFeed.ReadFromString(Properties.Resources.DefaultRSSTextUserError);
             else
             {
-                int loop = 0;
+        /*        int loop = 0;
 
                 while (err == true )
                 {
@@ -186,7 +286,11 @@ namespace RSSScreenSaver
                         break;
                     loop++;
                 }
-                if (err == true)
+                if (err == true)*/
+                string tmp = _mainService.GetMyRssFeed(_sessionID);
+                if (tmp != "")
+                    _rssFeed = RssFeed.ReadFromString(tmp);
+                else
                     _rssFeed = RssFeed.ReadFromString(Properties.Resources.DefaultRSSTextConnError);
             }
         

@@ -8,11 +8,10 @@ using Rss;
 
 namespace RSSReader
 {
-    class VocalThread
+    public class VocalThread
     {
 #region Members
         private RSSReaderMain _mainForm;
-        private RssFeed _rssFeed;
         private RssItem _firstItem;
         private SpVoice mainVoice = new SpVoice();
 
@@ -23,36 +22,37 @@ namespace RSSReader
             string sentence = "";
             if (rssItem.Title != "")
                 sentence += "Titre " + System.Web.HttpUtility.HtmlDecode(rssItem.Title) + ". ";
-            if (rssItem.Author != "")
+          /*  if (rssItem.Author != "")
                 sentence += "Auteur " + System.Web.HttpUtility.HtmlDecode(rssItem.Author) + ". ";
             if (rssItem.Description != "")
                 sentence += "Description " + System.Web.HttpUtility.HtmlDecode(rssItem.Description) + ". ";
             if (rssItem.PubDate.ToString() != "")
-                sentence += "Date " + rssItem.PubDate.ToShortDateString() + ". ";
+                sentence += "Date " + rssItem.PubDate.ToShortDateString() + ". ";*/
             return sentence;
         }
 
-        private void vocal_SpellText(string text)
+        public void run()
         {
             try
             {
+                string text = readNewsItem(_firstItem);
                 SpeechVoiceSpeakFlags flags = SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFPurgeBeforeSpeak;
                 mainVoice.Volume = Properties.Settings.Default.synthVolume;
                 mainVoice.Speak(text, flags);
 
                 int lngHandle = mainVoice.SpeakCompleteEvent();
                 bool lngRtn = mainVoice.WaitUntilDone(System.Threading.Timeout.Infinite);
-
+                _mainForm.Invoke(_mainForm.m_DelegateThreadFinished, null);
             }
             catch
             {
             }
+           
         }
 
-        public VocalThread(RSSReaderMain mainForm, RssFeed rssFeed, RssItem item)
+        public VocalThread(ManualResetEvent eventStop, ManualResetEvent eventStopped, RSSReaderMain mainForm, RssItem item)
         {
             _mainForm = mainForm;
-            _rssFeed = rssFeed;
             _firstItem = item;
         }
     }

@@ -57,7 +57,7 @@ namespace RSSReader
             this.newsRead_toolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.vocalSynthNews_toolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.pause_resumeVocalSynth_toolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.stop_VocalSynth_toolStripButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.flux_listView = new System.Windows.Forms.ListView();
             this.flux_columnHeader = new System.Windows.Forms.ColumnHeader();
@@ -244,7 +244,7 @@ namespace RSSReader
             this.newsRead_toolStripButton,
             this.toolStripSeparator3,
             this.vocalSynthNews_toolStripButton,
-            this.pause_resumeVocalSynth_toolStripButton});
+            this.stop_VocalSynth_toolStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1100, 36);
@@ -319,16 +319,16 @@ namespace RSSReader
             this.vocalSynthNews_toolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.vocalSynthNews_toolStripButton.Click += new System.EventHandler(this.vocalSynthNews_toolStripButton_Click);
             // 
-            // pause_resumeVocalSynth_toolStripButton
+            // stop_VocalSynth_toolStripButton
             // 
-            this.pause_resumeVocalSynth_toolStripButton.Enabled = false;
-            this.pause_resumeVocalSynth_toolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("pause_resumeVocalSynth_toolStripButton.Image")));
-            this.pause_resumeVocalSynth_toolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.pause_resumeVocalSynth_toolStripButton.Name = "pause_resumeVocalSynth_toolStripButton";
-            this.pause_resumeVocalSynth_toolStripButton.Size = new System.Drawing.Size(40, 33);
-            this.pause_resumeVocalSynth_toolStripButton.Text = "Pause";
-            this.pause_resumeVocalSynth_toolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.pause_resumeVocalSynth_toolStripButton.ToolTipText = "Pause/Resume";
+            this.stop_VocalSynth_toolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("stop_VocalSynth_toolStripButton.Image")));
+            this.stop_VocalSynth_toolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.stop_VocalSynth_toolStripButton.Name = "stop_VocalSynth_toolStripButton";
+            this.stop_VocalSynth_toolStripButton.Size = new System.Drawing.Size(33, 33);
+            this.stop_VocalSynth_toolStripButton.Text = "Stop";
+            this.stop_VocalSynth_toolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.stop_VocalSynth_toolStripButton.ToolTipText = "Stop";
+            this.stop_VocalSynth_toolStripButton.Click += new System.EventHandler(this.stop_VocalSynth_toolStripButton_Click);
             // 
             // splitContainer1
             // 
@@ -556,6 +556,7 @@ namespace RSSReader
             this.Name = "RSSReaderMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RSSReader";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RSSReaderMain_FormClosed);
             this.Resize += new System.EventHandler(this.RSSReaderMain_Resize);
             this.Shown += new System.EventHandler(this.RSSReaderMain_Shown);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RSSReaderMain_FormClosing);
@@ -624,7 +625,7 @@ namespace RSSReader
         private System.Windows.Forms.ToolStripMenuItem deconnexionToolStripMenuItem;
         private System.Windows.Forms.ProgressBar main_progressBar;
         private System.Windows.Forms.Label status_label;
-        private System.Windows.Forms.ToolStripButton pause_resumeVocalSynth_toolStripButton;
+        private System.Windows.Forms.ToolStripButton stop_VocalSynth_toolStripButton;
 
 
     }

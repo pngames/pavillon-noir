@@ -15,7 +15,7 @@ namespace RSSReader
     public partial class ModifyFluxList : Form
     {
         private RSSReaderMain frmParent;
-    
+        private IList _SuscribeFeedsList;
 
         public RSSReaderMain FormParent
         {
@@ -25,36 +25,55 @@ namespace RSSReader
 
         public ModifyFluxList()
         {
-        
-
             InitializeComponent();
-          
+        }
+
+        private bool isInSuscribeList(RssFeedRef feedRef)
+        {
+            foreach (RssFeedRef feeds in _SuscribeFeedsList)
+            {
+                if (feedRef.Id == feeds.Id)
+                    return true;
+            }
+            return false;
         }
 
         private void ModifyFluxList_Load(object sender, EventArgs e)
         {
             IList AllFeedsList = frmParent.MainWebService.ListAvailableRssFeeds(frmParent.SessionID);
-            IList SuscribeFeedsList = frmParent.MainWebService.ListSubscribedRssFeeds(frmParent.SessionID);
+            _SuscribeFeedsList = frmParent.MainWebService.ListSubscribedRssFeeds(frmParent.SessionID);
 
-            foreach (RssFeedRef test in AllFeedsList)
+            foreach (RssFeedRef feedRef in AllFeedsList)
             {
-                
-                flux_listView.Items.Add(test.Name);
+                ListViewItem item = new ListViewItem(feedRef.Name);
+                item.Tag = feedRef;
+                if (isInSuscribeList(feedRef) == true)
+                    item.Checked = true;
+                flux_listView.Items.Add(item);
             }
-       
         }
 
-        private void refreshLists()
-        {
-       
-        }
-
+      
    
 
         private void valid_button_Click(object sender, EventArgs e)
         {
-            //frmParent.MainWebService.RssFeedSubscribe(frmParent.SessionID);
+            foreach (ListViewItem item in flux_listView.Items)
+            {
+                if (item.Checked == true && isInSuscribeList((RssFeedRef)item.Tag) == false)
+                {
+                    frmParent.MainWebService.RssFeedSubscribe(frmParent.SessionID, ((RssFeedRef)item.Tag).Id);
+                }
+            }
+           /* foreach (ListViewItem item in flux_listView.Items)
+            {
+                if (item.Checked == false && isInSuscribeList((RssFeedRef)item.Tag) == true)
+                {
+                    frmParent.MainWebService.RssFeedUnSubscribe(frmParent.SessionID, ((RssFeedRef)item.Tag).Id);
+                }
+            }*/
             
+            this.Close();
         }
 
       

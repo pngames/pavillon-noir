@@ -226,7 +226,7 @@ namespace RSSScreenSaver.UI
             string textToDraw = channels[virtualIndex].Description;
             using (Brush textBrush = new SolidBrush(textBrushColor))
             {
-                g.DrawString(textToDraw, ItemFont, textBrush, articleRect, stringFormat);
+                g.DrawString(System.Web.HttpUtility.HtmlDecode(textToDraw), ItemFont, textBrush, articleRect, stringFormat);
             }
         }
 

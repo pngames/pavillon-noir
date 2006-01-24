@@ -40,17 +40,21 @@ namespace RSSScreenSaver.KKTRSS_service {
         
         private System.Threading.SendOrPostCallback ListAvailableRssFeedsOperationCompleted;
         
+        private System.Threading.SendOrPostCallback ListSubscribedRssFeedsOperationCompleted;
+        
         private System.Threading.SendOrPostCallback RssFeedSubscribeOperationCompleted;
         
-        private System.Threading.SendOrPostCallback RssFeedUnSubscribeOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback GetMyRssFeedIdListOperationCompleted;
+        private System.Threading.SendOrPostCallback GetMyRssFeedOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetGroupListOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetMyGroupListOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetRssFeedOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback ImportRssFeedOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback MarkAsReadOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -106,13 +110,13 @@ namespace RSSScreenSaver.KKTRSS_service {
         public event ListAvailableRssFeedsCompletedEventHandler ListAvailableRssFeedsCompleted;
         
         /// <remarks/>
+        public event ListSubscribedRssFeedsCompletedEventHandler ListSubscribedRssFeedsCompleted;
+        
+        /// <remarks/>
         public event RssFeedSubscribeCompletedEventHandler RssFeedSubscribeCompleted;
         
         /// <remarks/>
-        public event RssFeedUnSubscribeCompletedEventHandler RssFeedUnSubscribeCompleted;
-        
-        /// <remarks/>
-        public event GetMyRssFeedIdListCompletedEventHandler GetMyRssFeedIdListCompleted;
+        public event GetMyRssFeedCompletedEventHandler GetMyRssFeedCompleted;
         
         /// <remarks/>
         public event GetGroupListCompletedEventHandler GetGroupListCompleted;
@@ -122,6 +126,12 @@ namespace RSSScreenSaver.KKTRSS_service {
         
         /// <remarks/>
         public event GetRssFeedCompletedEventHandler GetRssFeedCompleted;
+        
+        /// <remarks/>
+        public event ImportRssFeedCompletedEventHandler ImportRssFeedCompleted;
+        
+        /// <remarks/>
+        public event MarkAsReadCompletedEventHandler MarkAsReadCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GenerateShema", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -214,11 +224,11 @@ namespace RSSScreenSaver.KKTRSS_service {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ListAvailableRssFeedsInGroup", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public int[] ListAvailableRssFeedsInGroup(string sessionId, int groupId) {
+        public object[] ListAvailableRssFeedsInGroup(string sessionId, int groupId) {
             object[] results = this.Invoke("ListAvailableRssFeedsInGroup", new object[] {
                         sessionId,
                         groupId});
-            return ((int[])(results[0]));
+            return ((object[])(results[0]));
         }
         
         /// <remarks/>
@@ -245,10 +255,10 @@ namespace RSSScreenSaver.KKTRSS_service {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ListAvailableRssFeeds", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public int[] ListAvailableRssFeeds(string sessionId) {
+        public object[] ListAvailableRssFeeds(string sessionId) {
             object[] results = this.Invoke("ListAvailableRssFeeds", new object[] {
                         sessionId});
-            return ((int[])(results[0]));
+            return ((object[])(results[0]));
         }
         
         /// <remarks/>
@@ -273,27 +283,56 @@ namespace RSSScreenSaver.KKTRSS_service {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/RssFeedSubscribe", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public object[] RssFeedSubscribe(string sessionId, int RssRlowId) {
-            object[] results = this.Invoke("RssFeedSubscribe", new object[] {
-                        sessionId,
-                        RssRlowId});
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ListSubscribedRssFeeds", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public object[] ListSubscribedRssFeeds(string sessionId) {
+            object[] results = this.Invoke("ListSubscribedRssFeeds", new object[] {
+                        sessionId});
             return ((object[])(results[0]));
         }
         
         /// <remarks/>
-        public void RssFeedSubscribeAsync(string sessionId, int RssRlowId) {
-            this.RssFeedSubscribeAsync(sessionId, RssRlowId, null);
+        public void ListSubscribedRssFeedsAsync(string sessionId) {
+            this.ListSubscribedRssFeedsAsync(sessionId, null);
         }
         
         /// <remarks/>
-        public void RssFeedSubscribeAsync(string sessionId, int RssRlowId, object userState) {
+        public void ListSubscribedRssFeedsAsync(string sessionId, object userState) {
+            if ((this.ListSubscribedRssFeedsOperationCompleted == null)) {
+                this.ListSubscribedRssFeedsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnListSubscribedRssFeedsOperationCompleted);
+            }
+            this.InvokeAsync("ListSubscribedRssFeeds", new object[] {
+                        sessionId}, this.ListSubscribedRssFeedsOperationCompleted, userState);
+        }
+        
+        private void OnListSubscribedRssFeedsOperationCompleted(object arg) {
+            if ((this.ListSubscribedRssFeedsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ListSubscribedRssFeedsCompleted(this, new ListSubscribedRssFeedsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/RssFeedSubscribe", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool RssFeedSubscribe(string sessionId, long RssFeedId) {
+            object[] results = this.Invoke("RssFeedSubscribe", new object[] {
+                        sessionId,
+                        RssFeedId});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void RssFeedSubscribeAsync(string sessionId, long RssFeedId) {
+            this.RssFeedSubscribeAsync(sessionId, RssFeedId, null);
+        }
+        
+        /// <remarks/>
+        public void RssFeedSubscribeAsync(string sessionId, long RssFeedId, object userState) {
             if ((this.RssFeedSubscribeOperationCompleted == null)) {
                 this.RssFeedSubscribeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnRssFeedSubscribeOperationCompleted);
             }
             this.InvokeAsync("RssFeedSubscribe", new object[] {
                         sessionId,
-                        RssRlowId}, this.RssFeedSubscribeOperationCompleted, userState);
+                        RssFeedId}, this.RssFeedSubscribeOperationCompleted, userState);
         }
         
         private void OnRssFeedSubscribeOperationCompleted(object arg) {
@@ -304,62 +343,31 @@ namespace RSSScreenSaver.KKTRSS_service {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/RssFeedUnSubscribe", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool RssFeedUnSubscribe(string sessionId, int RssFeedId) {
-            object[] results = this.Invoke("RssFeedUnSubscribe", new object[] {
-                        sessionId,
-                        RssFeedId});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void RssFeedUnSubscribeAsync(string sessionId, int RssFeedId) {
-            this.RssFeedUnSubscribeAsync(sessionId, RssFeedId, null);
-        }
-        
-        /// <remarks/>
-        public void RssFeedUnSubscribeAsync(string sessionId, int RssFeedId, object userState) {
-            if ((this.RssFeedUnSubscribeOperationCompleted == null)) {
-                this.RssFeedUnSubscribeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnRssFeedUnSubscribeOperationCompleted);
-            }
-            this.InvokeAsync("RssFeedUnSubscribe", new object[] {
-                        sessionId,
-                        RssFeedId}, this.RssFeedUnSubscribeOperationCompleted, userState);
-        }
-        
-        private void OnRssFeedUnSubscribeOperationCompleted(object arg) {
-            if ((this.RssFeedUnSubscribeCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.RssFeedUnSubscribeCompleted(this, new RssFeedUnSubscribeCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetMyRssFeedIdList", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public int[] GetMyRssFeedIdList(string sessionId) {
-            object[] results = this.Invoke("GetMyRssFeedIdList", new object[] {
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetMyRssFeed", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string GetMyRssFeed(string sessionId) {
+            object[] results = this.Invoke("GetMyRssFeed", new object[] {
                         sessionId});
-            return ((int[])(results[0]));
+            return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void GetMyRssFeedIdListAsync(string sessionId) {
-            this.GetMyRssFeedIdListAsync(sessionId, null);
+        public void GetMyRssFeedAsync(string sessionId) {
+            this.GetMyRssFeedAsync(sessionId, null);
         }
         
         /// <remarks/>
-        public void GetMyRssFeedIdListAsync(string sessionId, object userState) {
-            if ((this.GetMyRssFeedIdListOperationCompleted == null)) {
-                this.GetMyRssFeedIdListOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetMyRssFeedIdListOperationCompleted);
+        public void GetMyRssFeedAsync(string sessionId, object userState) {
+            if ((this.GetMyRssFeedOperationCompleted == null)) {
+                this.GetMyRssFeedOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetMyRssFeedOperationCompleted);
             }
-            this.InvokeAsync("GetMyRssFeedIdList", new object[] {
-                        sessionId}, this.GetMyRssFeedIdListOperationCompleted, userState);
+            this.InvokeAsync("GetMyRssFeed", new object[] {
+                        sessionId}, this.GetMyRssFeedOperationCompleted, userState);
         }
         
-        private void OnGetMyRssFeedIdListOperationCompleted(object arg) {
-            if ((this.GetMyRssFeedIdListCompleted != null)) {
+        private void OnGetMyRssFeedOperationCompleted(object arg) {
+            if ((this.GetMyRssFeedCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetMyRssFeedIdListCompleted(this, new GetMyRssFeedIdListCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.GetMyRssFeedCompleted(this, new GetMyRssFeedCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -453,6 +461,74 @@ namespace RSSScreenSaver.KKTRSS_service {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ImportRssFeed", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool ImportRssFeed(string autologin, string url, string name, string grpId, bool isPrivate) {
+            object[] results = this.Invoke("ImportRssFeed", new object[] {
+                        autologin,
+                        url,
+                        name,
+                        grpId,
+                        isPrivate});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ImportRssFeedAsync(string autologin, string url, string name, string grpId, bool isPrivate) {
+            this.ImportRssFeedAsync(autologin, url, name, grpId, isPrivate, null);
+        }
+        
+        /// <remarks/>
+        public void ImportRssFeedAsync(string autologin, string url, string name, string grpId, bool isPrivate, object userState) {
+            if ((this.ImportRssFeedOperationCompleted == null)) {
+                this.ImportRssFeedOperationCompleted = new System.Threading.SendOrPostCallback(this.OnImportRssFeedOperationCompleted);
+            }
+            this.InvokeAsync("ImportRssFeed", new object[] {
+                        autologin,
+                        url,
+                        name,
+                        grpId,
+                        isPrivate}, this.ImportRssFeedOperationCompleted, userState);
+        }
+        
+        private void OnImportRssFeedOperationCompleted(object arg) {
+            if ((this.ImportRssFeedCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ImportRssFeedCompleted(this, new ImportRssFeedCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/MarkAsRead", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool MarkAsRead(string session, string ItemHashCode) {
+            object[] results = this.Invoke("MarkAsRead", new object[] {
+                        session,
+                        ItemHashCode});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void MarkAsReadAsync(string session, string ItemHashCode) {
+            this.MarkAsReadAsync(session, ItemHashCode, null);
+        }
+        
+        /// <remarks/>
+        public void MarkAsReadAsync(string session, string ItemHashCode, object userState) {
+            if ((this.MarkAsReadOperationCompleted == null)) {
+                this.MarkAsReadOperationCompleted = new System.Threading.SendOrPostCallback(this.OnMarkAsReadOperationCompleted);
+            }
+            this.InvokeAsync("MarkAsRead", new object[] {
+                        session,
+                        ItemHashCode}, this.MarkAsReadOperationCompleted, userState);
+        }
+        
+        private void OnMarkAsReadOperationCompleted(object arg) {
+            if ((this.MarkAsReadCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.MarkAsReadCompleted(this, new MarkAsReadCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -472,6 +548,7 @@ namespace RSSScreenSaver.KKTRSS_service {
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(RssFeedRef))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Group))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Account))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.26")]
@@ -524,13 +601,68 @@ namespace RSSScreenSaver.KKTRSS_service {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class RssFeedRef : APersistant {
+        
+        private string nameField;
+        
+        private string urlField;
+        
+        private Group groupField;
+        
+        private string rssCacheField;
+        
+        /// <remarks/>
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Url {
+            get {
+                return this.urlField;
+            }
+            set {
+                this.urlField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public Group Group {
+            get {
+                return this.groupField;
+            }
+            set {
+                this.groupField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string RssCache {
+            get {
+                return this.rssCacheField;
+            }
+            set {
+                this.rssCacheField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.26")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
     public partial class Group : APersistant {
         
         private string nameField;
         
         private bool privacyField;
-        
-        private object[] rssFeedRefsField;
         
         private Account ownerField;
         
@@ -551,16 +683,6 @@ namespace RSSScreenSaver.KKTRSS_service {
             }
             set {
                 this.privacyField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public object[] RssFeedRefs {
-            get {
-                return this.rssFeedRefsField;
-            }
-            set {
-                this.rssFeedRefsField = value;
             }
         }
         
@@ -752,10 +874,10 @@ namespace RSSScreenSaver.KKTRSS_service {
         }
         
         /// <remarks/>
-        public int[] Result {
+        public object[] Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((int[])(this.results[0]));
+                return ((object[])(this.results[0]));
             }
         }
     }
@@ -778,10 +900,36 @@ namespace RSSScreenSaver.KKTRSS_service {
         }
         
         /// <remarks/>
-        public int[] Result {
+        public object[] Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((int[])(this.results[0]));
+                return ((object[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    public delegate void ListSubscribedRssFeedsCompletedEventHandler(object sender, ListSubscribedRssFeedsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ListSubscribedRssFeedsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ListSubscribedRssFeedsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public object[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((object[])(this.results[0]));
             }
         }
     }
@@ -804,32 +952,6 @@ namespace RSSScreenSaver.KKTRSS_service {
         }
         
         /// <remarks/>
-        public object[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((object[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
-    public delegate void RssFeedUnSubscribeCompletedEventHandler(object sender, RssFeedUnSubscribeCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class RssFeedUnSubscribeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal RssFeedUnSubscribeCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
         public bool Result {
             get {
                 this.RaiseExceptionIfNecessary();
@@ -840,26 +962,26 @@ namespace RSSScreenSaver.KKTRSS_service {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
-    public delegate void GetMyRssFeedIdListCompletedEventHandler(object sender, GetMyRssFeedIdListCompletedEventArgs e);
+    public delegate void GetMyRssFeedCompletedEventHandler(object sender, GetMyRssFeedCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetMyRssFeedIdListCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class GetMyRssFeedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal GetMyRssFeedIdListCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal GetMyRssFeedCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
         /// <remarks/>
-        public int[] Result {
+        public string Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((int[])(this.results[0]));
+                return ((string)(this.results[0]));
             }
         }
     }
@@ -938,6 +1060,58 @@ namespace RSSScreenSaver.KKTRSS_service {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    public delegate void ImportRssFeedCompletedEventHandler(object sender, ImportRssFeedCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ImportRssFeedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ImportRssFeedCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    public delegate void MarkAsReadCompletedEventHandler(object sender, MarkAsReadCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class MarkAsReadCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal MarkAsReadCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
             }
         }
     }
