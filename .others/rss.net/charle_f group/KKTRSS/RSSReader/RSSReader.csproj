@@ -132,6 +132,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>RSSReaderSettings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Web References\KKTRSS_service\Service.wsdl" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -203,10 +204,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://localhost/kktrss_test1/Service.asmx">
+    <WebReferenceUrl Include="http://localhost:5551/KKTRSS.Server/Service.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\KKTRSS_service\</RelPath>
-      <UpdateFromURL>http://localhost/kktrss_test1/Service.asmx</UpdateFromURL>
+      <UpdateFromURL>http://localhost:5551/KKTRSS.Server/Service.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -221,7 +222,6 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Web References\KKTRSS_service\Service.disco" />
-    <None Include="Web References\KKTRSS_service\Service.wsdl" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

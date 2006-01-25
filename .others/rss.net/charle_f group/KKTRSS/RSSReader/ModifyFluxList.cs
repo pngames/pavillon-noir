@@ -76,7 +76,7 @@ namespace RSSReader
                     frmParent.MainWebService.RssFeedUnSubscribe(frmParent.SessionID, ((RssFeedRef)item.Tag).Id);
                 }
             }*/
-            
+            frmParent.updateFluxList();
             this.Close();
         }
 

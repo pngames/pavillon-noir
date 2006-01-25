@@ -89,8 +89,11 @@ namespace RSSReader
             this.Controls.Add(this.nomFlux_textBox);
             this.Controls.Add(this.urlFlux_textBox);
             this.Controls.Add(this.valid_button);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "AddFlux";
-            this.Text = "AddFlux";
+            this.Text = "Ajout Flux";
             this.ResumeLayout(false);
             this.PerformLayout();
 

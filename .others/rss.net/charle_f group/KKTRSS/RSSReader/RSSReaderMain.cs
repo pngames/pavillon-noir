@@ -202,7 +202,7 @@ namespace RSSReader
             return text;
         }
 
-        private void updateFluxList()
+        public void updateFluxList()
         {
             _isUpdating = true;
             Cursor.Current = Cursors.WaitCursor;

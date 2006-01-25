@@ -145,6 +145,7 @@ namespace RSSReader
             this.Proxy.Controls.Add(this.proxyUrl_textBox);
             this.Proxy.Controls.Add(this.proxyLogin_textBox);
             this.Proxy.Controls.Add(this.useProxy_checkBox);
+            this.Proxy.Enabled = false;
             this.Proxy.Location = new System.Drawing.Point(12, 154);
             this.Proxy.Name = "Proxy";
             this.Proxy.Size = new System.Drawing.Size(373, 100);
