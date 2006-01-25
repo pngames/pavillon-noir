@@ -1,0 +1,21 @@
+methodes :
+
+Register(login, pass)
+pour enregistrer un compte
+renvoi une string ID unique pour le user
+
+Login(login, pass)
+pour juste recuperer la string ID, si la string renvoyée est vide alors le compte
+n'existe pas
+
+ListAvailableRssFeeds(ID)
+renvoi une IList qui se cast en RssFeedRef
+donne la liste des Flux possibles presents sur le serveur
+
+ListSubscribedRssFeeds(ID)
+renvoi une IList qui se cast en RssFeedRef
+donne la liste des Flux a laquelle le user est inscrit
+
+RssFeedSubscribe(ID, RssFeedRef.Id)
+permet d'inscrire un user a ce Flux
+

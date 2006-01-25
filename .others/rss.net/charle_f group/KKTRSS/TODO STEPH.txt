@@ -4,5 +4,3 @@ erreur si on register un compte deja existant
 implementer la desincription a un flux
 regarder le pb d'encoding qui fait sauter les accents (ca je peux le faire)
 
-"a different object with the same identifier value was already associated with the session: 103, of class: KKTRSS.Server.Model.RssFeedRef"
-ya ca comme erreur si on fait un RssFeedSuscribe et qu'il y a deja un flux ajouté avec ce sessionID
