@@ -116,9 +116,9 @@ namespace Rss
             RssFeed feed = new RssFeed();
             RssElement element = null;
             Stream stream = null;
-  
-            
-            ASCIIEncoding myEncoder = new ASCIIEncoding();
+
+
+            Encoding myEncoder = Encoding.GetEncoding("iso-8859-1");
             byte[] strByte = myEncoder.GetBytes(str);
             MemoryStream memStream = new MemoryStream(strByte);
           
