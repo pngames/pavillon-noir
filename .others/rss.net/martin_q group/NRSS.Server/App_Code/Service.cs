@@ -171,6 +171,15 @@ public class Service : System.Web.Services.WebService
 			}
 		  }
 
+		if (feed.iChans != null)
+		  foreach (Chan chan in feed.iChans)
+			if (chan.iItems != null)
+			  foreach (Item item in chan.iItems)
+			  {
+				if (item.ReaderUsers != null && item.ReaderUsers.Contains(user))
+				  item.Read = true;
+			  }
+
 		tx.Commit();
 
 		mgr.Save(feed);

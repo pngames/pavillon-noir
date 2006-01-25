@@ -641,15 +641,15 @@ namespace NRSS.Winformclient.NRSSServer {
         
         private int idField;
         
+        private string typeField;
+        
         private string nameField;
-        
-        private string filsUserField;
-        
-        private int filsPortField;
         
         private string filsField;
         
-        private string typeField;
+        private int filsPortField;
+        
+        private string filsUserField;
         
         private string filsPassField;
         
@@ -668,32 +668,22 @@ namespace NRSS.Winformclient.NRSSServer {
         }
         
         /// <remarks/>
+        public string Type {
+            get {
+                return this.typeField;
+            }
+            set {
+                this.typeField = value;
+            }
+        }
+        
+        /// <remarks/>
         public string Name {
             get {
                 return this.nameField;
             }
             set {
                 this.nameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FilsUser {
-            get {
-                return this.filsUserField;
-            }
-            set {
-                this.filsUserField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int FilsPort {
-            get {
-                return this.filsPortField;
-            }
-            set {
-                this.filsPortField = value;
             }
         }
         
@@ -708,12 +698,22 @@ namespace NRSS.Winformclient.NRSSServer {
         }
         
         /// <remarks/>
-        public string Type {
+        public int FilsPort {
             get {
-                return this.typeField;
+                return this.filsPortField;
             }
             set {
-                this.typeField = value;
+                this.filsPortField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string FilsUser {
+            get {
+                return this.filsUserField;
+            }
+            set {
+                this.filsUserField = value;
             }
         }
         
@@ -761,11 +761,11 @@ namespace NRSS.Winformclient.NRSSServer {
         
         private string titleField;
         
+        private string descriptionField;
+        
         private string languageField;
         
         private string linkField;
-        
-        private string descriptionField;
         
         private Item[] itemsField;
         
@@ -792,6 +792,16 @@ namespace NRSS.Winformclient.NRSSServer {
         }
         
         /// <remarks/>
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
         public string Language {
             get {
                 return this.languageField;
@@ -808,16 +818,6 @@ namespace NRSS.Winformclient.NRSSServer {
             }
             set {
                 this.linkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
             }
         }
         
@@ -853,19 +853,19 @@ namespace NRSS.Winformclient.NRSSServer {
         
         private int idField;
         
+        private string messageIDField;
+        
         private string authorField;
         
         private System.DateTime dateField;
         
         private string titleField;
         
-        private string messageIDField;
+        private string descriptionField;
         
         private string contentField;
         
         private string linkField;
-        
-        private string descriptionField;
         
         private Item parentField;
         
@@ -878,6 +878,16 @@ namespace NRSS.Winformclient.NRSSServer {
             }
             set {
                 this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string MessageID {
+            get {
+                return this.messageIDField;
+            }
+            set {
+                this.messageIDField = value;
             }
         }
         
@@ -912,12 +922,12 @@ namespace NRSS.Winformclient.NRSSServer {
         }
         
         /// <remarks/>
-        public string MessageID {
+        public string Description {
             get {
-                return this.messageIDField;
+                return this.descriptionField;
             }
             set {
-                this.messageIDField = value;
+                this.descriptionField = value;
             }
         }
         
@@ -938,16 +948,6 @@ namespace NRSS.Winformclient.NRSSServer {
             }
             set {
                 this.linkField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
             }
         }
         
@@ -1040,15 +1040,15 @@ namespace NRSS.Winformclient.NRSSServer {
         
         private int idField;
         
-        private bool confirmedField;
-        
         private string emailField;
+        
+        private string passwdField;
+        
+        private bool confirmedField;
         
         private System.DateTime creationField;
         
         private System.DateTime lastLogonField;
-        
-        private string passwdField;
         
         private Group[] groupsField;
         
@@ -1063,22 +1063,32 @@ namespace NRSS.Winformclient.NRSSServer {
         }
         
         /// <remarks/>
-        public bool Confirmed {
-            get {
-                return this.confirmedField;
-            }
-            set {
-                this.confirmedField = value;
-            }
-        }
-        
-        /// <remarks/>
         public string Email {
             get {
                 return this.emailField;
             }
             set {
                 this.emailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Passwd {
+            get {
+                return this.passwdField;
+            }
+            set {
+                this.passwdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Confirmed {
+            get {
+                return this.confirmedField;
+            }
+            set {
+                this.confirmedField = value;
             }
         }
         
@@ -1099,16 +1109,6 @@ namespace NRSS.Winformclient.NRSSServer {
             }
             set {
                 this.lastLogonField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Passwd {
-            get {
-                return this.passwdField;
-            }
-            set {
-                this.passwdField = value;
             }
         }
         

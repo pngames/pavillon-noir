@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="NRSS_Winformclient_NRSSServer_Service" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost:1277/NRSS.Server/Service.asmx</Value>
+      <Value Profile="(Default)">http://localhost/nrss/Service.asmx</Value>
     </Setting>
     <Setting Name="UserLogin" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
