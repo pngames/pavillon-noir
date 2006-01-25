@@ -114,7 +114,9 @@ namespace KKTRSS.Server.Model
                 tried++;
             }
 
-            rss.Write(@""+Name+"temp.file");
+           // rss.Write(@"C:\kktrss_db\" + Name + "temp.file");
+            rss.Write(@"" + Name + "temp.file");
+            //StreamReader sr = new StreamReader(@"C:\kktrss_db\" + Name + "temp.file", System.Text.Encoding.GetEncoding("ISO-8859-1"));
             StreamReader sr = new StreamReader(@"" + Name + "temp.file", System.Text.Encoding.GetEncoding("ISO-8859-1"));
             MemoryStream ms = new MemoryStream();
             rss.Write(ms);
