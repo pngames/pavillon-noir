@@ -19,3 +19,7 @@ donne la liste des Flux a laquelle le user est inscrit
 RssFeedSubscribe(ID, RssFeedRef.Id)
 permet d'inscrire un user a ce Flux
 
+MarkAsRead(string session, string ItemHashCode)
+session = ID du user et le hash code correpond au item.hashID de chaque item
+generé par la lib rrs.net
+
