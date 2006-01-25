@@ -1,4 +1,5 @@
 	* copy __binaries\datafiles\configuration content to user configuration the first time is required by he game
+
 [function to implement]
 pncommon:
 	* PNImportManager::import(const std::string& path, importtype type, bool copy) : "Faire une copie de l'objet"
@@ -7,3 +8,26 @@ pnimporter:
 pnglrenderer:
 	* PNGLRenderer::renderLink(const PNPoint3f& p1, const PNPoint3f& p2, const pnfloat* color, pnuint direction, pnfloat thickness): "draw right arrow"
 	* PNGLRenderer::renderLink(const PNPoint3f& p1, const PNPoint3f& p2, const pnfloat* color, pnuint direction, pnfloat thickness): "draw left arrow"
+
+[pour la 0.1]
+* Physique
+	- trouver une bidouille pour se deplacer correctement integre dans l'environnement (JV, Thomas)
+
+[pour 10 Fevrier]
+* GUI
+	- fenetre de dialogue entre joueur et personnages non joueurs (Flo, Pierre)
+	- mettre au point le panneau d'inventaire/stats/... (Flo, Max)
+	- mettre au point l'interface InGame (Flo, Max)
+
+* Script/Ergonomie
+	- modifier le linkage des animation avec l'action du personnage: se placer au niveau de update(uint) et se servir du masque de bit deja en place pour le deplacement des personnages (Steph)
+	- terminer sur commande les outils de scripting necessire a la realisation du niveau (Steph, Pierre)
+
+* Jeu (Cedric, Mattia, Loic)
+	- mettre au point le scenario du niveau
+	- reunir les ressources graphiques necessaires et faire les modification qui s'imposent
+	- placer les ressources et les script de reaction dans la map
+
+* Common
+	- terminer l'enregistrement/changement de la configuration des plugins (Thomas)
+	~ mettre au point la sauvegarde/chargement du niveau (Thomas)
