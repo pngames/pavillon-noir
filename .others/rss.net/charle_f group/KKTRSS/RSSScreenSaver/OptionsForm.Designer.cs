@@ -32,6 +32,8 @@ namespace RSSScreenSaver
             this.backgroundImageOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.backgroundImageFolderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.account_groupBox = new System.Windows.Forms.GroupBox();
+            this.newAccount_button = new System.Windows.Forms.Button();
+            this.testConn_button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.pass_textBox = new System.Windows.Forms.TextBox();
             this.login_label = new System.Windows.Forms.Label();
@@ -49,8 +51,6 @@ namespace RSSScreenSaver
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.fade_numericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.testConn_button = new System.Windows.Forms.Button();
-            this.newAccount_button = new System.Windows.Forms.Button();
             this.account_groupBox.SuspendLayout();
             this.proxy_groupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -99,6 +99,26 @@ namespace RSSScreenSaver
             this.account_groupBox.TabStop = false;
             this.account_groupBox.Text = "Compte";
             // 
+            // newAccount_button
+            // 
+            this.newAccount_button.Location = new System.Drawing.Point(234, 43);
+            this.newAccount_button.Name = "newAccount_button";
+            this.newAccount_button.Size = new System.Drawing.Size(105, 23);
+            this.newAccount_button.TabIndex = 6;
+            this.newAccount_button.Text = "Nouveau compte";
+            this.newAccount_button.UseVisualStyleBackColor = true;
+            this.newAccount_button.Click += new System.EventHandler(this.newAccount_button_Click);
+            // 
+            // testConn_button
+            // 
+            this.testConn_button.Location = new System.Drawing.Point(234, 17);
+            this.testConn_button.Name = "testConn_button";
+            this.testConn_button.Size = new System.Drawing.Size(105, 23);
+            this.testConn_button.TabIndex = 5;
+            this.testConn_button.Text = "Tester";
+            this.testConn_button.UseVisualStyleBackColor = true;
+            this.testConn_button.Click += new System.EventHandler(this.testConn_button_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -144,6 +164,7 @@ namespace RSSScreenSaver
             this.proxy_groupBox.Controls.Add(this.proxyPass_textBox);
             this.proxy_groupBox.Controls.Add(this.label3);
             this.proxy_groupBox.Controls.Add(this.proxyLogin_textBox);
+            this.proxy_groupBox.Enabled = false;
             this.proxy_groupBox.Location = new System.Drawing.Point(12, 87);
             this.proxy_groupBox.Name = "proxy_groupBox";
             this.proxy_groupBox.Size = new System.Drawing.Size(355, 100);
@@ -273,26 +294,6 @@ namespace RSSScreenSaver
             0,
             0,
             0});
-            // 
-            // testConn_button
-            // 
-            this.testConn_button.Location = new System.Drawing.Point(234, 17);
-            this.testConn_button.Name = "testConn_button";
-            this.testConn_button.Size = new System.Drawing.Size(105, 23);
-            this.testConn_button.TabIndex = 5;
-            this.testConn_button.Text = "Tester";
-            this.testConn_button.UseVisualStyleBackColor = true;
-            this.testConn_button.Click += new System.EventHandler(this.testConn_button_Click);
-            // 
-            // newAccount_button
-            // 
-            this.newAccount_button.Location = new System.Drawing.Point(234, 43);
-            this.newAccount_button.Name = "newAccount_button";
-            this.newAccount_button.Size = new System.Drawing.Size(105, 23);
-            this.newAccount_button.TabIndex = 6;
-            this.newAccount_button.Text = "Nouveau compte";
-            this.newAccount_button.UseVisualStyleBackColor = true;
-            this.newAccount_button.Click += new System.EventHandler(this.newAccount_button_Click);
             // 
             // OptionsForm
             // 
