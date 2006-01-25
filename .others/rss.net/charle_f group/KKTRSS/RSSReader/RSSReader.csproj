@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddFlux.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddFlux.Designer.cs">
+      <DependentUpon>AddFlux.cs</DependentUpon>
+    </Compile>
     <Compile Include="AppOptions.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +82,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddFlux.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AddFlux.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AppOptions.resx">
       <SubType>Designer</SubType>
       <DependentUpon>AppOptions.cs</DependentUpon>
@@ -122,7 +132,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>RSSReaderSettings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Web References\KKTRSS_service\Service.wsdl" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -194,10 +203,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://localhost:5551/KKTRSS.Server/Service.asmx">
+    <WebReferenceUrl Include="http://localhost/kktrss_test1/Service.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\KKTRSS_service\</RelPath>
-      <UpdateFromURL>http://localhost:5551/KKTRSS.Server/Service.asmx</UpdateFromURL>
+      <UpdateFromURL>http://localhost/kktrss_test1/Service.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -212,6 +221,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Web References\KKTRSS_service\Service.disco" />
+    <None Include="Web References\KKTRSS_service\Service.wsdl" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

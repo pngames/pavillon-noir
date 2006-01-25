@@ -31,11 +31,12 @@ namespace RSSReader
             this.valid_button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.flux_listView = new System.Windows.Forms.ListView();
+            this.addFlux_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // valid_button
             // 
-            this.valid_button.Location = new System.Drawing.Point(113, 404);
+            this.valid_button.Location = new System.Drawing.Point(70, 404);
             this.valid_button.Name = "valid_button";
             this.valid_button.Size = new System.Drawing.Size(75, 23);
             this.valid_button.TabIndex = 4;
@@ -63,11 +64,22 @@ namespace RSSReader
             this.flux_listView.UseCompatibleStateImageBehavior = false;
             this.flux_listView.View = System.Windows.Forms.View.List;
             // 
+            // addFlux_button
+            // 
+            this.addFlux_button.Location = new System.Drawing.Point(170, 404);
+            this.addFlux_button.Name = "addFlux_button";
+            this.addFlux_button.Size = new System.Drawing.Size(75, 23);
+            this.addFlux_button.TabIndex = 7;
+            this.addFlux_button.Text = "Ajouter flux";
+            this.addFlux_button.UseVisualStyleBackColor = true;
+            this.addFlux_button.Click += new System.EventHandler(this.addFlux_button_Click);
+            // 
             // ModifyFluxList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(318, 439);
+            this.Controls.Add(this.addFlux_button);
             this.Controls.Add(this.flux_listView);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.valid_button);
@@ -89,5 +101,6 @@ namespace RSSReader
         private System.Windows.Forms.Button valid_button;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListView flux_listView;
+        private System.Windows.Forms.Button addFlux_button;
     }
 }

@@ -42,12 +42,12 @@ namespace RSSReader
 
                 int lngHandle = mainVoice.SpeakCompleteEvent();
                 bool lngRtn = mainVoice.WaitUntilDone(System.Threading.Timeout.Infinite);
-                _mainForm.Invoke(_mainForm.m_DelegateThreadFinished, null);
+               
             }
             catch
             {
             }
-           
+            _mainForm.Invoke(_mainForm.m_DelegateThreadFinished, null);
         }
 
         public VocalThread(ManualResetEvent eventStop, ManualResetEvent eventStopped, RSSReaderMain mainForm, RssItem item)

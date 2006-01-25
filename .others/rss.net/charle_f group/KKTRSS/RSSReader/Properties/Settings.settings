@@ -45,7 +45,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="RSSReader_KKTRSS_service_Service" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost:5551/KKTRSS.Server/Service.asmx</Value>
+      <Value Profile="(Default)">http://localhost/kktrss_test1/Service.asmx</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -40,6 +40,12 @@ namespace RSSReader
 
         private void ModifyFluxList_Load(object sender, EventArgs e)
         {
+            updateFluxList();
+        }
+
+        public void updateFluxList()
+        {
+            flux_listView.Items.Clear();
             IList AllFeedsList = frmParent.MainWebService.ListAvailableRssFeeds(frmParent.SessionID);
             _SuscribeFeedsList = frmParent.MainWebService.ListSubscribedRssFeeds(frmParent.SessionID);
 
@@ -53,8 +59,6 @@ namespace RSSReader
             }
         }
 
-      
-   
 
         private void valid_button_Click(object sender, EventArgs e)
         {
@@ -74,6 +78,13 @@ namespace RSSReader
             }*/
             
             this.Close();
+        }
+
+        private void addFlux_button_Click(object sender, EventArgs e)
+        {
+            AddFlux addFluxWin = new AddFlux();
+            addFluxWin.FormParent = this;
+            addFluxWin.ShowDialog();
         }
 
       

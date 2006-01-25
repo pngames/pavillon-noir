@@ -321,6 +321,7 @@ namespace RSSReader
             // 
             // stop_VocalSynth_toolStripButton
             // 
+            this.stop_VocalSynth_toolStripButton.Enabled = false;
             this.stop_VocalSynth_toolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("stop_VocalSynth_toolStripButton.Image")));
             this.stop_VocalSynth_toolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.stop_VocalSynth_toolStripButton.Name = "stop_VocalSynth_toolStripButton";

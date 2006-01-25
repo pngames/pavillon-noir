@@ -133,7 +133,8 @@ namespace RSSReader
 
             string tmp = _mainWebService.GetMyRssFeed(_sessionID);
             _previousFeed = _rssFeed;
-            _rssFeed = RssFeed.ReadFromString(tmp);
+            if (tmp != "")
+                _rssFeed = RssFeed.ReadFromString(tmp);
             setFluxIsRead();
             useTooltipMSN();
           //  if (err == true)
@@ -639,6 +640,8 @@ namespace RSSReader
                     Application.DoEvents();
                 }
             }
+            stop_VocalSynth_toolStripButton.Enabled = false;
+            newsRead_toolStripButton.Enabled = true;
             main_timer.Start();
         }
 
@@ -666,8 +669,8 @@ namespace RSSReader
 
         private void ThreadFinished()
         {
-            lock (this)
-            {
+           /* lock (this)
+            {*/
                 if (Properties.Settings.Default.nextNewsRead == true && _continueToRead == true)
                 {
                     _itemToRead = getNextItem(_itemToRead);
@@ -685,13 +688,16 @@ namespace RSSReader
                     _continueToRead = false;
                     main_timer.Start();
                 }
-            }
+           // }
         }
 
         private void vocal_ParseNews(ListView.SelectedListViewItemCollection newsSel)
         {
              if (newsSel.Count == 1 )
              {
+                 stop_VocalSynth_toolStripButton.Enabled = true;
+                 newsRead_toolStripButton.Enabled = false;
+
                  main_timer.Stop();
                  _continueToRead = true;
                  _itemToRead = (RssItem)newsSel[0].Tag;
