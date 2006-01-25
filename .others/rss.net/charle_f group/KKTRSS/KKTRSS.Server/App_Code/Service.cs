@@ -161,10 +161,11 @@ public class Service : System.Web.Services.WebService
             return false;
         try
         {
-
             NHibernateHttpModule.BeginTranaction();
             RssFeedRef rfr = new RssFeedRef();
-            NHibernateHttpModule.CurrentSession.Load(rfr, RssFeedId);
+           // NHibernateHttpModule.CurrentSession.Load(rfr, RssFeedId);
+            System.Type t = typeof(RssFeedRef);
+            rfr = (RssFeedRef)NHibernateHttpModule.CurrentSession.Load(t, RssFeedId);
             if (rfr == null)
             {
                 NHibernateHttpModule.RollbackTransaction();
@@ -189,6 +190,7 @@ public class Service : System.Web.Services.WebService
         if (acc == null)
             return null;
         RssFeed MyFeed = new RssFeed();
+        //MyFeed.Encoding = System.Text.Encoding.GetEncoding("ISO-8859-1");
         IList myRssFeeds = acc.SubscribedRssFeeds;
         foreach (RssFeedRef anRssfeedRef in myRssFeeds)
         {
@@ -208,18 +210,24 @@ public class Service : System.Web.Services.WebService
                 MyFeed.Channels.Add(chan);
             }
         }
-        MyFeed.Write(@"" + acc.Autologin + "temp.file");
-        StreamReader sr = new StreamReader(@"" + acc.Autologin + "temp.file");
-        MemoryStream ms = new MemoryStream();
-        MyFeed.Write(ms);
-        string line = sr.ReadLine();
-        while (sr.EndOfStream == false)
+        string line = "";
+        // erreur dans RSS.net si le feed ne contient pas de channel
+        if (MyFeed.Channels.Count > 0)
         {
-            line += sr.ReadLine();
+            MyFeed.Write(@"" + acc.Autologin + "temp.file");
+            //  MyFeed.Write(@"C:\kktrss_db\" + acc.Autologin + "temp.file");
+            StreamReader sr = new StreamReader(@"" + acc.Autologin + "temp.file", System.Text.Encoding.GetEncoding("ISO-8859-1"));
+            //  StreamReader sr = new StreamReader(@"C:\kktrss_db\" + acc.Autologin + "temp.file", System.Text.Encoding.GetEncoding("ISO-8859-1"));
+            MemoryStream ms = new MemoryStream();
+            MyFeed.Write(ms);
+            line = sr.ReadLine();
+            while (sr.EndOfStream == false)
+            {
+                line += sr.ReadLine();
+            }
+
+            sr.Close();
         }
-
-        sr.Close();
-
         return line;
 
     }
