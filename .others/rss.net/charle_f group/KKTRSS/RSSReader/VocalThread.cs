@@ -22,12 +22,12 @@ namespace RSSReader
             string sentence = "";
             if (rssItem.Title != "")
                 sentence += "Titre " + System.Web.HttpUtility.HtmlDecode(rssItem.Title) + ". ";
-          /*  if (rssItem.Author != "")
+            if (rssItem.Author != "")
                 sentence += "Auteur " + System.Web.HttpUtility.HtmlDecode(rssItem.Author) + ". ";
             if (rssItem.Description != "")
                 sentence += "Description " + System.Web.HttpUtility.HtmlDecode(rssItem.Description) + ". ";
             if (rssItem.PubDate.ToString() != "")
-                sentence += "Date " + rssItem.PubDate.ToShortDateString() + ". ";*/
+                sentence += "Date " + rssItem.PubDate.ToLongDateString() + ". ";
             return sentence;
         }
 
@@ -42,12 +42,12 @@ namespace RSSReader
 
                 int lngHandle = mainVoice.SpeakCompleteEvent();
                 bool lngRtn = mainVoice.WaitUntilDone(System.Threading.Timeout.Infinite);
-               
+                _mainForm.Invoke(_mainForm.m_DelegateThreadFinished, null);
             }
             catch
             {
             }
-            _mainForm.Invoke(_mainForm.m_DelegateThreadFinished, null);
+           
         }
 
         public VocalThread(ManualResetEvent eventStop, ManualResetEvent eventStopped, RSSReaderMain mainForm, RssItem item)

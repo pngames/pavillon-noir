@@ -204,10 +204,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://localhost:5551/KKTRSS.Server/Service.asmx">
+    <WebReferenceUrl Include="http://localhost:3527/KKTRSS.Server/Service.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\KKTRSS_service\</RelPath>
-      <UpdateFromURL>http://localhost:5551/KKTRSS.Server/Service.asmx</UpdateFromURL>
+      <UpdateFromURL>http://localhost:3527/KKTRSS.Server/Service.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

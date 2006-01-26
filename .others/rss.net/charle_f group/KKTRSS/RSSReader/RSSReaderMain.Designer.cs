@@ -385,7 +385,6 @@ namespace RSSReader
             this.webBrowser1.TabIndex = 11;
             this.webBrowser1.Url = new System.Uri("about:blank", System.UriKind.Absolute);
             this.webBrowser1.WebBrowserShortcutsEnabled = false;
-            this.webBrowser1.ProgressChanged += new System.Windows.Forms.WebBrowserProgressChangedEventHandler(this.webBrowser1_ProgressChanged);
             // 
             // panel1
             // 

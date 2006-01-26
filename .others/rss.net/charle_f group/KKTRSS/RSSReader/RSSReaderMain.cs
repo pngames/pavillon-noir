@@ -64,14 +64,14 @@ namespace RSSReader
         {
            
             InitializeComponent();
-            Properties.Settings.Default.Reset();
+            //Properties.Settings.Default.Reset();
         }
 
         private void updateOptions()
         {
             useSystray();
-            //main_timer.Interval = Properties.Settings.Default.updateTime * 60 * 1000;
-            main_timer.Interval = Properties.Settings.Default.updateTime * 10 * 1000;
+        //    main_timer.Interval = Properties.Settings.Default.updateTime * 60 * 1000;
+           main_timer.Interval = Properties.Settings.Default.updateTime * 10 * 1000;
         }
 
         private void RSSReaderMain_Load(object sender, EventArgs e)
@@ -102,8 +102,6 @@ namespace RSSReader
                 main_timer.Tick += new EventHandler(Timer_Tick);
                 main_timer.Start();
 
-               
-
                 updateFluxList();
             }
         }
@@ -132,9 +130,12 @@ namespace RSSReader
             int tried = 0;
 
             string tmp = _mainWebService.GetMyRssFeed(_sessionID);
-            _previousFeed = _rssFeed;
-            if (tmp != "")
+            _previousFeed = (_rssFeed);
+            _rssFeed = new RssFeed();    
+            if (tmp != "" && tmp != null)
                 _rssFeed = RssFeed.ReadFromString(tmp);
+            
+               
             setFluxIsRead();
             useTooltipMSN();
           //  if (err == true)
@@ -195,7 +196,7 @@ namespace RSSReader
             if (chan.ManagingEditor != "")
                 text += "Mail : " + System.Web.HttpUtility.HtmlDecode(chan.ManagingEditor.ToString()) + "\n";
             if (chan.PubDate.ToString() != "")
-                text += "Date : " + chan.PubDate.ToShortDateString() + "\n";
+                text += "Date : " + chan.PubDate.ToLongDateString() + "\n";
             if (chan.WebMaster != "")
                 text += "Webmaster : " + System.Web.HttpUtility.HtmlDecode(chan.WebMaster.ToString()) + "\n";
 
@@ -314,7 +315,7 @@ namespace RSSReader
                     
                    
                     newsSubject_label.Text = itemSel.Title.ToString();
-                    newsDate_label.Text = itemSel.PubDate.ToString();
+                    newsDate_label.Text = itemSel.PubDate.ToLongDateString();
                     newsFrom_label.Text = itemSel.Author.ToString();
                     newsWebSite_linkLabel.Text = itemSel.Link.ToString();
 
@@ -389,7 +390,7 @@ namespace RSSReader
             if (item.Link.ToString() != "")
                 text += "Url : " + item.Link.ToString() + "\n";
             if (item.PubDate.ToString() != "")
-                text += "Date : " + item.PubDate.ToShortDateString() + "\n";
+                text += "Date : " + item.PubDate.ToLongDateString() + "\n";
             return text;
         }
 
@@ -403,7 +404,7 @@ namespace RSSReader
                 ListViewItem item1 = new ListViewItem(nwsItem.Title.ToString());
              //   nwsItem.newsListItem = item1;
 
-                item1.SubItems.Add(nwsItem.PubDate.ToShortDateString());
+                item1.SubItems.Add(nwsItem.PubDate.ToLongDateString());
                 if (nwsItem.Author.ToString() != "")
                     item1.SubItems.Add(nwsItem.Author.ToString());
                 else
@@ -613,7 +614,7 @@ namespace RSSReader
             if (rssItem.Description != "")
                 sentence += "Description " + System.Web.HttpUtility.HtmlDecode(rssItem.Description) + ". ";
             if (rssItem.PubDate.ToString() != "")
-                sentence += "Date " + rssItem.PubDate.ToShortDateString() + ". ";
+                sentence += "Date " + rssItem.PubDate.ToLongDateString() + ". ";
             return sentence;
         }
 
@@ -792,6 +793,10 @@ namespace RSSReader
         private void update_toolStripButton_Click(object sender, EventArgs e)
         {
             updateFluxList();
+            if (flux_listView.Items.Count > 0) 
+               flux_listView.Items[0].Selected = true;
+            if (news_listView.Items.Count > 0)
+              news_listView.Items[0].Selected = true;
         }
 
         private void connexionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -799,10 +804,18 @@ namespace RSSReader
             connexionWin.FormParent = this;
             connexionWin.ShowDialog();
 
-            statusCnx_toolStripLabel.Text = Properties.Settings.Default.login;
-            update_toolStripButton.Enabled = true;
-            ListFluxToolStripMenuItem.Enabled = true;
-            updateFluxList();
+            if (_isConnected == true)
+            {
+                statusCnx_toolStripLabel.Text = Properties.Settings.Default.login;
+                update_toolStripButton.Enabled = true;
+                ListFluxToolStripMenuItem.Enabled = true;
+                updateFluxList();
+                webBrowser1.Url = new Uri("about:blank");
+                newsSubject_label.Text = "";
+                newsDate_label.Text = "";
+                newsFrom_label.Text = "";
+                newsWebSite_linkLabel.Text = "";
+            }
         }
 
         private void vocalSynth_toolStripButton_Click(object sender, EventArgs e)

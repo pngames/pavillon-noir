@@ -49,13 +49,16 @@ namespace RSSReader
             IList AllFeedsList = frmParent.MainWebService.ListAvailableRssFeeds(frmParent.SessionID);
             _SuscribeFeedsList = frmParent.MainWebService.ListSubscribedRssFeeds(frmParent.SessionID);
 
-            foreach (RssFeedRef feedRef in AllFeedsList)
+            if (AllFeedsList != null)
             {
-                ListViewItem item = new ListViewItem(feedRef.Name);
-                item.Tag = feedRef;
-                if (isInSuscribeList(feedRef) == true)
-                    item.Checked = true;
-                flux_listView.Items.Add(item);
+                foreach (RssFeedRef feedRef in AllFeedsList)
+                {
+                    ListViewItem item = new ListViewItem(feedRef.Name);
+                    item.Tag = feedRef;
+                    if (isInSuscribeList(feedRef) == true)
+                        item.Checked = true;
+                    flux_listView.Items.Add(item);
+                }
             }
         }
 
@@ -69,13 +72,13 @@ namespace RSSReader
                     frmParent.MainWebService.RssFeedSubscribe(frmParent.SessionID, ((RssFeedRef)item.Tag).Id);
                 }
             }
-           /* foreach (ListViewItem item in flux_listView.Items)
+            foreach (ListViewItem item in flux_listView.Items)
             {
                 if (item.Checked == false && isInSuscribeList((RssFeedRef)item.Tag) == true)
                 {
-                    frmParent.MainWebService.RssFeedUnSubscribe(frmParent.SessionID, ((RssFeedRef)item.Tag).Id);
+                    frmParent.MainWebService.RssFeedUnsubscribe(frmParent.SessionID, ((RssFeedRef)item.Tag).Id);
                 }
-            }*/
+            }
             frmParent.updateFluxList();
             this.Close();
         }

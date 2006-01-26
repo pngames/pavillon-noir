@@ -75,7 +75,10 @@ namespace RSSReader
                         MessageBox.Show(message, caption, buttons);
                     }
                     else
+                    {
+                       
                         this.Close();
+                    }
                 }
             }
         }
