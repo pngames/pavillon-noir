@@ -281,8 +281,8 @@ ul#channels_actions li {
 }
 
 /** Channels input box */
-div#channels_submit_box { /* suscribe */
-  color: #FFFFFF;
+div#channel_submit_box { /* suscribe */
+  color: #000000;
   font-size: 10px;
 }
 div#channels_submit_box li {

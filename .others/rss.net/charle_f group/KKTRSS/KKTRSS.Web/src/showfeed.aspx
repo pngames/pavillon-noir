@@ -14,7 +14,6 @@
 	  alert('init:'+last_action)
 	  switch (last_action){
 	  case 'suscribe':
-		alert('suscribe')
 		showBoxHideOthers('channels_suscribe_box');
 		break;
 	  case 'unsuscribe':
@@ -23,7 +22,10 @@
 	  case 'submit':
 		showBoxHideOthers('channel_submit_box');
 		break;
-	  default : break;
+	  case 'markread':
+	  case 'show':
+	  default : 
+		break;
 	  }
 	}
 	
@@ -42,6 +44,7 @@
 	
 	// Suscribe/Unsuscribe to feeds
 	function suscribe(chan_id, qs) {
+	  alert('suscribe func ! chan_id='+chan_id)
 	  document.getElementById('channels_suscribe_'+chan_id).style.background = "url('/KKTRSS.Web/img/accept.png') no-repeat left bottom";
 	  document.location.href = qs+chan_id;
 	}
@@ -73,7 +76,7 @@
 
   </head>
 
-<body onload="init(<%= action %>)">
+<body onload="init('<%= action %>')">
 
 <!-- #Include File="Header.inc" -->
 
@@ -98,7 +101,7 @@
 		<ul id="channels_list">
 				<% foreach (Rss.RssChannel channel in myfeed.Channels) {
                      string qs_str = "?"+CHANNEL_ID+"="+channel.HashID+"&"+PROXY_MODE+"="+Proxymode.ToString()+"&"+UID+"="+uid+"&"+
-						   DSP_NB_ITEMS+"="+Dspnbitems.ToString()+"&"+DSP_ONLY_UNREAD+"="+Dsponlyread.ToString()+"&"+ACTION+"=show";                         
+						   DSP_NB_ITEMS+"="+Dspnbitems.ToString()+"&"+DSP_ONLY_UNREAD+"="+Dsponlyunread.ToString()+"&"+ACTION+"=show";                         
 				%>
 		  <li class="channelsinbox"><a href="showfeed.aspx<%= qs_str %>" title="<%= channel.Title %>"><%= channel.Title %></a></li>
 				<% } %>
@@ -114,18 +117,24 @@
 		  <span class="boxtitle">Submit new feed</span>
 		  <a href="#" onclick="javascript:closeBox('channel_submit_box')"><img alt="close" src="/KKTRSS.Web/img/cancel.png" class="chanact_cancel" title="close"/></a>
 		  <% string qs_str_2 = "?"+CHANNEL_ID+"="+channelid+"&"+PROXY_MODE+"="+Proxymode.ToString()+"&"+UID+"="+uid+"&"+
-						   DSP_NB_ITEMS+"="+Dspnbitems.ToString()+"&"+DSP_ONLY_UNREAD+"="+Dsponlyread.ToString()+"&"+ACTION+"=submit"; %>
-		  <form action="showfeed.aspx<%= qs_str_2 %>" name="submit_feed" method="post">
-			Name:<input type="text" id="submit_feed_name" name="submit_feed_name" size="8"/>
+						   DSP_NB_ITEMS + "=" + Dspnbitems.ToString() + "&" + DSP_ONLY_UNREAD + "=" + Dsponlyunread.ToString() + "&" + ACTION + "=submit"; 
+			   
+		  %>
+		  <form action="showfeed.aspx" name="submit_feed" method="post">
+			Name:<input type="text" id="submit_feed_name" name="submit_feed_name" size="8"/><br/>
 			Url:<input type="text" id="submit_feed_url" name="submit_feed_url" size="15"/>
 			<input type="submit" id="submit_feed_btn" name="submit_feed_btn" value="submit" />
+			<input type="hidden" id="querystring_<%= PROXY_MODE %>" name="querystring_<%= PROXY_MODE %>" value="<%= Proxymode.ToString() %>" />
+			<input type="hidden" id="querystring_<%= ACTION %>" name="querystring_<%= ACTION %>" value="submit" />
+			<input type="hidden" id="querystring_<%= CHANNEL_ID %>" name="querystring_<%= CHANNEL_ID %>" value="<%= channelid %>" />
+			<input type="hidden" id="Hidden1" name="querystring_<%= DSP_ONLY_UNREAD %>" value="<%= dsponlyunread %>" />
 		  </form>
 		</div> <!-- !channels_submit_box -->
 
 		<div id="channels_suscribe_box" class="box">
 		  <span class="boxtitle">Add feed</span>
 		  <% string qs_str_3 = "?"+CHANNEL_ID+"="+channelid+"&"+PROXY_MODE+"="+Proxymode.ToString()+"&"+UID+"="+uid+"&"+
-						   DSP_NB_ITEMS+"="+Dspnbitems.ToString()+"&"+DSP_ONLY_UNREAD+"="+Dsponlyread.ToString()+"&"+ACTION+"=suscribe&"+FEED_ID+"="; %>
+						   DSP_NB_ITEMS + "=" + Dspnbitems.ToString() + "&" + DSP_ONLY_UNREAD + "=" + Dsponlyunread.ToString() + "&" + ACTION + "=suscribe&" + FEED_ID + "="; %>
 		  <a href="#" onclick="javascript:closeBox('channels_suscribe_box')"><img alt="close" src="/KKTRSS.Web/img/cancel.png" class="chanact_cancel" title="close"/></a>
 		  <ul id="channels_suscribe_list">
 			<% foreach (kktserver.RssFeedRef feed in unsuscribedFeeds) { %>
@@ -137,7 +146,7 @@
 		<div id="channels_unsuscribe_box" class="box">
 		  <span class="boxtitle">Remove feed</span>
 		  <% string qs_str_4 = "?"+CHANNEL_ID+"="+channelid+"&"+PROXY_MODE+"="+Proxymode.ToString()+"&"+UID+"="+uid+"&"+
-						   DSP_NB_ITEMS+"="+Dspnbitems.ToString()+"&"+DSP_ONLY_UNREAD+"="+Dsponlyread.ToString()+"&"+ACTION+"=unsuscribe&"+FEED_ID+"="; %>
+						   DSP_NB_ITEMS + "=" + Dspnbitems.ToString() + "&" + DSP_ONLY_UNREAD + "=" + Dsponlyunread.ToString() + "&" + ACTION + "=unsuscribe&" + FEED_ID + "="; %>
 		  <a href="#" onclick="javascript:closeBox('channels_unsuscribe_box')"><img alt="close" src="/KKTRSS.Web/img/cancel.png" class="chanact_cancel" title="close"/></a>
 		  <ul id="channels_unsuscribe_list">
 			<% foreach (kktserver.RssFeedRef feed in suscribedFeeds) { %>
@@ -154,9 +163,9 @@
 		<% if (current_channel != null) { %>
 		<!-- CHANNELS -->
 		<div class="channel">
-		<% //string favico = getFavico(Currentfeed.Url); %>
-		  <h3>
-			<%--<img class="favico" src="<%= favico %>" alt="favico" />--%>
+		<% string favico = getFavico(current_channel.Link.AbsoluteUri); %>
+		  <h3 id="channel_title">
+			<img class="favico" src="<%= favico %>" alt="favico" />
 			<a class="name" href="<%= current_channel.Link %>"><%= current_channel.Title %> (<%= current_channel.Items.Count %>)</a>
 		  </h3>
 
@@ -164,7 +173,9 @@
 		  <%
 			foreach (Rss.RssItem current_item in current_channel.Items) {
 			  string item_id = current_item.HashID;
-			  if (!Dsponlyread || (Dsponlyread && !current_item.IsRead)) {
+			  if (!Dsponlyunread || (Dsponlyunread && !current_item.IsRead)) {
+				string qs_str_item = "?" + CHANNEL_ID + "=" + channelid + "&" + PROXY_MODE + "=" + Proxymode.ToString() + "&" + UID + "=" + uid + "&" + ITEM_ID + "=" + item_id + "&" +
+										   DSP_NB_ITEMS + "=" + Dspnbitems.ToString() + "&" + DSP_ONLY_UNREAD + "=" + Dsponlyunread.ToString() + "&" + ACTION + "=markread";
 		  %>
 		  <div class="item" id="item_<%= item_id %>" ondblclick="javascript:markItemRead('<%=item_id%>')">
 			<h4>
@@ -180,7 +191,7 @@
 			</div>
 			<ul id="actions">
 			  <li><a href="<%= current_item.Link %>">Read more</a></li>
-			  <li><a href="#" onclick="javascript:markItemRead('<%=item_id%>')">Mark as read</a></li>
+			  <li><a href="showfeed.aspx<%= qs_str_item %>">Mark as read</a></li>
 			</ul>
 		  </div> <!-- !item -->
 		  
