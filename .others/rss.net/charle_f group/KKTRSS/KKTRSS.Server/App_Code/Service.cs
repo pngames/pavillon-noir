@@ -464,50 +464,62 @@ public class Service : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public bool DelFeedFromGroup(string sessionId, long groupId, long FeedId)
+    public bool DelRssFeed(string sessionId, long feedId)
     {
-        //TODO
-        return false;
+        Boolean isSucceed = false;
+        Account acc = GetRegistered(sessionId);
+        if (acc == null)
+            return isSucceed;
+        try
+        {
+            NHibernateHttpModule.BeginTranaction();
+            RssFeedRef rfr = (RssFeedRef)NHibernateHttpModule.CurrentSession.Load(typeof(RssFeedRef), feedId);
+            if (rfr == null || (rfr.Group.Owner != acc && acc.Email != "default") )
+            {
+                NHibernateHttpModule.RollbackTransaction();
+                return false;
+            }
+            NHibernateHttpModule.CurrentSession.Delete(rfr);
+
+            NHibernateHttpModule.CommitTranction();
+            isSucceed = true;
+        }
+        catch (HibernateException e)
+        {
+            NHibernateHttpModule.RollbackTransaction();
+        }
+        return isSucceed;
     }
 
-    [WebMethod]
-    public bool AddFeedToGroup(string sessionId, long groupId, long FeedId)
-    {
-        //TODO
-        return false;
-    }
 
     [WebMethod]
     public Boolean ImportRssFeed(string autologin, string url, string name, string grpId, Boolean isPrivate)
     {
         if (autologin == null || autologin == "" || url == null || url == "")
             return false;
-        Account acc = null;
-        RssFeedRef rssRef = new RssFeedRef();
         Group grp = null;
+        Account acc = null;
+        if ((acc = GetRegistered(autologin)) == null)
+            return false;
         try
         {
-            NHibernateHttpModule.BeginTranaction();
             if (grpId == null || grpId == "")
-            {
-                acc = (Account)NHibernateHttpModule.CurrentSession
-                  .CreateQuery("from Account acc where acc.Autologin=?")
-                  .SetString(0, autologin)
-                  .UniqueResult();
-
-                if (isPrivate == false)
-                {
-                    grp = GetDefaultGroup();
-                }
-                else
-                {
-                    grp = GetMainUserGroup(acc.Email);
-                }
-            }
-            else
             {
                 grp = GetDefaultGroup();
             }
+            else
+            {
+               grp = (Group)NHibernateHttpModule.CurrentSession.Load(typeof(Group), long.Parse(grpId));
+            }
+            if (grp == null)
+            {
+                grp = GetDefaultGroup();
+            }
+            RssFeedRef rssRef = new RssFeedRef();
+       
+
+
+            NHibernateHttpModule.BeginTranaction();
             rssRef.Group = grp;
             rssRef.Url = url;
             rssRef.Name = name;
