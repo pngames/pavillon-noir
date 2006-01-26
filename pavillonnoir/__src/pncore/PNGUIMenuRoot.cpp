@@ -195,7 +195,7 @@ namespace PN
 	// FIXME -> PNGameMap cree par le script
 	// FIXME -> lancer l'evenement START
 
-	std::string conffilepath = PNConf::getInstance()->getConfPath().string() + PATHSEPSTRING + "config.cfg";
+	std::string conffilepath = PNConf::getInstance()->getConfPath("config.cfg");
 	FILE* file = fopen(conffilepath.c_str(), "r");
 	char  buffer[1024];
 	memset(buffer, 0, sizeof(buffer));

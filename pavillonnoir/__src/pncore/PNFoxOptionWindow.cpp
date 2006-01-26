@@ -27,21 +27,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-
 #include <list>
 #include <string>
+#include <fxkeys.h>
+#include <libxml/xmlreader.h>
 
 #include "pndefs.h"
+#include "pnplugins.h"
+#include "pnproperties.h"
+
+#include "pcf_format.h"
+
+#include "PNConf.hpp"
 
 #include "PNFoxOptionWindow.hpp"
 #include "PNFoxOptionsObject.hpp"
-#include "pnproperties.h"
-#include "PNConfigurableParameter.hpp"
-#include "PNFXStringListParameter.hpp"
 #include "PNPropertiesGrid.hpp"
-#include "pnconfkeys.h"
-#include "pnplugins.h"
-#include "fxkeys.h"
 
 namespace PN
 {
@@ -62,69 +63,58 @@ FXIMPLEMENT(PNFoxOptionWindow,FXDialogBox,PNFoxOptionWindowMap,ARRAYNUMBER(PNFox
 /*
 * Ctor
 */
-PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options",DECOR_TITLE|DECOR_BORDER|DECOR_RESIZE,0,0,600,400, 0,0,0,0, 4,4)
+PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner)
+: FXDialogBox(owner,"Options",DECOR_TITLE|DECOR_BORDER|DECOR_RESIZE,0,0,600,400, 0,0,0,0, 4,4)
 {
-  _conf = PNConf::getInstance();
-  _plist = PNPluginManager::getInstance();
-  _gridslist.clear();
+  PNPluginManager*	plist = PNPluginManager::getInstance();
 
-  // General layout, buttons on the left, options on the right
-  FXVerticalFrame* vertical = new FXVerticalFrame(this,LAYOUT_SIDE_TOP|LAYOUT_FILL_X|LAYOUT_FILL_Y);
+  for (PNPluginManager::iterator it = plist->begin(); it != plist->end(); ++it)
+  {
+	PNPlugDesc*	desc = (*it)->getPlugDesc();
+
+	for (pnuint i = 0; i < desc->getNbInterface(); ++i)
+	{
+	  PNInterface*	interf = desc->getInterface(i);
+
+	  if (interf != NULL)
+		_interfaces[interf->getName()] = interf;
+	}
+  }
+
+  unserializeFromPath(PNConf::getInstance()->getConfPath("configuration.pcf"));
+
+  //////////////////////////////////////////////////////////////////////////
   
-/* -- 
-  std::string* tmpstr = new std::string("");
-  PNFoxOptionsObject* confobject = new PNFoxOptionsObject();
-  PNConfigurableParameter* confparam = new PNConfigurableParameter(confobject, PN_PARAMTYPE_EVENTBOX, tmpstr, "Jump", "Jump ?", FALSE);
-  confobject->addParam(confparam);
-  pnerror(PN_LOGLVL_DEBUG, "PNFoxOptionWindow::PNFoxOptionWindow() : confobject->getNbParameters()=%i", confobject->getNbParameters());
-
-  owner->create();
-  this->create();
-  vertical->create();
-
-  new FXLabel(vertical, "LABEL1");
-  PNPropertiesGrid* grid = new PNPropertiesGrid(vertical, NULL);
-  grid->setObject(confobject);
-  grid->update();
-  new FXLabel(vertical, "LABEL2");
- -- */
-
-/* --  */
-  FXHorizontalFrame* horizontal = new FXHorizontalFrame(vertical,LAYOUT_FILL_X|LAYOUT_FILL_Y);
-  FXVerticalFrame* buttons = new FXVerticalFrame(horizontal,LAYOUT_LEFT|LAYOUT_FILL_Y|FRAME_SUNKEN|PACK_UNIFORM_WIDTH|PACK_UNIFORM_HEIGHT,0,0,0,0, 0,0,0,0, 0,0);
-  FXSwitcher* switcher = new FXSwitcher(horizontal,LAYOUT_FILL_X|LAYOUT_FILL_Y,0,0,0,0, 0,0,0,0);
-	
-  // probably dirty but the app crashes if we don't do that, eat some fox documentation!
-  owner->create();
-  create();
-  vertical->create();
-  horizontal->create();
-  buttons->create();
-  switcher->create();
+  // General layout, buttons on the left, options on the right
+  _vertical = new FXVerticalFrame(this, LAYOUT_SIDE_TOP|LAYOUT_FILL_X|LAYOUT_FILL_Y);
+  
+  _horizontal = new FXHorizontalFrame(_vertical, LAYOUT_FILL_X|LAYOUT_FILL_Y);
+  _buttons = new FXVerticalFrame(_horizontal, LAYOUT_LEFT|LAYOUT_FILL_Y|FRAME_SUNKEN|PACK_UNIFORM_WIDTH|PACK_UNIFORM_HEIGHT,0,0,0,0, 0,0,0,0, 0,0);
+  _switcher = new FXSwitcher(_horizontal, LAYOUT_FILL_X|LAYOUT_FILL_Y, 0,0,0,0, 0,0,0,0);
 
   // for each plugin, read configuration informations and display them first in switcher (desc) then in tabs (interfaces)
   int switcherID = FXSwitcher::ID_OPEN_FIRST;
-  for (PNPluginManager::iterator it = _plist->begin(); it != _plist->end(); it++, switcherID++)
+
+  for (PNPluginManager::iterator it = plist->begin(); it != plist->end(); ++it, ++switcherID)
   {
     PNPlugin* pl = (*it);
     PNPlugDesc*	desc = pl->getPlugDesc();
   
 	// adds a button to the switcher and a tabbook to display the infos, plugdesc name as button label
-    new FXButton(buttons,desc->getName(),NULL,switcher,switcherID,FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y);
-    FXTabBook*  tabbook = new FXTabBook(switcher, NULL, 0, LAYOUT_FILL_Y, 0, 0, 0, 0, 0, 0, 0, 0);
-    tabbook->create();
+    new FXButton(_buttons, desc->getName(), NULL, _switcher, switcherID, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y);
+    FXTabBook*  tabbook = new FXTabBook(_switcher, NULL, 0, LAYOUT_FILL_Y, 0, 0, 0, 0, 0, 0, 0, 0);
 
 	pnerror(PN_LOGLVL_DEBUG, "[PNFoxOptionWindow] adding switcher section %s (version=%i, nb interfaces=%i)", 
 		desc->getName(), desc->getVersion(), desc->getNbInterface()); 
 
-    // creates a tab for each Interface
-    for (pnuint i = 0; i < desc->getNbInterface(); ++i)
-    {
+	// creates a tab for each Interface
+	for (pnuint i = 0; i < desc->getNbInterface(); ++i)
+	{
 	  PNInterface*	interf = desc->getInterface(i);
-  	  if (interf == NULL)
+	  if (interf == NULL)
 	  {
-	    pnerror(PN_LOGLVL_ERROR, "[PNFoxOptionWindow] could not load interface configuration for plugin %s", 
-			pl->getPath().native_file_string().c_str()); 
+		pnerror(PN_LOGLVL_ERROR, "[PNFoxOptionWindow] could not load interface configuration for plugin %s", 
+		  pl->getPath().native_file_string().c_str()); 
 	  }
 	  else 
 	  {
@@ -136,16 +126,13 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 		// can check its values later when saving configuration
 		PNPropertiesGrid* grid = new PNPropertiesGrid(tabbook);
 		grid->setObject(interf);
-		_gridslist.push_back(grid);
-		loadGrid(grid, _conf, interf->getLabel().c_str());
 	  }
 	}
   }
-/* -- */
 
   // Bottom part
-  new FXHorizontalSeparator(vertical,SEPARATOR_RIDGE|LAYOUT_FILL_X);
-  FXHorizontalFrame *closebox=new FXHorizontalFrame(vertical,LAYOUT_BOTTOM|LAYOUT_FILL_X|PACK_UNIFORM_WIDTH);
+  new FXHorizontalSeparator(_vertical,SEPARATOR_RIDGE|LAYOUT_FILL_X);
+  FXHorizontalFrame *closebox=new FXHorizontalFrame(_vertical,LAYOUT_BOTTOM|LAYOUT_FILL_X|PACK_UNIFORM_WIDTH);
   new FXButton(closebox,"&Ok",NULL,this,FXDialogBox::ID_ACCEPT,BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
   new FXButton(closebox,"&Cancel",NULL,this,FXDialogBox::ID_CANCEL,BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
   new FXButton(closebox,"&Apply",NULL,this,PNFoxOptionWindow::ID_APPLY,BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
@@ -155,10 +142,10 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner):FXDialogBox(owner,"Options
 * Dtor
 */
 PNFoxOptionWindow::~PNFoxOptionWindow()
-{	
+{
 }
 
-// --
+//////////////////////////////////////////////////////////////////////////
 
 void
 PNFoxOptionWindow::create()
@@ -166,68 +153,15 @@ PNFoxOptionWindow::create()
   FXDialogBox::create();
 }
 
-/*! \brief Loads the preferences using PNConf
-* For the given grid (group of configuration widgets displaying parameters) 
-* goes through the different parameters and gets the string value to load.
-*/
-void 
-PNFoxOptionWindow::loadGrid(PNPropertiesGrid* grid, PNConf* conf, const pnchar* section)
-{
-  PNPropertiesGrid::PNPPList& gridParameters = grid->getParams();
-
-  if (gridParameters.size() != 0)
-  {
-    for (PNPropertiesGrid::PNPPList::iterator it = gridParameters.begin(); it != gridParameters.end(); it++)
-	{
-	  PNPropertiesGridParameter* gridParameter = *it;
-
-  	  std::string key = gridParameter->getParam()->getLabel();
-
-	  /*pnbool ok = gridParameter->setStringValue(conf->getKey(key, section, std::string()));
-	  if (ok == false)
-		pnerror(PN_LOGLVL_DEBUG, "Could not load values for key \"%s\"", key.c_str());*/
-	}
-  }
-  else
-  {
-	new FXLabel(grid, "No options available for this plugin.");
-  }
-}
-
-/*! \brief Saves the preferences using PNConf
-* For the given grid, goes through the different parameters
-* and get a string value to save.
-*/
-void 
-PNFoxOptionWindow::saveGrid(PNPropertiesGrid* grid, PNConf* conf, const pnchar* section)
-{
-  PNPropertiesGrid::PNPPList& gridParameters = grid->getParams();
-
-  for (PNPropertiesGrid::PNPPList::iterator it = gridParameters.begin(); it != gridParameters.end(); ++it)
-  {
-	PNPropertiesGridParameter* gridParameter = *it;
-
-	// then call the appropriate method
-	conf->setKey(gridParameter->getParam()->getLabel().c_str(), gridParameter->getStringValue().c_str(), section);
-  }
-}
+//////////////////////////////////////////////////////////////////////////
 
 /*! \brief Saves the preferences using PNConf
 * Saves each grid in the option window.
 */
 long 
-PNFoxOptionWindow::onApply(FXObject* obj,FXSelector sel,void* ptr)
+PNFoxOptionWindow::onApply(FXObject* obj, FXSelector sel, void* ptr)
 {
-  pnerror(PN_LOGLVL_DEBUG, "PNFoxOptionWindow::onApply");
-
-  // save each grid in our list (filled earlier in constructor)
-  for (std::list<PNPropertiesGrid*>::iterator it = _gridslist.begin(); it != _gridslist.end(); it++)
-  {
-	PNPropertiesGrid* current_grid = (*it);
-	saveGrid(current_grid, _conf, current_grid->getObject()->getLabel().c_str());
-  }
-
-  _conf->saveConf();
+  serialize();
 
   return 1;
 }
@@ -237,7 +171,6 @@ PNFoxOptionWindow::onApply(FXObject* obj,FXSelector sel,void* ptr)
 long
 PNFoxOptionWindow::onAccept(FXObject* obj,FXSelector sel,void* ptr)
 {
-  pnerror(PN_LOGLVL_DEBUG, "PNFoxOptionWindow::onAccept");
   onApply(obj,sel,ptr);
 
   return FXDialogBox::onCmdAccept(obj, sel, ptr);
@@ -257,6 +190,46 @@ PNFoxOptionWindow::onKeyPress(FXObject* s,FXSelector sel,void* ptr)
   }
 
   return 1;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+const std::string&
+PNFoxOptionWindow::getDTD() const
+{
+  return PCF_XMLDTD;
+}
+
+const std::string&
+PNFoxOptionWindow::getDTDName() const
+{
+  return PCF_XMLDTD_NAME;
+}
+
+const std::string&
+PNFoxOptionWindow::getRootNodeName() const
+{
+  return PCF_XMLNODE_ROOT;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+pnint
+PNFoxOptionWindow::_unserializeNode(xmlNode* node)
+{
+  if (PCF_OBJECT_XMLDTD_NAME == (const char*)node->name)
+	return _interfaces[(const char *)xmlGetProp(node, PCF_XMLPROP_NAME)]->unserializeFromXML(node);
+
+  return PNEC_SUCCESS;
+}
+
+pnint
+PNFoxOptionWindow::_serializeContent(xmlNode* node)
+{
+  for (IFaceMap::iterator it = _interfaces.begin(); it != _interfaces.end(); ++it)
+	it->second->serializeInXML(node, false);
+
+  return PNEC_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////

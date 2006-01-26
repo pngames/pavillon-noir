@@ -47,7 +47,7 @@ namespace PN {
 
 PNOpalImporter::PNOpalImporter()
 {
-  _label = "PNP Importer";
+  _name = _label = "PNP Importer";
 }
 
 PNOpalImporter::~PNOpalImporter()

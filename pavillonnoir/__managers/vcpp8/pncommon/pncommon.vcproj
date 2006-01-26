@@ -788,10 +788,6 @@
 				RelativePath="..\..\..\__src\pncommon\PNConf.hpp"
 				>
 			</File>
-			<File
-				RelativePath="..\..\..\__src\pncommon\pnconfkeys.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="error"

@@ -31,17 +31,22 @@
 #include <boost/filesystem/operations.hpp>
 #include <iostream>
 
+namespace fs = boost::filesystem;
+
+//////////////////////////////////////////////////////////////////////////
+
 #include "pndefs.h"
 
-#include "PNFoxMainWindow.hpp"
+#include "PNFoxOptionWindow.hpp"
+
 #include "top_image2.h"
 #include "pnresources.h"
 #include "PNConf.hpp"
 
-namespace PN
-{
+#include "PNFoxMainWindow.hpp"
 
-namespace fs = boost::filesystem;
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
 
 /*!
 \brief
@@ -54,8 +59,6 @@ Bool set to true if "New Game" is pushed or false when "Quit".
 PNFoxMainWindow::PNFoxMainWindow(FXApp* a, bool *returnState):
 FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|DECOR_BORDER|DECOR_MENU,0,0,0,0)
 {
-  a->create();
-
   _imageFile = new FXGIFIcon(getApp(),top_image2);
 
   _returnState = returnState;
@@ -70,7 +73,7 @@ FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|
   new FXLabel(_contentMain,"Choose your map :",NULL,JUSTIFY_NORMAL);
   _mapSelector = new FXComboBox(_contentMain,10,NULL,0,COMBOBOX_STATIC|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FIX_WIDTH,0,0,312,45);
 
-  std::string	conffilepath = PNConf::getInstance()->getConfPath().native_directory_string() + PATHSEPSTRING + "config.cfg";
+  std::string	conffilepath = PNConf::getInstance()->getConfPath("config.cfg");
   std::FILE*	file = fopen(conffilepath.c_str(), "a");
   char		buffer[1024];
 
@@ -114,9 +117,10 @@ FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|
   //buttonOptions->setState(FX::STATE_CHECKED);
   new FXButton(_contentMain,"&QUIT\tTO QUIT THE GAME",NULL,this,ID_CLOSE,FRAME_RAISED|FRAME_THICK|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT,0,0,312,45);
 
+  //////////////////////////////////////////////////////////////////////////
+  
   // Build the "Options" window
-  PNFoxOptionWindow*	dialog; 
-  dialog = new PNFoxOptionWindow(this);
+  _optionWindow = new PNFoxOptionWindow(this);
 }
 
 /*!
@@ -128,6 +132,8 @@ PNFoxMainWindow::~PNFoxMainWindow()
   delete _mapSelector;
   delete _imageFile;
   delete _contentMain;
+
+  delete _optionWindow;
 }
 
 FXDEFMAP(PNFoxMainWindow) MainConfigWindowMap[]={
@@ -150,7 +156,7 @@ long	PNFoxMainWindow::onCmdLauchGame(FXObject*,FXSelector,void*)
   mapPath = _mapSelector->getItemText(_mapSelector->getCurrentItem()).text();
   //mapPath += "/entities.xml";
 
-  std::string conffilepath = PNConf::getInstance()->getConfPath().native_directory_string() + PATHSEPSTRING + "config.cfg";
+  std::string conffilepath = PNConf::getInstance()->getConfPath("config.cfg");
   std::FILE* configFile = fopen(conffilepath.c_str(), "w");
   fwrite( mapPath.c_str(), sizeof( char ), mapPath.length(), configFile);
   fclose(configFile);
@@ -165,8 +171,8 @@ Called when "Options" is pushed, open Options Fox Window.
 */
 long	PNFoxMainWindow::onCmdShowOption(FXObject*,FXSelector,void*)
 {
-  PNFoxOptionWindow modaldialog(this);
-  modaldialog.execute();
+  _optionWindow->execute();
+
   return 1;
 }
 
@@ -174,8 +180,7 @@ long	PNFoxMainWindow::onCmdShowOption(FXObject*,FXSelector,void*)
 void	PNFoxMainWindow::create()
 {
   FXMainWindow::create();
-
-  show(PLACEMENT_SCREEN);
 }
 
+//////////////////////////////////////////////////////////////////////////
 };

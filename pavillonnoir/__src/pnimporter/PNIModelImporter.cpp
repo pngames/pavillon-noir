@@ -44,7 +44,7 @@ namespace PN {
 
 PNIModelImporter::PNIModelImporter()
 {
-  _label = "PNM Importer";
+  _name = _label = "PNM Importer";
 
   _magic = PNM_MAGIC;
   _magicSize = PNM_MAGIC_SIZE;
