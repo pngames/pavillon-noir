@@ -38,6 +38,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "pndefs.h"
+#include "pnobject_base_types.h"
 
 #include "PNPoint3f.hpp"
 
@@ -84,9 +85,19 @@ IPNXMLSerializable::getRootNodeName() const
 //////////////////////////////////////////////////////////////////////////
 
 pnint
-IPNXMLSerializable::unserializeFromXML(xmlNode* root)
+IPNXMLSerializable::_unserializeNode(xmlNode* node)
 {
   return PNEC_NOT_IMPLEMENTED;
+}
+
+pnint
+IPNXMLSerializable::unserializeFromXML(xmlNode* root)
+{
+  for (root = root->children ; root != NULL; root = root->next)
+	if (root->type == XML_ELEMENT_NODE)
+	  _unserializeNode(root);
+
+  return PNEC_SUCCESS;
 }
 
 /**
@@ -142,6 +153,21 @@ IPNXMLSerializable::unserializeFromFile(const boost::filesystem::path& file)
 //////////////////////////////////////////////////////////////////////////
 
 pnint
+IPNXMLSerializable::_serializeContent(xmlNode* node)
+{
+  return PNEC_NOT_IMPLEMENTED;
+}
+
+pnint
+IPNXMLSerializable::serializeInXML(xmlNode* root, pnbool isroot /*=false*/)
+{
+  if (!isroot)
+	root = xmlNewChild(root, NULL, BAD_CAST getRootNodeName().c_str(), NULL);
+
+  return _serializeContent(root);
+}
+
+pnint
 IPNXMLSerializable::serializeInFile(const boost::filesystem::path& file)
 {
   if (!_serializeInXML)
@@ -193,12 +219,6 @@ IPNXMLSerializable::serializeInFile(const boost::filesystem::path& file)
   return PNEC_SUCCESS;
 }
 
-pnint
-IPNXMLSerializable::serializeInXML(xmlNode* node, pnbool root /*=false*/)
-{
-  return PNEC_NOT_IMPLEMENTED;
-}
-
 //////////////////////////////////////////////////////////////////////////
 
 namespace XMLUtils {
@@ -240,12 +260,7 @@ xmlGetProp(xmlNode* node, const pnuchar* name, pnbool def)
   if (att == NULL)
 	return def;
 
-  if (xmlStrEqual(att, XML_TRUE_VAL))
-	return true;
-  if (xmlStrEqual(att, XML_FALSE_VAL))
-	return false;
-
-  return def;
+  return PNBool::staticToValue((const char*)att, def);
 }
 
 PNAPI pnbool
@@ -279,7 +294,7 @@ xmlGetProp(xmlNode* node, const pnuchar* name, pnint def)
   if (att == NULL)
 	return def;
 
-  return atoi((const char*)att);
+  return PNInt::staticToValue((const char*)att, def);
 }
 
 PNAPI pnint
@@ -337,7 +352,7 @@ xmlGetProp(xmlNode* node, const pnuchar* name, pnfloat def)
   if (att == NULL)
 	return def;
 
-  return (pnfloat)atof((const char*)att);
+  return PNFloat::staticToValue((const char*)att, def);
 }
 
 PNAPI pnfloat

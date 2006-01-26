@@ -32,38 +32,40 @@
 
 #include <fx.h>
 
-#include "PNFoxOptionWindow.hpp"
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
 
-namespace PN
-{
+class PNFoxOptionWindow;
 
-class	PNFoxMainWindow : public FXMainWindow 
+class					PNFoxMainWindow : public FXMainWindow 
 {
-	FXDECLARE(PNFoxMainWindow)
+  FXDECLARE(PNFoxMainWindow)
 
 protected:
-	FXComboBox*			_mapSelector;
-	FXVerticalFrame*	_contentMain;
-	FXImageView*		_imageView;  
-	FXSplitter*			_splitter;
-	bool*				_returnState;
-	FXIcon*				_imageFile;
+  bool*					_returnState;
+
+  PNFoxOptionWindow*	_optionWindow;
+
+  FXComboBox*			_mapSelector;
+  FXVerticalFrame*		_contentMain;
+  FXIcon*				_imageFile;
 
 protected:
-	PNFoxMainWindow(){}
+  PNFoxMainWindow(){}
 
 public:
-	long	onCmdShowOption(FXObject*,FXSelector,void*);
-	long	onCmdLauchGame(FXObject*,FXSelector,void*);
-	enum {
-		ID_SHOWOPTIONDIALOG=FXMainWindow::ID_LAST,
-		ID_LAUCH_GAME
-	};
+  long					onCmdShowOption(FXObject*,FXSelector,void*);
+  long					onCmdLauchGame(FXObject*,FXSelector,void*);
+  enum 
+  {
+	ID_SHOWOPTIONDIALOG=FXMainWindow::ID_LAST,
+	ID_LAUCH_GAME
+  };
 
 public:
-	PNFoxMainWindow(FXApp *app, bool *returnState);
-	virtual void create();
-	virtual ~PNFoxMainWindow();
+  PNFoxMainWindow(FXApp *app, bool *returnState);
+  virtual void			create();
+  virtual ~PNFoxMainWindow();
 };
 
 };

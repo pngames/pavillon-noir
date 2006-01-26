@@ -44,7 +44,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  static std::string	saticToString(pnbool value)
+  static std::string	staticToString(pnbool value)
   {
 	return value ? "true" : "false";
   }

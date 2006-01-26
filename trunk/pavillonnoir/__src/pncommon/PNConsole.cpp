@@ -69,11 +69,7 @@ PNConsole::~PNConsole()
 void
 PNConsole::init()
 {
-  std::string tmpFile = PNConf::getInstance()->getConfPath().native_directory_string();
-  tmpFile += PATHSEPSTRING;
-  tmpFile += "pnConsole.log";
-
-  _logFile.open(tmpFile.c_str());
+  _logFile.open(PNConf::getInstance()->getConfPath("pnConsole.log").c_str());
 }
 
 void

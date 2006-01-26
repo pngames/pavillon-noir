@@ -31,52 +31,64 @@
 #ifndef _PNFOXOPTIONWINDOW_HPP_
 # define _PNFOXOPTIONWINDOW_HPP_
 
+#include <map>
+#include <list>
 #include <fx.h>
 
-#include "PNFoxMainWindow.hpp"
-#include "PNFoxOptionsObject.hpp"
-#include "PNPropertiesGrid.hpp"
-#include "PNConf.hpp"
-#include "PNPluginManager.hpp"
+#include "IPNXMLSerializable.hpp"
 
-namespace PN
-{
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
 
-class	PNFoxOptionWindow : public FXDialogBox 
+class PNPropertiesGrid;
+class PNInterface;
+
+class						PNFoxOptionWindow : public FXDialogBox, public IPNXMLSerializable
 {
-	FXDECLARE(PNFoxOptionWindow)
+  FXDECLARE(PNFoxOptionWindow)
 
 private:
 
-	PNPluginManager*		_plist;
-	PNConf*					_conf;
-	std::list<PNPropertiesGrid*>  _gridslist;
+  typedef std::map<std::string, PNInterface*> IFaceMap;
+  IFaceMap	_interfaces;
 
 protected:
-	FXHorizontalFrame*		buttons;
+  FXVerticalFrame*			_vertical;
+  FXHorizontalFrame*		_horizontal;
+  FXVerticalFrame*			_buttons;
+  FXSwitcher*				_switcher;
 
 private:
-	PNFoxOptionWindow(){}
+  PNFoxOptionWindow(){}
 
 public:
-	PNFoxOptionWindow(FXWindow* owner);
-	virtual					~PNFoxOptionWindow();
+  PNFoxOptionWindow(FXWindow* owner);
+  virtual					~PNFoxOptionWindow();
 
-	virtual void	create();
-	long			onAccept(FXObject* obj,FXSelector sel,void* ptr);
-	long			onApply(FXObject* obj,FXSelector sel,void* ptr);
-	long			onKeyPress(FXObject*,FXSelector,void* ptr);
-
-	void			saveGrid(PNPropertiesGrid* grid, PNConf* conf, const pnchar* section);
-	void			loadGrid(PNPropertiesGrid* grid, PNConf* conf, const pnchar* section);
+  virtual void				create();
+  long						onAccept(FXObject* obj, FXSelector sel, void* ptr);
+  long						onApply(FXObject* obj, FXSelector sel, void* ptr);
+  long						onKeyPress(FXObject*, FXSelector, void* ptr);
 
 public:
   enum {
 	ID_APPLY = FXDialogBox::ID_LAST,
 	ID_LAST
   };
+
+  //////////////////////////////////////////////////////////////////////////
+
+private:
+  pnint						_unserializeNode(xmlNode* node);
+  pnint						_serializeContent(xmlNode* node);
+
+public:
+  const std::string&		getDTD() const;
+  const std::string&		getDTDName() const;
+  const std::string&		getRootNodeName() const;
 };
 
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /* _PNFOXOPTIONWINDOW_HPP_ */

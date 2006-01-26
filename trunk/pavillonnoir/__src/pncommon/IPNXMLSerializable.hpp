@@ -71,6 +71,10 @@ protected:
   /// Save object to file
   virtual pnint					serializeInFile(const boost::filesystem::path& file);
 
+protected:
+  virtual pnint					_unserializeNode(xmlNode* node);
+  virtual pnint					_serializeContent(xmlNode* node);
+
 public:
   /// Parse XML root node
   virtual pnint					unserializeFromXML(xmlNode* node);

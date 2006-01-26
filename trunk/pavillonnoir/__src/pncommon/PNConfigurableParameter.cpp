@@ -96,7 +96,7 @@ PNConfigurableParameter::_init(PNConfigurableObject* p,
 
 //////////////////////////////////////////////////////////////////////////
 
-pnuint
+pnparamtype
 PNConfigurableParameter::getType()
 {
   return _type;
@@ -164,16 +164,16 @@ PNConfigurableParameter::toString()
   switch (_type)
   {
   case PN_PARAMTYPE_BOOLEAN:
-	return *((PNBool*)_elem);
+	return PNBool::staticToString(*((pnbool*)_elem));
   case PN_PARAMTYPE_INT:
-  	return *((PNInt*)_elem);
+	return PNInt::staticToString(*((pnint*)_elem));
   case PN_PARAMTYPE_UINT:
-	return *((PNUInt*)_elem);
+	return PNUInt::staticToString(*((pnuint*)_elem));
   case PN_PARAMTYPE_REAL:
   case PN_PARAMTYPE_DIALX:
   case PN_PARAMTYPE_DIALY:
   case PN_PARAMTYPE_DIALZ:
-	return *((PNFloat*)_elem);
+	return PNFloat::staticToString(*((pnfloat*)_elem));
   case PN_PARAMTYPE_STRING:
   case PN_PARAMTYPE_FILE:
   case PN_PARAMTYPE_DIR:
@@ -199,19 +199,19 @@ PNConfigurableParameter::fromString(const std::string& str)
   switch (_type)
   {
   case PN_PARAMTYPE_BOOLEAN:
-	*((PNBool*)_elem) = str;
+	*((pnbool*)_elem) = PNBool::staticToValue(str);
 	break;
   case PN_PARAMTYPE_INT:
-	*((PNInt*)_elem) = str;
+	*((pnint*)_elem) = PNInt::staticToValue(str);
 	break;
   case PN_PARAMTYPE_UINT:
-	*((PNUInt*)_elem) = str;
+	*((pnuint*)_elem) = PNUInt::staticToValue(str);
 	break;
   case PN_PARAMTYPE_REAL:
   case PN_PARAMTYPE_DIALX:
   case PN_PARAMTYPE_DIALY:
   case PN_PARAMTYPE_DIALZ:
-	*((PNFloat*)_elem) = str;
+	*((pnfloat*)_elem) = PNFloat::staticToValue(str);
 	break;
   case PN_PARAMTYPE_STRING:
   case PN_PARAMTYPE_FILE:
@@ -253,9 +253,10 @@ PNConfigurableParameter::unserializeFromXML(xmlNode* node)
   for (xmlNodePtr child = node->children ; child != NULL; child = child->next)
 	if (PCF_PARAMV_XMLDTD_NAME == (const char*)child->name)
 	{
-	  xmlChar* attr = xmlGetProp(node, PCF_XMLPROP_DATA);
+	  xmlChar* attr = xmlGetProp(child, PCF_XMLPROP_DATA);
 	  if (attr != NULL)
 		fromString((const char*)attr);
+
 	  break;
 	}
 

@@ -1,5 +1,3 @@
-	* copy __binaries\datafiles\configuration content to user configuration the first time is required by he game
-
 [function to implement]
 pncommon:
 	* PNImportManager::import(const std::string& path, importtype type, bool copy) : "Faire une copie de l'objet"
@@ -29,5 +27,5 @@ pnglrenderer:
 	- placer les ressources et les script de reaction dans la map
 
 * Common
-	- terminer l'enregistrement/changement de la configuration des plugins (Thomas)
-	~ mettre au point la sauvegarde/chargement du niveau (Thomas)
+	- terminer serialize/unserialize des ConfigurableParameterList (Thomas)
+	~ mettre au point la sauvegarde/chargement du niveau de jeu en cours (Thomas)

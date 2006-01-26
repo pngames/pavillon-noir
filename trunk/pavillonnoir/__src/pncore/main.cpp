@@ -30,7 +30,6 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
-#include <fx.h>
 
 #ifdef WIN32
 # include <direct.h>
@@ -42,14 +41,10 @@
 
 #include "pndefs.h"
 #include "pnevent.h"
-#include "pnplugins.h"
 #include "pnrender.h"
 #include "pnevent.h"
 #include "pnresources.h"
-#include "pnmath.h"
 #include "pni18n.h"
-
-#include "PNQuatf.hpp"
 
 #include "PNFoxMainWindow.hpp"
 #include "PNLoadPlugins.hpp"
@@ -60,21 +55,12 @@
 #include "PNGUIStateManager.hpp"
 #include "PNGUILoadingScreen.hpp"
 
-#include "PNGameInterface.hpp"
-
-#include "PN3DObject.hpp"
-#include "PN3DModel.hpp"
-#include "PN3DMaterial.hpp"
-
-#include "PNSoundInterface.hpp"
-#include "PNPhysicsInterface.hpp"
 #include "PNConf.hpp"
 
-#include <fx3d.h>
 #include <PNQuatf.hpp>
+#include "PNQuatf.hpp"
 
 using namespace PN;
-using namespace std;
 
 int	  main(int argc, char* argv[])
 {	
@@ -105,7 +91,6 @@ int	  main(int argc, char* argv[])
   //////////////////////////////////////////////////////////////////////////
   // Initialize configuration
  
-  PNConf::initialize();
   PNI18n::getInstance()->unserializeFromPath("datafiles/i18n/default.xml");
   
   //////////////////////////////////////////////////////////////////////////
@@ -128,6 +113,7 @@ int	  main(int argc, char* argv[])
 
   PNFoxMainWindow		*mainWindow = new PNFoxMainWindow(&gameWindowLauncher, &returnState);
   gameWindowLauncher.create();
+  mainWindow->show(PLACEMENT_SCREEN);
   gameWindowLauncher.run();
   
   if (returnState == true)
