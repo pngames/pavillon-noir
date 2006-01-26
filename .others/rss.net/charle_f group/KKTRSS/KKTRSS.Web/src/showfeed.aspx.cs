@@ -192,7 +192,7 @@ public partial class src_showfeed : System.Web.UI.Page
 
   protected void unsuscribe(long feed_id_)
   {
-	//service.RssFeedUnsubscribe(uid, feed_id_);
+	service.RssFeedUnsubscribe(uid, feed_id_);
   }
 
   // --- unused
