@@ -104,7 +104,7 @@ public class Service : System.Web.Services.WebService
         }
         catch (NHibernate.HibernateException e)
         {
-            throw e;
+            return "";
         }
 
         if (acc == null)
@@ -163,7 +163,7 @@ public class Service : System.Web.Services.WebService
         {
             NHibernateHttpModule.BeginTranaction();
             RssFeedRef rfr = new RssFeedRef();
-           // NHibernateHttpModule.CurrentSession.Load(rfr, RssFeedId);
+            // NHibernateHttpModule.CurrentSession.Load(rfr, RssFeedId);
             System.Type t = typeof(RssFeedRef);
             rfr = (RssFeedRef)NHibernateHttpModule.CurrentSession.Load(t, RssFeedId);
             if (rfr == null)
@@ -175,7 +175,7 @@ public class Service : System.Web.Services.WebService
             NHibernateHttpModule.CurrentSession.Update(acc);
             NHibernateHttpModule.CommitTranction();
         }
-        catch(HibernateException e)
+        catch (HibernateException e)
         {
             NHibernateHttpModule.RollbackTransaction();
             return false;
@@ -197,15 +197,15 @@ public class Service : System.Web.Services.WebService
             RssFeed feed = RssFeed.ReadFromString(anRssfeedRef.RssCache);
             foreach (RssChannel chan in feed.Channels)
             {
-                foreach(RssItem it in chan.Items)
+                foreach (RssItem it in chan.Items)
                 {
-                   if( NHibernateHttpModule.CurrentSession
-                     .CreateQuery("from ReadRssItem rri where rri.HashCode=? and rri.Account=?")
-                     .SetString(0, it.HashID)
-                     .SetEntity(1, acc).List().Count > 0)
-                   {
-                       it.IsRead = true;
-                   }
+                    if (NHibernateHttpModule.CurrentSession
+                      .CreateQuery("from ReadRssItem rri where rri.HashCode=? and rri.Account=?")
+                      .SetString(0, it.HashID)
+                      .SetEntity(1, acc).List().Count > 0)
+                    {
+                        it.IsRead = true;
+                    }
                 }
                 MyFeed.Channels.Add(chan);
             }
@@ -245,7 +245,7 @@ public class Service : System.Web.Services.WebService
         }
         catch (HibernateException e)
         {
-            throw e;
+            return null;
         }
         return ret;
     }
@@ -264,16 +264,42 @@ public class Service : System.Web.Services.WebService
         }
         catch (HibernateException e)
         {
-            throw e;
+            return null;
         }
         return ret;
     }
 
     [WebMethod]
-    public string GetRssFeed(string sessionId, int RssFeedId)
+    public bool RssFeedUnsubscribe(string sessionId, long RssFeedId)
     {
-        string ret = "";
-        return ret;
+        Account acc = GetRegistered(sessionId);
+        Boolean isSucceed = false;
+        if (acc == null)
+        {
+            return isSucceed;
+        }
+        try
+        {
+            NHibernateHttpModule.BeginTranaction();
+            foreach (RssFeedRef rfr in acc.SubscribedRssFeeds)
+            {
+                if (rfr.Id == RssFeedId)
+                {
+                    acc.SubscribedRssFeeds.Remove(rfr);
+                    NHibernateHttpModule.CurrentSession.Update(acc);
+                    NHibernateHttpModule.CommitTranction();
+                    isSucceed = true;
+                }
+            }
+        }
+        catch (HibernateException e)
+        {
+            NHibernateHttpModule.RollbackTransaction();
+        }
+
+        return isSucceed;
+
+
     }
 
     [WebMethod]
@@ -338,13 +364,14 @@ public class Service : System.Web.Services.WebService
             NHibernateHttpModule.CurrentSession.Save(rri);
             NHibernateHttpModule.CommitTranction();
         }
-        catch(HibernateException e)
+        catch (HibernateException e)
         {
             NHibernateHttpModule.RollbackTransaction();
             return false;
         }
         return true;
     }
+
     private Group GetDefaultGroup()
     {
         return (Group)NHibernateHttpModule.CurrentSession
