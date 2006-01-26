@@ -134,26 +134,19 @@ public partial class Admin : System.Web.UI.Page
     {
         if (group_ListBox.SelectedItem.Selected == true && globalFlux_ListBox.SelectedItem.Selected == true)
         {
-            IList tmp = _mainServer.ListAvailableRssFeeds(_sessionID);
-            foreach(RssFeedRef feed in tmp)
-            {
-                if (feed.Id == Convert.ToInt32(globalFlux_ListBox.SelectedItem.Value))
-                {
-                    _mainServer.ImportRssFeed(_sessionID, feed.Url, feed.Name, group_ListBox.SelectedItem.Value, false);
-                    refreshALL();
-                }
-            }
+            _mainServer.AddAccountToGroup(_sessionID, Convert.ToInt32(group_ListBox.SelectedItem.Value), Convert.ToInt32(user_ListBox.SelectedItem.Value));
+            refreshALL();
         }
     }
     protected void fluxDel_Button_Click(object sender, EventArgs e)
     {
         //////////////////////////////////////////////////////////////////////////
         //TODO
-/*        if (flux_ListBox.SelectedItem.Selected == true && group_ListBox.SelectedItem.Selected == true && flux_ListBox.SelectedItem.Text != "default")
+        if (flux_ListBox.SelectedItem.Selected == true && group_ListBox.SelectedItem.Selected == true && flux_ListBox.SelectedItem.Text != "default")
         {
-            _mainServer.de (_sessionID, Convert.ToInt32(group_ListBox.SelectedItem.Value), Convert.ToInt32(user_ListBox.SelectedItem.Value));
+            _mainServer.DelFeedFromGroup(_sessionID, Convert.ToInt32(group_ListBox.SelectedItem.Value), Convert.ToInt32(flux_ListBox.SelectedItem.Value));
             refreshALL();
-        }*/
+        }
     }
 
     protected void globalAddFlux_Button_Click(object sender, EventArgs e)
