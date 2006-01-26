@@ -112,6 +112,22 @@ public class Service : System.Web.Services.WebService
         return acc.Autologin;
     }
 
+
+    [WebMethod]
+    [System.Xml.Serialization.XmlInclude(typeof(KKTRSS.Server.Model.Account))]
+    public IList ListAccountInGroup(string sessionId, long groupId)
+    {
+        if (IsRegistered(sessionId) == false)
+            return null;
+        IList accList = null;
+        Group grp = (Group)NHibernateHttpModule.CurrentSession.Load(typeof(Group), groupId);
+        if (grp == null)
+            return null;
+        accList = new ArrayList(grp.Accounts);
+        return accList;
+    }
+
+
     [WebMethod]
     [System.Xml.Serialization.XmlInclude(typeof(KKTRSS.Server.Model.RssFeedRef))]
     public IList ListAvailableRssFeedsInGroup(string sessionId, long groupId)
@@ -164,6 +180,8 @@ public class Service : System.Web.Services.WebService
         return feedList;
     }
 
+
+
     [WebMethod]
     public bool RssFeedSubscribe(string sessionId, long RssFeedId)
     {
@@ -193,12 +211,13 @@ public class Service : System.Web.Services.WebService
         }
         return true;
     }
-    
+
     [WebMethod]
     public bool RssFeedUnsubscribe(string sessionId, long RssFeedId)
     {
         Account acc = GetRegistered(sessionId);
         Boolean isSucceed = false;
+        int index = -1;
         if (acc == null)
         {
             return isSucceed;
@@ -206,16 +225,26 @@ public class Service : System.Web.Services.WebService
         try
         {
             NHibernateHttpModule.BeginTranaction();
+
+
             foreach (RssFeedRef rfr in acc.SubscribedRssFeeds)
             {
                 if (rfr.Id == RssFeedId)
                 {
-                    acc.SubscribedRssFeeds.Remove(rfr);
-                    NHibernateHttpModule.CurrentSession.Update(acc);
-                    NHibernateHttpModule.CommitTranction();
+                    index = acc.SubscribedRssFeeds.IndexOf(rfr);
                     isSucceed = true;
+                    break;
                 }
             }
+
+            if (index != -1)
+            {
+                acc.SubscribedRssFeeds.RemoveAt(index);
+                NHibernateHttpModule.CurrentSession.Update(acc);
+                NHibernateHttpModule.CommitTranction();
+            }
+            else
+                NHibernateHttpModule.RollbackTransaction();
         }
         catch (HibernateException e)
         {
@@ -226,6 +255,7 @@ public class Service : System.Web.Services.WebService
 
 
     }
+
    
     [WebMethod]
     public string GetMyRssFeed(string sessionId)
@@ -431,6 +461,20 @@ public class Service : System.Web.Services.WebService
             return isSucceed;
         }
         return isSucceed;
+    }
+
+    [WebMethod]
+    public bool DelFeedFromGroup(string sessionId, long groupId, long FeedId)
+    {
+        //TODO
+        return false;
+    }
+
+    [WebMethod]
+    public bool AddFeedToGroup(string sessionId, long groupId, long FeedId)
+    {
+        //TODO
+        return false;
     }
 
     [WebMethod]
