@@ -9,7 +9,7 @@
       </generator>
     </id>
 
-    <property name="Email" type="String" />
+    <property name="Email" type="String" unique="true" />
     <property name="Password" type="String"  />
     <property name="IsActive" type="Boolean"/>
     <property name="Autologin" type="String"  />
@@ -24,17 +24,17 @@
 
     <bag name="OwnedGroups" inverse="true" lazy="false">
       <key column="fk_account_id" />
-      <one-to-many class="KKTRSS.Server.Model.Group, KKTRSS.ServerModel" />
+      <one-to-many class="KKTRSS.Server.Model.Group, KKTRSS.ServerModel"  />
     </bag>
 
     <bag name="Groups" table="account_in_group"  lazy="false">
       <key column="fk_account_id" />
-      <many-to-many class="KKTRSS.Server.Model.Group, KKTRSS.ServerModel" column="fk_group_id"/>
+      <many-to-many class="KKTRSS.Server.Model.Group, KKTRSS.ServerModel" column="fk_group_id"  />
     </bag>
 
     <bag name="SubscribedRssFeeds" table="subscribed_rss_feed" lazy="false">
       <key column="fk_account_id" />
-      <many-to-many class="KKTRSS.Server.Model.RssFeedRef, KKTRSS.ServerModel" column="fk_rss_feed_ref_id"/>
+      <many-to-many class="KKTRSS.Server.Model.RssFeedRef, KKTRSS.ServerModel" column="fk_rss_feed_ref_id"  />
     </bag>
     
   </class>

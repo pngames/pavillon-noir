@@ -19,12 +19,12 @@
     
     <bag name="Accounts" table="account_in_group"  lazy="false">
       <key column="fk_group_id" />
-      <many-to-many class="KKTRSS.Server.Model.Account, KKTRSS.ServerModel" column="fk_account_id"/>
+      <many-to-many class="KKTRSS.Server.Model.Account, KKTRSS.ServerModel" column="fk_account_id"  />
     </bag>
 
     <bag name="RssFeedRefs" inverse="true" lazy="false">
       <key column="fk_group_id" />
-      <one-to-many class="KKTRSS.Server.Model.RssFeedRef, KKTRSS.ServerModel" />
+      <one-to-many class="KKTRSS.Server.Model.RssFeedRef, KKTRSS.ServerModel"   />
     </bag>
 
   </class>

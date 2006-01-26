@@ -112,10 +112,15 @@ namespace KKTRSS.Server.Model
             Guid uid = Guid.NewGuid();
             Autologin = uid.ToString();
             IsActive = false;
-            Group grp = new Group();
-            grp.Name = Email;
-            grp.Privacy = true;
-            grp.Owner = this;
+            Group grp = (Group)s.CreateQuery("from Group grp where grp.Name='default'").UniqueResult();
+            if (grp == null)
+            {
+                grp = new Group();
+                grp.Name = "default";
+                grp.Owner = this;
+            }
+            grp.Privacy = false;
+            s.SaveOrUpdate(grp);
             s.Save(grp);
             if (this.Groups == null)
                 this.Groups = new ArrayList();

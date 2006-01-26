@@ -74,23 +74,22 @@ namespace KKTRSS.Server.Model
             return base.OnSave(s);
         }
 
-        public override void  OnLoad(NHibernate.ISession s, object id)
+        public override void OnLoad(NHibernate.ISession s, object id)
         {
-            if (base.OnSave(s, id) == NHibernate.LifecycleVeto.Veto)
-                return NHibernate.LifecycleVeto.Veto;
+            base.OnLoad(s,id);
             try
             {
-            string temp = ImportRssFeed(Url);
-            if (temp != null && temp != "")
-            {
-              RssCache = temp;
-              s.Update(RssCache);
-            } 
+                string temp = ImportRssFeed(Url);
+                if (temp != null && temp != "")
+                {
+                    RssCache = temp;
+                    s.Update(RssCache);
+                }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
             }
-            return NHibernate.LifecycleVeto.NoVeto;
+
         }
 
         public override NHibernate.LifecycleVeto OnUpdate(NHibernate.ISession s)
@@ -133,7 +132,7 @@ namespace KKTRSS.Server.Model
                 tried++;
             }
 
-           // rss.Write(@"C:\kktrss_db\" + Name + "temp.file");
+            // rss.Write(@"C:\kktrss_db\" + Name + "temp.file");
             rss.Write(@"" + Name + "temp.file");
             //StreamReader sr = new StreamReader(@"C:\kktrss_db\" + Name + "temp.file", System.Text.Encoding.GetEncoding("ISO-8859-1"));
             StreamReader sr = new StreamReader(@"" + Name + "temp.file", System.Text.Encoding.GetEncoding("ISO-8859-1"));
