@@ -29,7 +29,8 @@ public partial class login : System.Web.UI.Page
   private void Signin(string uid)
   {
 	if (uid != "")
-	  FormsAuthentication.RedirectFromLoginPage(UserEmail.Value, PersistCookie.Checked);
+	  Response.Redirect("src/showfeed.aspx?uid="+uid);
+	  //FormsAuthentication.RedirectFromLoginPage(UserEmail.Value, PersistCookie.Checked);
 	else
 	  Msg.Text = "Invalid Identifiers: Please try again";
   }

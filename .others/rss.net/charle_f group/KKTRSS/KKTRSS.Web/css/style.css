@@ -267,33 +267,53 @@ ul#channels_actions li {
   margin: 0px;
 }
 
+.box {
+  border: solid 1px #9AAAB5;
+  display: none;
+  padding: 5px;
+  -moz-border-radius: 8px;  
+}
+.box li {
+  display: block;
+  background: none;
+  padding-left: 20px;
+  margin: 0;
+}
 
 /** Channels input box */
+div#channels_submit_box { /* suscribe */
+  color: #FFFFFF;
+  font-size: 10px;
+}
+div#channels_submit_box li {
+}
+div#channels_submit_box #submit_feed_txt {
+  border: solid 1px #C9C9C9;
+  float: left;
+  font-size: 7pt;
+  margin: 0;
+  text-align: left;  
+}
+div#channels_submit_box #submit_feed_txt {
+  border: solid 1px #C9C9C9;
+  float: left;
+  font-size: 7pt;
+  margin: 0;
+  text-align: left;  
+}
+div#channels_submit_box #submit_feed_btn {
+  border: solid 1px #000000;
+  float: right;
+  margin: 0;
+  text-align: right;
+}
 div#channels_suscribe_box { /* suscribe */
-  border: solid 1px #9AAAB5;
-  display: none;
-  padding: 5px;
-  /*visibility: hidden;*/
-  -moz-border-radius: 8px;
 }
 div#channels_suscribe_box li {
-  display: block;
-  background: none;
-  padding-left: 20px;
-  margin: 0;
 }
 div#channels_unsuscribe_box { /* unsuscribe */
-  border: solid 1px #9AAAB5;
-  display: none;
-  padding: 5px;
-  /*visibility: hidden;*/
-  -moz-border-radius: 8px;
 }
 div#channels_unsuscribe_box li {
-  display: block;
-  background: none;
-  padding-left: 20px;
-  margin: 0;
 }
 .chanact_cancel { /* close button */
   /*top: 2px;

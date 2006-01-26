@@ -10,71 +10,57 @@
     
 	<script type="text/javascript" defer="defer">
 	<!--
-	/*
-	// AJAX stuffs
-	vSar textLen = Class.create();
-	textLen.prototype = {
-	  initialize: function(ele) {
-		this.ele = ele;
-		this.display = document.getElementById(this.ele.id + "_display");
-		addEvent(this.ele, "keyup", this.dosearch.bind(this));
-	  },
-	  dosearch: function() {
-		ASP.WebUserControl1.GetLength(this.ele.value, this.ondata.bind(this));
-	  },
-	  ondata: function(res) {
-		this.display.innerHTML = res.value;
+	function init(last_action) {
+	  alert('init:'+last_action)
+	  switch (last_action){
+	  case 'suscribe':
+		alert('suscribe')
+		showBoxHideOthers('channels_suscribe_box');
+		break;
+	  case 'unsuscribe':
+		showBoxHideOthers('channels_unsuscribe_box');
+		break;
+	  case 'submit':
+		showBoxHideOthers('channel_submit_box');
+		break;
+	  default : break;
 	  }
-	};
-	function init() {
-	  var x = new textLen(document.getElementById("<%=ClientID%>"));
-	  x.ele.focus();
 	}
-	addEvent(window, "load", init);
-	*/
-	// -- 
 	
 	function markItemRead(item_id) {
-	  //var item = document.getElementById("item_"+item_id);  
-	  alert(KKTRSS.Web.src_showfeed.Dsponlyread);
-	  alert(KKTRSS.Web.src_showfeed.gettest());
-	  /*if (KKTRSS.Web.src_showfeed.dsponlyread == true)
-		item.className = "invisible";
-	  else
-		item.className = "read";
-	  KKTRSS.Web.src_showfeed.markItemRead(item_id);*/
 	}
 	
-	// Show/Hide feed boxes
-	function addFeeds() {
-	  hideBox('channels_unsuscribe_box');
-	  showBox('channels_suscribe_box');
-	}
-	function delFeeds() {
-	  hideBox('channels_suscribe_box');
-	  showBox('channels_unsuscribe_box');
+	// Show only one box, others are automatically hidden
+	function showBoxHideOthers(toShow) {
+	  var boxes = new Array('channel_submit_box', 'channels_suscribe_box', 'channels_unsuscribe_box');
+	  for (var i = 0; i < boxes.length; i++)
+		if (toShow == boxes[i])
+		  showBox(boxes[i])
+		else
+		  hideBox(boxes[i])
 	}
 	
 	// Suscribe/Unsuscribe to feeds
-	function suscribe(chan_id) {
-	  // TODO: add chan
+	function suscribe(chan_id, qs) {
 	  document.getElementById('channels_suscribe_'+chan_id).style.background = "url('/KKTRSS.Web/img/accept.png') no-repeat left bottom";
+	  document.location.href = qs+chan_id;
 	}
-	function unsuscribe(chan_id) {
-	  // TODO: remove chan
+	function unsuscribe(chan_id, qs) {
 	  document.getElementById('channels_unsuscribe_'+chan_id).style.background = "url('/KKTRSS.Web/img/delete.png') no-repeat left bottom";
+	  document.location.href = qs+chan_id;
 	}
 	
-	// Closes suscribe/unsuscribe box
+	// Closes submit/suscribe/unsuscribe boxes
 	function closeBox(box) {
 	  hideBox(box);
-	  for (var cur_node = document.getElementById(box).firstChild; cur_node != null; cur_node = cur_node.nextSibling)
-		if (cur_node.nodeName == "UL")
-		  for (var listelem = cur_node.firstChild; listelem != null; listelem = listelem.nextSibling)
-			if (listelem.nodeName == "LI")
-			  listelem.style.background= "none";
+	  if (document.getElementById(box).hasChildNodes())
+		for (var cur_node = document.getElementById(box).firstChild; cur_node != null; cur_node = cur_node.nextSibling)
+		  if (cur_node.nodeName == "UL")
+			for (var listelem = cur_node.firstChild; listelem != null; listelem = listelem.nextSibling)
+			  if (listelem.nodeName == "LI")
+				listelem.style.background= "none";
 	}
-
+	
 	// Show/Hide boxes
 	function showBox(box) {
 	  document.getElementById(box).style.display = 'block';
@@ -87,7 +73,7 @@
 
   </head>
 
-<body>
+<body onload="init(<%= action %>)">
 
 <!-- #Include File="Header.inc" -->
 
@@ -105,85 +91,84 @@
 		  <li><a href="/KKTRSS.Web/login.aspx?logout=true">Logout</a></li>
 		</ul>
       </div>
-			
-	  
+
 	  <!-- Channels box -->	  
 	  <div id="channels_box">
 		<h3 id="channels_label">Channels</h3>
 		<ul id="channels_list">
-				<% foreach (DictionaryEntry de in Feedsmap)
-				   {
-				     KKTFeed kktfeed = (KKTFeed)de.Value;
-					 string name = kktfeed.Name;
-                     string feedid = (string)de.Key;
-                     string qs_str = "?"+FEED_ID+"="+feedid+"&"+PROXY_MODE+"="+Proxymode.ToString()+"&"+
-						   DSP_NB_ITEMS+"="+Dspnbitems.ToString()+"&"+DSP_ONLY_UNREAD+"="+Dsponlyread.ToString();                          
+				<% foreach (Rss.RssChannel channel in myfeed.Channels) {
+                     string qs_str = "?"+CHANNEL_ID+"="+channel.HashID+"&"+PROXY_MODE+"="+Proxymode.ToString()+"&"+UID+"="+uid+"&"+
+						   DSP_NB_ITEMS+"="+Dspnbitems.ToString()+"&"+DSP_ONLY_UNREAD+"="+Dsponlyread.ToString()+"&"+ACTION+"=show";                         
 				%>
-		  <li class="channelsinbox"><a href="showfeed.aspx<%= qs_str %>" title="<%= name %>"><%= name%></a></li>
+		  <li class="channelsinbox"><a href="showfeed.aspx<%= qs_str %>" title="<%= channel.Title %>"><%= channel.Title %></a></li>
 				<% } %>
-		</ul>
+		</ul> <!-- !channels_list -->
 		
-		<ul id="channels_actions">
-		  <li id="chanact_add"><a href="#" onclick="javascript:addFeeds()"><img alt="add feed" title="add feed" src="/KKTRSS.Web/img/feed_add.png" /></a></li>
-		  <li id="chanact_remove"><a href="#" onclick="javascript:delFeeds()"><img alt="remove feed" title="remove feed" src="/KKTRSS.Web/img/feed_delete.png" /></a></li>
-		</ul>
+		<ul id="channels_actions" >
+		  <li id="chanact_submit"><a href="#" onclick="javascript:showBoxHideOthers('channel_submit_box')"><img alt="submit new feed" title="submit new feed" src="/KKTRSS.Web/img/textfield_add.png" /></a></li>
+		  <li id="chanact_add"><a href="#" onclick="javascript:showBoxHideOthers('channels_suscribe_box')"><img alt="add feed" title="add feed" src="/KKTRSS.Web/img/feed_add.png" /></a></li>
+		  <li id="chanact_remove"><a href="#" onclick="javascript:showBoxHideOthers('channels_unsuscribe_box')"><img alt="remove feed" title="remove feed" src="/KKTRSS.Web/img/feed_delete.png" /></a></li>
+		</ul> <!-- !channels_actions -->
 		
-		<div id="channels_suscribe_box">
+		<div id="channel_submit_box" class="box">
+		  <span class="boxtitle">Submit new feed</span>
+		  <a href="#" onclick="javascript:closeBox('channel_submit_box')"><img alt="close" src="/KKTRSS.Web/img/cancel.png" class="chanact_cancel" title="close"/></a>
+		  <% string qs_str_2 = "?"+CHANNEL_ID+"="+channelid+"&"+PROXY_MODE+"="+Proxymode.ToString()+"&"+UID+"="+uid+"&"+
+						   DSP_NB_ITEMS+"="+Dspnbitems.ToString()+"&"+DSP_ONLY_UNREAD+"="+Dsponlyread.ToString()+"&"+ACTION+"=submit"; %>
+		  <form action="showfeed.aspx<%= qs_str_2 %>" name="submit_feed" method="post">
+			Name:<input type="text" id="submit_feed_name" name="submit_feed_name" size="8"/>
+			Url:<input type="text" id="submit_feed_url" name="submit_feed_url" size="15"/>
+			<input type="submit" id="submit_feed_btn" name="submit_feed_btn" value="submit" />
+		  </form>
+		</div> <!-- !channels_submit_box -->
+
+		<div id="channels_suscribe_box" class="box">
 		  <span class="boxtitle">Add feed</span>
+		  <% string qs_str_3 = "?"+CHANNEL_ID+"="+channelid+"&"+PROXY_MODE+"="+Proxymode.ToString()+"&"+UID+"="+uid+"&"+
+						   DSP_NB_ITEMS+"="+Dspnbitems.ToString()+"&"+DSP_ONLY_UNREAD+"="+Dsponlyread.ToString()+"&"+ACTION+"=suscribe&"+FEED_ID+"="; %>
 		  <a href="#" onclick="javascript:closeBox('channels_suscribe_box')"><img alt="close" src="/KKTRSS.Web/img/cancel.png" class="chanact_cancel" title="close"/></a>
 		  <ul id="channels_suscribe_list">
-			<% foreach (DictionaryEntry de in Feedsmap) { 
-			     KKTFeed kktfeed = (KKTFeed)de.Value;
-				 string name = kktfeed.Name;
-                 string feedid = (string)de.Key; 
-			%>
-			<li id="channels_suscribe_<%= feedid %>"><a href="#" onclick="javascript:suscribe('<%= feedid %>')"><%= name %></a></li>
+			<% foreach (kktserver.RssFeedRef feed in unsuscribedFeeds) { %>
+			<li id="channels_suscribe_<%= feed.Id %>"><a href="#" onclick="javascript:suscribe('<%= feed.Id %>', '<%= qs_str_3 %>')"><%= feed.Name %></a></li>
 			<% } %>
 		  </ul>
-		</div>
+		</div> <!-- !channels_suscribe_box -->
 
-		<div id="channels_unsuscribe_box">
-		  <h6 class="boxtitle">Remove feed</h6>
+		<div id="channels_unsuscribe_box" class="box">
+		  <span class="boxtitle">Remove feed</span>
+		  <% string qs_str_4 = "?"+CHANNEL_ID+"="+channelid+"&"+PROXY_MODE+"="+Proxymode.ToString()+"&"+UID+"="+uid+"&"+
+						   DSP_NB_ITEMS+"="+Dspnbitems.ToString()+"&"+DSP_ONLY_UNREAD+"="+Dsponlyread.ToString()+"&"+ACTION+"=unsuscribe&"+FEED_ID+"="; %>
 		  <a href="#" onclick="javascript:closeBox('channels_unsuscribe_box')"><img alt="close" src="/KKTRSS.Web/img/cancel.png" class="chanact_cancel" title="close"/></a>
 		  <ul id="channels_unsuscribe_list">
-			<% foreach (DictionaryEntry de in Feedsmap) { 
-			     KKTFeed kktfeed = (KKTFeed)de.Value;
-				 string name = kktfeed.Name;
-                 string feedid = (string)de.Key; 
-			%>
-			<li id="channels_unsuscribe_<%= feedid %>"><a href="#" onclick="javascript:unsuscribe('<%= feedid %>')"><%= name %></a></li>
+			<% foreach (kktserver.RssFeedRef feed in suscribedFeeds) { %>
+			<li id="channels_unsuscribe_<%= feed.Id %>"><a href="#" onclick="javascript:unsuscribe('<%= feed.Id %>', '<%= qs_str_4 %>')"><%= feed.Name %></a></li>
 			<% } %>
 		  </ul>
-		</div>
+		</div> <!-- !channels_unsuscribe_box -->
 		
-	  </div>
+	  </div> <!-- !channels_box -->
 	  
 	  
 	  <!-- FEED -->
 	  <div class="feed">
-
+		<% if (current_channel != null) { %>
 		<!-- CHANNELS -->
-		<% foreach (Rss.RssChannel current_channel in Currentfeed.Channels) { 
-			string favico = getFavico(Currentfeed.Url); %>
 		<div class="channel">
+		<% //string favico = getFavico(Currentfeed.Url); %>
 		  <h3>
-			<img class="favico" src="<%= favico %>" alt="favico" />
+			<%--<img class="favico" src="<%= favico %>" alt="favico" />--%>
 			<a class="name" href="<%= current_channel.Link %>"><%= current_channel.Title %> (<%= current_channel.Items.Count %>)</a>
 		  </h3>
-  
+
 		  <!-- ITEMS -->
-		  <% 
-			foreach (Rss.RssItem current_item in current_channel.Items) {		  
+		  <%
+			foreach (Rss.RssItem current_item in current_channel.Items) {
 			  string item_id = current_item.HashID;
-			  if (item_id.StartsWith("2"))
-				markItemRead(item_id);
-			  if (readitems.Contains(item_id)) 
-				current_item.IsRead = true;
 			  if (!Dsponlyread || (Dsponlyread && !current_item.IsRead)) {
 		  %>
 		  <div class="item" id="item_<%= item_id %>" ondblclick="javascript:markItemRead('<%=item_id%>')">
-			<h4> <!-- Title of the item with + and - signs -->
-			  <!--<img class="favico" src="<%= favico %>" alt="favico" />-->
+			<h4>
+			  <%--<img class="favico" src="<%= favico %>" alt="favico" />--%>
 			  <a href="<%= current_item.Link %>"><%= current_item.Title %></a>
 			</h4>
 			<ul id="infos_<%= item_id %>" class="infos">
@@ -201,12 +186,12 @@
 		  
 		<% } // if : DSP_ONLY_UNREAD 
 		  string color_ = "#999999";
-		  if (current_item.IsRead) color_ = "#FF0000";
-		 %>
+		  if (current_item.IsRead) 
+			color_ = "#FF0000"; %>
 		 <span class="itemid" style="color:<%= color_ %>">id=<%= item_id %></span><br/>
-		<%  } // for : items
-		 } // for : channels %>
+		<%  } // foreach : items %>
 		</div> <!-- !channel -->
+		<%  } // if : current_channel %>
                 
 	  </div> <!-- !feed -->
             

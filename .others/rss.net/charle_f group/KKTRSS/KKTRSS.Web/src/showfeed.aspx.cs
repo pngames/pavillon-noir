@@ -12,6 +12,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Net;
 using System.Threading;
+using kktserver;
 
 namespace KKTRSS.Web
 {
@@ -20,8 +21,10 @@ public partial class src_showfeed : System.Web.UI.Page
 {
 
   /* QS Parameters */
+  static public string ACTION = "action";
   static public string DSP_NB_ITEMS = "dspnbitems";
   static public string DSP_ONLY_UNREAD = "dsponlyunread";
+  static public string CHANNEL_ID = "channelid";
   static public string FEED_ID = "feedid";
   static public string PROXY_MODE = "proxymode";
   static public string UID = "uid";
@@ -30,6 +33,9 @@ public partial class src_showfeed : System.Web.UI.Page
   protected int dspnbitems = 0;
   protected Boolean dsponlyread = false;
   protected Boolean proxymode = true;
+  protected string channelid = "0";
+  protected string action = "show";
+  protected long feed_id = -1;
  
   /* proxy variables */
   string _proxy_url = "proxies.epitech.net";
@@ -38,15 +44,17 @@ public partial class src_showfeed : System.Web.UI.Page
   string _proxy_pass = "pufCjnc[";
   string _proxy_output_file = @"c:\output-showfeed.aspx.txt";
 
-  private static Hashtable feedsmap; // source feeds
-  private Rss.RssFeed currentfeed;
-  protected ArrayList readitems;
+  private static Hashtable feedsmap;
 
   protected Rss.RssFeed myfeed;
-  private Rss.RssFeed currentfeed;
+  protected Rss.RssChannel current_channel;
   protected System.Collections.Specialized.NameValueCollection qs;
   protected kktserver.Service service = new kktserver.Service();
   protected string uid = null;
+  
+  protected IList availableFeeds = null;
+  protected IList suscribedFeeds = null;
+  protected IList unsuscribedFeeds = null;
   
   # region Accessors
 	[AjaxPro.AjaxProperty]
@@ -70,11 +78,6 @@ public partial class src_showfeed : System.Web.UI.Page
         get { return src_showfeed.feedsmap; }
         set { src_showfeed.feedsmap = value; }
     }
-    protected Rss.RssFeed Currentfeed
-    {
-        get { return currentfeed; }
-        set { currentfeed = value; }
-    }
     protected System.Collections.Specialized.NameValueCollection Qs
     {
         get { return qs; }
@@ -87,21 +90,38 @@ public partial class src_showfeed : System.Web.UI.Page
   {
 	qs = Request.QueryString; 
 	if (qs != null)
-	{
+	{ // First we get the informations from the QueryString
 	  uid = qs[UID];
+	  action = (qs[ACTION] != null ? qs[ACTION] : "show");
+	  channelid = (qs[CHANNEL_ID] != null ? qs[CHANNEL_ID] : "0");
 	  dspnbitems = (qs[DSP_NB_ITEMS] != null ? Convert.ToInt32(qs[DSP_NB_ITEMS]) : dspnbitems);
 	  dsponlyread = (qs[DSP_ONLY_UNREAD] != null ? Convert.ToBoolean(qs[DSP_ONLY_UNREAD]) : dsponlyread);
 	  proxymode = (qs[PROXY_MODE] != null ? Convert.ToBoolean(qs[PROXY_MODE]) : proxymode);
+	  feed_id = (qs[FEED_ID] != null ? Convert.ToInt32(qs[FEED_ID]) : -1);
 	}
 
+	if (action.Equals("submit"))
+		submitFeed(Request.Form["submit_feed_url"].ToString(), Request.Form["submit_feed_name"].ToString());
+    else if (action.Equals("suscribe") && feed_id != -1)
+		suscribe(feed_id);
+	else if (action.Equals("unsuscribe") && feed_id != -1)
+		unsuscribe(feed_id);
+
 	if (uid != null)
-	{
-	  myfeed = RssFeed.ReadFromString(service.GetMyRssFeed());
+	{ // Then we fetch informations from the server, build lists, set current items ...
 	  HttpWebRequest request = null;
+	  checkFeeds();
+	  myfeed = RssFeed.ReadFromString(service.GetMyRssFeed(uid));
+	  if (channelid != "0")
+		foreach (Rss.RssChannel c in  myfeed.Channels)
+		  if (c.HashID.Equals(channelid))
+			current_channel = c;
+	  else
+		current_channel = null;
 	}
 	else
 	{
-	  Response.Redirect("login.aspx");
+	  Response.Redirect("../login.aspx");
 	}
   }
 
@@ -132,6 +152,35 @@ public partial class src_showfeed : System.Web.UI.Page
 	return favico;
   }
 
+  protected void checkFeeds() 
+  {
+	suscribedFeeds = service.ListSubscribedRssFeeds(uid);
+	unsuscribedFeeds = service.ListAvailableRssFeeds(uid);
+	availableFeeds = service.ListAvailableRssFeeds(uid);
+
+	foreach (RssFeedRef u in unsuscribedFeeds)
+	  foreach (RssFeedRef s in suscribedFeeds)
+		if (u.Equals(s))
+		  unsuscribedFeeds.Remove(u);
+  }
+
+  protected void submitFeed(string feedurl, string feedname)
+  {
+	service.ImportRssFeed(uid, feedurl, feedname, "", false);
+  }
+
+  protected void suscribe(long feed_id_)
+  {
+	service.RssFeedSubscribe(uid, feed_id_);
+  }
+
+  protected void unsuscribe(long feed_id_)
+  {
+//	service.RssFeedUnSubscribe(uid, feed_id_);
+  }
+
+  // --- unused
+
   private HttpWebRequest getFeed(string feedid, HttpWebRequest request)
   {
 	// Fetches the feed
@@ -155,7 +204,7 @@ public partial class src_showfeed : System.Web.UI.Page
 		  proxy.Credentials = new NetworkCredential(_proxy_user, _proxy_pass);
 		  request.Proxy = proxy;
 		}
-		currentfeed = RssFeed.Read(request);
+		//currentfeed = RssFeed.Read(request);
 		err = false;
 	  }
 	  catch (Exception ex)
@@ -181,14 +230,11 @@ public partial class src_showfeed : System.Web.UI.Page
   [AjaxPro.AjaxMethod()]
   public void markItemRead(string id)
   {
-	readitems.Add(id);
-	System.Console.WriteLine("id is " + id);
   }
 
   [AjaxPro.AjaxMethod()]
   public void markItemNotRead(string id)
   {
-	readitems.Remove(id);
   }
   [AjaxPro.AjaxMethod()]
   public int gettest()
