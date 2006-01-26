@@ -11,7 +11,6 @@
 	<script type="text/javascript" defer="defer">
 	<!--
 	function init(last_action) {
-	  alert('init:'+last_action)
 	  switch (last_action){
 	  case 'suscribe':
 		showBoxHideOthers('channels_suscribe_box');
