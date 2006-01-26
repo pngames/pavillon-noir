@@ -74,6 +74,25 @@ namespace KKTRSS.Server.Model
             return base.OnSave(s);
         }
 
+        public override void  OnLoad(NHibernate.ISession s, object id)
+        {
+            if (base.OnSave(s, id) == NHibernate.LifecycleVeto.Veto)
+                return NHibernate.LifecycleVeto.Veto;
+            try
+            {
+            string temp = ImportRssFeed(Url);
+            if (temp != null && temp != "")
+            {
+              RssCache = temp;
+              s.Update(RssCache);
+            } 
+            }
+            catch(Exception e)
+            {
+            }
+            return NHibernate.LifecycleVeto.NoVeto;
+        }
+
         public override NHibernate.LifecycleVeto OnUpdate(NHibernate.ISession s)
         {
             RssCache = ImportRssFeed(Url);

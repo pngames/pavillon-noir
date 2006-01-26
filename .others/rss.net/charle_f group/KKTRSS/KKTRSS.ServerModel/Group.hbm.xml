@@ -9,7 +9,7 @@
       </generator>
     </id>
 
-    <property name="Name" type="String" />
+    <property name="Name" type="String" unique="true" />
     <property name="Privacy" type="Boolean"/>
 
     <property name="CreationDate" type="DateTime" />

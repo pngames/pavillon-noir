@@ -113,10 +113,21 @@ public class Service : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public IList ListAvailableRssFeedsInGroup(string sessionId, int groupId)
+    [System.Xml.Serialization.XmlInclude(typeof(KKTRSS.Server.Model.RssFeedRef))]
+    public IList ListAvailableRssFeedsInGroup(string sessionId, long groupId)
     {
-        int[] ret = { 1, 2 };
-        return ret;
+        if (IsRegistered(sessionId) == false)
+            return null;
+        IList feedList = null;
+        feedList = NHibernateHttpModule.CurrentSession
+        .CreateQuery("from RssFeedRef rfr where rfr.Group.Id=?")
+        .SetInt64(0, groupId)
+        .List();
+        foreach (RssFeedRef it in feedList)
+        {
+            it.RssCache = "";
+        }
+        return feedList;
     }
 
     [WebMethod]
@@ -182,7 +193,40 @@ public class Service : System.Web.Services.WebService
         }
         return true;
     }
+    
+    [WebMethod]
+    public bool RssFeedUnsubscribe(string sessionId, long RssFeedId)
+    {
+        Account acc = GetRegistered(sessionId);
+        Boolean isSucceed = false;
+        if (acc == null)
+        {
+            return isSucceed;
+        }
+        try
+        {
+            NHibernateHttpModule.BeginTranaction();
+            foreach (RssFeedRef rfr in acc.SubscribedRssFeeds)
+            {
+                if (rfr.Id == RssFeedId)
+                {
+                    acc.SubscribedRssFeeds.Remove(rfr);
+                    NHibernateHttpModule.CurrentSession.Update(acc);
+                    NHibernateHttpModule.CommitTranction();
+                    isSucceed = true;
+                }
+            }
+        }
+        catch (HibernateException e)
+        {
+            NHibernateHttpModule.RollbackTransaction();
+        }
 
+        return isSucceed;
+
+
+    }
+   
     [WebMethod]
     public string GetMyRssFeed(string sessionId)
     {
@@ -269,37 +313,124 @@ public class Service : System.Web.Services.WebService
         return ret;
     }
 
+
     [WebMethod]
-    public bool RssFeedUnsubscribe(string sessionId, long RssFeedId)
+    public bool AddGroup(string sessionId, string groupName, bool isPrivate)
     {
-        Account acc = GetRegistered(sessionId);
         Boolean isSucceed = false;
+        Account acc = GetRegistered(sessionId);
+        Group grp = null;
         if (acc == null)
-        {
             return isSucceed;
-        }
         try
         {
             NHibernateHttpModule.BeginTranaction();
-            foreach (RssFeedRef rfr in acc.SubscribedRssFeeds)
-            {
-                if (rfr.Id == RssFeedId)
-                {
-                    acc.SubscribedRssFeeds.Remove(rfr);
-                    NHibernateHttpModule.CurrentSession.Update(acc);
-                    NHibernateHttpModule.CommitTranction();
-                    isSucceed = true;
-                }
-            }
+            grp = new Group();
+            grp.Name = groupName;
+            grp.Owner = acc;
+            grp.Privacy = isPrivate;
+            if (grp.Accounts == null)
+                grp.Accounts = new ArrayList();
+            grp.Accounts.Add(acc);
+            NHibernateHttpModule.CurrentSession.Save(grp);
+            NHibernateHttpModule.CommitTranction();
+            isSucceed = true;
+        }
+        catch(HibernateException e)
+        {
+            NHibernateHttpModule.RollbackTransaction();
+            return isSucceed;
+        }
+        return isSucceed;
+    }
+
+    [WebMethod]
+    public bool DelGroup(string sessionId, long groupId)
+    {
+        Boolean isSucceed = false;
+        Account acc = GetRegistered(sessionId);
+        Group grp = null;
+        if (acc == null)
+            return isSucceed;
+        try
+        {
+            NHibernateHttpModule.BeginTranaction();
+            grp = (Group) NHibernateHttpModule.CurrentSession.Load(typeof(Group), groupId);
+            if (grp == null)
+                return isSucceed;
+            if (grp.Owner.Id == acc.Id || acc.Email == "default")
+                NHibernateHttpModule.CurrentSession.Delete(grp);
+            NHibernateHttpModule.CommitTranction();
+            isSucceed = true;
         }
         catch (HibernateException e)
         {
             NHibernateHttpModule.RollbackTransaction();
+            return isSucceed;
         }
-
         return isSucceed;
+    }
 
+    [WebMethod]
+    public bool AddAccountToGroup(string sessionId, long groupId, long AccountId)
+    {
+        Boolean isSucceed = false;
+        Account acc = GetRegistered(sessionId);
+        Group grp = null;
+        Account acc2Add = null;
+        if (acc == null)
+            return isSucceed;
+        try
+        {
+            NHibernateHttpModule.BeginTranaction();
+            grp = (Group)NHibernateHttpModule.CurrentSession.Load(typeof(Group), groupId);
+            acc2Add = (Account)NHibernateHttpModule.CurrentSession.Load(typeof(Account), AccountId);
+            if (grp == null || acc2Add == null)
+                return isSucceed;
+            if (grp.Owner.Id != acc.Id && acc.Email != "default")
+                return isSucceed;
+            grp.Accounts.Add(acc2Add);
+            NHibernateHttpModule.CurrentSession.Update(grp);
+            NHibernateHttpModule.CommitTranction();
+            isSucceed = true;
+        }
+        catch (HibernateException e)
+        {
+            NHibernateHttpModule.RollbackTransaction();
+            return isSucceed;
+        }
+        return isSucceed;
+    }
 
+    [WebMethod]
+    public bool DelAccountFromGroup(string sessionId, long groupId, long AccountId)
+    {
+        Boolean isSucceed = false;
+        Account acc = GetRegistered(sessionId);
+        Group grp = null;
+        Account acc2Add = null;
+        if (acc == null)
+            return isSucceed;
+        try
+        {
+            NHibernateHttpModule.BeginTranaction();
+            grp = (Group)NHibernateHttpModule.CurrentSession.Load(typeof(Group), groupId);
+            acc2Add = (Account)NHibernateHttpModule.CurrentSession.Load(typeof(Account), AccountId);
+            if (grp == null || acc2Add == null)
+                return isSucceed;
+            if (grp.Owner.Id != acc.Id && acc.Email != "default" && acc.Id != acc2Add.Id)
+                return isSucceed;
+            grp.Accounts.Remove(acc2Add);
+            NHibernateHttpModule.CurrentSession.Update(grp);
+            NHibernateHttpModule.CommitTranction();
+            isSucceed = true;
+        }
+        catch (HibernateException e)
+        {
+            NHibernateHttpModule.RollbackTransaction();
+            return isSucceed;
+        }
+        return isSucceed;
     }
 
     [WebMethod]
