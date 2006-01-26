@@ -36,6 +36,8 @@ namespace RSSScreenSaver.KKTRSS_service {
         
         private System.Threading.SendOrPostCallback LoginOperationCompleted;
         
+        private System.Threading.SendOrPostCallback ListAccountInGroupOperationCompleted;
+        
         private System.Threading.SendOrPostCallback ListAvailableRssFeedsInGroupOperationCompleted;
         
         private System.Threading.SendOrPostCallback ListAvailableRssFeedsOperationCompleted;
@@ -44,13 +46,21 @@ namespace RSSScreenSaver.KKTRSS_service {
         
         private System.Threading.SendOrPostCallback RssFeedSubscribeOperationCompleted;
         
+        private System.Threading.SendOrPostCallback RssFeedUnsubscribeOperationCompleted;
+        
         private System.Threading.SendOrPostCallback GetMyRssFeedOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetGroupListOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetMyGroupListOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GetRssFeedOperationCompleted;
+        private System.Threading.SendOrPostCallback AddGroupOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback DelGroupOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback AddAccountToGroupOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback DelAccountFromGroupOperationCompleted;
         
         private System.Threading.SendOrPostCallback ImportRssFeedOperationCompleted;
         
@@ -104,6 +114,9 @@ namespace RSSScreenSaver.KKTRSS_service {
         public event LoginCompletedEventHandler LoginCompleted;
         
         /// <remarks/>
+        public event ListAccountInGroupCompletedEventHandler ListAccountInGroupCompleted;
+        
+        /// <remarks/>
         public event ListAvailableRssFeedsInGroupCompletedEventHandler ListAvailableRssFeedsInGroupCompleted;
         
         /// <remarks/>
@@ -116,6 +129,9 @@ namespace RSSScreenSaver.KKTRSS_service {
         public event RssFeedSubscribeCompletedEventHandler RssFeedSubscribeCompleted;
         
         /// <remarks/>
+        public event RssFeedUnsubscribeCompletedEventHandler RssFeedUnsubscribeCompleted;
+        
+        /// <remarks/>
         public event GetMyRssFeedCompletedEventHandler GetMyRssFeedCompleted;
         
         /// <remarks/>
@@ -125,7 +141,16 @@ namespace RSSScreenSaver.KKTRSS_service {
         public event GetMyGroupListCompletedEventHandler GetMyGroupListCompleted;
         
         /// <remarks/>
-        public event GetRssFeedCompletedEventHandler GetRssFeedCompleted;
+        public event AddGroupCompletedEventHandler AddGroupCompleted;
+        
+        /// <remarks/>
+        public event DelGroupCompletedEventHandler DelGroupCompleted;
+        
+        /// <remarks/>
+        public event AddAccountToGroupCompletedEventHandler AddAccountToGroupCompleted;
+        
+        /// <remarks/>
+        public event DelAccountFromGroupCompletedEventHandler DelAccountFromGroupCompleted;
         
         /// <remarks/>
         public event ImportRssFeedCompletedEventHandler ImportRssFeedCompleted;
@@ -223,8 +248,39 @@ namespace RSSScreenSaver.KKTRSS_service {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ListAccountInGroup", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public object[] ListAccountInGroup(string sessionId, long groupId) {
+            object[] results = this.Invoke("ListAccountInGroup", new object[] {
+                        sessionId,
+                        groupId});
+            return ((object[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ListAccountInGroupAsync(string sessionId, long groupId) {
+            this.ListAccountInGroupAsync(sessionId, groupId, null);
+        }
+        
+        /// <remarks/>
+        public void ListAccountInGroupAsync(string sessionId, long groupId, object userState) {
+            if ((this.ListAccountInGroupOperationCompleted == null)) {
+                this.ListAccountInGroupOperationCompleted = new System.Threading.SendOrPostCallback(this.OnListAccountInGroupOperationCompleted);
+            }
+            this.InvokeAsync("ListAccountInGroup", new object[] {
+                        sessionId,
+                        groupId}, this.ListAccountInGroupOperationCompleted, userState);
+        }
+        
+        private void OnListAccountInGroupOperationCompleted(object arg) {
+            if ((this.ListAccountInGroupCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ListAccountInGroupCompleted(this, new ListAccountInGroupCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ListAvailableRssFeedsInGroup", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public object[] ListAvailableRssFeedsInGroup(string sessionId, int groupId) {
+        public object[] ListAvailableRssFeedsInGroup(string sessionId, long groupId) {
             object[] results = this.Invoke("ListAvailableRssFeedsInGroup", new object[] {
                         sessionId,
                         groupId});
@@ -232,12 +288,12 @@ namespace RSSScreenSaver.KKTRSS_service {
         }
         
         /// <remarks/>
-        public void ListAvailableRssFeedsInGroupAsync(string sessionId, int groupId) {
+        public void ListAvailableRssFeedsInGroupAsync(string sessionId, long groupId) {
             this.ListAvailableRssFeedsInGroupAsync(sessionId, groupId, null);
         }
         
         /// <remarks/>
-        public void ListAvailableRssFeedsInGroupAsync(string sessionId, int groupId, object userState) {
+        public void ListAvailableRssFeedsInGroupAsync(string sessionId, long groupId, object userState) {
             if ((this.ListAvailableRssFeedsInGroupOperationCompleted == null)) {
                 this.ListAvailableRssFeedsInGroupOperationCompleted = new System.Threading.SendOrPostCallback(this.OnListAvailableRssFeedsInGroupOperationCompleted);
             }
@@ -343,6 +399,37 @@ namespace RSSScreenSaver.KKTRSS_service {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/RssFeedUnsubscribe", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool RssFeedUnsubscribe(string sessionId, long RssFeedId) {
+            object[] results = this.Invoke("RssFeedUnsubscribe", new object[] {
+                        sessionId,
+                        RssFeedId});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void RssFeedUnsubscribeAsync(string sessionId, long RssFeedId) {
+            this.RssFeedUnsubscribeAsync(sessionId, RssFeedId, null);
+        }
+        
+        /// <remarks/>
+        public void RssFeedUnsubscribeAsync(string sessionId, long RssFeedId, object userState) {
+            if ((this.RssFeedUnsubscribeOperationCompleted == null)) {
+                this.RssFeedUnsubscribeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnRssFeedUnsubscribeOperationCompleted);
+            }
+            this.InvokeAsync("RssFeedUnsubscribe", new object[] {
+                        sessionId,
+                        RssFeedId}, this.RssFeedUnsubscribeOperationCompleted, userState);
+        }
+        
+        private void OnRssFeedUnsubscribeOperationCompleted(object arg) {
+            if ((this.RssFeedUnsubscribeCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.RssFeedUnsubscribeCompleted(this, new RssFeedUnsubscribeCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetMyRssFeed", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public string GetMyRssFeed(string sessionId) {
             object[] results = this.Invoke("GetMyRssFeed", new object[] {
@@ -430,33 +517,132 @@ namespace RSSScreenSaver.KKTRSS_service {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetRssFeed", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string GetRssFeed(string sessionId, int RssFeedId) {
-            object[] results = this.Invoke("GetRssFeed", new object[] {
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/AddGroup", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool AddGroup(string sessionId, string groupName, bool isPrivate) {
+            object[] results = this.Invoke("AddGroup", new object[] {
                         sessionId,
-                        RssFeedId});
-            return ((string)(results[0]));
+                        groupName,
+                        isPrivate});
+            return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void GetRssFeedAsync(string sessionId, int RssFeedId) {
-            this.GetRssFeedAsync(sessionId, RssFeedId, null);
+        public void AddGroupAsync(string sessionId, string groupName, bool isPrivate) {
+            this.AddGroupAsync(sessionId, groupName, isPrivate, null);
         }
         
         /// <remarks/>
-        public void GetRssFeedAsync(string sessionId, int RssFeedId, object userState) {
-            if ((this.GetRssFeedOperationCompleted == null)) {
-                this.GetRssFeedOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetRssFeedOperationCompleted);
+        public void AddGroupAsync(string sessionId, string groupName, bool isPrivate, object userState) {
+            if ((this.AddGroupOperationCompleted == null)) {
+                this.AddGroupOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAddGroupOperationCompleted);
             }
-            this.InvokeAsync("GetRssFeed", new object[] {
+            this.InvokeAsync("AddGroup", new object[] {
                         sessionId,
-                        RssFeedId}, this.GetRssFeedOperationCompleted, userState);
+                        groupName,
+                        isPrivate}, this.AddGroupOperationCompleted, userState);
         }
         
-        private void OnGetRssFeedOperationCompleted(object arg) {
-            if ((this.GetRssFeedCompleted != null)) {
+        private void OnAddGroupOperationCompleted(object arg) {
+            if ((this.AddGroupCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetRssFeedCompleted(this, new GetRssFeedCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.AddGroupCompleted(this, new AddGroupCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/DelGroup", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool DelGroup(string sessionId, long groupId) {
+            object[] results = this.Invoke("DelGroup", new object[] {
+                        sessionId,
+                        groupId});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void DelGroupAsync(string sessionId, long groupId) {
+            this.DelGroupAsync(sessionId, groupId, null);
+        }
+        
+        /// <remarks/>
+        public void DelGroupAsync(string sessionId, long groupId, object userState) {
+            if ((this.DelGroupOperationCompleted == null)) {
+                this.DelGroupOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDelGroupOperationCompleted);
+            }
+            this.InvokeAsync("DelGroup", new object[] {
+                        sessionId,
+                        groupId}, this.DelGroupOperationCompleted, userState);
+        }
+        
+        private void OnDelGroupOperationCompleted(object arg) {
+            if ((this.DelGroupCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DelGroupCompleted(this, new DelGroupCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/AddAccountToGroup", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool AddAccountToGroup(string sessionId, long groupId, long AccountId) {
+            object[] results = this.Invoke("AddAccountToGroup", new object[] {
+                        sessionId,
+                        groupId,
+                        AccountId});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void AddAccountToGroupAsync(string sessionId, long groupId, long AccountId) {
+            this.AddAccountToGroupAsync(sessionId, groupId, AccountId, null);
+        }
+        
+        /// <remarks/>
+        public void AddAccountToGroupAsync(string sessionId, long groupId, long AccountId, object userState) {
+            if ((this.AddAccountToGroupOperationCompleted == null)) {
+                this.AddAccountToGroupOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAddAccountToGroupOperationCompleted);
+            }
+            this.InvokeAsync("AddAccountToGroup", new object[] {
+                        sessionId,
+                        groupId,
+                        AccountId}, this.AddAccountToGroupOperationCompleted, userState);
+        }
+        
+        private void OnAddAccountToGroupOperationCompleted(object arg) {
+            if ((this.AddAccountToGroupCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.AddAccountToGroupCompleted(this, new AddAccountToGroupCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/DelAccountFromGroup", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool DelAccountFromGroup(string sessionId, long groupId, long AccountId) {
+            object[] results = this.Invoke("DelAccountFromGroup", new object[] {
+                        sessionId,
+                        groupId,
+                        AccountId});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void DelAccountFromGroupAsync(string sessionId, long groupId, long AccountId) {
+            this.DelAccountFromGroupAsync(sessionId, groupId, AccountId, null);
+        }
+        
+        /// <remarks/>
+        public void DelAccountFromGroupAsync(string sessionId, long groupId, long AccountId, object userState) {
+            if ((this.DelAccountFromGroupOperationCompleted == null)) {
+                this.DelAccountFromGroupOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDelAccountFromGroupOperationCompleted);
+            }
+            this.InvokeAsync("DelAccountFromGroup", new object[] {
+                        sessionId,
+                        groupId,
+                        AccountId}, this.DelAccountFromGroupOperationCompleted, userState);
+        }
+        
+        private void OnDelAccountFromGroupOperationCompleted(object arg) {
+            if ((this.DelAccountFromGroupCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DelAccountFromGroupCompleted(this, new DelAccountFromGroupCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -549,8 +735,8 @@ namespace RSSScreenSaver.KKTRSS_service {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RssFeedRef))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Group))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Account))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Group))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.26")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -560,9 +746,9 @@ namespace RSSScreenSaver.KKTRSS_service {
         
         private long idField;
         
-        private System.DateTime creationDateField;
-        
         private System.DateTime lastUpdateField;
+        
+        private System.DateTime creationDateField;
         
         /// <remarks/>
         public long Id {
@@ -575,22 +761,22 @@ namespace RSSScreenSaver.KKTRSS_service {
         }
         
         /// <remarks/>
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-            }
-        }
-        
-        /// <remarks/>
         public System.DateTime LastUpdate {
             get {
                 return this.lastUpdateField;
             }
             set {
                 this.lastUpdateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
             }
         }
     }
@@ -603,23 +789,13 @@ namespace RSSScreenSaver.KKTRSS_service {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
     public partial class RssFeedRef : APersistant {
         
-        private string nameField;
-        
         private string urlField;
+        
+        private string nameField;
         
         private Group groupField;
         
         private string rssCacheField;
-        
-        /// <remarks/>
-        public string Name {
-            get {
-                return this.nameField;
-            }
-            set {
-                this.nameField = value;
-            }
-        }
         
         /// <remarks/>
         public string Url {
@@ -628,6 +804,16 @@ namespace RSSScreenSaver.KKTRSS_service {
             }
             set {
                 this.urlField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
             }
         }
         
@@ -705,47 +891,17 @@ namespace RSSScreenSaver.KKTRSS_service {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
     public partial class Account : APersistant {
         
-        private string emailField;
-        
-        private string passwordField;
-        
-        private string autologinField;
-        
         private bool isActiveField;
+        
+        private string emailField;
         
         private object[] readRssItemsField;
         
+        private string passwordField;
+        
         private object[] subscribedRssFeedsField;
         
-        /// <remarks/>
-        public string Email {
-            get {
-                return this.emailField;
-            }
-            set {
-                this.emailField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Password {
-            get {
-                return this.passwordField;
-            }
-            set {
-                this.passwordField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Autologin {
-            get {
-                return this.autologinField;
-            }
-            set {
-                this.autologinField = value;
-            }
-        }
+        private string autologinField;
         
         /// <remarks/>
         public bool IsActive {
@@ -754,6 +910,16 @@ namespace RSSScreenSaver.KKTRSS_service {
             }
             set {
                 this.isActiveField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Email {
+            get {
+                return this.emailField;
+            }
+            set {
+                this.emailField = value;
             }
         }
         
@@ -768,12 +934,32 @@ namespace RSSScreenSaver.KKTRSS_service {
         }
         
         /// <remarks/>
+        public string Password {
+            get {
+                return this.passwordField;
+            }
+            set {
+                this.passwordField = value;
+            }
+        }
+        
+        /// <remarks/>
         public object[] SubscribedRssFeeds {
             get {
                 return this.subscribedRssFeedsField;
             }
             set {
                 this.subscribedRssFeedsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Autologin {
+            get {
+                return this.autologinField;
+            }
+            set {
+                this.autologinField = value;
             }
         }
     }
@@ -852,6 +1038,32 @@ namespace RSSScreenSaver.KKTRSS_service {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    public delegate void ListAccountInGroupCompletedEventHandler(object sender, ListAccountInGroupCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ListAccountInGroupCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ListAccountInGroupCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public object[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((object[])(this.results[0]));
             }
         }
     }
@@ -962,6 +1174,32 @@ namespace RSSScreenSaver.KKTRSS_service {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    public delegate void RssFeedUnsubscribeCompletedEventHandler(object sender, RssFeedUnsubscribeCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class RssFeedUnsubscribeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal RssFeedUnsubscribeCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
     public delegate void GetMyRssFeedCompletedEventHandler(object sender, GetMyRssFeedCompletedEventArgs e);
     
     /// <remarks/>
@@ -1040,26 +1278,104 @@ namespace RSSScreenSaver.KKTRSS_service {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
-    public delegate void GetRssFeedCompletedEventHandler(object sender, GetRssFeedCompletedEventArgs e);
+    public delegate void AddGroupCompletedEventHandler(object sender, AddGroupCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetRssFeedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class AddGroupCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal GetRssFeedCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal AddGroupCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
         /// <remarks/>
-        public string Result {
+        public bool Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    public delegate void DelGroupCompletedEventHandler(object sender, DelGroupCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class DelGroupCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal DelGroupCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    public delegate void AddAccountToGroupCompletedEventHandler(object sender, AddAccountToGroupCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class AddAccountToGroupCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal AddAccountToGroupCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    public delegate void DelAccountFromGroupCompletedEventHandler(object sender, DelAccountFromGroupCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.26")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class DelAccountFromGroupCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal DelAccountFromGroupCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
             }
         }
     }
