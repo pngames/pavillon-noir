@@ -170,23 +170,23 @@ _pEnableGL_LEQUAL(false, "Tester profondeur egale", "Activer les test de profond
 
   //////////////////////////////////////////////////////////////////////////
   
-  addParam("Fenetre");
+  addSeparator("Fenetre");
 
   addParam(&_pTitle);
   addParam(&_pFullScreen);
 
-  addParam("Mode d'affichage");
+  addSeparator("Mode d'affichage");
 
   if (_pDefinitionsList != NULL)
 	addParam(_pDefinitionsList);
   addParam(_pBppList);
 
-  addParam("Options avancees");
+  addSeparator("Options avancees");
 
   addParam(&_pEnableTransparency);
   addParam(&_pEnableGL_LEQUAL);
 
-  addParam("Cinematiques");
+  addSeparator("Cinematiques");
 
   addParam(PNGLVideo::getPMoviePlayer());
 }
@@ -874,10 +874,7 @@ PNGLRenderer::initGUI()
 {
   try
   {
-	std::string tmpFile = PNConf::getInstance()->getConfPath().native_directory_string();
-	tmpFile += PATHSEPSTRING;
-	tmpFile += "CEGUI.log";
-	CEGUI::Logger::getSingleton().setLogFilename(tmpFile);
+	CEGUI::Logger::getSingleton().setLogFilename(PNConf::getInstance()->getConfPath("CEGUI.log"));
 	CEGUI::Logger::getSingleton().setLoggingLevel(CEGUI::Insane);
 
 	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/TaharezLook.scheme");

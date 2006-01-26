@@ -69,7 +69,7 @@ class PNAPI						PNConfigurableParameter : public IPNXMLSerializable
 {
 protected:
   PNConfigurableObject*			_p;
-  pnuint						_type;
+  pnparamtype					_type;
 
   std::string					_name;
   void*							_elem;
@@ -88,7 +88,7 @@ public:
   PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, pnbool editable = true, void* max = NULL, void* min = NULL);
   virtual ~PNConfigurableParameter();
 
-  pnuint						getType();
+  pnparamtype					getType();
 
   void*							getElem();
   void*							getMax();

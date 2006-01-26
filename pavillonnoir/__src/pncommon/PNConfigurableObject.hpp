@@ -69,10 +69,6 @@ public:
 protected:
   virtual pnint						_unserializeNode(xmlNode* node);
   virtual pnint						_serializeContent(xmlNode* node);
-
-public:
-  virtual pnint						unserializeFromXML(xmlNode* node);
-  virtual pnint						serializeInXML(xmlNode* node, pnbool isroot = false);
 };
 
 //////////////////////////////////////////////////////////////////////////

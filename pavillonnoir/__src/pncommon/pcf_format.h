@@ -41,8 +41,8 @@ static const std::string	PCF_XMLNODE_ROOT			= PCF_XMLDTD_NAME;
 //////////////////////////////////////////////////////////////////////////
 
 static const std::string	PCF_OBJECT_XMLDTD_NAME		= "configurable_object";
-static const std::string	PCF_OBJECT_XMLDTD			= PCF_XMLDTD_NAME + ".dtd";
-static const std::string	PCF_OBJECT_XMLNODE_ROOT		= PCF_XMLDTD_NAME;
+static const std::string	PCF_OBJECT_XMLDTD			= PCF_OBJECT_XMLDTD_NAME + ".dtd";
+static const std::string	PCF_OBJECT_XMLNODE_ROOT		= PCF_OBJECT_XMLDTD_NAME;
 
 #define						PCF_XMLPROP_NAME			(BAD_CAST "name")
 

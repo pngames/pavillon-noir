@@ -31,22 +31,11 @@
 # define _PNCONF_HPP_
 
 #include <string>
-#include <map>
-#include <sstream>
-#include <iostream>
 #include <boost/filesystem/path.hpp>
-#include "PNException.hpp"
 
-#define PNCONFFILE	"configuration.xml"
-#define PNCONFPATH	"pavillon-noir"
-#ifdef WIN32
-# define UNIXPREFIX	""
-#else
-# define UNIXPREFIX	"."
-#endif
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
 
-namespace PN
-{
 /**
  * Configuration file management class
  */
@@ -54,49 +43,24 @@ class PNAPI							PNConf
 {
 private:
   static PNConf*					_instance;
+
   std::string						_homePath;
-  boost::filesystem::path			_confFilePath;
-  std::map<std::string, std::map<std::string, std::string> >	_confHash;
-  std::map<std::string, std::map<std::string, std::string> >	_defaultHash;
+  std::string						_confPath;
 
   PNConf();
   ~PNConf();
-  void								_loadConfFile();
-  void								_createDefaultConf();
+
+  void								_copyDirectory(const boost::filesystem::path& path, const std::string& target);
+  void								_loadDefaultConf();
 public:
-
-  static void						initialize();
   static PNConf*					getInstance();
-  void								setKey(const std::string& key, const std::string& value, const std::string& section);
-  void								saveConf();
-  boost::filesystem::path			getConfPath();
 
-  ///////////////////////////////////////////////////////////////////
-  // Templates
-  ///////////////////////////////////////////////////////////////////
-
-  /**
-  * @brief get the matching value to the given section and key
-  * @param key string value representing an item key
-  * @param section string value of the desired section
-  * @param type a type constructor (like int(), string(), ...)
-  * @return value of the matching key or throw a PNException if key is not found.
-  * @sa setKey()
-  */
-  template <typename T>
-  T getKey(const std::string& key, const std::string& section, const T& type)
-  {
-	T dest;
-	if (_confHash.find(section) == _confHash.end())
-	  throw PNException("Section not found");
-	if (_confHash[section].find(key) == _confHash[section].end())
-	  throw PNException("Key not found");
-	std::stringstream convert(_confHash[section][key]);
-	convert >> dest;
-	std::cout << dest << std::endl;
-	return dest;
-  }
+  //////////////////////////////////////////////////////////////////////////
+  
+  std::string						getConfPath(const std::string file = "");
 };
-}
+
+//////////////////////////////////////////////////////////////////////////
+};
 
 #endif /*_PNCONF_HPP_*/

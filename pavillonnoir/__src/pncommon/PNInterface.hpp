@@ -76,7 +76,7 @@ public:
 
 protected:
   void								addParam(PNConfigurableParameter* p);
-  void								addParam(const std::string& sepLabel);
+  void								addSeparator(const std::string& sepLabel);
 
   std::string						_label;
   std::string						_name;

@@ -94,7 +94,7 @@ PNInterface::addParam(PNConfigurableParameter* p)
 }
 
 void
-PNInterface::addParam(const std::string& sepLabel)
+PNInterface::addSeparator(const std::string& sepLabel)
 {
   addParam(new PNConfigurableParameter(this, PN_PARAMTYPE_SEPARATOR, (void*)NULL, sepLabel, sepLabel));
 }

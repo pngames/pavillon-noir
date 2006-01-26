@@ -235,10 +235,7 @@ PN3DObject::unserializeFromXML(xmlNode* root)
 	
   //////////////////////////////////////////////////////////////////////////
 
-  for (root = root->children ; root != NULL; root = root->next)
-	_unserializeNode(root);
-
-  return PNEC_SUCCESS;
+  return IPNXMLSerializable::unserializeFromXML(root);
 }
 
 pnint
@@ -246,12 +243,7 @@ PN3DObject::serializeInXML(xmlNode* root, pnbool isroot)
 {
   PNLOCK(this);
 
-  if (!isroot)
-	root = xmlNewChild(root, NULL, BAD_CAST getRootNodeName().c_str(), NULL);
-
-  _serializeContent(root);
-
-  return PNEC_SUCCESS;
+  return IPNXMLSerializable::serializeInXML(root, isroot);
 }
 
 /**

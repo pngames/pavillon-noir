@@ -97,25 +97,19 @@ PNConfigurableObject::getRootNodeName() const
 pnint
 PNConfigurableObject::_unserializeNode(xmlNode* node)
 {
+  const char *name = (const char*)xmlGetProp(node, PCF_XMLPROP_NAME);
+
   for (int i = 0; i < getNbParameters(); ++i)
   {
 	PNConfigurableParameter*  param = getParameter(i);
-	if (param->getName() == (const char*)node->name)
+
+	if (param->getType() >= 0 && param->getName() == name)
 	{
 	  param->unserializeFromXML(node);
 
 	  return PNEC_SUCCESS;
 	}
   }
-
-  return PNEC_SUCCESS;
-}
-
-pnint
-PNConfigurableObject::unserializeFromXML(xmlNode* root)
-{
-  for (root = root->children ; root != NULL; root = root->next)
-	_unserializeNode(root);
 
   return PNEC_SUCCESS;
 }
@@ -132,19 +126,12 @@ PNConfigurableObject::_serializeContent(xmlNode* node)
   for (int i = 0; i < getNbParameters(); ++i)
   {
 	PNConfigurableParameter*  param = getParameter(i);
-	param->serializeInXML(node);
+
+	if (param->getType() >= 0)
+	  param->serializeInXML(node);
   }
 
   return PNEC_SUCCESS;
-}
-
-pnint
-PNConfigurableObject::serializeInXML(xmlNode* root, pnbool isroot/* = false*/)
-{
-  if (!isroot)
-	root = xmlNewChild(root, NULL, BAD_CAST getRootNodeName().c_str(), NULL);
-
-  return _serializeContent(root);
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="FOXDLLD-1.4.lib CEGUIBase_d.lib"
+				AdditionalDependencies="FOXDLLD-1.4.lib CEGUIBase_d.lib libxml2.lib"
 				OutputFile="..\..\..\__binaries\win32\pncore-dbg.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"

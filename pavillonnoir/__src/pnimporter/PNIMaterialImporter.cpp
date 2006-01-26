@@ -47,7 +47,7 @@ namespace PN {
 
 PNIMaterialImporter::PNIMaterialImporter()
 {
-  _label = "PNT Importer";
+  _name = _label = "PNT Importer";
 
   _magic = PNT_MAGIC;
   _magicSize = PNT_MAGIC_SIZE;
