@@ -243,17 +243,15 @@ public partial class src_showfeed : System.Web.UI.Page
 	return request;
   }
 
-  [AjaxPro.AjaxMethod()]
   public void markItemRead(string id)
   {
 	service.MarkAsRead(uid, id);
   }
 
-  [AjaxPro.AjaxMethod()]
   public void markItemNotRead(string id)
   {
   }
-  [AjaxPro.AjaxMethod()]
+
   public int gettest()
   {
 	return (dsponlyunread ? 1 : 0);
