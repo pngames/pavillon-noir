@@ -32,10 +32,12 @@
 
 #include <string>
 
+//////////////////////////////////////////////////////////////////////////
+
+#include "PNObject.hpp"
 #include "IPNXMLSerializable.hpp"
 
-namespace PN
-{
+namespace PN {
 //////////////////////////////////////////////////////////////////////////	
 
 typedef enum
@@ -54,7 +56,7 @@ typedef enum
   PN_PARAMTYPE_DIALZ,		// based on pnfloat
   PN_PARAMTYPE_BOOLEAN,		// based on pnbool
   PN_PARAMTYPE_EVENTBOX,
-  PN_PARAMTYPE_MATERIAL,	// based on PNMaterial*
+  PN_PARAMTYPE_MATERIAL,	// based on PN3DMaterial*
 
   PN_PARAMTYPE_SCRIPTLIST,
 
@@ -65,8 +67,14 @@ typedef enum
 
 class PNConfigurableObject;
 
-class PNAPI						PNConfigurableParameter : public IPNXMLSerializable
+class PNAPI						PNConfigurableParameter : public PNObject, public IPNXMLSerializable
 {
+public:
+  typedef enum
+  {
+	S_VALUE = 0x000001,
+	LAST_S = S_VALUE << 1
+  } serializable;
 protected:
   PNConfigurableObject*			_p;
   pnparamtype					_type;
@@ -79,6 +87,8 @@ protected:
   std::string					_label;
   std::string					_altText;
   pnbool						_editable;
+
+  pnuint						_serialization;
 
 protected:
   PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, const std::string& label, const std::string& altText, pnbool editable = true, void* max = NULL, void* min = NULL);
@@ -104,8 +114,29 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   
+  void							setSerializable(serializable option);
+  void							unsetSerializable(serializable option);
+
+  //////////////////////////////////////////////////////////////////////////
+  
   virtual std::string			toString();
   virtual void					fromString(const std::string& str);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  static std::string			toString(pnbool value);
+  static std::string			toString(pnint value);
+  static std::string			toString(pnuint value);
+  static std::string			toString(pnfloat value);
+  static std::string			toString(const std::string& value);
+  static std::string			toString(PNObject* value);
+
+  static void					fromString(pnbool* value, const std::string& str);
+  static void					fromString(pnint* value, const std::string& str);
+  static void					fromString(pnuint* value, const std::string& str);
+  static void					fromString(pnfloat* value, const std::string& str);
+  static void					fromString(std::string* value, const std::string& str);
+  static void					fromString(PNObject** value, const std::string& str);
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -113,11 +144,8 @@ public:
   virtual const std::string&	getRootNodeName() const;
 
 protected:
+  virtual pnint					_unserializeNode(xmlNode* node);
   virtual pnint					_serializeContent(xmlNode* node);
-
-public:
-  virtual pnint					unserializeFromXML(xmlNode* node);
-  virtual pnint					serializeInXML(xmlNode* node, pnbool root = false);
 };
 
 //////////////////////////////////////////////////////////////////////////

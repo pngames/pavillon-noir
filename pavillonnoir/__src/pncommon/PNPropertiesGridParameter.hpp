@@ -52,10 +52,12 @@ public:
 
   PNConfigurableParameter*			getParam();
 
-  virtual std::string				getStringValue();
-  virtual pnbool					setStringValue(const std::string& val);
-
   void								sendParamModif();
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  virtual std::string				toString();
+  virtual void						fromString(const std::string& str);
 };
 
 //////////////////////////////////////////////////////////////////////////

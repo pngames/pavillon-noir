@@ -1,8 +1,8 @@
 /*
- * PNPropertiesGridParameter.cpp
+ * PNFXUIntParameter.cpp
  * 
  * Description :
- * PNPropertiesGridParameter definition
+ * PNFXUIntParameter definition
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,57 +27,42 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#include "pndefs.h"
 
-#include "PNConfigurableObject.hpp"
-#include "PNConfigurableParameter.hpp"
+#include <iostream>
 
-#include "PNPropertiesGridParameter.hpp"
+#include <fxkeys.h>
+
+#include "pneditorcommon.hpp"
+#include "pnproperties.h"
+
+#include "PNFXUIntParameter.hpp"
+
+using namespace std;
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-PNPropertiesGridParameter::PNPropertiesGridParameter(PNConfigurableParameter* param)
-: _param(param)
-{
-  
-}
-
-PNPropertiesGridParameter::~PNPropertiesGridParameter() 
-{
-  
-}
+/*// Map
+FXDEFMAP(PNFXUIntParameter) PNFXUIntParameterMap[]={
+  FXMAPFUNC(SEL_KEYRELEASE,0,PNFXUIntParameter::onKeyRelease),
+};*/
 
 //////////////////////////////////////////////////////////////////////////
+//FXIMPLEMENT(PNFXUIntParameter,PNFXTextFieldParameter,PNFXUIntParameterMap,ARRAYNUMBER(PNFXUIntParameterMap))
+FXIMPLEMENT(PNFXUIntParameter, PNFXTextFieldParameter, NULL, 0)
 
-PNConfigurableParameter*
-PNPropertiesGridParameter::getParam()
+PNFXUIntParameter::PNFXUIntParameter(FXComposite* p, PNConfigurableParameter* param)
+: PNFXTextFieldParameter(p, param, 12)
 {
-  return _param;
 }
 
-void
-PNPropertiesGridParameter::sendParamModif()
+PNFXUIntParameter::~PNFXUIntParameter()
 {
-  if (_param->getConfigurableObject())
-  {
-	_param->getConfigurableObject()->update(_param);
-	_param->getConfigurableObject()->setModified();
-  }
 }
 
-//////////////////////////////////////////////////////////////////////////
-
-std::string
-PNPropertiesGridParameter::toString()
+void	PNFXUIntParameter::create()
 {
-  return _param->toString();
-}
-
-void
-PNPropertiesGridParameter::fromString(const std::string& str)
-{
-  _param->fromString(str);
+  PNFXTextFieldParameter::create();
 }
 
 //////////////////////////////////////////////////////////////////////////
