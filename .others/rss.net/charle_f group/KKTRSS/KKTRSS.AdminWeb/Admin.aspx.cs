@@ -134,7 +134,28 @@ public partial class Admin : System.Web.UI.Page
     {
         if (group_ListBox.SelectedItem.Selected == true && globalFlux_ListBox.SelectedItem.Selected == true)
         {
-            _mainServer.AddAccountToGroup(_sessionID, Convert.ToInt32(group_ListBox.SelectedItem.Value), Convert.ToInt32(user_ListBox.SelectedItem.Value));
+          //  _mainServer.AddAccountToGroup(_sessionID, Convert.ToInt32(group_ListBox.SelectedItem.Value), Convert.ToInt32(user_ListBox.SelectedItem.Value));
+            IList allRssFeed = _mainServer.ListAvailableRssFeeds(_sessionID);
+            string name = "";
+            string url = "";
+            long id = 0;
+            foreach(RssFeedRef tmp in allRssFeed)
+            {
+                if (tmp.Id == Convert.ToInt32(globalFlux_ListBox.SelectedItem.Value))
+                {
+              //      _mainServer.ImportRssFeed(_sessionID, tmp.Url, tmp.Name, Convert.ToInt32(group_ListBox.SelectedItem.Value), false);
+                    id = tmp.Id;
+                    url = tmp.Url;
+                    name = tmp.Name;
+                    break;
+                }
+            }
+            if (id > 0)
+            {
+                _mainServer.DelRssFeed(_sessionID, id);
+                _mainServer.ImportRssFeed(_sessionID, url, name, group_ListBox.SelectedItem.Value, false);
+            }
+            //_mainServer.ImportRssFeed(_sessionID, Convert.ToInt32(group_ListBox.SelectedItem.Value), Convert.ToInt32(user_ListBox.SelectedItem.Value));
             refreshALL();
         }
     }
@@ -144,7 +165,8 @@ public partial class Admin : System.Web.UI.Page
         //TODO
         if (flux_ListBox.SelectedItem.Selected == true && group_ListBox.SelectedItem.Selected == true && flux_ListBox.SelectedItem.Text != "default")
         {
-            _mainServer.DelFeedFromGroup(_sessionID, Convert.ToInt32(group_ListBox.SelectedItem.Value), Convert.ToInt32(flux_ListBox.SelectedItem.Value));
+         //   _mainServer.DelFeedFromGroup(_sessionID, Convert.ToInt32(group_ListBox.SelectedItem.Value), Convert.ToInt32(flux_ListBox.SelectedItem.Value));
+           _mainServer.DelRssFeed(_sessionID, Convert.ToInt32(flux_ListBox.SelectedItem.Value));
             refreshALL();
         }
     }

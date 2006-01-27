@@ -503,6 +503,7 @@ public class Service : System.Web.Services.WebService
             return false;
         try
         {
+            NHibernateHttpModule.BeginTranaction();
             if (grpId == null || grpId == "")
             {
                 grp = GetDefaultGroup();
@@ -519,7 +520,7 @@ public class Service : System.Web.Services.WebService
        
 
 
-            NHibernateHttpModule.BeginTranaction();
+           
             rssRef.Group = grp;
             rssRef.Url = url;
             rssRef.Name = name;
