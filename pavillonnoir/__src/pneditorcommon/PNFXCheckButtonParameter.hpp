@@ -60,7 +60,9 @@ public:
   };
 
   void			create();
-  void			update();
+
+  void			updateParam();
+  void			apply();
 
 public:
   long			onValueChanged(FXObject*, FXSelector, void*);

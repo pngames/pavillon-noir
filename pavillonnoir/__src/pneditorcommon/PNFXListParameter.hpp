@@ -65,7 +65,8 @@ public:
 
   void						create();
 
-  void						update();
+  void						updateParam();
+  void						apply();
 
   enum 
   {

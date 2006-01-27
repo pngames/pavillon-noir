@@ -61,27 +61,6 @@ PNFXDialXYZParameter::PNFXDialXYZParameter(FXComposite* p, PNConfigurableParamet
 	LAYOUT_CENTER_Y, 0, 0, 160, 14, 0, 0, 0, 0);
   _field = new FXTextField(this, 6, NULL, 0, TEXTFIELD_READONLY|FRAME_SUNKEN|FRAME_THICK|LAYOUT_SIDE_TOP);
   _oldValue = _dial->getValue();
-
-  ostringstream oss;
-
-  pnfloat x, y, z;
-  o->getOrient().getDegrees(x, y, z);
-  switch (_param->getType())
-  {
-  case PN_PARAMTYPE_DIALX:
-	oss << x;
-	break;
-  case PN_PARAMTYPE_DIALY:
-	oss << y;
-	break;
-  case PN_PARAMTYPE_DIALZ:
-	oss << z;
-	break;
-  default:
-	break;
-  }
-
-  _field->setText(oss.str().c_str());
 }
 
 PNFXDialXYZParameter::~PNFXDialXYZParameter()
@@ -91,17 +70,48 @@ PNFXDialXYZParameter::~PNFXDialXYZParameter()
 }
 
 
-void	PNFXDialXYZParameter::create()
+void
+PNFXDialXYZParameter::create()
 {
   FXHorizontalFrame::create();
 
-  update();
+  updateParam();
 }
 
-void	PNFXDialXYZParameter::update()
+void
+PNFXDialXYZParameter::update()
 {
   FXHorizontalFrame::update();
 
+  apply();
+}
+
+void
+PNFXDialXYZParameter::updateParam()
+{
+  PN3DObject* o = (PN3DObject*)_param->getElem();
+
+  pnfloat x, y, z;
+  o->getOrient().getDegrees(x, y, z);
+  switch (_param->getType())
+  {
+  case PN_PARAMTYPE_DIALX:
+	_field->setText(PNFloat::staticToString(x).c_str());
+	break;
+  case PN_PARAMTYPE_DIALY:
+	_field->setText(PNFloat::staticToString(y).c_str());
+	break;
+  case PN_PARAMTYPE_DIALZ:
+	_field->setText(PNFloat::staticToString(z).c_str());
+	break;
+  default:
+	break;
+  }
+}
+
+void
+PNFXDialXYZParameter::apply()
+{
   pnfloat pos = (pnfloat)_dial->getValue();
 
   if (pos != _oldValue)

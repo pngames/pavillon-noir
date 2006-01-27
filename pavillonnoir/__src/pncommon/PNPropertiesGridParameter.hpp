@@ -48,7 +48,8 @@ protected:
   virtual ~PNPropertiesGridParameter();
 
 public:
-  virtual void						update()=0;
+  virtual void						updateParam()=0;
+  virtual void						apply()=0;
 
   PNConfigurableParameter*			getParam();
 

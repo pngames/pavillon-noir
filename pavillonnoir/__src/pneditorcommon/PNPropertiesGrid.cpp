@@ -173,13 +173,24 @@ void
 PNPropertiesGrid::update()
 {
   for (std::list<PNPropertiesGridParameter*>::iterator it = _params.begin(); it != _params.end(); it++)
-    (*it)->update();
+    (*it)->updateParam();
 }
 
 PNConfigurableObject* 
 PNPropertiesGrid::getObject()
 {
   return _object;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void
+PNPropertiesGrid::applyAll()
+{
+  for (PNPPList::iterator it = _params.begin(); it != _params.end(); ++it)
+  {
+	(*it)->apply();
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////

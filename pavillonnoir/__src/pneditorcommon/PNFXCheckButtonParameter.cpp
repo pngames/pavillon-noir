@@ -63,15 +63,24 @@ PNFXCheckButtonParameter::create()
 {
   FXCheckButton::create();
 
-  update();
+  updateParam();
 }
 
 void
-PNFXCheckButtonParameter::update()
+PNFXCheckButtonParameter::updateParam()
 {
   bool*	p = (bool*)_param->getElem();
 
   setCheck(*p);
+}
+
+void
+PNFXCheckButtonParameter::apply()
+{
+  bool*	p = (bool*)_param->getElem();
+
+  *p = getCheck() == TRUE;
+  sendParamModif();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -79,10 +88,7 @@ PNFXCheckButtonParameter::update()
 long
 PNFXCheckButtonParameter::onValueChanged(FXObject* obj, FXSelector sel, void* data)
 {
-  bool*	p = (bool*)_param->getElem();
-
-  *p = getCheck() == TRUE;
-  sendParamModif();
+  apply();
 
   return 1;
 }
