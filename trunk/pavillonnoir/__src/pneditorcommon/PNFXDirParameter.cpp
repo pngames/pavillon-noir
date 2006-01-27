@@ -66,18 +66,21 @@ PNFXDirParameter::create()
 {
   FXHorizontalFrame::create();
 
-  _field->create();
-  _button->create();
-
-  update();
+  updateParam();
 }
 
 void 
-PNFXDirParameter::update()
+PNFXDirParameter::updateParam()
 {
-  string* str = (string*)_param->getElem();
-  _field->setText(str->c_str());
+  _field->setText(toString().c_str());
   _field->setEditable(_param->isEditable());
+}
+
+void
+PNFXDirParameter::apply()
+{
+  fromString(_field->getText().text());
+  sendParamModif();
 }
 
 long	
@@ -89,6 +92,8 @@ PNFXDirParameter::onBrowse(FXObject* obj,FXSelector sel, void* ptr)
   if (open.execute())
   {
 	_field->setText(open.getDirectory().text());
+
+	apply();
   }
 
   return 1;

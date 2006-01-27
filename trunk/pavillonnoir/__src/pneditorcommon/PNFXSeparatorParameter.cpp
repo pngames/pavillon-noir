@@ -49,14 +49,24 @@ PNFXSeparatorParameter::~PNFXSeparatorParameter()
 {
 }
 
-void	PNFXSeparatorParameter::create()
+void
+PNFXSeparatorParameter::create()
 {
   FXLabel::create();
+
+  updateParam();
 }
 
-void PNFXSeparatorParameter::update()
+void
+PNFXSeparatorParameter::updateParam()
 {
-  return;
+
+}
+
+void
+PNFXSeparatorParameter::apply()
+{
+
 }
 
 //////////////////////////////////////////////////////////////////////////

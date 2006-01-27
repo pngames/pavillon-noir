@@ -46,7 +46,6 @@ class PNEDAPI PNFXEventBoxParameter : public FXTextField, public PNPropertiesGri
   FXDECLARE(PNFXEventBoxParameter);
 
   pnbool					_capture;
-  std::string*				_current_text;
 protected:
   PNFXEventBoxParameter() : PNPropertiesGridParameter(NULL) {}
   PNFXEventBoxParameter(PNFXEventBoxParameter&) : PNPropertiesGridParameter(NULL) {}
@@ -55,7 +54,9 @@ public:
   ~PNFXEventBoxParameter();
 
   void	create();
-  void	update();
+  
+  void  updateParam();
+  void	apply();
 
 public:
   long	onKeyRelease(FXObject*,FXSelector,void* ptr);

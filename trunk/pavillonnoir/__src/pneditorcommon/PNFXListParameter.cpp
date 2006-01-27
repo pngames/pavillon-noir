@@ -82,12 +82,7 @@ PNFXListParameter::create()
 {
   FXHorizontalFrame::create();
 
-  _listBox->create();
-  _buttonDelete->create();
-  _buttonAdd->create();
-  _buttonEdit->create();
-
-  update();
+  updateParam();
 }
 
 
@@ -276,10 +271,8 @@ PNFXListParameter::_update()
 //////////////////////////////////////////////////////////////////////////
 
 void
-PNFXListParameter::update()
+PNFXListParameter::updateParam()
 {
-  FXHorizontalFrame::update();
-
   _update();
 
   if (_listBox->getNumItems() > 0)
@@ -302,6 +295,12 @@ PNFXListParameter::update()
 	_buttonDelete->disable();
 	_buttonEdit->disable();
   }
+}
+
+void
+PNFXListParameter::apply()
+{
+
 }
 
 /*

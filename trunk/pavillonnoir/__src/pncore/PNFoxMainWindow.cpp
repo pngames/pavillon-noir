@@ -116,11 +116,6 @@ FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|
   FXButton* buttonOptions = new FXButton(_contentMain,"&OPTIONS\tTO SET THE OPTIONS",NULL,this,ID_SHOWOPTIONDIALOG,FRAME_RAISED|FRAME_THICK|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT,0,0,312,45);
   //buttonOptions->setState(FX::STATE_CHECKED);
   new FXButton(_contentMain,"&QUIT\tTO QUIT THE GAME",NULL,this,ID_CLOSE,FRAME_RAISED|FRAME_THICK|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT,0,0,312,45);
-
-  //////////////////////////////////////////////////////////////////////////
-  
-  // Build the "Options" window
-  _optionWindow = new PNFoxOptionWindow(this);
 }
 
 /*!
@@ -132,8 +127,6 @@ PNFoxMainWindow::~PNFoxMainWindow()
   delete _mapSelector;
   delete _imageFile;
   delete _contentMain;
-
-  delete _optionWindow;
 }
 
 FXDEFMAP(PNFoxMainWindow) MainConfigWindowMap[]={
@@ -171,7 +164,9 @@ Called when "Options" is pushed, open Options Fox Window.
 */
 long	PNFoxMainWindow::onCmdShowOption(FXObject*,FXSelector,void*)
 {
-  _optionWindow->execute();
+  PNFoxOptionWindow	optionWindow(this);
+
+  optionWindow.execute();
 
   return 1;
 }

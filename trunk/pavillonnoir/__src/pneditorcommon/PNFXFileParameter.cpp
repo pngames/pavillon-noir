@@ -70,21 +70,21 @@ PNFXFileParameter::create()
 {
   FXHorizontalFrame::create();
   
-  _field->create();
-  _button->create();
-
-  update();
+  updateParam();
 }
 
 void
-PNFXFileParameter::update()
+PNFXFileParameter::updateParam()
 {
-  std::string*	path = (std::string*)_param->getElem();
-
-  _field->setText(path->c_str());
+  _field->setText(toString().c_str());
   _field->setEditable(_param->isEditable());
+}
 
-  return;
+void
+PNFXFileParameter::apply()
+{
+  fromString(_field->getText().text());
+  sendParamModif();
 }
 
 long
@@ -113,10 +113,7 @@ PNFXFileParameter::onBrowse(FXObject* obj,FXSelector sel, void* ptr)
 	{
 	  _field->setText(str.replace(0, (FXint)strlen(buf) + 1, "").substitute('\\', '/').text());
 
-	  std::string* p = (std::string*)_param->getElem();
-	  *p = _field->getText().text();
-
-	  _param->getConfigurableObject()->update(_param);
+	  apply();
 	}
   }
 

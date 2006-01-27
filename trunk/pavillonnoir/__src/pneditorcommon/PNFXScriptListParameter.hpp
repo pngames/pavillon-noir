@@ -89,7 +89,9 @@ public:
   long						onAddScript(FXObject* obj,FXSelector sel,void* ptr);
   long						onEditScripts(FXObject* obj,FXSelector sel,void* ptr);
   void						buildList(void);
-  void						update(void);
+  
+  void						updateParam();
+  void						apply();
 };
 
 //////////////////////////////////////////////////////////////////////////

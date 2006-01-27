@@ -104,9 +104,6 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner)
     new FXButton(_buttons, desc->getName(), NULL, _switcher, switcherID, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y);
     FXTabBook*  tabbook = new FXTabBook(_switcher, NULL, 0, LAYOUT_FILL_Y, 0, 0, 0, 0, 0, 0, 0, 0);
 
-	pnerror(PN_LOGLVL_DEBUG, "[PNFoxOptionWindow] adding switcher section %s (version=%i, nb interfaces=%i)", 
-		desc->getName(), desc->getVersion(), desc->getNbInterface()); 
-
 	// creates a tab for each Interface
 	for (pnuint i = 0; i < desc->getNbInterface(); ++i)
 	{
@@ -119,7 +116,6 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner)
 	  else 
 	  {
 		// sets the interface's label as the tab name/title
-		pnerror(PN_LOGLVL_DEBUG, "[PNFoxOptionWindow] adding tab for interface %s", interf->getLabel().c_str());
 		new FXTabItem(tabbook, interf->getLabel().c_str());
 
 		// ConfigurableParameters are displayed in a PropertiesGird, the grid is added to our list so that we 
@@ -185,8 +181,11 @@ PNFoxOptionWindow::onKeyPress(FXObject* s,FXSelector sel,void* ptr)
 
   switch (event->code)
   {
-  case KEY_Escape: break;
-  default: FXDialogBox::handle(s, sel, ptr);
+  case KEY_Escape:
+	break;
+
+  default:
+	FXDialogBox::handle(s, sel, ptr);
   }
 
   return 1;

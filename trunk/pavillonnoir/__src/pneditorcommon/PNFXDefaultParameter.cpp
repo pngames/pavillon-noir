@@ -55,11 +55,20 @@ PNFXDefaultParameter::~PNFXDefaultParameter()
 void	PNFXDefaultParameter::create()
 {
   FXLabel::create();
+
+  updateParam();
 }
 
-void PNFXDefaultParameter::update()
+void
+PNFXDefaultParameter::updateParam()
 {
-  return;
+
+}
+
+void
+PNFXDefaultParameter::apply()
+{
+
 }
 
 //////////////////////////////////////////////////////////////////////////

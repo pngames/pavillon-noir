@@ -84,7 +84,7 @@ PNPropertiesGridParameter(param)
   _buttonEditScripts = new FXButton(this, "Edit", NULL, this, ID_EDIT_SCRIPTS, FRAME_RAISED | FRAME_THICK);
   _buttonDeleteEvent = new FXButton(this, "Delete", NULL, this, ID_DELETE_EVENT, FRAME_RAISED | FRAME_THICK);
   //_event = new FXTextField(this, 8, NULL, 0, TEXTFIELD_NORMAL | FRAME_SUNKEN | FRAME_THICK | LAYOUT_SIDE_TOP);
-  update();
+
 }
 
 PNFXScriptListParameter::~PNFXScriptListParameter()
@@ -99,13 +99,8 @@ PNFXScriptListParameter::~PNFXScriptListParameter()
 void	PNFXScriptListParameter::create()
 {
   FXHorizontalFrame::create();
-  _eventList->create();
-  _buttonDeleteEvent->create();
-  _buttonAddEvent->create();
-  _buttonEditScripts->create();
-  //_event->create();
 
-  return;
+  updateParam();
 }
 
 /*
@@ -123,8 +118,6 @@ void	PNFXScriptListParameter::buildList(void)
 	_eventList->appendItem(str,NULL,(void*)&(it->first));
   }
   _eventList->setNumVisible(_eventList->getNumItems());
-
-  return;
 }
 
 long	PNFXScriptListParameter::onAddEvent(FXObject* obj,FXSelector sel,void* ptr)
@@ -142,7 +135,8 @@ long	PNFXScriptListParameter::onAddEvent(FXObject* obj,FXSelector sel,void* ptr)
   new FXButton(buttons,"&Cancel",NULL,this,ID_ADD_EVENT_CANCEL,BUTTON_DEFAULT|LAYOUT_RIGHT|LAYOUT_CENTER_Y|FRAME_RAISED|FRAME_THICK,10,10,0,0, 20,20);
 
   _dbox->execute();
-  update();
+  updateParam();
+
   return 1;
 }
 
@@ -157,7 +151,8 @@ long	PNFXScriptListParameter::onAddEventOK(FXObject* obj,FXSelector sel,void* pt
 
   _dbox->getApp()->stopModal(_dbox, TRUE);
   _dbox->close();
-  update();
+  updateParam();
+
   return 1;
 }
 
@@ -165,7 +160,8 @@ long	PNFXScriptListParameter::onAddEventCancel(FXObject* obj,FXSelector sel,void
 {
   _dbox->getApp()->stopModal(_dbox, TRUE);
   _dbox->close();
-  update();
+  updateParam();
+
   return 1;
 }
 
@@ -182,7 +178,7 @@ long	PNFXScriptListParameter::onDeleteEvent(FXObject* obj,FXSelector sel,void* p
 
 	delete it->second;
 	smap->erase(it);
-	update();
+	updateParam();
   }
 
   return 1;
@@ -214,7 +210,7 @@ long	PNFXScriptListParameter::onEditScripts(FXObject* obj,FXSelector sel,void* p
 	  _scriptList->appendItem((*i)->string().c_str(), NULL, *i);
 
 	_dbox->execute();
-	update();
+	updateParam();
 	delete _scriptList;
 	delete _dbox;
   }
@@ -286,12 +282,19 @@ long	PNFXScriptListParameter::onDeleteScript(FXObject* obj,FXSelector sel,void* 
 /*
 *	Updates ScriptListlist
 */
-void	PNFXScriptListParameter::update(void)
+void
+PNFXScriptListParameter::updateParam(void)
 {
   _eventList->clearItems();
   buildList();
   _param->getConfigurableObject()->update(_param);
   _eventList->sortItems();
+}
+
+void
+PNFXScriptListParameter::apply()
+{
+
 }
 
 

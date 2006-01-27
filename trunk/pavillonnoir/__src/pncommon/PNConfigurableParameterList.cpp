@@ -71,7 +71,7 @@ PNConfigurableParameterList::~PNConfigurableParameterList()
 pnbool
 PNConfigurableParameterList::isChoosable()
 {
-  return _editable;
+  return _choosable;
 }
 
 void

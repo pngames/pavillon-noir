@@ -55,7 +55,7 @@ typedef enum
   PN_PARAMTYPE_DIALY,		// based on pnfloat
   PN_PARAMTYPE_DIALZ,		// based on pnfloat
   PN_PARAMTYPE_BOOLEAN,		// based on pnbool
-  PN_PARAMTYPE_EVENTBOX,
+  PN_PARAMTYPE_EVENTBOX,	// based on std::string
   PN_PARAMTYPE_MATERIAL,	// based on PN3DMaterial*
 
   PN_PARAMTYPE_SCRIPTLIST,
