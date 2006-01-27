@@ -62,6 +62,7 @@ PNPropertiesGridParameter(param)
   switch (_param->getType())
   {
   case PN_PARAMTYPE_INT:
+  case PN_PARAMTYPE_UINT:
 	options |= TEXTFIELD_INTEGER;
 	break;
   case PN_PARAMTYPE_REAL:
@@ -87,46 +88,14 @@ PNFXTextFieldParameter::create()
 void
 PNFXTextFieldParameter::update()
 {
-  FXString  str;
-
-  string*	truc = (string*)_param->getElem();
-
-  switch (_param->getType())
-  {
-  case PN_PARAMTYPE_STRING:
-	str = ((string*)_param->getElem())->c_str();
-	break;
-  case PN_PARAMTYPE_INT:
-	str.format("%i", *(int*)_param->getElem());
-	break;
-  case PN_PARAMTYPE_REAL:
-	str.format("%f", *(pnfloat*)_param->getElem());
-	break;
-  default:
-	break;
-  }
-
-  setText(str);
+  setText(toString().c_str());
   setEditable(_param->isEditable());
 }
 
 void
 PNFXTextFieldParameter::updateParam()
 {
-  switch (_param->getType())
-  {
-  case PN_PARAMTYPE_STRING:
-	*(std::string*)_param->getElem() = getText().text();
-	break;
-  case PN_PARAMTYPE_INT:
-	*(pnint*)_param->getElem() = atoi(getText().text());
-	break;
-  case PN_PARAMTYPE_REAL:
-	*(pnfloat*)_param->getElem() = (pnfloat)atof(getText().text());
-	break;
-  default:
-	break;
-  }
+  fromString(getText().text());
 }
 
 //////////////////////////////////////////////////////////////////////////

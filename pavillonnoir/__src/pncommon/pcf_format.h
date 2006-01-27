@@ -51,7 +51,7 @@ static const std::string	PCF_OBJECT_XMLNODE_ROOT		= PCF_OBJECT_XMLDTD_NAME;
 static const std::string	PCF_PARAM_XMLDTD_NAME		= "parameter";
 static const std::string	PCF_PARAM_XMLNODE_ROOT		= PCF_PARAM_XMLDTD_NAME;
 
-#define						PCF_XMLPROP_NAME			(BAD_CAST "name")
+#define						PCF_XMLPROP_CHOISE			(BAD_CAST "choise")
 
 //////////////////////////////////////////////////////////////////////////
 
