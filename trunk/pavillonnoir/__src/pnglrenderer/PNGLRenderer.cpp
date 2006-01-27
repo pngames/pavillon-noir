@@ -139,6 +139,7 @@ _pEnableGL_LEQUAL(false, "Tester profondeur egale", "Activer les test de profond
   else
   {
 	_pDefinitionsList = new PNConfigurableParameterList(this, PN_LISTPARAMTYPE_VPPNOBJECT, &_definitionsList, "Definition", "Definition", true, false);
+	_pDefinitionsList->unsetSerializable(PNConfigurableParameterList::S_VALUE);
 
 	for (int i = 0; modes[i]; ++i)
 	{
@@ -157,6 +158,7 @@ _pEnableGL_LEQUAL(false, "Tester profondeur egale", "Activer les test de profond
 
   _pBppList = new PNConfigurableParameterList(this, PN_LISTPARAMTYPE_UINT, &_bppList, "Bpp", "Bpp", true, false);
   _pBppList->setChoise(2);
+  _pBppList->unsetSerializable(PNConfigurableParameterList::S_VALUE);
 
   //////////////////////////////////////////////////////////////////////////
   // configurabe implementation

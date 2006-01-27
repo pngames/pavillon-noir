@@ -30,6 +30,10 @@
 #ifndef _PNCONFIGURABLEPARAMETERLIST_HPP_
 # define _PNCONFIGURABLEPARAMETERLIST_HPP_
 
+#include <list>
+
+//////////////////////////////////////////////////////////////////////////
+
 #include "PNConfigurableParameter.hpp"
 
 namespace PN {
@@ -37,7 +41,8 @@ namespace PN {
 
 typedef enum
 {
-  PN_LISTPARAMTYPE_INT = PN_NB_PARAMTYPE,	// based on std:list<pnint>
+  PN_LISTPARAMTYPE_BOOL = PN_NB_PARAMTYPE,	// based on std:list<pnbool>
+  PN_LISTPARAMTYPE_INT,						// based on std:list<pnint>
   PN_LISTPARAMTYPE_UINT,					// based on std:list<pnuint>
   PN_LISTPARAMTYPE_REAL,					// based on std:list<pnfloat>
   PN_LISTPARAMTYPE_STRING,					// based on std:list<std::string>
@@ -58,6 +63,12 @@ typedef enum
 
 class PNAPI				PNConfigurableParameterList : public PNConfigurableParameter
 {
+public:
+  typedef enum
+  {
+	S_CHOISE = PNConfigurableParameter::LAST_S,
+	LAST_S = S_CHOISE << 1
+  } serializable;
 protected:
   pnbool				_choosable;
   pnuint				_choise;
@@ -75,6 +86,25 @@ public:
   pnint					getElementList(pnint def);
   pnuint				getElementList(pnuint def);
   pnfloat				getElementList(pnfloat def);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  virtual pnint			_unserializeNode(xmlNode* node);
+  virtual pnint			_serializeContent(xmlNode* node);
+
+  virtual pnint			unserializeFromXML(xmlNode* node);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  template<class _ListType>
+  static pnint			findChoiseIndex(_ListType* list, const std::string& choise);
+
+  pnint					findChoiseIndex(const std::string& choise);
+
+  template<class _ListType>
+  static std::string	findChoiseValue(_ListType* list, pnuint choise);
+
+  std::string			findChoiseValue(pnuint choise);
 };
 
 //////////////////////////////////////////////////////////////////////////

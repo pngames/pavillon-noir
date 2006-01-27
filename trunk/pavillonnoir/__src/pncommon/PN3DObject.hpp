@@ -33,6 +33,8 @@
 #include <vector>
 #include <boost/thread/recursive_mutex.hpp>
 
+//////////////////////////////////////////////////////////////////////////
+
 #include "pnmath.h"
 
 #include "PNPoint3f.hpp"
@@ -40,6 +42,8 @@
 #include "PNMatrixTR4f.hpp"
 #include "PNVector3f.hpp"
 #include "PNNormal3f.hpp"
+
+//////////////////////////////////////////////////////////////////////////
 
 #include "PNLockableObject.hpp"
 #include "IPNXMLSerializable.hpp"

@@ -1,8 +1,8 @@
 /*
- * PNPropertiesGridParameter.cpp
+ * PNFXUIntParameter.hpp
  * 
  * Description :
- * PNPropertiesGridParameter definition
+ * PNFXUIntParameter declaration
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,58 +27,32 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#include "pndefs.h"
 
-#include "PNConfigurableObject.hpp"
-#include "PNConfigurableParameter.hpp"
+#ifndef _PNFXUINTPARAMETER_HPP_
+# define _PNFXUINTPARAMETER_HPP_
 
-#include "PNPropertiesGridParameter.hpp"
+#include <fx.h>
+
+#include "PNFXTextFieldParameter.hpp"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-PNPropertiesGridParameter::PNPropertiesGridParameter(PNConfigurableParameter* param)
-: _param(param)
+class PNEDAPI	PNFXUIntParameter : public PNFXTextFieldParameter
 {
-  
-}
+  FXDECLARE(PNFXUIntParameter);
 
-PNPropertiesGridParameter::~PNPropertiesGridParameter() 
-{
-  
-}
+protected:
+  PNFXUIntParameter() {}
+  PNFXUIntParameter(PNFXUIntParameter&) {}
+public:
+  PNFXUIntParameter(FXComposite* p, PNConfigurableParameter* param);
+  ~PNFXUIntParameter();
 
-//////////////////////////////////////////////////////////////////////////
-
-PNConfigurableParameter*
-PNPropertiesGridParameter::getParam()
-{
-  return _param;
-}
-
-void
-PNPropertiesGridParameter::sendParamModif()
-{
-  if (_param->getConfigurableObject())
-  {
-	_param->getConfigurableObject()->update(_param);
-	_param->getConfigurableObject()->setModified();
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-std::string
-PNPropertiesGridParameter::toString()
-{
-  return _param->toString();
-}
-
-void
-PNPropertiesGridParameter::fromString(const std::string& str)
-{
-  _param->fromString(str);
-}
+  void			create();
+};
 
 //////////////////////////////////////////////////////////////////////////
 };
+
+#endif /*_PNFXUINTPARAMETER_HPP_*/

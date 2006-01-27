@@ -92,6 +92,8 @@ PNConfigurableParameter::_init(PNConfigurableObject* p,
   _altText = altText;
   _type = type;
   _editable = editable;
+
+  _serialization = S_VALUE;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -159,38 +161,116 @@ PNConfigurableParameter::setConfigurableObject(PNConfigurableObject* object)
 //////////////////////////////////////////////////////////////////////////
 
 std::string
+PNConfigurableParameter::toString(pnbool value)
+{
+  return PNBool::staticToString(value);
+}
+
+std::string
+PNConfigurableParameter::toString(pnint value)
+{
+  return PNInt::staticToString(value);
+}
+
+std::string
+PNConfigurableParameter::toString(pnuint value)
+{
+  return PNUInt::staticToString(value);
+}
+
+std::string
+PNConfigurableParameter::toString(pnfloat value)
+{
+  return PNFloat::staticToString(value);
+}
+
+std::string
+PNConfigurableParameter::toString(const std::string& value)
+{
+  return value;
+}
+
+std::string
+PNConfigurableParameter::toString(PNObject* value)
+{
+  return value->toString();
+}
+
+std::string
 PNConfigurableParameter::toString()
 {
   switch (_type)
   {
   case PN_PARAMTYPE_BOOLEAN:
-	return PNBool::staticToString(*((pnbool*)_elem));
+	return toString(*(pnbool*)_elem);
+
   case PN_PARAMTYPE_INT:
-	return PNInt::staticToString(*((pnint*)_elem));
+	return toString(*(pnint*)_elem);
+
   case PN_PARAMTYPE_UINT:
-	return PNUInt::staticToString(*((pnuint*)_elem));
+	return toString(*(pnuint*)_elem);
+
   case PN_PARAMTYPE_REAL:
   case PN_PARAMTYPE_DIALX:
   case PN_PARAMTYPE_DIALY:
   case PN_PARAMTYPE_DIALZ:
-	return PNFloat::staticToString(*((pnfloat*)_elem));
+	return toString(*(pnfloat*)_elem);
+
   case PN_PARAMTYPE_STRING:
   case PN_PARAMTYPE_FILE:
   case PN_PARAMTYPE_DIR:
-	return *((std::string*)_elem);
+	return toString(*(std::string*)_elem);
+
   case PN_PARAMTYPE_LINK:
-	break;
   case PN_PARAMTYPE_EVENTBOX:
-	break;
   case PN_PARAMTYPE_MATERIAL:
-	break;
+	return toString(*(PNObject**)_elem);
+
   case PN_PARAMTYPE_SCRIPTLIST:
-	break;
+	/*FIXME*/
   default:
 	break;
   }
 
   return "";
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void
+PNConfigurableParameter::fromString(pnbool* value, const std::string& str)
+{
+  *value = PNBool::staticToValue(str);
+}
+
+void
+PNConfigurableParameter::fromString(pnint* value, const std::string& str)
+{
+  *value = PNInt::staticToValue(str);
+}
+
+void
+PNConfigurableParameter::fromString(pnuint* value, const std::string& str)
+{
+  *value = PNUInt::staticToValue(str);
+}
+
+void
+PNConfigurableParameter::fromString(pnfloat* value, const std::string& str)
+{
+  *value = PNFloat::staticToValue(str);
+}
+
+void
+PNConfigurableParameter::fromString(std::string* value, const std::string& str)
+{
+  *value = str;
+}
+
+void
+PNConfigurableParameter::fromString(PNObject** value, const std::string& str)
+{
+  (*value)->fromString(str);
 }
 
 void
@@ -199,39 +279,58 @@ PNConfigurableParameter::fromString(const std::string& str)
   switch (_type)
   {
   case PN_PARAMTYPE_BOOLEAN:
-	*((pnbool*)_elem) = PNBool::staticToValue(str);
+	fromString((pnbool*)_elem, str);
 	break;
+
   case PN_PARAMTYPE_INT:
-	*((pnint*)_elem) = PNInt::staticToValue(str);
+	fromString((pnint*)_elem, str);
 	break;
+
   case PN_PARAMTYPE_UINT:
-	*((pnuint*)_elem) = PNUInt::staticToValue(str);
+	fromString((pnuint*)_elem, str);
 	break;
+
   case PN_PARAMTYPE_REAL:
   case PN_PARAMTYPE_DIALX:
   case PN_PARAMTYPE_DIALY:
   case PN_PARAMTYPE_DIALZ:
-	*((pnfloat*)_elem) = PNFloat::staticToValue(str);
+	fromString((pnfloat*)_elem, str);
 	break;
+
   case PN_PARAMTYPE_STRING:
   case PN_PARAMTYPE_FILE:
   case PN_PARAMTYPE_DIR:
-	*((std::string*)_elem) = str;
+	fromString((std::string*)_elem, str);
 	break;
+
   case PN_PARAMTYPE_LINK:
-	break;
   case PN_PARAMTYPE_EVENTBOX:
-	break;
   case PN_PARAMTYPE_MATERIAL:
+	fromString((PNObject**)_elem, str);
 	break;
+
   case PN_PARAMTYPE_SCRIPTLIST:
-	break;
+	/*FIXME*/
   default:
 	break;
   }
 }
 
 //////////////////////////////////////////////////////////////////////////
+
+void
+PNConfigurableParameter::setSerializable(serializable option)
+{
+  _serialization |= option;
+}
+
+void
+PNConfigurableParameter::unsetSerializable(serializable option)
+{
+  _serialization &= ~option;
+}
+
+///
 
 const std::string&
 PNConfigurableParameter::getDTDName() const
@@ -248,17 +347,14 @@ PNConfigurableParameter::getRootNodeName() const
 //////////////////////////////////////////////////////////////////////////
 
 pnint
-PNConfigurableParameter::unserializeFromXML(xmlNode* node)
+PNConfigurableParameter::_unserializeNode(xmlNode* node)
 {
-  for (xmlNodePtr child = node->children ; child != NULL; child = child->next)
-	if (PCF_PARAMV_XMLDTD_NAME == (const char*)child->name)
-	{
-	  xmlChar* attr = xmlGetProp(child, PCF_XMLPROP_DATA);
-	  if (attr != NULL)
-		fromString((const char*)attr);
-
-	  break;
-	}
+  if (PCF_PARAMV_XMLDTD_NAME == (const char*)node->name)
+  {
+	xmlChar* attr = xmlGetProp(node, PCF_XMLPROP_DATA);
+	if (attr != NULL)
+	  fromString((const char*)attr);
+  }
 
   return PNEC_SUCCESS;
 }
@@ -270,19 +366,13 @@ PNConfigurableParameter::_serializeContent(xmlNode* node)
 {
   xmlNewProp(node, PCF_XMLPROP_NAME, BAD_CAST getName().c_str());
 
-  xmlNodePtr valueNode = xmlNewChild(node, NULL, BAD_CAST PCF_PARAMV_XMLDTD_NAME.c_str(), NULL);
-  xmlNewProp(valueNode, PCF_XMLPROP_DATA, BAD_CAST toString().c_str());
+  if (_serialization & S_VALUE)
+  {
+	xmlNodePtr valueNode = xmlNewChild(node, NULL, BAD_CAST PCF_PARAMV_XMLDTD_NAME.c_str(), NULL);
+	xmlNewProp(valueNode, PCF_XMLPROP_DATA, BAD_CAST toString().c_str());
+  }
 
   return PNEC_SUCCESS;
-}
-
-pnint
-PNConfigurableParameter::serializeInXML(xmlNode* root, pnbool isroot/* = false*/)
-{
-  if (!isroot)
-	root = xmlNewChild(root, NULL, BAD_CAST getRootNodeName().c_str(), NULL);
-
-  return _serializeContent(root);
 }
 
 //////////////////////////////////////////////////////////////////////////
