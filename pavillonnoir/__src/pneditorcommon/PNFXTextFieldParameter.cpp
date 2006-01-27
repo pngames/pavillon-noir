@@ -82,18 +82,27 @@ PNFXTextFieldParameter::create()
 {
   FXTextField::create();
 
-  update();
+  updateParam();
 }
 
 void
-PNFXTextFieldParameter::update()
+PNFXTextFieldParameter::updateParam()
 {
   setText(toString().c_str());
   setEditable(_param->isEditable());
 }
 
 void
-PNFXTextFieldParameter::updateParam()
+PNFXTextFieldParameter::apply()
+{
+  _apply();
+  sendParamModif();
+
+  setTextColor(0x000000);
+}
+
+void
+PNFXTextFieldParameter::_apply()
 {
   fromString(getText().text());
 }
@@ -103,10 +112,7 @@ PNFXTextFieldParameter::updateParam()
 long
 PNFXTextFieldParameter::onValueValidated(FXObject*, FXSelector, void* ptr)
 {
-  updateParam();
-  sendParamModif();
-
-  setTextColor(0x000000);
+  apply();
 
   return 1;
 }

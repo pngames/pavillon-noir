@@ -37,13 +37,13 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class PNEDAPI PNFXDialXYZParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
+class PNEDAPI		PNFXDialXYZParameter : public FXHorizontalFrame, public PNPropertiesGridParameter
 {
   FXDECLARE(PNFXDialXYZParameter);
 
-  FXDial*						_dial;
-  FXTextField*				_field;
-  pnint						_oldValue;
+  FXDial*			_dial;
+  FXTextField*		_field;
+  pnint				_oldValue;
 
 protected:
   PNFXDialXYZParameter() : PNPropertiesGridParameter(NULL) {}
@@ -52,8 +52,12 @@ public:
   PNFXDialXYZParameter(FXComposite* p, PNConfigurableParameter* param);
   ~PNFXDialXYZParameter();
 
-  void  create();
-  void  update();
+  void				create();
+
+  void				update();
+
+  void				updateParam();
+  void				apply();
 };
 
 //////////////////////////////////////////////////////////////////////////

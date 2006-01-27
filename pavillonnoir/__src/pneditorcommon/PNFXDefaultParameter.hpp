@@ -53,7 +53,9 @@ public:
   ~PNFXDefaultParameter();
 
   void	create();
-  void	update();
+
+  void	updateParam();
+  void	apply();
 };
 
 //////////////////////////////////////////////////////////////////////////

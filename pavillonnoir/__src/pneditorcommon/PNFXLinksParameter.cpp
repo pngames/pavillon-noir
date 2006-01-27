@@ -93,12 +93,8 @@ PNFXLinksParameter::~PNFXLinksParameter()
 void	PNFXLinksParameter::create()
 {
   FXHorizontalFrame::create();
-  _listbox->create();
-  _buttonDelete->create();
-  _buttonAdd->create();
-  _fieldCoef->create();
 
-  update();
+  updateParam();
 }
 
 /*
@@ -120,8 +116,6 @@ void	PNFXLinksParameter::buildList(void)
 	_listbox->appendItem(str,NULL,*it);
 	_lnkMap[(int)mynext->getId()] = 1;
   }
-
-  return;
 }
 
 /*
@@ -131,6 +125,7 @@ long	PNFXLinksParameter::onCmdListBox(FXObject* obj,FXSelector sel,void* ptr)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXLinksParameter::onCmdListBox");
   updateCoef();
+
   return 1;
 }
 
@@ -205,6 +200,7 @@ long	PNFXLinksParameter::onRadioSimple(FXObject* obj,FXSelector sel,void* ptr)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXLinksParameter::onRadioSimple()");
   _doubleLnk->setCheck(FALSE);
+
   return 1;
 }
 
@@ -215,6 +211,7 @@ long	PNFXLinksParameter::onRadioDouble(FXObject* obj,FXSelector sel,void* ptr)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXLinksParameter::onRadioDouble()");
   _simpleLnk->setCheck(FALSE);
+
   return 1;
 }
 
@@ -246,10 +243,8 @@ long	PNFXLinksParameter::onCancel(FXObject* obj,FXSelector sel,void* ptr)
   return 1;
 }
 
-/*
-*	Updates linkslist
-*/
-void	PNFXLinksParameter::update(void)
+void
+PNFXLinksParameter::updateParam()
 {
   _listbox->clearItems();
   buildList();
@@ -257,8 +252,12 @@ void	PNFXLinksParameter::update(void)
   _listbox->setNumVisible(_listbox->getNumItems());
   _listbox->sortItems();
   updateCoef();
+}
 
-  return;
+void
+PNFXLinksParameter::apply()
+{
+
 }
 
 /*
@@ -276,8 +275,6 @@ void	PNFXLinksParameter::updateCoef(void)
 	_fieldCoef->setText(str);
 	_fieldCoef->setEditable(_param->isEditable());
   }
-
-  return;
 }
 
 //////////////////////////////////////////////////////////////////////////

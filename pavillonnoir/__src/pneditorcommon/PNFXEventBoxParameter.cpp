@@ -59,9 +59,7 @@ PNFXEventBoxParameter::PNFXEventBoxParameter(FXComposite* p, PNConfigurableParam
 : FXTextField(p, 5),
 PNPropertiesGridParameter(param)
 {
-  _current_text = (string*)_param->getElem();
-  setText(_current_text->c_str());
-  this->setEditable(false);
+  
 }
 
 
@@ -69,18 +67,25 @@ PNFXEventBoxParameter::~PNFXEventBoxParameter()
 {
 }
 
-void	PNFXEventBoxParameter::create()
+void
+PNFXEventBoxParameter::create()
 {
   FXTextField::create();
 
-  update();
+  updateParam();
 }
 
-void PNFXEventBoxParameter::update()
+void
+PNFXEventBoxParameter::updateParam()
 {
-  pnerror(PN_LOGLVL_DEBUG, "PNFXEventBoxParameter::onupdate()");
-  string* str = (string*)_param->getElem();
-  setText(str->c_str());
+  setText(toString().c_str());
+  setEditable(false);
+}
+
+void
+PNFXEventBoxParameter::apply()
+{
+
 }
 
 /*! \brief Called on left button press event
@@ -111,7 +116,7 @@ long	PNFXEventBoxParameter::onKeyRelease(FXObject* obj,FXSelector sel, void* ptr
   switch(event->code)
   {
   case KEY_Escape:
-	setText(_current_text->c_str());
+	setText(toString().c_str());
 	break;
   default:
 	{
@@ -122,14 +127,14 @@ long	PNFXEventBoxParameter::onKeyRelease(FXObject* obj,FXSelector sel, void* ptr
 		fxstr.format("%i", event->code);
 		elem->clear();
 		elem->append(fxstr.text());
-		_current_text = elem;
+		sendParamModif();
 	  }
 	  break;
 	}
   }
   setTextColor(0x000000);
   _capture=false;
-  update();
+  updateParam();
 
   return 1;
 }

@@ -92,8 +92,10 @@ public:
   long						onAccept(FXObject* obj,FXSelector sel,void* ptr);
   long						onCancel(FXObject* obj,FXSelector sel,void* ptr);
   void						buildList(void);
-  void						update(void);
   void						updateCoef(void);
+
+  void						updateParam();
+  void						apply();
 };
 
 //////////////////////////////////////////////////////////////////////////

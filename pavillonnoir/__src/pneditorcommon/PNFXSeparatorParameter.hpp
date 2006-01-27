@@ -50,7 +50,9 @@ public:
   ~PNFXSeparatorParameter();
 
   void			create();
-  void			update();
+
+  void			updateParam();
+  void			apply();
 };
 
 //////////////////////////////////////////////////////////////////////////

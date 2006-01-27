@@ -61,8 +61,11 @@ public:
 
   void			create();
 
-  virtual void	update();
   virtual void	updateParam();
+  virtual void	apply();
+
+protected:
+  virtual void	_apply();
 
 public:
   long			onValueChanged(FXObject*, FXSelector, void* ptr);

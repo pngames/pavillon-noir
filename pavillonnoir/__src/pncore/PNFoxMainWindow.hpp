@@ -44,7 +44,7 @@ class					PNFoxMainWindow : public FXMainWindow
 protected:
   bool*					_returnState;
 
-  PNFoxOptionWindow*	_optionWindow;
+  //PNFoxOptionWindow*	_optionWindow;
 
   FXComboBox*			_mapSelector;
   FXVerticalFrame*		_contentMain;
