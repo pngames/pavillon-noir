@@ -47,6 +47,9 @@ class PNQuatf;
  */
 class PNAPI		PNMatrix4f : public PNObject
 {
+  PNDECLARE(PNMatrix4f)
+
+private:
   friend PNAPI std::ostream&	operator<<(std::ostream& o, const PNMatrix4f& mat);
 
   //////////////////////////////////////////////////////////////////////////

@@ -37,6 +37,8 @@ namespace PN {
 
 class PNAPI PNLine : public PNObject
 {
+  PNDECLARE(PNLine)
+
 public:
   PNLine(void);
   ~PNLine(void);

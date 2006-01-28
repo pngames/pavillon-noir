@@ -20,4 +20,5 @@
 
 <!ELEMENT value EMPTY>
 
+<!ATTLIST value class CDATA #IMPLIED>
 <!ATTLIST value data CDATA #REQUIRED>

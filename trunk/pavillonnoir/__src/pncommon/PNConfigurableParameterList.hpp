@@ -98,14 +98,59 @@ public:
   
   template<class _ListType>
   static pnint			findChoiseIndex(_ListType* list, const std::string& choise);
-
   pnint					findChoiseIndex(const std::string& choise);
 
   template<class _ListType>
   static std::string	findChoiseValue(_ListType* list, pnuint choise);
-
   std::string			findChoiseValue(pnuint choise);
+
+  void				  	addToList(const std::string& value);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  template<class _ListType>
+  void					serializeList(_ListType* list, xmlNode* node);
+  void					serializeList(xmlNode* node);
 };
+
+template<class _ListType>
+inline pnint
+PNConfigurableParameterList::findChoiseIndex(_ListType* list, const std::string& value)
+{
+  pnint choise = 0;
+
+  for (_ListType::iterator it = list->begin(); it != list->end(); ++it, ++choise)
+	if (value == toString(*it))
+	  return choise;
+
+  return -1;
+}
+
+template<class _ListType>
+inline std::string
+PNConfigurableParameterList::findChoiseValue(_ListType* list, pnuint index)
+{
+  for (_ListType::iterator it = list->begin(); it != list->end(); ++it, --index)
+	if (index == 0)
+	  return toString(*it);
+
+  return "";
+}
+
+template<class _ListType>
+inline void
+PNConfigurableParameterList::serializeList(_ListType* list, xmlNode* node)
+{
+  for (_ListType::iterator it = list->begin(); it != list->end(); ++it)
+  {
+	xmlNodePtr valueNode = xmlNewChild(node, NULL, BAD_CAST PCF_PARAMV_XMLDTD_NAME.c_str(), NULL);
+
+	if (PNObject::getClass(*it).size() >0)
+	  xmlNewProp(valueNode, PCF_XMLPROP_CLASS, BAD_CAST PNObject::getClass(*it).c_str());
+
+	xmlNewProp(valueNode, PCF_XMLPROP_DATA, BAD_CAST toString(*it).c_str());
+  }
+}
 
 //////////////////////////////////////////////////////////////////////////
 };

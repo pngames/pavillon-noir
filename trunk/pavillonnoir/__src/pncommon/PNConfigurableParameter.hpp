@@ -139,6 +139,11 @@ public:
   static void					fromString(PNObject** value, const std::string& str);
 
   //////////////////////////////////////////////////////////////////////////
+  
+public:
+  virtual PNObject*				getObjectByClass(const std::string& name);
+
+  //////////////////////////////////////////////////////////////////////////
 
   virtual const std::string&	getDTDName() const;
   virtual const std::string&	getRootNodeName() const;

@@ -39,6 +39,8 @@ namespace PN {
 
 class PNAPI					PNPoint3f: public PNObject
 {
+  PNDECLARE(PNPoint3f)
+
 private:
   friend PNAPI PNPoint3f	operator+(const PNPoint3f& p1, const PNPoint3f& p2);
   friend PNAPI PNPoint3f	operator-(const PNPoint3f& p1, const PNPoint3f& p2);
