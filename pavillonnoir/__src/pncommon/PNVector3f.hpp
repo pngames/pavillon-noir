@@ -38,7 +38,6 @@
 
 #include "pndefs.h"
 #include "pnmath.h"
-#include "IAutoTestable.hpp"
 #include "PNPoint3f.hpp"
 
 /////////////////////////////////////
@@ -49,6 +48,8 @@ namespace PN {
 
 class PNAPI							PNVector3f : public PNPoint3f
 {
+  PNDECLARE(PNVector3f)
+
 public:
   PNVector3f();
   PNVector3f(pnfloat x, pnfloat y, pnfloat z);

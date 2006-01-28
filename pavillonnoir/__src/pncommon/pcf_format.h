@@ -58,6 +58,7 @@ static const std::string	PCF_PARAM_XMLNODE_ROOT		= PCF_PARAM_XMLDTD_NAME;
 static const std::string	PCF_PARAMV_XMLDTD_NAME		= "value";
 static const std::string	PCF_PARAMV_XMLNODE_ROOT		= PCF_PARAMV_XMLDTD_NAME;
 
+#define						PCF_XMLPROP_CLASS			(BAD_CAST "class")
 #define						PCF_XMLPROP_DATA			(BAD_CAST "data")
 
 #endif /*_PCF_FORMAT_H_*/

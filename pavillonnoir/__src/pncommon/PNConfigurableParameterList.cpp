@@ -33,6 +33,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "pndefs.h"
+#include "pnobject_base_types.h"
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -144,19 +145,6 @@ PNConfigurableParameterList::getElementList(pnfloat def)
 
 //////////////////////////////////////////////////////////////////////////
 
-template<class _ListType>
-pnint
-PNConfigurableParameterList::findChoiseIndex(_ListType* list, const std::string& value)
-{
-  pnint choise = 0;
-
-  for (_ListType::iterator it = list->begin(); it != list->end(); ++it, ++choise)
-	if (value == toString(*it))
-	  return choise;
-
-  return -1;
-}
-
 pnint
 PNConfigurableParameterList::findChoiseIndex(const std::string& value)
 {
@@ -188,20 +176,8 @@ PNConfigurableParameterList::findChoiseIndex(const std::string& value)
   default:
 	break;
   }
-  
 
   return -1;
-}
-
-template<class _ListType>
-std::string
-PNConfigurableParameterList::findChoiseValue(_ListType* list, pnuint index)
-{
-  for (_ListType::iterator it = list->begin(); it != list->end(); ++it, --index)
-	if (index == 0)
-	  return toString(*it);
-
-  return "";
 }
 
 std::string
@@ -239,6 +215,72 @@ PNConfigurableParameterList::findChoiseValue(pnuint index)
   return "";
 }
 
+void
+PNConfigurableParameterList::addToList(const std::string& value)
+{
+  switch (_type)
+  {
+  case PN_LISTPARAMTYPE_BOOL:
+	((std::list<pnbool>*)_elem)->push_back(PNBool::staticToValue(value));
+  case PN_LISTPARAMTYPE_INT:
+	((std::list<pnint>*)_elem)->push_back(PNInt::staticToValue(value));
+  case PN_LISTPARAMTYPE_UINT:
+	((std::list<pnuint>*)_elem)->push_back(PNUInt::staticToValue(value));
+  case PN_LISTPARAMTYPE_REAL:
+	((std::list<pnfloat>*)_elem)->push_back(PNFloat::staticToValue(value));
+  case PN_LISTPARAMTYPE_STRING:
+  case PN_LISTPARAMTYPE_FILE:
+  case PN_LISTPARAMTYPE_DIR:
+	((std::list<std::string>*)_elem)->push_back(value);
+
+  case PN_LISTPARAMTYPE_LPPNOBJECT:
+	/*FIXME*/
+
+  case PN_LISTPARAMTYPE_VPPNOBJECT:
+  case PN_LISTPARAMTYPE_MATERIAL:
+  case PN_LISTPARAMTYPE_ANIM:
+	/*FIXME*/
+
+  case PN_LISTPARAMTYPE_LINK:
+	/*FIXME*/
+  default:
+	break;
+  }
+}
+
+void
+PNConfigurableParameterList::serializeList(xmlNode* node)
+{
+  switch (_type)
+  {
+  case PN_LISTPARAMTYPE_BOOL:
+	return serializeList((std::list<pnbool>*)_elem, node);
+  case PN_LISTPARAMTYPE_INT:
+	return serializeList((std::list<pnint>*)_elem, node);
+  case PN_LISTPARAMTYPE_UINT:
+	return serializeList((std::list<pnuint>*)_elem, node);
+  case PN_LISTPARAMTYPE_REAL:
+	return serializeList((std::list<pnfloat>*)_elem, node);
+  case PN_LISTPARAMTYPE_STRING:
+  case PN_LISTPARAMTYPE_FILE:
+  case PN_LISTPARAMTYPE_DIR:
+	return serializeList((std::list<std::string>*)_elem, node);
+
+  case PN_LISTPARAMTYPE_LPPNOBJECT:
+	return serializeList((std::list<PNObject*>*)_elem, node);
+
+  case PN_LISTPARAMTYPE_VPPNOBJECT:
+  case PN_LISTPARAMTYPE_MATERIAL:
+  case PN_LISTPARAMTYPE_ANIM:
+	return serializeList((std::vector<PNObject*>*)_elem, node);
+
+  case PN_LISTPARAMTYPE_LINK:
+	/*FIXME*/
+  default:
+	break;
+  }
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 pnint
@@ -248,7 +290,7 @@ PNConfigurableParameterList::_unserializeNode(xmlNode* node)
   {
 	xmlChar* attr = xmlGetProp(node, PCF_XMLPROP_DATA);
 	
-	/*FIXME*/
+	addToList((const char*)attr);
   }
 
   return PNEC_SUCCESS;
@@ -280,7 +322,7 @@ PNConfigurableParameterList::_serializeContent(xmlNode* node)
 
   if (_serialization & S_VALUE)
   {
-	/*FIXME*/
+	serializeList(node);
   }
 
   return PNEC_SUCCESS;

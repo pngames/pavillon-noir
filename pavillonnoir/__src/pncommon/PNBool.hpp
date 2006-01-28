@@ -35,8 +35,10 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class 					PNBool : public PNBaseValue<pnbool>
+class /*PNAPI*/			PNBool : public PNBaseValue<pnbool>
 {
+  PNDECLARE(PNBool)
+
 public:
   PNBool();
   PNBool(pnbool value) : PNBaseValue<pnbool>(value) {}

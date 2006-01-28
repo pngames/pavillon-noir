@@ -581,6 +581,10 @@
 			Name="properties"
 			>
 			<File
+				RelativePath="..\..\..\__binaries\datafiles\configuration\configuration.dtd"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\pcf_format.h"
 				>
 			</File>
@@ -816,10 +820,6 @@
 		<Filter
 			Name="maths"
 			>
-			<File
-				RelativePath="..\..\..\__src\pncommon\IAutoTestable.hpp"
-				>
-			</File>
 			<File
 				RelativePath="..\..\..\__src\pncommon\PNLine.cpp"
 				>

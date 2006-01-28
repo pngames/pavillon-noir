@@ -36,14 +36,28 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
+#define PNDECLARE(classname)  \
+public:	\
+  virtual std::string			getClass() const { return getStaticClass(); } \
+  static std::string			getStaticClass() { return #classname; };
+
 /// Base object for all classes of pncommon
 class PNAPI						PNObject
 {
+  PNDECLARE(PNObject)
+
 public:
   virtual ~PNObject() {}
 
   virtual std::string			toString() const;
   virtual void					fromString(const std::string& str);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  template<class _Type>
+  static std::string			getClass(const _Type& object) { return ""; }
+  static std::string			getClass(const PNObject* object);
+  static std::string			getClass(const PNObject& object);
 };
 
 typedef std::vector<PNObject*>	PNVPPNObjectParameter;

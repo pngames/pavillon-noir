@@ -37,7 +37,6 @@ using namespace std;
 /////////////////////////////////////
 
 #include "pndefs.h"
-#include "IAutoTestable.hpp"
 #include "PNNormal3f.hpp"
 
 /////////////////////////////////////
