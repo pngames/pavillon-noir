@@ -160,6 +160,15 @@ PNConfigurableParameter::setConfigurableObject(PNConfigurableObject* object)
 
 //////////////////////////////////////////////////////////////////////////
 
+PNObject*
+PNConfigurableParameter::getObjectByClass(const std::string& name)
+{
+  //if (name == )
+  return NULL;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 std::string
 PNConfigurableParameter::toString(pnbool value)
 {

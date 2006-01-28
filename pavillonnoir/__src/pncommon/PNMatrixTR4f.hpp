@@ -47,6 +47,7 @@ class PNVector3f;
  */
 class PNAPI		PNMatrixTR4f : public PNMatrix4f
 {
+  PNDECLARE(PNMatrixTR4f)
 public:
   PNMatrixTR4f();
   PNMatrixTR4f(const PNMatrix4f& matrix);

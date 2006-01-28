@@ -39,12 +39,24 @@ namespace PN {
 std::string
 PNObject::toString() const
 {
-  return "PNObject";
+  return getClass();
 }
 
 void
 PNObject::fromString(const std::string& str)
 { }
+
+std::string
+PNObject::getClass(const PNObject* object)
+{
+  return object->getClass();
+}
+
+std::string
+PNObject::getClass(const PNObject& object)
+{
+  return object.getClass();
+}
 
 //////////////////////////////////////////////////////////////////////////
 };
