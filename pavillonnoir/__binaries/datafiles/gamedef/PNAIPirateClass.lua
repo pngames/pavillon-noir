@@ -12,6 +12,7 @@ function PNAIPirateClass(id)
 	OBJ.shownCharacType = CHARACTER_TYPE.PIRATE
 	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
 	OBJ.ennemyJustReached = true
+	OBJ.elapsedTurns = 0
 	OBJ.stats=	{strength=5,
 						 address=3,
 						 adaptation=6,

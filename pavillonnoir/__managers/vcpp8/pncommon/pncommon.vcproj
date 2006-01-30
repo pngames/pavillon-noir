@@ -501,6 +501,10 @@
 			Name="sound"
 			>
 			<File
+				RelativePath=".\pncommon.rc"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\PNSoundEventData.hpp"
 				>
 			</File>
@@ -985,10 +989,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\pncommon.rc"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

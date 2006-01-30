@@ -254,8 +254,12 @@ function gameMap:fightAction(sourceId)
 	if (self.fights[targetId] == sourceId) then
 		self.fights[targetId] = -1
 	end
-	source:waitForAnimEnd(sAnim)
-	target:waitForAnimEnd(tAnim)
+	if (source.health_state < HEALTH_STATE.COMA) then
+		source:waitForAnimEnd(sAnim)
+	end
+	if (target.health_state < HEALTH_STATE.COMA) then
+		target:waitForAnimEnd(tAnim)
+	end
 	source.combat_state = COMBAT_STATE.NEUTRAL
 	target.combat_state = COMBAT_STATE.NEUTRAL
 	pnprint("<= gameMap:fightAction()\n")
