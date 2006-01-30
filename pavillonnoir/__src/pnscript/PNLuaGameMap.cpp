@@ -46,6 +46,7 @@ extern "C"
 #include "PNLuaGameMap.hpp"
 #include "PNLuaGameUtil.h"
 #include "PNLuaGame.hpp"
+#include "PNRendererInterface.hpp"
 using namespace PN; 
 
 
@@ -275,7 +276,9 @@ void  PNLuaGameMap::onDeath(pnEventType evt, PNObject* source, PNEventData* data
   luaOrder << "\")";
   pnerror(PN_LOGLVL_DEBUG, "%s", luaOrder.str().c_str());
   manageLuaError(_LVM.execString(luaOrder.str()));
-  delete source;
+  //delete the object from the rendered objects list
+  //PNRendererInterface::getInstance()->deleteObj(source);
+  //delete source;
 }
 
 void  PNLuaGameMap::sendGameActionEvent(std::string eventName, PN::PNGameActionEventData *eventData)
