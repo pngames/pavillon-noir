@@ -174,7 +174,7 @@ If it is detected as an ennemy, the character switches to the fighting mode
 		if ((target:getId() ~= self.id) and (isInstanceOf(target, "PNCharacter"))) then
 			pnprint("J'ai cru voir un rominet !\n")
 			self.ennemies[target:getId()] = 1
-			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= CHARACTER_TYPE.CIVILIAN) and (self:getViewTarget() == nil)) then
+			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= CHARACTER_TYPE.CIVILIAN) and (self:getViewTarget() == nil) and (target.health_state < HEALTH_STATE.COMA)) then
 				pnprint("Mais oui, j'ai bien vu un rominet !\n")
 				self:setTarget(target)
 				self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
@@ -212,10 +212,10 @@ Called at the end of a Fight Action
 			--Anim Coma
 		elseif (self.health_state >= HEALTH_STATE.LETHAL) then
 			--Anim Death
-			self:startAnimation(CHARACTER_ANIM.DIE)
-			self:setState(self.stateEnum.PN_IA_COMA)
 			gameMap:sendEventFromLua(self, 17) -- DeathEvent
-			pnprint(self.id .. "is dead !\n")
+			self:waitForAnimEnd(CHARACTER_ANIM.DIE)
+			self:setState(self.stateEnum.PN_IA_COMA)
+			pnprint(self.id .. " is dead !\n")
 		end
 		
 	end
@@ -238,9 +238,13 @@ Checks if waited Animation is the one that ended
 	function OBJ:checkAnimEnd(anim)
 		pnprint("=> PNAICharacter:checkAnimEnd(" .. anim .. ") and waited: " .. self.waitedAnim .. "\n")
 		if ((self.state == self.stateEnum.PN_IA_WAIT_ANIM_END) and (self.waitedAnim == anim)) then
-			self:restoreState()
-			if (self.state == self.stateEnum.PN_IA_FIGHTING and (self.combat_state == COMBAT_STATE.ATTACK)) then
-				self.combat_state = COMBAT_STATE.NEUTRAL
+			if (self.health_state >= HEALTH_STATE.LETHAL) then --if is dead
+				--delete object
+			else
+				self:restoreState()
+				if (self.state == self.stateEnum.PN_IA_FIGHTING and (self.combat_state == COMBAT_STATE.ATTACK)) then -- if is fighting
+					self.combat_state = COMBAT_STATE.NEUTRAL
+				end
 			end
 		end
 		pnprint("<= PNAICharacter:checkAnimEnd\n")
@@ -272,7 +276,10 @@ Not used yet
 		pnprint("=> " .. self.id .. ":isDead(" .. deadId .. ")\n")
 		if (self:getViewTarget():getId() == deadId) then
 			local newTargetId = -1
-			for id in self.ennemies do
+			if (self.ennemies[deadId] ~= NULL) then
+				self.ennemies[deadId] = NULL
+			end
+			for id in self.ennemies do -- can be null ?
 				if ((newTargetId == -1) or (self:getCoord():getDistance(gameMap.entities.all[newTargetId]:GetCoord()) > self:getCoord():getDistance(gameMap.entities.all[id]:GetCoord()))) then
 					newTargetId = id
 				end
@@ -282,9 +289,6 @@ Not used yet
 			else
 				self:setTarget(nil)
 				self:restoreState()
-			end
-			if (self.ennemies[deadId] ~= NULL) then
-				self.ennemies[deadId] = NULL
 			end
 		end
 		pnprint("<= " .. self.id .. ":isDead(" .. deadId .. ")\n")

@@ -328,7 +328,7 @@ Add the entity in the seen_entities list
 		self.idleTime = self.idleTime + deltaTime;
 		if (self.idleTime >= 10000 and self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.NONE) then
 			self:setEnableLoop(false)
-			self:startAnimation(CHARACTER_ANIM.IDLE)
+			--self:startAnimation(CHARACTER_ANIM.IDLE)
 			self.idleTime = 0
 		end
 		self:PN3DSkeletonObject_onUpdate(deltaTime)
@@ -520,8 +520,15 @@ Launches an Animation and waits for its end
 		--pnprint("competence=" .. self.stats[self.selected_weapon.skill] .. " modifier=" .. self.selected_weapon.modifier .. " nbDice=" .. nbDice .. "\n")
 	
 		-- Success Modifiers
-		local distance = self:getCoord():getDistance(self:getViewTarget():getCoord())
+		local distance = 0;
+		if (self:getViewTarget() ~= nil) then
+			pnprint("distance is set\n")
+			distance = self:getCoord():getDistance(self:getViewTarget():getCoord())
+		end
 		local range = self.selected_weapon.range
+		pnprint(self:getId() .. " -> ")
+		--pnprint(self:getViewTarget():getId())
+		pnprint(" d=" .. distance .. "\n")
 		if ((self.selected_weapon.type ~= firearm) and (self.selected_weapon.type ~= throw_weapon)) then
 			if (distance < range) then
 				-- nb success
