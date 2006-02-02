@@ -170,7 +170,7 @@ const PNQuatf&	PNOpalObject::getOrient()
   return _orient;
 }
 
-/** Return the physical object's offset between its rendering center and its center of mass
+/** Return the physical object's offset (scaled) between its rendering center and its center of mass
 *
 * \return offset
 */ 
@@ -178,6 +178,16 @@ const PNQuatf&	PNOpalObject::getOrient()
 const PNPoint3f&	PNOpalObject::getOffset()
 {
   return _offset;
+}
+
+/** Return the physical object's offset between its rendering center and its center of mass
+*
+* \return offset
+*/ 
+
+const PNPoint3f&	PNOpalObject::getRenderOffset()
+{
+  return _renderOffset;
 }
 
 /** Return the Opal physical object (opal::Solid)
@@ -238,8 +248,8 @@ void			PNOpalObject::setTransform(const PNPoint3f& coord, const PNQuatf& orient,
   pntransform.loadIdentity();
   pntransform.setTranslation(trans);
   pntransform.setRotationQuaternion(orient);
-
   transform.set(pntransform.getMatrix());
+
   _solid->setTransform(transform);
 }
 
@@ -416,7 +426,21 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
   // create and instantiate the opal blueprint
   _file = file.string();
   opal::loadFile(_blueprint, _file);
-  _sim->instantiateBlueprint(_blueprintInstance, _blueprint, opal::Matrix44r(), mpp);
+
+  
+  opal::Matrix44r offset;
+  offset.makeIdentity();
+
+  /* Could be used if the PN3DObject was reachable here */
+  /*
+  offset.scale( mpp );
+  offset.makeTranslation( position[ 0 ], position[ 1 ], position[ 2 ] );
+  offset.rotate( orientation[ 0 ], 1, 0, 0 );
+  offset.rotate( orientation[ 1 ], 0, 1, 0 );
+  offset.rotate( orientation[ 2 ], 0, 0, 1 );
+  */
+
+  _sim->instantiateBlueprint(_blueprintInstance, _blueprint, offset, mpp);
 
   _solid = _blueprintInstance.getSolid("Boite01");
   if (_solid != NULL)
@@ -451,11 +475,10 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
   PNOpal* pnopalInstance = (PNOpal*)PNOpal::getInstance();
   _solid->setCollisionEventHandler((opal::CollisionEventHandler*)pnopalInstance->getEventHandler());
 
-  // get the solid translation
+  // set the offsets (physically scaled & rendering)
   opal::real* translation = _solid->getTransform().getTranslation().getData();
-  
-  //_solid->getTransform().setPosition(translation[0] * mpp, translation[1] * mpp, translation[2] * mpp);
   _offset.set(translation[0], translation[1], translation[2]);
+  _renderOffset.set(translation[0] / mpp, translation[1] / mpp, translation[2] / mpp);
 
   // create a motor
   _movementMotor = _sim->createSpringMotor();

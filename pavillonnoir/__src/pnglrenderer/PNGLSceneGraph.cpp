@@ -178,7 +178,7 @@ PNRendererInterface::getInstance()->renderSphere(100.0, 20, 20, scolor, lpos);
 		PNLOCK_BEGIN(obj);
 		{
 		  const PNPoint3f&  pos = obj->getCoord();
-		  const PNPoint3f&  offset = obj->getPhysicalObject() == NULL ? PNPoint3f::ZERO : obj->getPhysicalObject()->getOffset();
+		  const PNPoint3f&  offset = obj->getPhysicalObject() == NULL ? PNPoint3f::ZERO : obj->getPhysicalObject()->getRenderOffset();
 		  const PNQuatf&  orient = obj->getOrient();
 
 		  transMatrix.setRotationQuaternion(orient);
