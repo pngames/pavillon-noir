@@ -55,6 +55,7 @@ public:
   virtual const PNPoint3f&	getCoord()=0;
   virtual const PNQuatf&	getOrient()=0;
   virtual const PNPoint3f&	getOffset()=0;
+  virtual const PNPoint3f&	getRenderOffset()=0;
 
   //////////////////////////////////////////////////////////////////////////
 

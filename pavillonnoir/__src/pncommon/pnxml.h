@@ -54,7 +54,7 @@ static const std::string	PNENTITY_XMLNODE_ROOT	= "entity";
 // Attributes
 
 #define PNXML_ID_ATTR				(const xmlChar *)"id"
-#define PNXML_MPP_ATTR				(const xmlChar *)"mpp"
+#define PNXML_MEPEPI_ATTR			(const xmlChar *)"mpp"
 #define PNXML_COORDX_ATTR			(const xmlChar *)"x"
 #define PNXML_COORDY_ATTR			(const xmlChar *)"y"
 #define PNXML_COORDZ_ATTR			(const xmlChar *)"z"

@@ -103,6 +103,7 @@ private:
   pnfloat						_aabb[6];
   pndouble						_radius;
   PNPoint3f						_offset;
+  PNPoint3f						_renderOffset;
 
 public:
   PNOpalObject(opal::Simulator* sim);
@@ -114,6 +115,7 @@ public:
   const PNPoint3f&				getCoord();
   const PNQuatf&				getOrient();
   const PNPoint3f&				getOffset();
+  const PNPoint3f&				getRenderOffset();
   opal::Solid*					getOpalSolid();
   opal::AccelerationSensor*		getAccelSensor();
 
