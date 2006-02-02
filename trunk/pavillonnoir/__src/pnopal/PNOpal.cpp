@@ -49,7 +49,7 @@
 #define PNOPAL_LABEL "physics"
 #define GRAVITY -9.81
 #define STEPSIZE 0.02
-#define TIME_SCALE 100
+#define TIME_SCALE 1000
 #define DEFAULT_FORCE_MAGNITUDE 300000.0f
 #define DEFAULT_FORCE_DURATION 0.0f
 
@@ -77,9 +77,9 @@ void  PNOpal::init()
   pnerror(PN_LOGLVL_DEBUG, "%s", "PNOpal (PNPhysicsInterface implementation) initialization");
 
   PNEventManager::getInstance()->addCallback(PN_EVENT_ML_STARTED, EventCallback(this, &PNOpal::_onMapLoad));
-  //PNEventManager::getInstance()->addCallback(PN_EVENT_ML_ENDED, EventCallback(this, &PNOpal::_onMapLoaded));
-  //PNEventManager::getInstance()->addCallback(PN_EVENT_MU_ENDED, EventCallback(this, &PNOpal::_onMapUnload));
-  //PNEventManager::getInstance()->addCallback(PN_EVENT_PU_START, EventCallback(this, &PNOpal::_onFrame));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_ML_ENDED, EventCallback(this, &PNOpal::_onMapLoaded));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_MU_ENDED, EventCallback(this, &PNOpal::_onMapUnload));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_PU_START, EventCallback(this, &PNOpal::_onFrame));
 
   _label = PNOPAL_LABEL;
   addParam(new PNConfigurableParameter(this, PN_PARAMTYPE_BOOLEAN, &_paused, "pause", "pause"));
