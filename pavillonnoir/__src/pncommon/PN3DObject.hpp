@@ -132,6 +132,8 @@ public:
   void								addMovingState(pnuint mstate);
   /// sub bit mask indicate in witch moving states is the 3D object
   void								subMovingState(pnuint mstate);
+  /// test bit mask indicate in witch moving states is the 3D object
+  pnbool								testMovingState(pnuint mstate);
   /// Get the moving speed of 3D object
   pnfloat							getMovingSpeed() const;
   /// Set the moving speed of 3D object
