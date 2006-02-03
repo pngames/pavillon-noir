@@ -136,6 +136,7 @@ namespace PN{
 	static void  _addForce(const std::string&, std::istream& i);
 	static void  _listPhysicalObjects(const std::string&, std::istream& i);
 	static void	 _setPhysicalObjectsDynamic(const std::string&, std::istream& i);
+	static void	 _showObjectCoord(const std::string&, std::istream& i);
 
 	//////////////////////////////////////////////////////////////////////////
 
