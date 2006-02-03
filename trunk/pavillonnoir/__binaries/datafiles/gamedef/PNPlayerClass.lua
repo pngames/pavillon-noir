@@ -13,17 +13,19 @@ function PNPlayerClass(id)
 --	PNRenderCam:setViewTarget(RCVT)
 	PNRenderCam:setViewTarget(OBJ)
 	PNRenderCam:setPositionTarget(OBJ)
-    PNRenderCam:setTargetPosition(0, 50 , 150)
+    PNRenderCam:setTargetPosition(0, 75 , 200)
     PNRenderCam:setTargetDistance(150)
+    --PNRenderCam:setTargetOrientation(PNQuatf:new_local(0.0, 0.0, 0.1, 1));
     PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
     PNRenderCam:addTargetMode(PN3DObject.TMODE_DISTANCE_ABS_LOCKED)
     PNRenderCam:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
+    PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_LOCKED)
     --PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_ABS_LOCKED)
     
     
 -----------------------------------------------------------
 	function OBJ:onMouseLook(y, x)
-		PNRenderCam:subTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
+	--	PNRenderCam:subTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
 	--	PNRenderCam:getViewTarget():subMovingState(PN3DObject.STATE_T_FORWARD)
 		
 	end    

@@ -526,6 +526,14 @@ PN3DObject::subMovingState(pnuint mstate)
   _movingState &= ~mstate;
 }
 
+pnbool
+PN3DObject::testMovingState(pnuint mstate)
+{
+  PNLOCK(this);
+
+  return (_movingState & mstate);
+}
+
 pnfloat
 PN3DObject::getMovingSpeed() const
 {
