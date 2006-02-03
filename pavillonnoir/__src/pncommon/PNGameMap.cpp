@@ -143,7 +143,7 @@ PNGameMap::_unserializeEntity(xmlNode* node)
 
   if (object == NULL)
 	return PNEC_ERROR;
-
+    
   //////////////////////////////////////////////////////////////////////////
 
   SEND_LOAD_STEP(eaLoadStep, className + " " + id + ": parsing", 2.0f / nbSteps)

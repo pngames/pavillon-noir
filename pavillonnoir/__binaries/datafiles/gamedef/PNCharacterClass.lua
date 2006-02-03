@@ -232,7 +232,8 @@ Call when someone tell the object to rotate right
 	function OBJ:onRotateRight(state)
 		pnprint(self.id)
 		pnprint(":onRotateRight\n")
-		self:PN3DSkeletonObject_onRotateRight(state)		
+		self:PN3DSkeletonObject_onRotateRight(state)
+		self:launchGoodAnimation()		
 	end	
 -------------------------------------------------------------------------------
 --[[%
@@ -246,6 +247,7 @@ Call when someone tell the object to rotate left
 		pnprint(":onRotateLeft\n")
 		self:PN3DSkeletonObject_onRotateLeft(state)	
 		self.yawSpeed = self.defaultRotateSpeed;
+		self:launchGoodAnimation()
 	end
 -------------------------------------------------------------------------------
 --[[%
@@ -324,13 +326,13 @@ Add the entity in the seen_entities list
 		--pnprint("speed: " .. self.actualSpeed .."\n")
 		--pnprint("attitude: " .. self.attitude.."\n")
 		self.view:update(deltaTime)
-		self:setMovingSpeed(self.actualSpeed)
-		self.idleTime = self.idleTime + deltaTime;
-		if (self.idleTime >= 10000 and self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.NONE) then
-			self:setEnableLoop(false)
-			--self:startAnimation(CHARACTER_ANIM.IDLE)
-			self.idleTime = 0
-		end
+	--	self:setMovingSpeed(self.actualSpeed)
+	--	self.idleTime = self.idleTime + deltaTime;
+	--	if (self.idleTime >= 10000 and self:getMovingState() == 0) then
+	--		self:setEnableLoop(false)
+	--		self:launchGoodAnimation()
+	--		self.idleTime = 0
+	--	end
 		self:PN3DSkeletonObject_onUpdate(deltaTime)
 	end
 	
@@ -393,92 +395,204 @@ Returns the type of the character that is visible to others
 	end
 --------------------------------------------------------------------------------
 	function OBJ:launchGoodAnimation()
+	
+			self:setEnableLoop(true)
+		if (self.attitude == CHARACTER_ATTITUDE.WALKING) then
+			pnprint ("walk\n")
+			if (self:getMovingState() == 0)then
+				self:startAnimation(CHARACTER_ANIM.IDLE)
+				self.idleTime = 0
+				print("IDLE")
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_T_FORWARD) and self:testMovingState(PN3DObject.STATE_R_LEFT)) then
+				self:startAnimation(CHARACTER_ANIM.WALK_L)
+				print("f CHARACTER_ANIM.WALK_L")
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_T_FORWARD) and self:testMovingState(PN3DObject.STATE_R_RIGHT)) then
+				self:startAnimation(CHARACTER_ANIM.WALK_R)
+				print("f CHARACTER_ANIM.WALK_R")
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_T_BACKWARD) and self:testMovingState(PN3DObject.STATE_R_LEFT)) then
+				self:startAnimation(CHARACTER_ANIM.WALK_L)
+				print("b CHARACTER_ANIM.WALK_L")
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_T_BACKWARD) and self:testMovingState(PN3DObject.STATE_R_RIGHT)) then
+				self:startAnimation(CHARACTER_ANIM.WALK_R)
+				print("b CHARACTER_ANIM.WALK_R")
+				return	
+			elseif (self:testMovingState(PN3DObject.STATE_T_FORWARD)) then
+				self:startAnimation(CHARACTER_ANIM.WALK_F)
+				print("f CHARACTER_ANIM.WALK_F")
+				return	
+			elseif (self:testMovingState(PN3DObject.STATE_T_BACKWARD)) then
+				self:startAnimation(CHARACTER_ANIM.WALK_B)
+				print("b CHARACTER_ANIM.WALK_B")
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_R_RIGHT)) then
+				self:startAnimation(CHARACTER_ANIM.WALK_R)
+				print("CHARACTER_ANIM.WALK_R")
+				return	
+			elseif (self:testMovingState(PN3DObject.STATE_R_LEFT)) then
+				self:startAnimation(CHARACTER_ANIM.WALK_L)
+				print("CHARACTER_ANIM.WALK_L")
+				return		
+			end 
+		elseif (self.attitude == CHARACTER_ATTITUDE.RUNNING) then
+		    pnprint ("Run\n")
+		    if (self:getMovingState() == 0)then
+				self:startAnimation(CHARACTER_ANIM.IDLE)
+				self.idleTime = 0
+				print("IDLE")
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_T_FORWARD) and self:testMovingState(PN3DObject.STATE_R_LEFT)) then
+				self:startAnimation(CHARACTER_ANIM.RUN_L)
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_T_FORWARD) and self:testMovingState(PN3DObject.STATE_R_RIGHT)) then
+				self:startAnimation(CHARACTER_ANIM.RUN_R)
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_T_BACKWARD) and self:testMovingState(PN3DObject.STATE_R_LEFT)) then
+				self:startAnimation(CHARACTER_ANIM.RUN_L)
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_T_BACKWARD) and self:testMovingState(PN3DObject.STATE_R_RIGHT)) then
+				self:startAnimation(CHARACTER_ANIM.RUN_R)
+				return	
+			elseif (self:testMovingState(PN3DObject.STATE_T_FORWARD)) then
+				self:startAnimation(CHARACTER_ANIM.RUN_F)
+				return	
+			elseif (self:testMovingState(PN3DObject.STATE_T_BACKWARD)) then
+				self:startAnimation(CHARACTER_ANIM.RUN_B)
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_R_RIGHT)) then
+				self:startAnimation(CHARACTER_ANIM.RUN_R)
+				return	
+			elseif (self:testMovingState(PN3DObject.STATE_R_LEFT)) then
+				self:startAnimation(CHARACTER_ANIM.RUN_L)
+				return		
+			end 		
+		elseif (self.attitude == CHARACTER_ATTITUDE.CROUCHING) then
+		    pnprint ("Crouch\n")
+			if (self:getMovingState() == 0)then
+				self:startAnimation(CHARACTER_ANIM.CROUCH)
+				self.idleTime = 0
+				print("IDLE")
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_T_FORWARD) and self:testMovingState(PN3DObject.STATE_R_LEFT)) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_L)
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_T_FORWARD) and self:testMovingState(PN3DObject.STATE_R_RIGHT)) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_R)
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_T_BACKWARD) and self:testMovingState(PN3DObject.STATE_R_LEFT)) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_L)
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_T_BACKWARD) and self:testMovingState(PN3DObject.STATE_R_RIGHT)) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_R)
+				return	
+			elseif (self:testMovingState(PN3DObject.STATE_T_FORWARD)) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_F)
+				return	
+			elseif (self:testMovingState(PN3DObject.STATE_T_BACKWARD)) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_B)
+				return
+			elseif (self:testMovingState(PN3DObject.STATE_R_RIGHT)) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_R)
+				return	
+			elseif (self:testMovingState(PN3DObject.STATE_R_LEFT)) then
+				self:startAnimation(CHARACTER_ANIM.CROUCH_L)
+				return		
+			end 						
+		elseif (self.attitude == CHARACTER_ATTITUDE.JUMPING) then
+			if 	   (self:testMovingState(PN3DObject.STATE_T_BACKWARD) and self:testMovingState(PN3DObject.STATE_T_LEFT)) then
+				self:startAnimation(CHARACTER_ANIM.JUMP, 0)
+				return		
+			end 		
+		end
 		--[[
 		self:setEnableLoop(true)
 		if (self.attitude == CHARACTER_ATTITUDE.WALKING) then
 			--pnprint ("walk\n")
 			if (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.NONE)then
-				self:startAnimation(CHARACTER_ANIM.IDLE, 0)
+				self:startAnimation(CHARACTER_ANIM.IDLE)
 				self.idleTime = 0
 				print("toto")
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
-				self:startAnimation(CHARACTER_ANIM.WALK_L, 0)
+				self:startAnimation(CHARACTER_ANIM.WALK_L)
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
-				self:startAnimation(CHARACTER_ANIM.WALK_R, 0)
+				self:startAnimation(CHARACTER_ANIM.WALK_R)
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.NONE) then
-				self:startAnimation(CHARACTER_ANIM.WALK_F, 0)
+				self:startAnimation(CHARACTER_ANIM.WALK_F)
 				return	
 			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
-				self:startAnimation(CHARACTER_ANIM.WALK_L, 0)
+				self:startAnimation(CHARACTER_ANIM.WALK_L)
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
-				self:startAnimation(CHARACTER_ANIM.WALK_R, 0)
+				self:startAnimation(CHARACTER_ANIM.WALK_R)
 				return	
 			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.NONE) then
-				self:startAnimation(CHARACTER_ANIM.WALK_B, 0)
+				self:startAnimation(CHARACTER_ANIM.WALK_B)
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
-				self:startAnimation(CHARACTER_ANIM.WALK_R, 0)
+				self:startAnimation(CHARACTER_ANIM.WALK_R)
 				return	
 			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
-				self:startAnimation(CHARACTER_ANIM.WALK_L, 0)
+				self:startAnimation(CHARACTER_ANIM.WALK_L)
 				return		
 			end 
 		elseif (self.attitude == CHARACTER_ATTITUDE.RUNNING) then
 		    pnprint ("Run\n")
 			if 	   (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
-				self:startAnimation(CHARACTER_ANIM.RUN_L, 0)
+				self:startAnimation(CHARACTER_ANIM.RUN_L)
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
-				self:startAnimation(CHARACTER_ANIM.RUN_R, 0)
+				self:startAnimation(CHARACTER_ANIM.RUN_R)
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.NONE) then
-				self:startAnimation(CHARACTER_ANIM.RUN_F, 0)
+				self:startAnimation(CHARACTER_ANIM.RUN_F)
 				return	
 			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
-				self:startAnimation(CHARACTER_ANIM.RUN_L, 0)
+				self:startAnimation(CHARACTER_ANIM.RUN_L)
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
-				self:startAnimation(CHARACTER_ANIM.RUN_R, 0)
+				self:startAnimation(CHARACTER_ANIM.RUN_R)
 				return	
 			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.NONE) then
-				self:startAnimation(CHARACTER_ANIM.RUN_B, 0)
+				self:startAnimation(CHARACTER_ANIM.RUN_B)
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
-				self:startAnimation(CHARACTER_ANIM.RUN_R, 0)
+				self:startAnimation(CHARACTER_ANIM.RUN_R)
 				return	
 			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
-				self:startAnimation(CHARACTER_ANIM.RUN_L, 0)
+				self:startAnimation(CHARACTER_ANIM.RUN_L)
 				return		
 			end 		
 		elseif (self.attitude == CHARACTER_ATTITUDE.CROUCHING) then
 		    pnprint ("Crouch\n")
 			if 	   (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
-				self:startAnimation(CHARACTER_ANIM.CROUCH_L, 0)
+				self:startAnimation(CHARACTER_ANIM.CROUCH_L)
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
-				self:startAnimation(CHARACTER_ANIM.CROUCH_R, 0)
+				self:startAnimation(CHARACTER_ANIM.CROUCH_R)
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.FORWARD and self.dirLate == CHARACTER_DIR_LATE.NONE) then
-				self:startAnimation(CHARACTER_ANIM.CROUCH_F, 0)
+				self:startAnimation(CHARACTER_ANIM.CROUCH_F)
 				return	
 			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
-				self:startAnimation(CHARACTER_ANIM.CROUCH_L, 0)
+				self:startAnimation(CHARACTER_ANIM.CROUCH_L)
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
-				self:startAnimation(CHARACTER_ANIM.CROUCH_R, 0)
+				self:startAnimation(CHARACTER_ANIM.CROUCH_R)
 				return	
 			elseif (self.dirLong == CHARACTER_DIR_LONG.BACKWARD and self.dirLate == CHARACTER_DIR_LATE.NONE) then
-				self:startAnimation(CHARACTER_ANIM.CROUCH_B, 0)
+				self:startAnimation(CHARACTER_ANIM.CROUCH_B)
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.RIGHT) then
-				self:startAnimation(CHARACTER_ANIM.CROUCH_R, 0)
+				self:startAnimation(CHARACTER_ANIM.CROUCH_R)
 				return	
 			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.LEFT) then
-				self:startAnimation(CHARACTER_ANIM.CROUCH_L, 0)
+				self:startAnimation(CHARACTER_ANIM.CROUCH_L)
 				return
 			elseif (self.dirLong == CHARACTER_DIR_LONG.NONE and self.dirLate == CHARACTER_DIR_LATE.NONE) then
 				self:startAnimation(CHARACTER_ANIM.CROUCH, 0)

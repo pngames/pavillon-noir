@@ -37,6 +37,8 @@ public:
   void						addMovingState(unsigned int mstate);
   /// sub bit mask indicate in witch moving states is the 3D object
   void						subMovingState(unsigned int mstate);
+  /// test bit mask indicate in witch moving states is the 3D object
+  pnbool					testMovingState(pnuint mstate);
   /// Get the moving speed of 3D object
   float						getMovingSpeed();
   /// Set the moving speed of 3D object
