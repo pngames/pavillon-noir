@@ -262,7 +262,7 @@ void  PNGUIGame::_commandHideWP(const std::string&, std::istream& i)
   }
 }
 
-//FIXME: this is the cradest way to test PF!
+//FIXME: this is the ugliest way to test PF!
 void  PNGUIGame::_commandMoveTo(const std::string&, std::istream& i)
 {
   PN3DObjList::iterator it;
@@ -340,11 +340,13 @@ void  PNGUIGame::_addForce(const std::string&, std::istream& i)
   pnfloat y = 0.0f;
   pnfloat z = 0.0f;
   pnfloat duration = 0.0f;
+  pnfloat magnitude = 0.0f;
 
   i >> objectid;
   i >> x;
   i >> y;
   i >> z;
+  i >> magnitude;
   i >> duration;
 
   if (!(x == 0.0f && y == 0.0f && z == 0.0f && duration == 0.0f))
@@ -354,8 +356,12 @@ void  PNGUIGame::_addForce(const std::string&, std::istream& i)
 	if (it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end())
 	{
 	  PN3DObject* current_obj = it->second;
-	  // FIXME
-	  //current_obj->getPhysicalObject()->addForce(x, y, z, duration);
+	  PNVector3f vec;
+	  vec.x = x;
+	  vec.y = y;
+	  vec.z = z;
+
+	  current_obj->getPhysicalObject()->addForce(vec, magnitude, duration);
 	}
 	else
 	  PNConsole::writeLine("object %s does not exist", objectid.c_str());
@@ -382,6 +388,25 @@ void  PNGUIGame::_setPhysicalObjectsDynamic(const std::string&, std::istream& i)
   {
 	PNPhysicsInterface::getInstance()->setAllPhysicalObjectsStatic(true);
   }
+}
+
+void PNGUIGame::_showObjectCoord(const std::string&, std::istream& i)
+{
+  std::string objectid;
+  i >> objectid;
+
+  PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().find(objectid.c_str());
+
+  if (it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end())
+  {
+	PN3DObject* current_obj = it->second;
+	PNPoint3f coords = current_obj->getCoord();
+	
+	PNConsole::writeLine("%s coords : %f, %f, %f", objectid.c_str(), coords.x, coords.y, coords.z);
+  }
+  else
+	PNConsole::writeLine("object %s does not exist", objectid.c_str());
+
 }
 
 void  PNGUIGame::_setScriptingDebug(const std::string&, std::istream& i)
@@ -464,6 +489,7 @@ void PNGUIGame::suscribeConsoleCommand()
   PNConsole::addFonction("addforce", &PNGUIGame::_addForce, "Add force to a physical object, addforce objectid x y z duration");
   PNConsole::addFonction("listphysics", &PNGUIGame::_listPhysicalObjects, "List physical objects");
   PNConsole::addFonction("setdyn", &PNGUIGame::_setPhysicalObjectsDynamic, "Set all physical objects dynamic, 0=false or 1=true");
+  PNConsole::addFonction("showobjcoord", &PNGUIGame::_showObjectCoord, "Display the object coordinates, showobjcoord objectid");
   //////////////////////////////////////////////////////////////////////////
   PNConsole::addFonction("setscriptingdebug", &PNGUIGame::_setScriptingDebug, "Activates or deactivates the scripting's debug logging to file \"pnscript.log\", 0=false or 1=true");
   //////////////////////////////////////////////////////////////////////////
