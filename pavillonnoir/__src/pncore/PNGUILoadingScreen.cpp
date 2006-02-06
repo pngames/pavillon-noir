@@ -31,6 +31,7 @@
 #include <time.h>
 
 #include "pndefs.h"
+#include "pnrender.h"
 #include "PNGameEventData.hpp"
 #include "PNGUILoadingScreen.hpp"
 
@@ -194,6 +195,7 @@ PNGUILoadingScreen::startGUI(pnEventType type, PNObject* source, PNEventData* da
 void
 PNGUILoadingScreen::resetGUI(pnEventType type, PNObject* source, PNEventData* data)
 {
+  PNRendererInterface::getInstance()->flushSDLEvents();
   hide();
 }
 

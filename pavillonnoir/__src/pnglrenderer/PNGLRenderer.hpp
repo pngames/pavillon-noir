@@ -118,6 +118,8 @@ public:
 
   void						run();
   void						endRendering();
+  void						flushSDLEvents();
+  bool						getSDLGrabState();
   
   //////////////////////////////////////////////////////////////////////////
   
