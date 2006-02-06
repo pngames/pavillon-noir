@@ -29,6 +29,6 @@ obj.target = 'pnimporter' + env['suffix'] + '.pnp'
 obj.instdir = env['install_prefix'] + env['install_path'] + '/linux/plugins' + env['debug_path']
 obj.libpaths = [env.Dir('#./build/pncommon/').abspath]
 obj.libs = ['pncommon'+env['suffix']]
-obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath])
-obj.linkflags = ' '.join(['-lpncommon'+env['suffix']])
+obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],env['XML_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath])
+obj.linkflags = ' '.join([env['XML_LDFLAGS'],'-lpncommon'+env['suffix']])
 obj.execute()
