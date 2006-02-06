@@ -43,7 +43,7 @@ class PN3DSkeleton;
 class PN3DAnimation;
 
 /// 3D object containing skeleton and animation to work with
-class PNAPI					PN3DSkeletonObject : public PN3DObject, public IPNAnimated
+class PNAPI					PN3DSkeletonObject : public PN3DObject/*, public IPNAnimated*/
 {
 public:
   /// Sub Objects to render
@@ -72,6 +72,11 @@ private:
   /// Animations list associated with this object
   AnimationVector			_anims;
   AnimationSet				_animsToPlay;
+
+  pnfloat					_defaultAnimSpeed;
+
+  pnuint					_animTransTime;
+  pnfloat					_animTransitionStep;
 public:
   /// Default constructor for PN3DSkeletonObject.
   PN3DSkeletonObject();
