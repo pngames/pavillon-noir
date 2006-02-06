@@ -103,6 +103,9 @@ function PNCharacterClass(id)
 	OBJ.combat_state = COMBAT_STATE.NEUTRAL
 	OBJ.realCharacType = CHARACTER_TYPE.CIVILIAN
 	OBJ.shownCharacType = CHARACTER_TYPE.CIVILIAN
+	OBJ.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2, PN_IA_WAIT_ANIM_END = 3, PN_IA_COMA}
+	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
+
 	--------------------------------------
 	OBJ.load_capacity = 10;
 	--------------------------------------
@@ -136,7 +139,8 @@ function PNCharacterClass(id)
 	--------------- Animation parameters ---------------------- 
 	OBJ:setAnimSpeed(4.0)
 	OBJ.idleTime = 0
-	OBJ.waitedAnim = 0
+	OBJ.waitedAnim = -1
+	OBJ.striking = false
 	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_F, true)
 	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_B, true)
 	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_R, true)
@@ -149,6 +153,7 @@ function PNCharacterClass(id)
 	OBJ:setEnableLoop(CHARACTER_ANIM.CROUCH_B, true)
 	OBJ:setEnableLoop(CHARACTER_ANIM.CROUCH, true)		
 	OBJ:setEnableLoop(CHARACTER_ANIM.IDLE, true)
+	OBJ:setEnableLoop(CHARACTER_ANIM.DIE, true)
 	----------------- Fight Management ------------------------ 
 	OBJ.armor = 0
 	gameMap.fights[OBJ.id] = -1
@@ -379,9 +384,24 @@ Add the entity in the seen_entities list
     end	
 --------------------------------------------------------------------------------
 --[[%
-Overriden in PNAICharacterClass
+Called at the end of a Fight Action
 %--]]
     function OBJ:onDamage(damage, localisation)
+		pnprint(self.id .. " gets " .. damage .. " at localisation " .. localisation .. " as damage\n")
+		self.m_wounds[localisation] = self.m_wounds[localisation] + damage
+		if (self.m_wounds[localisation] > self.health_state) then
+			self.health_state = self.m_wounds[localisation]
+		end
+		if (self.health_state == HEALTH_STATE.COMA) then
+			self:setState(self.stateEnum.PN_IA_COMA)
+			--Anim Coma
+		elseif (self.health_state >= HEALTH_STATE.LETHAL) then
+			--Anim Death
+			gameMap:sendEventFromLua(self, 17) -- DeathEvent
+			self:waitForAnimEnd(CHARACTER_ANIM.DIE)
+			self:setState(self.stateEnum.PN_IA_COMA)
+			pnprint(self.id .. " is dead !\n")
+		end
 	end
 --------------------------------------------------------------------------------
 --[[%
@@ -413,7 +433,7 @@ Launch the good annimation regarding the state of the Character
 		self:setEnable(CHARACTER_ANIM.CROUCH_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
 			
 		self:setEnable(CHARACTER_ANIM.CROUCH, (self:getMovingState() == 0) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
-		self:setEnable(CHARACTER_ANIM.IDLE, (self:getMovingState() == 0) and (self.attitude ~= CHARACTER_ATTITUDE.CROUCHING))
+	--	self:setEnable(CHARACTER_ANIM.IDLE, (self:getMovingState() == 0) and (self.attitude ~= CHARACTER_ATTITUDE.CROUCHING))
 	end
 --------------------------------------------------------
 --[[%

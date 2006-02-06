@@ -329,6 +329,8 @@ PNEventManager::run()
 	  pnevent& event = _events.front();
 
 	  type = event.type;
+	  if (type == PN_EVENT_F_IN)
+		pnerror(PN_LOGLVL_DEBUG, "managing frustrum in event");
 	  source = event.source;
 	  data = event.data;
 
@@ -358,11 +360,13 @@ void	PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* d
 
   PNLOCK(this);
 
+  if (type == PN_EVENT_F_IN)
+	pnerror(PN_LOGLVL_DEBUG, "adding frustrum in event");
   _events.push(pnevent(type, source, data));
 
   if (_events.size() == 1)
   {
-	//pnerror(PN_LOGLVL_INFO, "stack was empty");
+	//pnerror(PN_LOGLVL_DEBUG, "stack was empty");
     _cond.notify_all();
   }
 }

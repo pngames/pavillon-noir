@@ -13,13 +13,13 @@ function PNAIPirateClass(id)
 	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
 	OBJ.ennemyJustReached = true
 	OBJ.elapsedTurns = 0
-	OBJ.stats=	{strength=5,
+	OBJ.stats=	{strength=3,
 						 address=3,
 						 adaptation=6,
 						 awareness=6,
-						 resistance=6
+						 resistance=8
 						}
-	OBJ.skills=	{h2h_combat=9, -- hand to hand
+	OBJ.skills=	{h2h_combat=6, -- hand to hand
 						 firearm=5,
 						 slasher=8,
 						 throw_weapon=7,
@@ -45,8 +45,8 @@ Called while handling a fight
 			self.ennemyJustReached = false
 			self.elapsedTurns = 0
 		else
+			self:onMoveForward(ACTION_STATE.STOP)
 			if (self.elapsedTurns == 0) then
-				self:onMoveForward(ACTION_STATE.STOP)
 				self.ennemyJustReached = true
 			end
 			if ((self.ennemyJustReached == true) or ((self.elapsedTurns) == (self.stats.awareness * 50))) then
@@ -67,8 +67,10 @@ Called when an ennemy enters the frustrum
 Prepares the Character to handle a fight
 %--]]
 	OVERRIDE(OBJ, "startFight")
-	function OBJ:startFight()
+	function OBJ:startFight(target)
 		pnprint("fightpirate\n")
+		self:setTarget(target)
+		self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
 		self:setState(self.stateEnum.PN_IA_FIGHTING)
 		self:onMoveForward(ACTION_STATE.STOP)
 		-- anim combat, sortir l'arme toussa

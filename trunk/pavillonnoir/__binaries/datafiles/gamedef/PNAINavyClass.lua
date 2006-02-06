@@ -13,13 +13,13 @@ function PNAINavyClass(id)
 	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
 	OBJ.ennemyJustReached = false
 	OBJ.elapsedTurns = 0
-	OBJ.stats=	{strength=4,
+	OBJ.stats=	{strength=3,
 						 address=7,
 						 adaptation=6,
 						 awareness=4,
-						 resistance=5
+						 resistance=7
 						}
-	OBJ.skills=	{h2h_combat=4,
+	OBJ.skills=	{h2h_combat=5,
 						 firearm=7,
 						 slasher=8,
 						 throw_weapon=3,
@@ -35,7 +35,7 @@ Called while handling a fight
 	function OBJ:manageFight()
 		--print("==>> PNAINavy:manageFight()")
 		--print(self)
-	    if (self.combat_state == COMBAT_STATE.ATTACK) then
+	    if (self.combat_state == COMBAT_STATE.ATTACK or self:getViewTarget() == nil) then
 	    	return
 	    end
 		if (self:getCoord():getDistance(self:getViewTarget():getCoord()) > self.selected_weapon.range) then
@@ -46,13 +46,13 @@ Called while handling a fight
 			self.ennemyJustReached = false
 			self.elapsedTurns = 0
 		else
+			self:onMoveForward(ACTION_STATE.STOP)
 			if ((2 * self.health_state) < self:getViewTarget().health_state) then
 				self.combat_state = COMBAT_STATE.DODGE
 			else
 				self.combat_state = COMBAT_STATE.DEFENSE
 			end
 			if (self.elapsedTurns == 0) then
-				self:onMoveForward(ACTION_STATE.STOP)
 				self.ennemyJustReached = true
 			end
 			if ((self.ennemyJustReached == true) or ((self.elapsedTurns) >= (1000 / self.stats.awareness))) then
@@ -73,8 +73,10 @@ Called when an ennemy enters the frustrum
 Prepares the Character to handle a fight
 %--]]
 	OVERRIDE(OBJ, "startFight")
-	function OBJ:startFight()
+	function OBJ:startFight(target)
 		pnprint("fightnavy\n")
+		self:setTarget(target)
+		self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
 		self:setState(self.stateEnum.PN_IA_FIGHTING)
 		self:onMoveForward(ACTION_STATE.STOP)
 		-- anim combat, sortir l'arme toussa
