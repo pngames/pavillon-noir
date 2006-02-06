@@ -12,7 +12,7 @@ function PNAICharacterClass(id)
     OBJ.id = id
     pnprint("PNCharacterClass creating 2\n")
 
-	OBJ:setMovingSpeed(0.5)
+--	OBJ:setMovingSpeed(0.5)
 	OBJ.hurry = false
 	OBJ.realCharacType = CHARACTER_TYPE.CIVILIAN
 	OBJ.shownCharacType = CHARACTER_TYPE.CIVILIAN
@@ -23,8 +23,6 @@ function PNAICharacterClass(id)
 	OBJ.pathFinding:unserializeFromPath(gameMap:getWpFile())
 --	pnprint("pathFinding created\n")
 	OBJ.toReach = PN3DObject:new_local()
-	OBJ.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2, PN_IA_WAIT_ANIM_END = 3, PN_IA_COMA}
-	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
 	OBJ.elapsedTurns = 0
 	OBJ.pastStates = {}
 	OBJ.ennemies = {}
@@ -61,13 +59,22 @@ Called during PathFinding to resolve the travel
 		if (distance <= 10.0) then
 			self.pathFinding:moveNext(self.toReach)
 			local distance2 = self:getCoord():getDistance(self.toReach:getCoord())
-			if (distance2 <= 50.0) then
+			if (distance2 <= 10.0) then
 				self:restoreState()
 				self:onMoveForward(ACTION_STATE.STOP)
 				return
 			end
 			self:setTarget(self.toReach)
 			self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
+		end
+		for id, val in pairs(self.ennemies) do
+			if (val == 1) then
+				local ennemy = gameMap.entities.all[id]
+				pnprint(self.id .. " viewing an ennemy (" .. ennemy:getId() .. ") while travelling, can he attack him ?\n")
+				if (self:getCoord():getDistance(ennemy:getCoord()) < self:getCoord():getDistance(self.toReach:getCoord())) then
+					self:startFight(ennemy)
+				end
+			end
 		end
 	end
 --------------------------------------------------------
@@ -103,7 +110,9 @@ Prepares the character to handle the PathFinding
 Called when an ennemy enters the frustrum
 Prepares the Character to handle a fight
 %--]]
-	function OBJ:startFight()
+	function OBJ:startFight(target)
+		self:setTarget(target)
+		self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
 	    print("==>> PNAICharacter:startFight()")
 	    print(self)
 	    print("<<== PNAICharacter:startFight()")
@@ -175,10 +184,17 @@ If it is detected as an ennemy, the character switches to the fighting mode
 			pnprint("J'ai cru voir un rominet !\n")
 			self.ennemies[target:getId()] = 1
 			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= CHARACTER_TYPE.CIVILIAN) and (self:getViewTarget() == nil) and (target.health_state < HEALTH_STATE.COMA)) then
-				pnprint("Mais oui, j'ai bien vu un rominet !\n")
-				self:setTarget(target)
-				self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
-				self:startFight()
+				if (self.state == self.stateEnum.PN_IA_TRAVELING) then
+					if (self:getCoord():getDistance(target:getCoord()) < self:getCoord():getDistance(self:getViewTarget():getCoord())) then
+						pnprint("Mais oui, j'ai bien vu un rominet !\n")
+						self:startFight()
+					end
+				elseif (self:getCoord():getDistance(target:getCoord()) < 10 * self.selected_weapon.range) then
+					pnprint("Mais oui, j'ai bien vu un rominet !\n")
+					self:startFight()
+				else
+					self:moveTo(target:getCoord())
+				end
 			end
 		end
 	end
@@ -191,33 +207,10 @@ Called when an object enters the frustrum of the character
 		self:PNCharacter_onFrustrumOut(target)
 		pnprint(self.id .. " NOT viewing " .. target:getId() .. "\n")
 		if (target:getId() ~= self.id) then
-			if (self.ennemies[target:getId()] ~= NULL) then
-				self.ennemies[target:getId()] = NULL
+			if (self.ennemies[target:getId()] ~= nil) then
+				self.ennemies[target:getId()] = nil
 			end
 		end
-	end
---------------------------------------------------------
---[[%
-Called at the end of a Fight Action
-%--]]
-	OVERRIDE(OBJ, "onDamage")
-	function OBJ:onDamage(damage, localisation)
-		pnprint(self.id .. " gets " .. damage .. " at localisation " .. localisation .. " as damage\n")
-		self.m_wounds[localisation] = self.m_wounds[localisation] + damage
-		if (self.m_wounds[localisation] > self.health_state) then
-			self.health_state = self.m_wounds[localisation]
-		end
-		if (self.health_state == HEALTH_STATE.COMA) then
-			self:setState(self.stateEnum.PN_IA_COMA)
-			--Anim Coma
-		elseif (self.health_state >= HEALTH_STATE.LETHAL) then
-			--Anim Death
-			gameMap:sendEventFromLua(self, 17) -- DeathEvent
-			self:waitForAnimEnd(CHARACTER_ANIM.DIE)
-			self:setState(self.stateEnum.PN_IA_COMA)
-			pnprint(self.id .. " is dead !\n")
-		end
-		
 	end
 --------------------------------------------------------
 --[[%
@@ -279,9 +272,11 @@ Not used yet
 			if (self.ennemies[deadId] ~= NULL) then
 				self.ennemies[deadId] = NULL
 			end
-			for id in self.ennemies do -- can be null ?
-				if ((newTargetId == -1) or (self:getCoord():getDistance(gameMap.entities.all[newTargetId]:GetCoord()) > self:getCoord():getDistance(gameMap.entities.all[id]:GetCoord()))) then
-					newTargetId = id
+			for id, val in self.ennemies do
+				if (val == 1) then
+					if ((newTargetId == -1) or (self:getCoord():getDistance(gameMap.entities.all[newTargetId]:GetCoord()) > self:getCoord():getDistance(gameMap.entities.all[id]:GetCoord()))) then
+						newTargetId = id
+					end
 				end
 			end
 			if (newTargetId ~= -1) then

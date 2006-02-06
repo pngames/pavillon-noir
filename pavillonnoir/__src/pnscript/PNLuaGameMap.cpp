@@ -210,10 +210,9 @@ void  PNLuaGameMap::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData*
   PN3DObject*	  viewer = viewerCamera->getPositionTarget();
   std::string	  luaOrder;
 
-  pnerror(PN_LOGLVL_DEBUG, "frustrum in : %s view %s", viewerCamera->getId().c_str(), viewed->getId().c_str());
-
   if (viewer != NULL)
   {
+	pnerror(PN_LOGLVL_DEBUG, "frustrum in : %s views %s", viewer->getId().c_str(), viewed->getId().c_str());
 	luaOrder = "gameMap:onFrustrumIn(\"";
 	luaOrder += viewer->getId().c_str();
 	luaOrder += "\",\"";

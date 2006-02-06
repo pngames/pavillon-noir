@@ -157,7 +157,7 @@ Call when before object destruction
 --------------------------------------------------------
 --[[%
 Call when player push the primary attack button
-%--]]	
+%--]]
 	function OBJ:onPrimaryAttack()
 		local id = nil
 		local entity = nil
@@ -182,6 +182,15 @@ Call when player push the primary attack button
 			sendGameActionEvent("Attack", self:getId(), entity:getTarget(), true)
 		end
 		--@TODO: launch attack annimation				
+	end
+---------------------------------------------------------
+--[[%
+Called at the end of a Fight Action
+%--]]
+	OVERRIDE(OBJ, "onDamage")
+    function OBJ:onDamage(damage, localisation)
+    	self:PNCharacter_onDamage(damage, localisation)
+    	-- call refresh of life bar
 	end
 ---------------------------------------------------------
 	
