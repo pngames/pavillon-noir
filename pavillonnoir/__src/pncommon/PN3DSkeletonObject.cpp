@@ -57,7 +57,10 @@ PN3DSkeletonObject::PN3DSkeletonObject() : _skeleton(NULL)
 {
   _objType = OBJTYPE_3DSKELETONOBJ;
 
-  _defaultAnimSpeed = 1.0;
+  _defaultAnimSpeed = 1.0f;
+
+  _animTransTime = 0;
+  _animTransitionStep = 1.0f;
 }
 
 PN3DSkeletonObject::~PN3DSkeletonObject()
