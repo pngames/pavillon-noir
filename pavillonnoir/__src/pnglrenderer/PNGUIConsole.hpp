@@ -49,6 +49,7 @@ public:
   boost::recursive_mutex			_mutex;
 
 private:
+  bool								_cursorVisibility;
   CEGUI::Window*		  	  		_pnConsole;
   CEGUI::Editbox*					_editBox;
   CEGUI::Listbox*					_listBox;
@@ -62,11 +63,17 @@ private:
   pnuint							_listboxItemSize;
   std::string						_currentHistoryLine;
   bool								_consoleVisibility;
-  bool								_fadeIn;
-  bool								_fadeOut;
+  float								_fadeTimer;
+  float								_frameAlphaValue;
  CEGUI::ListboxTextItem*			_hackItem1;
  CEGUI::ListboxTextItem*			_hackItem2; 
-
+ enum 
+ {
+   winVisible,
+   winHidden,
+   winFadeIn,
+   winFadeOut
+ }								  _winState;
 
   /*/////////////////////////////////////////////////////////////////////////////
   /                                    Methods                                  /
@@ -88,7 +95,7 @@ private:
   static void						changeAlpha(const std::string& command, std::istream &parameters);
   static void						quitGame(const std::string& command, std::istream &parameters);
 
-  void								fadeInOut(pnEventType type, PNObject* source, PNEventData* data);
+  void								update(pnEventType type, PNObject* source, PNEventData* data);
 
   /*/////////////////////////////////////////////////////////////////////////////
   /                           Constructors / Destructor                         /

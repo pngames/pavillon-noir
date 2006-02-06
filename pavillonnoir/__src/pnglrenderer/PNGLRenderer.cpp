@@ -573,6 +573,19 @@ PNGLRenderer::endRendering()
   SDL_Quit();
 }
 
+void
+PNGLRenderer::flushSDLEvents()
+{
+  SDL_Event		event;
+  while (SDL_PollEvent(&event))
+	;
+}
+
+bool
+PNGLRenderer::getSDLGrabState()
+{
+  return SDL_WM_GrabInput(SDL_GRAB_QUERY);
+}
 //////////////////////////////////////////////////////////////////////////
 
 PNRendererObject*

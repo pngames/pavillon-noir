@@ -70,6 +70,8 @@ public:
   
   virtual void				run()=0;
   virtual void				endRendering()=0;
+  virtual void				flushSDLEvents()=0;
+  virtual bool				getSDLGrabState()=0;
 
   //////////////////////////////////////////////////////////////////////////
   
