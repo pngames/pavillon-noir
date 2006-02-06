@@ -531,7 +531,7 @@ PN3DObject::testMovingState(pnuint mstate)
 {
   PNLOCK(this);
 
-  return (_movingState & mstate);
+  return (_movingState & mstate) != 0;
 }
 
 pnfloat
