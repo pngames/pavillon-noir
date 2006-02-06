@@ -25,10 +25,11 @@ PNFXTextFieldParameter.cpp
 PNFXListParameter.cpp
 PNFXSeparatorParameter.cpp
 PNFXVPPNObjectParameter.cpp
+PNFXUIntParameter.cpp
 """.split()
 obj.target = 'libpneditorcommon' + env['suffix']
 obj.vnum = env['package_version']
 obj.instdir = env['install_prefix'] + env['install_path'] + '/linux'
-obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],env['FOX_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath])
-obj.linkflags = ' '.join([env['FOX_LDFLAGS']])
+obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],env['FOX_FLAGS'],env['XML_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath])
+obj.linkflags = ' '.join([env['FOX_LDFLAGS'],env['XML_LDFLAGS']])
 obj.execute()

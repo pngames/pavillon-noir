@@ -35,6 +35,8 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "PNConfigurableParameter.hpp"
+#include "pcf_format.h"
+#include "libxml/xmlreader.h"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -119,7 +121,7 @@ PNConfigurableParameterList::findChoiseIndex(_ListType* list, const std::string&
 {
   pnint choise = 0;
 
-  for (_ListType::iterator it = list->begin(); it != list->end(); ++it, ++choise)
+  for (typename _ListType::iterator it = list->begin(); it != list->end(); ++it, ++choise)
 	if (value == toString(*it))
 	  return choise;
 
@@ -130,7 +132,7 @@ template<class _ListType>
 inline std::string
 PNConfigurableParameterList::findChoiseValue(_ListType* list, pnuint index)
 {
-  for (_ListType::iterator it = list->begin(); it != list->end(); ++it, --index)
+  for (typename _ListType::iterator it = list->begin(); it != list->end(); ++it, --index)
 	if (index == 0)
 	  return toString(*it);
 
@@ -141,7 +143,7 @@ template<class _ListType>
 inline void
 PNConfigurableParameterList::serializeList(_ListType* list, xmlNode* node)
 {
-  for (_ListType::iterator it = list->begin(); it != list->end(); ++it)
+  for (typename _ListType::iterator it = list->begin(); it != list->end(); ++it)
   {
 	xmlNodePtr valueNode = xmlNewChild(node, NULL, BAD_CAST PCF_PARAMV_XMLDTD_NAME.c_str(), NULL);
 
