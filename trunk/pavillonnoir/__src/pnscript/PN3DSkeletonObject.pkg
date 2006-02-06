@@ -9,8 +9,11 @@ public:
   }						rendermode;
 
 //////////////////////////////////////////////////////////////////////////
+  pnuint				setEnable(pnuint animId, pnbool enabled);
+  pnbool				isEnable(pnuint animId) const;
   
   pnuint				startAnimation();
+  
   pnuint				startAnimation(pnuint animId);
 
   /// Stop current animation and reset position

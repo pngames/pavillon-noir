@@ -12,14 +12,17 @@ function PNPlayerClass(id)
 	
 --	PNRenderCam:setViewTarget(RCVT)
 	PNRenderCam:setViewTarget(OBJ)
+	PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
+	
 	PNRenderCam:setPositionTarget(OBJ)
     PNRenderCam:setTargetPosition(0, 75 , 200)
-    PNRenderCam:setTargetDistance(150)
+    PNRenderCam:addTargetMode(PN3DObject.TMODE_POSITION_LOCKED)
+    
+    --PNRenderCam:setTargetDistance(150)
     --PNRenderCam:setTargetOrientation(PNQuatf:new_local(0.0, 0.0, 0.1, 1));
-    PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-    PNRenderCam:addTargetMode(PN3DObject.TMODE_DISTANCE_ABS_LOCKED)
-    PNRenderCam:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
-    PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_LOCKED)
+
+    --PNRenderCam:addTargetMode(PN3DObject.TMODE_DISTANCE_ABS_LOCKED)
+    --PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_LOCKED)
     --PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_ABS_LOCKED)
     
     
