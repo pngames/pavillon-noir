@@ -13,7 +13,6 @@ PN3DGround.cpp
 PN3DObject.cpp
 PN3DSkeletonAnimation.cpp
 PN3DSkeletonObject.cpp
-PNBool.cpp
 PNBoolParameter.cpp
 PNBoundingBox.cpp
 PNBoundingSphere.cpp
@@ -21,6 +20,7 @@ PNCallBackList.cpp
 PNCharacter.cpp
 PNConf.cpp
 PNConfPanel.cpp
+PNConfigurableObject.cpp
 PNConfigurableParameter.cpp
 PNConfigurableParameterList.cpp
 PNConsole.cpp
@@ -30,7 +30,6 @@ PNException.cpp
 PNExportInterface.cpp
 PNExportManager.cpp
 PNFace.cpp
-PNFloat.cpp
 PNFloatParameter.cpp
 PNGameInterface.cpp
 PNGameMap.cpp
@@ -38,7 +37,6 @@ PNI18n.cpp
 PNIAGraph.cpp
 PNImportInterface.cpp
 PNImportManager.cpp
-PNInt.cpp
 PNIntParameter.cpp
 PNInterface.cpp
 PNLine.cpp
@@ -63,7 +61,6 @@ PNRendererInterface.cpp
 PNSoundInterface.cpp
 PNStringParameter.cpp
 PNTriangle.cpp
-PNUInt.cpp
 PNUIntParameter.cpp
 PNVector3f.cpp
 PNWPModel.cpp
