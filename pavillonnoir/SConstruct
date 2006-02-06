@@ -77,15 +77,30 @@ if env['_INSTALL'] == 1:
 	env.bksys_install(env['install_prefix']+'/'+env['package_name']+'/__binaries/linux','#./__library/linux/lib/opal/libopal-ode.so')
 	install_abspath = '"'+env['install_prefix']+'/'+env['package_name']+'/__binaries/linux"'
 	exec_file = open(env.Dir('#./build').abspath+'/'+env['package_name'], 'w')
+	editor_file = open(env.Dir('#./build').abspath+'/'+env['package_name']+'-editor', 'w')
+
 	exec_file.write("""#!/bin/sh
 # Needed to make symlinks/shortcuts work.
 # the binaries must run with correct working directory
 """+'cd '+install_abspath+"""
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"""+install_abspath+"""
 """+'exec ./pncore'+env['suffix']+' "$@"\n')
+
+	editor_file.write("""#!/bin/sh
+# Needed to make symlinks/shortcuts work.
+# the binaries must run with correct working directory
+"""+'cd '+install_abspath+"""
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"""+install_abspath+"""
+"""+'exec ./pneditor'+env['suffix']+' "$@"\n')
+
 	exec_file.close()
+	editor_file.close()
+
 	os.chmod(env.Dir('#./build').abspath+'/'+env['package_name'], 0755)
+	os.chmod(env.Dir('#./build').abspath+'/'+env['package_name']+'-editor', 0755)
+
 	env.bksys_install(env['install_prefix']+'/'+env['package_name']+'/',[env.Dir('#./build').abspath+'/'+env['package_name']])
+	env.bksys_install(env['install_prefix']+'/'+env['package_name']+'/',[env.Dir('#./build').abspath+'/'+env['package_name']+'-editor'])
 	
 	datafiles = os.popen("find __binaries/datafiles -type f | grep -v '.svn'").read().split('\n')
 	for i in datafiles:
