@@ -56,6 +56,15 @@ namespace PN{
 
 	typedef std::map<std::string, PNConfigurableParameter*>	confPanelMap;
 	 confPanelMap		_confPanelMap;
+
+	 enum 
+	 {
+	   winVisible,
+	   winHidden,
+	   winFadeIn,
+	   winFadeOut
+	 }								  _winState;
+
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
@@ -78,6 +87,7 @@ namespace PN{
 
 	// std::string getWinNameByConfParam(PNConfigurableParameter* current_param);
 	 void	update(std::string winName, PNConfigurableParameter* current_param);
+	 // void updateGUI(pnEventType type, PNObject* source, PNEventData* data);
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
