@@ -137,6 +137,18 @@ function PNCharacterClass(id)
 	OBJ:setAnimSpeed(4.0)
 	OBJ.idleTime = 0
 	OBJ.waitedAnim = 0
+	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_F, true)
+	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_B, true)
+	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_R, true)
+	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_L, true)
+	OBJ:setEnableLoop(CHARACTER_ANIM.RUN_F, true)
+	OBJ:setEnableLoop(CHARACTER_ANIM.RUN_B, true)
+	OBJ:setEnableLoop(CHARACTER_ANIM.RUN_L, true)
+	OBJ:setEnableLoop(CHARACTER_ANIM.RUN_R, true)
+	OBJ:setEnableLoop(CHARACTER_ANIM.CROUCH_F, true)
+	OBJ:setEnableLoop(CHARACTER_ANIM.CROUCH_B, true)
+	OBJ:setEnableLoop(CHARACTER_ANIM.CROUCH, true)		
+	OBJ:setEnableLoop(CHARACTER_ANIM.IDLE, true)
 	----------------- Fight Management ------------------------ 
 	OBJ.armor = 0
 	gameMap.fights[OBJ.id] = -1
@@ -150,21 +162,12 @@ Call when someone tell the object to go backward
 %--]]
 	OVERRIDE(OBJ, "onMoveForward")	
 	function OBJ:onMoveForward(state)
-    	--pnprint("==>> PNCharacter:onMoveForward()\n")
-		--pnprint("speed: " .. self.actualSpeed .."\n")
-		--pnprint("attitude: " .. self.attitude.."\n")
-		--pnprint(self.id .. ":onMoveForward=" .. state .. "\n")
-		--OBJ:setMovingSpeed(self.actualSpeed)
 		self:PN3DSkeletonObject_onMoveForward(state)	
 		if (state == ACTION_STATE.START) then
 			self.dirLong = self.dirLong + CHARACTER_DIR_LONG.FORWARD
 		else
 			self.dirLong = CHARACTER_DIR_LONG.NONE
 		end 
-		--self:launchGoodAnimation()
-		--pnprint("speed: " .. self.actualSpeed .."\n")
-		--pnprint("attitude: " .. self.attitude.."\n")
-		--pnprint("<<== PNCharacter:onMoveForward()\n")
 	end
 -------------------------------------------------------------------------------
 --[[%
@@ -183,7 +186,6 @@ Call when someone tell the object to go backward and start apropriate annimation
 		else
 			self.dirLong = CHARACTER_DIR_LONG.NONE
 		end 
-		--self:launchGoodAnimation()
 	end
 -------------------------------------------------------------------------------
 --[[%
@@ -201,7 +203,6 @@ Call when someone tell the object to go Left
 		else
 			self.dirLate = CHARACTER_DIR_LATE.NONE
 		end 
-		--self:launchGoodAnimation()
 	end
 -------------------------------------------------------------------------------
 --[[%
@@ -220,7 +221,6 @@ Call when someone tell the object to left and start apropriate animation
 		else
 			self.dirLate = CHARACTER_DIR_LATE.NONE
 		end 
-		--self:launchGoodAnimation()
 	end
 -------------------------------------------------------------------------------
 
@@ -234,7 +234,6 @@ Call when someone tell the object to rotate right
 		pnprint(self.id)
 		pnprint(":onRotateRight\n")
 		self:PN3DSkeletonObject_onRotateRight(state)
-		--self:launchGoodAnimation()		
 	end	
 -------------------------------------------------------------------------------
 --[[%
@@ -248,7 +247,6 @@ Call when someone tell the object to rotate left
 		pnprint(":onRotateLeft\n")
 		self:PN3DSkeletonObject_onRotateLeft(state)	
 		self.yawSpeed = self.defaultRotateSpeed;
-		--self:launchGoodAnimation()
 	end
 -------------------------------------------------------------------------------
 --[[%
@@ -370,7 +368,6 @@ Add the entity in the seen_entities list
 		end
 		self.actualSpeed = self.walkingSpeed
 		self:setMovingSpeed(self.actualSpeed)
-		--self:launchGoodAnimation()
     end	
 --------------------------------------------------------------------------------
     function OBJ:onJump(state)
@@ -379,7 +376,6 @@ Add the entity in the seen_entities list
 		    self.actualSpeed = self.walkingSpeed
 		end
 		--self:setMovingSpeed(self.actualSpeed)
-		self:launchGoodAnimation()
     end	
 --------------------------------------------------------------------------------
 --[[%
@@ -395,28 +391,29 @@ Returns the type of the character that is visible to others
 		return self.shownCharacType
 	end
 --------------------------------------------------------------------------------
+--[[%
+Launch the good annimation regarding the state of the Character
+%--]]
 	function OBJ:launchGoodAnimation()
-	
-		self:setEnableLoop(true)
-			--pnprint ("walk\n")
-			if (self:getMovingState() ~= 0)then
-				self.idleTime = 0
-			end	
-			self:setEnable(CHARACTER_ANIM.WALK_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
-			self:setEnable(CHARACTER_ANIM.WALK_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
-			self:setEnable(CHARACTER_ANIM.WALK_L, self:testMovingState(PN3DObject.STATE_R_LEFT) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
-			self:setEnable(CHARACTER_ANIM.WALK_R, self:testMovingState(PN3DObject.STATE_R_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
+		if (self:getMovingState() ~= 0)then
+			self.idleTime = 0
+		end	
+
+		self:setEnable(CHARACTER_ANIM.WALK_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
+		self:setEnable(CHARACTER_ANIM.WALK_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
+		self:setEnable(CHARACTER_ANIM.WALK_L, self:testMovingState(PN3DObject.STATE_R_LEFT) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
+		self:setEnable(CHARACTER_ANIM.WALK_R, self:testMovingState(PN3DObject.STATE_R_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
 		
-			self:setEnable(CHARACTER_ANIM.RUN_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
-			self:setEnable(CHARACTER_ANIM.RUN_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
-			self:setEnable(CHARACTER_ANIM.RUN_L, self:testMovingState(PN3DObject.STATE_R_LEFT) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
-			self:setEnable(CHARACTER_ANIM.RUN_R, self:testMovingState(PN3DObject.STATE_R_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
+		self:setEnable(CHARACTER_ANIM.RUN_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
+		self:setEnable(CHARACTER_ANIM.RUN_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
+		self:setEnable(CHARACTER_ANIM.RUN_L, self:testMovingState(PN3DObject.STATE_R_LEFT) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
+		self:setEnable(CHARACTER_ANIM.RUN_R, self:testMovingState(PN3DObject.STATE_R_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
 			
-			self:setEnable(CHARACTER_ANIM.CROUCH_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
-			self:setEnable(CHARACTER_ANIM.CROUCH_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
+		self:setEnable(CHARACTER_ANIM.CROUCH_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
+		self:setEnable(CHARACTER_ANIM.CROUCH_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
 			
-			self:setEnable(CHARACTER_ANIM.CROUCH, (self:getMovingState() == 0) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
-			self:setEnable(CHARACTER_ANIM.IDLE, (self:getMovingState() == 0) and (self.attitude ~= CHARACTER_ATTITUDE.CROUCHING))
+		self:setEnable(CHARACTER_ANIM.CROUCH, (self:getMovingState() == 0) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
+		self:setEnable(CHARACTER_ANIM.IDLE, (self:getMovingState() == 0) and (self.attitude ~= CHARACTER_ATTITUDE.CROUCHING))
 	end
 --------------------------------------------------------
 --[[%
