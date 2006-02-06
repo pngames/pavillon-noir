@@ -75,6 +75,35 @@ PN3DSkeletonAnimation::getParent() const
 
 //////////////////////////////////////////////////////////////////////////
 
+void
+PN3DSkeletonAnimation::start()
+{
+  this->step = 0;
+
+  PNEventManager::getInstance()->addEvent(PN_EVENT_OA_STARTED, _object,
+	new PNObjectAnimationEventData(playId, looping, step, speed, weight));
+}
+
+void
+PN3DSkeletonAnimation::stop()
+{
+  this->step = (pnuint)-1;
+
+  PNEventManager::getInstance()->addEvent(PN_EVENT_OA_ENDED, _object,
+	new PNObjectAnimationEventData(playId, looping, step, speed, weight));
+}
+
+void
+PN3DSkeletonAnimation::loop()
+{
+  this->step -= this->anim->getTotalTime();
+
+  PNEventManager::getInstance()->addEvent(PN_EVENT_OA_LOOPED, _object,
+	new PNObjectAnimationEventData(playId, looping, step, speed, weight));
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 pnbool
 PN3DSkeletonAnimation::update(pnuint deltaTime)
 {
@@ -83,18 +112,10 @@ PN3DSkeletonAnimation::update(pnuint deltaTime)
   if (this->anim->getTotalTime() < this->step)
   {
 	if (this->looping)
-	{
-	  this->step -= this->anim->getTotalTime();
-
-	  PNEventManager::getInstance()->addEvent(PN_EVENT_OA_LOOPED, _object,
-		new PNObjectAnimationEventData(playId, looping, step, speed, weight));
-	}
+	  loop();
 	else
 	{
-	  this->step = (pnuint)-1;
-
-	  PNEventManager::getInstance()->addEvent(PN_EVENT_OA_ENDED, _object,
-		new PNObjectAnimationEventData(playId, looping, step, speed, weight));
+	  stop();
 
 	  return false;
 	}

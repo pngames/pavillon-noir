@@ -31,12 +31,12 @@
 # define _PNCONFIGURABLEPARAMETERLIST_HPP_
 
 #include <list>
+#include <libxml/xmlreader.h>
 
 //////////////////////////////////////////////////////////////////////////
 
 #include "PNConfigurableParameter.hpp"
 #include "pcf_format.h"
-#include "libxml/xmlreader.h"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////

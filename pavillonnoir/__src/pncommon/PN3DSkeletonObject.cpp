@@ -57,11 +57,7 @@ PN3DSkeletonObject::PN3DSkeletonObject() : _skeleton(NULL)
 {
   _objType = OBJTYPE_3DSKELETONOBJ;
 
-  _startedEventType = PN_EVENT_OA_STARTED;
-  _stopedEventType = PN_EVENT_OA_ENDED;
-  _pausedEventType = PN_EVENT_OA_PAUSED;
-
-  _pmutex = &_mutex;
+  _defaultAnimSpeed = 1.0;
 }
 
 PN3DSkeletonObject::~PN3DSkeletonObject()
@@ -103,7 +99,7 @@ PN3DSkeletonObject::_parseAnimations(xmlNode* parent)
 
 	//////////////////////////////////////////////////////////////////////////
 
-	skanim->speed = (pnfloat)_animSpeed;
+	skanim->speed = _defaultAnimSpeed;
 
 	_anims.push_back(skanim);
 
@@ -213,7 +209,12 @@ PN3DSkeletonObject::update(pnuint deltaTime)
   if (_skeleton == NULL)
 	return ;
 
-  IPNAnimated::update(deltaTime);
+  //////////////////////////////////////////////////////////////////////////
+  
+  if (_animTransitionStep < 1.0)
+	_animTransitionStep += deltaTime / (pnfloat)_animTransTime;
+
+  //////////////////////////////////////////////////////////////////////////
 
   if (_animTransitionStep < 1.0)
   {
@@ -287,9 +288,13 @@ PN3DSkeletonObject::setEnable(pnuint animId, pnbool enabled)
   _anims[animId]->playId = (pnint)animId;
 
   if (enabled)
+  {
 	_animsToPlay.insert(_anims[animId]);
+	if (_anims[animId]->step == (pnuint)-1)
+	  _anims[animId]->step = 0;
+  }
   else
-	_animsToPlay.erase(_anims[_animId]);
+	_animsToPlay.erase(_anims[animId]);
 
   return PNEC_SUCCESS;
 }
@@ -306,12 +311,28 @@ PN3DSkeletonObject::isEnable(pnuint animId) const
 pnuint
 PN3DSkeletonObject::stopAnimation()
 {
-  return IPNAnimated::stopAnimation();
+  PNLOCK(this);
+
+  for (AnimationSet::iterator it = _animsToPlay.begin(); it != _animsToPlay.end(); ++it)
+	(*it)->stop();
+
+  _animsToPlay.clear();
+
+  return PNEC_SUCCESS;
 }
 
 pnuint
 PN3DSkeletonObject::stopAnimation(pnuint animId)
 {
+  PNLOCK(this);
+
+  if (animId < 0 || (pnuint)animId >= _anims.size())
+	return PNEC_ERROR;
+
+  //////////////////////////////////////////////////////////////////////////
+
+  _anims[animId]->stop();
+
   return setEnable(animId, false);
 }
 
@@ -321,11 +342,11 @@ PN3DSkeletonObject::startAnimation()
   PNLOCK(this);
 
   for (AnimationSet::iterator it = _animsToPlay.begin(); it != _animsToPlay.end(); ++it)
-	((PN3DSkeletonAnimation*)*it)->step = 0;
+	((PN3DSkeletonAnimation*)*it)->start();
 
   //////////////////////////////////////////////////////////////////////////
   
-  return IPNAnimated::startAnimation();
+  return PNEC_SUCCESS;
 }
 
 pnuint
@@ -338,11 +359,9 @@ PN3DSkeletonObject::startAnimation(pnuint animId)
 
   //////////////////////////////////////////////////////////////////////////
 
-  _anims[animId]->step = 0;
+  _anims[animId]->start();
 
-  pnuint error = setEnable(animId, true);
-
-  return error != PNEC_SUCCESS ? error : IPNAnimated::startAnimation();
+  return setEnable(animId, true);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -352,10 +371,12 @@ PN3DSkeletonObject::setAnimSpeed(pnfloat speed)
 {
   PNLOCK(this);
 
+  _defaultAnimSpeed = speed;
+
   for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
 	(*it)->speed = speed;
 
-  return IPNAnimated::setAnimSpeed(speed);
+  return PNEC_SUCCESS;
 }
 
 pnuint
@@ -403,7 +424,7 @@ PN3DSkeletonObject::setEnableLoop(pnbool loop)
   for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
 	(*it)->looping = loop;
 
-  return IPNAnimated::setEnableLoop(loop);
+  return PNEC_SUCCESS;
 }
 
 pnuint
@@ -432,7 +453,8 @@ PN3DSkeletonObject::startAnimation(pnint animation, pnuint transTime)
   if (animation >= 0)
 	startAnimation(animation);
 
-  return IPNAnimated::startAnimation(animation, transTime);
+  return PNEC_SUCCESS;
+  //return IPNAnimated::startAnimation(animation, transTime);
 }
 
 void
