@@ -6,7 +6,7 @@ name		| current version
 * Fox 	: 1.4.5.0 (http://fox-toolkit.org)
 * SDL 	: 1.2.9 (http://www.libsdl.org/news.php)
 * CEGUI	: 0.4
-* boost	: 1.33 (http://sourceforge.net/project/showfiles.php?group_id=7586)
+* boost	: 1.33.1 (http://sourceforge.net/project/showfiles.php?group_id=7586)
 * openal	: 1.1
 		- Installeur dans le rep "install", obligatoire sous windows.
 * ogg-vorbis: 1.0.1
