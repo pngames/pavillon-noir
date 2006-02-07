@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include;../../../__library/win32/include/lua;../../../__library/common/"
+				AdditionalIncludeDirectories="../../../__src/pncore;../../../__src/pncommon;../../../__library/win32/include/CEGUI;../../../__library/win32/include;../../../__library/win32/include/lua;../../../__library/common/"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PNSCRIPT_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -317,6 +317,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pnscript\PNGameMap.pkg"
+				>
+			</File>
+			<File
+				RelativePath=".\PNGUIGame.pkg"
 				>
 			</File>
 			<File

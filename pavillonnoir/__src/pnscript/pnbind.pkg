@@ -23,4 +23,5 @@ $ifile "PNPathFinding.pkg"
 $ifile "PNGameMap.pkg"
 //
 //$ifile "PNCharacter.pkg"
-
+//
+//$ifile "PNGUIGame.pkg"
