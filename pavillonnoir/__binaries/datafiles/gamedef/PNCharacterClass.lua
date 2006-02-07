@@ -39,7 +39,8 @@ CHARACTER_ANIM={IDLE=0,
 				STRIKE_LARM=18,
 				STRIKE_RARM=19,
 				STRIKE_LLEG=20,
-				STRIKE_RLEG=21
+				STRIKE_RLEG=21,
+				DEAD=22,
 				}
 
 CHARACTER_ATTITUDE={WALKING=0,
@@ -456,10 +457,13 @@ Launch the good annimation regarding the state of the Character
 			
 		self:setEnable(CHARACTER_ANIM.CROUCH_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
 		self:setEnable(CHARACTER_ANIM.CROUCH_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
+		self:setEnable(CHARACTER_ANIM.CROUCH_L, self:testMovingState(PN3DObject.STATE_R_LEFT) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
+		self:setEnable(CHARACTER_ANIM.CROUCH_R, self:testMovingState(PN3DObject.STATE_R_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
 			
 		self:setEnable(CHARACTER_ANIM.CROUCH, (self:getMovingState() == 0) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
-	--	self:setEnable(CHARACTER_ANIM.IDLE, (self:getMovingState() == 0) and (self.attitude ~= CHARACTER_ATTITUDE.CROUCHING))
-	end
+		self:setEnable(CHARACTER_ANIM.IDLE, (self:getMovingState() == 0) and (self.attitude ~= CHARACTER_ATTITUDE.CROUCHING) and (OBJ.state == OBJ.stateEnum.PN_IA_PASSIVE))
+		self:setEnable(CHARACTER_ANIM.DEAD, (self:getMovingState() == 0) and (OBJ.state == OBJ.stateEnum.PN_IA_COMA))
+	end 
 --------------------------------------------------------
 --[[%
 Add comment here
