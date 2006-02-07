@@ -15,19 +15,24 @@ public:
 public:
   typedef enum
   {
-	STATE_T_RIGHT			= 0x000001,			/// Translate to the right
-	STATE_T_LEFT			= 0x000001 << 1,	/// Translate to the left
-	STATE_T_TOP				= 0x000001 << 2,	/// Translate to the top
-	STATE_T_BACK			= 0x000001 << 3,	/// Translate to the back
-	STATE_T_FORWARD			= 0x000001 << 4,	/// Translate to the forward
-	STATE_T_BACKWARD		= 0x000001 << 5,	/// Translate to the backward
-	STATE_R_RIGHT			= 0x000001 << 6,	/// Rotate to the right
-	STATE_R_LEFT			= 0x000001 << 7,	/// Rotate to the left
-	STATE_R_TOP				= 0x000001 << 8,	/// Rotate to the top
-	STATE_R_BACK			= 0x000001 << 9,	/// Rotate to the back
-	STATE_R_FORWARD			= 0x000001 << 10,	/// Rotate to the forward
-	STATE_R_BACKWARD		= 0x000001 << 11,	/// Rotate to the backward
-  }							movingState;
+	STATE_NONE,											/// Do nothing
+	STATE_T_RIGHT					= 0x000001,			/// Translate to the right
+	STATE_T_LEFT					= 0x000001 << 1,	/// Translate to the left
+	STATE_T_TOP						= 0x000001 << 2,	/// Translate to the top
+	STATE_T_BACK					= 0x000001 << 3,	/// Translate to the back
+	STATE_T_FORWARD					= 0x000001 << 4,	/// Translate to the forward
+	STATE_T_BACKWARD				= 0x000001 << 5,	/// Translate to the backward
+	STATE_R_RIGHT					= 0x000001 << 6,	/// Rotate to the right
+	STATE_R_LEFT					= 0x000001 << 7,	/// Rotate to the left
+	STATE_R_TOP						= 0x000001 << 8,	/// Rotate to the top
+	STATE_R_BACK					= 0x000001 << 9,	/// Rotate to the back
+	STATE_R_FORWARD					= 0x000001 << 10,	/// Rotate to the forward
+	STATE_R_BACKWARD				= 0x000001 << 11,	/// Rotate to the backward
+
+	STATE_ALL_T						= STATE_T_RIGHT | STATE_T_LEFT | STATE_T_TOP | STATE_T_BACK | STATE_T_FORWARD | STATE_T_BACKWARD,
+	STATE_ALL_R						= STATE_R_RIGHT | STATE_R_LEFT | STATE_R_TOP | STATE_R_BACK | STATE_R_FORWARD | STATE_R_BACKWARD
+  }									movingState;
+
 
   /// Return bit mask indicate in witch mouving states is the 3D object
   unsigned int				getMovingState();
