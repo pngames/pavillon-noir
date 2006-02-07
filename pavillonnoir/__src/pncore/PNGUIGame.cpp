@@ -583,7 +583,7 @@ void PNGUIGame::resetGUI()
 
 void  PNGUIGame::changeLife(int val)
 {
-   PNLOCK(this);
+  PNLOCK(PNGUIGame::getInstance());
   if (val < 7)
   {
 	float sizeHeight = 0.25;
@@ -591,13 +591,13 @@ void  PNGUIGame::changeLife(int val)
 	float posX = 0.90f;
 	float posY = 0.75f;
 
-	_statImg->setImage("FioleImages", _mapLife[val]);
-	_statImg->setSize(CEGUI::Size(sizeWidth, sizeHeight));
-	_statImg->setPosition(CEGUI::Point(posX, posY));
-	_statImg->setFrameEnabled(false);
-	_statImg->setBackgroundEnabled(false);
-	_statImg->disable();
-	_statImg->show();
+	PNGUIGame::getInstance()->_statImg->setImage("FioleImages", PNGUIGame::getInstance()->_mapLife[val]);
+	PNGUIGame::getInstance()->_statImg->setSize(CEGUI::Size(sizeWidth, sizeHeight));
+	PNGUIGame::getInstance()->_statImg->setPosition(CEGUI::Point(posX, posY));
+	PNGUIGame::getInstance()->_statImg->setFrameEnabled(false);
+	PNGUIGame::getInstance()->_statImg->setBackgroundEnabled(false);
+	PNGUIGame::getInstance()->_statImg->disable();
+	PNGUIGame::getInstance()->_statImg->show();
   }
 }
 
