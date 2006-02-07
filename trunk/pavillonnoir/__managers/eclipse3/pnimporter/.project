@@ -21,7 +21,7 @@
 		<link>
 			<name>src</name>
 			<type>2</type>
-			<location>PAVILLONNOIR_DEV/pavillonnoir/__src/pnimporter</location>
+			<locationURI>PAVILLONNOIR_DEV/pavillonnoir/__src/pnimporter</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
