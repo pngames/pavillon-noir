@@ -21,7 +21,7 @@
 		<link>
 			<name>src</name>
 			<type>2</type>
-			<location>PAVILLONNOIR_DEV/pavillonnoir/__src/pnopal</location>
+			<locationURI>PAVILLONNOIR_DEV/pavillonnoir/__src/pnopal</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

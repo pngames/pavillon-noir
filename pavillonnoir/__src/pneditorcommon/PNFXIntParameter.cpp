@@ -32,6 +32,8 @@
 
 #include <fxkeys.h>
 
+#include "pndefs.h"
+
 #include "pneditorcommon.hpp"
 #include "pnproperties.h"
 
