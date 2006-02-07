@@ -261,11 +261,11 @@ function gameMap:fightAction(sourceId)
 			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
 			--anim
 			sAnim = strikeAnim
-			tAnim = CHARACTER_ANIM.WALK_B
+			tAnim = CHARACTER_ANIM.JUMP
 		else
 			source:onDamage(-success + target.stats[target.selected_weapon.skill] + target.selected_weapon.modifier - source.armor, self.die:getVal(6))
 			--anim
-			sAnim = CHARACTER_ANIM.WALK_B
+			sAnim = CHARACTER_ANIM.JUMP
 			tAnim = strikeAnim
 		end
 
@@ -275,7 +275,7 @@ function gameMap:fightAction(sourceId)
 			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
 			--anim
 			sAnim = strikeAnim
-			tAnim = CHARACTER_ANIM.WALK_B
+			tAnim = CHARACTER_ANIM.JUMP
 		else
 			--anim
 			sAnim = strikeAnim
@@ -285,12 +285,13 @@ function gameMap:fightAction(sourceId)
 
 	elseif (target.combat_state == COMBAT_STATE.DEFENSE) then
 		pnprint(targetId .. " defending!\n")
+		sAnim = strikeAnim
 		if (success > 0) then
 			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
 			--anim
-			sAnim = strikeAnim
-			tAnim = CHARACTER_ANIM.WALK_B
+			tAnim = CHARACTER_ANIM.JUMP
 		else
+			tAnim = CHARACTER_ANIM.CROUCH_L
 			--anim
 		end
 
@@ -298,7 +299,7 @@ function gameMap:fightAction(sourceId)
 		pnprint(targetId .. " gonna get it loud!\n")
 		target:onDamage(nbAS + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
 		sAnim = strikeAnim
-		tAnim = CHARACTER_ANIM.WALK_B
+		tAnim = CHARACTER_ANIM.JUMP
 	end
 
 	self.fights[sourceId] = -1

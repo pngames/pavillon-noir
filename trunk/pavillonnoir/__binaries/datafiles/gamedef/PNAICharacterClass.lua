@@ -24,7 +24,6 @@ function PNAICharacterClass(id)
 --	pnprint("pathFinding created\n")
 	OBJ.toReach = PN3DObject:new_local()
 	OBJ.elapsedTurns = 0
-	OBJ.pastStates = {}
 	OBJ.ennemies = {}
 	OBJ:setTarget(nil)
 --	pnprint("PNCharacterClass creating 3\n")
@@ -60,6 +59,7 @@ Called during PathFinding to resolve the travel
 			self.pathFinding:moveNext(self.toReach)
 			local distance2 = self:getCoord():getDistance(self.toReach:getCoord())
 			if (distance2 <= 10.0) then
+				self:setTarget(nil)
 				self:restoreState()
 				self:onMoveForward(ACTION_STATE.STOP)
 				return
@@ -127,30 +127,6 @@ No yet implemented
 	end
 --------------------------------------------------------
 --[[%
-Called on a behaviour change
-Sets a new state impliying a new behaviour for the character
-Adds the old state on a stack to retrieve it later
-%--]]
-	function OBJ:setState(st)
-		table.insert(self.pastStates, 0, self.state)
-		self.state = st
-		if (self.pastStates[0] == self.stateEnum.PN_IA_TRAVELLING) then
-			self:onMoveForward(ACTION_STATE.STOP)
-		end
-	end
---------------------------------------------------------
---[[%
-Called when a behaviour is not needed anymore
-Sets the character's behaviour to the previous state on the stack
-%--]]
-	function OBJ:restoreState()
-		pnprint("=> PNCharacter:restoreState()\n")
-		self.state = self.pastStates[0]
-		table.remove(self.pastStates,0)
-		pnprint("<= PNCharacter:restoreState()\n")
-	end
---------------------------------------------------------
---[[%
 Called at every loop
 %--]]
 	OVERRIDE(OBJ, "onUpdate")
@@ -182,18 +158,17 @@ If it is detected as an ennemy, the character switches to the fighting mode
 		pnprint(self.id .. " viewing " .. target:getId() .. "\n")
 		if ((target:getId() ~= self.id) and (isInstanceOf(target, "PNCharacter"))) then
 			pnprint("J'ai cru voir un rominet !\n")
-			self.ennemies[target:getId()] = 1
-			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= CHARACTER_TYPE.CIVILIAN) and (self:getViewTarget() == nil) and (target.health_state < HEALTH_STATE.COMA)) then
-				if (self.state == self.stateEnum.PN_IA_TRAVELING) then
-					if (self:getCoord():getDistance(target:getCoord()) < self:getCoord():getDistance(self:getViewTarget():getCoord())) then
-						pnprint("Mais oui, j'ai bien vu un rominet !\n")
-						self:startFight()
+			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= CHARACTER_TYPE.CIVILIAN)) then
+				self.ennemies[target:getId()] = 1
+				if ((self:getViewTarget() == nil) and (target.health_state < HEALTH_STATE.COMA)) then
+					if (self.state ~= self.stateEnum.PN_IA_TRAVELING) then
+						if (self:getCoord():getDistance(target:getCoord()) < 10 * self.selected_weapon.range) then
+							pnprint("Mais oui, j'ai bien vu un rominet !\n")
+							self:startFight()
+						else
+							self:moveTo(target:getCoord())
+						end
 					end
-				elseif (self:getCoord():getDistance(target:getCoord()) < 10 * self.selected_weapon.range) then
-					pnprint("Mais oui, j'ai bien vu un rominet !\n")
-					self:startFight()
-				else
-					self:moveTo(target:getCoord())
 				end
 			end
 		end

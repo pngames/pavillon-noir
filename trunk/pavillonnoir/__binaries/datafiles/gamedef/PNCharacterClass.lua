@@ -106,6 +106,7 @@ function PNCharacterClass(id)
 	OBJ.shownCharacType = CHARACTER_TYPE.CIVILIAN
 	OBJ.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2, PN_IA_WAIT_ANIM_END = 3, PN_IA_COMA}
 	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
+	OBJ.pastStates = {}
 
 	--------------------------------------
 	OBJ.load_capacity = 10;
@@ -141,7 +142,6 @@ function PNCharacterClass(id)
 	OBJ:setAnimSpeed(4.0)
 	OBJ.idleTime = 0
 	OBJ.waitedAnim = -1
-	OBJ.striking = false
 	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_F, true)
 	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_B, true)
 	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_R, true)
@@ -154,7 +154,7 @@ function PNCharacterClass(id)
 	OBJ:setEnableLoop(CHARACTER_ANIM.CROUCH_B, true)
 	OBJ:setEnableLoop(CHARACTER_ANIM.CROUCH, true)		
 	OBJ:setEnableLoop(CHARACTER_ANIM.IDLE, true)
-	OBJ:setEnableLoop(CHARACTER_ANIM.DIE, true)
+	--OBJ:setEnableLoop(CHARACTER_ANIM.DIE, true)
 	----------------- Fight Management ------------------------ 
 	OBJ.armor = 0
 	gameMap.fights[OBJ.id] = -1
@@ -360,6 +360,30 @@ Add the entity in the seen_entities list
     end	
 --------------------------------------------------------------------------------
 --[[%
+Called on a behaviour change
+Sets a new state impliying a new behaviour for the character
+Adds the old state on a stack to retrieve it later
+%--]]
+	function OBJ:setState(st)
+		table.insert(self.pastStates, 0, self.state)
+		self.state = st
+		if (self.pastStates[0] == self.stateEnum.PN_IA_TRAVELLING) then
+			self:onMoveForward(ACTION_STATE.STOP)
+		end
+	end
+--------------------------------------------------------
+--[[%
+Called when a behaviour is not needed anymore
+Sets the character's behaviour to the previous state on the stack
+%--]]
+	function OBJ:restoreState()
+		pnprint("=> PNCharacter:restoreState()\n")
+		self.state = self.pastStates[0]
+		table.remove(self.pastStates,0)
+		pnprint("<= PNCharacter:restoreState()\n")
+	end
+--------------------------------------------------------
+--[[%
 Called at the end of a Fight Action
 %--]]
     function OBJ:onDamage(damage, localisation)
@@ -370,6 +394,8 @@ Called at the end of a Fight Action
 		end
 		if (self.health_state >= HEALTH_STATE.COMA) then
 			--Anim Death
+			self:setTarget(nil)
+			self:onMoveForward(ACTION_STATE.STOP)
 			gameMap:sendEventFromLua(self, 17) -- DeathEvent
 			self:waitForAnimEnd(CHARACTER_ANIM.DIE)
 			pnprint(self.id .. " is dead !\n")
