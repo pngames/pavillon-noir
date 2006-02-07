@@ -39,6 +39,7 @@
 
 #include "PNGUIGame.hpp"
 #include "PNGUIStateManager.hpp"
+#include "PNGUIDeath.hpp"
 #include "PNGUIEscMenu.hpp"
 #include "PN3DCamera.hpp"
 
@@ -432,12 +433,16 @@ PNGUIGame*	PNGUIGame::_instance = NULL;
 PNGUIGame::PNGUIGame()
 {
   _label = "PNGUIGame";
+  if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("FioleImages") == false)
+	CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/fiole_final.imageset");
+
   _rootWin = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNGUIGame.layout");
+
   CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_rootWin);
 
   _rootWin->activate();
 
-  _lifeBar = (CEGUI::ProgressBar*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/lifeBar");
+//  _lifeBar = (CEGUI::ProgressBar*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/lifeBar");
   _myri = PNRendererInterface::getInstance();
   _skipFirstFrame = false;
   _inputHandleModifier = 0;
@@ -453,6 +458,20 @@ PNGUIGame::PNGUIGame()
 
   _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &_lifeValue, "life bar value", "life bar value"));
  // CEGUI::MouseCursor::getSingleton().hide();
+
+  _mapLife[0] = "FioleImages/fiole_OK";
+  _mapLife[1] = "FioleImages/fiole_LIGHT";
+  _mapLife[2] = "FioleImages/fiole_SERIOUS";
+  _mapLife[3] = "FioleImages/fiole_DANGEROUS";
+  _mapLife[4] = "FioleImages/fiole_CRITIC";
+  _mapLife[5] = "FioleImages/fiole_COMA";
+  _mapLife[6] = "FioleImages/fiole_LETHAL";
+
+ 
+  _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "PNGUIGame/Life");
+  _rootWin->addChildWindow(_statImg);
+
+ changeLife(0);
 }
 
 PNGUIGame::~PNGUIGame()
@@ -562,6 +581,27 @@ void PNGUIGame::resetGUI()
   hide();
 }
 
+void  PNGUIGame::changeLife(int val)
+{
+   PNLOCK(this);
+  if (val < 7)
+  {
+	float sizeHeight = 0.25;
+	float sizeWidth = 213 * sizeHeight / 367 / 1.33;
+	float posX = 0.90f;
+	float posY = 0.75f;
+
+	_statImg->setImage("FioleImages", _mapLife[val]);
+	_statImg->setSize(CEGUI::Size(sizeWidth, sizeHeight));
+	_statImg->setPosition(CEGUI::Point(posX, posY));
+	_statImg->setFrameEnabled(false);
+	_statImg->setBackgroundEnabled(false);
+	_statImg->disable();
+	_statImg->show();
+  }
+}
+
+
 void  PNGUIGame::inputHandleEsc(pnEventType type, PNObject* source, PNEventData* data)
 {
   if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME &&
@@ -585,6 +625,7 @@ bool PNGUIGame::eventMouseWheel(const CEGUI::EventArgs& e)
   //cam->moveZ( me->wheelChange*2);
   //cam->moveUD(me->wheelChange*2);
 	
+ 
   return true;
 }
 
@@ -908,6 +949,10 @@ Called when there is a mouse click
 */
 bool PNGUIGame::eventMouseClickdHandler(const CEGUI::EventArgs& e)
 { 
+//resetGUI();
+//PNGUIDeath::getInstance()->show();
+
+
   CEGUI::MouseEventArgs* me = (CEGUI::MouseEventArgs*)&e;
 
   if (me->button == CEGUI::LeftButton){
@@ -1007,12 +1052,6 @@ default:
    _rootWin->activate();
    _rootWin->setMutedState(false);
   }
-}
-
-void  PNGUIGame::setLifeValue(float val)
-{
-  PNLOCK(this);
-  _lifeBar->setProgress(val);
 }
 
 void  PNGUIGame::show()
