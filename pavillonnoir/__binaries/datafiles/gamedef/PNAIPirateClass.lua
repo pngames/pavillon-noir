@@ -49,7 +49,7 @@ Called while handling a fight
 			if (self.elapsedTurns == 0) then
 				self.ennemyJustReached = true
 			end
-			if ((self.ennemyJustReached == true) or ((self.elapsedTurns) == (self.stats.awareness * 50))) then
+			if ((self.ennemyJustReached == true) or ((self.elapsedTurns) == (self.stats.awareness * 30))) then
 				--attack
 				self.combat_state = COMBAT_STATE.ATTACK
 				gameMap:onAttack(self.id, self:getViewTarget():getId())

@@ -25,7 +25,8 @@ function PNPlayerClass(id)
     --PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_LOCKED)
     --PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_ABS_LOCKED)
     
-    
+    OBJ.realCharacType = CHARACTER_TYPE.PIRATE
+	OBJ.shownCharacType = CHARACTER_TYPE.PIRATE
 -----------------------------------------------------------
 	function OBJ:onMouseLook(x, y)
 		self:rotateYawRadians(math.rad(x))		
@@ -137,6 +138,7 @@ Call when player push the primary attack button
 		local entity = nil
 		local nearest_d = 99999999999999	-- nearest distance
 		local nearest_e = nil 				-- nearest entitie
+
 		self:startAnimation(CHARACTER_ANIM.STRIKE_TORSO)
 		
 		pnprint("tappe !!!\n")
@@ -161,8 +163,9 @@ Call when player push the primary attack button
 			end
 		else
 			self.combat_state = COMBAT_STATE.NEUTRAL
+
 		end
-		--@TODO: launch attack annimation				
+		--@TODO: launch attack annimation
 	end
 ---------------------------------------------------------
 --[[%
