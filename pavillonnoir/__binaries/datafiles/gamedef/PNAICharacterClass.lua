@@ -214,36 +214,6 @@ Called when an object enters the frustrum of the character
 	end
 --------------------------------------------------------
 --[[%
-Launches an Animation and waits for its end
-%--]]
-	OVERRIDE(OBJ, "waitForAnimEnd")
-	function OBJ:waitForAnimEnd(anim)
-		pnprint(self.id .. ":waitForAnimEnd(" .. anim .. ")\n")
-		self.waitedAnim = anim
-		self:startAnimation(anim)
-		self:setState(self.stateEnum.PN_IA_WAIT_ANIM_END)
-	end
---------------------------------------------------------
---[[%
-Checks if waited Animation is the one that ended
-%--]]
-	OVERRIDE(OBJ, "checkAnimEnd")
-	function OBJ:checkAnimEnd(anim)
-		pnprint("=> PNAICharacter:checkAnimEnd(" .. anim .. ") and waited: " .. self.waitedAnim .. "\n")
-		if ((self.state == self.stateEnum.PN_IA_WAIT_ANIM_END) and (self.waitedAnim == anim)) then
-			if (self.health_state >= HEALTH_STATE.LETHAL) then --if is dead
-				--delete object
-			else
-				self:restoreState()
-				if (self.state == self.stateEnum.PN_IA_FIGHTING and (self.combat_state == COMBAT_STATE.ATTACK)) then -- if is fighting
-					self.combat_state = COMBAT_STATE.NEUTRAL
-				end
-			end
-		end
-		pnprint("<= PNAICharacter:checkAnimEnd\n")
-	end
---------------------------------------------------------
---[[%
 Called at init
 Not used yet
 %--]]

@@ -392,16 +392,41 @@ Called at the end of a Fight Action
 		if (self.m_wounds[localisation] > self.health_state) then
 			self.health_state = self.m_wounds[localisation]
 		end
-		if (self.health_state == HEALTH_STATE.COMA) then
-			self:setState(self.stateEnum.PN_IA_COMA)
-			--Anim Coma
-		elseif (self.health_state >= HEALTH_STATE.LETHAL) then
+		if (self.health_state >= HEALTH_STATE.COMA) then
 			--Anim Death
 			gameMap:sendEventFromLua(self, 17) -- DeathEvent
 			self:waitForAnimEnd(CHARACTER_ANIM.DIE)
-			self:setState(self.stateEnum.PN_IA_COMA)
 			pnprint(self.id .. " is dead !\n")
 		end
+	end
+--------------------------------------------------------
+--[[%
+Launches an Animation and waits for its end
+%--]]
+	function OBJ:waitForAnimEnd(anim)
+		pnprint(self.id .. ":waitForAnimEnd(" .. anim .. ")\n")
+		self.waitedAnim = anim
+		self:startAnimation(anim)
+		self:setState(self.stateEnum.PN_IA_WAIT_ANIM_END)
+	end
+--------------------------------------------------------
+--[[%
+Checks if waited Animation is the one that ended
+%--]]
+	function OBJ:checkAnimEnd(anim)
+		pnprint("=> PNAICharacter:checkAnimEnd(" .. anim .. ") and waited: " .. self.waitedAnim .. "\n")
+		if ((self.state == self.stateEnum.PN_IA_WAIT_ANIM_END) and (self.waitedAnim == anim)) then
+			if (self.health_state >= HEALTH_STATE.LETHAL) then --if is dead
+				self:setState(self.stateEnum.PN_IA_COMA)
+				--delete object
+			else
+				self:restoreState()
+				if (self.state == self.stateEnum.PN_IA_FIGHTING and (self.combat_state == COMBAT_STATE.ATTACK)) then -- if is fighting
+					self.combat_state = COMBAT_STATE.NEUTRAL
+				end
+			end
+		end
+		pnprint("<= PNAICharacter:checkAnimEnd\n")
 	end
 --------------------------------------------------------------------------------
 --[[%
@@ -486,18 +511,6 @@ Launches an Animation and waits for its end
 		end
 
 		return nbS
-	end
---------------------------------------------------------
---[[%
-Launches an Animation and waits for its end
-%--]]
-	function OBJ:waitForAnimEnd(anim)
-	end
---------------------------------------------------------
---[[%
-Checks if waited Animation is the one that ended
-%--]]
-	function OBJ:checkAnimEnd(anim)
 	end
 --------------------------------------------------------
 	return OBJ
