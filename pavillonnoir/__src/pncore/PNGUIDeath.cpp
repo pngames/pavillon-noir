@@ -36,7 +36,7 @@
 
 using namespace PN;
 
-#define FADE_TIME                   300
+#define FADE_TIME                   600
 
 namespace PN
 {
@@ -44,25 +44,27 @@ namespace PN
 
   PNGUIDeath::PNGUIDeath()
   {
-	_pnDeath = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNGUIDeath.layout");
-	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnDeath);
+	//_pnDeath = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNGUIDeath.layout");
+	//CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnDeath);
 
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("DeathImages") == false)
 	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/DeathScreen.imageset");
 	
 	_deathImage = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "DeathImages/DeathScreen");
+	_deathImage->setImage("DeathImages", "DeathImages/DeathScreen");
 	_deathWnd = (CEGUI::Window*)( CEGUI::WindowManager::getSingleton().createWindow( "DefaultWindow", "death_wnd" ) );
-//	_deathWnd->addChildWindow(_deathImage);
+
+	_deathWnd->addChildWindow(_deathImage);
 
 	_deathWnd->setPosition( CEGUI::Point( 0.5f, 0.5f ) );
 	//_deathWnd->setSize(CEGUI::Size ( 0.5f,  0.5f)); 
 
-//	_deathWnd->hide();
+	_deathWnd->hide();
 	//_rootWin->addChildWindow(_deathWnd);
 
 	
 	_deathImage->setSize( CEGUI::Size( 1.0f, 1.0f ) );
-	_deathImage->setPosition( CEGUI::Point( 0, 0 ) );
+	_deathImage->setPosition( CEGUI::Point( 0.0f, 0.0f ) );
 	_deathImage->setBackgroundEnabled( false );
 	_deathImage->setFrameEnabled( false );
 	
@@ -84,12 +86,12 @@ namespace PN
 
   void PNGUIDeath::show()
   {
-	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_deathImage);
+	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_deathWnd);
 	_deathWnd->show();
-	_deathWnd->moveToFront();
-	_deathWnd->activate();
+	/*_pnDeath->moveToFront();
+	_pnDeath->activate();*/
 	_winState = winFadeIn;
-	//PNEventManager::getInstance()->addCallback(PN_EVENT_UPDATE_GUI, EventCallback(this, &PNGUIDeath::update));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_UPDATE_GUI, EventCallback(this, &PNGUIDeath::update));
 	
 	
   }
@@ -117,6 +119,7 @@ namespace PN
 		{
 		  _fadeTimer = 0;
 		  _winState = winVisible;
+		  return;
 		 /*
 
 		  CEGUI::Size sizeTmp( 1.0, 1.0); 
@@ -133,7 +136,7 @@ namespace PN
 //		_consoleVisibility = true;
 		_fadeTimer += deltaTime;
 
-		float fadefac = _fadeTimer / FADE_TIME/100;
+		float fadefac = _fadeTimer / FADE_TIME;
 
 		CEGUI::Point pos = CEGUI::Point( 0.5f - fadefac * 0.5f, 0.5f - fadefac * 0.5f );
 		_deathWnd->setPosition( pos );
