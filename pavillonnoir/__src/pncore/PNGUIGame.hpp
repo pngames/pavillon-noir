@@ -68,6 +68,10 @@ namespace PN{
 	std::string		_label;
 	float			_lifeValue; 
 
+	CEGUI::StaticImage* _statImg;
+	typedef std::map<int, std::string> MapLife;
+	MapLife _mapLife;
+
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
@@ -78,7 +82,8 @@ namespace PN{
 	CEGUI::Window*  getWindow();
 	void  resetGUI();
 	void  startGUI();
-	void  setLifeValue(float val);
+	//void  setLifeValue(float val);
+	void  changeLife(int val);
   private:
 	bool eventMouseMoveHandler(const CEGUI::EventArgs& e);
 	bool eventKeyPressedHandler(const CEGUI::EventArgs& e);

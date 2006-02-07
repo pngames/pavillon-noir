@@ -505,10 +505,10 @@ PNGUIConsole::update(pnEventType type, PNObject* source, PNEventData* data)
 	  _fadeTimer += deltaTime;
 	  
 	  float fadefac = _fadeTimer / FADE_TIME;
-	  std::cout << "fadefac = " << fadefac << std::endl;
+	 // std::cout << "fadefac = " << fadefac << std::endl;
 
 	  float tempAlpha = fadefac * _frameAlphaValue;
-	  std::cout << "tempalpha = " << tempAlpha << std::endl;
+	  //std::cout << "tempalpha = " << tempAlpha << std::endl;
 
 	  if (tempAlpha > _frameAlphaValue)
 		_pnConsole->setAlpha( _frameAlphaValue );
