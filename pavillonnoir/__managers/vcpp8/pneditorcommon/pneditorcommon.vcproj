@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../../__library/win32/include/fox;../../../__library/win32/include;../../../__src/pncommon;../../../__library/common"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PNEDITORCOMMON_EXPORTS;FOXDLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PNEDITORCOMMON_EXPORTS;FOXDLL;BOOST_ALL_DYN_LINK;BOOST_THREAD_USE_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -120,7 +120,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../../__library/win32/include/fox;../../../__library/win32/include;../../../__src/pncommon;../../../__library/common"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PNEDITORCOMMON_EXPORTS;FOXDLL"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PNEDITORCOMMON_EXPORTS;FOXDLL;BOOST_ALL_DYN_LINK;BOOST_THREAD_USE_DLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"

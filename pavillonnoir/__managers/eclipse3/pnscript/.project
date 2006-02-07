@@ -21,7 +21,7 @@
 		<link>
 			<name>src</name>
 			<type>2</type>
-			<location>PAVILLONNOIR_DEV/pavillonnoir/__src/pnscript</location>
+			<locationURI>PAVILLONNOIR_DEV/pavillonnoir/__src/pnscript</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
