@@ -84,6 +84,8 @@ namespace PN{
 	bool eventKeyPressedHandler(const CEGUI::EventArgs& e);
 	bool eventKeyReleasedHandler(const CEGUI::EventArgs& e);
 	bool eventMouseClickdHandler(const CEGUI::EventArgs& e);
+    bool eventMouseButtonPressedHandler(const CEGUI::EventArgs& e);
+    bool eventMouseButtonReleasedHandler(const CEGUI::EventArgs& e);
 	bool eventMouseWheel(const CEGUI::EventArgs& e);
 	void  inputHandleModifierState(pnEventType type, PNObject* source, PNEventData* data);
 	void  inputHandleEsc(pnEventType type, PNObject* source, PNEventData* data);
