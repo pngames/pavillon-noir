@@ -1,8 +1,24 @@
 <?xml version="1.0" ?>
 <GUILayout>
 	<Window Type="DefaultWindow" Name="PNGUIGame">
-			<Window Type="Vanilla/ProgressBar" Name="PNGUIGame/lifeBar">
+		<!--	<Window Type="Vanilla/ProgressBar" Name="PNGUIGame/lifeBar">
 			<Property Name="RelativeRect" Value="l:0.620000 t:0.007500 r:0.990000 b:0.060000" />
-			</Window>
+			</Window> -->
+    <!--<Window Type="Vanilla/StaticImage" Name="PNGUIGame/fiole" >
+      <Property Name="Image" Value="set:FioleImages image:FioleImages/fiole_OK" />
+      <Property Name="UnifiedAreaRect" Value="{{0.60000,0.000000},{0.63000,0.000000},{0.95000,0.000000},{0.780000,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="FrameEnabled" Value="false"/>
+      <Property Name="Disabled" Value="true"/>
+      <Property Name="BackgroundEnabled" Value="false" />
+    </Window>-->
+    <!--<Window Type="Vanilla/StaticImage" Name="PNGUIGame/Life" >
+      <Property Name="UnifiedAreaRect" Value="{{0.00000,0.000000},{0.00000,0.000000},{0.9000,0.000000},{0.45800,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="Image" Value="set:FioleImages image:FioleImages/fiole_OK" />
+      <Property Name="FrameEnabled" Value="false"/>
+      <Property Name="Disabled" Value="true"/>
+      <Property Name="BackgroundEnabled" Value="false" />
+    </Window>-->
 		</Window>
 </GUILayout>
