@@ -11,6 +11,7 @@ gameMap.entities.className = {}
 gameMap.fights = {}
 gameMap.timer = PNTimerClass()
 gameMap.die = PNDieClass()
+-------------------------------------------------------------------------------
 
 function gameMap:spawn2(entity, id)
 	pnprint("==>> gameMap:spawn2\n")
@@ -29,6 +30,7 @@ function gameMap:spawn2(entity, id)
     pnprint("<<== gameMap:spawn2\n")
     pnprint("[LUA exit function] gameMap:spawn2\n")
 end 
+-------------------------------------------------------------------------------
 
 function gameMap:clear()
 	pnprint("[LUA enter function] gameMap:clear\n")
@@ -45,6 +47,7 @@ function gameMap:clear()
 	collectgarbage()
    pnprint("[LUA exit function] gameMap:clear\n")
 end 
+-------------------------------------------------------------------------------
 
 function gameMap:spwan(entity, id, position, orientation, model)
 	entity:setCoord(position)
@@ -52,6 +55,7 @@ function gameMap:spwan(entity, id, position, orientation, model)
 	self:spawn2(entity, id)
 	return entity
 end 
+-------------------------------------------------------------------------------
 
 function gameMap:onUpdate(deltaTime)
 --	pnprint("=> LUA GameMap: onUpdate()")
@@ -69,6 +73,7 @@ function gameMap:onUpdate(deltaTime)
 	    --print("#######################################################\n")
 --	pnprint("<= LUA GameMap: onUpdate()")
 end
+-------------------------------------------------------------------------------
 
 function gameMap:onInit()
 	pnprint("LUA GameMap: onInit()\n")
@@ -81,85 +86,98 @@ function gameMap:onInit()
       pnprint("\n")
 	end
 end
+-------------------------------------------------------------------------------
 
 function gameMap:onReset()
     pnprint("LUA GameMap: onReset()\n")
 end
+-------------------------------------------------------------------------------
 
 function gameMap:onNewGame()
     pnprint("LUA GameMap: onNewGame()\n")
 end
+-------------------------------------------------------------------------------
 
 function gameMap:onStartGame()
     pnprint("LUA GameMap: onStartGame()\n")
 end
+-------------------------------------------------------------------------------
 
 function gameMap:onPauseGame()
     pnprint("LUA GameMap: onPauseGame()\n")
 end
+-------------------------------------------------------------------------------
 
 function gameMap:onLeaveGame()
     pnprint("LUA GameMap: onLeaveGame()\n")
 end
+-------------------------------------------------------------------------------
 
 function gameMap:onLoadMap()
     pnprint("LUA GameMap: onLoadMap()\n")
 end
+-------------------------------------------------------------------------------
 
 function gameMap:onMoveForward(srcId, targId, state)
     pnprint("LUA GameMap:onMoveForward()\n")
     pnprint("TargetId"..targId.."\n")
-    if (targetId == "")then
+    if (targId == "")then
     	PNRenderCam:onMoveForward(state)
     else
     	self.entities.all[targId]:onMoveForward(state)
     end
 end	
+-------------------------------------------------------------------------------
 
 function gameMap:onMoveBackward(srcId, targId, state)
     pnprint("LUA GameMap:onMoveBackward()\n")
-    if (targetId == "")then
+    if (targId == "")then
     	PNRenderCam:onMoveBackward(state)
     else
     	self.entities.all[targId]:onMoveBackward(state)
     end
 end		
+-------------------------------------------------------------------------------
 
 function gameMap:onMoveLeft(srcId, targId, state)
     pnprint("LUA GameMap:onMoveLeft()\n")
-    if (targetId == "")then
+    if (targId == "")then
     	PNRenderCam:onMoveLeft(state)
     else
     	self.entities.all[targId]:onMoveLeft(state)
     end
 end	
+-------------------------------------------------------------------------------
 
 function gameMap:onMoveRight(srcId, targId, state)
     pnprint("LUA GameMap:onMoveRight()\n")
-    if (targetId == "")then
+    if (targId == "")then
     	PNRenderCam:onMoveRight(state)
     else
     	self.entities.all[targId]:onMoveRight(state)
     end
 end
+-------------------------------------------------------------------------------
 
 function gameMap:onRotateLeft(srcId, targId, state)
     pnprint("LUA GameMap:onRotateLeft()\n")
-    if (targetId == "")then
+    if (targId == "")then
     	PNRenderCam:onRotateLeft(state)
     else
     	self.entities.all[targId]:onRotateLeft(state)
     end
 end	
+-------------------------------------------------------------------------------
 
 function gameMap:onRotateRight(srcId, targId, state)
     pnprint("LUA GameMap:onRotateRight()\n")
-    if (targetId == "")then
+    if (targId == "")then
     	PNRenderCam:onRotateRight(state)
     else
     	self.entities.all[targId]:onRotateRight(state)
     end
 end
+-------------------------------------------------------------------------------
 
 function gameMap:onMouseMove(xdelta, ydelta)
    -- pnprint("gameMap:onMouseMove()\n")
@@ -171,6 +189,7 @@ function gameMap:onMouseMove(xdelta, ydelta)
 		entity:onMouseLook(xdelta, ydelta)
 	end 
 end
+-------------------------------------------------------------------------------
 
 function gameMap:onRun(srcId, targId, state)
     pnprint("==>>GameMap:onRun()\n")
@@ -179,6 +198,7 @@ function gameMap:onRun(srcId, targId, state)
     end
     pnprint("<<==GameMap:onRun()\n")
 end
+-------------------------------------------------------------------------------
 
 function gameMap:onCrouch(srcId, targId, state)
     pnprint("LUA GameMap:onCrouch()\n")
@@ -186,14 +206,17 @@ function gameMap:onCrouch(srcId, targId, state)
     	self.entities.all[targId]:onCrouch(state)
     end
 end
+-------------------------------------------------------------------------------
 
 function gameMap:onFrustrumIn(sourceId, targetId)
     self.entities.all[sourceId]:onFrustrumIn(self.entities.all[targetId])
 end
+-------------------------------------------------------------------------------
 
 function gameMap:onFrustrumOut(sourceId, targetId)
     self.entities.all[sourceId]:onFrustrumOut(self.entities.all[targetId])
 end
+-------------------------------------------------------------------------------
 
 function gameMap:fightAction(sourceId)
 	pnprint("=> gameMap:fightAction()\n")
@@ -292,7 +315,7 @@ function gameMap:fightAction(sourceId)
 	target.combat_state = COMBAT_STATE.NEUTRAL
 	pnprint("<= gameMap:fightAction()\n")
 end
-
+-------------------------------------------------------------------------------
 function gameMap:onAttack(sourceId, targetId)
 	--local id
 	--local entity
@@ -305,7 +328,14 @@ function gameMap:onAttack(sourceId, targetId)
 		self.entities.all[sourceId].strikeLocalisation = LOCALISATION.RANDOM
 	end
 end
-
+-------------------------------------------------------------------------------
+function gameMap:onPrimaryAttack(srcId, targId, state)	
+    pnprint("gameMap:onPrimaryAttack:   TargetId '"..targId.."'\n")
+	if (targId ~= "" and self.entities.all[targId].onPrimaryAttack ~= nil)then
+    	self.entities.all[targId]:onPrimaryAttack(state)
+    end
+end
+-------------------------------------------------------------------------------
 function gameMap:onDeath(deadId)
 	pnprint("=> GameMap:onDeath(" .. deadId .. ")\n")
 	for id, entity in pairs(self.entities.className.PNAICharacter) do
