@@ -27,17 +27,15 @@ function PNPlayerClass(id)
     
     
 -----------------------------------------------------------
-	function OBJ:onMouseLook(y, x)
-	--	PNRenderCam:subTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-	--	PNRenderCam:getViewTarget():subMovingState(PN3DObject.STATE_T_FORWARD)
-		
+	function OBJ:onMouseLook(x, y)
+		self:rotateYawRadians(math.rad(x))		
 	end    
 ------------------------------ MOVE -----------------------
 	OVERRIDE(OBJ, "onMoveForward")
 	function OBJ:onMoveForward(state)
 	pnprint("==>> PNPlayer:onMoveForward()\n")
 		self:PNCharacter_onMoveForward(state)
-		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)		
+		--PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)		
 	pnprint("<<== PNPlayer:onMoveForward()\n")
 		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 		--if (state == ACTION_STATE.START) then
@@ -49,62 +47,38 @@ function PNPlayerClass(id)
 	OVERRIDE(OBJ, "onMoveBackward")
 	function OBJ:onMoveBackward(state)
 		self:PNCharacter_onMoveBackward(state)
-		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
-		--if (state == ACTION_STATE.START) then
-		--	PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-		--	PNRenderCam:getViewTarget():addMovingState(PN3DObject.STATE_T_FORWARD)
-		--end	
 	end
 	
 	OVERRIDE(OBJ, "onMoveLeft")	
 	function OBJ:onMoveLeft(state)
 		self:PNCharacter_onMoveLeft(state)
-		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
-		--if (state == ACTION_STATE.START) then
-		--	PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-		--	PNRenderCam:getViewTarget():addMovingState(PN3DObject.STATE_T_FORWARD)
-		--end	
 	end	
 
 	OVERRIDE(OBJ, "onMoveRight")
 	function OBJ:onMoveRight(state)
 		self:PNCharacter_onMoveRight(state)
-		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
-		--if (state == ACTION_STATE.START) then
-		--	PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-		--	PNRenderCam:getViewTarget():addMovingState(PN3DObject.STATE_T_FORWARD)
-		--end
 	end
 ------------------------- ROTATE -----------------------------
 	OVERRIDE(OBJ, "onRotateRight")
 	function OBJ:onRotateRight(state)
 		self:PNCharacter_onRotateRight(state)
-		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 	end
 
 	OVERRIDE(OBJ, "onRotateLeft")	
 	function OBJ:onRotateLeft(state)
 		self:PNCharacter_onRotateLeft(state)
-		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 	end
 	
 	OVERRIDE(OBJ, "onRotateUp")
 	function OBJ:onRotateUp(state)
 		self:PNCharacter_onRotateUp(state)
 		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 	end
 	
 	OVERRIDE(OBJ, "onRotateDown")	
 	function OBJ:onRotateDown(state)
 		self:PNCharacter_onRotateDown(state)
 		PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 	end    
 -----------------------------------------------------------
 --[[%

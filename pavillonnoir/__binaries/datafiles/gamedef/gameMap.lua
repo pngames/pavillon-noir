@@ -109,32 +109,56 @@ end
 function gameMap:onMoveForward(srcId, targId, state)
     pnprint("LUA GameMap:onMoveForward()\n")
     pnprint("TargetId"..targId.."\n")
-    self.entities.all[targId]:onMoveForward(state)
+    if (targetId == "")then
+    	PNRenderCam:onMoveForward(state)
+    else
+    	self.entities.all[targId]:onMoveForward(state)
+    end
 end	
 
 function gameMap:onMoveBackward(srcId, targId, state)
     pnprint("LUA GameMap:onMoveBackward()\n")
-    self.entities.all[targId]:onMoveBackward(state)
+    if (targetId == "")then
+    	PNRenderCam:onMoveBackward(state)
+    else
+    	self.entities.all[targId]:onMoveBackward(state)
+    end
 end		
 
 function gameMap:onMoveLeft(srcId, targId, state)
     pnprint("LUA GameMap:onMoveLeft()\n")
-    self.entities.all[targId]:onMoveLeft(state)
+    if (targetId == "")then
+    	PNRenderCam:onMoveLeft(state)
+    else
+    	self.entities.all[targId]:onMoveLeft(state)
+    end
 end	
 
 function gameMap:onMoveRight(srcId, targId, state)
     pnprint("LUA GameMap:onMoveRight()\n")
-    self.entities.all[targId]:onMoveRight(state)
+    if (targetId == "")then
+    	PNRenderCam:onMoveRight(state)
+    else
+    	self.entities.all[targId]:onMoveRight(state)
+    end
 end
 
 function gameMap:onRotateLeft(srcId, targId, state)
     pnprint("LUA GameMap:onRotateLeft()\n")
-    self.entities.all[targId]:onRotateLeft(state)
+    if (targetId == "")then
+    	PNRenderCam:onRotateLeft(state)
+    else
+    	self.entities.all[targId]:onRotateLeft(state)
+    end
 end	
 
 function gameMap:onRotateRight(srcId, targId, state)
     pnprint("LUA GameMap:onRotateRight()\n")
-    self.entities.all[targId]:onRotateRight(state)
+    if (targetId == "")then
+    	PNRenderCam:onRotateRight(state)
+    else
+    	self.entities.all[targId]:onRotateRight(state)
+    end
 end
 
 function gameMap:onMouseMove(xdelta, ydelta)
@@ -150,13 +174,17 @@ end
 
 function gameMap:onRun(srcId, targId, state)
     pnprint("==>>GameMap:onRun()\n")
-    self.entities.all[targId]:onRun(state)
+    if (self.entities.all[targId].onRun ~= nil)then
+    	self.entities.all[targId]:onRun(state)
+    end
     pnprint("<<==GameMap:onRun()\n")
 end
 
 function gameMap:onCrouch(srcId, targId, state)
     pnprint("LUA GameMap:onCrouch()\n")
-    self.entities.all[targId]:onCrouch(state)
+    if (self.entities.all[targId].onCrouch ~= nil) then 
+    	self.entities.all[targId]:onCrouch(state)
+    end
 end
 
 function gameMap:onFrustrumIn(sourceId, targetId)

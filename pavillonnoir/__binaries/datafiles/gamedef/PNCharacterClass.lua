@@ -169,11 +169,6 @@ Call when someone tell the object to go backward
 	OVERRIDE(OBJ, "onMoveForward")	
 	function OBJ:onMoveForward(state)
 		self:PN3DSkeletonObject_onMoveForward(state)	
-		if (state == ACTION_STATE.START) then
-			self.dirLong = self.dirLong + CHARACTER_DIR_LONG.FORWARD
-		else
-			self.dirLong = CHARACTER_DIR_LONG.NONE
-		end 
 	end
 -------------------------------------------------------------------------------
 --[[%
@@ -186,12 +181,6 @@ Call when someone tell the object to go backward and start apropriate annimation
 		pnprint(self.id)
 		pnprint(":onMoveBackward\n")
 		self:PN3DSkeletonObject_onMoveBackward(state)
-		--OBJ:setMovingSpeed(self.actualSpeed)	
-		if (state == ACTION_STATE.START) then
-			self.dirLong = self.dirLong + CHARACTER_DIR_LONG.BACKWARD
-		else
-			self.dirLong = CHARACTER_DIR_LONG.NONE
-		end 
 	end
 -------------------------------------------------------------------------------
 --[[%
@@ -201,14 +190,8 @@ Call when someone tell the object to go Left
 %--]]	
 	OVERRIDE(OBJ, "onMoveLeft")	
 	function OBJ:onMoveLeft(state)
-		pnprint(self.id .. ":onMoveForLeft=" .. state .. "\n")
-		--OBJ:setMovingSpeed(self.actualSpeed)
+		pnprint(self.id .. ":onMoveLeft=" .. state .. "\n")
 		self:PN3DSkeletonObject_onMoveLeft(state)	
-		if (state == ACTION_STATE.START) then
-			self.dirLate = self.dirLate + CHARACTER_DIR_LATE.LEFT
-		else
-			self.dirLate = CHARACTER_DIR_LATE.NONE
-		end 
 	end
 -------------------------------------------------------------------------------
 --[[%
@@ -218,15 +201,8 @@ Call when someone tell the object to left and start apropriate animation
 %--]]		
 	OVERRIDE(OBJ, "onMoveRight")	
 	function OBJ:onMoveRight(state)
-		pnprint(self.id)
-		pnprint(self.id .. ":onMoveForRight=" .. state .. "\n")
+		pnprint(self.id .. ":onMoveRight=" .. state .. "\n")
 		self:PN3DSkeletonObject_onMoveRight(state)
-		--OBJ:setMovingSpeed(self.actualSpeed)	
-		if (state == ACTION_STATE.START) then
-			self.dirLate = self.dirLate + CHARACTER_DIR_LATE.RIGHT
-		else
-			self.dirLate = CHARACTER_DIR_LATE.NONE
-		end 
 	end
 -------------------------------------------------------------------------------
 
@@ -237,8 +213,7 @@ Call when someone tell the object to rotate right
 %--]]	
 	OVERRIDE(OBJ, "onRotateRight")	
 	function OBJ:onRotateRight(state)
-		pnprint(self.id)
-		pnprint(":onRotateRight\n")
+		pnprint(self.id .. ":onRotateRight=" .. state .. "\n")
 		self:PN3DSkeletonObject_onRotateRight(state)
 	end	
 -------------------------------------------------------------------------------
@@ -447,18 +422,18 @@ Launch the good annimation regarding the state of the Character
 
 		self:setEnable(CHARACTER_ANIM.WALK_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
 		self:setEnable(CHARACTER_ANIM.WALK_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
-		self:setEnable(CHARACTER_ANIM.WALK_L, self:testMovingState(PN3DObject.STATE_R_LEFT) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
-		self:setEnable(CHARACTER_ANIM.WALK_R, self:testMovingState(PN3DObject.STATE_R_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
+		self:setEnable(CHARACTER_ANIM.WALK_L, self:testMovingState(PN3DObject.STATE_T_LEFT) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
+		self:setEnable(CHARACTER_ANIM.WALK_R, self:testMovingState(PN3DObject.STATE_T_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
 		
 		self:setEnable(CHARACTER_ANIM.RUN_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
 		self:setEnable(CHARACTER_ANIM.RUN_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
-		self:setEnable(CHARACTER_ANIM.RUN_L, self:testMovingState(PN3DObject.STATE_R_LEFT) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
-		self:setEnable(CHARACTER_ANIM.RUN_R, self:testMovingState(PN3DObject.STATE_R_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
+		self:setEnable(CHARACTER_ANIM.RUN_L, self:testMovingState(PN3DObject.STATE_T_LEFT) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
+		self:setEnable(CHARACTER_ANIM.RUN_R, self:testMovingState(PN3DObject.STATE_T_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
 			
 		self:setEnable(CHARACTER_ANIM.CROUCH_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
 		self:setEnable(CHARACTER_ANIM.CROUCH_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
-		self:setEnable(CHARACTER_ANIM.CROUCH_L, self:testMovingState(PN3DObject.STATE_R_LEFT) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
-		self:setEnable(CHARACTER_ANIM.CROUCH_R, self:testMovingState(PN3DObject.STATE_R_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
+		self:setEnable(CHARACTER_ANIM.CROUCH_L, self:testMovingState(PN3DObject.STATE_T_LEFT) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
+		self:setEnable(CHARACTER_ANIM.CROUCH_R, self:testMovingState(PN3DObject.STATE_T_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
 			
 		self:setEnable(CHARACTER_ANIM.CROUCH, (self:getMovingState() == 0) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
 		self:setEnable(CHARACTER_ANIM.IDLE, (self:getMovingState() == 0) and (self.attitude ~= CHARACTER_ATTITUDE.CROUCHING) and (OBJ.state == OBJ.stateEnum.PN_IA_PASSIVE))
