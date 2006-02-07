@@ -584,7 +584,7 @@ PNGLRenderer::flushSDLEvents()
 bool
 PNGLRenderer::getSDLGrabState()
 {
-  return SDL_WM_GrabInput(SDL_GRAB_QUERY);
+  return SDL_WM_GrabInput(SDL_GRAB_QUERY) != 0;
 }
 //////////////////////////////////////////////////////////////////////////
 

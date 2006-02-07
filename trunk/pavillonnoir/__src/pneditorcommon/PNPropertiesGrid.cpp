@@ -166,6 +166,7 @@ PNPropertiesGrid::setObject(PNConfigurableObject* object)
 	}
   }
 
+  create();
   recalc();
 }
 
