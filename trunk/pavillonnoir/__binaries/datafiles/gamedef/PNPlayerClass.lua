@@ -132,28 +132,35 @@ Call when before object destruction
 --[[%
 Call when player push the primary attack button
 %--]]
-	function OBJ:onPrimaryAttack()
+	function OBJ:onPrimaryAttack(state)
 		local id = nil
 		local entity = nil
 		local nearest_d = 99999999999999	-- nearest distance
 		local nearest_e = nil 				-- nearest entitie
-		-- loop on entities seen by the player
-		for id, entity in pairs(self.seen_entities) do
-			local distance = self:getPosition():getDistance(entity:getPosition())
-			-- select the nearest entity seen by the player
-			if (distance < nearest_d) then
-				nearest_d = distance
-				nearest_e = entity
-			end			
-		end
-		-- if a entity has been selected
-		if (nearest_e ~= nil) then
-			-- set it as target of player
-			self.setTarget(nearest_e)
-			-- set player in ATTACK mode
-			self.combat_state = COMBAT_STATE.ATTACK
-			-- prevent every body that player is attakink target
-			sendGameActionEvent("Attack", self:getId(), entity:getTarget(), true)
+		self:startAnimation(CHARACTER_ANIM.STRIKE_TORSO)
+		
+		pnprint("tappe !!!\n")
+		if (state == true) then
+			-- loop on entities seen by the player
+			for id, entity in pairs(self.seen_entities) do
+				local distance = self:getPosition():getDistance(entity:getPosition())
+				-- select the nearest entity seen by the player
+				if (distance < nearest_d) then
+					nearest_d = distance
+					nearest_e = entity
+				end			
+			end
+			-- if a entity has been selected
+			if (nearest_e ~= nil) then
+				-- set it as target of player
+				self.setTarget(nearest_e)
+				-- set player in ATTACK mode
+				self.combat_state = COMBAT_STATE.ATTACK
+				-- prevent every body that player is attakink target
+				sendGameActionEvent("Attack", self:getId(), entity:getTarget(), true)
+			end
+		else
+			self.combat_state = COMBAT_STATE.NEUTRAL
 		end
 		--@TODO: launch attack annimation				
 	end

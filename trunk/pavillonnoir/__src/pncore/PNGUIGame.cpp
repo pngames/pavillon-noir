@@ -447,6 +447,8 @@ PNGUIGame::PNGUIGame()
   _rootWin->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIGame::eventKeyPressedHandler, this));
   _rootWin->subscribeEvent(CEGUI::Window::EventKeyUp, CEGUI::Event::Subscriber(&PNGUIGame::eventKeyReleasedHandler, this));
   _rootWin->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseClickdHandler, this));
+  _rootWin->subscribeEvent(CEGUI::Window::EventMouseButtonDown, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseButtonPressedHandler, this));
+  _rootWin->subscribeEvent(CEGUI::Window::EventMouseButtonUp, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseButtonReleasedHandler, this));
   _rootWin->subscribeEvent(CEGUI::Window::EventMouseWheel, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseWheel, this));
 
   _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &_lifeValue, "life bar value", "life bar value"));
@@ -908,14 +910,67 @@ bool PNGUIGame::eventMouseClickdHandler(const CEGUI::EventArgs& e)
 { 
   CEGUI::MouseEventArgs* me = (CEGUI::MouseEventArgs*)&e;
 
-  if (me->button == CEGUI::LeftButton)
+  if (me->button == CEGUI::LeftButton){
 	std::cout << "game left click" << std::endl;
+    //PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("PrimaryAttack",playerid,"null",true));
+
+  }
   if (me->button == CEGUI::RightButton)
 	std::cout << "game right click" << std::endl;
   if (me->button == CEGUI::MiddleButton)
 	std::cout << "game middle click" << std::endl;
   return true;
 }
+
+/*!
+\brief
+Called when there is a mouse click
+*/
+bool PNGUIGame::eventMouseButtonPressedHandler(const CEGUI::EventArgs& e)
+{ 
+  CEGUI::MouseEventArgs* me = (CEGUI::MouseEventArgs*)&e;
+  std::string playerid = "";
+
+  if (PNGameInterface::getInstance()->getGameMap()->getPlayer() != NULL)
+    playerid = PNGameInterface::getInstance()->getGameMap()->getPlayer()->getId();
+
+  if (me->button == CEGUI::LeftButton){
+    std::cout << "game left click" << std::endl;
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("PrimaryAttack",playerid,"null",true));
+
+  }
+  if (me->button == CEGUI::RightButton)
+    std::cout << "game right click" << std::endl;
+  if (me->button == CEGUI::MiddleButton)
+    std::cout << "game middle click" << std::endl;
+  return true;
+}
+
+/*!
+\brief
+Called when there is a mouse click
+*/
+bool PNGUIGame::eventMouseButtonReleasedHandler(const CEGUI::EventArgs& e)
+{ 
+  CEGUI::MouseEventArgs* me = (CEGUI::MouseEventArgs*)&e;
+
+  std::string playerid = "";
+
+  if (PNGameInterface::getInstance()->getGameMap()->getPlayer() != NULL)
+    playerid = PNGameInterface::getInstance()->getGameMap()->getPlayer()->getId();
+
+  if (me->button == CEGUI::LeftButton){
+    std::cout << "game left click" << std::endl;
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("PrimaryAttack",playerid,"null",false));
+
+  }
+  if (me->button == CEGUI::RightButton)
+    std::cout << "game right click" << std::endl;
+  if (me->button == CEGUI::MiddleButton)
+    std::cout << "game middle click" << std::endl;
+  return true;
+}
+
 
 /*!
 \brief
