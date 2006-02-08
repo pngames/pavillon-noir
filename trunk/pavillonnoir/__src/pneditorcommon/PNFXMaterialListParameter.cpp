@@ -86,9 +86,11 @@ void	PNFXMaterialListParameter::create()
 bool
 PNFXMaterialListParameter::_deleteObject(FXint index)
 {
+  pnerror(PN_LOGLVL_DEBUG, "PNFXMaterialListParameter::deleteObject");
   PN3DObject::VectorMaterial* v = (PN3DObject::VectorMaterial*)_param->getElem(); 
 
   v->erase(v->begin() + index);
+  _update();
 
   return true;
 }
@@ -96,7 +98,7 @@ PNFXMaterialListParameter::_deleteObject(FXint index)
 bool
 PNFXMaterialListParameter::_addNewObject(FXint index)
 {
-  pnerror(PN_LOGLVL_DEBUG, "PNFXMaterialListParameter::onAdd");
+  pnerror(PN_LOGLVL_DEBUG, "PNFXMaterialListParameter::addNewObject");
   FXFileDialog fd(this, "Choose material file");
 
   if (fd.execute())
@@ -149,6 +151,7 @@ PNFXMaterialListParameter::_addNewObject(FXint index)
 void
 PNFXMaterialListParameter::_update(void)
 {
+  pnerror(PN_LOGLVL_DEBUG, "PNFXMaterialListParameter::update");
   PN3DObject::VectorMaterial* v = (PN3DObject::VectorMaterial*)_param->getElem();
 
   _listBox->clearItems();
