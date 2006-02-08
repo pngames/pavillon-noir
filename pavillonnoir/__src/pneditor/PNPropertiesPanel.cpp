@@ -494,8 +494,8 @@ long          PNPropertiesPanel::onAccept(FXObject* obj, FXSelector sel, void* p
 	  t = PN_STATIC;
 	else if (_envTypesListBox->getItemText(_envTypesListBox->getCurrentItem()) == (char *)PNXML_DYNAMIC_VAL)
 	  t = PN_DYNAMIC;
-	_ed->add3DObject(obj, this, _idMax, t, _classLabel->getText().text(), _objLabel->getText().text());
 	_idMax++;
+	_ed->add3DObject(obj, this, _idMax, t, _classLabel->getText().text(), _objLabel->getText().text());
 	_dbox->getApp()->stopModal(_dbox, TRUE);
 	_dbox->close();
   }
