@@ -90,6 +90,7 @@ PNFXAnimListParameter::_deleteObject(FXint index)
   PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem(); 
 
   v->erase(v->begin() + index);
+  _update();
 
   return true;
 }
