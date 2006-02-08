@@ -583,7 +583,7 @@ void PNGUIGame::resetGUI()
 
 void  PNGUIGame::changeLife(int val)
 {
-  PNLOCK(PNGUIGame::getInstance());
+ /* PNLOCK(PNGUIGame::getInstance());
   if (val < 7)
   {
 	float sizeHeight = 0.25;
@@ -598,7 +598,7 @@ void  PNGUIGame::changeLife(int val)
 	PNGUIGame::getInstance()->_statImg->setBackgroundEnabled(false);
 	PNGUIGame::getInstance()->_statImg->disable();
 	PNGUIGame::getInstance()->_statImg->show();
-  }
+  }*/
 }
 
 
