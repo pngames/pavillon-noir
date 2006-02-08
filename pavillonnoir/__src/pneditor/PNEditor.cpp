@@ -514,7 +514,6 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 
   //////////////////////////////////////////////////////////////////////////
   
-  _genScene.clear();
   _genScene.setOptionView(PNGLGroup::VIEW_ALL);
   _wpenabled = false;
 
