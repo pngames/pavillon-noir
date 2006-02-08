@@ -331,10 +331,6 @@ PNFXListParameter::onDelete(FXObject* obj, FXSelector sel, void* ptr)
 long
 PNFXListParameter::onAdd(FXObject* obj, FXSelector sel, void* ptr)
 { 
-  if (_listBox->getNumItems() == 0)
-	return 1;
-
-  //////////////////////////////////////////////////////////////////////////
   FXint	index = _listBox->getCurrentItem();
 
   if (_addNewObject(index))
