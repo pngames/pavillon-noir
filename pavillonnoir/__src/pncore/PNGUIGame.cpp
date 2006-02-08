@@ -949,8 +949,8 @@ Called when there is a mouse click
 */
 bool PNGUIGame::eventMouseClickdHandler(const CEGUI::EventArgs& e)
 { 
-resetGUI();
-PNGUIDeath::getInstance()->show();
+//resetGUI();
+//PNGUIDeath::getInstance()->show();
 
 
   CEGUI::MouseEventArgs* me = (CEGUI::MouseEventArgs*)&e;
