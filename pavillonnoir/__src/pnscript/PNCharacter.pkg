@@ -38,6 +38,4 @@ public:
 
   pnCharacType							getCharacType();
 
-  void									setState(pnIAState st);
-  void									restoreState();
 };

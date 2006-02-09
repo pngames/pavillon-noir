@@ -26,7 +26,21 @@ function PNPlayerClass(id)
     --PNRenderCam:addTargetMode(PN3DObject.TMODE_DISTANCE_ABS_LOCKED)
     --PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_LOCKED)
     --PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_ABS_LOCKED)
-    
+
+    OBJ.stats=	{strength=4,
+						 address=3,
+						 adaptation=6,
+						 awareness=6,
+						 resistance=9
+						}
+	OBJ.skills=	{h2h_combat=5, -- hand to hand
+						 firearm=5,
+						 slasher=8,
+						 throw_weapon=7,
+						 dodge=2,
+						 escrime=2
+						}
+						    
     OBJ.realCharacType = CHARACTER_TYPE.PIRATE
 	OBJ.shownCharacType = CHARACTER_TYPE.PIRATE
 -----------------------------------------------------------
@@ -140,16 +154,18 @@ Call when player push the primary attack button
 	function OBJ:onPrimaryAttack(state)
 		local id = nil
 		local entity = nil
-		local nearest_d = 99999999999999	-- nearest distance
+		local nearest_d = 2 * self.selected_weapon.range	-- nearest distance
 		local nearest_e = nil 				-- nearest entitie
 
-		self:startAnimation(CHARACTER_ANIM.STRIKE_TORSO)
-		
-		pnprint("tappe !!!\n")
-		if (state == true) then
+		--self:startAnimation(CHARACTER_ANIM.STRIKE_TORSO)
+		if (self.combat_state ~= COMBAT_STATE.ATTACK) then
+			pnprint("tappe !!!\n")
+			--if (state == true) then
+			pnprint ("Player wants to fight\n")
 			-- loop on entities seen by the player
 			for id, entity in pairs(self.seen_entities) do
-				local distance = self:getPosition():getDistance(entity:getPosition())
+				pnprint("He can attack " .. id .. "\n")
+				local distance = self:getCoord():getDistance(entity:getCoord())
 				-- select the nearest entity seen by the player
 				if (distance < nearest_d) then
 					nearest_d = distance
@@ -158,19 +174,25 @@ Call when player push the primary attack button
 			end
 			-- if a entity has been selected
 			if (nearest_e ~= nil) then
+				pnprint("He will finally attack " .. nearest_e:getId() .. "\n")
 				-- set it as target of player
-				self.setTarget(nearest_e)
+				self:setTarget(nearest_e)
 				-- set player in ATTACK mode
 				self.combat_state = COMBAT_STATE.ATTACK
-				-- prevent every body that player is attakink target
-				sendGameActionEvent("Attack", self:getId(), entity:getTarget(), true)
+				-- prevent every body that player is attaking target
+				gameMap:onAttack(self.id, nearest_e:getId())
+				--sendGameActionEvent("Attack", self:getId(), entity:getTarget(), true)
+			else
+				self.combat_state = COMBAT_STATE.NEUTRAL
 			end
-		else
-			self.combat_state = COMBAT_STATE.NEUTRAL
-
 		end
 		--@TODO: launch attack annimation
 	end
+---------------------------------------------------------
+	OVERRIDE(OBJ, "startFight")
+    function OBJ:startFight(damage, localisation)
+    	--nothing
+    end
 ---------------------------------------------------------
 --[[%
 Called at the end of a Fight Action
@@ -179,8 +201,24 @@ Called at the end of a Fight Action
     function OBJ:onDamage(damage, localisation)
     	self:PNCharacter_onDamage(damage, localisation)
     	-- call refresh of life bar
+    	GUIChangeLife(self.health_state)
 	end
 ---------------------------------------------------------
-	
+	OVERRIDE(OBJ, "onFrustrumIn")
+	function OBJ:onFrustrumIn(target)
+		if (target:getId() ~= self.id) then
+			pnprint ("Player sees " .. target:getId() .. "\n")
+			self.seen_entities[target:getId()] = target
+		end
+	end
+---------------------------------------------------------
+	OVERRIDE(OBJ, "onFrustrumOut")
+	function OBJ:onFrustrumOut(target)
+		if (target:getId() ~= self.id) then
+			pnprint ("Player doesn't see " .. target:getId() .. " anymore\n")
+			self.seen_entities[target:getId()] = nil
+		end
+	end
+---------------------------------------------------------
 	return OBJ
 end
