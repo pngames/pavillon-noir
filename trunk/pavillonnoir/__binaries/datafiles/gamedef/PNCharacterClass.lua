@@ -104,7 +104,7 @@ function PNCharacterClass(id)
 	OBJ.combat_state = COMBAT_STATE.NEUTRAL
 	OBJ.realCharacType = CHARACTER_TYPE.CIVILIAN
 	OBJ.shownCharacType = CHARACTER_TYPE.CIVILIAN
-	OBJ.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2, PN_IA_WAIT_ANIM_END = 3, PN_IA_COMA}
+	OBJ.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2, PN_IA_WAIT_ANIM_END = 3, PN_IA_COMA = 4}
 	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
 	OBJ.pastStates = {}
 
@@ -175,7 +175,7 @@ Call when someone tell the object to go backward
 Call when someone tell the object to go backward and start apropriate annimation 
 @param state boolean
 	true -> start , false -> stop  
-%--]]		
+%--]]
 	OVERRIDE(OBJ, "onMoveBackward")	
 	function OBJ:onMoveBackward(state)
 		pnprint(self.id)
@@ -364,29 +364,43 @@ Called on a behaviour change
 Sets a new state impliying a new behaviour for the character
 Adds the old state on a stack to retrieve it later
 %--]]
+	--OVERRIDE(OBJ, "setState")
 	function OBJ:setState(st)
-		table.insert(self.pastStates, 0, self.state)
-		self.state = st
-		if (self.pastStates[0] == self.stateEnum.PN_IA_TRAVELLING) then
-			self:onMoveForward(ACTION_STATE.STOP)
+		pnprint("=> PNCharacter:setState()\n")
+		if (self.state ~= st) then
+			--pnprint("states stack size = " .. table.getn(self.pastStates).. "\n")
+			pnprint(self.state .. " --> " .. st .. "\n")
+			table.insert(self.pastStates, 0, self.state)
+			self.state = st
+			if (self.pastStates[0] == self.stateEnum.PN_IA_TRAVELLING) then
+				self:onMoveForward(ACTION_STATE.STOP)
+			end
 		end
+		pnprint("<= PNCharacter:setState()\n")
 	end
 --------------------------------------------------------
 --[[%
 Called when a behaviour is not needed anymore
 Sets the character's behaviour to the previous state on the stack
 %--]]
+	--OVERRIDE(OBJ, "restoreState")
 	function OBJ:restoreState()
 		pnprint("=> PNCharacter:restoreState()\n")
+		pnprint("states stack size = " .. table.getn(self.pastStates).. "\n")
+		pnprint(self.state .. " --> " .. self.pastStates[0] .. "\n")
 		self.state = self.pastStates[0]
-		table.remove(self.pastStates,0)
+		table.remove(self.pastStates, 0)
+		if (self.state == self.stateEnum.PN_IA_TRAVELLING) then
+			self:setTarget(self.toReach)
+			self:onMoveForward(ACTION_STATE.START)
+		end
 		pnprint("<= PNCharacter:restoreState()\n")
 	end
 --------------------------------------------------------
 --[[%
 Called at the end of a Fight Action
 %--]]
-    function OBJ:onDamage(damage, localisation)
+    function OBJ:onDamage(damage, localisation, source)
 		pnprint(self.id .. " gets " .. damage .. " at localisation " .. localisation .. " as damage\n")
 		self.m_wounds[localisation] = self.m_wounds[localisation] + damage
 		if (self.m_wounds[localisation] > self.health_state) then
@@ -399,6 +413,8 @@ Called at the end of a Fight Action
 			gameMap:sendEventFromLua(self, 17) -- DeathEvent
 			self:waitForAnimEnd(CHARACTER_ANIM.DIE)
 			pnprint(self.id .. " is dead !\n")
+		elseif ((self.state ~= self.stateEnum.PN_IA_FIGHTING)) then
+			self:startFight(source)
 		end
 	end
 --------------------------------------------------------
@@ -506,7 +522,7 @@ Launches an Animation and waits for its end
 			if (distance < range) then
 				-- nb success
 				for i = 1, nbDice do
-					--pnprint(self.id .. " throwing a die !\n")
+					pnprint(self.id .. " throwing a die !\n")
 					if ((gameMap.die:getVal(10) + MDsuccess) <= self.skills[self.selected_weapon.type]) then
 						--pnprint("\tsuccess !\n")
 						nbS = nbS + 1
