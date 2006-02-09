@@ -125,11 +125,11 @@ public:
   bool							isStatic();
   void							setStatic(bool state);
   void							setTransform(const PNPoint3f& coord, const PNQuatf& orient, pnfloat scale);
+  void							addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration, pnbool isLocal);
 
   //////////////////////////////////////////////////////////////////////////
   // PNOpalObject specific
 
-  void							addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration, pnbool isLocal);
   void							addTorque(const PNVector3f& axis, pnfloat magnitude, pnfloat duration, pnbool isLocal);
   void							setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf orient);
   void							destroyMovementMotor();
