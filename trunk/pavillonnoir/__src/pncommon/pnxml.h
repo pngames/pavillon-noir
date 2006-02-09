@@ -38,7 +38,14 @@ static const std::string	PNMAP_XMLNODE_ROOT		= PNMAP_XMLDTD_NAME;
 
 static const std::string	PNENTITY_XMLNODE_ROOT	= "entity";
 
+// Chat
+static const std::string	PNCHAT_XMLDTD_NAME		= "chat";
+static const std::string	PNCHAT_XMLDTD			=  std::string("../") + PNCHAT_XMLDTD_NAME + ".dtd";
+static const std::string	PNCHAT_XMLNODE_ROOT		= PNCHAT_XMLDTD_NAME;
+
+
 // Markups
+
 #define PNXML_LISTENTITIES_MKP		(const xmlChar *)PNMAP_XMLNODE_ROOT.c_str()
 #define PNXML_ENTITY_MKP			(const xmlChar *)PNENTITY_XMLNODE_ROOT.c_str()
 #define PNXML_ACTION_MKP			(const xmlChar *)"action"
@@ -50,6 +57,11 @@ static const std::string	PNENTITY_XMLNODE_ROOT	= "entity";
 #define PNXML_LINK_MKP				(const xmlChar *)"lnk"
 #define PNXML_LISTSOUNDS_MKP		(const xmlChar *)"listsounds"
 #define PNXML_SOUND_MKP				(const xmlChar *)"sound"
+// Chat
+#define PNXML_BUDDY_MKP				(const xmlChar *)"buddy"
+#define PNXML_DEPENDS_MKP			(const xmlChar *)"depends"
+#define PNXML_PLAYER_MKP			(const xmlChar *)"player"
+
 
 // Attributes
 
@@ -73,8 +85,16 @@ static const std::string	PNENTITY_XMLNODE_ROOT	= "entity";
 #define PNXML_REFERENCE_ATTR		(const xmlChar *)"ref"
 #define PNXML_INTENSITY_ATTR		(const xmlChar *)"intensity"
 #define PNXML_CLASS_ATTR			(const xmlChar *)"class"
+// Chat
+#define PNXML_BUDDYNAME_ATTR		(const xmlChar *)"name"
+#define PNXML_SENTENCE_ATTR			(const xmlChar *)"sentence"
+#define PNXML_RESPONSE_ATTR			(const xmlChar *)"response"
+#define PNXML_QUIT_ATTR				(const xmlChar *)"quit"
+#define PNXML_CHECKPOINT_ATTR		(const xmlChar *)"checkpoint"
+
 
 // Values
+
 #define PNXML_DYNAMIC_VAL			(const xmlChar *)"dynamic"
 #define PNXML_GROUND_VAL			(const xmlChar *)"ground"
 #define PNXML_STATIC_VAL			(const xmlChar *)"static"
