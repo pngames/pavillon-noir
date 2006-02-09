@@ -40,6 +40,7 @@
 #include "pneditorcommon.h"
 #include "pnproperties.h"
 #include "pnimport.h"
+#include "pnresources.h"
 
 #include "PNFXAnimListParameter.hpp"
 
@@ -100,6 +101,12 @@ PN3DAnimation*
 PNFXAnimListParameter::openAnim()
 {
   FXFileDialog fd(this, "Choose animation file to add");
+  fd.setPatternList("PN Animations (*.pna)\nAll Files (*)");
+  
+  FXString* dir_path = new FXString(fd.getDirectory().text());
+  dir_path->append("/");
+  dir_path->append(DEF::animationFilePath.c_str());
+  fd.setDirectory(*dir_path);
 
   if (fd.execute())
   {
