@@ -94,13 +94,13 @@ function PNCharacterClass(id)
 	OBJ.items = {}
 	--------------------------------------
 	-------LIST OF WEAPONS----------------
-	OBJ.items.weapons	=	{h2h=PNWeaponH2HClass("h2h")} --FIXME id de merde
+	OBJ.items.weapons	=	{h2h_combat=PNWeaponH2HClass("h2h")} --FIXME id de merde
 	--------------------------------------
 	-------LIST OF WOUNDS BY MEMBER-------
 	OBJ.m_wounds=	{0,0,0,0,0,0}
 	--------------------------------------
 	OBJ.health_state = HEALTH_STATE.OK
-	OBJ.selected_weapon = OBJ.items.weapons.h2h
+	OBJ.selected_weapon = OBJ.items.weapons.h2h_combat
 	OBJ.combat_state = COMBAT_STATE.NEUTRAL
 	OBJ.realCharacType = CHARACTER_TYPE.CIVILIAN
 	OBJ.shownCharacType = CHARACTER_TYPE.CIVILIAN
@@ -516,6 +516,25 @@ Launches an Animation and waits for its end
 		end
 
 		return nbS
+	end
+
+--------------------------------------------------------
+	function OBJ:selectWeapon(typename)
+		self.selectedWeapon:setIsVisible(false)
+		self.selectedWeapon = self.items.weapons[typename]
+		self.selectedWeapon:setIsVisible(true)
+	end			
+--------------------------------------------------------
+
+	function OBJ:getItem(item)
+		if (isInstanceOf(item, "PNWeapon") and self.items.weapons[item.type] == nil)then
+			self.items.weapons[item.type] = item
+			item:setPositionBoneTarget("Bip01 R Hand")
+			item:setIsVisible(false)
+			item.isHold = true
+			self:selectWeapon(item.type)
+		end 
+		return true
 	end
 --------------------------------------------------------
 	return OBJ

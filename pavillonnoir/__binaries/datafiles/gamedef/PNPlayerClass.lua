@@ -12,9 +12,11 @@ function PNPlayerClass(id)
 	
 --	PNRenderCam:setViewTarget(RCVT)
 	PNRenderCam:setViewTarget(OBJ)
-	PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
+	PNRenderCam:setViewBoneTarget("Bip01 Head")
+	PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_ABS_LOCKED)
 	
 	PNRenderCam:setPositionTarget(OBJ)
+--	PNRenderCam:setPositionBoneTarget("Bip01 Head")
     PNRenderCam:setTargetPosition(0, 75 , 200)
     PNRenderCam:addTargetMode(PN3DObject.TMODE_POSITION_LOCKED)
     
@@ -29,7 +31,9 @@ function PNPlayerClass(id)
 	OBJ.shownCharacType = CHARACTER_TYPE.PIRATE
 -----------------------------------------------------------
 	function OBJ:onMouseLook(x, y)
-		self:rotateYawRadians(math.rad(x))		
+		self:rotateYawRadians(math.rad(x))	
+		--PNRenderCam:subTargetMode(PN3DObject.TMODE_VIEW_ABS_LOCKED)	
+		--PNRenderCam:onMouseLook(x, y)
 	end    
 ------------------------------ MOVE -----------------------
 	OVERRIDE(OBJ, "onMoveForward")
