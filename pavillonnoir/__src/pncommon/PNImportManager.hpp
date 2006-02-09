@@ -77,3 +77,4 @@ private:
 };
 
 #endif /*_PNIMPORTMANAGER_HPP_*/
+

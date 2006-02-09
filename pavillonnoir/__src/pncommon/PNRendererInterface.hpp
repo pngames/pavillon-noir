@@ -162,3 +162,4 @@ PNRendererInterface::getInstance()
 }
 
 #endif /*_PNRENDERERINTERFACE_HPP_*/
+

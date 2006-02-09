@@ -75,3 +75,4 @@ protected:
 };
 
 #endif /*!_PNCONFIGURABLEOBJECT_HPP_*/
+

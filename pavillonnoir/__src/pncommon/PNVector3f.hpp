@@ -168,3 +168,4 @@ PNVector3f::setNorm(pnfloat* v, pnfloat newNorm)
 /////////////////////////////////////
 
 #endif /* _PNVECTOR3F_HPP_ */
+

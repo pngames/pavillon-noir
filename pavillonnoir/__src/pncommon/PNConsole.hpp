@@ -127,3 +127,4 @@ protected:
 };
 
 #endif /*_PNCONSOLE_HPP_*/
+

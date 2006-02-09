@@ -66,3 +66,4 @@ public:
 }
 
 #endif /*_PNRENDERMATERIAL_HPP_*/
+

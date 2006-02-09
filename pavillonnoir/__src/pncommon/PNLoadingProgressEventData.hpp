@@ -60,3 +60,4 @@ public:
 };
 
 #endif /*!_PNLOADINGPROGRESSEVENTDATA_HPP_*/
+

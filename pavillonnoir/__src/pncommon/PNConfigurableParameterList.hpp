@@ -158,3 +158,4 @@ PNConfigurableParameterList::serializeList(_ListType* list, xmlNode* node)
 };
 
 #endif /*!_PNCONFIGURABLEPARAMETERLIST_HPP_*/
+

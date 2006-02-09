@@ -191,3 +191,4 @@ PNQuatf::set(const pnfloat* quat)
 };
 
 #endif /*_PNQUATF_HPP_*/
+

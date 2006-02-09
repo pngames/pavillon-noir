@@ -320,3 +320,4 @@ void  PNLuaGameMap::sendEventFromLua(PNObject* source, pnint eventId)
 {
   PNEventManager::getInstance()->addEvent((pnEventType)eventId, source, NULL);
 }
+

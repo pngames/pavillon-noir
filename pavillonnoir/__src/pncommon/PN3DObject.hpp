@@ -487,3 +487,4 @@ public:
 };
 
 #endif /*_PN3DOBJECT_HPP_*/
+

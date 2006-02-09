@@ -50,3 +50,4 @@ public:
 };
 
 #endif /*_PNBOOLPARAMETER_HPP_*/
+

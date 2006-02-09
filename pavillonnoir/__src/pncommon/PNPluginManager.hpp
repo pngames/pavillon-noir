@@ -60,3 +60,4 @@ public:
 };
 
 #endif /*_PNPLUGINMANAGER_HPP_*/
+

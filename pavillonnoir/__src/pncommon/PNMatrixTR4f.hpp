@@ -82,3 +82,4 @@ public:
 };
 
 #endif /*_PNMATRIXTR4F_HPP_*/
+

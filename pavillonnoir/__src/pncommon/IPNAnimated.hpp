@@ -96,3 +96,4 @@ protected:
 }
 
 #endif /*_IPNANIMATED_HPP_*/
+

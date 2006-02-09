@@ -129,3 +129,4 @@ public:
 };
 
 #endif /*!_PNBASEVALUE_HPP_*/
+

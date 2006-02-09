@@ -84,3 +84,4 @@ public:
 };
 
 #endif /*_PNBOOL_HPP_*/
+
