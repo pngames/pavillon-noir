@@ -74,6 +74,7 @@ protected:
   bool						_editObject(FXint index);
 
   void						_update();
+  void						_update(pnuint index);
 };
 
 //////////////////////////////////////////////////////////////////////////

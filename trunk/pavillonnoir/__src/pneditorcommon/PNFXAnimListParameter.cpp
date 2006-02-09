@@ -87,6 +87,7 @@ PNFXAnimListParameter::create()
 bool
 PNFXAnimListParameter::_deleteObject(FXint index)
 {
+  pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::deleteObject");
   PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem(); 
 
   v->erase(v->begin() + index);
@@ -130,6 +131,7 @@ PNFXAnimListParameter::openAnim()
 bool
 PNFXAnimListParameter::_addNewObject(FXint index)
 {
+  pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::addNewObject");
   PN3DAnimation* anim = openAnim();
 
   if (anim != NULL)
@@ -142,6 +144,7 @@ PNFXAnimListParameter::_addNewObject(FXint index)
 	  PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem(); 
 
 	  v->insert(v->begin() + index, _skanim);
+	  return true;
 	}
   }
 
@@ -173,6 +176,7 @@ PNFXAnimListParameter::showAnim(PNConfigurableObject* skanim)
 bool
 PNFXAnimListParameter::_editObject(FXint index)
 {
+  pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::editObject");
   PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem();
 
   showAnim((*v)[index]);
@@ -186,6 +190,7 @@ PNFXAnimListParameter::_editObject(FXint index)
 void
 PNFXAnimListParameter::_update(void)
 {
+  pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::update");
   PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem();
 
   _listBox->clearItems();
@@ -200,5 +205,14 @@ PNFXAnimListParameter::_update(void)
   _listBox->setNumVisible(_listBox->getNumItems()< 5 ? _listBox->getNumItems() : 5);
 }
 
+/*
+*	Updates AnimList, sets the current selection to index
+*/
+void
+PNFXAnimListParameter::_update(pnuint index)
+{
+  _update();
+  _setCurrentItem(index);
+}
 //////////////////////////////////////////////////////////////////////////
 };
