@@ -18,8 +18,8 @@
     table.insert(PNRenderCam.lastYMouseValues, 1,0)
 ------------------------------ MOVE -----------------------
 	function PNRenderCam:onMoveForward(state)
-		-- pnprint("LUA PNRenderCam:onMoveForward()\n")	
-		if (state == true) then
+		pnprint("LUA PNRenderCam:onMoveForward()\n")	
+		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_T_FORWARD)
 		else
 			self:subMovingState(PN3DObject.STATE_T_FORWARD)
@@ -28,7 +28,7 @@
 
 	function PNRenderCam:onMoveBackward(state)
 		-- pnprint("LUA PNRenderCam:onMoveBackward()\n")
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_T_BACKWARD)
 		else
 			self:subMovingState(PN3DObject.STATE_T_BACKWARD)
@@ -37,7 +37,7 @@
 	
 	function PNRenderCam:onMoveLeft(state)
 		-- pnprint("LUA PNRenderCam:onMoveLeft()\n")	
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_T_LEFT)
 		else
 			self:subMovingState(PN3DObject.STATE_T_LEFT)
@@ -46,7 +46,7 @@
 
 	function PNRenderCam:onMoveRight(state)
 		-- pnprint("LUA PNRenderCam:onMoveRight()\n")
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_T_RIGHT)
 		else
 			self:subMovingState(PN3DObject.STATE_T_RIGHT)
@@ -55,7 +55,7 @@
 ------------------------- ROTATE -----------------------------
 	function PNRenderCam:onRotateRight(state)
 		-- pnprint("LUA PNRenderCam:onRotateRight()\n")
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_R_RIGHT)
 		else
 			self:subMovingState(PN3DObject.STATE_R_RIGHT)
@@ -64,7 +64,7 @@
 	
 	function PNRenderCam:onRotateLeft(state)
 		-- pnprint("LUA PNRenderCam:onRotateLeft()\n")
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_R_LEFT)
 		else
 			self:subMovingState(PN3DObject.STATE_R_LEFT)
@@ -73,7 +73,7 @@
 	
 	function PNRenderCam:onRotateUp(state)
 		-- pnprint("LUA PNRenderCam:onRotateUp()\n")
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_R_TOP)
 		else
 			self:subMovingState(PN3DObject.STATE_R_TOP)
@@ -82,7 +82,7 @@
 	
 	function PNRenderCam:onRotateDown(state)
 		-- pnprint("LUA PNRenderCam:onRotateDown()\n")
-		if (state == true) then
+		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_R_BACK)
 		else
 			self:subMovingState(PN3DObject.STATE_R_BACK)
