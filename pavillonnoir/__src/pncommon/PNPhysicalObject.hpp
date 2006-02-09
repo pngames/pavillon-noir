@@ -65,7 +65,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
-  virtual void				addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration)=0;
+  virtual void				addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration, pnbool isLocal)=0;
 };
 
 //////////////////////////////////////////////////////////////////////////
