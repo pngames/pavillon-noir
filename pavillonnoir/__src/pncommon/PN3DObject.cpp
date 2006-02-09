@@ -899,14 +899,35 @@ PN3DObject::unsetTarget()
 }
 //////////////////////////////////////////////////////////////////////////
 /// Get minimum x y z coordinate
-const PNPoint3f&	PN3DObject::getMin() const 
+const PNPoint3f&
+PN3DObject::getMin() const 
 {
   return _model->getMin();
 }
 /// Get maximum x y z coordinate
-const PNPoint3f&	PN3DObject::getMax() const
+const PNPoint3f&
+PN3DObject::getMax() const
 {
   return  _model->getMax();
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void
+PN3DObject::setVisible(pnbool visible)
+{
+  PNLOCK(this);
+
+  if (visible)
+	addRenderMode(RENDER_MODEL);
+  else
+	subRenderMode(RENDER_MODEL);
+}
+
+pnbool
+PN3DObject::isVisible() const
+{
+  return get3DModel() != NULL && (_renderMode & RENDER_MODEL);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1207,6 +1228,24 @@ PN3DObject::getRenderMode() const
 {
   return _renderMode;
 }
+
+void
+PN3DObject::addRenderMode(pnuint mode)
+{
+  PNLOCK(this);
+
+  _renderMode |= mode;
+}
+
+void
+PN3DObject::subRenderMode(pnuint mode)
+{
+  PNLOCK(this);
+
+  _renderMode &= ~mode;
+}
+
+//////////////////////////////////////////////////////////////////////////
 
 void
 PN3DObject::render()
