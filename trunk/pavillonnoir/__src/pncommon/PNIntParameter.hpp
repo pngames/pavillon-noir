@@ -50,3 +50,4 @@ public:
 };
 
 #endif /*_PNINTPARAMETER_HPP_*/
+

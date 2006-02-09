@@ -33,7 +33,7 @@ obj.target = 'pnscript' + env['suffix'] + '.pnp'
 obj.instdir = env['install_prefix'] + env['install_path'] + '/linux/plugins' + env['debug_path']
 #obj.libpaths = [env.Dir('#./build/pncommon/').abspath]
 #obj.libs = ['pncommon'+env['suffix']]
-obj.cxxflags = ' '.join([env['XML_FLAGS'],env['FastDelegate_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath,env['LUA50_FLAGS'],env['TOLUA_FLAGS']])
-obj.linkflags = ' '.join([env['XML_LDFLAGS'],env['LUA50_LDFLAGS']])
+obj.cxxflags = ' '.join([env['XML_FLAGS'],env['FastDelegate_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath,'-I'+env.Dir('#./__src/pncore/').abspath,env['CEGUI_FLAGS'],env['LUA50_FLAGS'],env['TOLUA_FLAGS']])
+obj.linkflags = ' '.join([env['XML_LDFLAGS'],env['CEGUI_LDFLAGS'],env['LUA50_LDFLAGS']])
 obj.libs = env['TOLUA_LDFLAGS']
 obj.execute()

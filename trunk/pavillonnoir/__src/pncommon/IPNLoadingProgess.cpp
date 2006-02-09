@@ -118,3 +118,4 @@ IPNLoadingProgess::stepLoad(pnEventType type, PNObject* source, PNEventData* dat
 
 //////////////////////////////////////////////////////////////////////////
 };
+

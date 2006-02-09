@@ -499,3 +499,4 @@ PNPlane::getDistanceFromPlane(const PNPoint3f& position) const
 } /* end of namespace */
 
 ////////////////////////////////////////
+

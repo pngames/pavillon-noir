@@ -80,3 +80,4 @@ protected:
 }
 
 #endif /*!_IPNSERIALIZATION_HPP_*/
+

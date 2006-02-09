@@ -139,3 +139,4 @@ public:
 };
 
 #endif /*_PNCHARACTER_HPP_*/
+

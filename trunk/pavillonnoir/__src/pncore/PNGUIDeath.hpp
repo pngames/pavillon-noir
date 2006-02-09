@@ -82,3 +82,4 @@ private:
 }
 
 #endif /*_PNGUIDEATH_HPP_*/
+

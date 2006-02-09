@@ -92,3 +92,4 @@ public:
 };
 
 #endif /*_PNGAMEINTERFACE_HPP_*/
+

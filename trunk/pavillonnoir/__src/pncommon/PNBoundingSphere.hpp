@@ -84,3 +84,4 @@ private:
 }
 
 #endif /*_PNBOUNDINGSPHERE_HPP_*/
+

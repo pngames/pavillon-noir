@@ -50,3 +50,4 @@ namespace PN
 }
 
 #endif /*_PNCONFPANEL_HPP_*/
+

@@ -51,3 +51,4 @@ public:
 };
 
 #endif /*_PNVIDEOEVENTDATA_HPP_*/
+

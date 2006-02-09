@@ -112,3 +112,4 @@ public:
 }
 
 #endif /*_PNPOINT3F_HPP_*/
+
