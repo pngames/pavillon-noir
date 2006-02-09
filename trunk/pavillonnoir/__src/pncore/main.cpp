@@ -59,8 +59,8 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-#include <PNQuatf.hpp>
 #include "PNQuatf.hpp"
+#include "PNNormal3f.hpp"
 
 using namespace PN;
 
@@ -69,17 +69,17 @@ using namespace PN;
 int	  main(int argc, char* argv[])
 {
   PNQuatf		quaty;
-  quaty.fromDegrees(0.0f, 90.0f, 0.0f);
+  quaty.fromDegrees(0.0f, 0.0f, 0.0f);
 
   std::cout << quaty  << std::endl;
 
-  pnfloat x;
-  pnfloat y;
-  pnfloat z;
+  PNNormal3f  mod = quaty * PNVector3f::NEGATIVE_UNIT_Z;
 
-  quaty.getDegrees(x, y, z);
+  std::cout << "mod: " << mod.getVector() << std::endl;
 
-  std::cout << "quaty: " << x << " " << y << " " << z << std::endl;
+  pnfloat angle = mod.degreeRange2Pi(PNVector3f::UNIT_X, PNVector3f::NEGATIVE_UNIT_Z);
+
+  std::cout << "angle: " << angle << std::endl;
 
   //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
