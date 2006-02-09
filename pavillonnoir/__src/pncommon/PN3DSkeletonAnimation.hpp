@@ -111,3 +111,4 @@ typedef std::set<PN3DSkeletonAnimation*>	AnimationSet;
 }
 
 #endif /*_PN3DSKELETONANIMATION_HPP_*/
+

@@ -108,3 +108,4 @@ public:
 };
 
 #endif /*_PNGAMEEVENTDATA_HPP_*/
+

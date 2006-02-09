@@ -66,3 +66,4 @@ typedef std::vector<PNObject*>	PNVPPNObjectParameter;
 };
 
 #endif /*_PNOBJECT_HPP_*/
+

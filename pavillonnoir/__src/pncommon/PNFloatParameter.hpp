@@ -50,3 +50,4 @@ public:
 };
 
 #endif /*_PNFLOATPARAMETER_HPP_*/
+

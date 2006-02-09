@@ -375,3 +375,4 @@ const std::string&	PNGameMap::getWpFile()
 {
   return _wpFile;
 }
+

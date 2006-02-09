@@ -105,3 +105,4 @@ public:
 };
 
 #endif /*_PNGAMEMAP_HPP*/
+

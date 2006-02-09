@@ -41,3 +41,4 @@ typedef PNBaseValue<pnfloat>  PNFloat;
 };
 
 #endif /*_PNFLOAT_HPP_*/
+

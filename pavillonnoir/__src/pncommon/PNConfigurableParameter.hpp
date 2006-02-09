@@ -157,3 +157,4 @@ protected:
 };
 
 #endif /*!_PNCONFIGURABLEPARAMETER_HPP_*/
+

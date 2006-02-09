@@ -55,3 +55,4 @@ public:
 }
 
 #endif /*_PN3DMATERIAL_HPP_*/
+

@@ -591,3 +591,4 @@ PNTriangle::substract(PNTriangle & triangle, std::vector<PNTriangle> & triangles
 ///////////////////////////////////////////////////
  
 }	/* end of namespace */
+

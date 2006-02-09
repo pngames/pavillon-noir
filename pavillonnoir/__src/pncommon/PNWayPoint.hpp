@@ -112,3 +112,4 @@ public:
 };
 
 #endif /* !_PNWAYPOINT_HPP_ */
+
