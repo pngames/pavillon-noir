@@ -329,6 +329,8 @@ protected:
 
   /// Current update translation of 3d object
   PNVector3f						_updateTranslation;
+  /// Last update translation of 3d object
+  PNVector3f					_lastUpdateTranslation;
 
 public:
   /// Default constructor for PN3DObject.
@@ -393,6 +395,8 @@ public:
   virtual const PNVector3f&			getUpdateTranslation() const;
   /// Set current update translation object
   virtual void						setUpdateTranslation(const PNVector3f& translation);
+  /// Return last update translation object
+  virtual const PNVector3f&		getLastUpdateTranslation() const;
 
   //////////////////////////////////////////////////////////////////////////
   
