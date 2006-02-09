@@ -1,8 +1,8 @@
 /*
- * PNLuaGameUtil.h
+ * PNGUIGame.hpp
  * 
  * Description :
- * 
+ * PNGUIGame declaration
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -27,27 +27,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#ifndef _PNLUASANDBOXUTIL_H
-# define _PNLUASANDBOXUTIL_H
-#include "stdio.h"
-#include "PNLuaGameMap.hpp"
-#include "PNGameEventData.hpp"
-namespace PN{
-  void loadLuaScript(const pnchar* file, bool reload = 0);
 
-  pnint pnprint(const pnchar* format, int where = 0);
-  void  newGame();
-  void  continueGame();
-  void  loadGame(std::string saveName);
-  void  saveGame(std::string saveName);
-  void  loadMap(std::string mapName);
-  void  onUpdate(float deltaTime);
-  void  onInit();
-  void  onReset();
-  //void	activateDebug(bool b);
-  void	sendGameActionEvent(std::string eventName, std::string sourceid, std::string targetId, double value);
-  PNLuaGameMap* getGameMap();
-  void GUIChangeLife(int lifeLevel);
-}
 
-#endif
+
+
+  class PNGUIGame :  public PNObject
+  {
+  public:
+	static void  changeLife(int val);
+ 
+  };
+
