@@ -48,6 +48,12 @@ efence
 env['package_version'] = "0.0.2"
 env['package_name'] = "pavillon-noir"
 
+if os.environ.has_key('CXX'):
+	env['CXX'] = os.environ['CXX']
+
+if os.environ.has_key('CC'):
+	env['CC'] = os.environ['CC']
+
 if env.has_key('PREFIX'):
 	env['install_prefix'] = env['PREFIX']
 else:
