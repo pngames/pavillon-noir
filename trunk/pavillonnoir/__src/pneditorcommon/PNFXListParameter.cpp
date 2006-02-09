@@ -278,7 +278,8 @@ PNFXListParameter::_update(pnuint index)
 void
 PNFXListParameter::_setCurrentItem(pnuint index)
 {
-  _listBox->setCurrentItem(index);
+  if ( _listBox->getNumItems() > 0 )
+	_listBox->setCurrentItem(index);
 }
 //////////////////////////////////////////////////////////////////////////
 

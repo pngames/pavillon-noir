@@ -40,6 +40,7 @@
 #include "pneditorcommon.h"
 #include "pnproperties.h"
 #include "pnimport.h"
+#include "pnresources.h"
 
 #include "PNImportManager.hpp"
 #include "PNGLContext.hpp"
@@ -90,7 +91,7 @@ PNFXMaterialListParameter::_deleteObject(FXint index)
   PN3DObject::VectorMaterial* v = (PN3DObject::VectorMaterial*)_param->getElem(); 
 
   v->erase(v->begin() + index);
-  _update();
+  _update( index != 0 ? index - 1 : index );
 
   return true;
 }
@@ -100,6 +101,12 @@ PNFXMaterialListParameter::_addNewObject(FXint index)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXMaterialListParameter::addNewObject");
   FXFileDialog fd(this, "Choose material file");
+  fd.setPatternList("PN Materials (*.pnt)\nAll Files (*)");
+
+  FXString* dir_path = new FXString(fd.getDirectory().text());
+  dir_path->append("/");
+  dir_path->append(DEF::materialFilePath.c_str());
+  fd.setDirectory(*dir_path);
 
   if (fd.execute())
   {
@@ -123,13 +130,11 @@ PNFXMaterialListParameter::_addNewObject(FXint index)
 
 	  if (mat != NULL)
 	  {
-		//v->push_back(mat);
 		v->insert(v->begin() + index, mat);
 
 		std::string s = *v->at(index)->getFile();
 		if (s.size() > 29)
 		  s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
-		//_listBox->appendItem(s.c_str(), NULL, v->at(i));
 		_listBox->insertItem(index, s.c_str(), NULL);
 		_listBox->setNumVisible(_listBox->getNumItems() < 5 ? _listBox->getNumItems() : 5 );
 		PNConfigurableObject* co = _param->getConfigurableObject();
@@ -142,9 +147,10 @@ PNFXMaterialListParameter::_addNewObject(FXint index)
 	  EDITOR::PNGLContext::getInstance()->makeViewerNonCurrent();
 	  _param->getConfigurableObject()->update(_param);
 	}
+	return true;
   }
 
-  return 1;
+  return false;
 }
 
 /*

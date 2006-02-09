@@ -50,6 +50,7 @@ using namespace std;
 namespace fs = boost::filesystem;
 
 namespace PN {
+
 //////////////////////////////////////////////////////////////////////////
 
 // Map
@@ -64,6 +65,7 @@ FXDEFMAP(PNFXScriptListParameter) PNFXScriptListParameterMap[]={
 };
 
 //////////////////////////////////////////////////////////////////////////
+
 FXIMPLEMENT(PNFXScriptListParameter,FXHorizontalFrame,PNFXScriptListParameterMap,ARRAYNUMBER(PNFXScriptListParameterMap))
 
 /*
@@ -94,6 +96,7 @@ PNFXScriptListParameter::~PNFXScriptListParameter()
   delete _buttonAddEvent;
   delete _buttonDeleteEvent;
 }
+
 //////////////////////////////////////////////////////////////////////////
 
 void	PNFXScriptListParameter::create()
