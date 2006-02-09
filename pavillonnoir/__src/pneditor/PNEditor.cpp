@@ -106,7 +106,7 @@ FXDEFMAP(PNEditor) PNEditorMap[] =
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_OPEN,			PNEditor::onCmdOpen),
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_SAVE,			PNEditor::onCmdSave),
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_SAVEAS,		PNEditor::onCmdSaveAs),
-  FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_EXPORT,		PNEditor::onCmdExport),
+//  FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_EXPORT,		PNEditor::onCmdExport),
 
   FXMAPFUNC(SEL_UPDATE,		PNEditor::ID_QUERY_MODE,	PNEditor::onUpdMode),
   FXMAPFUNC(SEL_COMMAND,	FXWindow::ID_QUERY_MENU,	PNEditor::onQueryMenu),
@@ -282,8 +282,8 @@ PNEditor::PNEditor(FXApp* a)
   new FXMenuCommand(filemenu, "&Open...\tCtl-O\tOpen document file.", fileopenicon, this, ID_OPEN);
   new FXMenuCommand(filemenu, "&Save\tCtl-S\tSave document.", filesaveicon, this, ID_SAVE);
   new FXMenuCommand(filemenu, "Save &As...\t\tSave document to another file.", filesaveasicon, this, ID_SAVEAS);
-  new FXMenuCommand(filemenu, "&Dump...\t\tDump widgets.", NULL, getApp(), FXApp::ID_DUMP);
-  new FXMenuCommand(filemenu, "&Export...\t\tExport Space Partioning.", NULL, this, ID_EXPORT);
+// IFDEBUG ?  new FXMenuCommand(filemenu, "&Dump...\t\tDump widgets.", NULL, getApp(), FXApp::ID_DUMP);
+//  new FXMenuCommand(filemenu, "&Export...\t\tExport Space Partioning.", NULL, this, ID_EXPORT);
   new FXMenuCommand(filemenu, "&Quit\tCtl-Q\tQuit the application.", NULL, getApp(), FXApp::ID_QUIT);
   
   // File manipulation
@@ -421,6 +421,11 @@ long PNEditor::onCmdOpen(FXObject*, FXSelector, void*)
 {
   FXDirDialog open(this, "Choose level directory to edit");
   
+  FXString* dir_path = new FXString(open.getDirectory().text());
+  dir_path->append("/");
+  dir_path->append(DEF::mapsFilePath.c_str());
+  open.setDirectory(*dir_path);
+
   if (open.execute())
   {
     _genScene.clear();
@@ -490,6 +495,12 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
   if (_graph == NULL)
   {
 	FXDirDialog open(this, "Choose level directory to save your work");
+	
+	FXString* dir_path = new FXString(open.getDirectory().text());
+	dir_path->append("/");
+	dir_path->append(DEF::mapsFilePath.c_str());
+	open.setDirectory(*dir_path);
+
 	if (open.execute())
 	{
 	  wpGroup = new FXGLGroup;
