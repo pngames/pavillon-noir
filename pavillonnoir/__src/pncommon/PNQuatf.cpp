@@ -111,9 +111,9 @@ PNQuatf::fromDegrees(const pnfloat* angles)
 }
 
 void
-PNQuatf::fromDegrees(pnfloat x, pnfloat y, pnfloat z)
+PNQuatf::fromDegrees(pnfloat pitch, pnfloat yaw, pnfloat roll)
 {
-  fromRadians((pnfloat)DEGREE_TO_RADIAN(x), (pnfloat)DEGREE_TO_RADIAN(y), (pnfloat)DEGREE_TO_RADIAN(z));
+  fromRadians((pnfloat)DEGREE_TO_RADIAN(pitch), (pnfloat)DEGREE_TO_RADIAN(yaw), (pnfloat)DEGREE_TO_RADIAN(roll));
 }
 
 void
@@ -123,13 +123,13 @@ PNQuatf::fromRadians(const pnfloat* angles)
 }
 
 void
-PNQuatf::fromRadians(pnfloat rx, pnfloat ry, pnfloat rz)
+PNQuatf::fromRadians(pnfloat pitch, pnfloat yaw, pnfloat roll)
 {
   register pnfloat	sx, sy, sz, cx, cy, cz;
 
-  register pnfloat	ax = rx * 0.5f;
-  register pnfloat	ay = ry * 0.5f;
-  register pnfloat	az = rz * 0.5f;
+  register pnfloat	ax = pitch * 0.5f;
+  register pnfloat	ay = yaw * 0.5f;
+  register pnfloat	az = roll * 0.5f;
 
   sx = sinf(ax);
   cx = cosf(ax);
@@ -149,7 +149,7 @@ PNQuatf::fromRadians(pnfloat rx, pnfloat ry, pnfloat rz)
 void
 PNQuatf::fromAxisDegrees(const PNVector3f& axis, pnfloat phi)
 {
-  fromAxisRadians(axis, (pnfloat)DEGREE_TO_RADIAN(phi));
+  fromAxisRadians(axis, DEGREE_TO_RADIAN_F(phi));
 }
 
 void
@@ -171,13 +171,13 @@ PNQuatf::getDegrees(pnfloat* angles) const
 }
 
 void
-PNQuatf::getDegrees(pnfloat& x, pnfloat& y, pnfloat& z) const
+PNQuatf::getDegrees(pnfloat& pitch, pnfloat& yaw, pnfloat& roll) const
 {
-  getRadians(x, y, z);
+  getRadians(pitch, yaw, roll);
 
-  x = (pnfloat)RADIAN_TO_DEGREE(x);
-  y = (pnfloat)RADIAN_TO_DEGREE(y);
-  z = (pnfloat)RADIAN_TO_DEGREE(z);
+  pitch = RADIAN_TO_DEGREE_F(pitch);
+  yaw = RADIAN_TO_DEGREE_F(yaw);
+  roll = RADIAN_TO_DEGREE_F(roll);
 }
 
 void
@@ -187,7 +187,7 @@ PNQuatf::getRadians(pnfloat* angles) const
 }
 
 void
-PNQuatf::getRadians(pnfloat& roll, pnfloat& pitch, pnfloat& yaw) const
+PNQuatf::getRadians(pnfloat& pitch, pnfloat& yaw, pnfloat& roll) const
 {
   register pnfloat s = -2.0f * (x * z - w * y);
 
@@ -195,22 +195,22 @@ PNQuatf::getRadians(pnfloat& roll, pnfloat& pitch, pnfloat& yaw) const
   {
 	if (-1.0f < s)
 	{
-	  roll = atan2f(2.0f * (y * z + w * x), 1.0f - 2.0f * (x * x + y * y));
-	  pitch = asinf(s);
-	  yaw = atan2f(2.0f * (x * y + w * z), 1.0f - 2.0f * (y * y + z * z));
+	  pitch = atan2f(2.0f * (y * z + w * x), 1.0f - 2.0f * (x * x + y * y));
+	  yaw = asinf(s);
+	  roll = atan2f(2.0f * (x * y + w * z), 1.0f - 2.0f * (y * y + z * z));
 	}
 	else
 	{
-	  roll = 0.0f;
-	  pitch = -1.57079632679489661923f;
-	  yaw = -atan2f(-2.0f * (x * y - w * z), 2.0f * (x * z + w * y));
+	  pitch = 0.0f;
+	  yaw = -1.57079632679489661923f;
+	  roll = -atan2f(-2.0f * (x * y - w * z), 2.0f * (x * z + w * y));
 	}
   }
   else
   {
-	roll = 0.0f;
-	pitch = 1.57079632679489661923f;
-	yaw = atan2f(-2.0f * (x * y - w * z), 2.0f * (x * z + w * y));
+	pitch = 0.0f;
+	yaw = 1.57079632679489661923f;
+	roll = atan2f(-2.0f * (x * y - w * z), 2.0f *(x * z + w * y));
   }
 }
 
