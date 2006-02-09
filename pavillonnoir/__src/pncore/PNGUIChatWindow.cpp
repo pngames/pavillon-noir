@@ -30,6 +30,8 @@
 #include "pndefs.h"
 #include "PNGUIChatWindow.hpp"
 #include "PNConsole.hpp"
+#include "PNGameMap.hpp"
+#include "PNGameInterface.hpp"
 
 using namespace PN;
 
@@ -50,6 +52,8 @@ namespace PN
 
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 	hide();
+	PNGameMap*	gmap = PNGameInterface::getInstance()->getGameMap();
+	std::string* tmpMap = gmap->getPath();
   }
 
   PNGUIChatWindow::~PNGUIChatWindow()

@@ -1,0 +1,44 @@
+<chat name="toto" uid="CHAT-TOTO">
+  
+  <buddy id="CHAT-TOTO_buddy_1" name="toto" sentence="Bonjour, je m'appelle toto, comment ca va bien?">
+    <depends id="CHAT-TITI_player_1_2_3" />
+    <player id="CHAT-TOTO_player_1" response="Bien">
+      
+      <buddy id="CHAT-TOTO_buddy_1_1" sentence="Tu vas au bal ce soir ?">
+
+        <player id="CHAT-TOTO_player_1_1" response="Oui">
+          <buddy id="CHAT-TOTO_buddy_1_1_1" sentence="Tu as un cavalier ?">
+
+            <player id="CHAT-TOTO_player_1_1_1" response="Je suis TRES presse" quit="true" />
+  
+          </buddy>
+        </player>
+      
+        <player id="CHAT-TOTO_player_1_2" response="Non">
+          <buddy id="CHAT-TOTO_buddy_1_2_1" sentence="Gros nul!" quit="true" />
+        </player>
+
+        <player id="CHAT-TOTO_player_1_3" response="Je suis presse" quit="true"/>
+
+      </buddy>
+      
+    </player>
+
+    <player id="CHAT-TOTO_player_2" response="Pas bien">
+      <buddy id="CHAT-TOTO_buddy_2_1" sentence="Tu as la collique ?">
+
+        <player id="CHAT-TOTO_player_2_1" response="Oui" checkpoint="true">
+          <buddy id="CHAT-TOTO_buddy_2_1_1" sentence="Gros nul!" quit="true" />
+        </player>
+
+        <player id="CHAT-TOTO_player_2_2" response="Non">
+          <buddy id="CHAT-TOTO_buddy_2_2_1" sentence="Gros nul!" quit="true" />
+        </player>
+
+      </buddy>
+    </player>
+
+    <player id="CHAT-TOTO_player_3" response="Non rien desole." quit="true" />
+  </buddy>
+  
+</chat>

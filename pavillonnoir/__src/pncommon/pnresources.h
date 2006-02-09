@@ -58,6 +58,8 @@ namespace PN {
 
 	static const std::string	confFilePath = dataFilePath + "configuration/";
 
+	static const std::string	chatDirectory = "chats/";
+
 	inline std::string			convertPath(const std::string& type, const std::string& path)
 	{
 	  std::string::size_type	  index = path.rfind(type);
