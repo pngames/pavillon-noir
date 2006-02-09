@@ -258,12 +258,12 @@ function gameMap:fightAction(sourceId)
 	if ((target.combat_state == COMBAT_STATE.ATTACK) and (self.fights[targetId] == sourceId)) then
 		pnprint(targetId .. " tries to counter!\n")
 		if (success > 0) then
-			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
+			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation, source)
 			--anim
 			sAnim = strikeAnim
 			tAnim = CHARACTER_ANIM.JUMP
 		else
-			source:onDamage(-success + target.stats[target.selected_weapon.skill] + target.selected_weapon.modifier - source.armor, self.die:getVal(6))
+			source:onDamage(-success + target.stats[target.selected_weapon.skill] + target.selected_weapon.modifier - source.armor, self.die:getVal(6), target)
 			--anim
 			sAnim = CHARACTER_ANIM.JUMP
 			tAnim = strikeAnim
@@ -272,7 +272,7 @@ function gameMap:fightAction(sourceId)
 	elseif (target.combat_state == COMBAT_STATE.DODGE) then
 		pnprint(targetId .. " tries to dodge!\n")
 		if (success > 0) then
-			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
+			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation,source)
 			--anim
 			sAnim = strikeAnim
 			tAnim = CHARACTER_ANIM.JUMP
@@ -287,7 +287,7 @@ function gameMap:fightAction(sourceId)
 		pnprint(targetId .. " defending!\n")
 		sAnim = strikeAnim
 		if (success > 0) then
-			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
+			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation, source)
 			--anim
 			tAnim = CHARACTER_ANIM.JUMP
 		else
@@ -297,7 +297,7 @@ function gameMap:fightAction(sourceId)
 
 	else
 		pnprint(targetId .. " gonna get it loud!\n")
-		target:onDamage(nbAS + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation)
+		target:onDamage(nbAS + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation, source)
 		sAnim = strikeAnim
 		tAnim = CHARACTER_ANIM.JUMP
 	end
@@ -312,8 +312,8 @@ function gameMap:fightAction(sourceId)
 	if (target.health_state < HEALTH_STATE.COMA) then
 		target:waitForAnimEnd(tAnim)
 	end
-	source.combat_state = COMBAT_STATE.NEUTRAL
-	target.combat_state = COMBAT_STATE.NEUTRAL
+	--source.combat_state = COMBAT_STATE.NEUTRAL
+	--target.combat_state = COMBAT_STATE.NEUTRAL
 	pnprint("<= gameMap:fightAction()\n")
 end
 -------------------------------------------------------------------------------

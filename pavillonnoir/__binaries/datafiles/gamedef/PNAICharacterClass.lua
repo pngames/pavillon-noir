@@ -12,7 +12,7 @@ function PNAICharacterClass(id)
     OBJ.id = id
     pnprint("PNCharacterClass creating 2\n")
 
---	OBJ:setMovingSpeed(0.5)
+	--OBJ:setMovingSpeed(0.5)
 	OBJ.hurry = false
 	OBJ.realCharacType = CHARACTER_TYPE.CIVILIAN
 	OBJ.shownCharacType = CHARACTER_TYPE.CIVILIAN
@@ -93,7 +93,7 @@ Prepares the character to handle the PathFinding
 %--]]
 	function OBJ:moveTo(p)
 		pnprint("moveto: " .. p.x .. " " .. p.y .. " " .. p.z .. "\n")
-		self.state = self.stateEnum.PN_IA_TRAVELLING
+		self:setState(self.stateEnum.PN_IA_TRAVELLING)
 		self.pathFinding:moveTo(p)
 		self.pathFinding:moveNext(self.toReach)
 		local fdistance = self:getCoord():getFlatDistance(self.toReach:getCoord())
@@ -154,19 +154,23 @@ If it is detected as an ennemy, the character switches to the fighting mode
 %--]]
 	OVERRIDE(OBJ, "onFrustrumIn")
 	function OBJ:onFrustrumIn(target)
-		self:PNCharacter_onFrustrumIn(target)
-		pnprint(self.id .. " viewing " .. target:getId() .. "\n")
-		if ((target:getId() ~= self.id) and (isInstanceOf(target, "PNCharacter"))) then
-			pnprint("J'ai cru voir un rominet !\n")
-			if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= CHARACTER_TYPE.CIVILIAN)) then
-				self.ennemies[target:getId()] = 1
-				if ((self:getViewTarget() == nil) and (target.health_state < HEALTH_STATE.COMA)) then
-					if (self.state ~= self.stateEnum.PN_IA_TRAVELING) then
-						if (self:getCoord():getDistance(target:getCoord()) < 10 * self.selected_weapon.range) then
-							pnprint("Mais oui, j'ai bien vu un rominet !\n")
-							self:startFight()
-						else
-							self:moveTo(target:getCoord())
+		if (self.health_state < HEALTH_STATE.COMA) then
+			self:PNCharacter_onFrustrumIn(target)
+			pnprint(self.id .. " viewing " .. target:getId() .. "\n")
+			if ((target:getId() ~= self.id) and (isInstanceOf(target, "PNCharacter"))) then
+				pnprint("J'ai cru voir un rominet !\n")
+				if ((target:getCharacType() ~= self.realCharacType) and (target:getCharacType() ~= CHARACTER_TYPE.CIVILIAN) and (target.health_state < HEALTH_STATE.COMA)) then
+					self.ennemies[target:getId()] = 1
+					if (self:getViewTarget() == nil) then
+						pnprint("Mais oui, j'ai bien vu un rominet !\n")
+						if (self.state ~= self.stateEnum.PN_IA_TRAVELING) then
+							if (self:getCoord():getDistance(target:getCoord()) < 10 * self.selected_weapon.range) then
+								pnprint("Il est pas loin, je vais me le faire !\n")
+								self:startFight()
+							else
+								pnprint("Je vais voir ca de plus pres !\n")
+								self:moveTo(target:getCoord())
+							end
 						end
 					end
 				end
@@ -179,11 +183,13 @@ Called when an object enters the frustrum of the character
 %--]]
 	OVERRIDE(OBJ, "onFrustrumOut")
 	function OBJ:onFrustrumOut(target)
-		self:PNCharacter_onFrustrumOut(target)
-		pnprint(self.id .. " NOT viewing " .. target:getId() .. "\n")
-		if (target:getId() ~= self.id) then
-			if (self.ennemies[target:getId()] ~= nil) then
-				self.ennemies[target:getId()] = nil
+		if (self.health_state < HEALTH_STATE.COMA) then
+			self:PNCharacter_onFrustrumOut(target)
+			pnprint(self.id .. " NOT viewing " .. target:getId() .. "\n")
+			if (target:getId() ~= self.id) then
+				if (self.ennemies[target:getId()] ~= nil) then
+					self.ennemies[target:getId()] = nil
+				end
 			end
 		end
 	end
@@ -212,7 +218,7 @@ Not used yet
 %--]]
 	function OBJ:isDead(deadId)
 		pnprint("=> " .. self.id .. ":isDead(" .. deadId .. ")\n")
-		if (self:getViewTarget():getId() == deadId) then
+		if ((self:getViewTarget():getId() ~= nil) and (self:getViewTarget():getId() == deadId)) then
 			local newTargetId = -1
 			if (self.ennemies[deadId] ~= NULL) then
 				self.ennemies[deadId] = NULL
