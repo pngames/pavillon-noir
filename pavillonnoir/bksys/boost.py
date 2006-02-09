@@ -76,7 +76,9 @@ def generate(env):
 
 		boost_lib = ''
 		for lib_path in boost_libs:
-			if os.path.exists(lib_path+'/libboost_filesystem.so') and os.path.exists(lib_path+'/libboost_thread.so'):
+			fs_exists = os.popen('ls '+lib_path+'/libboost_filesystem*.so 2>/dev/null').read().strip()
+			thread_exists = os.popen('ls '+lib_path+'/libboost_thread*.so 2>/dev/null').read().strip()
+			if len(fs_exists) > 0 and len(thread_exists) > 0:
 				boost_lib = lib_path
 
 		if boost_lib == '':
