@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <OpalBlueprint>
 	<Solid>
-		<Name value="Boite01"/>
+		<Name value="Player"/>
 		<Offset>
 			<Transform type="translate" x="2.03002" y="35.0" z="0.332632"/>
 		</Offset>
@@ -10,28 +10,4 @@
 			<Material hardness="0.9" friction="0.3" bounciness="0.1" density="10.0"/>
 		</Shape>
 	</Solid>
-	<Motor>
-		<Name value="movementMotor"/>
-		<Type value="spring"/>
-		<References solid="Boite01"/>
-		<Mode value="linearAndAngular"/>
-		<AttachOffset x="1.0" y="0.0" z="-4.0"/>
-		<DesiredPos x="10.0" y="-15.0" z="20.0"/>
-		<DesiredForward x="0.0" y="0.0" z="-1.0"/>
-		<DesiredUp x="0.0" y="1.0" z="0.0"/>
-		<DesiredRight x="1.0" y="0.0" z="0.0"/>
-		<LinearKd value="1.0"/>
-		<LinearKs value="1.0"/>
-		<AngularKd value="1.0"/>
-		<AngularKs value="1.0"/>
-	</Motor>
-	<Sensor>
-		<Name value="groudSensor"/>
-		<Type value="raycast"/>
-		<References solid="Boite01"/>
-		<Offset>
-			<Transform type="translate" x="2.03002" y="35.0" z="0.332632"/>
-		</Offset>
-		<Ray originx="0.0" originy="0.0" originz="0.0" dirx="0.0" diry="0.0" dirz="-1.0"/>
-	</Sensor>
 </OpalBlueprint>

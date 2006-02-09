@@ -198,6 +198,14 @@ opal::Solid* PNOpalObject::getOpalSolid()
   return _solid;
 }
 
+/** Return the Opal raycast sensor (opal::RaycastSensor)
+*/ 
+
+opal::RaycastSensor* PNOpalObject::getPlayerSensor()
+{
+  return _playerSensor;
+}
+
 /** Return the Opal acceleration sensor (opal::AccelerationSensor)
 */ 
 
@@ -253,21 +261,6 @@ void			PNOpalObject::setTransform(const PNPoint3f& coord, const PNQuatf& orient,
   _solid->setTransform(transform);
 }
 
-//////////////////////////////////////////////////////////////////////////
-
-void	  PNOpalObject::printAccel()
-{
-  opal::Vec3r print;
-  print = getAccelSensor()->getLocalLinearAccel();
-  pnerror(PN_LOGLVL_DEBUG, "Solid %s acceleration sensor", _solid->getName().c_str()); 
-  pnerror(PN_LOGLVL_DEBUG, "Local  linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
-  print = getAccelSensor()->getGlobalLinearAccel();
-  pnerror(PN_LOGLVL_DEBUG, "Global linear - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
-  print = getAccelSensor()->getLocalAngularAccel();
-  pnerror(PN_LOGLVL_DEBUG, "Local angular - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
-  print = getAccelSensor()->getGlobalAngularAccel();
-  pnerror(PN_LOGLVL_DEBUG, "Global angular - x:%f, y:%f, z:%f", print[0], print[1], print[2]);
-}
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -277,12 +270,15 @@ void	  PNOpalObject::printAccel()
 * /param  duration Specifies how long to apply the force. (in millisecond)
 */
 
-void		PNOpalObject::addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration)
+void		PNOpalObject::addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration, pnbool isLocal)
 {
   opal::Force f;
   
-  f.type = opal::LOCAL_FORCE_AT_LOCAL_POS;
-  f.pos = opal::Point3r(0.0, 0.0, 0.0);
+  if (isLocal == true)
+	f.type = opal::LOCAL_FORCE_AT_LOCAL_POS;
+  else
+	f.type = opal::GLOBAL_FORCE_AT_LOCAL_POS;
+  f.pos.set(PNPoint3f::ZERO.x, PNPoint3f::ZERO.y, PNPoint3f::ZERO.z);
   f.duration = duration;
   if (duration == 0.0f)
 	f.singleStep = true;
@@ -301,19 +297,20 @@ void		PNOpalObject::addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat d
 * /param  duration Specifies how long to apply the torque. (in millisecond)
 */
 
-void		PNOpalObject::addTorque(const PNVector3f& axis, pnfloat magnitude, pnfloat duration)
+void		PNOpalObject::addTorque(const PNVector3f& axis, pnfloat magnitude, pnfloat duration, pnbool isLocal)
 {
   opal::Force f;
 
   f.type = opal::LOCAL_TORQUE;
-  f.pos = opal::Point3r(0.0, 0.0, 0.0);
+  f.pos.set(PNPoint3f::ZERO.x, PNPoint3f::ZERO.y, PNPoint3f::ZERO.z);
   f.duration = duration;
   if (duration == 0.0f)
 	f.singleStep = true;
   else
 	f.singleStep = false;
-  opal::Vec3r maxis(axis.x, axis.y, axis.z);
-  f.vec = maxis * 400;
+  opal::Vec3r opalAxis(axis.x, axis.y, axis.z);
+  opalAxis *= magnitude;
+  f.vec = opalAxis;
 
   _solid->addForce(f);
 }
@@ -332,8 +329,10 @@ void		PNOpalObject::setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf or
   _movementMotorData.solid = _solid;
   _movementMotorData.mode = opal::LINEAR_AND_ANGULAR_MODE;
 
+  const PNPoint3f&	offset = getOffset();
+
   /* coordinates */
-  _movementMotorData.desiredPos.set((opal::real)x, (opal::real)y, (opal::real)z);
+  _movementMotorData.desiredPos.set((opal::real)x + offset.x, (opal::real)y + offset.y, (opal::real)z + offset.z);
 
   /* creation of the orientation matrix */
   opal::Matrix44r transform;
@@ -347,10 +346,10 @@ void		PNOpalObject::setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf or
   }
 
   /* optional motor data */
-  /*_movementMotorData.linearKd = (opal::real)2.0;
-  _movementMotorData.linearKs = (opal::real)20.0;
-  _movementMotorData.angularKd = (opal::real)0.01;
-  _movementMotorData.angularKs = (opal::real)0.6;*/
+  _movementMotorData.linearKd = (opal::real)0.1;
+  _movementMotorData.linearKs = (opal::real)100.0;
+  _movementMotorData.angularKd = (opal::real)0.1;
+  _movementMotorData.angularKs = (opal::real)200.0;
 
   /* motor init */
   _movementMotor->init(_movementMotorData);
@@ -420,18 +419,16 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
 	return PNEC_NOT_A_FILE;
 
   PNGameMap*  gm = PNGameInterface::getInstance()->getGameMap();
-
   pnfloat mpp = gm->getMpp();
 
   // create and instantiate the opal blueprint
   _file = file.string();
   opal::loadFile(_blueprint, _file);
 
-  
+  // object's coord offset
   opal::Matrix44r offset;
   offset.makeIdentity();
-
-  /* Could be used if the PN3DObject was reachable here */
+  /* Could be used if the PN3DObject was reachable here, in this case opal2pn would be deprecated */
   /*
   offset.scale( mpp );
   offset.makeTranslation( position[ 0 ], position[ 1 ], position[ 2 ] );
@@ -441,27 +438,39 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
   */
 
   _sim->instantiateBlueprint(_blueprintInstance, _blueprint, offset, mpp);
+  _solid = _blueprintInstance.getSolid(0);
 
-  _solid = _blueprintInstance.getSolid("Boite01");
   if (_solid != NULL)
   {
-	// get the AABB dimensions
 	_solid->getData().getShapeData(0)->getLocalAABB(_aabb);
+	opal::ShapeData* shapeData = _solid->getData().getShapeData(0);
 
 	// enlarge the local AABB (make the AABB rendering a little bigger)
-	for (int i = 0; i < 6; i++)
+	switch(shapeData->getType())
 	{
-	  if (_aabb[i] < 0)
-		_aabb[i] -= 0.1f;
-	  else
-		_aabb[i] += 0.1f;
+	case opal::BOX_SHAPE:
+	  {
+		for (int i = 0; i < 6; i++)
+		{
+		  if (_aabb[i] < 0)
+			_aabb[i] -= 0.1f;
+		  else
+			_aabb[i] += 0.1f;
+		}
+		break;
+	  }
+	case opal::SPHERE_SHAPE:
+	  {
+		_radius = ((opal::SphereShapeData*)shapeData)->radius + 0.1;
+		break;
+	  }
+	case opal::CAPSULE_SHAPE:
+	  break;
+	case opal::PLANE_SHAPE:
+	  break;
+	default:
+	  assert(false);
 	}
-  }
-  else 
-  {
-	_solid = _blueprintInstance.getSolid("Sphere01");
-	opal::SphereShapeData* shapeData = (opal::SphereShapeData*)_solid->getData().getShapeData(0);
-	_radius = shapeData->radius + 0.1;
   }
 
   // check for loading errors
@@ -487,6 +496,17 @@ pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
   _accelSensorData.solid = _solid;
   _accelSensor = _sim->createAccelerationSensor();
   _accelSensor->init(_accelSensorData);
+
+  if (_solid->getName() == "Player")
+  {
+	opal::RaycastSensorData data;
+	data.solid = _solid;
+	data.ray.setOrigin(opal::Point3r(0, 0, 0));
+	data.ray.setDir(opal::Vec3r(0, -1, 0));
+	//data.contactGroup = 3;
+	_playerSensor = _sim->createRaycastSensor();
+	_playerSensor->init(data);
+  }
 
   // enable the object
   _solid->setEnabled(true);

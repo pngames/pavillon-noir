@@ -96,6 +96,7 @@ private:
   opal::SpringMotorData			_movementMotorData;
 
   /* sensor */
+  opal::RaycastSensor*			_playerSensor;
   opal::AccelerationSensor*		_accelSensor;
   opal::AccelerationSensorData	_accelSensorData;
 
@@ -128,8 +129,8 @@ public:
   //////////////////////////////////////////////////////////////////////////
   // PNOpalObject specific
 
-  void							addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration);
-  void							addTorque(const PNVector3f& axis, pnfloat magnitude, pnfloat duration);
+  void							addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration, pnbool isLocal);
+  void							addTorque(const PNVector3f& axis, pnfloat magnitude, pnfloat duration, pnbool isLocal);
   void							setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf orient);
   void							destroyMovementMotor();
 
@@ -137,6 +138,7 @@ public:
   // PNOpalObject specific (debug)
 
   void							printAccel();
+  opal::RaycastSensor*			getPlayerSensor();
 
 protected:
   void							_createMeshEntity();

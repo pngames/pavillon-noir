@@ -50,7 +50,7 @@
 #define GRAVITY -9.81
 #define STEPSIZE 0.02
 #define TIME_SCALE 1000
-#define DEFAULT_FORCE_MAGNITUDE 300000.0f
+#define DEFAULT_FORCE_MAGNITUDE 5.0f
 #define DEFAULT_FORCE_DURATION 0.0f
 
 using namespace std;
@@ -84,7 +84,7 @@ void  PNOpal::init()
   _label = PNOPAL_LABEL;
   addParam(new PNConfigurableParameter(this, PN_PARAMTYPE_BOOLEAN, &_paused, "pause", "pause"));
 
-  setPause(true);
+  setPause(false);
 }
 
 /** Play/pause the physical simulation
@@ -95,6 +95,8 @@ void  PNOpal::init()
 void  PNOpal::setPause(bool state)
 {
   _paused = state;
+  //if (state == false)
+	//pn2opal();
 }
 
 /** Create the physical simulation (opal::Simulator)
@@ -109,6 +111,8 @@ void PNOpal::createSimulation()
 
   _eventHandler = new PNOpalCommonEventHandler();
   _break = false;
+
+  setPause(true);
 
   PNConfPanel::getInstance()->addConfigurableObject(this);
 }
@@ -202,12 +206,37 @@ void PNOpal::_onFrame(pnEventType type, PNObject* source, PNEventData* data)
 	  {
 		const PNPoint3f& coord = current_obj->getCoord();
 		const PNQuatf& orient = current_obj->getOrient();
-		
-		if (!current_obj->getUpdateTranslation().isNull() || (orient != current_obj->getPhysicalObject()->getOrient()))
+
+		opal::Vec3r gravity = ((PNOpalObject*)current_obj->getPhysicalObject())->getOpalSolid()->getGlobalLinearVel();
+		((PNOpalObject*)current_obj->getPhysicalObject())->getOpalSolid()->setGlobalLinearVel(opal::Vec3r(0, gravity.getData()[1], 0));
+		((PNOpalObject*)current_obj->getPhysicalObject())->getOpalSolid()->setGlobalAngularVel(opal::Vec3r(0, 0, 0)); 
+
+		// translate players
+		if (!current_obj->getUpdateTranslation().isNull())
 		{
-		  //const PNPoint3f& offset = current_obj->getPhysicalObject()->getOffset();
-		  //((PNOpalObject*)current_obj->getPhysicalObject())->setMovementMotor(coord.x + offset.x, coord.y + offset.y, coord.z + offset.z, orient);
-		  ((PNOpalObject*)current_obj->getPhysicalObject())->addForce(current_obj->getUpdateTranslation(), DEFAULT_FORCE_MAGNITUDE, DEFAULT_FORCE_DURATION);
+		  const PNVector3f& dir = current_obj->getUpdateTranslation();
+		  pnerror(PN_LOGLVL_INFO, "updateTranslation --- x : %f, y : %f, z : %f", dir.x, dir.y, dir.z);
+
+		  ((PNOpalObject*)current_obj->getPhysicalObject())->addForce(current_obj->getUpdateTranslation(), DEFAULT_FORCE_MAGNITUDE, DEFAULT_FORCE_DURATION, false);
+		}
+		// rotate players
+		if (orient != current_obj->getPhysicalObject()->getOrient())
+		{
+		  PNNormal3f vecOri = current_obj->getPhysicalObject()->getOrient() * PNVector3f::NEGATIVE_UNIT_Z;
+		  PNNormal3f vecEnd = orient * PNVector3f::NEGATIVE_UNIT_Z;
+		  pnfloat angleOri = vecOri.radianRange2Pi(PNVector3f::UNIT_X, PNVector3f::NEGATIVE_UNIT_Z);
+		  pnfloat angleEnd = vecEnd.radianRange2Pi(PNVector3f::UNIT_X, PNVector3f::NEGATIVE_UNIT_Z);
+
+		  pnerror(PN_LOGLVL_INFO, "angleOri : %f, angleEnd : %f", RADIAN_TO_DEGREE(angleOri), RADIAN_TO_DEGREE(angleEnd));
+		  pnfloat angle = angleOri - angleEnd;
+		  pnerror(PN_LOGLVL_INFO, "angle : %f", RADIAN_TO_DEGREE(angle));
+
+		  if (angle > PI)
+			angle -= (pnfloat)PI*2.0f;
+		  else if (angle < -PI)
+			angle += (pnfloat)PI*2.0f;
+		  pnerror(PN_LOGLVL_INFO, "angle : %f", RADIAN_TO_DEGREE(angle));
+		  ((PNOpalObject*)current_obj->getPhysicalObject())->addTorque(PNVector3f::UNIT_Y, -angle*10, 0.0f, true);
 		}
 	  }
 	  PNLOCK_END(current_obj);
@@ -294,6 +323,19 @@ void	PNOpal::opal2pn()
 		const PNPoint3f& coord = physicalObject->getCoord();
 		const PNPoint3f& offset = physicalObject->getOffset();
 		const PNQuatf& orient = physicalObject->getOrient();
+		
+		if (object->getId() == "Player")
+		{
+		  opal::RaycastResult result = ((PNOpalObject*)physicalObject)->getPlayerSensor()->fireRay(100);
+		  opal::Point3r hitPoint = result.intersection;
+		  opal::Solid* hitSolid = result.solid;
+
+		  if (result.distance != 0.0 && result.distance < 0.4)
+		  {
+			//pnerror(PN_LOGLVL_INFO, "Player sensor, Y: %f", result.distance);
+			((PNOpalObject*)physicalObject)->addForce(PNVector3f::UNIT_Y, (0.4f - (pnfloat)result.distance)*300.0f, 0.0f, true);
+		  }
+		}
 		
 		object->setCoord((coord.x - offset.x) / mpp,
 						(coord.y - offset.y) / mpp,
