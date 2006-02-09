@@ -50,6 +50,7 @@ namespace PN
 	  PAUSE_MENULOAD,
 	  PAUSE_MENUSAVE,
 	  CHAT_WINDOW,
+	  DEAD_WINDOW,
 	  INVENTORY_WINDOW,
 	  NONE
 	} guiStates;

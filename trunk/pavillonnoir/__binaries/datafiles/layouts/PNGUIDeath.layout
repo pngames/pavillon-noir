@@ -1,7 +1,14 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <GUILayout>
-	<Window Type="DefaultWindow" Name="PNGUIDeath">
-		
-  
-		</Window>
+  <Window Type="DefaultWindow" Name="PNGUIDeath" >
+    <Property Name="UnifiedAreaRect" Value="{{0.000000,0.000000},{0.000000,0.000000},{1.000000,0.000000},{1.000000,0.000000}}" />
+    <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+    <Window Type="Vanilla/StaticText" Name="PNGUIDeath/BackMenuText" >
+      <Property Name="Text" Value="Appuyez sur une touche pour revenir au Menu Principal" />
+      <Property Name="HorzFormatting" Value="HorzCentred" />
+      <Property Name="UnifiedAreaRect" Value="{{0.100000,0.000000},{0.900000,0.000000},{0.900000,0.000000},{0.970000,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="setVisible" Value="false" />
+    </Window>
+  </Window>
 </GUILayout>

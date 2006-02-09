@@ -97,7 +97,7 @@ namespace PN
 	if (_currentMainState == MENUROOT && (_currentSubState == MENULOAD || _currentSubState == NONE))
 	  PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_START, 0, data);
 
-	if (_currentMainState == INGAME && (_currentSubState == MENUPAUSE || _currentSubState == PAUSE_MENULOAD))
+	if (_currentMainState == INGAME && (_currentSubState == MENUPAUSE || _currentSubState == PAUSE_MENULOAD || _currentSubState == DEAD_WINDOW))
 	   PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_END, 0, NULL);
   }
 
@@ -113,7 +113,7 @@ namespace PN
 		PNGUIGame::getInstance()->startGUI();
 	}
 
-	if (_currentMainState == INGAME && (_currentSubState == MENUPAUSE || _currentSubState == PAUSE_MENULOAD))
+	if (_currentMainState == INGAME && (_currentSubState == MENUPAUSE || _currentSubState == PAUSE_MENULOAD || _currentSubState == DEAD_WINDOW))
 	{
 	  if (type == PN_EVENT_ML_ENDED)
 		PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_START, 0, NULL);

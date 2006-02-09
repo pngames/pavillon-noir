@@ -44,8 +44,11 @@ namespace PN
 
   PNGUIDeath::PNGUIDeath()
   {
-	//_pnDeath = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNGUIDeath.layout");
-	//CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnDeath);
+	_pnDeath = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNGUIDeath.layout");
+	_pnDeath->hide();
+	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnDeath);
+	_pnStatText = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIDeath/BackMenuText");
+	_pnStatText->hide();
 
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("DeathImages") == false)
 	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/DeathScreen.imageset");
@@ -56,19 +59,20 @@ namespace PN
 
 	_deathWnd->addChildWindow(_deathImage);
 
-	_deathWnd->setPosition( CEGUI::Point( 0.5f, 0.5f ) );
-	//_deathWnd->setSize(CEGUI::Size ( 0.5f,  0.5f)); 
+	//_deathWnd->setPosition( CEGUI::Point( 0.5f, 0.5f ) );
+	_pnDeath->addChildWindow(_deathWnd);
 
-	_deathWnd->hide();
+	//_deathWnd->hide();
 	//_rootWin->addChildWindow(_deathWnd);
 
 	
-	_deathImage->setSize( CEGUI::Size( 1.0f, 1.0f ) );
-	_deathImage->setPosition( CEGUI::Point( 0.0f, 0.0f ) );
+	//_deathImage->setSize( CEGUI::Size( 1.0f, 1.0f ) );
+	//_deathImage->setPosition( CEGUI::Point( 0.0f, 0.0f ) );
 	_deathImage->setBackgroundEnabled( false );
 	_deathImage->setFrameEnabled( false );
 	
 	_fadeTimer = 0;
+	_pnDeath->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIDeath::eventKeyPressedHandler, this));
   }
 
   PNGUIDeath::~PNGUIDeath()
@@ -84,24 +88,44 @@ namespace PN
   }
 
 
-  void PNGUIDeath::show()
+  void PNGUIDeath::startGUI()
   {
-	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_deathWnd);
-	_deathWnd->show();
-	/*_pnDeath->moveToFront();
-	_pnDeath->activate();*/
-	_winState = winFadeIn;
-	PNEventManager::getInstance()->addCallback(PN_EVENT_UPDATE_GUI, EventCallback(this, &PNGUIDeath::update));
+	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME && 
+	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
+	{
+	  PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_PAUSE, NULL, NULL);
+	  PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::DEAD_WINDOW);
+	  
+	  _deathWnd->setPosition( CEGUI::Point( 0.5f, 0.5f ) );
+	  _deathImage->setSize( CEGUI::Size( 1.0f, 1.0f ) );
+	  _deathImage->setPosition( CEGUI::Point( 0.0f, 0.0f ) );
+
+	  _pnStatText->hide();
+	  _pnDeath->show();
+	  _winState = winFadeIn;
+	  PNEventManager::getInstance()->addCallback(PN_EVENT_UPDATE_GUI, EventCallback(this, &PNGUIDeath::update));
+	}
+  }
+
+  void PNGUIDeath::animFinished()
+  {
+	PNEventManager::getInstance()->deleteCallback(PN_EVENT_UPDATE_GUI, EventCallback(this, &PNGUIDeath::update));
 	
+	_pnStatText->show();
+	_pnDeath->moveToFront();
+
 	
   }
 
-  void PNGUIDeath::hide()
+  bool PNGUIDeath::eventKeyPressedHandler(const CEGUI::EventArgs& e)
   {
-	PNEventManager::getInstance()->deleteCallback(PN_EVENT_UPDATE_GUI, EventCallback(this, &PNGUIDeath::update));
-	_winState = winHidden;
-
 	//dechargement map et retour au menu principal (faire statut dans la classe correspondante)
+	_pnDeath->hide();
+	_winState = winHidden;
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_UNPAUSE, NULL, NULL);
+	PNGUIStateManager::getInstance()->LoadManager(NULL, PNGUIStateManager::MENUROOT);
+	
+	return true;
   }
 
   void PNGUIDeath::update(pnEventType type, PNObject* source, PNEventData* data)
@@ -119,6 +143,7 @@ namespace PN
 		{
 		  _fadeTimer = 0;
 		  _winState = winVisible;
+		  animFinished();
 		  return;
 		 /*
 
@@ -137,14 +162,18 @@ namespace PN
 		_fadeTimer += deltaTime;
 
 		float fadefac = _fadeTimer / FADE_TIME;
-
-		CEGUI::Point pos = CEGUI::Point( 0.5f - fadefac * 0.5f, 0.5f - fadefac * 0.5f );
-		_deathWnd->setPosition( pos );
-		CEGUI::Size sizeTmp( fadefac,  fadefac ); 
-		_deathWnd->setSize( sizeTmp );
-		_deathWnd->setAlpha( std::max( 0.2f, fadefac ) );
-
-
+		float tmpVal = 0.5f - fadefac * 0.5f;
+		if (tmpVal > 0)
+		{
+		  CEGUI::Point pos = CEGUI::Point( tmpVal, tmpVal );
+		  std::cout << pos.d_x << "  " << pos.d_y << std::endl;
+			_deathWnd->setPosition( pos );
+		  CEGUI::Size sizeTmp( fadefac,  fadefac ); 
+		  
+		  _deathWnd->setSize( sizeTmp );
+		  _deathWnd->setAlpha( std::max( 0.2f, fadefac ) );
+		}
+		
 
 /*
 		float tempAlpha = fadefac * _frameAlphaValue;
