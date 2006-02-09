@@ -70,6 +70,7 @@ PN3DObject::PN3DObject()
 
   _orient.loadIdentity();
   _updateTranslation.setNull();
+  _lastUpdateTranslation.setNull();
 
   _frontDirection = PNVector3f::NEGATIVE_UNIT_Z;
   _rightDirection = PNVector3f::UNIT_X;
@@ -331,6 +332,12 @@ PN3DObject::setUpdateTranslation(const PNVector3f& translation)
   PNLOCK(this);
 
   _updateTranslation = translation;
+}
+
+const PNVector3f &
+PN3DObject::getLastUpdateTranslation() const
+{
+  return _lastUpdateTranslation;
 }
 
 pnfloat
@@ -983,6 +990,7 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
 
   pnfloat step = deltaTime * _movingSpeed;
 
+  _lastUpdateTranslation = _updateTranslation;
   _updateTranslation.setNull();
 
   //////////////////////////////////////////////////////////////////////////

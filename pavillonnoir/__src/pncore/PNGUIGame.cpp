@@ -407,7 +407,6 @@ void PNGUIGame::_showObjectCoord(const std::string&, std::istream& i)
   }
   else
 	PNConsole::writeLine("object %s does not exist", objectid.c_str());
-
 }
 
 void  PNGUIGame::_setScriptingDebug(const std::string&, std::istream& i)
@@ -518,7 +517,7 @@ void PNGUIGame::suscribeConsoleCommand()
   //////////////////////////////////////////////////////////////////////////
   PNConsole::addFonction("physics", &PNGUIGame::_setPhysics, "Physical simulation, 0=false or 1=true");
   PNConsole::addFonction("renderphysics", &PNGUIGame::_renderPhysics, "Display object's physical entities, 0=false or 1=true");
-  PNConsole::addFonction("addforce", &PNGUIGame::_addForce, "Add force to a physical object, addforce objectid x y z duration");
+  PNConsole::addFonction("addforce", &PNGUIGame::_addForce, "Add force to a physical object, addforce objectid x y z magnitude duration");
   PNConsole::addFonction("listphysics", &PNGUIGame::_listPhysicalObjects, "List physical objects");
   PNConsole::addFonction("setdyn", &PNGUIGame::_setPhysicalObjectsDynamic, "Set all physical objects dynamic, 0=false or 1=true");
   PNConsole::addFonction("showobjcoord", &PNGUIGame::_showObjectCoord, "Display the object coordinates, showobjcoord objectid");
