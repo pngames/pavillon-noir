@@ -49,6 +49,7 @@ namespace PN
 	CEGUI::Window* _mainSheet;
 	CEGUI::Listbox*	_listBox;
 	CEGUI::StaticText* _textQuestion;
+	std::string _currentChatXml;
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
