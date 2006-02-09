@@ -123,12 +123,14 @@ PNFXMaterialListParameter::_addNewObject(FXint index)
 
 	  if (mat != NULL)
 	  {
-		v->push_back(mat);
+		//v->push_back(mat);
+		v->insert(v->begin() + index, mat);
 
-		std::string s = *v->at(i)->getFile();
+		std::string s = *v->at(index)->getFile();
 		if (s.size() > 29)
 		  s = s.substr(0, 10) + "[...]" + s.substr(s.size()-15, s.size());
-		_listBox->appendItem(s.c_str(), NULL, v->at(i));
+		//_listBox->appendItem(s.c_str(), NULL, v->at(i));
+		_listBox->insertItem(index, s.c_str(), NULL);
 		_listBox->setNumVisible(_listBox->getNumItems() < 5 ? _listBox->getNumItems() : 5 );
 		PNConfigurableObject* co = _param->getConfigurableObject();
 		co->setModified();
@@ -162,6 +164,18 @@ PNFXMaterialListParameter::_update(void)
 
 	_listBox->appendItem(FXFile::name(material->getFile()->c_str()), NULL, material);
   }
+
+  _listBox->setNumVisible(_listBox->getNumItems() < 5 ? _listBox->getNumItems() : 5 );
+}
+
+/*
+*	Updates MaterialListlist, sets the current selection to index
+*/
+void
+PNFXMaterialListParameter::_update(pnuint index)
+{
+  _update();
+  _setCurrentItem(index);
 }
 
 //////////////////////////////////////////////////////////////////////////

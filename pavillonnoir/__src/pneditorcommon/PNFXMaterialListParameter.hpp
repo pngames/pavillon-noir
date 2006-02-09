@@ -59,6 +59,7 @@ protected:
   bool						_addNewObject(FXint index);
 
   void						_update();
+  void						_update(pnuint index);
 };
 
 //////////////////////////////////////////////////////////////////////////

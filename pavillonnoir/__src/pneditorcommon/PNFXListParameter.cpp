@@ -268,6 +268,18 @@ PNFXListParameter::_update()
   }
 }
 
+void
+PNFXListParameter::_update(pnuint index)
+{
+  _update();
+  _setCurrentItem(index);
+}
+
+void
+PNFXListParameter::_setCurrentItem(pnuint index)
+{
+  _listBox->setCurrentItem(index);
+}
 //////////////////////////////////////////////////////////////////////////
 
 void
@@ -331,15 +343,16 @@ PNFXListParameter::onDelete(FXObject* obj, FXSelector sel, void* ptr)
 long
 PNFXListParameter::onAdd(FXObject* obj, FXSelector sel, void* ptr)
 { 
-  FXint	index = _listBox->getCurrentItem();
+  FXint	index = ( _listBox->getCurrentItem() != -1 ? _listBox->getCurrentItem()+1 : 0 );
 
   if (_addNewObject(index))
   {
-	if (index >= (FXint)getChoise())
+	if (index != 0 && index >= (FXint)getChoise())
 	  setChoise(getChoise() + 1);
 
 	sendParamModif();
 	update();
+	_update(getChoise());
   }
 
   return 1;

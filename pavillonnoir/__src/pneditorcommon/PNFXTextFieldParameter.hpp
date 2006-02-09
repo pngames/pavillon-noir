@@ -35,10 +35,6 @@
 
 #include "pnproperties.h"
 
-/*
- *	A simple FXStringParameter. The contents becomes red if modified, turns back 
- *  to black on validation (KEY_Return or KEY_KP_Enter).
- */
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
