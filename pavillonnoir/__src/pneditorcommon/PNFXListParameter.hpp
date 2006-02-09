@@ -99,6 +99,9 @@ protected:
   virtual bool				_editObject(FXint index);
 
   virtual void				_update();
+  virtual void				_update(pnuint index);
+  virtual void				_setCurrentItem(pnuint index);
+
 public:
   long						onDelete(FXObject*, FXSelector, void* ptr);
   long						onAdd(FXObject* obj, FXSelector sel, void* ptr);
