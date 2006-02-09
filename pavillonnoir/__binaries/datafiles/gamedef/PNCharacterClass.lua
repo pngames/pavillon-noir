@@ -100,13 +100,15 @@ function PNCharacterClass(id)
 	OBJ.m_wounds=	{0,0,0,0,0,0}
 	--------------------------------------
 	OBJ.health_state = HEALTH_STATE.OK
+	OBJ.comaTurns = 0
 	OBJ.selected_weapon = OBJ.items.weapons.h2h_combat
 	OBJ.combat_state = COMBAT_STATE.NEUTRAL
 	OBJ.realCharacType = CHARACTER_TYPE.CIVILIAN
 	OBJ.shownCharacType = CHARACTER_TYPE.CIVILIAN
-	OBJ.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2, PN_IA_WAIT_ANIM_END = 3, PN_IA_COMA = 4}
+	OBJ.stateEnum = {PN_IA_PASSIVE = 0, PN_IA_TRAVELLING = 1, PN_IA_FIGHTING = 2, PN_IA_WAIT_ANIM_END = 3, PN_IA_COMA = 4, PN_IA_DEAD = 5}
 	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
 	OBJ.pastStates = {}
+	OBJ.restoreAtAnimEnd = false
 
 	--------------------------------------
 	OBJ.load_capacity = 10;
@@ -392,6 +394,7 @@ Sets the character's behaviour to the previous state on the stack
 		table.remove(self.pastStates, 0)
 		if (self.state == self.stateEnum.PN_IA_TRAVELLING) then
 			self:setTarget(self.toReach)
+			self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
 			self:onMoveForward(ACTION_STATE.START)
 		end
 		pnprint("<= PNCharacter:restoreState()\n")
@@ -412,7 +415,7 @@ Called at the end of a Fight Action
 			self:onMoveForward(ACTION_STATE.STOP)
 			gameMap:sendEventFromLua(self, 17) -- DeathEvent
 			self:waitForAnimEnd(CHARACTER_ANIM.DIE)
-			pnprint(self.id .. " is dead !\n")
+			pnprint(self.id .. " is dead (or coma) !\n")
 		elseif ((self.state ~= self.stateEnum.PN_IA_FIGHTING)) then
 			self:startFight(source)
 		end
@@ -434,17 +437,43 @@ Checks if waited Animation is the one that ended
 	function OBJ:checkAnimEnd(anim)
 		pnprint("=> PNAICharacter:checkAnimEnd(" .. anim .. ") and waited: " .. self.waitedAnim .. "\n")
 		if ((self.state == self.stateEnum.PN_IA_WAIT_ANIM_END) and (self.waitedAnim == anim)) then
-			if (self.health_state >= HEALTH_STATE.LETHAL) then --if is dead
+			if (self.health_state == HEALTH_STATE.LETHAL) then --if is dead
+				self:setState(self.stateEnum.PN_IA_DEAD)
+				pnprint("Actually he really is dead\n")
+			elseif (self.health_state == HEALTH_STATE.COMA) then
 				self:setState(self.stateEnum.PN_IA_COMA)
-				--delete object
+				pnprint("Actually it only is a coma\n")
 			else
 				self:restoreState()
+				if (self.restoreAtAnimEnd == true) then
+					self:restoreState()
+					self.restoreAtAnimEnd = false
+				end
 				if (self.state == self.stateEnum.PN_IA_FIGHTING and (self.combat_state == COMBAT_STATE.ATTACK)) then -- if is fighting
 					self.combat_state = COMBAT_STATE.NEUTRAL
 				end
 			end
 		end
 		pnprint("<= PNAICharacter:checkAnimEnd\n")
+	end
+--------------------------------------------------------------------------------
+--[[%
+Lets some turns in coma then the characters gain one life level
+%--]]
+	function OBJ:manageComa()
+		if (self.comaTurns == self.stats.awareness * 50) then
+			self.comaTurns = 0
+			for loc in LOCALISATION do
+				if (self.m_wounds[loc] >= HEALTH_STATE.COMA) then
+					self.m_wounds[loc] = HEALTH_STATE.CRITIC
+				end
+			end
+			self.health_state = HEALTH_STATE.CRITIC
+			self:restoreState()
+			GUIChangeLife(self.health_state)
+		else
+			self.comaTurns = self.comaTurns + 1
+		end
 	end
 --------------------------------------------------------------------------------
 --[[%

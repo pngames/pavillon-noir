@@ -52,7 +52,7 @@ function PNPlayerClass(id)
 ------------------------------ MOVE -----------------------
 	OVERRIDE(OBJ, "onMoveForward")
 	function OBJ:onMoveForward(state)
-	pnprint("==>> PNPlayer:onMoveForward()\n")
+	--pnprint("==>> PNPlayer:onMoveForward()\n")
 		self:PNCharacter_onMoveForward(state)
 		--PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)		
 	pnprint("<<== PNPlayer:onMoveForward()\n")
@@ -113,6 +113,9 @@ Do some recurent stuff
 		--	pnprint("IAM PN3Dobject")
 		--end
 		self:PNCharacter_onUpdate(deltaTime)
+		if (self.state == self.stateEnum.PN_IA_COMA) then
+			self:manageComa()
+		end
 		--local RCVT= PNRenderCam:getViewTarget()
 		--if (self:getCoord():getDistance(RCVT:getCoord()) <= 5)then
 		--	RCVT:subMovingState(PN3DObject.STATE_T_FORWARD)
@@ -198,10 +201,31 @@ Call when player push the primary attack button
 Called at the end of a Fight Action
 %--]]
 	OVERRIDE(OBJ, "onDamage")
-    function OBJ:onDamage(damage, localisation)
-    	self:PNCharacter_onDamage(damage, localisation)
+    function OBJ:onDamage(damage, localisation, source)
+    	self:PNCharacter_onDamage(damage, localisation, source)
     	-- call refresh of life bar
     	GUIChangeLife(self.health_state)
+	end
+--------------------------------------------------------
+--[[%
+Checks if waited Animation is the one that ended
+%--]]
+	function OBJ:checkAnimEnd(anim)
+		if (anim == CHARACTER_ANIM.DIE) then
+			if ((self.state == self.stateEnum.PN_IA_WAIT_ANIM_END) and (self.waitedAnim == anim)) then
+				if (self.health_state == HEALTH_STATE.LETHAL) then --if is dead
+					self:setState(self.stateEnum.PN_IA_DEAD)
+					pnprint("Actually he really is dead\n")
+				elseif (self.health_state == HEALTH_STATE.COMA) then
+					self:setState(self.stateEnum.PN_IA_COMA)
+					pnprint("Actually it only is a coma\n")
+				end
+			end
+		elseif (anim == CHARACTER_ANIM.STRIKE) then
+			if (self.state == self.stateEnum.PN_IA_FIGHTING and (self.combat_state == COMBAT_STATE.ATTACK)) then -- if is fighting
+				self.combat_state = COMBAT_STATE.NEUTRAL
+			end
+		end
 	end
 ---------------------------------------------------------
 	OVERRIDE(OBJ, "onFrustrumIn")
