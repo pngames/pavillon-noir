@@ -55,7 +55,7 @@ Called while handling a fight
 			if (self.elapsedTurns == 0) then
 				self.ennemyJustReached = true
 			end
-			if ((self.ennemyJustReached == true) or ((self.elapsedTurns) == (self.stats.awareness * 30))) then
+			if ((self.ennemyJustReached == true) or ((self.elapsedTurns) == (self.stats.awareness * 20))) then
 				--attack
 				self.combat_state = COMBAT_STATE.ATTACK
 				gameMap:onAttack(self.id, self:getViewTarget():getId())
@@ -79,6 +79,7 @@ Prepares the Character to handle a fight
 		self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
 		self:setState(self.stateEnum.PN_IA_FIGHTING)
 		self:onMoveForward(ACTION_STATE.STOP)
+		self.combat_state = COMBAT_STATE.NEUTRAL
 		-- anim combat, sortir l'arme toussa
 	end
 --------------------------------------------------------
