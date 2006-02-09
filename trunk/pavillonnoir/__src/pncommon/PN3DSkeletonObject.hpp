@@ -33,7 +33,6 @@
 #include <vector>
 
 #include "PN3DObject.hpp"
-#include "IPNAnimated.hpp"
 #include "PN3DSkeletonAnimation.hpp"
 
 namespace PN {
@@ -43,7 +42,7 @@ class PN3DSkeleton;
 class PN3DAnimation;
 
 /// 3D object containing skeleton and animation to work with
-class PNAPI					PN3DSkeletonObject : public PN3DObject/*, public IPNAnimated*/
+class PNAPI					PN3DSkeletonObject : public PN3DObject
 {
 public:
   /// Sub Objects to render
