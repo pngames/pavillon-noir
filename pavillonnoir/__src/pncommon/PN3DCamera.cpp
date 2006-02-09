@@ -403,7 +403,7 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 {
   PNLOCK(_testedObj = obj);
 
-  if (_testedObj->get3DModel() == NULL || _testedObj->getRenderMode() == 0)
+  if (_testedObj->get3DModel() == NULL || !_testedObj->isVisible())
 	return false;
 
   PNQuatf	invertOrient = _testedObj->getOrient().getInvert();

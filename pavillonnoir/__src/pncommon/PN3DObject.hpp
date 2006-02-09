@@ -100,6 +100,14 @@ public:
 	RENDER_LAST						= 0x000001 << 4
   }									rendermode;
 
+  /// Set render mode (model, materials) bit mask
+  void								setRenderMode(pnuint mode);
+  /// Return render mode bit mask
+  pnint								getRenderMode() const;
+
+  void								addRenderMode(pnuint mode);
+  void								subRenderMode(pnuint mode);
+
   //////////////////////////////////////////////////////////////////////////
   
 public:
@@ -133,7 +141,7 @@ public:
   /// sub bit mask indicate in witch moving states is the 3D object
   void								subMovingState(pnuint mstate);
   /// test bit mask indicate in witch moving states is the 3D object
-  pnbool								testMovingState(pnuint mstate);
+  pnbool							testMovingState(pnuint mstate);
   /// Get the moving speed of 3D object
   pnfloat							getMovingSpeed() const;
   /// Set the moving speed of 3D object
@@ -260,66 +268,66 @@ public:
   /// Type of the 3d object
   typedef enum
   {
-	OBJTYPE_3DOBJ,				/// Simple 3D object
-	OBJTYPE_3DSKELETONOBJ,		/// 3D object with skeleton and skeleton animations
-	OBJTYPE_WAYPOINT,			/// Way point used for IA graphs
-	OBJTYPE_GROUND,				/// Ground partitioned for optimization and static
-	OBJTYPE_CAMERA,				/// A camera
-	OBJTYPE_CHARACTER,			/// Game character
+	OBJTYPE_3DOBJ,					/// Simple 3D object
+	OBJTYPE_3DSKELETONOBJ,			/// 3D object with skeleton and skeleton animations
+	OBJTYPE_WAYPOINT,				/// Way point used for IA graphs
+	OBJTYPE_GROUND,					/// Ground partitioned for optimization and static
+	OBJTYPE_CAMERA,					/// A camera
+	OBJTYPE_CHARACTER,				/// Game character
 	NB_OBJTYPE 
-  }								objType;
+  }									objType;
 
 protected:
   /// Type of the 3d object
-  objType						_objType;
+  objType							_objType;
 
   //////////////////////////////////////////////////////////////////////////
 
 public:
   /// Indicate witch direction is 3D object front
-  PNNormal3f					_frontDirection;
+  PNNormal3f						_frontDirection;
   /// Indicate witch direction is 3D object right
-  PNNormal3f					_rightDirection;
+  PNNormal3f						_rightDirection;
   /// Indicate witch direction is 3D object top
-  PNNormal3f					_topDirection;
+  PNNormal3f						_topDirection;
 
   /// Return 3d object front direction
-  const PNNormal3f&				getFrontDirection() const;
+  const PNNormal3f&					getFrontDirection() const;
   /// Return 3d object right direction
-  const PNNormal3f&				getRightDirection() const;
+  const PNNormal3f&					getRightDirection() const;
   /// Return 3d object top direction
-  const PNNormal3f&				getTopDirection() const;
+  const PNNormal3f&					getTopDirection() const;
 
   //////////////////////////////////////////////////////////////////////////
  
 protected:
   /// Sub Objects to render
-  pnuint						_renderMode;
+  pnuint							_renderMode;
 
   /// Translation and rotation speed
-  pnfloat						_movingSpeed;
-  pnfloat						_rotatingYawSpeed;
-  pnfloat						_rotatingPitchSpeed;
-  pnfloat						_rotatingRollSpeed;
+  pnfloat							_movingSpeed;
+  pnfloat							_rotatingYawSpeed;
+  pnfloat							_rotatingPitchSpeed;
+  pnfloat							_rotatingRollSpeed;
 public:
   /// List of materials associated with 3d object
   typedef std::vector<PN3DMaterial*>	VectorMaterial;
 protected:
   /// Represent object in graphic world
-  PN3DModel*					_model;
+  PN3DModel*						_model;
   /// Materials list associated with this object
-  VectorMaterial				_materials;
+  VectorMaterial					_materials;
 
   /// Represent object in physic world
-  PNPhysicalObject*				_physicalObject;
+  PNPhysicalObject*					_physicalObject;
 
   /// Object position in 3D world
-  PNPoint3f						_coord;
+  PNPoint3f							_coord;
   /// Define object orientation
-  PNQuatf						_orient;
+  PNQuatf							_orient;
 
   /// Current update translation of 3d object
-  PNVector3f					_updateTranslation;
+  PNVector3f						_updateTranslation;
 
 public:
   /// Default constructor for PN3DObject.
@@ -329,158 +337,160 @@ public:
 
 protected:
   /// Parse XML Model node
-  pnint							_parseModel(xmlNode* node);
+  pnint								_parseModel(xmlNode* node);
   /// Parse XML Materials node
-  pnint							_parseMaterials(xmlNode* node);
+  pnint								_parseMaterials(xmlNode* node);
   /// Parse XML Physics node
-  pnint							_parsePhysics(xmlNode* node);
+  pnint								_parsePhysics(xmlNode* node);
   /// Parse XML PNO internal node
-  virtual pnint					_unserializeNode(xmlNode* node);
+  virtual pnint						_unserializeNode(xmlNode* node);
 
   /// Write in model node content to out stream
-  virtual pnint					_serializeContent(xmlNode* node);
+  virtual pnint						_serializeContent(xmlNode* node);
 
   //////////////////////////////////////////////////////////////////////////
   // PNXMLSERIALIZABLE
 
-  virtual const std::string&	getDTD() const;
-  virtual const std::string&	getDTDName() const;
-  virtual const std::string&	getRootNodeName() const;
+  virtual const std::string&		getDTD() const;
+  virtual const std::string&		getDTDName() const;
+  virtual const std::string&		getRootNodeName() const;
 
 public:
   /// Parse XML root node
-  virtual pnint					unserializeFromXML(xmlNode* node);
+  virtual pnint						unserializeFromXML(xmlNode* node);
 
   /// Save 3DObject into XML file
-  virtual pnint					serializeInXML(xmlNode* node, pnbool isroot = false);
+  virtual pnint						serializeInXML(xmlNode* node, pnbool isroot = false);
 
   //////////////////////////////////////////////////////////////////////////
   
 public:
   /// Return 3D object coordinate in 3D scene
-  virtual const PNPoint3f&		getCoord() const;
+  virtual const PNPoint3f&			getCoord() const;
   /// Return 3D object x coordinate in 3D scene
-  virtual pnfloat				getX() const;
+  virtual pnfloat					getX() const;
   /// Return 3D object y coordinate in 3D scene
-  virtual pnfloat				getY() const;
+  virtual pnfloat					getY() const;
   /// Return 3D object z coordinate in 3D scene
-  virtual pnfloat				getZ() const;
+  virtual pnfloat					getZ() const;
 
   /// Set 3D object coordinate in 3D scene
-  virtual void					setCoord(const PNPoint3f& coord);
+  virtual void						setCoord(const PNPoint3f& coord);
   /// Set 3D object coordinate in 3D scene
-  virtual void					setCoord(pnfloat x, pnfloat y, pnfloat z);
+  virtual void						setCoord(pnfloat x, pnfloat y, pnfloat z);
 
   /// Translate relative to object coordinate
-  virtual void					move(PNPoint3f& coord);
+  virtual void						move(PNPoint3f& coord);
   /// Translate on x relative to object coordinate
-  virtual void					moveX(pnfloat x);
+  virtual void						moveX(pnfloat x);
   /// Translate on y relative to object coordinate
-  virtual void					moveY(pnfloat y);
+  virtual void						moveY(pnfloat y);
   /// Translate on z relative to object coordinate
-  virtual void					moveZ(pnfloat z);
+  virtual void						moveZ(pnfloat z);
 
   /// Return current update translation object
-  virtual const PNVector3f&		getUpdateTranslation() const;
+  virtual const PNVector3f&			getUpdateTranslation() const;
   /// Set current update translation object
-  virtual void					setUpdateTranslation(const PNVector3f& translation);
+  virtual void						setUpdateTranslation(const PNVector3f& translation);
 
   //////////////////////////////////////////////////////////////////////////
   
   /// Return 3D object center coordinate relative to his coordinate
-  const PNPoint3f&				getCenter() const;
+  const PNPoint3f&					getCenter() const;
 
   /// Return 3D object radius relative to his coordinate
-  pnfloat						getRadius() const;
+  pnfloat							getRadius() const;
 
   //////////////////////////////////////////////////////////////////////////
 
   /// Return 3D object orientation in quaternion
-  virtual const PNQuatf&		getOrient() const;
+  virtual const PNQuatf&			getOrient() const;
   /// Set 3D object orientation in quaternion
-  virtual void					setOrient(const PNQuatf& orient);
+  virtual void						setOrient(const PNQuatf& orient);
   /// Set 3D object orientation in quaternion
-  virtual void					setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w);
+  virtual void						setOrient(pnfloat x, pnfloat y, pnfloat z, pnfloat w);
 
   /// Rotate around right normale (x)
-  virtual void					rotatePitchRadians(pnfloat pitch);
+  virtual void						rotatePitchRadians(pnfloat pitch);
   /// Rotate around top normale (y)
-  virtual void					rotateYawRadians(pnfloat yaw);
+  virtual void						rotateYawRadians(pnfloat yaw);
   /// Rotate around front normale (z)
-  virtual void					rotateRollRadians(pnfloat roll);
+  virtual void						rotateRollRadians(pnfloat roll);
   /// Rotate relative to actual rotation
-  virtual void					rotatePYRAxisRadians(const PNVector3f& axis, pnfloat phi);
+  virtual void						rotatePYRAxisRadians(const PNVector3f& axis, pnfloat phi);
 
   /// Rotate around X axis
-  virtual void					rotateXRadians(pnfloat x);
+  virtual void						rotateXRadians(pnfloat x);
   /// Rotate around Y axis
-  virtual void					rotateYRadians(pnfloat y);
+  virtual void						rotateYRadians(pnfloat y);
   /// Rotate around Z axis
-  virtual void					rotateZRadians(pnfloat z);
+  virtual void						rotateZRadians(pnfloat z);
   /// Rotate around "axis" axis
-  virtual void					rotateAxisRadians(const PNVector3f& axis, pnfloat phi);
+  virtual void						rotateAxisRadians(const PNVector3f& axis, pnfloat phi);
 
   //////////////////////////////////////////////////////////////////////////
 
   /// Return 3D object type
-  virtual objType				getObjType() const;
+  virtual objType					getObjType() const;
 
   //////////////////////////////////////////////////////////////////////////
   
   /// Retrieve number of vertex owned by 3d object
-  virtual pnuint				getNbVertexComputed();
+  virtual pnuint					getNbVertexComputed();
 
   /// Fill buffer from step with vertices owned by 3d object
-  virtual pnuint				computeVertex(pnfloat* buffer, pnuint step = 0);
+  virtual pnuint					computeVertex(pnfloat* buffer, pnuint step = 0);
   /// Fill buffer from step with normals owned by 3d object
-  virtual pnuint				computeNormales(pnfloat* buffer, pnuint step = 0);
+  virtual pnuint					computeNormales(pnfloat* buffer, pnuint step = 0);
   /// Fill buffer from step with textures coordinates owned by 3d object
-  virtual pnuint				computeTextCoord(pnfloat* buffer, pnuint step = 0);
+  virtual pnuint					computeTextCoord(pnfloat* buffer, pnuint step = 0);
   /// Fill buffer from step with colors owned by 3d object
-  virtual pnuint				computeColors(pnfloat* buffer, pnuint step = 0);
+  virtual pnuint					computeColors(pnfloat* buffer, pnuint step = 0);
 
   /// Retrieve number of face owned by 3d object
-  virtual pnuint				getNbFacesComputed();
+  virtual pnuint					getNbFacesComputed();
 
   /// Fill buffer from step with faces owned by 3d object
-  virtual pnuint				computeFaces(PNFace* faces, pnuint step = 0);
+  virtual pnuint					computeFaces(PNFace* faces, pnuint step = 0);
 
   //////////////////////////////////////////////////////////////////////////
   /// Get minimum x y z coordinate
-  const PNPoint3f&	getMin() const;
+  const PNPoint3f&					getMin() const;
   /// Get maximum x y z coordinate
-  const PNPoint3f&	getMax() const;
+  const PNPoint3f&					getMax() const;
+
+  //////////////////////////////////////////////////////////////////////////
+  // Visible wrapper
+
+  void								setVisible(pnbool visible);
+  bool								isVisible() const;
+
   //////////////////////////////////////////////////////////////////////////
 
   /// Retrieve model of 3d object
-  PN3DModel*					get3DModel() const;
+  PN3DModel*						get3DModel() const;
   /// Set the model of 3d object
-  void							set3DModel(PN3DModel* model);
+  void								set3DModel(PN3DModel* model);
 
   /// Retrieve materials list of 3d object
-  const VectorMaterial&			getMaterials() const;
+  const VectorMaterial&				getMaterials() const;
 
   /// Retrieve physical object of 3d object
-  PNPhysicalObject*				getPhysicalObject() const;
+  PNPhysicalObject*					getPhysicalObject() const;
   /// Set the physical object of 3d object
-  bool							setPhysicalObject(PNPhysicalObject* physicalObject);
+  bool								setPhysicalObject(PNPhysicalObject* physicalObject);
 
   //////////////////////////////////////////////////////////////////////////
 
-  /// Set render mode (model, materials) bit mask
-  void							setRenderMode(pnuint mode);
-  /// Return render mode bit mask
-  pnint							getRenderMode() const;
-
   /// Update object informations
-  virtual void					update(pnuint deltaTime);
+  virtual void						update(pnuint deltaTime);
   /// Update object position
-  virtual void					updateTranslation(float step);
+  virtual void						updateTranslation(float step);
   /// Update object orientation
-  virtual void					updateRotation(float step);
+  virtual void						updateRotation(float step);
 
   /// Render object using PNRendererInterface
-  virtual void					render();
+  virtual void						render();
 };
 
 //////////////////////////////////////////////////////////////////////////
