@@ -41,10 +41,10 @@ function PN3DSkeletonObjectClass(id)
 		pnprint(self.id)
 		--pnprint(":onMoveLeft\n")	
 		if (state == ACTION_STATE.START) then
-			pnprint("left key press\n")
+			--pnprint("left key press\n")
 			self:addMovingState(PN3DObject.STATE_T_LEFT)
 		else
-			pnprint("left key release\n")
+			--pnprint("left key release\n")
 			self:subMovingState(PN3DObject.STATE_T_LEFT)
 		end 
 	end	
@@ -53,16 +53,16 @@ function PN3DSkeletonObjectClass(id)
 		pnprint(self.id)
 		--pnprint(":onMoveRight\n")
 		if (state == ACTION_STATE.START) then
-			pnprint("right key press\n")
+			--pnprint("right key press\n")
 			self:addMovingState(PN3DObject.STATE_T_RIGHT)
 		else
-			pnprint("right key release\n")
+			--pnprint("right key release\n")
 			self:subMovingState(PN3DObject.STATE_T_RIGHT)
 		end 
 	end
 	
 	function OBJ:onRotateRight(state)
-		pnprint("OBJ:onRotateRight()\n")
+		--pnprint("OBJ:onRotateRight()\n")
 		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_R_RIGHT)
 		else
@@ -71,7 +71,7 @@ function PN3DSkeletonObjectClass(id)
 	end
 	
 	function OBJ:onRotateLeft(state)
-		pnprint("LUA OBJ:onRotateLeft()\n")
+		--pnprint("LUA OBJ:onRotateLeft()\n")
 		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_R_LEFT)
 		else
@@ -80,7 +80,7 @@ function PN3DSkeletonObjectClass(id)
 	end
 	
 	function OBJ:onRotateUp(state)
-		pnprint("LUA obj:onRotateUp()\n")
+		--pnprint("LUA obj:onRotateUp()\n")
 		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_R_TOP)
 		else
@@ -89,7 +89,7 @@ function PN3DSkeletonObjectClass(id)
 	end
 	
 	function OBJ:onRotateDown(state)
-		pnprint("LUA obj:onRotateDown()\n")
+		--pnprint("LUA obj:onRotateDown()\n")
 		if (state == ACTION_STATE.START) then
 			self:addMovingState(PN3DObject.STATE_R_BACK)
 		else

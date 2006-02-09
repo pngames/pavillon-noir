@@ -39,6 +39,8 @@ Calls a Behaviour Function depending on the state in which the character is
 			self:manageTravel()
 		elseif (self.state == self.stateEnum.PN_IA_FIGHTING) then
 			self:manageFight()
+		elseif (self.state == self.stateEnum.PN_IA_COMA) then
+			self:manageComa()
 		end
 	    --print("<<== PNAICharacter:beSmart()")
 	end
@@ -70,7 +72,7 @@ Called during PathFinding to resolve the travel
 		for id, val in pairs(self.ennemies) do
 			if (val == 1) then
 				local ennemy = gameMap.entities.all[id]
-				pnprint(self.id .. " viewing an ennemy (" .. ennemy:getId() .. ") while travelling, can he attack him ?\n")
+				--pnprint(self.id .. " viewing an ennemy (" .. ennemy:getId() .. ") while travelling, can he attack him ?\n")
 				if (self:getCoord():getDistance(ennemy:getCoord()) < self:getCoord():getDistance(self.toReach:getCoord())) then
 					self:startFight(ennemy)
 				end
@@ -166,7 +168,7 @@ If it is detected as an ennemy, the character switches to the fighting mode
 						if (self.state ~= self.stateEnum.PN_IA_TRAVELING) then
 							if (self:getCoord():getDistance(target:getCoord()) < 10 * self.selected_weapon.range) then
 								pnprint("Il est pas loin, je vais me le faire !\n")
-								self:startFight()
+								self:startFight(target)
 							else
 								pnprint("Je vais voir ca de plus pres !\n")
 								self:moveTo(target:getCoord())
@@ -218,23 +220,39 @@ Not used yet
 %--]]
 	function OBJ:isDead(deadId)
 		pnprint("=> " .. self.id .. ":isDead(" .. deadId .. ")\n")
-		if ((self:getViewTarget():getId() ~= nil) and (self:getViewTarget():getId() == deadId)) then
+		if (self.ennemies[deadId] ~= NULL) then
+			self.ennemies[deadId] = NULL
+		end
+		if ((self:getViewTarget() ~= nil) and (self:getViewTarget():getId() == deadId)) then
+			self.elapsed_turns = 0
 			local newTargetId = -1
-			if (self.ennemies[deadId] ~= NULL) then
-				self.ennemies[deadId] = NULL
-			end
 			for id, val in self.ennemies do
 				if (val == 1) then
-					if ((newTargetId == -1) or (self:getCoord():getDistance(gameMap.entities.all[newTargetId]:GetCoord()) > self:getCoord():getDistance(gameMap.entities.all[id]:GetCoord()))) then
+					if (newTargetId == -1) then
+						newTargetId = id
+					end
+				elseif (self:getCoord():getDistance(gameMap.entities.all[newTargetId]:GetCoord()) > self:getCoord():getDistance(gameMap.entities.all[id]:GetCoord())) then
+					if (gameMap.entities.all[id].health_state < HEALTH_STATE.COMA) then
 						newTargetId = id
 					end
 				end
 			end
+			local target = gameMap.entities.all[newTargetId]
 			if (newTargetId ~= -1) then
-				self:setTarget(gameMap.entities.all[newTargetId])
+				if (self:getCoord():getDistance(target:getCoord()) < 10 * self.selected_weapon.range) then
+					pnprint("Il est pas loin, je vais me le faire !\n")
+					self:startFight(target)
+				else
+					pnprint("Je vais voir ca de plus pres !\n")
+					self:moveTo(target:getCoord())
+				end
 			else
 				self:setTarget(nil)
-				self:restoreState()
+				if (self.state == self.stateEnum.PN_IA_WAIT_ANIM_END)then
+					self.restoreAtAnimEnd = true;
+				else
+					self:restoreState()
+				end
 			end
 		end
 		pnprint("<= " .. self.id .. ":isDead(" .. deadId .. ")\n")

@@ -119,8 +119,8 @@ end
 -------------------------------------------------------------------------------
 
 function gameMap:onMoveForward(srcId, targId, state)
-    pnprint("LUA GameMap:onMoveForward()\n")
-    pnprint("TargetId"..targId.."\n")
+    --pnprint("LUA GameMap:onMoveForward()\n")
+    --pnprint("TargetId"..targId.."\n")
     if (targId == "")then
     	PNRenderCam:onMoveForward(state)
     else
@@ -130,7 +130,7 @@ end
 -------------------------------------------------------------------------------
 
 function gameMap:onMoveBackward(srcId, targId, state)
-    pnprint("LUA GameMap:onMoveBackward()\n")
+    --pnprint("LUA GameMap:onMoveBackward()\n")
     if (targId == "")then
     	PNRenderCam:onMoveBackward(state)
     else
@@ -140,7 +140,7 @@ end
 -------------------------------------------------------------------------------
 
 function gameMap:onMoveLeft(srcId, targId, state)
-    pnprint("LUA GameMap:onMoveLeft()\n")
+    --pnprint("LUA GameMap:onMoveLeft()\n")
     if (targId == "")then
     	PNRenderCam:onMoveLeft(state)
     else
@@ -150,7 +150,7 @@ end
 -------------------------------------------------------------------------------
 
 function gameMap:onMoveRight(srcId, targId, state)
-    pnprint("LUA GameMap:onMoveRight()\n")
+    --pnprint("LUA GameMap:onMoveRight()\n")
     if (targId == "")then
     	PNRenderCam:onMoveRight(state)
     else
@@ -160,7 +160,7 @@ end
 -------------------------------------------------------------------------------
 
 function gameMap:onRotateLeft(srcId, targId, state)
-    pnprint("LUA GameMap:onRotateLeft()\n")
+    --pnprint("LUA GameMap:onRotateLeft()\n")
     if (targId == "")then
     	PNRenderCam:onRotateLeft(state)
     else
@@ -170,7 +170,7 @@ end
 -------------------------------------------------------------------------------
 
 function gameMap:onRotateRight(srcId, targId, state)
-    pnprint("LUA GameMap:onRotateRight()\n")
+    --pnprint("LUA GameMap:onRotateRight()\n")
     if (targId == "")then
     	PNRenderCam:onRotateRight(state)
     else
@@ -192,16 +192,16 @@ end
 -------------------------------------------------------------------------------
 
 function gameMap:onRun(srcId, targId, state)
-    pnprint("==>>GameMap:onRun()\n")
+    --pnprint("==>>GameMap:onRun()\n")
     if (self.entities.all[targId].onRun ~= nil)then
     	self.entities.all[targId]:onRun(state)
     end
-    pnprint("<<==GameMap:onRun()\n")
+    --pnprint("<<==GameMap:onRun()\n")
 end
 -------------------------------------------------------------------------------
 
 function gameMap:onCrouch(srcId, targId, state)
-    pnprint("LUA GameMap:onCrouch()\n")
+    --pnprint("LUA GameMap:onCrouch()\n")
     if (self.entities.all[targId].onCrouch ~= nil) then 
     	self.entities.all[targId]:onCrouch(state)
     end
