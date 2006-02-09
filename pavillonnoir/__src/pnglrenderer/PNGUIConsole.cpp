@@ -212,30 +212,31 @@ PNGUIConsole::addItemToListBox(CEGUI::ListboxTextItem* item)
 {
   PNLOCK(this);
   
-  if (_ConsoleListboxItem.size() > 0)
+/*  if (_ConsoleListboxItem.size() > 0)
   {
 	_listBox->removeItem(_hackItem1);
 	_listBox->removeItem(_hackItem2);
-  }
+  }*/
 
   _ConsoleListboxItem.push_back(item);
-  if (_ConsoleListboxItem.size() > _listboxItemSize)
+  /*if (_ConsoleListboxItem.size() > _listboxItemSize)
   {
 	ConsoleListboxItem::iterator iter = _ConsoleListboxItem.begin();
 	_listBox->removeItem((CEGUI::ListboxItem*)*iter);
 	_ConsoleListboxItem.pop_front();
-  }
+  }*/
   
   //hack for the vertical scrollbar
-  std::string tmp = item->getText().c_str();
+ /* std::string tmp = item->getText().c_str();
   tmp += "          ";
-  item->setText(tmp.c_str());
+  item->setText(tmp.c_str());*/
   
-  _listBox->addItem(item);
-  _listBox->ensureItemIsVisible(item);
+ // _listBox->addItem(item);
+   _listBox->insertItem(item, NULL);
+ // _listBox->ensureItemIsVisible(item);
 
  //hack for the horizontal scrollbar
-  if (_ConsoleListboxItem.size() > 0)
+  /*if (_ConsoleListboxItem.size() > 0)
   {
 	_hackItem1 = new CEGUI::ListboxTextItem("");
 	_hackItem2 = new CEGUI::ListboxTextItem("");
@@ -244,7 +245,7 @@ PNGUIConsole::addItemToListBox(CEGUI::ListboxTextItem* item)
 	_listBox->ensureItemIsVisible(_hackItem1);
 	_listBox->addItem(_hackItem2);
 	_listBox->ensureItemIsVisible(_hackItem2);
-  }
+  }*/
 
   ite = _ConsoleHistory.begin();
 }
