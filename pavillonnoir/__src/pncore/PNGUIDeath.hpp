@@ -46,6 +46,7 @@ private:
   CEGUI::Window*	_pnDeath;
   CEGUI::StaticImage* _deathImage;
   CEGUI::Window* _deathWnd;
+  CEGUI::StaticText* _pnStatText;
   static PNGUIDeath* _instance;
   float	_fadeTimer;
   enum 
@@ -61,10 +62,12 @@ private:
   /////////////////////////////////////////////////////////////////////////////*/
 public:
   static PNGUIDeath* getInstance();
-  void show();
-  void hide();
+  void startGUI();
+  
 protected:
 private:
+  void animFinished();
+  bool eventKeyPressedHandler(const CEGUI::EventArgs& e);
   void	update(pnEventType type, PNObject* source, PNEventData* data);
 
 

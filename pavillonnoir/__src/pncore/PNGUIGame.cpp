@@ -567,6 +567,7 @@ void PNGUIGame::startGUI()
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_OFF, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_OVER, EventCallback(this, &PNGUIGame::playerDied));
   suscribeConsoleCommand();
   show();
 }
@@ -577,6 +578,7 @@ void PNGUIGame::resetGUI()
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_GRAB_OFF, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_OVER, EventCallback(this, &PNGUIGame::playerDied));
   unsuscribeConsoleCommand();
   hide();
 }
@@ -601,6 +603,15 @@ void  PNGUIGame::changeLife(int val)
   }*/
 }
 
+void  PNGUIGame::playerDied(pnEventType type, PNObject* source, PNEventData* data)
+{
+  if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME &&
+	PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
+  {
+	this->resetGUI();
+	PNGUIDeath::getInstance()->startGUI();
+  }
+}
 
 void  PNGUIGame::inputHandleEsc(pnEventType type, PNObject* source, PNEventData* data)
 {
