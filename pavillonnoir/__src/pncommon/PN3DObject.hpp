@@ -66,6 +66,7 @@ public:
   void								setId(const std::string& id);
   const std::string&				getId() const;
 
+
   ///////////////////////////////////////////////////////////////////////////
 private:
   /// Rotation axis activated

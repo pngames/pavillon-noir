@@ -47,7 +47,16 @@ loadLuaScript("PNAIPirateClass.lua", true)
       
 loadLuaScript("PNAINavyClass.lua", true)
    pnprint("PNAINavyClass.lua loaded\n")
-      
+
+loadLuaScript("PNActionTriggerClass.lua", true)
+   pnprint("PNActionTriggerClass.lua loaded\n")
+ 
+loadLuaScript("PNGetItemTriggerClass.lua", true)
+   pnprint("PNGetItemTriggerClass.lua loaded\n")
+   
+ loadLuaScript("PNSaberWeaponClass.lua", true)
+   pnprint("PNSaberWeaponClass.lua loaded\n")  
+        
 pnprint("[LUA] Init file loaded")
 
 

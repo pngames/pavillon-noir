@@ -37,3 +37,11 @@ function OVERRIDE(last, functionName)
 	last[last.__parent.className.."_"..functionName] =  last[functionName]
 	--last[functionName] = nil
 end
+
+
+uid = 0;
+function getUID()
+	 local suid = "lua_id_"..uid
+	uid = uid+1
+	return suid
+end 
