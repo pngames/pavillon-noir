@@ -15,7 +15,6 @@ $#include "PNVector3f.hpp"
 $#include "PNWayPoint.hpp"
 $#include "PNPathFinding.hpp"
 $#include "PNCharacter.hpp"
-$#include "PNGUIGame.hpp"
 $using namespace PN;
 
 
