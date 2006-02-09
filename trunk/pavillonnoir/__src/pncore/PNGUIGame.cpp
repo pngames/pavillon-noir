@@ -362,7 +362,7 @@ void  PNGUIGame::_addForce(const std::string&, std::istream& i)
 	  vec.y = y;
 	  vec.z = z;
 
-	  current_obj->getPhysicalObject()->addForce(vec, magnitude, duration);
+	  current_obj->getPhysicalObject()->addForce(vec, magnitude, duration, true);
 	}
 	else
 	  PNConsole::writeLine("object %s does not exist", objectid.c_str());
