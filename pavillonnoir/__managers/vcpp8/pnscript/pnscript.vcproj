@@ -320,10 +320,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\PNGUIGame.pkg"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pnscript\PNLuaGameUtils.pkg"
 				>
 			</File>

@@ -58,8 +58,9 @@ public:
 };
 
 class			PNGameLifeValEventData : public PNEventData
-{
+ {
 public:
+  PNGameLifeValEventData(int life): lifeVal(life){}
   int	lifeVal;
 };
 
