@@ -57,6 +57,12 @@ public:
   std::string	mapName;
 };
 
+class			PNGameLifeValEventData : public PNEventData
+{
+public:
+  int	lifeVal;
+};
+
 class			PNGameLoadGameEventData : public PNEventData
 {
 public:

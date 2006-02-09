@@ -83,7 +83,7 @@ namespace PN{
 	void  resetGUI();
 	void  startGUI();
 	//void  setLifeValue(float val);
-	static void  changeLife(int val);
+	void  changeLife(pnEventType type, PNObject* source, PNEventData* data);
   private:
 	bool eventMouseMoveHandler(const CEGUI::EventArgs& e);
 	bool eventKeyPressedHandler(const CEGUI::EventArgs& e);
