@@ -471,7 +471,18 @@ PNGUIGame::PNGUIGame()
   _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "PNGUIGame/Life");
   _rootWin->addChildWindow(_statImg);
 
- changeLife(0);
+  float sizeHeight = 0.25;
+  float sizeWidth = 213 * sizeHeight / 367 / 1.33;
+  float posX = 0.90f;
+  float posY = 0.75f;
+
+ _statImg->setImage("FioleImages", _mapLife[0]);
+ _statImg->setSize(CEGUI::Size(sizeWidth, sizeHeight));
+ _statImg->setPosition(CEGUI::Point(posX, posY));
+ _statImg->setFrameEnabled(false);
+ _statImg->setBackgroundEnabled(false);
+ _statImg->disable();
+ _statImg->show();
 }
 
 PNGUIGame::~PNGUIGame()
@@ -585,7 +596,8 @@ void PNGUIGame::resetGUI()
 
 void  PNGUIGame::changeLife(int val)
 {
- /* PNLOCK(PNGUIGame::getInstance());
+  PNLOCK(PNGUIGame::getInstance());
+
   if (val < 7)
   {
 	float sizeHeight = 0.25;
@@ -600,7 +612,7 @@ void  PNGUIGame::changeLife(int val)
 	PNGUIGame::getInstance()->_statImg->setBackgroundEnabled(false);
 	PNGUIGame::getInstance()->_statImg->disable();
 	PNGUIGame::getInstance()->_statImg->show();
-  }*/
+  }
 }
 
 void  PNGUIGame::playerDied(pnEventType type, PNObject* source, PNEventData* data)
