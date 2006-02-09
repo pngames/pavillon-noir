@@ -67,6 +67,8 @@ typedef enum
   PN_EVENT_GAME_DEATH,			/// A PNCharacter just died
   PN_EVENT_GAME_OVER,			/// when the player died
 
+  PN_EVENT_GAME_LIFEVAL,
+
   PN_EVENT_GUI_MENU_ROOT,
   PN_EVENT_GUI_MENU_LOAD,
   PN_EVENT_GUI_MENU_OPTIONS,
