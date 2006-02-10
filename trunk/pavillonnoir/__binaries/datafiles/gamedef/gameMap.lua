@@ -58,7 +58,7 @@ end
 -------------------------------------------------------------------------------
 
 function gameMap:onUpdate(deltaTime)
---	pnprint("=> LUA GameMap: onUpdate()")
+	pnprint("=> LUA GameMap: onUpdate()\n")
 	--local id
 	--local entity
 	self.timer:onUpdate(deltaTime);
@@ -66,12 +66,12 @@ function gameMap:onUpdate(deltaTime)
 	for id, entity in pairs(self.entities.all) do
 	    --print("==>> gameMap:updateLua()")
 	    --print(entity)
-	    --print(entity.className)
+	    print(id)
 	    entity:onUpdate(deltaTime)
 		--print("<<== gameMap:updateLua()\n\n")
 	end
 	    --print("#######################################################\n")
---	pnprint("<= LUA GameMap: onUpdate()")
+	pnprint("<= LUA GameMap: onUpdate()\n")
 end
 -------------------------------------------------------------------------------
 
@@ -224,7 +224,10 @@ function gameMap:fightAction(sourceId)
 	local source = self.entities.all[sourceId]
 	local target = self.entities.all[targetId]
 	pnprint(sourceId .. " attacking " .. targetId .. "\n")
-
+	if (sourceId == -1 or targetId == -1) then
+		pnprint("aborted!\n")
+		return
+	end
 	nbAS = source:getNBFightSuccess()
 	nbDS = target:getNBFightSuccess()
 	local localisation = 0
@@ -263,7 +266,7 @@ function gameMap:fightAction(sourceId)
 			sAnim = strikeAnim
 			tAnim = CHARACTER_ANIM.JUMP
 		else
-			source:onDamage(-success + target.stats[target.selected_weapon.skill] + target.selected_weapon.modifier - source.armor, self.die:getVal(6), target)
+			source:onDamage(-success + target.stats[target.selected_weapon.skill] + target.selected_weapon.modifier - source.armor, localisation, target)
 			--anim
 			sAnim = CHARACTER_ANIM.JUMP
 			tAnim = strikeAnim
@@ -279,19 +282,24 @@ function gameMap:fightAction(sourceId)
 		else
 			--anim
 			sAnim = strikeAnim
-			tAnim = CHARACTER_ANIM.CROUCH
+			target:onMoveForward(ACTION_STATE.STOP)
+			target.elapsed_turns = 1
+			tAnim = strikeAnim --FIXME: CHANGE IT !
 			target.elapsedTurns = 1 --Cannot attack right after
 		end
 
 	elseif (target.combat_state == COMBAT_STATE.DEFENSE) then
-		pnprint(targetId .. " defending!\n")
 		sAnim = strikeAnim
 		if (success > 0) then
+			pnprint(targetId .. " defending (failure)!\n")
 			target:onDamage(success + source.stats[source.selected_weapon.skill] + source.selected_weapon.modifier - target.armor, localisation, source)
 			--anim
 			tAnim = CHARACTER_ANIM.JUMP
 		else
-			tAnim = CHARACTER_ANIM.CROUCH_L
+			pnprint(targetId .. " defending (success)!\n")
+			target:onMoveForward(ACTION_STATE.STOP)
+			target.elapsed_turns = 1
+			tAnim = strikeAnim --FIXME: CHANGE IT !
 			--anim
 		end
 
@@ -321,6 +329,10 @@ function gameMap:onAttack(sourceId, targetId)
 	--local id
 	--local entity
 	pnprint(sourceId .. " wants to attack " .. targetId .. "\n")
+	if (sourceId == -1 or targetId == -1) then
+		pnprint("aborted!\n")
+		return
+	end
 	self.fights[sourceId] = targetId
 	if (self.fights[targetId] ~= sourceId) then
 		--pnprint("addTask\n")
@@ -331,8 +343,8 @@ function gameMap:onAttack(sourceId, targetId)
 end
 -------------------------------------------------------------------------------
 function gameMap:onPrimaryAttack(srcId, targId, state)	
-    pnprint("gameMap:onPrimaryAttack:   TargetId '"..targId.."'\n")
-	if (targId ~= "" and self.entities.all[targId].onPrimaryAttack ~= nil)then
+    --pnprint("gameMap:onPrimaryAttack:   TargetId '"..targId.."'\n")
+	if (targId ~= "" and self.entities.all[targId].onPrimaryAttack ~= nil) then
     	self.entities.all[targId]:onPrimaryAttack(state)
     end
 end
@@ -340,7 +352,7 @@ end
 function gameMap:onDeath(deadId)
 	pnprint("=> GameMap:onDeath(" .. deadId .. ")\n")
 	for id, entity in pairs(self.entities.className.PNAICharacter) do
-		pnprint(id .. "\n")
+		--pnprint(id .. "\n")
 		if (id ~= deadId) then
 			entity:isDead(deadId)
 		end

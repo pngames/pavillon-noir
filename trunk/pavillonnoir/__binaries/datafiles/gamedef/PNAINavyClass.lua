@@ -35,7 +35,7 @@ Called while handling a fight
 	function OBJ:manageFight()
 		--print("==>> PNAINavy:manageFight()")
 		--print(self)
-	    if (self.combat_state == COMBAT_STATE.ATTACK or self:getViewTarget() == nil) then
+	    if (self.state == PN_IA_WAIT_ANIM_END or self:getViewTarget() == nil) then
 	    	return
 	    end
 		if (self:getCoord():getDistance(self:getViewTarget():getCoord()) > self.selected_weapon.range) then
@@ -55,7 +55,7 @@ Called while handling a fight
 			if (self.elapsedTurns == 0) then
 				self.ennemyJustReached = true
 			end
-			if ((self.ennemyJustReached == true) or ((self.elapsedTurns) == (self.stats.awareness * 20))) then
+			if ((self.ennemyJustReached == true) or ((self.elapsedTurns) == (self.stats.awareness * 30))) then
 				--attack
 				self.combat_state = COMBAT_STATE.ATTACK
 				gameMap:onAttack(self.id, self:getViewTarget():getId())

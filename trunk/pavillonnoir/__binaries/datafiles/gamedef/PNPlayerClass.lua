@@ -142,18 +142,20 @@ Call when player push the primary attack button
 		local nearest_e = nil 				-- nearest entitie
 
 		--self:startAnimation(CHARACTER_ANIM.STRIKE_TORSO)
-		if (self.combat_state ~= COMBAT_STATE.ATTACK) then
+		if (self.combat_state == COMBAT_STATE.NEUTRAL) then
 			pnprint("tappe !!!\n")
 			--if (state == true) then
 			pnprint ("Player wants to fight\n")
 			-- loop on entities seen by the player
 			for id, entity in pairs(self.seen_entities) do
-				pnprint("He can attack " .. id .. "\n")
-				local distance = self:getCoord():getDistance(entity:getCoord())
-				-- select the nearest entity seen by the player
-				if (distance < nearest_d) then
-					nearest_d = distance
-					nearest_e = entity
+				if ((isInstanceOf(entity, "PNCharacter")) and (entity.health_state < HEALTH_STATE.COMA)) then 
+					pnprint("He can attack " .. id .. "\n")
+					local distance = self:getCoord():getDistance(entity:getCoord())
+					-- select the nearest entity seen by the player
+					if (distance < nearest_d) then
+						nearest_d = distance
+						nearest_e = entity
+					end
 				end			
 			end
 			-- if a entity has been selected
@@ -166,8 +168,6 @@ Call when player push the primary attack button
 				-- prevent every body that player is attaking target
 				gameMap:onAttack(self.id, nearest_e:getId())
 				--sendGameActionEvent("Attack", self:getId(), entity:getTarget(), true)
-			else
-				self.combat_state = COMBAT_STATE.NEUTRAL
 			end
 		end
 		--@TODO: launch attack annimation
@@ -192,21 +192,25 @@ Called at the end of a Fight Action
 Checks if waited Animation is the one that ended
 %--]]
 	function OBJ:checkAnimEnd(anim)
-		if (anim == CHARACTER_ANIM.DIE) then
-			if ((self.state == self.stateEnum.PN_IA_WAIT_ANIM_END) and (self.waitedAnim == anim)) then
-				if (self.health_state == HEALTH_STATE.LETHAL) then --if is dead
-					self:setState(self.stateEnum.PN_IA_DEAD)
-					pnprint("Actually he really is dead\n")
-				elseif (self.health_state == HEALTH_STATE.COMA) then
-					self:setState(self.stateEnum.PN_IA_COMA)
-					pnprint("Actually it only is a coma\n")
+		pnprint("=> PNPlayer:checkAnimEnd(" .. anim .. ") and waited: " .. self.waitedAnim .. "\n")
+		if (anim == self.waitedAnim) then
+			if (anim == CHARACTER_ANIM.DIE) then
+				if ((self.state == self.stateEnum.PN_IA_WAIT_ANIM_END) and (self.waitedAnim == anim)) then
+					if (self.health_state >= HEALTH_STATE.LETHAL) then --if is dead
+						self:setState(self.stateEnum.PN_IA_DEAD)
+						pnprint("Actually he really is dead\n")
+					elseif (self.health_state == HEALTH_STATE.COMA) then
+						self:setState(self.stateEnum.PN_IA_COMA)
+						pnprint("Actually it only is a coma\n")
+					end
 				end
-			end
-		elseif (anim == CHARACTER_ANIM.STRIKE) then
-			if (self.state == self.stateEnum.PN_IA_FIGHTING and (self.combat_state == COMBAT_STATE.ATTACK)) then -- if is fighting
+			elseif ((self.combat_state == COMBAT_STATE.ATTACK) or (self..combat_state == COMBAT_STATE.DEFENSE)) then -- if is fighting
+				pnprint("restoring Neutral combat state\n")
 				self.combat_state = COMBAT_STATE.NEUTRAL
 			end
+			self.waitedAnim = -1
 		end
+		pnprint("<= PNPlayer:checkAnimEnd\n")
 	end
 ---------------------------------------------------------
 	OVERRIDE(OBJ, "onFrustrumIn")

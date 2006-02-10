@@ -108,6 +108,7 @@ class PNAPI						PNEventManager : public PNLockableObject, public IPNSerializabl
 private:
   /// Unique instance of events manager
   static PNEventManager*		_instance;
+  pnEventType					_lastSentType;
 
   /// Default constructor for PNEventManager
   PNEventManager();
