@@ -4,28 +4,15 @@ function PNPlayerClass(id)
 	OBJ.className = "PNPlayer" 
 	---------------setting camera behavior-----------------
 	
---	local RCVT = PN3DObjectClass("RCVT")
---	RCVT:setPositionTarget(PNRenderCam)
---	RCVT:setViewTarget(OBJ)
---	RCVT:setMovingSpeed(0.2);
---	RCVT:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
-	
---	PNRenderCam:setViewTarget(RCVT)
+
 	PNRenderCam:setViewTarget(OBJ)
 	PNRenderCam:setViewBoneTarget("Bip01 Head")
 	PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_ABS_LOCKED)
 	
 	PNRenderCam:setPositionTarget(OBJ)
---	PNRenderCam:setPositionBoneTarget("Bip01 Head")
     PNRenderCam:setTargetPosition(0, 75 , 200)
     PNRenderCam:addTargetMode(PN3DObject.TMODE_POSITION_LOCKED)
-    
-    --PNRenderCam:setTargetDistance(150)
-    --PNRenderCam:setTargetOrientation(PNQuatf:new_local(0.0, 0.0, 0.1, 1));
 
-    --PNRenderCam:addTargetMode(PN3DObject.TMODE_DISTANCE_ABS_LOCKED)
-    --PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_LOCKED)
-    --PNRenderCam:addTargetMode(PN3DObject.TMODE_ORIENTATION_ABS_LOCKED)
 
     OBJ.stats=	{strength=4,
 						 address=3,
@@ -54,13 +41,7 @@ function PNPlayerClass(id)
 	function OBJ:onMoveForward(state)
 	--pnprint("==>> PNPlayer:onMoveForward()\n")
 		self:PNCharacter_onMoveForward(state)
-		--PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)		
 	pnprint("<<== PNPlayer:onMoveForward()\n")
-		--PNRenderCam:subTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
-		--if (state == ACTION_STATE.START) then
-		--	PNRenderCam:addTargetMode(PN3DObject.TMODE_VIEW_LOCKED)
-		--	PNRenderCam:getViewTarget():addMovingState(PN3DObject.STATE_T_FORWARD)
-		--end
 	end	
 	
 	OVERRIDE(OBJ, "onMoveBackward")
