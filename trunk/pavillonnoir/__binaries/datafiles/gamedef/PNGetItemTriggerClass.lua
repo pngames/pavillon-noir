@@ -3,7 +3,7 @@ function PNGetItemTriggerClass(id, item)
 	
 	OBJ.className="PNGetItemTrigger"
 	OBJ.item = item
-	OBJ.actionRange = 5.0
+	OBJ.actionRange = 80
 	OBJ:setPositionTarget(item)
 	OBJ:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 	
@@ -24,8 +24,8 @@ function PNGetItemTriggerClass(id, item)
 	---------------------------------------------------
 	------------------onUpdate---------------------------
 	OVERRIDE(OBJ, "onUpdate")
-	function OBJ:onUpdate()
-		self:PNActionTrigger_onUpdate()
+	function OBJ:onUpdate(deltaTime)
+		self:PNActionTrigger_onUpdate(deltaTime)
 		
 	end
 	
@@ -34,6 +34,7 @@ function PNGetItemTriggerClass(id, item)
 	OVERRIDE(OBJ, "executeAction")
 	function OBJ:executeAction(entity, entity_state)
 		if (entity:getId() == "player" and entity_state == TRIGGER_STATE.STILL_IN)then
+			print("[LUA] get the item")
 			entity:getItem(self.item)
 		end
 	end

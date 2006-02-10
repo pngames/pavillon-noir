@@ -18,19 +18,21 @@ function PNActionTriggerClass(id)
 	function OBJ:customInit()
 	end
 	
-	function OBJ:onUpdate(deltaTime)	
+	OVERRIDE(OBJ, "onUpdate")
+	function OBJ:onUpdate(deltaTime)
+		self:PN3DObject_onUpdate(deltaTime)	
 		for  id_1,  entity in pairs(gameMap.entities.className.PNPlayer) do 
      		--pnprint(id_1)
       		--pnprint("\n")
       		if (self.last_entities_state[id_1] == nil) then 
       			self.last_entities_state[id_1] = TRIGGER_STATE.STILL_OUT
       		end 
-      		local distance_trigger = self:getCenter():getDistance(entity:getCenter())
+      		local distance_trigger = self:getCoord():getDistance(entity:getCoord())
       		if (distance_trigger <= self.actionRange) then 
       			if   (self.last_entities_state[id_1] == TRIGGER_STATE.STILL_OUT)then
       				self.last_entities_state[id_1] = TRIGGER_STATE.GO_IN
       			elseif (self.last_entities_state[id_1] == TRIGGER_STATE.GO_IN) then
-      				self.last_entities_state[id_1] = TRIGGER_STATE.GO_IN
+      				self.last_entities_state[id_1] = TRIGGER_STATE.STILL_IN
       			end
       		else      			
       			if   (self.last_entities_state[id_1] == TRIGGER_STATE.STILL_IN)then
@@ -40,13 +42,13 @@ function PNActionTriggerClass(id)
       			end
       		end
       		local entity_state = self.last_entities_state[id_1]
-      		--print("[lua] entity coord: ".. entity:getCenter().x .." ".. entity:getCenter().z .." ")
-      		--print("[lua] distance: ".. self:getCenter():getDistance(entity:getCenter()))
+      		--print("[lua] entity coord: ".. entity:getCoord().x .." ".. entity:getCoord().z .." ")
+      		--print("[lua] distance: ".. distance_trigger)
       		--print("[lua] action rage ".. self.actionRange)
       		--print("[lua] state"..entity_state)
       	
       		self:executeAction(entity, entity_state)
-      		pnprint("\n")
+      		--pnprint("\n")
       	
 		end
 	end

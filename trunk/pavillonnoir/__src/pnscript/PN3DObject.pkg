@@ -269,6 +269,13 @@ public:
   const PNPoint3f&	getMin() const;
   /// Get maximum x y z coordinate
   const PNPoint3f&	getMax() const;
+  
+    //////////////////////////////////////////////////////////////////////////
+  // Visible wrapper
+
+  void								setVisible(pnbool visible);
+  bool								isVisible() const;
+
   //////////////////////////////////////////////////////////////////////////
 
   /// Retrieve model of 3d object
