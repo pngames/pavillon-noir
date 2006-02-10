@@ -141,7 +141,7 @@ function PNCharacterClass(id)
 	------------------- Jump Parameter ------------------------
 	OBJ.JumpHeight= 0;
 	--------------- Animation parameters ---------------------- 
-	OBJ:setAnimSpeed(4.0)
+	OBJ:setAnimSpeed(10.0)
 	OBJ.idleTime = 0
 	OBJ.waitedAnim = -1
 	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_F, true)
@@ -565,17 +565,28 @@ Launches an Animation and waits for its end
 
 --------------------------------------------------------
 	function OBJ:selectWeapon(typename)
-		self.selectedWeapon:setIsVisible(false)
-		self.selectedWeapon = self.items.weapons[typename]
-		self.selectedWeapon:setIsVisible(true)
+		print(self.selected_weapon:getId())
+		if (self.selected_weapon.type ~= "h2h_combat") then
+			self.selected_weapon:setVisible(false)
+		end
+		self.selected_weapon = self.items.weapons[typename]
+		print(self.selected_weapon:getId())
+		self.selected_weapon:setVisible(true)
 	end			
 --------------------------------------------------------
 
 	function OBJ:getItem(item)
+		print("function OBJ:getItem(item)")
 		if (isInstanceOf(item, "PNWeapon") and self.items.weapons[item.type] == nil)then
+			print("function OBJ:getItem(item)2")
 			self.items.weapons[item.type] = item
-			item:setPositionBoneTarget("Bip01 R Hand")
-			item:setIsVisible(false)
+			item:setPositionTarget(self)
+			--item:setPositionBoneTarget("Bip01 Head")
+	        item:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
+	        item:setViewTarget(self)
+			--item:setViewBoneTarget("Bip01 Head")
+	        item:addTargetMode(PN3DObject.TMODE_ORIENTATION_ABS_LOCKED)
+			item:setVisible(false)
 			item.isHold = true
 			self:selectWeapon(item.type)
 		end 
