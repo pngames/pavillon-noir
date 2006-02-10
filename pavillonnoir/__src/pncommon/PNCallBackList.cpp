@@ -65,7 +65,14 @@ void  PNCallBackList::sendEvent(pnEventType type, PNObject* source, PNEventData*
   CallbackSet tmp = _callbacks;
 
   for (CallbackSet::iterator it = tmp.begin(); it != tmp.end(); ++it)
-	(*it)(type, source, data);
+  {
+	try
+	{
+	  (*it)(type, source, data);
+	}
+	catch (...)
+	{}
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////
