@@ -42,6 +42,7 @@
 #include "PNGUIDeath.hpp"
 #include "PNGUIEscMenu.hpp"
 #include "PN3DCamera.hpp"
+#include "PNGUIChatWindow.hpp"
 
 #include "PNConsole.hpp"
 
@@ -432,8 +433,6 @@ PNGUIGame*	PNGUIGame::_instance = NULL;
 PNGUIGame::PNGUIGame()
 {
   _label = "PNGUIGame";
-  if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("FioleImages") == false)
-	CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/fiole_final.imageset");
 
   _rootWin = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNGUIGame.layout");
 
@@ -476,6 +475,7 @@ PNGUIGame::PNGUIGame()
   float posY = 0.75f;
 
  _statImg->setImage("FioleImages", _mapLife[0]);
+ //  _statImg->setImage("LoadingScreenImages", "LoadingScreenImages/parrot_red");
  _statImg->setSize(CEGUI::Size(sizeWidth, sizeHeight));
  _statImg->setPosition(CEGUI::Point(posX, posY));
  _statImg->setFrameEnabled(false);
@@ -966,6 +966,9 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
 	//cam->setTargetMode(PN3DObject::TMODE_FREE);
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Run",playerid,"null",false));
     break;
+  case CEGUI::Key::Space:
+//	PNGUIChatWindow::getInstance()->startGUI("id_1");
+	break;
   default:
 	std::cout << "not managed key";
 	break;

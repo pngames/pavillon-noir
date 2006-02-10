@@ -899,6 +899,9 @@ PNGLRenderer::initGUI()
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("LoadingScreenImages") == false)
 	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/LoadingBackground.imageset");
 
+	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("FioleImages") == false)
+	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/fiole_final.imageset");
+
 	CEGUI::System::getSingleton().setTooltip("Vanilla/Tooltip");
 
 	CEGUI::System::getSingleton().setDefaultMouseCursor("Vanilla-Images", "MouseArrow");

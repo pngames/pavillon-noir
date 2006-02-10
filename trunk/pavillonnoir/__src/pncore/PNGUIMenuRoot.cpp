@@ -303,7 +303,8 @@ namespace PN
 	  return true;
 
 	resetGUI();
-	PNGUILoadingScreen::getInstance()->show();
+	//PNGUILoadingScreen::getInstance()->show();
+	//PNGUIChatWindow::getInstance()->show();
 	return true;
   }
 

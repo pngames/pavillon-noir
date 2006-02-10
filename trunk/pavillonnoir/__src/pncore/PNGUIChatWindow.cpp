@@ -27,13 +27,19 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
+#include <boost/filesystem/operations.hpp>
+
 #include "pndefs.h"
+#include "pnresources.h"
 #include "PNGUIChatWindow.hpp"
 #include "PNConsole.hpp"
 #include "PNGameMap.hpp"
 #include "PNGameInterface.hpp"
+#include "PNChatTree.hpp"
+
 
 using namespace PN;
+namespace fs = boost::filesystem;
 
 #define RGBA(R,G,B,A) (B+(G<<8)+(R<<16)+(A<<24))
 
@@ -52,8 +58,7 @@ namespace PN
 
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 	hide();
-	PNGameMap*	gmap = PNGameInterface::getInstance()->getGameMap();
-	std::string* tmpMap = gmap->getPath();
+	
   }
 
   PNGUIChatWindow::~PNGUIChatWindow()
@@ -69,10 +74,20 @@ namespace PN
 	return _instance;
   }
 
-  void	PNGUIChatWindow::startGUI()
+  void	PNGUIChatWindow::startGUI(std::string id_player)
   {
-	show();
-	std::vector<std::string> responses;
+/*	PNGameMap*	gmap = PNGameInterface::getInstance()->getGameMap();
+	std::string* tmpMap = gmap->getPath();
+	_currentChatXml += *tmpMap;
+	_currentChatXml += "/" + DEF::chatDirectory + id_player + ".xml";
+
+	PNChatTree* chatTree = new PNChatTree();
+	fs::path file(_currentChatXml, fs::no_check);
+
+	chatTree->unserializeFromFile(file);
+	chatTree->getBuddyNode(chatTree->getCurrentNode());*/
+	
+	/*std::vector<std::string> responses;
 	responses.push_back("l'amour");
 	responses.push_back("le jeu");
 	responses.push_back("la bouffe");
@@ -80,7 +95,8 @@ namespace PN
 	responses.push_back("la picole");
 	responses.push_back("la drogue");
 	
-	updateItems("Qu'est ce qui vous rend heureux dans la vie ?", responses);
+	updateItems("Qu'est ce qui vous rend heureux dans la vie ?", responses);*/
+	show();
   }
 
   void	PNGUIChatWindow::resetGUI()
