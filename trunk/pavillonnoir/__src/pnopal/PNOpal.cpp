@@ -50,7 +50,7 @@
 #define GRAVITY -9.81
 #define STEPSIZE 0.02
 #define TIME_SCALE 1000
-#define DEFAULT_FORCE_MAGNITUDE 5.0f
+#define DEFAULT_FORCE_MAGNITUDE 40.0f
 #define DEFAULT_FORCE_DURATION 0.0f
 
 using namespace std;
@@ -84,7 +84,7 @@ void  PNOpal::init()
   _label = PNOPAL_LABEL;
   addParam(new PNConfigurableParameter(this, PN_PARAMTYPE_BOOLEAN, &_paused, "pause", "pause"));
 
-  setPause(false);
+  //setPause(false);
 }
 
 /** Play/pause the physical simulation
@@ -112,7 +112,7 @@ void PNOpal::createSimulation()
   _eventHandler = new PNOpalCommonEventHandler();
   _break = false;
 
-  setPause(true);
+  //setPause(true);
 
   PNConfPanel::getInstance()->addConfigurableObject(this);
 }
@@ -209,13 +209,13 @@ void PNOpal::_onFrame(pnEventType type, PNObject* source, PNEventData* data)
 
 		opal::Vec3r gravity = ((PNOpalObject*)current_obj->getPhysicalObject())->getOpalSolid()->getGlobalLinearVel();
 		((PNOpalObject*)current_obj->getPhysicalObject())->getOpalSolid()->setGlobalLinearVel(opal::Vec3r(0, gravity.getData()[1], 0));
-		((PNOpalObject*)current_obj->getPhysicalObject())->getOpalSolid()->setGlobalAngularVel(opal::Vec3r(0, 0, 0)); 
+		((PNOpalObject*)current_obj->getPhysicalObject())->getOpalSolid()->setGlobalAngularVel(opal::Vec3r(0, 0, 0));
 
 		// translate players
 		if (!current_obj->getUpdateTranslation().isNull())
 		{
 		  const PNVector3f& dir = current_obj->getUpdateTranslation();
-		  pnerror(PN_LOGLVL_INFO, "updateTranslation --- x : %f, y : %f, z : %f", dir.x, dir.y, dir.z);
+		  //pnerror(PN_LOGLVL_INFO, "updateTranslation --- x : %f, y : %f, z : %f", dir.x, dir.y, dir.z);
 
 		  ((PNOpalObject*)current_obj->getPhysicalObject())->addForce(current_obj->getUpdateTranslation(), DEFAULT_FORCE_MAGNITUDE, DEFAULT_FORCE_DURATION, false);
 		}
@@ -227,15 +227,20 @@ void PNOpal::_onFrame(pnEventType type, PNObject* source, PNEventData* data)
 		  pnfloat angleOri = vecOri.radianRange2Pi(PNVector3f::UNIT_X, PNVector3f::NEGATIVE_UNIT_Z);
 		  pnfloat angleEnd = vecEnd.radianRange2Pi(PNVector3f::UNIT_X, PNVector3f::NEGATIVE_UNIT_Z);
 
-		  pnerror(PN_LOGLVL_INFO, "angleOri : %f, angleEnd : %f", RADIAN_TO_DEGREE(angleOri), RADIAN_TO_DEGREE(angleEnd));
+		  //std::cout << "Quat ori : " << current_obj->getPhysicalObject()->getOrient() << std::endl;
+		  //std::cout << "Normal : " << vecOri.getVector() << std::endl;
+		  //std::cout << "Quat end : " << orient << std::endl;
+		  //std::cout << "Normal : " << vecEnd.getVector() << std::endl;
+
+		  //pnerror(PN_LOGLVL_INFO, "angleOri : %f, angleEnd : %f", RADIAN_TO_DEGREE(angleOri), RADIAN_TO_DEGREE(angleEnd));
 		  pnfloat angle = angleOri - angleEnd;
-		  pnerror(PN_LOGLVL_INFO, "angle : %f", RADIAN_TO_DEGREE(angle));
+		  //pnerror(PN_LOGLVL_INFO, "angle : %f", RADIAN_TO_DEGREE(angle));
 
 		  if (angle > PI)
 			angle -= (pnfloat)PI*2.0f;
 		  else if (angle < -PI)
 			angle += (pnfloat)PI*2.0f;
-		  pnerror(PN_LOGLVL_INFO, "angle : %f", RADIAN_TO_DEGREE(angle));
+		  //pnerror(PN_LOGLVL_INFO, "angle : %f", RADIAN_TO_DEGREE(angle));
 		  ((PNOpalObject*)current_obj->getPhysicalObject())->addTorque(PNVector3f::UNIT_Y, -angle*10, 0.0f, true);
 		}
 	  }
@@ -333,7 +338,7 @@ void	PNOpal::opal2pn()
 		  if (result.distance != 0.0 && result.distance < 0.4)
 		  {
 			//pnerror(PN_LOGLVL_INFO, "Player sensor, Y: %f", result.distance);
-			((PNOpalObject*)physicalObject)->addForce(PNVector3f::UNIT_Y, (0.4f - (pnfloat)result.distance)*300.0f, 0.0f, true);
+			((PNOpalObject*)physicalObject)->addForce(PNVector3f::UNIT_Y, (0.4f - (pnfloat)result.distance)*50.0f, 0.0f, true);
 		  }
 		}
 		
