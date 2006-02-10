@@ -97,7 +97,7 @@ function PNCharacterClass(id)
 	OBJ.items.weapons	=	{h2h_combat=PNWeaponH2HClass("h2h")} --FIXME id de merde
 	--------------------------------------
 	-------LIST OF WOUNDS BY MEMBER-------
-	OBJ.m_wounds=	{0,0,0,0,0,0}
+	OBJ.m_wounds=	{0,0,0,0,0,0,0}
 	--------------------------------------
 	OBJ.health_state = HEALTH_STATE.OK
 	OBJ.comaTurns = 0
@@ -180,8 +180,8 @@ Call when someone tell the object to go backward and start apropriate annimation
 %--]]
 	OVERRIDE(OBJ, "onMoveBackward")	
 	function OBJ:onMoveBackward(state)
-		pnprint(self.id)
-		pnprint(":onMoveBackward\n")
+		--pnprint(self.id)
+		--pnprint(":onMoveBackward\n")
 		self:PN3DSkeletonObject_onMoveBackward(state)
 	end
 -------------------------------------------------------------------------------
@@ -192,7 +192,7 @@ Call when someone tell the object to go Left
 %--]]	
 	OVERRIDE(OBJ, "onMoveLeft")	
 	function OBJ:onMoveLeft(state)
-		pnprint(self.id .. ":onMoveLeft=" .. state .. "\n")
+		--pnprint(self.id .. ":onMoveLeft=" .. state .. "\n")
 		self:PN3DSkeletonObject_onMoveLeft(state)	
 	end
 -------------------------------------------------------------------------------
@@ -203,7 +203,7 @@ Call when someone tell the object to left and start apropriate animation
 %--]]		
 	OVERRIDE(OBJ, "onMoveRight")	
 	function OBJ:onMoveRight(state)
-		pnprint(self.id .. ":onMoveRight=" .. state .. "\n")
+		--pnprint(self.id .. ":onMoveRight=" .. state .. "\n")
 		self:PN3DSkeletonObject_onMoveRight(state)
 	end
 -------------------------------------------------------------------------------
@@ -215,7 +215,7 @@ Call when someone tell the object to rotate right
 %--]]	
 	OVERRIDE(OBJ, "onRotateRight")	
 	function OBJ:onRotateRight(state)
-		pnprint(self.id .. ":onRotateRight=" .. state .. "\n")
+		--pnprint(self.id .. ":onRotateRight=" .. state .. "\n")
 		self:PN3DSkeletonObject_onRotateRight(state)
 	end	
 -------------------------------------------------------------------------------
@@ -226,8 +226,8 @@ Call when someone tell the object to rotate left
 %--]]		
 	OVERRIDE(OBJ, "onRotateLeft")	
 	function OBJ:onRotateLeft(state)
-		pnprint(self.id)
-		pnprint(":onRotateLeft\n")
+		--pnprint(self.id)
+		--pnprint(":onRotateLeft\n")
 		self:PN3DSkeletonObject_onRotateLeft(state)	
 		self.yawSpeed = self.defaultRotateSpeed;
 	end
@@ -239,8 +239,8 @@ Call when someone tell the object to rotate up
 %--]]	
 	OVERRIDE(OBJ, "onRotateUp")	
 	function OBJ:onRotateUp(state)
-		pnprint(self.id)
-		pnprint(":onRotateUp\n")
+		--pnprint(self.id)
+		--pnprint(":onRotateUp\n")
 		self.pitchSpeed = self.defaultRotateSpeed;
 		self:PN3DSkeletonObject_onRotateUp(state)		
 	end
@@ -252,8 +252,8 @@ Call when someone tell the object to rotate down
 %--]]	
 	OVERRIDE(OBJ, "onRotateDown")	
 	function OBJ:onRotateDown(state)
-		pnprint(self.id)
-		pnprint(":onRotateDown\n")
+		--pnprint(self.id)
+		--pnprint(":onRotateDown\n")
 		self.pitchSpeed = self.defaultRotateSpeed
 		self:PN3DSkeletonObject_onRotateDown(state)	
 	end
@@ -320,33 +320,33 @@ Add the entity in the seen_entities list
 	
 --------------------------------------------------------------------------------
 	function OBJ:onRun(state)
-   		print(self)
-    	pnprint("==>> "..self.className..":onRun()\n")
-		pnprint("speed: " .. self.actualSpeed .."\n")
-		pnprint("attitude: " .. self.attitude.."\n")
+   		--print(self)
+    	--pnprint("==>> "..self.className..":onRun()\n")
+		--pnprint("speed: " .. self.actualSpeed .."\n")
+		--pnprint("attitude: " .. self.attitude.."\n")
 		if (state == ACTION_STATE.START)then
-			pnprint("start run\n")
+			--pnprint("start run\n")
 		    self.attitude = CHARACTER_ATTITUDE.RUNNING
 		    self.actualSpeed = self.runningSpeed
 		else
-			pnprint("stop run\n")
+			--pnprint("stop run\n")
 		    self.attitude = CHARACTER_ATTITUDE.WALKING
 		    self.actualSpeed = self.walkingSpeed
 		end
 		self:setMovingSpeed(self.actualSpeed)
 		--self:launchGoodAnimation()
-		pnprint("speed: " .. self.actualSpeed .."\n")
-		pnprint("attitude: " .. self.attitude.."\n")
-    	pnprint("<<== "..self.className..":onRun()\n")
+		--pnprint("speed: " .. self.actualSpeed .."\n")
+		--pnprint("attitude: " .. self.attitude.."\n")
+    	--pnprint("<<== "..self.className..":onRun()\n")
     end	
 --------------------------------------------------------------------------------
 	function OBJ:onCrouch(state)
 		if (state == ACTION_STATE.START)then
-			pnprint("start crouch\n")
+			--pnprint("start crouch\n")
 		    self.attitude = CHARACTER_ATTITUDE.CROUCHING
 		    
 		else
-			pnprint("stop Crouch\n")
+			--pnprint("stop Crouch\n")
 		    self.attitude = CHARACTER_ATTITUDE.WALKING
 		end
 		self.actualSpeed = self.walkingSpeed
@@ -437,7 +437,7 @@ Checks if waited Animation is the one that ended
 	function OBJ:checkAnimEnd(anim)
 		pnprint("=> PNAICharacter:checkAnimEnd(" .. anim .. ") and waited: " .. self.waitedAnim .. "\n")
 		if ((self.state == self.stateEnum.PN_IA_WAIT_ANIM_END) and (self.waitedAnim == anim)) then
-			if (self.health_state == HEALTH_STATE.LETHAL) then --if is dead
+			if (self.health_state >= HEALTH_STATE.LETHAL) then --if is dead
 				self:setState(self.stateEnum.PN_IA_DEAD)
 				pnprint("Actually he really is dead\n")
 			elseif (self.health_state == HEALTH_STATE.COMA) then
@@ -449,7 +449,7 @@ Checks if waited Animation is the one that ended
 					self:restoreState()
 					self.restoreAtAnimEnd = false
 				end
-				if (self.state == self.stateEnum.PN_IA_FIGHTING and (self.combat_state == COMBAT_STATE.ATTACK)) then -- if is fighting
+				if (self.state == self.stateEnum.PN_IA_FIGHTING and ((self.combat_state == COMBAT_STATE.ATTACK) or (self.combat_state == COMBAT_STATE.DEFENSE))) then -- if is fighting
 					self.combat_state = COMBAT_STATE.NEUTRAL
 				end
 			end
@@ -463,9 +463,13 @@ Lets some turns in coma then the characters gain one life level
 	function OBJ:manageComa()
 		if (self.comaTurns == self.stats.awareness * 50) then
 			self.comaTurns = 0
-			for loc in LOCALISATION do
-				if (self.m_wounds[loc] >= HEALTH_STATE.COMA) then
-					self.m_wounds[loc] = HEALTH_STATE.CRITIC
+			for locname, locval in pairs(LOCALISATION) do
+				if (locval > 0) then
+					pnprint("repairing ? at ".. locname .. " " .. locval .. " " .. self.m_wounds[locval] .. "\n")
+					if (self.m_wounds[locval] >= HEALTH_STATE.COMA) then
+						pnprint("repaired !\n")
+						self.m_wounds[locval] = HEALTH_STATE.CRITIC
+					end
 				end
 			end
 			self.health_state = HEALTH_STATE.CRITIC
