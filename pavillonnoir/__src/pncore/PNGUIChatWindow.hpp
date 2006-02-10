@@ -55,7 +55,7 @@ namespace PN
 	/////////////////////////////////////////////////////////////////////////////*/
   public:
 	static PNGUIChatWindow*	getInstance();
-	void  startGUI();
+	void  startGUI(std::string id_player);
 	void  resetGUI();
 	CEGUI::Window*  getWindow();
   protected:

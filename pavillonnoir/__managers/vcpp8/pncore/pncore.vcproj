@@ -193,6 +193,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncore\PNChatTree.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncore\PNFoxMainWindow.cpp"
 				>
 			</File>
@@ -248,6 +252,10 @@
 			>
 			<File
 				RelativePath="..\..\..\__src\pncore\myCEGUI.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncore\PNChatTree.hpp"
 				>
 			</File>
 			<File

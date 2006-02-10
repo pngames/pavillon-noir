@@ -58,6 +58,7 @@ static const std::string	PNCHAT_XMLNODE_ROOT		= PNCHAT_XMLDTD_NAME;
 #define PNXML_LISTSOUNDS_MKP		(const xmlChar *)"listsounds"
 #define PNXML_SOUND_MKP				(const xmlChar *)"sound"
 // Chat
+#define PNXML_CHAT_MKP				(const xmlChar *)"chat"
 #define PNXML_BUDDY_MKP				(const xmlChar *)"buddy"
 #define PNXML_DEPENDS_MKP			(const xmlChar *)"depends"
 #define PNXML_PLAYER_MKP			(const xmlChar *)"player"
