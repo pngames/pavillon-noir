@@ -1,0 +1,35 @@
+<!--
+	http://www.pavillon-noir.org/
+	XML DTD for in-game chats
+-->
+
+
+<!-- ELEMENTS -->
+
+<!ELEMENT chat (buddy*)>
+    <!ELEMENT buddy (depends*, player*)>
+        <!ELEMENT depends EMPTY>
+        <!ELEMENT player (buddy*)>
+
+<!-- CHAT ATTRIBUTES -->
+
+<!ATTLIST chat name CDATA #IMPLIED>
+<!ATTLIST chat uid ID #REQUIRED>
+
+<!-- BUDDY ATTRIBUTES -->
+
+<!ATTLIST buddy id ID #REQUIRED>
+<!ATTLIST buddy name CDATA #IMPLIED>
+<!ATTLIST buddy sentence CDATA #REQUIRED>
+<!ATTLIST buddy quit (true|false) #IMPLIED>
+
+<!-- DEPENDS ATTRIBUTES -->
+
+<!ATTLIST depends id ID #REQUIRED>
+
+<!-- PLAYER ATTRIBUTES -->
+
+<!ATTLIST player id ID #REQUIRED>
+<!ATTLIST player sentence CDATA #REQUIRED>
+<!ATTLIST player checkpoint (true|false) #IMPLIED>
+<!ATTLIST player quit (true|false) #IMPLIED>
