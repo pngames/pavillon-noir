@@ -120,8 +120,11 @@ namespace PN
 
 	if (_currentMainState == INGAME && (_currentSubState == MENUPAUSE || _currentSubState == PAUSE_MENULOAD || _currentSubState == DEAD_WINDOW))
 	{
-	  if (type == PN_EVENT_ML_ENDED)
-		PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_START, 0, NULL);
+      if (type == PN_EVENT_ML_ENDED)
+        PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_INIT, 0, NULL);
+
+      if (type == PN_EVENT_GAME_INIT_ENDED)
+        PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_START, 0, NULL);
 
 	  if (type == PN_EVENT_MP_STARTED)
 		PNGUIGame::getInstance()->startGUI();

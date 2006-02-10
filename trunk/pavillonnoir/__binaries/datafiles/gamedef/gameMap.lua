@@ -79,7 +79,7 @@ function gameMap:onInit()
 	pnprint("LUA GameMap: onInit()\n")
 	--local id
 	--local entity
-	for id, entity in pairs(self.entities.all) do 
+	for id, entity in pairs(self.entities.all) do
       pnprint(id)
       pnprint("\n")
       self.entities.all[id]:onInit()

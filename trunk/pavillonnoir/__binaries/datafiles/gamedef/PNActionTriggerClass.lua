@@ -2,7 +2,7 @@ TRIGGER_STATE = {STILL_OUT=0, STILL_IN=1, GO_IN=2, GO_OUT=3}
 
 function PNActionTriggerClass(id)
 	local OBJ = inheritFrom(PN3DObjectClass(id))
-	
+	OBJ.className="PNActionTrigger"
 	OBJ.actionRange = 0
 	OBJ.last_entities_state = {}
 	 
@@ -11,37 +11,41 @@ function PNActionTriggerClass(id)
 	end 
 	
 	function OBJ:onInit()
-		OBJ.actionRange = self:getCenter():getDistance(self:getMax())
-		OBJ:custumInit()	
+		--self.actionRange = self:getCenter():getDistance(self:getMax())
+		self:customInit()	
 	end
 	
 	function OBJ:customInit()
 	end
 	
 	function OBJ:onUpdate(deltaTime)	
-		for  id_1,  entity in pairs(gameMap.entities.all) do 
-     		pnprint(id_1)
-      		pnprint("\n")
-      		if (OBJ.last_entities_state[id_1] == nil) then 
-      			OBJ.last_entities_state[id_1] = TRIGGER_STATE.STILL_OUT
+		for  id_1,  entity in pairs(gameMap.entities.className.PNPlayer) do 
+     		--pnprint(id_1)
+      		--pnprint("\n")
+      		if (self.last_entities_state[id_1] == nil) then 
+      			self.last_entities_state[id_1] = TRIGGER_STATE.STILL_OUT
       		end 
       		local distance_trigger = self:getCenter():getDistance(entity:getCenter())
-      		if (distance_trigger <= OBJ.actionRange) then 
-      			if   (OBJ.last_entities_state[id_1] == TRIGGER_STATE.STILL_OUT)then
-      				OBJ.last_entities_state[id_1] = TRIGGER_STATE.GO_IN
-      			elseif (OBJ.last_entities_state[id_1] == TRIGGER_STATE.GO_IN) then
-      				OBJ.last_entities_state[id_1] = TRIGGER_STATE.GO_IN
+      		if (distance_trigger <= self.actionRange) then 
+      			if   (self.last_entities_state[id_1] == TRIGGER_STATE.STILL_OUT)then
+      				self.last_entities_state[id_1] = TRIGGER_STATE.GO_IN
+      			elseif (self.last_entities_state[id_1] == TRIGGER_STATE.GO_IN) then
+      				self.last_entities_state[id_1] = TRIGGER_STATE.GO_IN
       			end
       		else      			
-      			if   (OBJ.last_entities_state[id_1] == TRIGGER_STATE.STILL_IN)then
-      				OBJ.last_entities_state[id_1] = TRIGGER_STATE.GO_OUT
-      			elseif (OBJ.last_entities_state[id_1] == TRIGGER_STATE.GO_OUT) then
-      				OBJ.last_entities_state[id_1] = TRIGGER_STATE.STILL_OUT
+      			if   (self.last_entities_state[id_1] == TRIGGER_STATE.STILL_IN)then
+      				self.last_entities_state[id_1] = TRIGGER_STATE.GO_OUT
+      			elseif (self.last_entities_state[id_1] == TRIGGER_STATE.GO_OUT) then
+      				self.last_entities_state[id_1] = TRIGGER_STATE.STILL_OUT
       			end
       		end
-      		local entity_state = OBJ.last_entities_state[id_1]
-      		
-      		OBJ:executeAction(entity, entity_state)
+      		local entity_state = self.last_entities_state[id_1]
+      		--print("[lua] entity coord: ".. entity:getCenter().x .." ".. entity:getCenter().z .." ")
+      		--print("[lua] distance: ".. self:getCenter():getDistance(entity:getCenter()))
+      		--print("[lua] action rage ".. self.actionRange)
+      		--print("[lua] state"..entity_state)
+      	
+      		self:executeAction(entity, entity_state)
       		pnprint("\n")
       	
 		end

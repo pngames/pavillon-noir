@@ -1,7 +1,7 @@
 function PNSaberWeaponClass(id)	
 	------INHERITANCE----------------------------
 	local OBJ = inheritFrom(PNWeaponClass(id))
-	OBJ.className="PNWeapon"
+	OBJ.className="PNSaberWeapon"
 	---------------------------------------------
 	OBJ.range = 2
 	OBJ.reload = 0
@@ -14,7 +14,8 @@ function PNSaberWeaponClass(id)
 -------------------------------------------------------------------------------
 	OVERRIDE(OBJ, "onInit")
 	function OBJ:onInit()
-		self.PNWeaponClass_onInit()
+		print("[LUA] PNSaberWeapo:onInit")
+		self.PNWeapon_onInit()
 		self.trigger = PNGetItemTriggerClass(getUID(), self)
 		self.trigger:onInit()
 	end
@@ -22,7 +23,7 @@ function PNSaberWeaponClass(id)
 -------------------------------------------------------------------------------
 	OVERRIDE(OBJ, "onUpdate")
 	function OBJ:onUpdate(deltaTime)
-		self:PNWeaponClass_onUpdate(deltaTime)
+		self:PNWeapon_onUpdate(deltaTime)
 		if (self.isHold == false)then
 			self.trigger:onUpdate(deltaTime)
 		end

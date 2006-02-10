@@ -55,6 +55,7 @@ PNLuaGameMap::PNLuaGameMap(PNLuaVm &lvm): _LVM(lvm)
   this->_mapStarted = false; 
   PNEventManager::getInstance()->addCallback(PN_EVENT_MP_START,  EventCallback(this, &PNLuaGameMap::onPlayMapStart));
   PNEventManager::getInstance()->addCallback(PN_EVENT_MP_END,  EventCallback(this, &PNLuaGameMap::onPlayMapEnd));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT, EventCallback(this, &PNLuaGameMap::onInit));
   return;
 }
 
@@ -62,6 +63,7 @@ PNLuaGameMap::~PNLuaGameMap(void)
 {
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_MP_START,  EventCallback(this, &PNLuaGameMap::onPlayMapStart));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_MP_END,  EventCallback(this, &PNLuaGameMap::onPlayMapEnd));
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_INIT, EventCallback(this, &PNLuaGameMap::onInit));
 }
 
 
@@ -144,7 +146,7 @@ void  PNLuaGameMap::onInit(pnEventType evt, PNObject* source, PNEventData* data)
   PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_INIT_STARTED, this, NULL);
 
   std::string luaOrder;
-  luaOrder +=  "gameMap.onInit()";
+  luaOrder +=  "gameMap:onInit()";
   manageLuaError(this->_LVM.execString(luaOrder));
 
   PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_INIT_ENDED, this, NULL);
@@ -290,7 +292,6 @@ void  PNLuaGameMap::registerInGameCallbacks()
 {
   PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGameMap::onGameAction));
   PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_UPDATE, EventCallback(this, &PNLuaGameMap::onUpdate));
-  PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT, EventCallback(this, &PNLuaGameMap::onInit));
   PNEventManager::getInstance()->addCallback(PN_EVENT_F_IN, EventCallback(this, &PNLuaGameMap::onFrustrumIn));
   PNEventManager::getInstance()->addCallback(PN_EVENT_F_OUT, EventCallback(this, &PNLuaGameMap::onFrustrumOut));
   PNEventManager::getInstance()->addCallback(PN_EVENT_MOUSE_MOVE, EventCallback(this, &PNLuaGameMap::onMouseMove));
@@ -305,7 +306,6 @@ void  PNLuaGameMap::unregisterInGameCallbacks()
 {
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNLuaGameMap::onGameAction));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_UPDATE, EventCallback(this, &PNLuaGameMap::onUpdate));
-  PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_INIT, EventCallback(this, &PNLuaGameMap::onInit));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_F_IN, EventCallback(this, &PNLuaGameMap::onFrustrumIn));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_F_OUT, EventCallback(this, &PNLuaGameMap::onFrustrumOut));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_MOUSE_MOVE, EventCallback(this, &PNLuaGameMap::onMouseMove));
