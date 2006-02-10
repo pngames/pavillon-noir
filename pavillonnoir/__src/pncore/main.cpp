@@ -73,7 +73,7 @@ int	  main(int argc, char* argv[])
 
   std::cout << quaty  << std::endl;
 
-  PNNormal3f  mod = quaty * PNVector3f::NEGATIVE_UNIT_Z;
+  PNNormal3f  mod(-0.0189894, 2.6773e-006, 0.99982);
 
   std::cout << "mod: " << mod.getVector() << std::endl;
 

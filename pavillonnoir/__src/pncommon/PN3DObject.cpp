@@ -1056,25 +1056,30 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
 
 	if (_targetMode & (TMODE_POSITION_LOCKED | TMODE_DISTANCE_LOCKED))
 	{
-	  PNNormal3f  vec(_orient.getInvert() * _updateTranslation);
+	  PNVector3f  vtmp = _orient.getInvert() * _updateTranslation;
 
-	  pnfloat sp = getFrontDirection().scalarProduct(vec);
-	  if (sp > PN_EPSILON)
-		addMovingState(STATE_T_FORWARD);
-	  else if (sp < PN_EPSILON)
-		addMovingState(STATE_T_BACKWARD);
+	  if (!vtmp.isNull())
+	  {
+		PNNormal3f  vec(vtmp);
 
-	  sp = getRightDirection().scalarProduct(vec);
-	  if (sp > PN_EPSILON)
-		addMovingState(STATE_T_RIGHT);
-	  else if (sp < PN_EPSILON)
-		addMovingState(STATE_T_LEFT);
+		pnfloat sp = getFrontDirection().scalarProduct(vec);
+		if (sp > PN_EPSILON)
+		  addMovingState(STATE_T_FORWARD);
+		else if (sp < PN_EPSILON)
+		  addMovingState(STATE_T_BACKWARD);
 
-	  sp = getTopDirection().scalarProduct(vec);
-	  if (sp > PN_EPSILON)
-		addMovingState(STATE_T_TOP);
-	  else if (sp < PN_EPSILON)
-		addMovingState(STATE_T_BACK);
+		sp = getRightDirection().scalarProduct(vec);
+		if (sp > PN_EPSILON)
+		  addMovingState(STATE_T_RIGHT);
+		else if (sp < PN_EPSILON)
+		  addMovingState(STATE_T_LEFT);
+
+		sp = getTopDirection().scalarProduct(vec);
+		if (sp > PN_EPSILON)
+		  addMovingState(STATE_T_TOP);
+		else if (sp < PN_EPSILON)
+		  addMovingState(STATE_T_BACK);
+	  }
 	}
   }
 }
