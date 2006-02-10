@@ -337,6 +337,8 @@ PNEventManager::run()
 	  type = event.type;
 	  if (type == PN_EVENT_F_IN)
 		pnerror(PN_LOGLVL_DEBUG, "managing frustrum in event");
+	  else
+		pnerror(PN_LOGLVL_DEBUG, "managing some other event: %d", type);
 	  source = event.source;
 	  data = event.data;
 
@@ -344,6 +346,7 @@ PNEventManager::run()
 	}
 	PNLOCK_END(this);
 
+	_lastSentType = type;
 	sendEvent(type, source, data);
 
 	if (data != NULL && data->destructData)

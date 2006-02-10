@@ -38,7 +38,7 @@ function PN3DSkeletonObjectClass(id)
 	end
 	
 	function OBJ:onMoveLeft(state)
-		pnprint(self.id)
+		--pnprint(self.id)
 		--pnprint(":onMoveLeft\n")	
 		if (state == ACTION_STATE.START) then
 			--pnprint("left key press\n")
@@ -50,7 +50,7 @@ function PN3DSkeletonObjectClass(id)
 	end	
 
 	function OBJ:onMoveRight(state)
-		pnprint(self.id)
+		--pnprint(self.id)
 		--pnprint(":onMoveRight\n")
 		if (state == ACTION_STATE.START) then
 			--pnprint("right key press\n")
