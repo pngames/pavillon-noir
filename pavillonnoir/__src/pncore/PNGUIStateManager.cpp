@@ -50,6 +50,8 @@ namespace PN
 	PNEventManager::getInstance()->addCallback(PN_EVENT_ML_STARTED, EventCallback(this, &PNGUIStateManager::LoadManagerHandler));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_ML_ENDED, EventCallback(this, &PNGUIStateManager::LoadManagerHandler));
 
+	PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_INIT_ENDED, EventCallback(this, &PNGUIStateManager::LoadManagerHandler));
+
 	PNEventManager::getInstance()->addCallback(PN_EVENT_MP_STARTED, EventCallback(this, &PNGUIStateManager::LoadManagerHandler));
 	PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PNGUIStateManager::LoadManagerHandler));
 
@@ -107,6 +109,9 @@ namespace PN
 	if (_currentMainState == MENUROOT && (_currentSubState == MENULOAD || _currentSubState == NONE))
 	{
 	  if (type == PN_EVENT_ML_ENDED)
+		PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_INIT, 0, NULL);
+
+	  if (type == PN_EVENT_GAME_INIT_ENDED)
 		PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_START, 0, NULL);
 
 	  if (type == PN_EVENT_MP_STARTED)
