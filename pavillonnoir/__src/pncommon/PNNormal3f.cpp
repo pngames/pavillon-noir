@@ -222,10 +222,10 @@ PNNormal3f::radianRange2Pi(const PNNormal3f& cosinusReferentiel, const PNNormal3
   if (ps_sn >= 0)
 	return (acosf(ps_cs));
 
-  if (ps_cs >= 0 && ps_sn < 0)
+  //if (ps_cs >= 0 && ps_sn < 0)
 	return (pnfloat)(2 * PI - acos(ps_cs));
 
-  return (pnfloat)(acos(ps_cs) + PI/2);
+  //return (pnfloat)(acos(ps_cs) + PI/2);
 }
 
 /**
