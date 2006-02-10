@@ -111,7 +111,7 @@ Call at the start of a map
 %--]]
 	OVERRIDE(OBJ, "onInit")		
 	function OBJ:onInit()
-        self:PNCharacter_onUpdate(deltaTime)
+        self:PNCharacter_onInit()
 		pnprint(self.id .. ":onInit()\n")
 	    --[[
 	     self.view = PNRenderCam
