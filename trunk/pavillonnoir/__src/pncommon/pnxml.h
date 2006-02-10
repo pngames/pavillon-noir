@@ -88,7 +88,7 @@ static const std::string	PNCHAT_XMLNODE_ROOT		= PNCHAT_XMLDTD_NAME;
 // Chat
 #define PNXML_BUDDYNAME_ATTR		(const xmlChar *)"name"
 #define PNXML_SENTENCE_ATTR			(const xmlChar *)"sentence"
-#define PNXML_RESPONSE_ATTR			(const xmlChar *)"response"
+#define PNXML_ANSWER_ATTR			(const xmlChar *)"answer"
 #define PNXML_QUIT_ATTR				(const xmlChar *)"quit"
 #define PNXML_CHECKPOINT_ATTR		(const xmlChar *)"checkpoint"
 
@@ -103,6 +103,14 @@ static const std::string	PNCHAT_XMLNODE_ROOT		= PNCHAT_XMLDTD_NAME;
 #define PNXML_TRUE_VAL				(const xmlChar *)"true"
 #define PNXML_FALSE_VAL				(const xmlChar *)"false"
 #define PNXML_IDBASE_VAL			(const xmlChar *)"id_"
+
+// Scripts
+#define PNXML_TYPE_ATTR				(const xmlChar *)"type"
+#define PNXML_ACTIONCODE_MKP		(const xmlChar *)"action"
+#define PNXML_SRC_ATTR				(const xmlChar *)"src"
+#define PNXML_INITCODE_MKP			(const xmlChar *)"init"
+
+
 
 //////////////////////////////////////////////////////////////////////////
 // SKYBOX
