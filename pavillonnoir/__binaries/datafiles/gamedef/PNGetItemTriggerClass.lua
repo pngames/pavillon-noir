@@ -1,8 +1,9 @@
 function PNGetItemTriggerClass(id, item)
-	local OBJ = inheriteFrom(PNActionTriggerClass(id))
+	local OBJ = inheritFrom(PNActionTriggerClass(id))
 	
+	OBJ.className="PNGetItemTrigger"
 	OBJ.item = item
-	OBJ.range = 5.0
+	OBJ.actionRange = 5.0
 	OBJ:setPositionTarget(item)
 	OBJ:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 	
@@ -16,7 +17,7 @@ function PNGetItemTriggerClass(id, item)
 	------------------onInit---------------------------
 	OVERRIDE(OBJ, "onInit")
 	function OBJ:onInit()
-		self.PNActionTriggerClass_onInit()
+		self:PNActionTrigger_onInit()
 		
 	end
 	
@@ -24,7 +25,7 @@ function PNGetItemTriggerClass(id, item)
 	------------------onUpdate---------------------------
 	OVERRIDE(OBJ, "onUpdate")
 	function OBJ:onUpdate()
-		self.PNActionTriggerClass_onUpdate()
+		self:PNActionTrigger_onUpdate()
 		
 	end
 	
