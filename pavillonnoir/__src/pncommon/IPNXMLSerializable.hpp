@@ -35,8 +35,7 @@
 typedef struct _xmlNode		xmlNode;
 typedef struct _xmlAttr		xmlAttr;
 
-namespace PN
-{
+namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 class PNPoint3f;
@@ -110,10 +109,10 @@ namespace XMLUtils
   PNAPI xmlAttr*				xmlNewProp(xmlNode* node, const char *name, const PNPoint3f& value);
   PNAPI PNPoint3f				xmlGetProp(xmlNode* node, const pnuchar* name, const PNPoint3f& def);
   PNAPI PNPoint3f				xmlGetProp(xmlNode* node, const char* name, const PNPoint3f& def);
-}
+};
 
 //////////////////////////////////////////////////////////////////////////
-}
+};
 
 #endif /*!_IPNXMLSERIALIZATION_HPP_*/
 
