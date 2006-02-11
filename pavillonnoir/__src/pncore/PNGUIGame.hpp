@@ -98,6 +98,7 @@ namespace PN{
 	static void  test(const std::string& tmp, std::istream& tmp2);
 	void unsuscribeConsoleCommand();
 	void suscribeConsoleCommand();
+	void  startChat(pnEventType type, PNObject* source, PNEventData* data);
 
 	//////////////////////////////////////////////////////////////////////////
 	// ConfigurableObject
