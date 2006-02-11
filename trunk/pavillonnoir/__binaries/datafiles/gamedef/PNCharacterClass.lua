@@ -41,6 +41,7 @@ CHARACTER_ANIM={IDLE=0,
 				STRIKE_LLEG=20,
 				STRIKE_RLEG=21,
 				DEAD=22,
+				DEFENSE=23,
 				}
 
 CHARACTER_ATTITUDE={WALKING=0,
@@ -581,6 +582,9 @@ Launches an Animation and waits for its end
 	end
 
 --------------------------------------------------------
+--[[%
+Select New Weapon from inventory
+%--]]
 	function OBJ:selectWeapon(typename)
 		print(self.selected_weapon:getId())
 		if (self.selected_weapon.type ~= "h2h_combat") then
@@ -591,7 +595,9 @@ Launches an Animation and waits for its end
 		self.selected_weapon:setVisible(true)
 	end			
 --------------------------------------------------------
-
+--[[%
+Called at the getItem and put it on inventory
+%--]]
 	function OBJ:getItem(item)
 		print("function OBJ:getItem(item)")
 		if (isInstanceOf(item, "PNWeapon") and self.items.weapons[item.type] == nil)then
@@ -609,6 +615,20 @@ Launches an Animation and waits for its end
 		end 
 		return true
 	end
---------------------------------------------------------
+-------------------------------------------------------------------------------
+--[[%
+Called at the Defense Action
+%--]]
+	function OBJ:onDefense(state)	
+		print("[LUA] onDefense "..state)
+	end
+-------------------------------------------------------------------------------
+--[[%
+Called at the Use Action
+%--]]
+	function OBJ:onUse(state)	
+		print("[LUA] onUse "..state)
+	end
+-------------------------------------------------------------------------------
 	return OBJ
 end

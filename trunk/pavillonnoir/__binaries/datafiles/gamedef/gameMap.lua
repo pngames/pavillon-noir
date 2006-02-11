@@ -349,6 +349,20 @@ function gameMap:onPrimaryAttack(srcId, targId, state)
     end
 end
 -------------------------------------------------------------------------------
+function gameMap:onDefense(srcId, targId, state)	
+    --pnprint("gameMap:onDefense:   TargetId '"..targId.."'\n")
+	if (targId ~= "" and self.entities.all[targId].onDefense ~= nil) then
+    	self.entities.all[targId]:onDefense(state)
+    end
+end
+-------------------------------------------------------------------------------
+function gameMap:onUse(srcId, targId, state)	
+    --pnprint("gameMap:onUse:   TargetId '"..targId.."'\n")
+	if (targId ~= "" and self.entities.all[targId].onUse ~= nil) then
+    	self.entities.all[targId]:onUse(state)
+    end
+end
+-------------------------------------------------------------------------------
 function gameMap:onDeath(deadId)
 	pnprint("=> GameMap:onDeath(" .. deadId .. ")\n")
 	for id, entity in pairs(self.entities.className.PNAICharacter) do
