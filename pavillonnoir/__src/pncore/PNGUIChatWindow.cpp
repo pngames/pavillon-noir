@@ -62,7 +62,7 @@ namespace PN
 
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 	hide();
-	_resolvedDependencies.insert("CHAT-TOTO_player_0");
+//	_resolvedDependencies.insert("CHAT-TOTO_player_0");
 	
   }
 
@@ -106,10 +106,10 @@ namespace PN
 	  {
 		show();
 	  }
-	  /*	else
+	  else
 	  {
-	  hide();
-	  }*/
+	   resetGUI();
+	  }
 	}
   }
 
