@@ -35,6 +35,7 @@
 #include "PNRendererInterface.hpp"
 #include "PNPhysicalObject.hpp"
 #include "PNGLSkyBox.hpp"
+#include "PNMatrix4f.hpp"
 
 #include "PNGLSceneGraph.hpp"
 

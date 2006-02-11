@@ -58,6 +58,7 @@ PN3DSkeletonObject::PN3DSkeletonObject() : _skeleton(NULL)
   _objType = OBJTYPE_3DSKELETONOBJ;
 
   _defaultAnimSpeed = 1.0f;
+  _defaultAnimWeight = 1.0f;
 
   _animTransTime = 0;
   _animTransitionStep = 1.0f;
@@ -78,6 +79,8 @@ int
 PN3DSkeletonObject::_parseAnimations(xmlNode* parent)
 {
   _anims.clear();
+
+  _defaultAnimSpeed = XMLUtils::xmlGetProp(parent, PNO_ANIM_XMLPROP_SPEED, _defaultAnimSpeed);
 
   for (xmlNodePtr  node = parent->children; node != NULL ; node = node->next)
   {
@@ -400,6 +403,8 @@ PN3DSkeletonObject::setAnimWeight(pnfloat weight)
 {
   PNLOCK(this);
 
+  _defaultAnimWeight = weight;
+
   for (AnimationVector::iterator it = _anims.begin(); it != _anims.end(); ++it)
 	(*it)->weight = weight;
 
@@ -444,21 +449,6 @@ PN3DSkeletonObject::setEnableLoop(pnint animId, pnbool loop)
 }
 
 //////////////////////////////////////////////////////////////////////////
-
-/// Set animation to play and the time used to make the transition between last animation and this
-pnuint
-PN3DSkeletonObject::startAnimation(pnint animation, pnuint transTime)
-{
-  PNLOCK(this);
-
-  clearAnimationIds();
-
-  if (animation >= 0)
-	startAnimation(animation);
-
-  return PNEC_SUCCESS;
-  //return IPNAnimated::startAnimation(animation, transTime);
-}
 
 void
 PN3DSkeletonObject::clearAnimationIds()

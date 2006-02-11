@@ -31,7 +31,6 @@
 # define _PNCALLBACKLIST_HPP_
 
 #include <set>
-#include <boost/thread/recursive_mutex.hpp>
 
 #include "PNLockableObject.hpp"
 #include "IPNSerializable.hpp"
@@ -62,10 +61,11 @@ public:
   virtual void				sendEvent(pnevent* event);
   /// Call all callback with these arguments
   virtual void				sendEvent(pnEventType type, PNObject* source, PNEventData* data);
+  /// Call all callback with these arguments
+  virtual void				operator() (pnEventType type, PNObject* source, PNEventData* data);
 };
 
 //////////////////////////////////////////////////////////////////////////
 }
 
 #endif /*_PNCALLBACKLIST_HPP_*/
-

@@ -125,50 +125,9 @@ struct tagMSG;
 
 #define PNFORMAT_STR_LEN		32
 
+#include "pntypes.h"
+
 namespace PN {
-
-	/*********************************  Typedefs **********************************/
-
-	// Streamable types; these are fixed size!
-	typedef char					pnchar;
-	typedef unsigned char			pnuchar;
-	typedef bool					pnbool;
-	typedef unsigned short			pnushort;
-	typedef short					pnshort;
-	typedef unsigned int			pnuint;
-	typedef unsigned int			pnwchar;
-	typedef int						pnint;
-	typedef float					pnfloat;
-	typedef double					pndouble;
-#if defined(_MSC_VER) || (defined(__BCPLUSPLUS__)&& __BORLANDC__ > 0x500) || defined(__WATCOM_INT64__)
-# define PN_LONG
-	typedef unsigned __int64		pnulong;
-	typedef __int64					pnlong;
-#elif defined(__GNUG__) || defined(__GNUC__) || defined(__SUNPRO_CC) || defined(__MWERKS__) || defined(__SC__)
-# define PN_LONG
-	typedef unsigned long long int	pnulong;
-	typedef long long int			pnlong;
-#endif
-
-	// Integral types large enough to hold value of a pointer
-#if defined(_MSC_VER)&& defined(_WIN64)
-	typedef __int64					pnival;
-	typedef unsigned __int64		pnuval;
-#else
-	typedef long					pnival;
-	typedef unsigned long			pnuval;
-#endif
-
-
-	// Handle to something in server
-#ifndef WIN32
-	typedef unsigned long			pnid;
-#else
-	typedef void*					pnid;
-#endif
-
-	// Time since January 1, 1970 (UTC)
-	typedef long					pntime;
 
 	/**********************************  Macros ***********************************/
 

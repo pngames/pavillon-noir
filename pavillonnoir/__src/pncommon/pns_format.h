@@ -36,7 +36,7 @@
 #ifndef _PNS_FORMAT_H_
 # define _PNS_FORMAT_H_
 
-#include "pndefs.h"
+#include "pnbasetypes.h"
 #include "pnmath.h"
 
 #define PNS_EXT			"pns"

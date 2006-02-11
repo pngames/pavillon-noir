@@ -1,7 +1,7 @@
-#include <Windows.h>
-#include <iostream>
-
 #include "pndefs.h"
+
+#include <iostream>
+#include <boost/thread/thread.hpp>
 
 #include "pnevent.h"
 
@@ -23,7 +23,6 @@ static void	run1()
   for (int i = 1; i < 100; ++i)
   {
 	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_INIT, NULL, new MyEventData(i));
-	Sleep(1);
   }
 }
 
@@ -32,7 +31,6 @@ static void	run2()
   for (int i = 1; i < 100; ++i)
   {
 	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_INIT, NULL, new MyEventData(i*100));
-	Sleep(1);
   }
 }
 

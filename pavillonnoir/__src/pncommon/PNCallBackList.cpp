@@ -28,6 +28,9 @@
  */
 
 #include "pndefs.h"
+
+//////////////////////////////////////////////////////////////////////////
+
 #include "pnevent.h"
 
 #include "PNCallBackList.hpp"
@@ -83,6 +86,11 @@ PNCallBackList::sendEvent(pnEventType type, PNObject* source, PNEventData* data)
   }
 }
 
-//////////////////////////////////////////////////////////////////////////
+void
+PNCallBackList::operator() (pnEventType type, PNObject* source, PNEventData* data)
+{
+  sendEvent(type, source, data);
 }
 
+//////////////////////////////////////////////////////////////////////////
+}

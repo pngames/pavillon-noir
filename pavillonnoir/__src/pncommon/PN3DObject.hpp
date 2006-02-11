@@ -31,7 +31,6 @@
 # define _PN3DOBJECT_HPP_
 
 #include <vector>
-#include <boost/thread/recursive_mutex.hpp>
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -39,7 +38,6 @@
 
 #include "PNPoint3f.hpp"
 #include "PNQuatf.hpp"
-#include "PNMatrixTR4f.hpp"
 #include "PNVector3f.hpp"
 #include "PNNormal3f.hpp"
 
@@ -53,8 +51,8 @@ namespace PN {
 
 class PN3DModel;
 class PN3DMaterial;
-class PNFace;
 class PNPhysicalObject;
+class PNFace;
 
 /// Base object for all object evolving in the scene
 class PNAPI							PN3DObject : public PNLockableObject, public IPNXMLSerializable
@@ -330,7 +328,7 @@ protected:
   /// Current update translation of 3d object
   PNVector3f						_updateTranslation;
   /// Last update translation of 3d object
-  PNVector3f					_lastUpdateTranslation;
+  PNVector3f						_lastUpdateTranslation;
 
 public:
   /// Default constructor for PN3DObject.

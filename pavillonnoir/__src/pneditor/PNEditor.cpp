@@ -470,7 +470,6 @@ void
 PNEditor::buildWPGroup()
 {
   WPLIST& wpl = _graph->getWayPoints();
-  char		  buf[512];
 
   if (wpGroup != NULL)
   {
@@ -481,12 +480,14 @@ PNEditor::buildWPGroup()
   }
   else
 	wpGroup = new FXGLGroup;
+
+  std::string	label = "WayPoint ";
+
   for (WPLIST::iterator i =  wpl.begin(); i != wpl.end(); i++)
   {
     pnint		  wpid = (*i)->getId();
 
-	sprintf(buf, "WayPoint #%d", wpid);
-    wpGroup->append(new PNGLShape(*i, wpPanel, this, PN_STATIC, "PNWayPoint", wpid, buf));
+	wpGroup->append(new PNGLShape(*i, wpPanel, this, PN_STATIC, "PNWayPoint", wpid, label + PNInt::staticToString(wpid)));
   }
 }
 
