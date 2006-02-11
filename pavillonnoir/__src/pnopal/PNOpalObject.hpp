@@ -95,12 +95,12 @@ private:
   opal::SpringMotor*		  	_movementMotor;
   opal::SpringMotorData			_movementMotorData;
 
-  /* sensor */
+  /* movements sensor */
   opal::RaycastSensor*			_playerSensor;
-  opal::AccelerationSensor*		_accelSensor;
-  opal::AccelerationSensorData	_accelSensorData;
+  pnfloat						_rayLenght;
+  pnfloat						_desiredHeight;
 
-  /* rendering previously deprecated */
+  /* rendering */
   pnfloat						_aabb[6];
   pndouble						_radius;
   PNPoint3f						_offset;
@@ -137,11 +137,11 @@ public:
   //////////////////////////////////////////////////////////////////////////
   // PNOpalObject specific (debug)
 
-  void							printAccel();
   opal::RaycastSensor*			getPlayerSensor();
+  pnfloat						getRayLenght();
+  pnfloat						getDesiredHeight();
 
 protected:
-  void							_createMeshEntity();
   pnint							_parseTypePnm(const std::string& file);
   pnint							_parseTypeOpal(const std::string& file);
   pnint							_parsePhysics(xmlNode* node);
