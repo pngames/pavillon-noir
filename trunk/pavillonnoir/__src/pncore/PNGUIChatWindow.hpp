@@ -32,7 +32,7 @@
 
 #include <vector>
 #include <libxml/xmlreader.h>
-#include <list>
+#include <set>
 #include "myCEGUI.h"
 
 #include "PNChatTree.hpp"
@@ -52,7 +52,7 @@ namespace PN
 	CEGUI::Listbox*	_listBox;
 	CEGUI::StaticText* _textQuestion;
 	std::string _currentChatXml;
-	typedef std::list<std::string>			ListResolvedDependencies;
+	typedef std::set<std::string>			ListResolvedDependencies;
 	ListResolvedDependencies				_resolvedDependencies;
 	PNChatTree* _chatTree;
 	xmlNode* _currentNode;

@@ -31,7 +31,7 @@
 # define _PNCHATTREE_HPP_
 
 #include <string>
-#include <list>
+#include <set>
 #include <iterator>
 
 
@@ -47,7 +47,7 @@ namespace PN {
 	std::string						_id;
 	std::string						_name;
 	xmlNode*						_currentNode;
-	typedef std::list<std::string>			ListResolvedDependencies;
+	typedef std::set<std::string>			ListResolvedDependencies;
 	ListResolvedDependencies				_resolvedDependencies;
 	xmlDocPtr						_doc;
 

@@ -36,6 +36,7 @@
 #include "PNGUIGame.hpp"
 #include "PNConsole.hpp"
 #include "PNGameMap.hpp"
+#include "PNGUIStateManager.hpp"
 #include "PNGameInterface.hpp"
 
 
@@ -54,12 +55,15 @@ namespace PN
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/PNChatWindow.layout"); 
 	_listBox = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Listbox");	
 	_textQuestion = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Text");
-
-	//_listBox->subscribeEvent(CEGUI::Listbox::EventSelectionChanged, CEGUI::Event::Subscriber(&PNGUIChatWindow::handleListBox, this));
+	_textQuestion->setFormatting(CEGUI::StaticText::WordWrapLeftAligned ,CEGUI::StaticText::TopAligned); 
+	//_textQuestion->setVerticalScrollbarEnabled(true);
+	_listBox->subscribeEvent(CEGUI::Listbox::EventSelectionChanged, CEGUI::Event::Subscriber(&PNGUIChatWindow::handleListBox, this));
 	CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/ButtonValid")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIChatWindow::handleValid, this));
 
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 	hide();
+	_resolvedDependencies.insert("CHAT-TOTO_player_0");
+	
   }
 
   PNGUIChatWindow::~PNGUIChatWindow()
@@ -86,34 +90,35 @@ namespace PN
 
   void	PNGUIChatWindow::startGUI(std::string id_player)
   {
-	setMapChatPath(id_player);
-	_chatTree = new PNChatTree();
-	fs::path file(_currentChatXml, fs::no_check);
-
- 	_chatTree->unserializeFromFile(file);
-
-	if (showNextBuddy(_chatTree->getCurrentNode()))
+	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME && 
+	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
 	{
-	  show();
-	}
-	else
-	{
+	  //  PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_PAUSE, NULL, NULL);
+	  PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::CHAT_WINDOW);
+
+	  setMapChatPath(id_player);
+	  _chatTree = new PNChatTree();
+	  fs::path file(_currentChatXml, fs::no_check);
+
+	  _chatTree->unserializeFromFile(file);
+
+	  if (showNextBuddy(_chatTree->getCurrentNode()))
+	  {
+		show();
+	  }
+	  /*	else
+	  {
 	  hide();
+	  }*/
 	}
-	/*std::vector<std::string> responses;
-	responses.push_back("l'amour");
-	responses.push_back("le jeu");
-	responses.push_back("la bouffe");
-	responses.push_back("le saiske");
-	responses.push_back("la picole");
-	responses.push_back("la drogue");
-	*/
   }
 
   void	PNGUIChatWindow::resetGUI()
   {
 	delete _chatTree;
 	hide();
+	PNGUIGame::getInstance()->startGUI();
+	PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Chat", "", "", 0.0));
   }
 
   void	PNGUIChatWindow::show()
@@ -128,7 +133,7 @@ namespace PN
   {
 	_mainSheet->hide();
 	_mainSheet->setMutedState(true);
-	PNGUIGame::getInstance()->startGUI();
+	
   }
 
   CEGUI::Window*  PNGUIChatWindow::getWindow()
@@ -138,26 +143,72 @@ namespace PN
 
   bool	PNGUIChatWindow::handleListBox(const CEGUI::EventArgs& e)
   {
+	if (_quitBuddy == true && _listBox->getFirstSelectedItem() == NULL)
+	{
+	  resetGUI();
+	  return true;
+	}
+
+	if (_listBox->getFirstSelectedItem() != NULL)
+	{
+	//  PNConsole::writeLine("Vous avez choisi : %s",_listBox->getFirstSelectedItem()->getText().c_str());
+
+	  unsigned int tmp = _listBox->getFirstSelectedItem()->getID();
+	  std::string selNodeId = (char *)tmp;
+
+	  xmlNode* selNode = _chatTree->getNodeFromId(_currentNode ,selNodeId);
+
+
+	  if ((const char*)xmlGetProp(selNode, PNCHATXML_CHECKPOINT_ATTR) == "true")
+		_resolvedDependencies.insert(selNodeId);
+	  //.push_back(selNodeId);
+
+
+	  xmlChar* quit = xmlGetProp(selNode, PNCHATXML_QUIT_ATTR);
+
+
+	  // if ((const char*)xmlGetProp(selNode, PNCHATXML_QUIT_ATTR) == "true")
+	  if (quit!= NULL && strcmp((const char*)quit, (const char*)PNCHATXML_TRUE_VAL) == 0)
+	  {
+		resetGUI();
+		return true;
+	  }
+
+	  showNextBuddy(selNode);
+
+	}
+
 	return true;
   }
 
   bool	PNGUIChatWindow::handleValid(const CEGUI::EventArgs& e)
   {
-	
+	if (_quitBuddy == true && _listBox->getFirstSelectedItem() == NULL)
+	{
+	  resetGUI();
+	  return true;
+	}
 
 	if (_listBox->getFirstSelectedItem() != NULL)
 	{
-	 PNConsole::writeLine("Vous avez choisi : %s",_listBox->getFirstSelectedItem()->getText().c_str());
+	// PNConsole::writeLine("Vous avez choisi : %s",_listBox->getFirstSelectedItem()->getText().c_str());
 
 	 unsigned int tmp = _listBox->getFirstSelectedItem()->getID();
 	 std::string selNodeId = (char *)tmp;
 	 
 	 xmlNode* selNode = _chatTree->getNodeFromId(_currentNode ,selNodeId);
 
+
 	 if ((const char*)xmlGetProp(selNode, PNCHATXML_CHECKPOINT_ATTR) == "true")
-	   _resolvedDependencies.push_back(selNodeId);
+	   _resolvedDependencies.insert(selNodeId);
+	   //.push_back(selNodeId);
 	  
-	 if ((const char*)xmlGetProp(selNode, PNCHATXML_QUIT_ATTR) == "true")
+
+	 xmlChar* quit = xmlGetProp(selNode, PNCHATXML_QUIT_ATTR);
+	 
+
+	// if ((const char*)xmlGetProp(selNode, PNCHATXML_QUIT_ATTR) == "true")
+	 if (quit!= NULL && strcmp((const char*)quit, (const char*)PNCHATXML_TRUE_VAL) == 0)
 	 {
 	  resetGUI();
 	  return true;
@@ -167,11 +218,7 @@ namespace PN
 
 	}
 
-	if (_quitBuddy == true)
-	{
-	  resetGUI();
-	  return true;
-	}
+	
 	return true;
   }
 
