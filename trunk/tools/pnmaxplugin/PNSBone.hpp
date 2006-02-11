@@ -28,6 +28,9 @@
 
 #include <list>
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 class PNSBone : public std::list<PNSBone*>
 {
 public:
@@ -55,6 +58,9 @@ private:
   PN::pnint				_id;
 
   bool					_exported;
+};
+
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PNSBONE_HPP_*/

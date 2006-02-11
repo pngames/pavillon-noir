@@ -28,6 +28,9 @@
 
 #include "PN3DObjectExporter.hpp"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 // Bo�e de dialogue PNObjectWindow
 
 class PNObjectWindow : public CDialog
@@ -121,4 +124,7 @@ public:
   afx_msg void OnBnClickedBbPhysics();
   afx_msg void OnBnClickedRbPhysModel();
   afx_msg void OnBnClickedRbPhysOptions();
+};
+
+//////////////////////////////////////////////////////////////////////////
 };

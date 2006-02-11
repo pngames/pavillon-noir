@@ -39,29 +39,35 @@
 #include "pnbasetypes.h"
 #include "pnmath.h"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 #define PNS_EXT			"pns"
 
 #define	PNS_MAGIC		"PNS0001"
 #define	PNS_MAGIC_SIZE	8
 
-typedef	struct		pnsHeader_s
+typedef	struct			pnsHeader_s
 {
-  PN::pnchar		magic[PNS_MAGIC_SIZE];
-  PN::pnuint		version;
+  pnchar				magic[PNS_MAGIC_SIZE];
+  pnuint				version;
 
-  PN::pnuint		nbBones;
+  pnuint				nbBones;
 
   //-> list of pnsBone_t
-}					pnsHeader_t;
+}						pnsHeader_t;
 
-typedef struct		pnsBone_s
+typedef struct			pnsBone_s
 {
-  PN::pnuint		id;
-  PN::pnchar		name[32];
+  pnuint				id;
+  pnchar				name[32];
 
-  PN::pnint			parent;
+  pnint					parent;
 
-  PN::pnmatrix4f	m_relative;
-}					pnsBone_t;
+  pnmatrix4f			m_relative;
+}						pnsBone_t;
+
+//////////////////////////////////////////////////////////////////////////
+};
 
 #endif /*_PNS_FORMAT_H_*/

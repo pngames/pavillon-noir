@@ -40,6 +40,9 @@
 
 #include "pna_format.h"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 class PNAnimationExporter : public PNSkeletonExporter
 {
 public:
@@ -90,6 +93,9 @@ public:
 
   const TCHAR*	InternalName();	// returns fixed parsable name (scripter-visible name)
   HINSTANCE		HInstance(); // returns owning module handle
+};
+
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PNANIMATIONEXPORTER_HPP_*/

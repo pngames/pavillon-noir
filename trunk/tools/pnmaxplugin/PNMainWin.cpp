@@ -36,6 +36,9 @@
 
 using namespace PN;
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 // Bo�e de dialogue PNMainWin
 PNMainWin*	PNMainWin::_instance = NULL;
 CListBox	PNMainWin::_console;
@@ -148,3 +151,6 @@ void PNMainWin::OnBnClickedMwinConfig()
 {
   _exporter->configure();
 }
+
+//////////////////////////////////////////////////////////////////////////
+};

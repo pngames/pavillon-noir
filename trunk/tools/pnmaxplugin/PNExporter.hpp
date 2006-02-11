@@ -29,10 +29,13 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-const static PN::pnpoint3f	_defaultVertex = {0.0f, 0.0f, 0.0f};
-const static PN::pnpoint3f	_defaultNormale = {0.0f, 0.0f, 0.0f};
-const static PN::pnpoint2f	_defaultTexCoord = {0.0f, 0.0f};
-const static PN::pncolor_t	_defaultColor = {1.0f, 1.0f, 1.0f, 1.0f};
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
+const static pnpoint3f	_defaultVertex = {0.0f, 0.0f, 0.0f};
+const static pnpoint3f	_defaultNormale = {0.0f, 0.0f, 0.0f};
+const static pnpoint2f	_defaultTexCoord = {0.0f, 0.0f};
+const static pncolor_t	_defaultColor = {1.0f, 1.0f, 1.0f, 1.0f};
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -90,4 +93,7 @@ public:
 protected:
   void					_getPoint3Property(IGameProperty* prop, PN::pnfloat* point, const PN::pnfloat* def = _defaultVertex);
   float					_getFloatProperty(IGameProperty* prop, PN::pnfloat def = -1.0f);
+};
+
+//////////////////////////////////////////////////////////////////////////
 };

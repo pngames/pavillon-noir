@@ -28,6 +28,9 @@
 
 #include "PNMaterialExporter.hpp"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 // Bo�e de dialogue PNMaterialWin
 
 class PNMaterialWin : public CDialog
@@ -53,4 +56,7 @@ private:
 public:
   afx_msg void OnBnClickedOk();
   afx_msg void OnLvnEndlabeleditMaterials(NMHDR *pNMHDR, LRESULT *pResult);
+};
+
+//////////////////////////////////////////////////////////////////////////
 };

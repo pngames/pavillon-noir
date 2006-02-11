@@ -6,6 +6,8 @@
 
 #include "PNWUVecEdit.hpp"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
 
 // Boîte de dialogue PNWUVecEdit
 
@@ -153,3 +155,4 @@ void PNWUVecEdit::OnBnClickedOk()
   _point = _getVector();
 }
 
+};
