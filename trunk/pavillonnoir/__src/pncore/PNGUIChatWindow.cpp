@@ -141,11 +141,7 @@ namespace PN
 
   bool	PNGUIChatWindow::handleValid(const CEGUI::EventArgs& e)
   {
-	if (_quitBuddy == true)
-	{
-	  resetGUI();
-	  return true;
-	}
+	
 
 	if (_listBox->getFirstSelectedItem() != NULL)
 	{
@@ -154,19 +150,25 @@ namespace PN
 	 unsigned int tmp = _listBox->getFirstSelectedItem()->getID();
 	 std::string selNodeId = (char *)tmp;
 	 
-	/* xmlNode* selNode = _chatTree->getNodeFromId(selNodeId);
+	 xmlNode* selNode = _chatTree->getNodeFromId(_currentNode ,selNodeId);
 
-	 if ((const char*)xmlGetProp(selNode, PNCHATXML_CHECKPOINT_ATTR) == PNCHATXML_TRUE_VAL)
+	 if ((const char*)xmlGetProp(selNode, PNCHATXML_CHECKPOINT_ATTR) == "true")
 	   _resolvedDependencies.push_back(selNodeId);
 	  
-	 if ((const char*)xmlGetProp(selNode, PNCHATXML_QUIT_ATTR) == true)
+	 if ((const char*)xmlGetProp(selNode, PNCHATXML_QUIT_ATTR) == "true")
 	 {
 	  resetGUI();
 	  return true;
 	 }
 
 	showNextBuddy(selNode);
-*/
+
+	}
+
+	if (_quitBuddy == true)
+	{
+	  resetGUI();
+	  return true;
 	}
 	return true;
   }
