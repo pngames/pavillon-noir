@@ -188,6 +188,10 @@ void  PNLuaGameMap::onGameAction(pnEventType evt, PNObject* source, PNEventData*
   std::stringstream luaOrder;
 
   PNGameActionEventData* actionEvent= (PNGameActionEventData*) data;
+
+  luaOrder << "if (gameMap.on";
+  luaOrder << actionEvent->action;
+   luaOrder << " ~= nil) then\n";
   luaOrder << "gameMap:on";
   luaOrder << actionEvent->action;
   luaOrder << "(\"" ;
@@ -196,7 +200,10 @@ void  PNLuaGameMap::onGameAction(pnEventType evt, PNObject* source, PNEventData*
   luaOrder << actionEvent->targetId;
   luaOrder << "\", ";
   luaOrder << (actionEvent->value);
-  luaOrder << ")";
+  luaOrder << ")\n else print(\"[LUA] ";
+  luaOrder << "gameMap:on";
+  luaOrder << actionEvent->action;
+  luaOrder << " is not binded\")\n end";
   luaOrder << std::ends;
   manageLuaError(this->_LVM.execString(luaOrder.str().c_str()));
 }
