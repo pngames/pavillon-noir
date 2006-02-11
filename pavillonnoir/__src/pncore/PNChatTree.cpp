@@ -33,7 +33,7 @@
 
 #include "pndefs.h"
 #include "pcf_format.h"
-#include "pnxml.h"
+#include "pnchatxml.h"
 #include "PNChatTree.hpp"
 
 using namespace PN;
@@ -55,8 +55,8 @@ namespace PN
 
   pnint	PNChatTree::unserializeFromXML(xmlNode* root)
   {
-	_id = (const char*)xmlGetProp(root, PNXML_ID_ATTR);
-	_name = (const char*)xmlGetProp(root, PNXML_BUDDYNAME_ATTR);
+	_id = (const char*)xmlGetProp(root, PNCHATXML_ID_ATTR);
+	_name = (const char*)xmlGetProp(root, PNCHATXML_BUDDYNAME_ATTR);
 	_currentNode = new xmlNode();
 	*_currentNode = *root;
 
@@ -128,8 +128,8 @@ namespace PN
 	{
 	  for (xmlNodePtr sub = node->children; sub != NULL; sub = sub->next)
 	  {
-		if (xmlStrEqual(sub->name, PNXML_DEPENDS_MKP))
-		  if (!isAResolvedDep((const char*)xmlGetProp(sub, PNXML_ID_ATTR)))
+		if (xmlStrEqual(sub->name, PNCHATXML_DEPENDS_MKP))
+		  if (!isAResolvedDep((const char*)xmlGetProp(sub, PNCHATXML_ID_ATTR)))
 			return false;
 	  }
 	}
@@ -142,7 +142,7 @@ namespace PN
 	{
 	  for (xmlNodePtr current = currentNode->children; current != NULL; current = current->next)
 	  {
-		if (xmlStrEqual(current->name, PNXML_BUDDY_MKP) && buddyIsAvailable(current))
+		if (xmlStrEqual(current->name, PNCHATXML_BUDDY_MKP) && buddyIsAvailable(current))
 		{
 		  return current;
 		}
@@ -160,8 +160,8 @@ namespace PN
   {
 	for (xmlNodePtr current = root->children; current != NULL; current = current->next)
 	{
-	  xmlChar* id = xmlGetProp(node, PNXML_ID_ATTR);
-	  if (id != NULL && strcmp((const char*)id, NodeId) == 0)
+	  xmlChar* id = xmlGetProp(current, PNCHATXML_ID_ATTR);
+	  if (id != NULL && strcmp((const char*)id, NodeId.c_str()) == 0)
 		return current;
 	}
 	return NULL;
