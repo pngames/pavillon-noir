@@ -64,9 +64,11 @@ PNCallBackList::sendEvent(pnevent* event)
 void
 PNCallBackList::sendEvent(pnEventType type, PNObject* source, PNEventData* data)
 {
-  PNLOCK(this);
+  CallbackSet tmp;
 
-  CallbackSet tmp = _callbacks;
+  PNLOCK_BEGIN(this);
+  tmp = _callbacks;
+  PNLOCK_END(this);
 
   for (CallbackSet::iterator it = tmp.begin(); it != tmp.end(); ++it)
   {
