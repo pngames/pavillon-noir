@@ -142,8 +142,8 @@ public:
 
 protected:
   void							_createMeshEntity();
-  pnint							_parseTypePnm(const boost::filesystem::path& file);
-  pnint							_parseTypeOpal(const boost::filesystem::path& file);
+  pnint							_parseTypePnm(const std::string& file);
+  pnint							_parseTypeOpal(const std::string& file);
   pnint							_parsePhysics(xmlNode* node);
 
   ///////////////////////////////////////////////////////////////////////////

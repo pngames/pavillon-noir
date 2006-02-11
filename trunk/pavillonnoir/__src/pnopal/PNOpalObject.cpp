@@ -47,6 +47,7 @@
 #include "PNOpal.hpp"
 #include "PNOpalObject.hpp"
 #include "PNOpalEvents.hpp"
+#include "PNOpalMeshImporter.hpp"
 
 #include "PNVector3f.hpp"
 #include "PNMatrixTR4f.hpp"
@@ -367,63 +368,56 @@ void		PNOpalObject::destroyMovementMotor()
 //////////////////////////////////////////////////////////////////////////
 // IPNXMLSerializable
 
-pnint		  PNOpalObject::_parseTypePnm(const boost::filesystem::path& file)
+pnint		  PNOpalObject::_parseTypePnm(const std::string& path)
 {
-  /*PN3DModel*		  PNMesh;
-  opal::MeshShapeData meshData;
+  fs::path	  file(path, fs::no_check);
 
-  PNMesh = (PN3DModel*)PNImportManager::getInstance()->import(file.string(), PN_IMPORT_3DMODEL);
-
-  meshData.numVertices = PNMesh->getNbVertexComputed();
-  meshData.numTriangles = PNMesh->getNbFacesComputed();
-
-  meshData.vertexArray = new opal::real[3 * meshData.numVertices];
-  meshData.triangleArray = new unsigned int[3 * meshData.numTriangles];
-  pnfloat* PNVertex = new pnfloat[3 * meshData.numVertices];
-
-  PNMesh->computeVertex(PNVertex);
-  pnfloat mpp = PNGameInterface::getInstance()->getGameMap()->getMpp();
-  for (unsigned i = 0; i < meshData.numVertices; i++)
-  {
-	meshData.vertexArray[i * 3] = PNVertex[i][0] * mpp;
-	meshData.vertexArray[i * 3 + 1] = PNVertex[i][1] * mpp;
-	meshData.vertexArray[i * 3 + 2] = PNVertex[i][2] * mpp;
-  }
-  delete[] PNVertex;
-
-  std::vector<PN3DMaterial*> PNFaces;
-  PNMesh->computeFaces(PNFaces, 0);
-  for (unsigned int j = 0; j < meshData.numTriangles; j++)
-  {
-	meshData.triangleArray[j * 3] = PNFaces. [j * 3];
-	meshData.triangleArray[j * 3 + 1] = PNFaces[j * 3 + 1];
-	meshData.triangleArray[j * 3 + 2] = PNFaces[j * 3 + 2];
-  }
-
-  // create a solid
-  _solid = _sim->createSolid();
-  _solid->setStatic(true);
-
-  // Add the mesh Shape to the Solid.
-  _solid->addShape(meshData);*/
-
-  return PNEC_SUCCESS;
-}
-
-pnint		  PNOpalObject::_parseTypeOpal(const boost::filesystem::path& file)
-{
   // check for errors
   if (!fs::exists(file))
 	return PNEC_FILE_NOT_FOUND;
   if (fs::is_directory(file))
 	return PNEC_NOT_A_FILE;
 
+  //////////////////////////////////////////////////////////////////////////
+  
+  PNOpalMeshImporter* mesh = new PNOpalMeshImporter();
+  opal::MeshShapeData meshData;
+  
+  mesh->unserializeFromPath(path);
+
+  meshData.numVertices = mesh->getNbVertices();
+  meshData.numTriangles = mesh->getNbFaces();
+
+  meshData.vertexArray = mesh->getVertices();
+  meshData.triangleArray = mesh->getFaces();
+
+  // create a solid
+  _solid = _sim->createSolid();
+  _solid->setStatic(true);
+
+  // Add the mesh Shape to the Solid.
+  _solid->addShape(meshData);
+  
+  return PNEC_SUCCESS;
+}
+
+pnint		  PNOpalObject::_parseTypeOpal(const std::string& path)
+{
+  fs::path	  file(path, fs::no_check);
+
+  // check for errors
+  if (!fs::exists(file))
+	return PNEC_FILE_NOT_FOUND;
+  if (fs::is_directory(file))
+	return PNEC_NOT_A_FILE;
+
+  //////////////////////////////////////////////////////////////////////////
+
   PNGameMap*  gm = PNGameInterface::getInstance()->getGameMap();
   pnfloat mpp = gm->getMpp();
 
   // create and instantiate the opal blueprint
-  _file = file.string();
-  opal::loadFile(_blueprint, _file);
+  opal::loadFile(_blueprint, path);
 
   // object's coord offset
   opal::Matrix44r offset;
@@ -523,18 +517,12 @@ pnint		  PNOpalObject::_parsePhysics(xmlNode* node)
 	if (PNP_XMLATTR_TYPEOPAL == (const char*)attr)
 	{
 	  if ((attr = xmlGetProp(node, (const xmlChar *)PNP_XMLPROP_PATH)) != NULL)
-	  {
-		fs::path p(PNOPAL_XML_DEF::opalFilePath + (const char*)attr, fs::native);
-		_parseTypeOpal(p);
-	  }
+		_parseTypeOpal(PNOPAL_XML_DEF::opalFilePath + (const char*)attr);
 	}
 	else if (PNP_XMLATTR_TYPEPNM == (const char *)attr)
 	{
 	  if ((attr = xmlGetProp(node, (const xmlChar *)PNP_XMLPROP_PATH)) != NULL)
-	  {
-		fs::path p(PNOPAL_XML_DEF::modelFilePath + (const char*)attr, fs::native);
-		_parseTypePnm(p);
-	  }
+		_parseTypePnm(PNOPAL_XML_DEF::modelFilePath + (const char*)attr);
 	}
 	else
 	  return PNEC_FAILED_TO_PARSE;

@@ -52,6 +52,8 @@
 #define TIME_SCALE 1000
 #define DEFAULT_FORCE_MAGNITUDE 40.0f
 #define DEFAULT_FORCE_DURATION 0.0f
+#define DEFAULT_TORQUE_MAGNITUDE 2.0f
+#define DEFAULT_ANTIGRAVITY 50.0f
 
 using namespace std;
 
@@ -112,7 +114,7 @@ void PNOpal::createSimulation()
   _eventHandler = new PNOpalCommonEventHandler();
   _break = false;
 
-  //setPause(true);
+  setPause(true);
 
   PNConfPanel::getInstance()->addConfigurableObject(this);
 }
@@ -215,10 +217,9 @@ void PNOpal::_onFrame(pnEventType type, PNObject* source, PNEventData* data)
 		if (!current_obj->getUpdateTranslation().isNull())
 		{
 		  const PNVector3f& dir = current_obj->getUpdateTranslation();
-		  //pnerror(PN_LOGLVL_INFO, "updateTranslation --- x : %f, y : %f, z : %f", dir.x, dir.y, dir.z);
-
 		  ((PNOpalObject*)current_obj->getPhysicalObject())->addForce(current_obj->getUpdateTranslation(), DEFAULT_FORCE_MAGNITUDE, DEFAULT_FORCE_DURATION, false);
 		}
+
 		// rotate players
 		if (orient != current_obj->getPhysicalObject()->getOrient())
 		{
@@ -226,21 +227,13 @@ void PNOpal::_onFrame(pnEventType type, PNObject* source, PNEventData* data)
 		  PNNormal3f vecEnd = orient * PNVector3f::NEGATIVE_UNIT_Z;
 		  pnfloat angleOri = vecOri.radianRange2Pi(PNVector3f::UNIT_X, PNVector3f::NEGATIVE_UNIT_Z);
 		  pnfloat angleEnd = vecEnd.radianRange2Pi(PNVector3f::UNIT_X, PNVector3f::NEGATIVE_UNIT_Z);
-
-		  //std::cout << "Quat ori : " << current_obj->getPhysicalObject()->getOrient() << std::endl;
-		  //std::cout << "Normal : " << vecOri.getVector() << std::endl;
-		  //std::cout << "Quat end : " << orient << std::endl;
-		  //std::cout << "Normal : " << vecEnd.getVector() << std::endl;
-
-		  //pnerror(PN_LOGLVL_INFO, "angleOri : %f, angleEnd : %f", RADIAN_TO_DEGREE(angleOri), RADIAN_TO_DEGREE(angleEnd));
 		  pnfloat angle = angleOri - angleEnd;
-		  //pnerror(PN_LOGLVL_INFO, "angle : %f", RADIAN_TO_DEGREE(angle));
 
 		  if (angle > PI)
-			angle -= (pnfloat)PI*2.0f;
+			angle -= (pnfloat)PI * DEFAULT_TORQUE_MAGNITUDE;
 		  else if (angle < -PI)
-			angle += (pnfloat)PI*2.0f;
-		  //pnerror(PN_LOGLVL_INFO, "angle : %f", RADIAN_TO_DEGREE(angle));
+			angle += (pnfloat)PI * DEFAULT_TORQUE_MAGNITUDE;
+
 		  ((PNOpalObject*)current_obj->getPhysicalObject())->addTorque(PNVector3f::UNIT_Y, -angle*10, 0.0f, true);
 		}
 	  }
@@ -310,7 +303,6 @@ void	PNOpal::pn2opal()
 
 /** Set PN3DObjects coordinates and orientation from opal simulation's data
 */
-
 void	PNOpal::opal2pn()
 {
   for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
@@ -329,6 +321,7 @@ void	PNOpal::opal2pn()
 		const PNPoint3f& offset = physicalObject->getOffset();
 		const PNQuatf& orient = physicalObject->getOrient();
 		
+		// elevates the players from the ground (a little bit)
 		if (object->getId() == "Player")
 		{
 		  opal::RaycastResult result = ((PNOpalObject*)physicalObject)->getPlayerSensor()->fireRay(100);
@@ -338,13 +331,15 @@ void	PNOpal::opal2pn()
 		  if (result.distance != 0.0 && result.distance < 0.4)
 		  {
 			//pnerror(PN_LOGLVL_INFO, "Player sensor, Y: %f", result.distance);
-			((PNOpalObject*)physicalObject)->addForce(PNVector3f::UNIT_Y, (0.4f - (pnfloat)result.distance)*50.0f, 0.0f, true);
+			((PNOpalObject*)physicalObject)->addForce(PNVector3f::UNIT_Y, (0.4f - (pnfloat)result.distance) * DEFAULT_ANTIGRAVITY, 0.0f, true);
 		  }
 		}
 		
+		// set obj's rendering coordinates according to map's scale (meters per pixel)
 		object->setCoord((coord.x - offset.x) / mpp,
 						(coord.y - offset.y) / mpp,
 						(coord.z - offset.z) / mpp);
+		// set obj's rendering orientation
 		object->setOrient(orient);
 	  }
 	  PNLOCK_END(object);
