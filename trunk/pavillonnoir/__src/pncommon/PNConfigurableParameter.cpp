@@ -31,7 +31,7 @@
 
 #include "pndefs.h"
 
-#include "pnobject_base_types.h"
+#include "pntypes.h"
 #include "pcf_format.h"
 
 #include "PNConfigurableParameter.hpp"

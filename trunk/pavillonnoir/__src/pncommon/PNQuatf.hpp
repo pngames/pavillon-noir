@@ -30,7 +30,6 @@
 #ifndef _PNQUATF_HPP_
 # define _PNQUATF_HPP_
 
-#include <string.h>
 #include <iostream>
 
 #include "PNObject.hpp"

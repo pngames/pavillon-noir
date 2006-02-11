@@ -22,6 +22,8 @@
 
 <!ATTLIST skeleton path CDATA #IMPLIED>
 
+<!ATTLIST listanims speed CDATA #IMPLIED>
+
 <!ATTLIST anim path CDATA #IMPLIED>
 <!ATTLIST anim enabled (true|false) #IMPLIED>
 <!ATTLIST anim loop (true|false) #IMPLIED>

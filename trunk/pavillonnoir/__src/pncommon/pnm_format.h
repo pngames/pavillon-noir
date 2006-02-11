@@ -30,7 +30,7 @@
 #ifndef _PNM_FORMAT_H_
 # define _PNM_FORMAT_H_
 
-#include "pndefs.h"
+#include "pnbasetypes.h"
 #include "pnmath.h"
 
 #define PNM_EXT			"pnm"

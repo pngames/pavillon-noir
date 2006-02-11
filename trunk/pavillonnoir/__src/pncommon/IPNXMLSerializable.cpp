@@ -38,7 +38,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "pndefs.h"
-#include "pnobject_base_types.h"
+#include "pntypes.h"
 
 #include "PNPoint3f.hpp"
 

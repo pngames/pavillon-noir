@@ -26,13 +26,16 @@
  * Pavillon Noir; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
- 
+
+#include "pndefs.h"
+
+//////////////////////////////////////////////////////////////////////////
+
 #include <math.h>
 #include <stdlib.h>
 #include <boost/thread/thread.hpp>
 #include <fastdelegate/FastDelegate.h>
 
-#include "pndefs.h"
 #include "pnevent.h"
  
 #include "PNGLVideo.hpp"
@@ -53,31 +56,21 @@ PNStringParameter*  PNGLVideo::getPMoviePlayer()
 
 //////////////////////////////////////////////////////////////////////////
 
-PNGLVideo::PNGLVideo()
+PNGLVideo::PNGLVideo(const std::string& path)
 {
-  _startedEventType = PN_EVENT_VIDEO_STARTED;
-  _stopedEventType = PN_EVENT_VIDEO_ENDED;
+  _path = path;
 }
 
 PNGLVideo::~PNGLVideo()
 {
 }
 
-pnint
-PNGLVideo::unserializeFromFile(const boost::filesystem::path& file)
-{
-  return PNEC_SUCCESS;
-}
+//////////////////////////////////////////////////////////////////////////
 
 pnuint
-PNGLVideo::startAnimation()
+PNGLVideo::play()
 {
-  printf("PNGLVideo::startAnimation()\n");
-
-  pnuint err = IPNAnimated::startAnimation();
-
-  if (err != PNEC_SUCCESS)
-    return err;
+  PNEventManager::getInstance()->addEvent(PN_EVENT_VIDEO_STARTED, this, NULL);
 
 #ifdef WIN32
   _command = (std::string&)_pMoviePlayer + " " + _path;
@@ -90,12 +83,24 @@ PNGLVideo::startAnimation()
   return PNEC_SUCCESS;
 }
 
+pnuint
+PNGLVideo::pause()
+{
+  return PNEC_NOT_IMPLEMENTED;
+}
+
+pnuint
+PNGLVideo::stop()
+{
+  return PNEC_NOT_IMPLEMENTED;
+}
+
 void
 PNGLVideo::_playVideo()
 {
   system(_command.c_str());
 
-  stopAnimation();
+  PNEventManager::getInstance()->addEvent(PN_EVENT_VIDEO_ENDED, this, NULL);
 
   delete this;
 }

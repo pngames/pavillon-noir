@@ -30,7 +30,7 @@
 #ifndef _PNT_FORMAT_H_
 # define _PNT_FORMAT_H_
 
-#include "pndefs.h"
+#include "pnbasetypes.h"
 #include "pnmath.h"
 
 #define PNT_EXT			"pnt"

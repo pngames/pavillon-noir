@@ -27,11 +27,15 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
+#include "pndefs.h"
+
+//////////////////////////////////////////////////////////////////////////
 
 #include <boost/filesystem/path.hpp>
 #include <boost/thread/recursive_mutex.hpp>
 
-#include "pndefs.h"
+//////////////////////////////////////////////////////////////////////////
+
 #include "pnerror.h"
 
 extern "C"

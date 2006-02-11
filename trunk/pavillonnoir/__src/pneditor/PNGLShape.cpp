@@ -41,6 +41,7 @@
 #include "PN3DObject.hpp"
 #include "PN3DSkeletonObject.hpp"
 #include "PNCharacter.hpp"
+#include "PNMatrixTR4f.hpp"
 
 #include "PNImportManager.hpp"
 #include "pnresources.h"
