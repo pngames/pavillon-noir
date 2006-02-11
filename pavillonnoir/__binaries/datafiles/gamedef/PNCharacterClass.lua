@@ -141,22 +141,22 @@ function PNCharacterClass(id)
 	------------------- Jump Parameter ------------------------
 	OBJ.JumpHeight= 0;
 	--------------- Animation parameters ---------------------- 
-	OBJ:setAnimSpeed(10.0)
+	--OBJ:setAnimSpeed(100.0)
 	OBJ.idleTime = 0
-	OBJ.waitedAnim = -1
-	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_F, true)
-	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_B, true)
-	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_R, true)
-	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_L, true)
-	OBJ:setEnableLoop(CHARACTER_ANIM.RUN_F, true)
-	OBJ:setEnableLoop(CHARACTER_ANIM.RUN_B, true)
-	OBJ:setEnableLoop(CHARACTER_ANIM.RUN_L, true)
-	OBJ:setEnableLoop(CHARACTER_ANIM.RUN_R, true)
-	OBJ:setEnableLoop(CHARACTER_ANIM.CROUCH_F, true)
-	OBJ:setEnableLoop(CHARACTER_ANIM.CROUCH_B, true)
-	OBJ:setEnableLoop(CHARACTER_ANIM.CROUCH, true)		
-	OBJ:setEnableLoop(CHARACTER_ANIM.IDLE, true)
-	--OBJ:setEnableLoop(CHARACTER_ANIM.DIE, true)
+-- 	OBJ.waitedAnim = -1
+-- 	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_F, true)
+-- 	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_B, true)
+-- 	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_R, true)
+-- 	OBJ:setEnableLoop(CHARACTER_ANIM.WALK_L, true)
+-- 	OBJ:setEnableLoop(CHARACTER_ANIM.RUN_F, true)
+-- 	OBJ:setEnableLoop(CHARACTER_ANIM.RUN_B, true)
+-- 	OBJ:setEnableLoop(CHARACTER_ANIM.RUN_L, true)
+-- 	OBJ:setEnableLoop(CHARACTER_ANIM.RUN_R, true)
+-- 	OBJ:setEnableLoop(CHARACTER_ANIM.CROUCH_F, true)
+-- 	OBJ:setEnableLoop(CHARACTER_ANIM.CROUCH_B, true)
+-- 	OBJ:setEnableLoop(CHARACTER_ANIM.CROUCH, true)		
+-- 	OBJ:setEnableLoop(CHARACTER_ANIM.IDLE, true)
+-- 	--OBJ:setEnableLoop(CHARACTER_ANIM.DIE, true)
 	----------------- Fight Management ------------------------ 
 	OBJ.armor = 0
 	gameMap.fights[OBJ.id] = -1
@@ -585,10 +585,10 @@ Launches an Animation and waits for its end
 			print("function OBJ:getItem(item)2")
 			self.items.weapons[item.type] = item
 			item:setPositionTarget(self)
-			--item:setPositionBoneTarget("Bip01 Head")
+			item:setPositionBoneTarget("Bip01 R Hand")
 	        item:addTargetMode(PN3DObject.TMODE_POSITION_ABS_LOCKED)
 	        item:setViewTarget(self)
-			--item:setViewBoneTarget("Bip01 Head")
+			item:setViewBoneTarget("Bip01 R Hand")
 	        item:addTargetMode(PN3DObject.TMODE_ORIENTATION_ABS_LOCKED)
 			item:setVisible(false)
 			item.isHold = true
