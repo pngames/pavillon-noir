@@ -335,10 +335,10 @@ PNEventManager::run()
 	  pnevent& event = _events.front();
 
 	  type = event.type;
-	  if (type == PN_EVENT_F_IN)
-		pnerror(PN_LOGLVL_DEBUG, "managing frustrum in event");
-	  else
-		pnerror(PN_LOGLVL_DEBUG, "managing some other event: %d", type);
+	  //if (type == PN_EVENT_F_IN)
+		//pnerror(PN_LOGLVL_DEBUG, "managing frustrum in event");
+	  //else
+		//pnerror(PN_LOGLVL_DEBUG, "managing some other event: %d", type);
 	  source = event.source;
 	  data = event.data;
 
@@ -370,8 +370,8 @@ PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* data, 
 
   PNLOCK(this);
 
-  if (type == PN_EVENT_F_IN)
-	pnerror(PN_LOGLVL_DEBUG, "adding frustrum in event");
+  //if (type == PN_EVENT_F_IN)
+	//pnerror(PN_LOGLVL_DEBUG, "adding frustrum in event");
   _events.push(pnevent(type, source, data));
 
   if (_events.size() == 1)
