@@ -34,6 +34,7 @@
 #include <list>
 #include <iterator>
 
+
 #include <libxml/xmlreader.h>
 
 #include "IPNXMLSerializable.hpp"
@@ -46,18 +47,18 @@ namespace PN {
 	std::string						_id;
 	std::string						_name;
 	xmlNode*						_currentNode;
-	std::list<std::string>*			_resolvedDependencies;
-
+	typedef std::list<std::string>			ListResolvedDependencies;
+	ListResolvedDependencies				_resolvedDependencies;
+	xmlDocPtr						_doc;
 	//////////////////////////////////////////////////////////////////////////
 	
 	bool							isAResolvedDep(std::string depID);
 	bool							buddyIsAvailable(xmlNodePtr node);
 
   public:
-	
 	xmlNode* getCurrentNode();
 	PNChatTree();
-	PNChatTree(std::list<std::string>* _resolvedDependencies);
+	PNChatTree(ListResolvedDependencies& _resolvedDependencies);
 	~PNChatTree();
 	
 	//////////////////////////////////////////////////////////////////////////
@@ -72,7 +73,7 @@ namespace PN {
 	virtual pnint					unserializeFromXML(xmlNode* node);
 
   public:
-	void							addDependency(std::string dependency);
+	void							setListDependencies(ListResolvedDependencies& deps);
 	xmlNode*						getBuddyNode(xmlNode* currentNode);
   };
 

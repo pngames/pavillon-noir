@@ -31,9 +31,11 @@
 #define _PNGUICHATWINDOW_HPP_
 
 #include <vector>
-
+#include <libxml/xmlreader.h>
+#include <list>
 #include "myCEGUI.h"
 
+#include "PNChatTree.hpp"
 
 namespace PN
 {
@@ -50,6 +52,13 @@ namespace PN
 	CEGUI::Listbox*	_listBox;
 	CEGUI::StaticText* _textQuestion;
 	std::string _currentChatXml;
+	typedef std::list<std::string>			ListResolvedDependencies;
+	ListResolvedDependencies				_resolvedDependencies;
+	PNChatTree* _chatTree;
+	xmlNode* _currentNode;
+	bool _quitBuddy;
+
+
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
@@ -64,7 +73,9 @@ namespace PN
 	void  show();
 	bool  handleListBox(const CEGUI::EventArgs& e);
 	bool  handleValid(const CEGUI::EventArgs& e);
-	void  updateItems(const std::string question, std::vector<std::string> responses);
+	void  updateItems(xmlNode* node);
+	 void	showNextBuddy(xmlNode* node);
+	 void setMapChatPath(std::string id_player);
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
