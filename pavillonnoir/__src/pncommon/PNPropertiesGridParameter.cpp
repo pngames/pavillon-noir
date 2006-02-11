@@ -62,7 +62,7 @@ PNPropertiesGridParameter::sendParamModif()
   if (_param->getConfigurableObject())
   {
 	_param->getConfigurableObject()->update(_param);
-	_param->getConfigurableObject()->setModified();
+	_param->setModified();
   }
 }
 

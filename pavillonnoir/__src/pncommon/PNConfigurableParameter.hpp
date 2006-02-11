@@ -88,14 +88,16 @@ protected:
   std::string					_altText;
   pnbool						_editable;
 
+  pnbool						_enableSetModified;
+
   pnuint						_serialization;
 
 protected:
-  PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, const std::string& label, const std::string& altText, pnbool editable = true, void* max = NULL, void* min = NULL);
+  PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, const std::string& label, const std::string& altText, pnbool editable = true, void* max = NULL, void* min = NULL, pnbool enableSetModified = false);
 
-  void							_init(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, pnbool editable, void* max, void* min);
+  void							_init(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, pnbool editable, void* max, void* min, pnbool enableSetModified);
 public:
-  PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, pnbool editable = true, void* max = NULL, void* min = NULL);
+  PNConfigurableParameter(PNConfigurableObject* p, pnparamtype type, void* elem, const std::string& label, const std::string& altText, pnbool editable = true, void* max = NULL, void* min = NULL, pnbool enableSetModified = false);
   virtual ~PNConfigurableParameter();
 
   pnparamtype					getType();
@@ -111,6 +113,9 @@ public:
 
   PNConfigurableObject*			getConfigurableObject();
   void							setConfigurableObject(PNConfigurableObject* object);
+
+  void							enableSetModified(pnbool modified);
+  void							setModified();
 
   //////////////////////////////////////////////////////////////////////////
   

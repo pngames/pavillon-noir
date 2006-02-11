@@ -182,20 +182,35 @@ PNGLShape::buildParams()
   _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &position.y, "position y", "position y"));
   _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &position.z, "position z", "position z"));
   _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_STRING, &_classStr, "class", "class"));
+
   if (_obj->getObjType() == PN3DObject::OBJTYPE_WAYPOINT)
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_LINK, _obj, "links", "links")); // FIXME _obj should'nt be given as param
   else
   {
+	_pOrientX = new PNConfigurableParameter(this, PN_PARAMTYPE_DIALX, _obj, "Pitch", "Pitch");
+	_pOrientY = new PNConfigurableParameter(this, PN_PARAMTYPE_DIALY, _obj, "Yaw", "Yaw");
+	_pOrientZ = new PNConfigurableParameter(this, PN_PARAMTYPE_DIALZ, _obj, "Roll", "Roll");
+	_pMaterialList = new PNConfigurableParameterList(this, PN_LISTPARAMTYPE_MATERIAL, (void*)&_obj->getMaterials(), "Materials", "Materials");
+	_pScriptList = new PNConfigurableParameter(this, PN_PARAMTYPE_SCRIPTLIST, &_scripts, "Events & Scripts", "Events & Scripts");
+	
+	_pMaterialList->enableSetModified(true);
+	_pScriptList->enableSetModified(true);
+
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_STRING, &_label, "label", "label"));
 	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_FILE, &_temppath, "model", "model"));
-	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_DIALX, _obj, "Pitch", "Pitch"));
-	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_DIALY, _obj, "Yaw", "Yaw"));
-	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_DIALZ, _obj, "Roll", "Roll"));
-	_params.push_back(new PNConfigurableParameterList(this, PN_LISTPARAMTYPE_MATERIAL, (void*)&_obj->getMaterials(), "Materials", "Materials"));
-	_params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_SCRIPTLIST, &_scripts, "Events & Scripts", "Events & Scripts"));
+	_params.push_back(_pOrientX);
+	_params.push_back(_pOrientY);
+	_params.push_back(_pOrientZ);
+	_params.push_back(_pMaterialList);
+	_params.push_back(_pScriptList);
 
 	if (_obj->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ)
-	  _params.push_back(new PNConfigurableParameterList(this, PN_LISTPARAMTYPE_ANIM, (void*)&((PN3DSkeletonObject*)_obj)->getAnimations(), "Animations", "Animations"));
+	{
+	  PNConfigurableParameterList* pAnimList = new PNConfigurableParameterList(this, PN_LISTPARAMTYPE_ANIM, (void*)&((PN3DSkeletonObject*)_obj)->getAnimations(), "Animations", "Animations");
+	  pAnimList->enableSetModified(true);
+
+	  _params.push_back(pAnimList);
+	}
   }
 
   _panel->addObject(this);
@@ -218,7 +233,8 @@ PNGLShape::setPosFromObj()
 }
 
 // overloaded function to update the PN3DObject coords
-FXbool	PNGLShape::drag(FXGLViewer* viewer,FXint fx,FXint fy,FXint tx,FXint ty)
+FXbool
+PNGLShape::drag(FXGLViewer* viewer,FXint fx,FXint fy,FXint tx,FXint ty)
 {
   //pnerror(PN_LOGLVL_DEBUG, "FXbool	PNGLShape::drag(FXGLViewer* viewer,FXint fx,FXint fy,FXint tx,FXint ty)");
   if (_canDrag)
@@ -235,7 +251,8 @@ FXbool	PNGLShape::drag(FXGLViewer* viewer,FXint fx,FXint fy,FXint tx,FXint ty)
 }
 
 // Draw this object in a viewer
-void PNGLShape::drawshape(FXGLViewer* v)
+void
+PNGLShape::drawshape(FXGLViewer* v)
 {
   PNMatrixTR4f	m;
 
@@ -293,7 +310,8 @@ PNGLShape::selfRemove()
 
 //////////////////////////////////////////////////////////////////////////
 
-void PNGLShape::update(PNConfigurableParameter* p)
+void
+PNGLShape::update(PNConfigurableParameter* p)
 {
   if (p->getElem() == &position.x || p->getElem() == &position.y || p->getElem() == &position.z)
 	_obj->setCoord(position.x, position.y, position.z);
@@ -310,7 +328,8 @@ void PNGLShape::update(PNConfigurableParameter* p)
   return;
 }
 
-int PNGLShape::getNbParameters()
+int
+PNGLShape::getNbParameters()
 {
   return _params.size();
 }
@@ -320,17 +339,20 @@ PNConfigurableParameter* PNGLShape::getParameter(int idx)
   return _params[idx];
 }
 
-void			PNGLShape::makeViewerCurrent()
+void
+PNGLShape::makeViewerCurrent()
 {
   _ed->makeViewerCurrent();
 }
 
-void			PNGLShape::makeViewerNonCurrent()
+void
+PNGLShape::makeViewerNonCurrent()
 {
   _ed->makeViewerNonCurrent();
 }
 
-void			PNGLShape::reset()
+void
+PNGLShape::reset()
 {
   _obj->unserialize();
   setUnmodified();
@@ -449,6 +471,8 @@ PNGLShape::unserializeFromXML(xmlNode* root)
 	  pnerror(PN_LOGLVL_ERROR, "%s%s : %s", DEF::objectFilePath.c_str(), mdref.c_str(), pnGetErrorString(obj_error));
 	  return obj_error;
 	}
+
+	setUnmodified();
   }
   else
   {

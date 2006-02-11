@@ -81,6 +81,14 @@ class						PNGLShape : public FXGLShape, public PNConfigurableObject
   std::string		  		_classStr;
   scriptMap			  		_scripts;
   bool						_modified;
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  PNConfigurableParameter*		_pOrientX;
+  PNConfigurableParameter*		_pOrientY;
+  PNConfigurableParameter*		_pOrientZ;
+  PNConfigurableParameterList*	_pMaterialList;
+  PNConfigurableParameter*		_pScriptList;
 protected:
   PNGLShape();
 public:
