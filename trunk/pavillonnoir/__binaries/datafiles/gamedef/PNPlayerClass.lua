@@ -30,6 +30,7 @@ function PNPlayerClass(id)
 						    
     OBJ.realCharacType = CHARACTER_TYPE.PIRATE
 	OBJ.shownCharacType = CHARACTER_TYPE.PIRATE
+   	GUIChangeLife(OBJ.health_state)
 -----------------------------------------------------------
 	function OBJ:onMouseLook(x, y)
 		self:rotateYawRadians(math.rad(x))	
@@ -113,6 +114,7 @@ Call at the start of a map
 	function OBJ:onInit()
         self:PNCharacter_onInit()
 		pnprint(self.id .. ":onInit()\n")
+   		GUIChangeLife(OBJ.health_state)
 	    --[[
 	     self.view = PNRenderCam
 	     self.view:setPositionTarget(OBJ)
@@ -148,7 +150,7 @@ Call when player push the primary attack button
 			pnprint ("Player wants to fight\n")
 			-- loop on entities seen by the player
 			for id, entity in pairs(self.seen_entities) do
-				if ((isInstanceOf(entity, "PNCharacter")) and (entity.health_state < HEALTH_STATE.COMA)) then 
+				if ((isInstanceOf(entity, "PNCharacter")) and (entity.health_state <= HEALTH_STATE.COMA)) then 
 					pnprint("He can attack " .. id .. "\n")
 					local distance = self:getCoord():getDistance(entity:getCoord())
 					-- select the nearest entity seen by the player
@@ -171,6 +173,19 @@ Call when player push the primary attack button
 			end
 		end
 		--@TODO: launch attack annimation
+	end
+-------------------------------------------------------------------------------
+--[[%
+Called at the Defense Action
+%--]]
+	OVERRIDE(OBJ, "onDefense")
+	function OBJ:onDefense(state)	
+		--print("[LUA] onDefense "..state)
+		if (state == ACTION_STATE.START) then
+			self.combat_state = COMBAT_STATE.DEFENSE
+		else
+			self.combat_state = COMBAT_STATE.NEUTRAL
+		end
 	end
 ---------------------------------------------------------
 	OVERRIDE(OBJ, "startFight")
@@ -207,7 +222,7 @@ Checks if waited Animation is the one that ended
 						pnprint("Actually it only is a coma\n")
 					end
 				end
-			elseif ((self.combat_state == COMBAT_STATE.ATTACK) or (self.combat_state == COMBAT_STATE.DEFENSE)) then -- if is fighting
+			elseif (self.combat_state == COMBAT_STATE.ATTACK) then -- if is fighting
 				pnprint("restoring Neutral combat state\n")
 				self.combat_state = COMBAT_STATE.NEUTRAL
 			end

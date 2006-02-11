@@ -111,7 +111,6 @@ function PNCharacterClass(id)
 	OBJ.state = OBJ.stateEnum.PN_IA_PASSIVE
 	OBJ.pastStates = {}
 	OBJ.restoreAtAnimEnd = false
-
 	--------------------------------------
 	OBJ.load_capacity = 10;
 	--------------------------------------
@@ -413,6 +412,13 @@ Sets the character's behaviour to the previous state on the stack
 			self:onMoveForward(ACTION_STATE.START)
 		end
 		pnprint("<= PNCharacter:restoreState()\n")
+	end
+--------------------------------------------------------
+--[[%
+Called when an ennemy enters the frustrum
+Prepares the Character to handle a fight
+%--]]
+	function OBJ:startFight(target)
 	end
 --------------------------------------------------------
 --[[%
