@@ -50,13 +50,13 @@ namespace PN {
 	typedef std::list<std::string>			ListResolvedDependencies;
 	ListResolvedDependencies				_resolvedDependencies;
 	xmlDocPtr						_doc;
+
 	//////////////////////////////////////////////////////////////////////////
 	
 	bool							isAResolvedDep(std::string depID);
 	bool							buddyIsAvailable(xmlNodePtr node);
 
   public:
-	xmlNode* getCurrentNode();
 	PNChatTree();
 	PNChatTree(ListResolvedDependencies& _resolvedDependencies);
 	~PNChatTree();
@@ -68,13 +68,14 @@ namespace PN {
 	virtual const std::string&		getDTDName() const;
 	virtual const std::string&		getRootNodeName() const;*/
 
-  
+	xmlNode*						getCurrentNode();  
 	virtual pnint					unserializeFromFile(const boost::filesystem::path& file);
 	virtual pnint					unserializeFromXML(xmlNode* node);
 
   public:
 	void							setListDependencies(ListResolvedDependencies& deps);
 	xmlNode*						getBuddyNode(xmlNode* currentNode);
+	xmlNode*						getNodeFromId(xmlNode* root, std::string NodeId);
   };
 
   //////////////////////////////////////////////////////////////////////////
