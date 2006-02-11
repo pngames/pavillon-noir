@@ -31,7 +31,7 @@
 
 #include "pndefs.h"
 #include "pnresources.h"
-#include "pnxml.h"
+#include "pnchatxml.h"
 #include "PNGUIChatWindow.hpp"
 #include "PNGUIGame.hpp"
 #include "PNConsole.hpp"
@@ -156,10 +156,10 @@ namespace PN
 	 
 	/* xmlNode* selNode = _chatTree->getNodeFromId(selNodeId);
 
-	 if ((const char*)xmlGetProp(selNode, PNXML_CHECKPOINT_ATTR) == "true")
+	 if ((const char*)xmlGetProp(selNode, PNCHATXML_CHECKPOINT_ATTR) == PNCHATXML_TRUE_VAL)
 	   _resolvedDependencies.push_back(selNodeId);
 	  
-	 if ((const char*)xmlGetProp(selNode, PNXML_QUIT_ATTR) == true)
+	 if ((const char*)xmlGetProp(selNode, PNCHATXML_QUIT_ATTR) == true)
 	 {
 	  resetGUI();
 	  return true;
@@ -183,21 +183,21 @@ namespace PN
   void  PNGUIChatWindow::updateItems(xmlNode* node)
   {
 	_quitBuddy = false;
-	xmlChar* quit = xmlGetProp(node, PNXML_QUIT_ATTR);
-	if (quit!= NULL && strcmp((const char*)quit,"true") == 0)
+	xmlChar* quit = xmlGetProp(node, PNCHATXML_QUIT_ATTR);
+	if (quit!= NULL && strcmp((const char*)quit, (const char*)PNCHATXML_TRUE_VAL) == 0)
 	  _quitBuddy = true;
 
-	_textQuestion->setText((const char*)xmlGetProp(node, PNXML_SENTENCE_ATTR));
+	_textQuestion->setText((const char*)xmlGetProp(node, PNCHATXML_SENTENCE_ATTR));
 	_listBox->resetList();
 
 	if (!_quitBuddy && node->children != NULL)
 	{
 	  for (xmlNodePtr sub = node->children; sub != NULL; sub = sub->next)
 	  {
-		if (xmlStrEqual(sub->name, PNXML_PLAYER_MKP))
+		if (xmlStrEqual(sub->name, PNCHATXML_PLAYER_MKP))
 		{
-		  CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem((const char*)xmlGetProp(sub, PNXML_ANSWER_ATTR));
-		  item->setID((unsigned int)xmlGetProp(sub, PNXML_ID_ATTR));
+		  CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem((const char*)xmlGetProp(sub, PNCHATXML_ANSWER_ATTR));
+		  item->setID((unsigned int)xmlGetProp(sub, PNCHATXML_ID_ATTR));
 		  item->setSelectionBrushImage((CEGUI::utf8*)"Vanilla-Images", (CEGUI::utf8*)"GenericBrush");
 		  item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
 		  _listBox->addItem(item);
