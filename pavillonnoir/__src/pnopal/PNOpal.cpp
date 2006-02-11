@@ -54,6 +54,7 @@
 #define DEFAULT_FORCE_DURATION 0.0f
 #define DEFAULT_TORQUE_MAGNITUDE 2.0f
 #define DEFAULT_ANTIGRAVITY 50.0f
+#define DEFAULT_ANTIGRAVITY_CONSTANT 0.2f
 
 using namespace std;
 
@@ -277,7 +278,6 @@ void	PNOpal::setAllPhysicalObjectsStatic(bool state)
 
 /** Set opal objects coordinates and orientation from PN3DObjects's data
 */
-
 void	PNOpal::pn2opal()
 {
   for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
@@ -312,7 +312,7 @@ void	PNOpal::opal2pn()
 
 	pnfloat mpp = PNGameInterface::getInstance()->getGameMap()->getMpp();
 	PN3DObject* object = it->second;
-	PNPhysicalObject* physicalObject = object->getPhysicalObject();
+	PNOpalObject* physicalObject = (PNOpalObject*)object->getPhysicalObject();
 	if (physicalObject != NULL)
 	{
 	  PNLOCK_BEGIN(object);
@@ -321,17 +321,18 @@ void	PNOpal::opal2pn()
 		const PNPoint3f& offset = physicalObject->getOffset();
 		const PNQuatf& orient = physicalObject->getOrient();
 		
+		// FIXME (need some fine tuning)
 		// elevates the players from the ground (a little bit)
-		if (object->getId() == "Player")
+		if (object->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ)
 		{
-		  opal::RaycastResult result = ((PNOpalObject*)physicalObject)->getPlayerSensor()->fireRay(100);
+		  opal::RaycastResult result = physicalObject->getPlayerSensor()->fireRay(physicalObject->getRayLenght());
 		  opal::Point3r hitPoint = result.intersection;
 		  opal::Solid* hitSolid = result.solid;
 
-		  if (result.distance != 0.0 && result.distance < 0.4)
+		  if (result.distance != 0.0 && result.distance < physicalObject->getDesiredHeight() + DEFAULT_ANTIGRAVITY_CONSTANT)
 		  {
 			//pnerror(PN_LOGLVL_INFO, "Player sensor, Y: %f", result.distance);
-			((PNOpalObject*)physicalObject)->addForce(PNVector3f::UNIT_Y, (0.4f - (pnfloat)result.distance) * DEFAULT_ANTIGRAVITY, 0.0f, true);
+			physicalObject->addForce(PNVector3f::UNIT_Y, (physicalObject->getDesiredHeight() - (pnfloat)result.distance) * DEFAULT_ANTIGRAVITY, 0.0f, true);
 		  }
 		}
 		
