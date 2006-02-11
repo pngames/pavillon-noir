@@ -1,53 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE chat SYSTEM "../../chats.dtd">
 <chat name="toto" id="CHAT-TOTO">
 
   <buddy id="CHAT-TOTO_buddy_1" name="toto" sentence="Bonjour, je m'appelle toto, comment ca va bien?">
     <depends id="CHAT-TOTO_player_0" />
-    <player id="CHAT-TOTO_player_1" response="Bien">
+    <player id="CHAT-TOTO_player_1" answer="Bien">
       
       <buddy id="CHAT-TOTO_buddy_1_1" sentence="Tu vas au bal ce soir ?">
 
-        <player id="CHAT-TOTO_player_1_1" response="Oui">
+        <player id="CHAT-TOTO_player_1_1" answer="Oui">
           <buddy id="CHAT-TOTO_buddy_1_1_1" sentence="Tu as un cavalier ?">
 
-            <player id="CHAT-TOTO_player_1_1_1" response="Je suis TRES presse" quit="true" />
+            <player id="CHAT-TOTO_player_1_1_1" answer="Je suis TRES presse" quit="true" />
   
           </buddy>
         </player>
       
-        <player id="CHAT-TOTO_player_1_2" response="Non">
+        <player id="CHAT-TOTO_player_1_2" answer="Non">
           <buddy id="CHAT-TOTO_buddy_1_2_1" sentence="Gros nul!" quit="true" />
         </player>
 
-        <player id="CHAT-TOTO_player_1_3" response="Je suis presse" quit="true"/>
+        <player id="CHAT-TOTO_player_1_3" answer="Je suis presse" quit="true"/>
 
       </buddy>
       
     </player>
 
-    <player id="CHAT-TOTO_player_2" response="Pas bien">
+    <player id="CHAT-TOTO_player_2" answer="Pas bien">
       <buddy id="CHAT-TOTO_buddy_2_1" sentence="Tu as la collique ?">
 
-        <player id="CHAT-TOTO_player_2_1" response="Oui" checkpoint="true">
+        <player id="CHAT-TOTO_player_2_1" answer="Oui" checkpoint="true">
           <buddy id="CHAT-TOTO_buddy_2_1_1" sentence="Gros nul!" quit="true" />
         </player>
 
-        <player id="CHAT-TOTO_player_2_2" response="Non">
+        <player id="CHAT-TOTO_player_2_2" answer="Non">
           <buddy id="CHAT-TOTO_buddy_2_2_1" sentence="Gros nul!" quit="true" />
         </player>
 
       </buddy>
     </player>
 
-    <player id="CHAT-TOTO_player_3" response="Non rien desole." quit="true" />
+    <player id="CHAT-TOTO_player_3" answer="Non rien desole." quit="true" />
   </buddy>
   
   <!-- Default buddy -->
   <buddy id="CHAT-TOTO_buddy_0" name="toto" sentence="Hello">
-    <player id="CHAT-TOTO_player_0_0" response="Hello">
+    <player id="CHAT-TOTO_player_0_0" answer="Hello">
         <buddy id="CHAT-TOTO_buddy_0_0" name="toto" sentence="You say stop and I say go, go, go Oh, no You say goodbye and I say hello Hello, hello I don't know why you say goodbye I say hello Hello, hello I don't know why you say goodbye Isay hello" quit="true" />
     </player>
-    <player id="CHAT-TOTO_player_0_1" response="Goodbye" quit="true" />
-    <player id="CHAT-TOTO_player_0_2" response="Yesterday" checkpoint="true">
+    <player id="CHAT-TOTO_player_0_1" answer="Goodbye" quit="true" />
+    <player id="CHAT-TOTO_player_0_2" answer="Yesterday" checkpoint="true">
         <buddy id="CHAT-TOTO_buddy_0_1" name="toto" sentence="Goodbye !" quit="true" />
     </player>
   </buddy>

@@ -55,13 +55,11 @@ namespace PN
 	_listBox = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Listbox");	
 	_textQuestion = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Text");
 
-
 	//_listBox->subscribeEvent(CEGUI::Listbox::EventSelectionChanged, CEGUI::Event::Subscriber(&PNGUIChatWindow::handleListBox, this));
 	CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/ButtonValid")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIChatWindow::handleValid, this));
 
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 	hide();
-	
   }
 
   PNGUIChatWindow::~PNGUIChatWindow()
@@ -92,10 +90,16 @@ namespace PN
 	_chatTree = new PNChatTree();
 	fs::path file(_currentChatXml, fs::no_check);
 
-	_chatTree->unserializeFromFile(file);
+ 	_chatTree->unserializeFromFile(file);
 
-	showNextBuddy(_chatTree->getCurrentNode());
-	
+	if (showNextBuddy(_chatTree->getCurrentNode()))
+	{
+	  show();
+	}
+	else
+	{
+	  hide();
+	}
 	/*std::vector<std::string> responses;
 	responses.push_back("l'amour");
 	responses.push_back("le jeu");
@@ -104,8 +108,6 @@ namespace PN
 	responses.push_back("la picole");
 	responses.push_back("la drogue");
 	*/
-
-	show();
   }
 
   void	PNGUIChatWindow::resetGUI()
@@ -174,12 +176,16 @@ namespace PN
   }
 
 
-  void	PNGUIChatWindow::showNextBuddy(xmlNode* node)
+  bool	PNGUIChatWindow::showNextBuddy(xmlNode* node)
   {
 	_chatTree->setListDependencies(_resolvedDependencies);
 	_currentNode = _chatTree->getBuddyNode(node);
 	// si currentNode est null (pas de buddy dispo) quitter mode chat ?
+	if (_currentNode == NULL)
+	  return false;
+	// --
 	updateItems(_currentNode);
+	return true;
   }
 
   void  PNGUIChatWindow::updateItems(xmlNode* node)
@@ -220,9 +226,7 @@ namespace PN
 	  item->setSelectionBrushImage((CEGUI::utf8*)"Vanilla-Images", (CEGUI::utf8*)"GenericBrush");
 	  item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
 	  _listBox->addItem(item);
-	}
-
-*/	
+	}*/	
   }
 
 }

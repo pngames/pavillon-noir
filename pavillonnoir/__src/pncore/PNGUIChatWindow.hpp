@@ -74,7 +74,7 @@ namespace PN
 	bool  handleListBox(const CEGUI::EventArgs& e);
 	bool  handleValid(const CEGUI::EventArgs& e);
 	void  updateItems(xmlNode* node);
-	 void	showNextBuddy(xmlNode* node);
+	 bool	showNextBuddy(xmlNode* node);
 	 void setMapChatPath(std::string id_player);
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
