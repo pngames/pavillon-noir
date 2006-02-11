@@ -42,7 +42,7 @@ public:
   ~PNOpalImporter();
 
   //////////////////////////////////////////////////////////////////////////
-  // PNIImporter
+  // PNOpalImporter
 
   bool  				isManaged(const std::string& file);
   IPNImportedObject*	doImport(const std::string& file);
