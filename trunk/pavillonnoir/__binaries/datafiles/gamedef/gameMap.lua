@@ -58,7 +58,7 @@ end
 -------------------------------------------------------------------------------
 
 function gameMap:onUpdate(deltaTime)
-	pnprint("=> LUA GameMap: onUpdate()\n")
+	--pnprint("=> LUA GameMap: onUpdate()\n")
 	--local id
 	--local entity
 	self.timer:onUpdate(deltaTime);
@@ -66,12 +66,12 @@ function gameMap:onUpdate(deltaTime)
 	for id, entity in pairs(self.entities.all) do
 	    --print("==>> gameMap:updateLua()")
 	    --print(entity)
-	    print(id)
+	    --print(id)
 	    entity:onUpdate(deltaTime)
 		--print("<<== gameMap:updateLua()\n\n")
 	end
 	    --print("#######################################################\n")
-	pnprint("<= LUA GameMap: onUpdate()\n")
+	--pnprint("<= LUA GameMap: onUpdate()\n")
 end
 -------------------------------------------------------------------------------
 
