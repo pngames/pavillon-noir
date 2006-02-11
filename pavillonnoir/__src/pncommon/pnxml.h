@@ -89,7 +89,7 @@ static const std::string	PNCHAT_XMLNODE_ROOT		= PNCHAT_XMLDTD_NAME;
 // Chat
 #define PNXML_BUDDYNAME_ATTR		(const xmlChar *)"name"
 #define PNXML_SENTENCE_ATTR			(const xmlChar *)"sentence"
-#define PNXML_ANSWER_ATTR			(const xmlChar *)"answer"
+#define PNXML_ANSWER_ATTR			(const xmlChar *)"response"
 #define PNXML_QUIT_ATTR				(const xmlChar *)"quit"
 #define PNXML_CHECKPOINT_ATTR		(const xmlChar *)"checkpoint"
 
