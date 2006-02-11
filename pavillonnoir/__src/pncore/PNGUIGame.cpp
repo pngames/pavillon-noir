@@ -967,7 +967,7 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Run",playerid,"null",false));
     break;
   case CEGUI::Key::Space:
-	//PNGUIChatWindow::getInstance()->startGUI("id_1");
+	PNGUIChatWindow::getInstance()->startGUI("id_1");
 	break;
   default:
 	std::cout << "not managed key";
