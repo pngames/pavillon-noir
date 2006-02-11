@@ -20,23 +20,23 @@
       </listmaterials>
       <skeleton path="[non-free]pirate.pns"/>
       <listanims>
-        <anim path="[non-free]pirate_idle.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_walk.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_walk.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_walk.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_walk.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_run.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_run.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_run.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_run.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_crouch.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_walk_crouch.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_walk_crouch.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_walk_crouch.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_walk_crouch.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_jump.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_die.pna" loop="false" step="-1" speed="1" weight="1"/>
-        <anim path="[non-free]pirate_shoot.pna" loop="false" step="-1" speed="1" weight="1"/>
+        <anim path="[non-free]pirate_idle.pna" loop="true" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_walk.pna" loop="true" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_walk.pna" loop="true" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_walk.pna" loop="true" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_walk.pna" loop="true" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_run.pna" loop="true" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_run.pna" loop="true" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_run.pna" loop="true" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_run.pna" loop="true" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_crouch.pna" loop="true" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_walk_crouch.pna" loop="true" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_walk_crouch.pna" loop="true" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_walk_crouch.pna" loop="true" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_walk_crouch.pna" loop="true" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_jump.pna" loop="false" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_die.pna" loop="false" step="-1" speed="4.0" weight="1"/>
+        <anim path="[non-free]pirate_shoot.pna" loop="false" step="-1" speed="4.0" weight="1"/>
       </listanims>
     </object>
   </entity>
