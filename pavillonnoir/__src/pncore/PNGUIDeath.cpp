@@ -50,8 +50,7 @@ namespace PN
 	_pnStatText = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIDeath/BackMenuText");
 	_pnStatText->hide();
 
-	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("DeathImages") == false)
-	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/DeathScreen.imageset");
+
 	
 	_deathImage = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "DeathImages/DeathScreen");
 	_deathImage->setImage("DeathImages", "DeathImages/DeathScreen");
