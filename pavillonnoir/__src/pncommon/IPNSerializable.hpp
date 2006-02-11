@@ -30,11 +30,12 @@
 #ifndef _IPNSERIALIZATION_HPP_
 # define _IPNSERIALIZATION_HPP_
 
-#include <boost/filesystem/path.hpp>
 #include <iostream>
+#include <string>
 
-namespace PN
-{
+namespace boost { namespace filesystem { class path; };};
+
+namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
 class PNAPI							IPNSerializable

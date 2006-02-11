@@ -27,16 +27,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string>
-using namespace std;
-
-/////////////////////////////////////
-
 #include "pndefs.h"
+#include "pnmath.h"
 #include "PNVector3f.hpp"
+
+//////////////////////////////////////////////////////////////////////////
+
+using namespace PN;
+using namespace std;
 
 /////////////////////////////////////
 

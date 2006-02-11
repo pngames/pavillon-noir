@@ -163,7 +163,7 @@ typedef enum
 
   PN_EVENT_RU_START,			/// event occurred when render engine start frame
   PN_EVENT_RU_STARTING,			/// event occurred when render engine starting frame
-  PN_EVENT_RU_END,			/// event occurred when render engine end frame
+  PN_EVENT_RU_END,				/// event occurred when render engine end frame
   PN_EVENT_RU_ENDING,			/// event occurred when render engine ending frame
   PN_EVENT_RSU_STARTING,		/// event occurred when scene rendering starting
   PN_EVENT_RSU_ENDING,			/// event occurred when scene rendering finishing

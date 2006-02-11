@@ -31,43 +31,35 @@
 # define _PNGLVIDEO_HPP_
 
 #include <string>
-#include <boost/filesystem/path.hpp>
-
-#ifndef WIN32
-# include <X11/X.h>
-# include <X11/Xlib.h>
-# include <X11/Xutil.h>
-
-# include <xine.h>
-# include <xine/xineutils.h>
-#endif
 
 #include "pnproperties.h"
 
 #include "PNObject.hpp"
-#include "IPNAnimated.hpp"
-#include "IPNSerializable.hpp"
 
 namespace PN {
+//////////////////////////////////////////////////////////////////////////
 	
-class				PNGLVideo : public PNObject, public IPNAnimated, public IPNSerializable
+class						PNGLVideo : public PNObject
 {
+  std::string				_path;
+
   static PNStringParameter	_pMoviePlayer;
 public:
-  static PNStringParameter*  getPMoviePlayer();
+  static PNStringParameter*	getPMoviePlayer();
 public:
-  PNGLVideo();
+  PNGLVideo(const std::string& path);
   ~PNGLVideo();
 
-  pnint				unserializeFromFile(const boost::filesystem::path& file);
-	
-  pnuint			startAnimation();
+  pnuint					play();
+  pnuint					pause();
+  pnuint					stop();
 private:
-  std::string		_command;
+  std::string				_command;
 
-  void				_playVideo();
+  void						_playVideo();
 };
 
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PNGLVIDEO_HPP_*/

@@ -268,6 +268,10 @@
 				Name="types"
 				>
 				<File
+					RelativePath="..\..\..\__src\pncommon\pnbasetypes.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\__src\pncommon\PNBaseValue.hpp"
 					>
 				</File>
@@ -284,7 +288,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\__src\pncommon\pnobject_base_types.h"
+					RelativePath="..\..\..\__src\pncommon\pntypes.h"
 					>
 				</File>
 				<File

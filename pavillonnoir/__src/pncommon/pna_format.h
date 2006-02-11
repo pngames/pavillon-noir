@@ -30,7 +30,7 @@
 #ifndef	_PNA_FORMAT_H_
 # define _PNA_FORMAT_H_
 
-#include "pndefs.h"
+#include "pnbasetypes.h"
 #include "pnmath.h"
 
 #define PNA_EXT			"pna"

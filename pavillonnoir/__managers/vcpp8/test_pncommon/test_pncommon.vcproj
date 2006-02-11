@@ -118,7 +118,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/common/;../../../__library/win32/include/"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;BOOST_ALL_DYN_LINK;BOOST_THREAD_USE_DLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -138,6 +139,7 @@
 				Name="VCLinkerTool"
 				OutputFile="..\..\..\__binaries\win32\$(ProjectName)-dbg.exe"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"

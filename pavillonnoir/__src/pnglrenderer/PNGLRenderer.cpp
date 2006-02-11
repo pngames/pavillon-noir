@@ -216,11 +216,9 @@ PNGLRenderer::_onPlayVideo(pnEventType type, PNObject* source, PNEventData* ed)
 {
   PNVideoEventData*	videoEventData = (PNVideoEventData*)ed;
 
-  PNGLVideo*	video = new PNGLVideo();
+  PNGLVideo*	video = new PNGLVideo(videoEventData->path);
   
-  video->unserializeFromFile(fs::path(videoEventData->path, fs::native));
-  
-  video->startAnimation();
+  video->play();
 }
 
 //////////////////////////////////////////////////////////////////////////

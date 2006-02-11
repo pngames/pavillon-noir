@@ -32,6 +32,7 @@
 #include "pndefs.h"
 #include "pnmath.h"
 
+#include "PNMatrixTR4f.hpp"
 #include "PNGLRendererCamera.hpp"
 #include "PNQuatf.hpp"
 

@@ -73,6 +73,7 @@ private:
   AnimationSet				_animsToPlay;
 
   pnfloat					_defaultAnimSpeed;
+  pnfloat					_defaultAnimWeight;
 
   pnuint					_animTransTime;
   pnfloat					_animTransitionStep;
@@ -123,9 +124,6 @@ public:
   pnuint					setEnableLoop(pnint animId, pnbool loop);
 
   //////////////////////////////////////////////////////////////////////////
-
-  /// Set animation to play and the time used to make the transition between last animation and this
-  PNDEPRECATED(startAnimation(pnuint animId)) pnuint	startAnimation(pnint animation, pnuint transTime);
 
   /// Empty animation list to play
   void						clearAnimationIds();
