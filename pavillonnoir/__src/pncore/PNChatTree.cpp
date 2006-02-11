@@ -149,11 +149,21 @@ namespace PN
 	  }
 	}
 	return NULL;
-
   }
 
   void	PNChatTree::setListDependencies(ListResolvedDependencies& deps)
   {
 	_resolvedDependencies = deps;
+  }
+
+  xmlNode* PNChatTree::getNodeFromId(xmlNode* root, std::string NodeId)
+  {
+	for (xmlNodePtr current = root->children; current != NULL; current = current->next)
+	{
+	  xmlChar* id = xmlGetProp(node, PNXML_ID_ATTR);
+	  if (id != NULL && strcmp((const char*)id, NodeId) == 0)
+		return current;
+	}
+	return NULL;
   }
 }
