@@ -362,7 +362,8 @@ PNEventManager::init()
 
 //////////////////////////////////////////////////////////////////////////
 
-void	PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* data, bool destruct/* = true*/)
+void
+PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* data, bool destruct/* = true*/)
 {
   if (data != NULL)
 	data->destructData = destruct;
@@ -380,36 +381,42 @@ void	PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* d
   }
 }
 
-void	PNEventManager::sendEvent(pnEventType type, PNObject* source, PNEventData* data)
+void
+PNEventManager::sendEvent(pnEventType type, PNObject* source, PNEventData* data)
 {
   _callbackList[type].sendEvent(type, source, data);
 }
 
-const std::string&	PNEventManager::getNameByType(pnEventType type)
+const std::string&
+PNEventManager::getNameByType(pnEventType type)
 {
   return _eventNames[type];
 }
 
-pnEventType			PNEventManager::getTypeByName(const std::string& name)
+pnEventType
+PNEventManager::getTypeByName(const std::string& name)
 {
   return _eventEnums[name];
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-void	PNEventManager::addCallback(pnEventType type, const EventCallback& callback)
+void
+PNEventManager::addCallback(pnEventType type, const EventCallback& callback)
 {
   _callbackList[type].addCallback(callback);
 }
 
-void	PNEventManager::deleteCallback(pnEventType type, const EventCallback& callback)
+void
+PNEventManager::deleteCallback(pnEventType type, const EventCallback& callback)
 {
   _callbackList[type].deleteCallback(callback);
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-void		PNEventManager::stop()
+void
+PNEventManager::stop()
 {
   _run = false;
 }

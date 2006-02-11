@@ -37,14 +37,16 @@ using namespace PN;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-void	PNCallBackList::addCallback(const EventCallback& callback)
+void
+PNCallBackList::addCallback(const EventCallback& callback)
 {
   PNLOCK(this);
 
   _callbacks.insert(callback);
 }
 
-void	PNCallBackList::deleteCallback(const EventCallback& callback)
+void
+PNCallBackList::deleteCallback(const EventCallback& callback)
 {
   PNLOCK(this);
 
@@ -53,12 +55,14 @@ void	PNCallBackList::deleteCallback(const EventCallback& callback)
 
 //////////////////////////////////////////////////////////////////////////
 
-void  PNCallBackList::sendEvent(pnevent* event)
+void
+PNCallBackList::sendEvent(pnevent* event)
 {
   sendEvent(event->type, event->source, event->data);
 }
 
-void  PNCallBackList::sendEvent(pnEventType type, PNObject* source, PNEventData* data)
+void
+PNCallBackList::sendEvent(pnEventType type, PNObject* source, PNEventData* data)
 {
   PNLOCK(this);
 
@@ -71,7 +75,9 @@ void  PNCallBackList::sendEvent(pnEventType type, PNObject* source, PNEventData*
 	  (*it)(type, source, data);
 	}
 	catch (...)
-	{}
+	{
+	  pnerror(PN_LOGLVL_ERROR, "Event %s has crashed in a callback.", PNEventManager::getInstance()->getNameByType(type).c_str());
+	}
   }
 }
 
