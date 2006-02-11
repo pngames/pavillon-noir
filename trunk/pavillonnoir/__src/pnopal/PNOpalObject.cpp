@@ -41,9 +41,6 @@
 #include "PNGameMap.hpp"
 #include "PNConsole.hpp"
 
-#include "PN3DModel.hpp"
-#include "PN3DMaterial.hpp"
-
 #include "PNOpal.hpp"
 #include "PNOpalObject.hpp"
 #include "PNOpalEvents.hpp"
@@ -54,7 +51,7 @@
 
 namespace fs = boost::filesystem;
 
-#define FORCE_MAGNITUDE 100
+#define DEFAULT_PLAYER_ID "Player"
 
 namespace PN {
 
@@ -63,48 +60,29 @@ namespace PN {
 * \param  sim  a pointer on the opal simulation
 */ 
 
-PNOpalObject::PNOpalObject(opal::Simulator* sim) : _blueprint(), _blueprintInstance(), _accelSensorData()
+PNOpalObject::PNOpalObject(opal::Simulator* sim) : _blueprint(), _blueprintInstance()
 {
   _sim = sim;
 }
 
 /** PNOpalObject destructor
 */
-
 PNOpalObject::~PNOpalObject()
 {
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-void PNOpalObject::update()
+void 
+PNOpalObject::update()
 {
-  /* deprecated */
 }
 
 /** Display the Axis Aligned Bounding Boxes of the solid (physical object)
 */
-
-void PNOpalObject::render()
+void 
+PNOpalObject::render()
 {
-  /*
-  pnuint numshapes;
-  pnfloat aabb[6];
-  pnfloat	color[4] = {0.0f, 1.0f, 0.0f, 1.0f};
-
-  opal::SolidData solidData;
-  opal::BoxShapeData* boxShapeData;
-  
-  solidData = _solid->getData();
-  numshapes = solidData.getNumShapes();
-
-  for (int i = 0; i < numshapes; i++)
-  {
-	boxShapeData = (opal::BoxShapeData*)solidData.getShapeData(i);
-	boxShapeData->getLocalAABB(aabb);
-
-  }
-  */
   pnfloat color[4] = {1.0f, 1.0f, 1.0f, 0.3f};
 
   opal::ShapeData* shapeData = _solid->getData().getShapeData(0);
@@ -142,9 +120,9 @@ void PNOpalObject::render()
 /** Return the coordinates of the physical object
 * 
 * \return point coordinates
-*/ 
-
-const PNPoint3f&	PNOpalObject::getCoord()
+*/
+const PNPoint3f&	
+PNOpalObject::getCoord()
 {
   opal::Point3r pos = _solid->getPosition();
   _coord.x = pos[0];
@@ -158,8 +136,8 @@ const PNPoint3f&	PNOpalObject::getCoord()
 * 
 * \return orientation quaternion
 */ 
-
-const PNQuatf&	PNOpalObject::getOrient()
+const PNQuatf&	
+PNOpalObject::getOrient()
 {
   opal::Quaternion quat = _solid->getQuaternion();
 
@@ -176,7 +154,8 @@ const PNQuatf&	PNOpalObject::getOrient()
 * \return offset
 */ 
 
-const PNPoint3f&	PNOpalObject::getOffset()
+const PNPoint3f&	
+PNOpalObject::getOffset()
 {
   return _offset;
 }
@@ -185,44 +164,57 @@ const PNPoint3f&	PNOpalObject::getOffset()
 *
 * \return offset
 */ 
-
-const PNPoint3f&	PNOpalObject::getRenderOffset()
+const PNPoint3f&	
+PNOpalObject::getRenderOffset()
 {
   return _renderOffset;
 }
 
-/** Return the Opal physical object (opal::Solid)
+/** 
+** \return opal physical object (opal::Solid)
 */ 
-
-opal::Solid* PNOpalObject::getOpalSolid()
+opal::Solid* 
+PNOpalObject::getOpalSolid()
 {
   return _solid;
 }
 
-/** Return the Opal raycast sensor (opal::RaycastSensor)
+/** Return distance between object's center and the ground
 */ 
+pnfloat 
+PNOpalObject::getDesiredHeight()
+{
+  return _desiredHeight;
+}
 
-opal::RaycastSensor* PNOpalObject::getPlayerSensor()
+/**
+** \return the Opal raycast sensor (opal::RaycastSensor)
+*/ 
+opal::RaycastSensor* 
+PNOpalObject::getPlayerSensor()
 {
   return _playerSensor;
 }
 
-/** Return the Opal acceleration sensor (opal::AccelerationSensor)
+/**
+** \return PNPlayer's ray lenght
 */ 
-
-opal::AccelerationSensor* PNOpalObject::getAccelSensor()
+pnfloat 
+PNOpalObject::getRayLenght()
 {
-  return _accelSensor;
+  return _rayLenght;
 }
 
+
 //////////////////////////////////////////////////////////////////////////
+// Core
 
 /** Set the state of the physical object (static/dynamic)
 *
 * /param  state  true to make it static / false to make it dynamic
 */ 
-
-void			PNOpalObject::setStatic(bool state)
+void			
+PNOpalObject::setStatic(bool state)
 {
   _solid->setStatic(state);
 }
@@ -231,8 +223,8 @@ void			PNOpalObject::setStatic(bool state)
 *
 * \return true if static, false if dynamic
 */
-
-bool			PNOpalObject::isStatic()
+bool			
+PNOpalObject::isStatic()
 {
   return _solid->isStatic();
 }
@@ -242,8 +234,8 @@ bool			PNOpalObject::isStatic()
 * /param  coord  coordinates
 * /param  orient  orientation
 */ 
-
-void			PNOpalObject::setTransform(const PNPoint3f& coord, const PNQuatf& orient, pnfloat scale)
+void			
+PNOpalObject::setTransform(const PNPoint3f& coord, const PNQuatf& orient, pnfloat scale)
 {
   pnfloat			trans[3];
   opal::Matrix44r	transform;
@@ -264,14 +256,15 @@ void			PNOpalObject::setTransform(const PNPoint3f& coord, const PNQuatf& orient,
 
 
 //////////////////////////////////////////////////////////////////////////
+// Forces
 
 /** Add a force to the solid
 * /param  vec the force vector
 * /param  magnitude the force magnitude
 * /param  duration Specifies how long to apply the force. (in millisecond)
 */
-
-void		PNOpalObject::addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration, pnbool isLocal)
+void		
+PNOpalObject::addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat duration, pnbool isLocal)
 {
   opal::Force f;
   
@@ -297,8 +290,8 @@ void		PNOpalObject::addForce(const PNVector3f& vec, pnfloat magnitude, pnfloat d
 * /param  magnitude the torque magnitude
 * /param  duration Specifies how long to apply the torque. (in millisecond)
 */
-
-void		PNOpalObject::addTorque(const PNVector3f& axis, pnfloat magnitude, pnfloat duration, pnbool isLocal)
+void		
+PNOpalObject::addTorque(const PNVector3f& axis, pnfloat magnitude, pnfloat duration, pnbool isLocal)
 {
   opal::Force f;
 
@@ -316,6 +309,9 @@ void		PNOpalObject::addTorque(const PNVector3f& axis, pnfloat magnitude, pnfloat
   _solid->addForce(f);
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Movement motor
+
 /** Enable the movementMotor attached to the solid
 *
 * /param  x desired x coordinate
@@ -323,8 +319,8 @@ void		PNOpalObject::addTorque(const PNVector3f& axis, pnfloat magnitude, pnfloat
 * /param  z desired z coordinate
 * /param  orient desired orientation quaternion
 */
-
-void		PNOpalObject::setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf orient)
+void		
+PNOpalObject::setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf orient)
 {
   /* motor data */
   _movementMotorData.solid = _solid;
@@ -359,7 +355,8 @@ void		PNOpalObject::setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf or
 /** Disable the movementMotor attached to the solid
 */
 
-void		PNOpalObject::destroyMovementMotor()
+void		
+PNOpalObject::destroyMovementMotor()
 {
   _movementMotorData.solid = NULL;
   _movementMotor->init(_movementMotorData);
@@ -368,11 +365,11 @@ void		PNOpalObject::destroyMovementMotor()
 //////////////////////////////////////////////////////////////////////////
 // IPNXMLSerializable
 
-pnint		  PNOpalObject::_parseTypePnm(const std::string& path)
+pnint		  
+PNOpalObject::_parseTypePnm(const std::string& path)
 {
   fs::path	  file(path, fs::no_check);
 
-  // check for errors
   if (!fs::exists(file))
 	return PNEC_FILE_NOT_FOUND;
   if (fs::is_directory(file))
@@ -391,6 +388,8 @@ pnint		  PNOpalObject::_parseTypePnm(const std::string& path)
   meshData.vertexArray = mesh->getVertices();
   meshData.triangleArray = mesh->getFaces();
 
+  //////////////////////////////////////////////////////////////////////////
+
   // create a solid
   _solid = _sim->createSolid();
   _solid->setStatic(true);
@@ -401,11 +400,11 @@ pnint		  PNOpalObject::_parseTypePnm(const std::string& path)
   return PNEC_SUCCESS;
 }
 
-pnint		  PNOpalObject::_parseTypeOpal(const std::string& path)
+pnint		  
+PNOpalObject::_parseTypeOpal(const std::string& path)
 {
   fs::path	  file(path, fs::no_check);
 
-  // check for errors
   if (!fs::exists(file))
 	return PNEC_FILE_NOT_FOUND;
   if (fs::is_directory(file))
@@ -422,6 +421,7 @@ pnint		  PNOpalObject::_parseTypeOpal(const std::string& path)
   // object's coord offset
   opal::Matrix44r offset;
   offset.makeIdentity();
+
   /* Could be used if the PN3DObject was reachable here, in this case opal2pn would be deprecated */
   /*
   offset.scale( mpp );
@@ -434,9 +434,13 @@ pnint		  PNOpalObject::_parseTypeOpal(const std::string& path)
   _sim->instantiateBlueprint(_blueprintInstance, _blueprint, offset, mpp);
   _solid = _blueprintInstance.getSolid(0);
 
+  //////////////////////////////////////////////////////////////////////////
+
   if (_solid != NULL)
   {
 	_solid->getData().getShapeData(0)->getLocalAABB(_aabb);
+	_desiredHeight = abs(_aabb[2]);
+	_rayLenght = _desiredHeight * 4;
 	opal::ShapeData* shapeData = _solid->getData().getShapeData(0);
 
 	// enlarge the local AABB (make the AABB rendering a little bigger)
@@ -471,9 +475,6 @@ pnint		  PNOpalObject::_parseTypeOpal(const std::string& path)
   if (!_solid)
 	return PNEC_NOT_INITIALIZED;
 
-  //_solid->setLinearDamping(0.10);
-  //_solid->setAngularDamping(0.05);
-
   // set Collision handling function
   PNOpal* pnopalInstance = (PNOpal*)PNOpal::getInstance();
   _solid->setCollisionEventHandler((opal::CollisionEventHandler*)pnopalInstance->getEventHandler());
@@ -483,21 +484,16 @@ pnint		  PNOpalObject::_parseTypeOpal(const std::string& path)
   _offset.set(translation[0], translation[1], translation[2]);
   _renderOffset.set(translation[0] / mpp, translation[1] / mpp, translation[2] / mpp);
 
-  // create a motor
+  // object spring motor
   _movementMotor = _sim->createSpringMotor();
 
-  // create an acceleration sensor
-  _accelSensorData.solid = _solid;
-  _accelSensor = _sim->createAccelerationSensor();
-  _accelSensor->init(_accelSensorData);
-
-  if (_solid->getName() == "Player")
+  // create a ground detection ray for PNPlayers
+  if (_solid->getName() == DEFAULT_PLAYER_ID)
   {
 	opal::RaycastSensorData data;
 	data.solid = _solid;
 	data.ray.setOrigin(opal::Point3r(0, 0, 0));
 	data.ray.setDir(opal::Vec3r(0, -1, 0));
-	//data.contactGroup = 3;
 	_playerSensor = _sim->createRaycastSensor();
 	_playerSensor->init(data);
   }
@@ -508,7 +504,8 @@ pnint		  PNOpalObject::_parseTypeOpal(const std::string& path)
   return PNEC_SUCCESS;
 }
 
-pnint		  PNOpalObject::_parsePhysics(xmlNode* node)
+pnint		  
+PNOpalObject::_parsePhysics(xmlNode* node)
 {
   xmlChar*	  attr = NULL;
 
