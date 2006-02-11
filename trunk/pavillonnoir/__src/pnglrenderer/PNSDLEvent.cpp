@@ -390,7 +390,7 @@ void	PNSDLEvent::handleKeyMouse(SDL_MouseButtonEvent* event, bool state)
   case SDL_BUTTON_RIGHT:
 	if (state == false)
 	{
-	  SDL_ShowCursor(SDL_ShowCursor(SDL_QUERY) == SDL_ENABLE ? SDL_DISABLE : SDL_ENABLE);
+	/*  SDL_ShowCursor(SDL_ShowCursor(SDL_QUERY) == SDL_ENABLE ? SDL_DISABLE : SDL_ENABLE);
 	  if (SDL_WM_GrabInput(SDL_GRAB_QUERY) == SDL_GRAB_ON)
 	  {
 		PNEventManager::getInstance()->sendEvent(PN_EVENT_SDL_GRAB_OFF, NULL, NULL);
@@ -400,7 +400,7 @@ void	PNSDLEvent::handleKeyMouse(SDL_MouseButtonEvent* event, bool state)
 	  {
 		PNEventManager::getInstance()->sendEvent(PN_EVENT_SDL_GRAB_ON, NULL, NULL);
 		SDL_WM_GrabInput(SDL_GRAB_ON);
-	  }
+	  }*/
 	  CEGUI::System::getSingleton().injectMouseButtonUp(CEGUI::RightButton);
 	}
 	else
@@ -431,6 +431,24 @@ True when the key is down or False when is up
 */
 void	PNSDLEvent::handleKeyPress(SDL_keysym*	keysym, bool state)
 {
+  if (keysym->sym == SDLK_BACKSPACE)
+  {
+	if (state == false)
+	{
+	  SDL_ShowCursor(SDL_ShowCursor(SDL_QUERY) == SDL_ENABLE ? SDL_DISABLE : SDL_ENABLE);
+	  if (SDL_WM_GrabInput(SDL_GRAB_QUERY) == SDL_GRAB_ON)
+	  {
+		PNEventManager::getInstance()->sendEvent(PN_EVENT_SDL_GRAB_OFF, NULL, NULL);
+		SDL_WM_GrabInput(SDL_GRAB_OFF);
+	  }
+	  else
+	  {
+		PNEventManager::getInstance()->sendEvent(PN_EVENT_SDL_GRAB_ON, NULL, NULL);
+		SDL_WM_GrabInput(SDL_GRAB_ON);
+	  }
+	}
+  }
+
   if (state == true) 
   {
 	 CEGUI::uint kc = SDLKeyToCEGUIKey(keysym->sym);
