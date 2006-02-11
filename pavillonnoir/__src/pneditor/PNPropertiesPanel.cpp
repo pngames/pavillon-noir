@@ -484,7 +484,7 @@ long          PNPropertiesPanel::onAccept(FXObject* obj, FXSelector sel, void* p
 	  obj = new PNCharacter;
 
 	_ed->makeViewerCurrent();
-	obj->unserializeFromPath(_path->getText().text());
+	obj->unserializeFromPath(_path->getText().substitute("\\", "/").text());
 	_ed->makeViewerNonCurrent();
 
 	obj->setCoord(x, y, z);
@@ -521,30 +521,13 @@ long          PNPropertiesPanel::onCancel(FXObject* obj, FXSelector sel, void* p
 
 long			PNPropertiesPanel::onAddObject(FXObject* sender, FXSelector sel, void* ptr)
 {
-  FXFileDialog			open(_grid, "Choose file to save the PN Object", SELECTFILE_MULTIPLE);
+  FXFileDialog			open(_grid, "Choose file to save the PN Object", SELECTFILE_EXISTING);
+
   open.setPatternList("Pavillon-Noir Objects (*.pno)");
 
   if (open.execute())
-  {
-	char buf[512] = "";
-	getcwd(buf, 512);
+	_path->setText(open.getFilename().substitute("\\", "/"));
 
-	FXString strbuf(buf);
-	strbuf = strbuf.substitute('\\', '/');
-
-	FXString str = open.getFilename();
-
-	pnerror(PN_LOGLVL_DEBUG, "strbuf=%s, str=%s", strbuf.text(), str.substitute('\\','/').text());
-	if ( str.substitute('\\','/').find(strbuf.text(), 0) == -1)
-	{
-	  FXMessageBox dbox(this, "File Error", "403");
-	  dbox.execute();
-	}
-	else
-	{
-	  _path->setText(str.replace(0, strlen(buf) + 1, "").substitute('\\', '/').text());
-	}
-  }
   return 1;
 }
 
@@ -555,7 +538,7 @@ pnint			PNPropertiesPanel::getIdMax()
 
 void			PNPropertiesPanel::incrementIdMax()
 {
-  _idMax++;
+  ++_idMax;
 }
 
 //////////////////////////////////////////////////////////////////////////

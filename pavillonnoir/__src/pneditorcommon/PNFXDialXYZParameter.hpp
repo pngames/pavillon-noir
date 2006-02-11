@@ -41,6 +41,9 @@ class PNEDAPI		PNFXDialXYZParameter : public FXHorizontalFrame, public PNPropert
 {
   FXDECLARE(PNFXDialXYZParameter);
 
+  FXint				_int;
+  FXDataTarget		_intTarget;
+
   FXDial*			_dial;
   FXTextField*		_field;
   pnint				_oldValue;
@@ -52,12 +55,17 @@ public:
   PNFXDialXYZParameter(FXComposite* p, PNConfigurableParameter* param);
   ~PNFXDialXYZParameter();
 
-  void				create();
+  enum{
+	ID_VALUE_CHANGED=FXHorizontalFrame::ID_LAST,
+	ID_LAST
+  };
 
-  void				update();
+  void				create();
 
   void				updateParam();
   void				apply();
+
+  long				onValueChanged(FXObject*, FXSelector, void* ptr);
 };
 
 //////////////////////////////////////////////////////////////////////////
