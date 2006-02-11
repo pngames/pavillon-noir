@@ -176,19 +176,21 @@ namespace PN
   {
 	_chatTree->setListDependencies(_resolvedDependencies);
 	_currentNode = _chatTree->getBuddyNode(node);
+	// si currentNode est null (pas de buddy dispo) quitter mode chat ?
 	updateItems(_currentNode);
   }
 
   void  PNGUIChatWindow::updateItems(xmlNode* node)
   {
 	_quitBuddy = false;
-	if (strcmp((const char*)xmlGetProp(node, PNXML_QUIT_ATTR),"true") == 0)
+	xmlChar* quit = xmlGetProp(node, PNXML_QUIT_ATTR);
+	if (quit!= NULL && strcmp((const char*)quit,"true") == 0)
 	  _quitBuddy = true;
 
 	_textQuestion->setText((const char*)xmlGetProp(node, PNXML_SENTENCE_ATTR));
 	_listBox->resetList();
 
-	if (node->children != NULL)
+	if (!_quitBuddy && node->children != NULL)
 	{
 	  for (xmlNodePtr sub = node->children; sub != NULL; sub = sub->next)
 	  {

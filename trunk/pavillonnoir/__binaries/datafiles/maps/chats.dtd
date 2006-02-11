@@ -30,6 +30,6 @@
 <!-- PLAYER ATTRIBUTES -->
 
 <!ATTLIST player id ID #REQUIRED>
-<!ATTLIST player sentence CDATA #REQUIRED>
+<!ATTLIST player answer CDATA #REQUIRED>
 <!ATTLIST player checkpoint (true|false) #IMPLIED>
 <!ATTLIST player quit (true|false) #IMPLIED>
