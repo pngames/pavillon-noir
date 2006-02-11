@@ -42,24 +42,27 @@ using namespace std;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-/*// Map
+// Map
 FXDEFMAP(PNFXDialXYZParameter) PNFXDialXYZParameterMap[]=
 {
-  FXMAPFUNC(SEL_UPDATE, 0, PNFXDialXYZParameter::onUpdate)
-};*/
+  FXMAPFUNC(SEL_COMMAND, PNFXDialXYZParameter::ID_VALUE_CHANGED, PNFXDialXYZParameter::onValueChanged),
+  FXMAPFUNC(SEL_CHANGED, PNFXDialXYZParameter::ID_VALUE_CHANGED, PNFXDialXYZParameter::onValueChanged)
+};
 
 //////////////////////////////////////////////////////////////////////////
-//FXIMPLEMENT(PNFXDialXYZParameter, FXHorizontalFrame, PNFXDialXYZParameterMap, ARRAYNUMBER(PNFXDialXYZParameterMap))
-FXIMPLEMENT(PNFXDialXYZParameter, FXHorizontalFrame, NULL, 0)
+FXIMPLEMENT(PNFXDialXYZParameter, FXHorizontalFrame, PNFXDialXYZParameterMap, ARRAYNUMBER(PNFXDialXYZParameterMap))
+//FXIMPLEMENT(PNFXDialXYZParameter, FXHorizontalFrame, NULL, 0)
 
 PNFXDialXYZParameter::PNFXDialXYZParameter(FXComposite* p, PNConfigurableParameter* param)
 : FXHorizontalFrame(p), PNPropertiesGridParameter(param)
 {
-  PN3DObject* o = (PN3DObject*)_param->getElem();
-  _dial = new FXDial(this, NULL, 0, FRAME_SUNKEN  |  FRAME_THICK  |  DIAL_CYCLIC  |  
-	DIAL_HORIZONTAL  |  LAYOUT_FIX_WIDTH  |  LAYOUT_FIX_HEIGHT  |  
-	LAYOUT_CENTER_Y, 0, 0, 160, 14, 0, 0, 0, 0);
-  _field = new FXTextField(this, 6, NULL, 0, TEXTFIELD_READONLY|FRAME_SUNKEN|FRAME_THICK|LAYOUT_SIDE_TOP);
+  _intTarget.connect(_int);
+  _intTarget.setTarget(this);
+  _intTarget.setSelector(ID_VALUE_CHANGED);
+  
+  _field = new FXTextField(this, 6, &_intTarget, FXDataTarget::ID_VALUE, TEXTFIELD_REAL|FRAME_SUNKEN|FRAME_THICK|LAYOUT_SIDE_TOP);
+  _dial = new FXDial(this, &_intTarget, FXDataTarget::ID_VALUE, LAYOUT_CENTER_Y|LAYOUT_FILL_ROW|LAYOUT_FIX_WIDTH|DIAL_HORIZONTAL|DIAL_HAS_NOTCH, 0, 0, 160, 14, 0, 0, 0, 0);
+
   _oldValue = _dial->getValue();
 }
 
@@ -69,21 +72,12 @@ PNFXDialXYZParameter::~PNFXDialXYZParameter()
   delete _field;
 }
 
-
 void
 PNFXDialXYZParameter::create()
 {
   FXHorizontalFrame::create();
 
   updateParam();
-}
-
-void
-PNFXDialXYZParameter::update()
-{
-  FXHorizontalFrame::update();
-
-  apply();
 }
 
 void
@@ -96,54 +90,54 @@ PNFXDialXYZParameter::updateParam()
   switch (_param->getType())
   {
   case PN_PARAMTYPE_DIALX:
-	_field->setText(PNFloat::staticToString(x).c_str());
+	_int = (int)x;
 	break;
   case PN_PARAMTYPE_DIALY:
-	_field->setText(PNFloat::staticToString(y).c_str());
+	_int = (int)y;
 	break;
   case PN_PARAMTYPE_DIALZ:
-	_field->setText(PNFloat::staticToString(z).c_str());
+	_int = (int)z;
 	break;
   default:
 	break;
   }
+
+  _intTarget.onUpdValue(this, 0, NULL);
 }
 
 void
 PNFXDialXYZParameter::apply()
 {
-  pnfloat pos = (pnfloat)_dial->getValue();
-
-  if (pos != _oldValue)
+  if (_int != _oldValue)
   {
 	PN3DObject* o = (PN3DObject*)_param->getElem();
 
-	ostringstream oss;
-
-	pnfloat	  x, y, z;
-	o->getOrient().getDegrees(x, y, z);
 	switch (_param->getType())
 	{
 	case PN_PARAMTYPE_DIALX:
-	  o->rotatePitchRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
-	  oss << x;
+	  o->rotatePitchRadians(DEGREE_TO_RADIAN_F(_int - _oldValue));
 	  break;
 	case PN_PARAMTYPE_DIALY:
-	  o->rotateYawRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
-	  oss << y;
+	  o->rotateYawRadians(DEGREE_TO_RADIAN_F(_int - _oldValue));
 	  break;
 	case PN_PARAMTYPE_DIALZ:
-	  o->rotateRollRadians(DEGREE_TO_RADIAN_F(pos - _oldValue));
-	  oss << z;
+	  o->rotateRollRadians(DEGREE_TO_RADIAN_F(_int - _oldValue));
 	  break;
 	default:
 	  break;
 	}
 
-	_oldValue = (pnint)pos;
-	_field->setText(oss.str().c_str());
-	_param->getConfigurableObject()->update(_param);
+	_oldValue = _int;
+	sendParamModif();
   }
+}
+
+long
+PNFXDialXYZParameter::onValueChanged(FXObject*, FXSelector, void*)
+{
+  apply();
+
+  return 0;
 }
 
 //////////////////////////////////////////////////////////////////////////

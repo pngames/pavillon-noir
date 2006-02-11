@@ -34,6 +34,7 @@
 #include "pntypes.h"
 #include "pcf_format.h"
 
+#include "PNConfigurableObject.hpp"
 #include "PNConfigurableParameter.hpp"
 
 using namespace std;
@@ -47,9 +48,10 @@ PNConfigurableParameter::PNConfigurableParameter(PNConfigurableObject* p,
 												 const std::string& altText,
 												 pnbool editable,
 												 void* max,
-												 void* min)
+												 void* min,
+												 pnbool enableSetModified)
 {
-  _init(p, type, NULL, label, altText, editable, max, min);
+  _init(p, type, NULL, label, altText, editable, max, min, enableSetModified);
 }
 
 PNConfigurableParameter::PNConfigurableParameter(PNConfigurableObject* p, 
@@ -59,9 +61,10 @@ PNConfigurableParameter::PNConfigurableParameter(PNConfigurableObject* p,
                                                  const string& altText,
 												 pnbool editable,
 												 void* max,
-												 void* min)
+												 void* min,
+												 pnbool enableSetModified)
 {
-  _init(p, type, elem, label, altText, editable, max, min);
+  _init(p, type, elem, label, altText, editable, max, min, enableSetModified);
 }
 
 PNConfigurableParameter::~PNConfigurableParameter()
@@ -78,7 +81,8 @@ PNConfigurableParameter::_init(PNConfigurableObject* p,
 							   const std::string& altText,
 							   pnbool editable, 
 							   void* max, 
-							   void* min)
+							   void* min,
+							   pnbool enableSetModified)
 {
   _p = p;
 
@@ -92,6 +96,8 @@ PNConfigurableParameter::_init(PNConfigurableObject* p,
   _altText = altText;
   _type = type;
   _editable = editable;
+
+  _enableSetModified = false;
 
   _serialization = S_VALUE;
 }
@@ -156,6 +162,19 @@ void
 PNConfigurableParameter::setConfigurableObject(PNConfigurableObject* object)
 {
   _p = object;
+}
+
+void
+PNConfigurableParameter::enableSetModified(pnbool modified)
+{
+  _enableSetModified = modified;
+}
+
+void
+PNConfigurableParameter::setModified()
+{
+  if (_enableSetModified && getConfigurableObject())
+	getConfigurableObject()->setModified();
 }
 
 //////////////////////////////////////////////////////////////////////////
