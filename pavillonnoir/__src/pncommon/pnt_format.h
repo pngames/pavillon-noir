@@ -33,32 +33,38 @@
 #include "pnbasetypes.h"
 #include "pnmath.h"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 #define PNT_EXT			"pnt"
 
 #define	PNT_MAGIC		"PNT0001"
 #define	PNT_MAGIC_SIZE	8
 
-typedef	struct	pntHeader_s
+typedef	struct			pntHeader_s
 {
-  PN::pnchar	magic[PNT_MAGIC_SIZE];
-  PN::pnuint	version;
+  pnchar				magic[PNT_MAGIC_SIZE];
+  pnuint				version;
 
-  PN::pnpoint4f	ambient;
-  PN::pnpoint4f	diffuse;
-  PN::pnpoint4f	emissive;
-  PN::pnpoint4f	specular;
+  pnpoint4f				ambient;
+  pnpoint4f				diffuse;
+  pnpoint4f				emissive;
+  pnpoint4f				specular;
 
-  PN::pnfloat	opacity;
-  PN::pnfloat	glossiness;
+  pnfloat				opacity;
+  pnfloat				glossiness;
 
-  PN::pnuint	nbMap;
+  pnuint				nbMap;
   //-> list of pntMap_t
-}				pntHeader_t;
+}						pntHeader_t;
 
-typedef struct	pntMap_s
+typedef struct			pntMap_s
 {
-  PN::pnuint	lenght;
+  pnuint				lenght;
   //-> list of pnchar
-}				pntMap_t;
+}						pntMap_t;
+
+//////////////////////////////////////////////////////////////////////////
+};
 
 #endif /*_PNT_FORMAT_H_*/

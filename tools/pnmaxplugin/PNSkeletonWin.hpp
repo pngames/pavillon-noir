@@ -26,6 +26,9 @@
 #pragma once
 #include "afxcmn.h"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 class PNSBone;
 class PNSkeletonExporter;
 
@@ -55,4 +58,7 @@ public:
   CTreeCtrl _treeSkeletor;
   afx_msg void OnBnClickedOk();
   afx_msg void OnNMClickTreeSqueletor(NMHDR *pNMHDR, LRESULT *pResult);
+};
+
+//////////////////////////////////////////////////////////////////////////
 };

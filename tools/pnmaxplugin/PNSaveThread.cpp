@@ -28,6 +28,9 @@
 #include "PNSaveThread.hpp"
 #include "PNMainWin.hpp"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 IMPLEMENT_DYNCREATE(PNSaveThread, CWinThread)
 
 PNSaveThread::PNSaveThread()
@@ -63,3 +66,6 @@ END_MESSAGE_MAP()
 
 
 // Gestionnaires de messages PNSaveThread
+
+//////////////////////////////////////////////////////////////////////////
+};

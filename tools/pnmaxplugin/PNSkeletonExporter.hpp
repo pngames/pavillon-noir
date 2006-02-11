@@ -40,6 +40,9 @@
 
 #include "pns_format.h"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 class PNSBone;
 
 class PNSkeletonExporter : public PNExporter
@@ -91,6 +94,9 @@ public:
 
   const TCHAR*	InternalName();	// returns fixed parsable name (scripter-visible name)
   HINSTANCE		HInstance(); // returns owning module handle
+};
+
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PNSKELETONEXPORTER_HPP_*/

@@ -30,6 +30,9 @@
 
 using namespace PN;
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 int		PNExporter::export(CString path)
 {
   PNMainWin::WriteLine("Start export");
@@ -285,3 +288,6 @@ float  PNExporter::_getFloatProperty(IGameProperty* prop, pnfloat def)
 
   return f;
 }
+
+//////////////////////////////////////////////////////////////////////////
+};

@@ -29,7 +29,9 @@
 #include "PNPhysicalExporter.hpp"
 
 #include "PNPhysicsWin.hpp"
-#include ".\pnphysicswin.hpp"
+
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
 
 IMPLEMENT_DYNAMIC(PNPhysicsWin, CDialog)
 PNPhysicsWin::PNPhysicsWin(PNPhysicalExporter* exporter, CWnd* pParent /*=NULL*/)
@@ -97,3 +99,6 @@ void PNPhysicsWin::OnBnClickedOk()
 
   OnOK();
 }
+
+//////////////////////////////////////////////////////////////////////////
+};

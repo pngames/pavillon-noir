@@ -28,6 +28,9 @@
 
 #include "pndefs.h"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 class PNSaveThread;
 class PNExporter;
 
@@ -74,4 +77,7 @@ public:
   static CListBox _console;
   CButton _btOK;
   afx_msg void OnBnClickedMwinConfig();
+};
+
+//////////////////////////////////////////////////////////////////////////
 };

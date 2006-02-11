@@ -34,6 +34,9 @@
 
 #include "pnmaxplugin.h"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 #ifdef _DEBUG
 # define new DEBUG_NEW
 #endif
@@ -193,3 +196,6 @@ void	CpnmaxpluginApp::setIntOption(CString section, CString key, int value)
 
   return TRUE;
 }*/
+
+//////////////////////////////////////////////////////////////////////////
+};

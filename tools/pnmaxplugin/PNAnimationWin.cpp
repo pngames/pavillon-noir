@@ -30,6 +30,8 @@
 #include "PNAnimationExporter.hpp"
 #include ".\pnanimationwin.hpp"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
 
 // Bo�e de dialogue PNAnimationWin
 
@@ -75,3 +77,6 @@ void PNAnimationWin::OnNMClickTreeSqueletor(NMHDR *pNMHDR, LRESULT *pResult)
 {
   _updateBone(_treeSkeletor.GetRootItem());
 }
+
+//////////////////////////////////////////////////////////////////////////
+};
