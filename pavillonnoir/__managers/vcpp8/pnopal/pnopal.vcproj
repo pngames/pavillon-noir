@@ -201,6 +201,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pnopal\PNOpalMeshImporter.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pnopal\PNOpalObject.cpp"
 				>
 			</File>
@@ -228,6 +232,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pnopal\PNOpalImporter.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pnopal\PNOpalMeshImporter.hpp"
 				>
 			</File>
 			<File
