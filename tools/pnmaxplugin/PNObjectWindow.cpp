@@ -30,7 +30,9 @@
 #include "PNOConfig.hpp"
 
 #include "PNObjectWindow.hpp"
-#include ".\pnobjectwindow.hpp"
+
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
 
 // Bo�e de dialogue PNObjectWindow
 
@@ -550,3 +552,6 @@ void PNObjectWindow::OnBnClickedOk()
 
   OnOK();
 }
+
+//////////////////////////////////////////////////////////////////////////
+};

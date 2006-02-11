@@ -3,6 +3,9 @@
 
 // Boîte de dialogue PNOConfig
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 class PN3DObjectExporter;
 
 class				  PNOConfig : public CDialog
@@ -43,4 +46,7 @@ public:
   afx_msg void OnBnClickedBtFront();
   afx_msg void OnBnClickedBtRight();
   afx_msg void OnBnClickedBtTop();
+};
+
+//////////////////////////////////////////////////////////////////////////
 };

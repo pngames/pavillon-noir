@@ -33,61 +33,67 @@
 #include "pnbasetypes.h"
 #include "pnmath.h"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 #define PNM_EXT			"pnm"
 
 #define	PNM_MAGIC		"PNM0001"
 #define	PNM_MAGIC_SIZE	8
 
-typedef	struct		pnmHeader_s
+typedef	struct			pnmHeader_s
 {
-  PN::pnchar		magic[PNM_MAGIC_SIZE];
-  PN::pnuint		version;
+  pnchar				magic[PNM_MAGIC_SIZE];
+  pnuint				version;
 
-  PN::pnuint		nbSupportedBones;
-  PN::pnuint		nbSupportedMaterials;
+  pnuint				nbSupportedBones;
+  pnuint				nbSupportedMaterials;
 
-  PN::pnuint		nbVerts;
+  pnuint				nbVerts;
 
-  PN::pnuint		nbMeshes;
+  pnuint				nbMeshes;
 
   //-> list of pnmVertex_t
   //-> list of pnmMesh_t
-}					pnmHeader_t;
+}						pnmHeader_t;
 
-typedef struct		pnmVertex_s
+typedef struct			pnmVertex_s
 {
-  PN::pnpoint3f		coord;
-  PN::pnpoint3f_t	normale;
-  PN::pncolor_t		color;
+  pnpoint3f				coord;
+  pnpoint3f_t			normale;
+  pncolor_t				color;
 
-  PN::pnuint		nbBones;
+  pnuint				nbBones;
   
   //-> list of pnmBoneID_t
-}					pnmVertex_t;
+}						pnmVertex_t;
 
-typedef	struct		pnmBoneID_s
+typedef	struct			pnmBoneID_s
 {
-  PN::pnint			boneIdx;
-  PN::pnfloat		weight;
-}					pnmBoneID_t;
+  pnint					boneIdx;
+  pnfloat				weight;
+}						pnmBoneID_t;
 
-typedef	struct		pnmMesh_s
+typedef	struct			pnmMesh_s
 {
-  PN::pnint			materialIdx;
-  PN::pnuchar		colored;
+  pnint					materialIdx;
+  pnuchar				colored;
 
-  PN::pnuint		nbVerts;
+  pnuint				nbVerts;
 
-  PN::pnuint		nbFaces;
+  pnuint				nbFaces;
 
   //-> list of pnmMeshVertex_t
   //-> list of pnpoint3ui
-}					pnmMesh_t;
+}						pnmMesh_t;
 
-typedef struct		pnmMeshVertex_s
+typedef struct			pnmMeshVertex_s
 {
-  PN::pnuint		vertexIdx;
-  PN::pnpoint2f_t	texCoord;
-}					pnmMeshVertex_t;
+  pnuint				vertexIdx;
+  pnpoint2f_t			texCoord;
+}						pnmMeshVertex_t;
+
+//////////////////////////////////////////////////////////////////////////
+};
 
 #endif /*_PNM_FORMAT_H_*/

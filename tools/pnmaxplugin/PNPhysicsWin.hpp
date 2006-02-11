@@ -25,6 +25,9 @@
 
 #pragma once
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 class PNPhysicalExporter;
 
 class					PNPhysicsWin : public CDialog
@@ -47,4 +50,7 @@ public:
   virtual BOOL OnInitDialog();
   afx_msg void OnBnClickedBbPhysics();
   afx_msg void OnBnClickedOk();
+};
+
+//////////////////////////////////////////////////////////////////////////
 };

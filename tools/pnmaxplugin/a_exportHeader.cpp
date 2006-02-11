@@ -33,6 +33,9 @@ using namespace PN;
 
 //////////////////////////////////////////////////////////////////////////
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 int	PNAnimationExporter::exportHeader()
 {
   _file->Write(&_aheader, sizeof(_aheader));
@@ -71,3 +74,5 @@ int	PNAnimationExporter::initExport()
 
   return TRUE;
 }
+
+};

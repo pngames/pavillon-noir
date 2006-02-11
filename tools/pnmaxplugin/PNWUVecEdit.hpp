@@ -3,6 +3,9 @@
 
 // Boîte de dialogue PNWUVecEdit
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 class PNWUVecEdit : public CDialog
 {
   DECLARE_DYNAMIC(PNWUVecEdit)
@@ -34,4 +37,7 @@ public:
   afx_msg void	OnBnClickedRbRdefault();
   afx_msg void	OnBnClickedRbTdefault();
   afx_msg void	OnBnClickedRbCustom();
+};
+
+//////////////////////////////////////////////////////////////////////////
 };

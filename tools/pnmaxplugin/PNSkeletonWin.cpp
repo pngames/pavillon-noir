@@ -31,6 +31,9 @@
 #include "PNMainWin.hpp"
 #include "PNSkeletonExporter.hpp"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 #define UNCHECK 1
 #define CHECK 2
 
@@ -125,3 +128,6 @@ void PNSkeletonWin::OnNMClickTreeSqueletor(NMHDR *pNMHDR, LRESULT *pResult)
 {
   _updateBone(_treeSkeletor.GetRootItem());
 }
+
+//////////////////////////////////////////////////////////////////////////
+};

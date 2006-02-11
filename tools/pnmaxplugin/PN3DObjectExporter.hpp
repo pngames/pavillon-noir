@@ -44,6 +44,9 @@
 #include "PNAnimationExporter.hpp"
 #include "PNPhysicalExporter.hpp"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 class PNObjectWindow;
 
 class					PN3DObjectExporter : public PNExporter
@@ -123,6 +126,9 @@ public:
 
   const TCHAR*	InternalName();	// returns fixed parsable name (scripter-visible name)
   HINSTANCE		HInstance(); // returns owning module handle
+};
+
+//////////////////////////////////////////////////////////////////////////
 };
 
 #endif /*_PN3DOBJECTEXPORTER_HPP_*/

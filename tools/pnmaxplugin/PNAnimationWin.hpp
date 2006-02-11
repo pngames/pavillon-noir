@@ -28,6 +28,9 @@
 #include "PNSkeletonWin.hpp"
 #include "afxwin.h"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 // Bo�e de dialogue PNAnimationWin
 
 class PNAnimationExporter;
@@ -55,4 +58,7 @@ public:
   CEdit t_framerate;
   CEdit t_name;
   afx_msg void OnNMClickTreeSqueletor(NMHDR *pNMHDR, LRESULT *pResult);
+};
+
+//////////////////////////////////////////////////////////////////////////
 };

@@ -33,46 +33,52 @@
 #include "pnbasetypes.h"
 #include "pnmath.h"
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 #define PNA_EXT			"pna"
 
 #define	PNA_MAGIC		"PNA0001"
 #define	PNA_MAGIC_SIZE	8
 
-typedef	struct	pnaHeader_s
+typedef	struct			pnaHeader_s
 {
-  PN::pnchar	magic[PNA_MAGIC_SIZE];
-  PN::pnuint	version;
+  pnchar				magic[PNA_MAGIC_SIZE];
+  pnuint				version;
 
-  PN::pnchar	name[32];
+  pnchar				name[32];
 
-  PN::pnuint	frameRate;
-  PN::pnuint	totalTime;
+  pnuint				frameRate;
+  pnuint				totalTime;
 
-  PN::pnuint	nbBones;
+  pnuint				nbBones;
   //-> list of pnaBones_t;
-}				pnaHeader_t;
+}						pnaHeader_t;
 
-typedef struct	pnaBone_s
+typedef struct			pnaBone_s
 {
-  PN::pnuint	id;
+  pnuint				id;
 
-  PN::pnuint	nbRot;
-  PN::pnuint	nbPos;
+  pnuint				nbRot;
+  pnuint				nbPos;
 
   //-> list of pnaKeyRot_t;
   //-> list of pnaKeyPos_t;
-}				pnaBone_t;
+}						pnaBone_t;
 
-typedef struct	pnaKeyRot_s
+typedef struct			pnaKeyRot_s
 {
-  PN::pnuint	time;
-  PN::pnquatf	rot;
-}				pnaKeyRot_t;
+  pnuint				time;
+  pnquatf				rot;
+}						pnaKeyRot_t;
 
-typedef struct	pnaKeyPos_s
+typedef struct			pnaKeyPos_s
 {
-  PN::pnuint	time;
-  PN::pnpoint3f	pos;
-}				pnaKeyPos_t;
+  pnuint				time;
+  pnpoint3f				pos;
+}						pnaKeyPos_t;
+
+//////////////////////////////////////////////////////////////////////////
+};
 
 #endif /*_PNA_FORMAT_H_*/

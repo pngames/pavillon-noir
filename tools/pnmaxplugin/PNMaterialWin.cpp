@@ -29,6 +29,9 @@
 #include "PNMaterialWin.hpp"
 
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 // Bo�e de dialogue PNMaterialWin
 
 IMPLEMENT_DYNAMIC(PNMaterialWin, CDialog)
@@ -97,3 +100,6 @@ void PNMaterialWin::OnLvnEndlabeleditMaterials(NMHDR *pNMHDR, LRESULT *pResult)
   
   *pResult = 0;
 }
+
+//////////////////////////////////////////////////////////////////////////
+};

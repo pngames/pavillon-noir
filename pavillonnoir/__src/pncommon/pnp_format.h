@@ -32,6 +32,9 @@
 
 #include <string>
 
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+
 #define PNP_EXT											"pnp"
 
 static const std::string	PNP_XML_HEADER				=
@@ -49,5 +52,8 @@ static const std::string	PNP_XMLATTR_TYPEOPAL		= "opal";
 
 #define						PNP_XMLPROP_TYPE			(BAD_CAST "type")
 #define						PNP_XMLPROP_PATH			(BAD_CAST "path")
+
+//////////////////////////////////////////////////////////////////////////
+};
 
 #endif /*_PNP_FORMAT_H_*/
