@@ -112,6 +112,7 @@ Prepares the character to handle the PathFinding
 Called when an ennemy enters the frustrum
 Prepares the Character to handle a fight
 %--]]
+	OVERRIDE(OBJ, "startFight")
 	function OBJ:startFight(target)
 		self:setTarget(target)
 		self:setTargetMode(self.TMODE_VIEW_ABS_LOCKED)
@@ -225,6 +226,7 @@ Not used yet
 		end
 		if ((self:getViewTarget() ~= nil) and (self:getViewTarget():getId() == deadId)) then
 			self.elapsed_turns = 0
+			self.combat_state = COMBAT_STATE.NEUTRAL
 			local newTargetId = -1
 			for id, val in self.ennemies do
 				if (val == 1) then

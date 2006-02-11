@@ -900,6 +900,10 @@ PNGLRenderer::initGUI()
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("FioleImages") == false)
 	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/fiole_final.imageset");
 
+	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("DeathImages") == false)
+	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/DeathScreen.imageset");
+
+
 	CEGUI::System::getSingleton().setTooltip("Vanilla/Tooltip");
 
 	CEGUI::System::getSingleton().setDefaultMouseCursor("Vanilla-Images", "MouseArrow");
