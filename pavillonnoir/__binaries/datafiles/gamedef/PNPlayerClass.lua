@@ -142,7 +142,7 @@ Call when player push the primary attack button
 		local nearest_e = nil 				-- nearest entitie
 
 		--self:startAnimation(CHARACTER_ANIM.STRIKE_TORSO)
-		if (self.combat_state == COMBAT_STATE.NEUTRAL) then
+		if (self.combat_state == COMBAT_STATE.NEUTRAL and self.health_state < HEALTH_STATE.COMA) then
 			pnprint("tappe !!!\n")
 			--if (state == true) then
 			pnprint ("Player wants to fight\n")
@@ -186,6 +186,9 @@ Called at the end of a Fight Action
     	self:PNCharacter_onDamage(damage, localisation, source)
     	-- call refresh of life bar
     	GUIChangeLife(self.health_state)
+    	if (self.health_state >= HEALTH_STATE.COMA) then
+    		gameMap:sendEventFromLua(self, 18) -- GameOverEvent
+    	end
 	end
 --------------------------------------------------------
 --[[%
@@ -204,7 +207,7 @@ Checks if waited Animation is the one that ended
 						pnprint("Actually it only is a coma\n")
 					end
 				end
-			elseif ((self.combat_state == COMBAT_STATE.ATTACK) or (self..combat_state == COMBAT_STATE.DEFENSE)) then -- if is fighting
+			elseif ((self.combat_state == COMBAT_STATE.ATTACK) or (self.combat_state == COMBAT_STATE.DEFENSE)) then -- if is fighting
 				pnprint("restoring Neutral combat state\n")
 				self.combat_state = COMBAT_STATE.NEUTRAL
 			end
