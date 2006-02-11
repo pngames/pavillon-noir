@@ -461,6 +461,10 @@
 			Name="game"
 			>
 			<File
+				RelativePath="..\..\..\__src\pncommon\pnchatxml.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncommon\PNDie.cpp"
 				>
 			</File>

@@ -2,7 +2,7 @@
  * pnxml.h
  * 
  * Description :
- * XML balise and parameters definines for map loading
+ * XML balises and parameters definines for map loading
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
@@ -38,10 +38,6 @@ static const std::string	PNMAP_XMLNODE_ROOT		= PNMAP_XMLDTD_NAME;
 
 static const std::string	PNENTITY_XMLNODE_ROOT	= "entity";
 
-// Chat
-static const std::string	PNCHAT_XMLDTD_NAME		= "chat";
-static const std::string	PNCHAT_XMLDTD			=  std::string("../") + PNCHAT_XMLDTD_NAME + ".dtd";
-static const std::string	PNCHAT_XMLNODE_ROOT		= PNCHAT_XMLDTD_NAME;
 
 
 // Markups
@@ -57,11 +53,7 @@ static const std::string	PNCHAT_XMLNODE_ROOT		= PNCHAT_XMLDTD_NAME;
 #define PNXML_LINK_MKP				(const xmlChar *)"lnk"
 #define PNXML_LISTSOUNDS_MKP		(const xmlChar *)"listsounds"
 #define PNXML_SOUND_MKP				(const xmlChar *)"sound"
-// Chat
-#define PNXML_CHAT_MKP				(const xmlChar *)"chat"
-#define PNXML_BUDDY_MKP				(const xmlChar *)"buddy"
-#define PNXML_DEPENDS_MKP			(const xmlChar *)"depends"
-#define PNXML_PLAYER_MKP			(const xmlChar *)"player"
+
 
 
 // Attributes
@@ -86,12 +78,7 @@ static const std::string	PNCHAT_XMLNODE_ROOT		= PNCHAT_XMLDTD_NAME;
 #define PNXML_REFERENCE_ATTR		(const xmlChar *)"ref"
 #define PNXML_INTENSITY_ATTR		(const xmlChar *)"intensity"
 #define PNXML_CLASS_ATTR			(const xmlChar *)"class"
-// Chat
-#define PNXML_BUDDYNAME_ATTR		(const xmlChar *)"name"
-#define PNXML_SENTENCE_ATTR			(const xmlChar *)"sentence"
-#define PNXML_ANSWER_ATTR			(const xmlChar *)"response"
-#define PNXML_QUIT_ATTR				(const xmlChar *)"quit"
-#define PNXML_CHECKPOINT_ATTR		(const xmlChar *)"checkpoint"
+
 
 
 // Values

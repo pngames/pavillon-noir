@@ -38,7 +38,7 @@
 
 <!ATTLIST skybox enabled (true|false) #IMPLIED>
 <!ATTLIST skybox top CDATA #IMPLIED>
-<!ATTLIST skybox botttom CDATA #IMPLIED>
+<!ATTLIST skybox bottom CDATA #IMPLIED>
 <!ATTLIST skybox left CDATA #IMPLIED>
 <!ATTLIST skybox right CDATA #IMPLIED>
 <!ATTLIST skybox front CDATA #IMPLIED>
