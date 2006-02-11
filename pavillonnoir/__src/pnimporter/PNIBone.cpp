@@ -153,6 +153,8 @@ PNIBone::update(const AnimationSet& anims)
   if (posUpdated)
 	transform.setTranslation(_lastPos);
 
+  _totalLastRot = _lastRot;
+
   if (_parent == NULL)
 	_mCourse = transform;
   else

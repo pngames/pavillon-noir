@@ -1001,7 +1001,8 @@ PN3DObject::updateTranslation(pnfloat deltaTime)
 	_movingState &= !STATE_ALL_T;
 
 	_updateTranslation = getPositionTargetCoord();
-	_updateTranslation += getPositionTargetOrient() * _targetPosition;
+    if (!_targetPosition.isNull())
+	  _updateTranslation += getPositionTargetOrient() * _targetPosition;
 	_updateTranslation -= getCoord();
 
 	if (_targetMode & TMODE_POSITION_ABS_LOCKED)
