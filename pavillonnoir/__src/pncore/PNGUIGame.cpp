@@ -578,7 +578,9 @@ void PNGUIGame::startGUI()
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
   PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_OVER, EventCallback(this, &PNGUIGame::playerDied));
-PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_LIFEVAL, EventCallback(this, &PNGUIGame::changeLife));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_LIFEVAL, EventCallback(this, &PNGUIGame::changeLife));
+PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNGUIGame::startChat));
+
   suscribeConsoleCommand();
   show();
 }
@@ -591,6 +593,7 @@ void PNGUIGame::resetGUI()
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_OVER, EventCallback(this, &PNGUIGame::playerDied));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_LIFEVAL, EventCallback(this, &PNGUIGame::changeLife));
+PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNGUIGame::startChat));
   unsuscribeConsoleCommand();
   hide();
 }
@@ -635,6 +638,20 @@ void  PNGUIGame::inputHandleEsc(pnEventType type, PNObject* source, PNEventData*
 	PNGUIEscMenu::getInstance()->startGUI();
   }
 }
+
+void  PNGUIGame::startChat(pnEventType type, PNObject* source, PNEventData* data)
+{
+  if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME &&
+	PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
+  {
+	if (((PNGameActionEventData*)data)->action == "Chat" && ((PNGameActionEventData*)data)->value == 1.0)
+	{
+	  resetGUI();
+	  PNGUIChatWindow::getInstance()->startGUI(((PNGameActionEventData*)data)->targetId);
+	}
+  }
+}
+
 
 /*!
 \brief
@@ -966,9 +983,6 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
 	//cam->setTargetMode(PN3DObject::TMODE_FREE);
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Run",playerid,"null",false));
     break;
-  case CEGUI::Key::Space:
-	PNGUIChatWindow::getInstance()->startGUI("id_1");
-	break;
   default:
 	std::cout << "not managed key";
 	break;
