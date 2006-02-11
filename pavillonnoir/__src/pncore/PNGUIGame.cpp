@@ -1020,10 +1020,14 @@ bool PNGUIGame::eventMouseButtonPressedHandler(const CEGUI::EventArgs& e)
     PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("PrimaryAttack",playerid,"null",true));
 
   }
-  if (me->button == CEGUI::RightButton)
+  if (me->button == CEGUI::RightButton){
     std::cout << "game right click" << std::endl;
-  if (me->button == CEGUI::MiddleButton)
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Defense",playerid,"null",true));
+  }
+  if (me->button == CEGUI::MiddleButton){
     std::cout << "game middle click" << std::endl;
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Use",playerid,"null",true));
+  }
   return true;
 }
 
@@ -1043,12 +1047,15 @@ bool PNGUIGame::eventMouseButtonReleasedHandler(const CEGUI::EventArgs& e)
   if (me->button == CEGUI::LeftButton){
     std::cout << "game left click" << std::endl;
     PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("PrimaryAttack",playerid,"null",false));
-
   }
-  if (me->button == CEGUI::RightButton)
+  if (me->button == CEGUI::RightButton){
     std::cout << "game right click" << std::endl;
-  if (me->button == CEGUI::MiddleButton)
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Defense",playerid,"null",false));
+  }
+  if (me->button == CEGUI::MiddleButton){
     std::cout << "game middle click" << std::endl;
+    PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Use",playerid,"null",false));
+  }
   return true;
 }
 
