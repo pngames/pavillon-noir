@@ -28,7 +28,8 @@
 */
 
 #include <boost/filesystem/operations.hpp>
-
+#include <libxml/parser.h>
+#include <libxml/tree.h>
 
 #include "pndefs.h"
 #include "pcf_format.h"
@@ -47,6 +48,7 @@ namespace PN
 
   PNChatTree::~PNChatTree()
   {
+	xmlFreeDoc(_doc);
   }
 
   //////////////////////////////////////////////////////////////////////////
@@ -55,7 +57,8 @@ namespace PN
   {
 	_id = (const char*)xmlGetProp(root, PNXML_ID_ATTR);
 	_name = (const char*)xmlGetProp(root, PNXML_BUDDYNAME_ATTR);
-	_currentNode = root;
+	_currentNode = new xmlNode();
+	*_currentNode = *root;
 
 	return PNEC_SUCCESS;
   }
@@ -67,14 +70,51 @@ namespace PN
 
   pnint	PNChatTree::unserializeFromFile(const fs::path& file)
   {
-	return IPNXMLSerializable::unserializeFromFile(file);
+	pnerror(PN_LOGLVL_INFO, "Loading XMLObject: %s ...", file.native_file_string().c_str());
+
+	if (!fs::exists(file))
+	  return PNEC_FILE_NOT_FOUND;
+
+	if (fs::is_directory(file))
+	  return PNEC_NOT_A_FILE;
+
+	//////////////////////////////////////////////////////////////////////////
+
+	xmlParserCtxtPtr	ctxt;
+	
+
+	LIBXML_TEST_VERSION ctxt = xmlNewParserCtxt();	// create a parser context
+
+	if (ctxt == NULL) 
+	  return PNEC_ALLOC_PARSER_CONTEXT;
+
+	_doc = xmlCtxtReadFile(ctxt, file.string().c_str(), NULL, XML_PARSE_DTDVALID); // parse the file, + DTD validation 
+	xmlFreeParserCtxt(ctxt);							// free up the parser context
+
+	if (_doc == NULL)									// check if parsing succeeded
+	  return PNEC_FAILED_TO_PARSE;
+
+	xmlNodePtr  node = xmlDocGetRootElement(_doc);
+
+	//////////////////////////////////////////////////////////////////////////
+
+	pnint error = unserializeFromXML(node);
+
+	//////////////////////////////////////////////////////////////////////////
+	// clean
+
+	//xmlFreeDoc(doc);									// free the document
+
+	return error;
   }
 
   //////////////////////////////////////////////////////////////////////////
   
   bool PNChatTree::isAResolvedDep(std::string depID)
   {
-	for (std::list<std::string>::iterator it = _resolvedDependencies->begin(); it != _resolvedDependencies->end(); ++it)
+	ListResolvedDependencies::iterator it;
+
+	for ( it = _resolvedDependencies.begin(); it != _resolvedDependencies.end(); ++it)
 	{
 	  if (depID == *it)
 		return true;
@@ -112,8 +152,8 @@ namespace PN
 
   }
 
-  void	PNChatTree::addDependency(std::string dependency)
+  void	PNChatTree::setListDependencies(ListResolvedDependencies& deps)
   {
-	_resolvedDependencies->push_back(dependency);
+	_resolvedDependencies = deps;
   }
 }
