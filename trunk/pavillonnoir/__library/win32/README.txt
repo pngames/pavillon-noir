@@ -3,7 +3,7 @@ Third party library:
 name		| current version
 
 * libxml2 	: 2.6.22 (http://xmlsoft.org/news.html)
-* Fox 	: 1.4.5.0 (http://fox-toolkit.org)
+* Fox 	: 1.4.29 (http://fox-toolkit.org)
 * SDL 	: 1.2.9 (http://www.libsdl.org/news.php)
 * CEGUI	: 0.4
 * boost	: 1.33.1 (http://sourceforge.net/project/showfiles.php?group_id=7586)
