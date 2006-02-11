@@ -14,7 +14,7 @@
 <!-- CHAT ATTRIBUTES -->
 
 <!ATTLIST chat name CDATA #IMPLIED>
-<!ATTLIST chat uid ID #REQUIRED>
+<!ATTLIST chat id ID #REQUIRED>
 
 <!-- BUDDY ATTRIBUTES -->
 
