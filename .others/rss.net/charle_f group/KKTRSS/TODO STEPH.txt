@@ -1,7 +1,0 @@
-TODO :
-
-Faire des update des données !!!!
-erreur si on register un compte deja existant
-implementer la desincription a un flux
-regarder le pb d'encoding qui fait sauter les accents (ca je peux le faire)
-
