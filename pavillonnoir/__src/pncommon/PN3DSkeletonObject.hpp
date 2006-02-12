@@ -119,6 +119,8 @@ public:
   pnuint					setAnimWeight(pnfloat weight);
   pnuint					setAnimWeight(pnint animId, pnfloat weight);
 
+  pnuint					setAnimNext(pnint animId, pnint nextAnimId);
+
   /// Set the automatic looping of animation enable or disable
   pnuint					setEnableLoop(pnbool loop);
   pnuint					setEnableLoop(pnint animId, pnbool loop);
