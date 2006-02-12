@@ -466,6 +466,10 @@ PNGUIGame::PNGUIGame()
   _mapLife[6] = "FioleImages/fiole_LETHAL";
 
  _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/fiole");
+ _miniMapPoint = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/MiniMapPos");
+  _mapSizeX = 5000.0;
+  _mapSizeZ = 5000.0;
+
 //  _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "PNGUIGame/Life");
 /*  _rootWin->addChildWindow(_statImg);
 
@@ -580,6 +584,7 @@ void PNGUIGame::startGUI()
   PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_OVER, EventCallback(this, &PNGUIGame::playerDied));
   PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_LIFEVAL, EventCallback(this, &PNGUIGame::changeLife));
 PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNGUIGame::startChat));
+PNEventManager::getInstance()->addCallback(PN_EVENT_OM, EventCallback(this, &PNGUIGame::updateCoordPlayer));
 
   suscribeConsoleCommand();
   show();
@@ -594,6 +599,7 @@ void PNGUIGame::resetGUI()
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_OVER, EventCallback(this, &PNGUIGame::playerDied));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_LIFEVAL, EventCallback(this, &PNGUIGame::changeLife));
 PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNGUIGame::startChat));
+PNEventManager::getInstance()->deleteCallback(PN_EVENT_OM, EventCallback(this, &PNGUIGame::updateCoordPlayer));
   unsuscribeConsoleCommand();
   hide();
 }
@@ -601,7 +607,8 @@ PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_ACTION, EventCallbac
 void  PNGUIGame::changeLife(pnEventType type, PNObject* source, PNEventData* data)
 {
   PNLOCK(this);
-int val = ((PNGameLifeValEventData*)data)->lifeVal;
+  
+  int val = ((PNGameLifeValEventData*)data)->lifeVal;
   if (val < 7)
   {
 	/*float sizeHeight = 0.25;
@@ -652,6 +659,20 @@ void  PNGUIGame::startChat(pnEventType type, PNObject* source, PNEventData* data
   }
 }
 
+void  PNGUIGame::updateCoordPlayer(pnEventType type, PNObject* source, PNEventData* data)
+{
+  PNLOCK(this);
+  if (((PN3DObject*)source)->getObjType() == PN3DObject::OBJTYPE_CAMERA)
+  {
+	PNPoint3f coord = ((PN3DObject*)source)->getCoord();
+	float tmpX = coord.x / _mapSizeX;
+	float tmpZ = coord.z / _mapSizeZ;
+	_miniMapPoint->setPosition(CEGUI::Point(tmpZ, tmpX));
+
+	//std::cout << "x = " << coord.x << " z = " << coord.z << std::endl;  
+
+  }
+}
 
 /*!
 \brief

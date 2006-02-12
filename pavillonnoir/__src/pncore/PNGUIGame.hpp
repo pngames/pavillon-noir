@@ -69,8 +69,12 @@ namespace PN{
 	float			_lifeValue; 
 
 	CEGUI::StaticImage* _statImg;
+	CEGUI::StaticImage* _miniMapPoint;
 	typedef std::map<int, std::string> MapLife;
 	MapLife _mapLife;
+
+	float _mapSizeX;
+	float _mapSizeZ;
 
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
@@ -99,6 +103,7 @@ namespace PN{
 	void unsuscribeConsoleCommand();
 	void suscribeConsoleCommand();
 	void  startChat(pnEventType type, PNObject* source, PNEventData* data);
+	void  updateCoordPlayer(pnEventType type, PNObject* source, PNEventData* data);
 
 	//////////////////////////////////////////////////////////////////////////
 	// ConfigurableObject
