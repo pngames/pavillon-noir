@@ -384,6 +384,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNActionTriggerClass.lua"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNAICharacterClass.lua"
 				>
 			</File>
@@ -404,6 +408,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNGetItemTriggerClass.lua"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNItemClass.lua"
 				>
 			</File>
@@ -421,6 +429,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNRenderCam.lua"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNSaberWeaponClass.lua"
 				>
 			</File>
 			<File
