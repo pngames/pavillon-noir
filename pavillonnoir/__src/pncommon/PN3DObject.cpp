@@ -727,6 +727,8 @@ PN3DObject::getPositionTargetCoord() const
 	return coord;
 
   PN3DSkeletonObject* skobj = (PN3DSkeletonObject*)_positionTarget;
+  if (skobj->getSkeleton() == NULL)
+	  return coord;
 
   const pnfloat*	  bcoord = skobj->getSkeleton()->getBoneCoords(_positionBoneTarget);
 
@@ -746,6 +748,9 @@ PN3DObject::getPositionTargetOrient() const
 	return orient;
 
   PN3DSkeletonObject* skobj = (PN3DSkeletonObject*)_positionTarget;
+
+  if (skobj->getSkeleton() == NULL)
+	  return orient;
 
   const PNQuatf*	  borient = skobj->getSkeleton()->getBoneOrientation(_positionBoneTarget);
 
@@ -804,6 +809,9 @@ PN3DObject::getViewTargetCoord() const
 
   PN3DSkeletonObject* skobj = (PN3DSkeletonObject*)_viewTarget;
 
+  if (skobj->getSkeleton() == NULL)
+	  return coord;
+
   const pnfloat*	  bcoord = skobj->getSkeleton()->getBoneCoords(_viewBoneTarget);
 
   if (bcoord == NULL)
@@ -822,6 +830,9 @@ PN3DObject::getViewTargetOrient() const
 	return orient;
 
   PN3DSkeletonObject* skobj = (PN3DSkeletonObject*)_viewTarget;
+  
+  if (skobj->getSkeleton() == NULL)
+	  return orient;
 
   const PNQuatf*	  borient = skobj->getSkeleton()->getBoneOrientation(_viewBoneTarget);
 
