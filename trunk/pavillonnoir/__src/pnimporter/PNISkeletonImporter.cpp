@@ -60,8 +60,6 @@ PNISkeletonImporter::~PNISkeletonImporter(void)
 IPNImportedObject*
 PNISkeletonImporter::doImport(const std::string& path)
 {
-  pnerror(PN_LOGLVL_INFO, "Import %s", path.c_str());
-
   PNI3DSkeleton* obj = new PNI3DSkeleton();
 
   pnuint error = obj->unserializeFromPath(path);

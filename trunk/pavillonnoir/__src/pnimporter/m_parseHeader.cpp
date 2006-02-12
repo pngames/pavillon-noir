@@ -45,7 +45,7 @@ pnint	  PNI3DModel::parseHeader()
   if (strncmp(_header.magic, PNM_MAGIC, PNM_MAGIC_SIZE) != 0)
   	return PNEC_FILETYPE_INVALID;
 
-  std::cout << "magic : " << _header.magic << std::endl;
+  /*std::cout << "magic : " << _header.magic << std::endl;
   std::cout << "version : " << _header.version << std::endl;
 
   std::cout << "SupportedBones : " << _header.nbSupportedBones << std::endl;
@@ -53,7 +53,7 @@ pnint	  PNI3DModel::parseHeader()
 
   std::cout << "nbVerts : " << _header.nbVerts << std::endl;
 
-  std::cout << "nbMeshes : " << _header.nbMeshes << std::endl;
+  std::cout << "nbMeshes : " << _header.nbMeshes << std::endl;*/
 
   return PNEC_SUCCESS;
 }

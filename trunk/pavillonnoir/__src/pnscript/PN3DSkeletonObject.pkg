@@ -9,8 +9,8 @@ public:
   }						rendermode;
 
 //////////////////////////////////////////////////////////////////////////
-  pnuint				setEnable(pnuint animId, pnbool enabled);
-  pnbool				isEnable(pnuint animId) const;
+  pnuint				setEnabled(pnuint animId, pnbool enabled);
+  pnbool				isEnabled(pnuint animId) const;
   
   pnuint				startAnimation();
   

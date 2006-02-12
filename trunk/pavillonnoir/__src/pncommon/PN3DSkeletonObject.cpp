@@ -238,8 +238,8 @@ PN3DSkeletonObject::update(pnuint deltaTime)
 	  PN3DSkeletonAnimation*  anim = *it;
 	  if (!anim->update(deltaTime))
 	  {
-		_animsToPlay.erase(anim);
-		setEnable(anim->next, true);
+		_setEnabled(anim, false);
+		setEnabled(anim->next, true);
 	  }
 	}
 
@@ -287,7 +287,22 @@ PN3DSkeletonObject::getSkeleton() const
 //////////////////////////////////////////////////////////////////////////
 
 pnuint
-PN3DSkeletonObject::setEnable(pnuint animId, pnbool enabled)
+PN3DSkeletonObject::_setEnabled(PN3DSkeletonAnimation* anim, pnbool enabled)
+{
+  if (enabled)
+  {
+	_animsToPlay.insert(anim);
+	if (anim->step == (pnuint)-1)
+	  anim->step = 0;
+  }
+  else
+	_animsToPlay.erase(anim);
+
+  return PNEC_SUCCESS;
+}
+
+pnuint
+PN3DSkeletonObject::setEnabled(pnuint animId, pnbool enabled)
 {
   PNLOCK(this);
 
@@ -296,20 +311,11 @@ PN3DSkeletonObject::setEnable(pnuint animId, pnbool enabled)
   
   _anims[animId]->playId = (pnint)animId;
 
-  if (enabled)
-  {
-	_animsToPlay.insert(_anims[animId]);
-	if (_anims[animId]->step == (pnuint)-1)
-	  _anims[animId]->step = 0;
-  }
-  else
-	_animsToPlay.erase(_anims[animId]);
-
-  return PNEC_SUCCESS;
+  return _setEnabled(_anims[animId], enabled);
 }
 
 pnbool
-PN3DSkeletonObject::isEnable(pnuint animId) const
+PN3DSkeletonObject::isEnabled(pnuint animId) const
 {
   if (animId < 0 || (pnuint)animId >= _anims.size())
 	return false;
@@ -342,7 +348,7 @@ PN3DSkeletonObject::stopAnimation(pnuint animId)
 
   _anims[animId]->stop();
 
-  return setEnable(animId, false);
+  return setEnabled(animId, false);
 }
 
 pnuint
@@ -370,7 +376,7 @@ PN3DSkeletonObject::startAnimation(pnuint animId)
 
   _anims[animId]->start();
 
-  return setEnable(animId, true);
+  return setEnabled(animId, true);
 }
 
 //////////////////////////////////////////////////////////////////////////
