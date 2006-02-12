@@ -25,7 +25,7 @@
 
 <!-- DEPENDS ATTRIBUTES -->
 
-<!ATTLIST depends id ID #REQUIRED>
+<!ATTLIST depends id IDREF #REQUIRED>
 
 <!-- PLAYER ATTRIBUTES -->
 
