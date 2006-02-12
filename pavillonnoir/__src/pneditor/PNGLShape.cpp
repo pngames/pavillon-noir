@@ -204,7 +204,7 @@ PNGLShape::buildParams()
 	_params.push_back(_pMaterialList);
 	_params.push_back(_pScriptList);
 
-	if (_obj->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ)
+	if (_obj->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ || _obj->getObjType() == PN3DObject::OBJTYPE_CHARACTER)
 	{
 	  PNConfigurableParameterList* pAnimList = new PNConfigurableParameterList(this, PN_LISTPARAMTYPE_ANIM, (void*)&((PN3DSkeletonObject*)_obj)->getAnimations(), "Animations", "Animations");
 	  pAnimList->enableSetModified(true);
