@@ -306,8 +306,6 @@ PNI3DMesh::unserializeFromStream(std::istream& i)
 
   _defaultrobject->setBuffer(PN_VARRAY, (pnfloat*)_defaultVertBuffer, true);
   _defaultrobject->setBuffer(PN_NARRAY, (pnfloat*)_defaultNormBuffer, true);
-  
-  _defaultrobject->setIndexBuffer((pnuint*)_idBuffer, _header.nbFaces * 3, true);
 
   return PNEC_SUCCESS;
 }
