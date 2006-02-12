@@ -417,9 +417,9 @@ long          PNPropertiesPanel::onCmdAdd(FXObject* obj, FXSelector sel, void* p
 	FXHorizontalFrame* hFramePath = new FXHorizontalFrame(vFrame,LAYOUT_FILL_X | LAYOUT_FILL_Y);
 	_path = new FXTextField(hFramePath, 30, NULL, 0, LAYOUT_FILL_X | LAYOUT_LEFT | TEXTFIELD_READONLY | FRAME_SUNKEN | FRAME_THICK);
 	_path->setText(PN::DEF::defaultObjFilePath.c_str());
-	/*	  FXButton* browse = */new FXButton(hFramePath, "&Browse", NULL, this, ID_ADDOBJECT, BUTTON_DEFAULT|FRAME_RAISED|LAYOUT_FILL_X|FRAME_THICK);
 
-	// gros hack rapide pour jv : recopie des coordonnees de l'objet selectionne dans la liste box //
+	new FXButton(hFramePath, "&Browse", NULL, this, ID_ADDOBJECT, BUTTON_DEFAULT|FRAME_RAISED|LAYOUT_FILL_X|FRAME_THICK);
+
 	if (_objectsListBox->getNumItems() != 0)
 	{
 	  PNConfigurableObject*	co = (PNConfigurableObject*)_objectsListBox->getItemData(_objectsListBox->getCurrentItem());
@@ -439,6 +439,7 @@ long          PNPropertiesPanel::onCmdAdd(FXObject* obj, FXSelector sel, void* p
   new FXButton(buttons,"&Cancel",NULL,this,PNPropertiesPanel::ID_CANCEL,BUTTON_DEFAULT|LAYOUT_RIGHT|LAYOUT_CENTER_Y|FRAME_RAISED|FRAME_THICK,10,10,0,0, 20,20);
 
   _dbox->execute();
+  _objectsListBox->setCurrentItem(_objectsListBox->getNumItems()-1);
   update();
 
   return 1;
@@ -524,6 +525,11 @@ long			PNPropertiesPanel::onAddObject(FXObject* sender, FXSelector sel, void* pt
   FXFileDialog			open(_grid, "Choose file to save the PN Object", SELECTFILE_EXISTING);
 
   open.setPatternList("Pavillon-Noir Objects (*.pno)");
+  
+  FXString* dir_path = new FXString(open.getDirectory().text());
+  dir_path->append("/");
+  dir_path->append(DEF::objectFilePath.c_str());
+  open.setDirectory(*dir_path);
 
   if (open.execute())
 	_path->setText(open.getFilename().substitute("\\", "/"));

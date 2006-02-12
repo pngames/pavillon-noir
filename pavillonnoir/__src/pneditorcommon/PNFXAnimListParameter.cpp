@@ -165,10 +165,11 @@ PNFXAnimListParameter::showAnim(PNConfigurableObject* skanim)
   FXVerticalFrame* vframe = new FXVerticalFrame(_animDialBox, LAYOUT_FILL_X | LAYOUT_FILL_Y);
   FXGroupBox* group = new FXGroupBox(vframe, "Animation properties", LAYOUT_FILL_X | LAYOUT_FILL_Y | FRAME_GROOVE);
   PNPropertiesGrid* grid = new PNPropertiesGrid(group);
+  
   _animDialBox->create();
   vframe->create();
   group->create();
-
+  
   grid->setObject(skanim);
 
   new FXHorizontalSeparator(vframe, LAYOUT_FILL_X);
@@ -176,7 +177,11 @@ PNFXAnimListParameter::showAnim(PNConfigurableObject* skanim)
   new FXButton(buttons, "&Ok", NULL, _animDialBox, FXDialogBox::ID_ACCEPT, BUTTON_DEFAULT | LAYOUT_RIGHT | LAYOUT_CENTER_Y | FRAME_RAISED | FRAME_THICK, 10, 10, 0, 0, 20, 20);
   new FXButton(buttons, "&Cancel", NULL, _animDialBox, FXDialogBox::ID_CANCEL, BUTTON_DEFAULT | LAYOUT_RIGHT | LAYOUT_CENTER_Y | FRAME_RAISED | FRAME_THICK, 10, 10, 0, 0, 20, 20);
   buttons->create();
-
+  
+  // FIXME : dialog box does not automatically resize, so we force it. Correct that.
+  _animDialBox->setHeight(180);
+  _animDialBox->setWidth(170);
+  
   return _animDialBox->execute();
 }
 

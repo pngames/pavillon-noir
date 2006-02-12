@@ -536,7 +536,9 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 	}
   }
   
+  _genScene.remove(wpGroup);
   _genScene.serializeInPath(_dir + "entities.xml");
+  _genScene.append(wpGroup);
 
   //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
@@ -548,7 +550,7 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
   //////////////////////////////////////////////////////////////////////////
   
   _genScene.setOptionView(PNGLGroup::VIEW_ALL);
-  _wpenabled = false;
+  //_wpenabled = false;
 
   return 1;
 }

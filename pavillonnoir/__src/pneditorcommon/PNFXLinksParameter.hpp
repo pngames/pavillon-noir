@@ -28,8 +28,6 @@
  */
 
 
-// TODO : renommer en PNConfigurableParametersList
-
 #ifndef _PNFXLINKSPARAMETER_HPP_
 # define _PNFXLINKSPARAMETER_HPP_
 
