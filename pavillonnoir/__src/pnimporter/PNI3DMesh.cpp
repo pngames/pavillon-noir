@@ -247,8 +247,8 @@ PNI3DMesh::unserializeFromStream(std::istream& i)
   
   i.read((char*)&_header, sizeof(_header));
 
-  cout << "nbVerts=" << _header.nbVerts << endl;
-  cout << "nbFaces=" << _header.nbFaces << endl;
+  /*cout << "nbVerts=" << _header.nbVerts << endl;
+  cout << "nbFaces=" << _header.nbFaces << endl;*/
 
   //////////////////////////////////////////////////////////////////////////
 

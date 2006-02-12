@@ -73,7 +73,7 @@ PNI3DMaterial::_parse(std::istream& istm)
 
   //////////////////////////////////////////////////////////////////////////
 
-  std::cout << "magic : " << _header.magic << std::endl;
+  /*std::cout << "magic : " << _header.magic << std::endl;
   std::cout << "version : " << _header.version << std::endl;
 
   std::cout << "ambient : r=" << _header.ambient[0] << " g=" << _header.ambient[1] << " b=" << _header.ambient[2] << " a=" << _header.ambient[3] << std::endl;
@@ -84,7 +84,7 @@ PNI3DMaterial::_parse(std::istream& istm)
   std::cout << "opacity : " << _header.opacity << std::endl;
   std::cout << "glossiness : " << _header.glossiness << std::endl;
 
-  std::cout << "nbMap : " << _header.nbMap << std::endl;
+  std::cout << "nbMap : " << _header.nbMap << std::endl;*/
 
   if (_header.nbMap == 0)
   {
@@ -129,7 +129,7 @@ PNI3DMaterial::unserializeFromStream(std::istream& istm)
 
   if (_texture.size() > 0)
   {
-  	std::cout << _texture << std::endl;
+  	//std::cout << _texture << std::endl;
   	
 	err = _renderMaterial->setTexture(DEF::texturesFilePath + _texture);
   }
