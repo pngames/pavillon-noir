@@ -277,13 +277,13 @@ PNGLRendererObject::render()
 	glDrawArrays(_renderer->convertFlag(_mode), 0, _nbIndex);
   else
   {
-	if (_indexArraysId != (GLuint)-1) 
+	if (_indexArraysId != (GLuint)-1)
 	{
 	  glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, _indexArraysId); 
 	  glDrawElements(_renderer->convertFlag(_mode), _nbIndex, GL_UNSIGNED_INT, NULL);
-	  glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0); 
+	  glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
 	}
-	else 
+	else
 	  glDrawElements(_renderer->convertFlag(_mode), _nbIndex, GL_UNSIGNED_INT, _indexArrays);
   }
 
