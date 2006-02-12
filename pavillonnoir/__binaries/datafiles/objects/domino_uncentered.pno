@@ -1,7 +1,0 @@
-<?xml version="1.0"?><!DOCTYPE object SYSTEM "object.dtd">
-<object>
-  <model path="domino_60x5x120.pnm" />
-  <listmaterials>
-    <material path="domino_60x5x120.pnt" />
-  </listmaterials>
-</object>

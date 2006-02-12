@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE object SYSTEM "object.dtd">
-<object>
-  <model path="JiveImportTrimesh.pnm" />
-  <listmaterials>
-    <material path="JiveImportTrimesh_Materiau #1.pnt" />
-  </listmaterials>
-  <physics path="JiveImportTrimesh.pnp"/>
-</object>
