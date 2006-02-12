@@ -84,6 +84,7 @@ public:
 	ID_GROUND,
 	ID_STATIC,
 	ID_DYNAMIC,
+	ID_UNSELECT,
 
 	// grid
 	ID_GRID_OBJ_SEL,
@@ -186,6 +187,7 @@ public:
   long onCmdStaticView(FXObject* obj, FXSelector sel, void* ptr);
   long onCmdDynView(FXObject* obj, FXSelector sel, void* ptr);
   long onCmdWPView(FXObject* obj, FXSelector sel, void* ptr);
+  long onCmdUnselect(FXObject* obj, FXSelector sel, void* ptr);
 
   // grid messages handlers
   long onCmdGridObjSel(FXObject* obj, FXSelector sel, void* ptr);

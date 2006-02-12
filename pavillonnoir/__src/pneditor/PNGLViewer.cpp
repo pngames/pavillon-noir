@@ -53,9 +53,11 @@ namespace PN
 	FXDEFMAP(PNGLViewer) PNGLViewerMap[]=
 	{
 	  FXMAPFUNC(SEL_LEFTBUTTONRELEASE,0,PNGLViewer::onLeftBtnRelease),
+/*	  FXMAPFUNC(SEL_CHANGED,ID_POS_X,PNGLViewer::onPosX),
+	  FXMAPFUNC(SEL_UPDATE,ID_POS_Y,PNGLViewer::onPosY),
+	  FXMAPFUNC(SEL_COMMAND,ID_POS_Z,PNGLViewer::onPosZ),*/
 	  FXMAPFUNC(SEL_KEYPRESS,0,PNGLViewer::onKeyPress)
 	};
-
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -148,34 +150,86 @@ namespace PN
 	 */
 	long PNGLViewer::onKeyPress(FXObject* obj,FXSelector sel,void* ptr)
 	{
-	  // FIXME : definir des raccourcis
 	  pnerror(PN_LOGLVL_DEBUG, "long PNGLViewer::onKeyPress(FXObject* obj,FXSelector sel,void* ptr)");
-	  FXGLViewer::handle(obj, sel,ptr);
 	  FXEvent* event=(FXEvent*)ptr;
 	  PNGLShape* s = (PNGLShape*)getSelection();
   
-	  if (s != NULL)
+	  FXVec3f eye = getEyePosition();
+
+	  float x = .0f;
+	  float y = .0f;
+	  float z = .0f;
+	  pnerror(PN_LOGLVL_DEBUG, "BEFORE: eye.x=%f;eye.y=%f;eye.z=%f", eye.x, eye.y, eye.z);
+	  //if (s != NULL)
 	  switch(event->code)
 	  {
+		  case KEY_d:
+		  case KEY_D:
 		  case KEY_Right:
-		  case KEY_KP_Right:	
-			// deplacer l'objet de 10 a droite
+		  case KEY_KP_Right:
+			pnerror(PN_LOGLVL_DEBUG, "X++");
+			x = 50.0f;
+			break;
+		  case KEY_a:
+		  case KEY_A:
 		  case KEY_Left:
 		  case KEY_KP_Left:
-			// deplacer l'objet de 10 a gauche
+			pnerror(PN_LOGLVL_DEBUG, "X--");
+			x = -50.0f;
+			break;
+		  case KEY_w:
+		  case KEY_W:
 		  case KEY_Up:
 		  case KEY_KP_Up:
-			// deplacer l'objet de 10 en haut
+			pnerror(PN_LOGLVL_DEBUG, "Z--");
+			z = -50.0f;
+			break;
+		  case KEY_s:
+		  case KEY_S:
 		  case KEY_Down:
 		  case KEY_KP_Down:
-			// deplacer l'objet de 10 en bas
+			pnerror(PN_LOGLVL_DEBUG, "Z++");
+			z = 50.0f;
+			break;
+		  case KEY_e:
+		  case KEY_E:
+		  case KEY_Page_Up:
+			pnerror(PN_LOGLVL_DEBUG, "Y++");
+			y = 50.0f;
+			break;
+		  case KEY_q:
+		  case KEY_Q:
+		  case KEY_Page_Down:
+			pnerror(PN_LOGLVL_DEBUG, "Y--");
+			y  = -50.0f;
+			break;
 		  default:
+			pnerror(PN_LOGLVL_DEBUG, "DEFAULT");
+			FXGLViewer::handle(obj, sel,ptr);
 			;
 	  }
+	  pnerror(PN_LOGLVL_DEBUG, "AFTER: eye.x=%f;eye.y=%f;eye.z=%f", eye.x, eye.y, eye.z);
+	  translate(FXVec3f(x, y, z));
+	  _ed->redraw();
 	  return 1;
 	}
 
+/*
+	long PNGLViewer::onPosX(FXObject* obj,FXSelector sel,void* ptr)
+	{
+	  return 1;
+	}
 
+	long PNGLViewer::onPosY(FXObject* obj,FXSelector sel,void* ptr)
+	{
+	  return 1;
+	}
+
+	long PNGLViewer::onPosZ(FXObject* obj,FXSelector sel,void* ptr)
+	{
+	  return 1;
+	}
+*/
 	// viewer ////////////////////////////////////////////////////////////////
 
 

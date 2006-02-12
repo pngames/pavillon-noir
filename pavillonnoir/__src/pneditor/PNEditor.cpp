@@ -119,9 +119,11 @@ FXDEFMAP(PNEditor) PNEditorMap[] =
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_STATIC,		PNEditor::onCmdStaticView),
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_DYNAMIC,		PNEditor::onCmdDynView),
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_WAYPOINTS,		PNEditor::onCmdWPView),
+  FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_UNSELECT,		PNEditor::onCmdUnselect),
+
   // grid
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_GRID_OBJ_SEL,	PNEditor::onCmdGridObjSel),
-  FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_COPYOBJ,		PNEditor::onCmdCopyObj)
+  FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_COPYOBJ,		PNEditor::onCmdCopyObj)  
 };
 
 // Macro for the PNEditor class hierarchy implementation
@@ -182,65 +184,78 @@ PNEditor::PNEditor(FXApp* a)
   _panels = new FXTabBook(dockbar, NULL, 0, LAYOUT_FILL_Y, 0, 0, 0, 0, 0, 0, 0, 0);
 
   // Angles
-  new FXTabItem(_panels, "Angles\tCamera Angles\tSwitch to camera angles panel.");
-  FXMatrix *angles = new FXMatrix(_panels, 3, FRAME_THICK  |  FRAME_RAISED  |  MATRIX_BY_COLUMNS
+  new FXTabItem(_panels, "Camera\tCamera\tSwitch to camera panel.");
+  FXMatrix *camera = new FXMatrix(_panels, 3, FRAME_THICK  |  FRAME_RAISED  |  MATRIX_BY_COLUMNS
 	|  LAYOUT_FILL_Y  |  LAYOUT_TOP  |  LAYOUT_LEFT, 
 	0, 0, 0, 0, 10, 10, 10, 10);
-  new FXLabel(angles, "X:");
-  new FXTextField(angles, 6, viewer, FXGLViewer::ID_ROLL, 
+  new FXLabel(camera, "X:");
+  new FXTextField(camera, 6, viewer, FXGLViewer::ID_ROLL, 
 	TEXTFIELD_INTEGER  |  JUSTIFY_RIGHT  |  FRAME_SUNKEN  |  FRAME_THICK);
-  FXDial* x_dial = new FXDial(angles, viewer, FXGLViewer::ID_DIAL_X, 
+  FXDial* x_dial = new FXDial(camera, viewer, FXGLViewer::ID_DIAL_X, 
 	FRAME_SUNKEN  |  FRAME_THICK  |  DIAL_CYCLIC  |  
 	DIAL_HORIZONTAL  |  LAYOUT_FIX_WIDTH  |  LAYOUT_FIX_HEIGHT  |  
 	LAYOUT_CENTER_Y, 0, 0, 160, 14, 0, 0, 0, 0);
   x_dial->setTipText("Rotate about X");
   x_dial->setNotchOffset(900);
 
-  new FXLabel(angles,"Y:");
-  new FXTextField(angles, 6, viewer, FXGLViewer::ID_PITCH, 
+  new FXLabel(camera,"Y:");
+  new FXTextField(camera, 6, viewer, FXGLViewer::ID_PITCH, 
 	TEXTFIELD_INTEGER  |  JUSTIFY_RIGHT  |  FRAME_SUNKEN  |  FRAME_THICK);
-  FXDial* y_dial = new FXDial(angles, viewer, FXGLViewer::ID_DIAL_Y, 
+  FXDial* y_dial = new FXDial(camera, viewer, FXGLViewer::ID_DIAL_Y, 
 	FRAME_SUNKEN  |  FRAME_THICK  |  DIAL_CYCLIC  |  
 	DIAL_HORIZONTAL  |  LAYOUT_FIX_WIDTH  |  LAYOUT_FIX_HEIGHT  |  
 	LAYOUT_CENTER_Y, 0, 0, 160, 14, 0, 0, 0, 0);
   y_dial->setTipText("Rotate about Y");
   y_dial->setNotchOffset(900);
 
-  new FXLabel(angles, "Z:");
-  new FXTextField(angles, 6, viewer, FXGLViewer::ID_YAW, 
+  new FXLabel(camera, "Z:");
+  new FXTextField(camera, 6, viewer, FXGLViewer::ID_YAW, 
 	TEXTFIELD_INTEGER  |  JUSTIFY_RIGHT  |  FRAME_SUNKEN  |  FRAME_THICK);
-  FXDial* z_dial = new FXDial(angles, viewer, FXGLViewer::ID_DIAL_Z, 
+  FXDial* z_dial = new FXDial(camera, viewer, FXGLViewer::ID_DIAL_Z, 
 	FRAME_SUNKEN  |  FRAME_THICK  |  DIAL_CYCLIC  |  
 	DIAL_HORIZONTAL  |  LAYOUT_FIX_WIDTH  |  LAYOUT_FIX_HEIGHT 
 	|  LAYOUT_CENTER_Y, 0, 0, 160, 14, 0, 0, 0, 0);
   z_dial->setTipText("Rotate about Z");
   z_dial->setNotchOffset(900);
 
-  new FXLabel(angles, "FOV:");
-  FXTextField* fov = new FXTextField(angles, 5, viewer, FXGLViewer::ID_FOV, 
+  new FXLabel(camera, "FOV:");
+  FXTextField* fov = new FXTextField(camera, 5, viewer, FXGLViewer::ID_FOV, 
 	JUSTIFY_RIGHT  |  FRAME_SUNKEN  |  FRAME_THICK);
-  new FXFrame(angles, 0);
+  new FXFrame(camera, 0);
   fov->setTipText("Field of view");
 
-  new FXLabel(angles, "Zoom:");
-  FXTextField* zz = new FXTextField(angles, 5, viewer, FXGLViewer::ID_ZOOM, 
+  new FXLabel(camera, "Zoom:");
+  FXTextField* zz = new FXTextField(camera, 5, viewer, FXGLViewer::ID_ZOOM, 
 	JUSTIFY_RIGHT  |  FRAME_SUNKEN  |  FRAME_THICK);
-  new FXFrame(angles, 0);
+  new FXFrame(camera, 0);
   zz->setTipText("Zooming");
 
-  new FXLabel(angles,"Scale X:");
-  new FXTextField(angles, 5, viewer, FXGLViewer::ID_SCALE_X, 
+  new FXLabel(camera,"Scale X:");
+  new FXTextField(camera, 5, viewer, FXGLViewer::ID_SCALE_X, 
 	JUSTIFY_RIGHT  |  FRAME_SUNKEN  |  FRAME_THICK);
-  new FXFrame(angles, 0);
-  new FXLabel(angles, "Scale Y:");
-  new FXTextField(angles, 5, viewer, FXGLViewer::ID_SCALE_Y, 
+  new FXFrame(camera, 0);
+  new FXLabel(camera, "Scale Y:");
+  new FXTextField(camera, 5, viewer, FXGLViewer::ID_SCALE_Y, 
 	JUSTIFY_RIGHT  |  FRAME_SUNKEN  |  FRAME_THICK);
-  new FXFrame(angles, 0);
-  new FXLabel(angles, "Scale Z:");
-  new FXTextField(angles, 5, viewer, FXGLViewer::ID_SCALE_Z,
+  new FXFrame(camera, 0);
+  new FXLabel(camera, "Scale Z:");
+  new FXTextField(camera, 5, viewer, FXGLViewer::ID_SCALE_Z,
 	JUSTIFY_RIGHT  |  FRAME_SUNKEN  |  FRAME_THICK);
-  new FXFrame(angles, 0);
-
+  new FXFrame(camera, 0);
+/*
+  new FXLabel(camera,"Position X:");
+  new FXTextField(camera, 5, viewer, PNGLViewer::ID_POS_X, 
+	JUSTIFY_RIGHT  |  FRAME_SUNKEN  |  FRAME_THICK);
+  new FXFrame(camera, 0);
+  new FXLabel(camera, "Position Y:");
+  new FXTextField(camera, 5, viewer, PNGLViewer::ID_POS_Y, 
+	JUSTIFY_RIGHT  |  FRAME_SUNKEN  |  FRAME_THICK);
+  new FXFrame(camera, 0);
+  new FXLabel(camera, "Position Z:");
+  new FXTextField(camera, 5, viewer, PNGLViewer::ID_POS_Z,
+	JUSTIFY_RIGHT  |  FRAME_SUNKEN  |  FRAME_THICK);
+  new FXFrame(camera, 0);
+*/
   // 3D Objects
   new FXTabItem(_panels, "3D Objects\t3D Objects\tEdit 3D Objects.");
   objPanel = new PNPropertiesPanel(_panels, PNPropertiesPanel::PN_PANELTYPE_3DOBJECTS, this);
@@ -330,6 +345,12 @@ PNEditor::PNEditor(FXApp* a)
 	ID_WAYPOINTS, BUTTON_NORMAL | FRAME_RAISED | LAYOUT_TOP | LAYOUT_LEFT);
 
   new FXSeparator(toolbar1, SEPARATOR_GROOVE);
+
+  new FXToggleButton(toolbar1, 
+	"\tUnselect\tReset selection",
+	"\tUnselect\tReset selection", NULL, NULL, this,
+	ID_UNSELECT, BUTTON_NORMAL | FRAME_RAISED | LAYOUT_TOP | LAYOUT_LEFT);
+
 
 /*  new FXButton(toolbar1,"\tNo shading\tTurn light sources off.",nolighticon,this,FXGLShape::ID_SHADEOFF,BUTTON_AUTOGRAY|BUTTON_TOOLBAR|FRAME_RAISED|LAYOUT_TOP|LAYOUT_LEFT);
   new FXButton(toolbar1,"\tFlat shading\tTurn on faceted (flat) shading.",lighticon,this,FXGLShape::ID_SHADEON,BUTTON_AUTOGRAY|BUTTON_TOOLBAR|FRAME_RAISED|LAYOUT_TOP|LAYOUT_LEFT);
@@ -674,6 +695,12 @@ long PNEditor::onCmdWPView(FXObject* sender, FXSelector, void*)
 	FXToggleButton* b = (FXToggleButton*)sender;
 	b->setState(FALSE);
   }
+  return 1;
+}
+
+long PNEditor::onCmdUnselect(FXObject* obj, FXSelector sel, void* ptr)
+{
+  viewer->setSelection(NULL);
   return 1;
 }
 
