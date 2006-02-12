@@ -71,7 +71,6 @@ PNIMaterialImporter::doImport(const std::string& path)
 
   if (error != PNEC_SUCCESS)
   {
-	pnerror(PN_LOGLVL_ERROR, "%s : %s", path.c_str(), pnGetErrorString(error));
 	delete mat;
 	mat = NULL;
   }

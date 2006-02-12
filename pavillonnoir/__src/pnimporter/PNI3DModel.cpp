@@ -148,10 +148,7 @@ PNI3DModel::getNbVertexComputed()
   pnuint  nb = 0;
 
   for (LIST_3DMESH::iterator it = _meshes.begin(); it != _meshes.end(); ++it)
-  {
-	//if (it == _meshes.begin())
-	  nb += ((PNI3DMesh*)*it)->getNbVerts();
-  }
+	nb += ((PNI3DMesh*)*it)->getNbVerts();
 
   return nb;
 }
@@ -162,10 +159,7 @@ PNI3DModel::computeVertex(pnfloat* buffer, pnuint step)
   int nb = step;
 
   for (LIST_3DMESH::iterator it = _meshes.begin(); it != _meshes.end(); ++it)
-  {
-	//if (it == _meshes.begin())
-	  nb += ((PNI3DMesh*)*it)->computeVertex(buffer + nb);
-  }
+	nb += ((PNI3DMesh*)*it)->computeVertex(buffer + nb);
 
   return nb - step;
 }
@@ -176,10 +170,7 @@ PNI3DModel::computeNormales(pnfloat* buffer, pnuint step)
   int nb = step;
 
   for (LIST_3DMESH::iterator it = _meshes.begin(); it != _meshes.end(); ++it)
-  {
-	//if (it == _meshes.begin())
-	  nb += ((PNI3DMesh*)*it)->computeNormales(buffer + nb);
-  }
+	nb += ((PNI3DMesh*)*it)->computeNormales(buffer + nb);
 
   return nb - step;
 }
@@ -190,10 +181,7 @@ PNI3DModel::computeTextCoord(pnfloat* buffer, pnuint step)
   int nb = step;
 
   for (LIST_3DMESH::iterator it = _meshes.begin(); it != _meshes.end(); ++it)
-  {
-	//if (it == _meshes.begin())
-	  nb += ((PNI3DMesh*)*it)->computeTextCoord(buffer + nb);
-  }
+	nb += ((PNI3DMesh*)*it)->computeTextCoord(buffer + nb);
 
   return nb - step;
 }
@@ -204,10 +192,7 @@ PNI3DModel::computeColors(pnfloat* buffer, pnuint step)
   int nb = step;
 
   for (LIST_3DMESH::iterator it = _meshes.begin(); it != _meshes.end(); ++it)
-  {
-	//if (it == _meshes.begin())
-	  nb += ((PNI3DMesh*)*it)->computeColors(buffer + nb);
-  }
+	nb += ((PNI3DMesh*)*it)->computeColors(buffer + nb);
 
   return nb - step;
 }
@@ -228,11 +213,8 @@ PNI3DModel::computeFaces(std::vector<PN3DMaterial*>& mat, PNFace* faces, pnuint 
 
   for (LIST_3DMESH::iterator it = _meshes.begin(); it != _meshes.end(); ++it)
   {
-	//if (it == _meshes.begin())
-	{
-	  nb += ((PNI3DMesh*)*it)->computeFaces(mat, faces + nb, stepVerts);
-	  stepVerts += ((PNI3DMesh*)*it)->getNbVerts();
-	}
+	nb += ((PNI3DMesh*)*it)->computeFaces(mat, faces + nb, stepVerts);
+	stepVerts += ((PNI3DMesh*)*it)->getNbVerts();
   }
 
   return nb - step;

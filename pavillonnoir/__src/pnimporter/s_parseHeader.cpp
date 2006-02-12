@@ -44,10 +44,10 @@ int	  PNI3DSkeleton::parseHeader(std::istream& istm)
   if (strncmp(_header.magic, PNS_MAGIC, PNS_MAGIC_SIZE) != 0)
 	return PNEC_FILETYPE_INVALID;
 
-  std::cout << "magic : " << _header.magic << std::endl;
+  /*std::cout << "magic : " << _header.magic << std::endl;
   std::cout << "version : " << _header.version << std::endl;
 
-  std::cout << "nbBones : " << _header.nbBones << std::endl;
+  std::cout << "nbBones : " << _header.nbBones << std::endl;*/
 
   return PNEC_SUCCESS;
 }

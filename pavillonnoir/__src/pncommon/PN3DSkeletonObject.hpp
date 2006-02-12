@@ -101,9 +101,10 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
   
+  pnuint					_setEnabled(PN3DSkeletonAnimation* anim, pnbool enabled);
 public:
-  pnuint					setEnable(pnuint animId, pnbool enabled);
-  pnbool					isEnable(pnuint animId) const;
+  pnuint					setEnabled(pnuint animId, pnbool enabled);
+  pnbool					isEnabled(pnuint animId) const;
 
   /// Stop current animation and reset position
   pnuint					stopAnimation();

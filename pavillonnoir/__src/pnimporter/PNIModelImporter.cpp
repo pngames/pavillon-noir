@@ -60,8 +60,6 @@ PNIModelImporter::~PNIModelImporter()
 IPNImportedObject*
 PNIModelImporter::doImport(const std::string& path)
 {
-  pnerror(PN_LOGLVL_INFO, "Import %s", path.c_str());
-
   PNI3DModel* obj = new PNI3DModel();
 
   pnuint error = obj->unserializeFromPath(path);

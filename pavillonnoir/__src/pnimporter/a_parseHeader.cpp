@@ -43,7 +43,7 @@ pnint	  PNI3DAnimation::parseHeader(std::istream& istm)
   if (strncmp(_header.magic, PNA_MAGIC, PNA_MAGIC_SIZE) != 0)
 	return PNEC_FILETYPE_INVALID;
 
-  std::cout << "magic : " << _header.magic << std::endl;
+  /*std::cout << "magic : " << _header.magic << std::endl;
   std::cout << "version : " << _header.version << std::endl;
 
   std::cout << "Name : " << _header.name << std::endl;
@@ -51,7 +51,7 @@ pnint	  PNI3DAnimation::parseHeader(std::istream& istm)
   std::cout << "framerate : " << _header.frameRate << std::endl;
   std::cout << "totalTime : " << _header.totalTime << std::endl;
 
-  std::cout << "nbBones : " << _header.nbBones << std::endl;
+  std::cout << "nbBones : " << _header.nbBones << std::endl;*/
 
   return PNEC_SUCCESS;
 }

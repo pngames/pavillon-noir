@@ -516,24 +516,24 @@ Launch the good annimation regarding the state of the Character
 			self.idleTime = 0
 		end	
 
-		self:setEnable(CHARACTER_ANIM.WALK_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
-		self:setEnable(CHARACTER_ANIM.WALK_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
-		self:setEnable(CHARACTER_ANIM.WALK_L, self:testMovingState(PN3DObject.STATE_T_LEFT) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
-		self:setEnable(CHARACTER_ANIM.WALK_R, self:testMovingState(PN3DObject.STATE_T_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
+		self:setEnabled(CHARACTER_ANIM.WALK_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
+		self:setEnabled(CHARACTER_ANIM.WALK_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
+		self:setEnabled(CHARACTER_ANIM.WALK_L, self:testMovingState(PN3DObject.STATE_T_LEFT) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
+		self:setEnabled(CHARACTER_ANIM.WALK_R, self:testMovingState(PN3DObject.STATE_T_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.WALKING))
 		
-		self:setEnable(CHARACTER_ANIM.RUN_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
-		self:setEnable(CHARACTER_ANIM.RUN_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
-		self:setEnable(CHARACTER_ANIM.RUN_L, self:testMovingState(PN3DObject.STATE_T_LEFT) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
-		self:setEnable(CHARACTER_ANIM.RUN_R, self:testMovingState(PN3DObject.STATE_T_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
+		self:setEnabled(CHARACTER_ANIM.RUN_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
+		self:setEnabled(CHARACTER_ANIM.RUN_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
+		self:setEnabled(CHARACTER_ANIM.RUN_L, self:testMovingState(PN3DObject.STATE_T_LEFT) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
+		self:setEnabled(CHARACTER_ANIM.RUN_R, self:testMovingState(PN3DObject.STATE_T_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.RUNNING))
 			
-		self:setEnable(CHARACTER_ANIM.CROUCH_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
-		self:setEnable(CHARACTER_ANIM.CROUCH_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
-		self:setEnable(CHARACTER_ANIM.CROUCH_L, self:testMovingState(PN3DObject.STATE_T_LEFT) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
-		self:setEnable(CHARACTER_ANIM.CROUCH_R, self:testMovingState(PN3DObject.STATE_T_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
+		self:setEnabled(CHARACTER_ANIM.CROUCH_F, self:testMovingState(PN3DObject.STATE_T_FORWARD) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
+		self:setEnabled(CHARACTER_ANIM.CROUCH_B, self:testMovingState(PN3DObject.STATE_T_BACKWARD) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
+		self:setEnabled(CHARACTER_ANIM.CROUCH_L, self:testMovingState(PN3DObject.STATE_T_LEFT) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
+		self:setEnabled(CHARACTER_ANIM.CROUCH_R, self:testMovingState(PN3DObject.STATE_T_RIGHT) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
 			
-		self:setEnable(CHARACTER_ANIM.CROUCH, (self:getMovingState() == 0) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
-		self:setEnable(CHARACTER_ANIM.IDLE, (self:getMovingState() == 0) and (self.attitude ~= CHARACTER_ATTITUDE.CROUCHING) and (OBJ.state == OBJ.stateEnum.PN_IA_PASSIVE))
-		self:setEnable(CHARACTER_ANIM.DEAD, (self:getMovingState() == 0) and (OBJ.state == OBJ.stateEnum.PN_IA_COMA))
+		self:setEnabled(CHARACTER_ANIM.CROUCH, (self:getMovingState() == 0) and (self.attitude == CHARACTER_ATTITUDE.CROUCHING))
+		self:setEnabled(CHARACTER_ANIM.IDLE, (self:getMovingState() == 0) and (self.attitude ~= CHARACTER_ATTITUDE.CROUCHING) and (OBJ.state == OBJ.stateEnum.PN_IA_PASSIVE))
+		self:setEnabled(CHARACTER_ANIM.DEAD, (self:getMovingState() == 0) and (OBJ.state == OBJ.stateEnum.PN_IA_COMA))
 	end 
 --------------------------------------------------------
 --[[%
