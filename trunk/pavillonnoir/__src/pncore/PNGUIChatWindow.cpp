@@ -40,7 +40,6 @@
 #include "PNGameInterface.hpp"
 
 
-
 using namespace PN;
 namespace fs = boost::filesystem;
 
@@ -63,7 +62,6 @@ namespace PN
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 	hide();
 	_resolvedDependencies.insert("CHAT-TOTO_player_0");
-	
   }
 
   PNGUIChatWindow::~PNGUIChatWindow()
@@ -108,7 +106,9 @@ namespace PN
 		  resetGUI();
 	  }
 	  else
+	  {
 		resetGUI();
+	  }
 	}
   }
 
@@ -132,7 +132,6 @@ namespace PN
   {
 	_mainSheet->hide();
 	_mainSheet->setMutedState(true);
-	
   }
 
   CEGUI::Window*  PNGUIChatWindow::getWindow()
@@ -149,7 +148,6 @@ namespace PN
   bool	PNGUIChatWindow::handleValid(const CEGUI::EventArgs& e)
   {
 	handleAll();
-	
 	return true;
   }
 
@@ -165,21 +163,17 @@ namespace PN
 	{
 	  //  PNConsole::writeLine("Vous avez choisi : %s",_listBox->getFirstSelectedItem()->getText().c_str());
 
-	  unsigned int tmp = _listBox->getFirstSelectedItem()->getID();
-	  std::string selNodeId = (char *)tmp;
+	  unsigned int tmpid = _listBox->getFirstSelectedItem()->getID();
+	  std::string selNodeId = (const char *)tmpid;
 
 	  xmlNode* selNode = _chatTree->getNodeFromId(_currentNode ,selNodeId);
-
 	  xmlChar* tmpXmlChar = xmlGetProp(selNode, PNCHATXML_CHECKPOINT_ATTR);
 
-	  if (tmpXmlChar!= NULL && strcmp((const char*)tmpXmlChar, (const char*)PNCHATXML_TRUE_VAL) == 0)
-		_resolvedDependencies.insert(selNodeId);
-	  //.push_back(selNodeId);
-
+	  //if (tmpXmlChar!= NULL) && strcmp((const char*)tmpXmlChar, (const char*)PNCHATXML_TRUE_VAL) == 0)
+	  _resolvedDependencies.insert(selNodeId);
 
 	  tmpXmlChar = xmlGetProp(selNode, PNCHATXML_QUIT_ATTR);
 
-	  // if ((const char*)xmlGetProp(selNode, PNCHATXML_QUIT_ATTR) == "true")
 	  if (tmpXmlChar!= NULL && strcmp((const char*)tmpXmlChar, (const char*)PNCHATXML_TRUE_VAL) == 0)
 	  {
 		resetGUI();
@@ -188,8 +182,6 @@ namespace PN
 
 	  if (showNextBuddy(selNode) == false)
 		resetGUI();
-	  // showNextBuddy(selNode);
-
 	}
 
 	return;
@@ -199,10 +191,8 @@ namespace PN
   {
 	_chatTree->setListDependencies(_resolvedDependencies);
 	_currentNode = _chatTree->getBuddyNode(node);
-	// si currentNode est null (pas de buddy dispo) quitter mode chat ?
-	if (_currentNode == NULL)
+	if (_currentNode == NULL) // no available buddy, quit chat windows 
 	  return false;
-	// --
 	updateItems(_currentNode);
 	return true;
   }
@@ -231,21 +221,6 @@ namespace PN
 		}
 	  }
 	}
-
-/*	_textQuestion->setText(question.c_str());
-	
-	_listBox->resetList();
-
-	std::vector<std::string>::iterator p_beg = responses.begin();
-	std::vector<std::string>::iterator p_end = responses.end();
-	for (;p_beg != p_end; p_beg++)
-	{
-	  std::string tmp = *p_beg;
-	  CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(tmp.c_str());
-	  item->setSelectionBrushImage((CEGUI::utf8*)"Vanilla-Images", (CEGUI::utf8*)"GenericBrush");
-	  item->setSelectionColours(CEGUI::colour(RGBA(159,159,159,255)));
-	  _listBox->addItem(item);
-	}*/	
   }
 
 }

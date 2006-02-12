@@ -7,9 +7,9 @@
   
   
   <!-- Third Level -->
-  <buddy id="quiz_lvl2_q0" sentence="Level 3, Nothing to see here, move along !" quit="true">
+  <buddy id="quiz_lvl3_q0" sentence="Level 3, Nothing to see here, move along !" quit="true">
   
-    <depends id="quiz_lvl2_p1_a1" />
+    <depends id="quiz_lvl6_p1_a1" />
     
   </buddy>
 
@@ -29,9 +29,9 @@
   
     <player id="quiz_lvl2_p0_a3" answer="Paris">
     
-      <buddy id="quiz_lvl2_q1_a1" sentence="Level 2, Q1: President ?">
+      <buddy id="quiz_lvl2_q1" sentence="Level 2, Q1: President ?">
         
-          <player id="quiz_lvl2_p1_a1" answer="Chirac" checkpoint="true">
+          <player id="quiz_lvl2_p1_a1" answer="Chirac" >
               <buddy id="quiz_lvl2_q1_a1" sentence="Good, go to level 3" quit="true" />
           </player>
            
@@ -63,10 +63,10 @@
     <depends id="quiz_lvl0_p0_a1" />
     
     <player id="quiz_lvl1_p0_a0" answer="0">
-        <buddy id="quiz_lvl1_q0_a0" sentence="Wrong : 1+1=1" quit="true" />
+        <buddy id="quiz_lvl1_q0_a0" sentence="Wrong : 1+1=2" quit="true" />
     </player>
     
-    <player id="quiz_lvl1_p0_a1" answer="1" checkpoint="true">
+    <player id="quiz_lvl1_p0_a1" answer="2">
     
         <buddy id="quiz_lvl1_q1" sentence="Level 1, Q1 : 53-3= ?">
             
@@ -78,22 +78,22 @@
                 <buddy id="quiz_lvl1_q1_a1" sentence="Wrong : 53-3=50" quit="true" />
             </player>
             
-            <player id="quiz_lvl1_p1_a2" answer="50" checkpoint="true">
+            <player id="quiz_lvl1_p1_a2" answer="50" >
                 <buddy id="quiz_lvl1_q1_a2" sentence="Good! now you can come back for level 2!" quit="true" />
             </player>
             
-            <player id="quiz_lvl1_p1_a3" answer="quit" checkpoint="true" quit="true" />
+            <player id="quiz_lvl1_p1_a3" answer="quit" quit="true" />
 
         </buddy>
         
     </player>
     
-    <player id="quiz_lvl1_p0_a2" answer="2">
-        <buddy id="quiz_lvl1_q0_a2" sentence="Wrong : 1+1=1" quit="true" />
+    <player id="quiz_lvl1_p0_a2" answer="21">
+        <buddy id="quiz_lvl1_q0_a2" sentence="Wrong : 1+1=2" quit="true" />
     </player>
     
     <player id="quiz_lvl1_p0_a3" answer="42">
-        <buddy id="quiz_lvl1_q0_a2" sentence="Wrong : 1+1=1" quit="true" />
+        <buddy id="quiz_lvl1_q0_a2" sentence="Wrong : 1+1=2" quit="true" />
     </player>
     
   </buddy>
@@ -101,8 +101,8 @@
 
   
   <!-- Default buddy -->
-  <buddy id="quiz_lvl2_q0" sentence="Do you want to play with me ?">
-    <player id="quiz_lvl0_p0_a1" answer="Yes" checkpoint="true" quit="true" />
+  <buddy id="quiz_lvl0_q0" sentence="Do you want to play with me ?">
+    <player id="quiz_lvl0_p0_a1" answer="Yes" quit="true" />
     <player id="quiz_lvl0_p0_a2" answer="No" quit="true" />
   </buddy>
   
