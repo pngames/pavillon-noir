@@ -454,7 +454,7 @@ PNGUIGame::PNGUIGame()
   _rootWin->subscribeEvent(CEGUI::Window::EventMouseButtonUp, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseButtonReleasedHandler, this));
   _rootWin->subscribeEvent(CEGUI::Window::EventMouseWheel, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseWheel, this));
 
-  _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &_lifeValue, "life bar value", "life bar value"));
+ // _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &_lifeValue, "life bar value", "life bar value"));
  // CEGUI::MouseCursor::getSingleton().hide();
 
   _mapLife[0] = "FioleImages/fiole_OK";
@@ -465,9 +465,9 @@ PNGUIGame::PNGUIGame()
   _mapLife[5] = "FioleImages/fiole_COMA";
   _mapLife[6] = "FioleImages/fiole_LETHAL";
 
- 
-  _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "PNGUIGame/Life");
-  _rootWin->addChildWindow(_statImg);
+ _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/fiole");
+//  _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "PNGUIGame/Life");
+/*  _rootWin->addChildWindow(_statImg);
 
   float sizeHeight = 0.25;
   float sizeWidth = 213 * sizeHeight / 367 / 1.33;
@@ -481,7 +481,7 @@ PNGUIGame::PNGUIGame()
  _statImg->setFrameEnabled(false);
  _statImg->setBackgroundEnabled(false);
  _statImg->disable();
- _statImg->show();
+ _statImg->show();*/
 }
 
 PNGUIGame::~PNGUIGame()
@@ -604,18 +604,18 @@ void  PNGUIGame::changeLife(pnEventType type, PNObject* source, PNEventData* dat
 int val = ((PNGameLifeValEventData*)data)->lifeVal;
   if (val < 7)
   {
-	float sizeHeight = 0.25;
+	/*float sizeHeight = 0.25;
 	float sizeWidth = 213 * sizeHeight / 367 / 1.33;
 	float posX = 0.90f;
-	float posY = 0.75f;
+	float posY = 0.75f;*/
 
 	_statImg->setImage("FioleImages", _mapLife[val]);
-	_statImg->setSize(CEGUI::Size(sizeWidth, sizeHeight));
+	/*_statImg->setSize(CEGUI::Size(sizeWidth, sizeHeight));
 	_statImg->setPosition(CEGUI::Point(posX, posY));
 	_statImg->setFrameEnabled(false);
 	_statImg->setBackgroundEnabled(false);
 	_statImg->disable();
-	_statImg->show();
+	_statImg->show();*/
   }
 }
 
