@@ -177,8 +177,6 @@ PNGLRendererObject::setBuffer(pnrenderarray flag_array, pnfloat *array, pnbool c
 	{
 	  glDeleteBuffersARB(1, id);
 	  *id = (GLuint)-1;
-
-	  return;
 	}
   }
 }
@@ -216,8 +214,6 @@ PNGLRendererObject::setIndexBuffer(pnuint *array, pnint nbIndex, pnbool compress
 	{
 	  glDeleteBuffersARB(1, &_indexArraysId);
 	  _indexArraysId = (GLuint)-1;
-
-	  return;
 	}
   }
 }
