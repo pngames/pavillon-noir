@@ -52,3 +52,7 @@ Travaux realises:
   * chargement d'objets physique : 
   * gestion du deplacement d'un personnage humain : 
   * application des lois de la physique : 
+
+================================ Autres ================================
+
+* seances de motion tracking
