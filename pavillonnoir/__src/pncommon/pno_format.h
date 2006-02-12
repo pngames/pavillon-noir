@@ -56,6 +56,7 @@ static const std::string	PNO_XMLNODE_PHYSICS			= "physics";
 #define						PNO_ANIM_XMLPROP_STEP		(BAD_CAST "step")
 #define						PNO_ANIM_XMLPROP_SPEED		(BAD_CAST "speed")
 #define						PNO_ANIM_XMLPROP_WEIGHT		(BAD_CAST "weight")
+#define						PNO_ANIM_XMLPROP_NEXT		(BAD_CAST "next")
 
 #define						PNO_XMLPROP_FRONT			(BAD_CAST "front")
 #define						PNO_XMLPROP_RIGHT			(BAD_CAST "right")
