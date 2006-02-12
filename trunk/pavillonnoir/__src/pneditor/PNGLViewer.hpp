@@ -62,6 +62,14 @@ namespace PN
   
 	  FXDECLARE(PNGLViewer);
 
+	  enum
+	  {
+		ID_POS_X = FXGLViewer::ID_LAST,
+		ID_POS_Y,
+		ID_POS_Z,
+		ID_LAST
+	  };
+
 	  FXComposite*	_parent;
 	  PNEditor*		_ed;
 
