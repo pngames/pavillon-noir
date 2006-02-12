@@ -84,6 +84,9 @@ PNOpalMeshImporter::parseVertexes()
   {
 	_istream->read((char*)&vert, sizeof(vert));
 
+	if (vert.nbBones > 0)
+	  _istream->seekg(sizeof(pnmBoneID_t) * vert.nbBones, ios_base::cur);
+
 	_vertices.push_back(vert.coord[0] * mpp);
 	_vertices.push_back(vert.coord[1] * mpp);
 	_vertices.push_back(vert.coord[2] * mpp);
