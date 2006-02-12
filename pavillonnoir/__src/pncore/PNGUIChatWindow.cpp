@@ -100,16 +100,15 @@ namespace PN
 	  _chatTree = new PNChatTree();
 	  fs::path file(_currentChatXml, fs::no_check);
 
-	  _chatTree->unserializeFromFile(file);
-
-	  if (showNextBuddy(_chatTree->getCurrentNode()))
+	  if (_chatTree->unserializeFromFile(file) == PNEC_SUCCESS)
 	  {
-		show();
+		if (showNextBuddy(_chatTree->getCurrentNode()))
+		  show();
+		else
+		  resetGUI();
 	  }
 	  else
-	  {
-	   resetGUI();
-	  }
+		resetGUI();
 	}
   }
 
@@ -174,7 +173,9 @@ namespace PN
 		return true;
 	  }
 
-	  showNextBuddy(selNode);
+	  if (showNextBuddy(selNode) == false)
+		resetGUI();
+		// showNextBuddy(selNode);
 
 	}
 
@@ -214,7 +215,9 @@ namespace PN
 	  return true;
 	 }
 
-	showNextBuddy(selNode);
+	 if (showNextBuddy(selNode) == false)
+	   resetGUI();
+	//showNextBuddy(selNode);
 
 	}
 
