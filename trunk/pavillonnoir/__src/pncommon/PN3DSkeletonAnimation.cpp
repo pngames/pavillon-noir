@@ -47,6 +47,9 @@ PN3DSkeletonAnimation::PN3DSkeletonAnimation(PN3DAnimation* anim, PN3DSkeletonOb
 {
   _object = object;
 
+  playId = -1;
+  next = -1;
+
   this->looping = false;
 
   this->step = (pnuint)-1;
@@ -140,6 +143,7 @@ PN3DSkeletonAnimation::unserializeFromXML(xmlNode* root)
   step = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_STEP, step);
   speed = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_SPEED, speed);
   weight = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_WEIGHT, weight);
+  next = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_WEIGHT, next);
 
   return PNEC_SUCCESS;
 }

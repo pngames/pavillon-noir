@@ -237,7 +237,10 @@ PN3DSkeletonObject::update(pnuint deltaTime)
 	{
 	  PN3DSkeletonAnimation*  anim = *it;
 	  if (!anim->update(deltaTime))
+	  {
 		_animsToPlay.erase(anim);
+		setEnable(anim->next, true);
+	  }
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -420,6 +423,19 @@ PN3DSkeletonObject::setAnimWeight(pnint animId, pnfloat weight)
 	return PNEC_ERROR;
 
   _anims[animId]->weight = weight;
+
+  return PNEC_SUCCESS;
+}
+
+pnuint
+PN3DSkeletonObject::setAnimNext(pnint animId, pnint nextAnimId)
+{
+  PNLOCK(this);
+
+  if (animId < 0 || (pnuint)animId >= _anims.size())
+	return PNEC_ERROR;
+
+  _anims[animId]->next = nextAnimId;
 
   return PNEC_SUCCESS;
 }

@@ -30,5 +30,6 @@
 <!ATTLIST anim step CDATA #IMPLIED>
 <!ATTLIST anim speed CDATA #IMPLIED>
 <!ATTLIST anim weight CDATA #IMPLIED>
+<!ATTLIST anim next CDATA #IMPLIED>
 
 <!ATTLIST physics path CDATA #IMPLIED>

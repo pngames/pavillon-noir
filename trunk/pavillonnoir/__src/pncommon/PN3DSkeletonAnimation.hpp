@@ -58,6 +58,7 @@ public:
   pnbool							update(pnuint current);
 public:
   pnint								playId;
+  pnint								next;
 
   pnbool							looping;
 
