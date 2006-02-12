@@ -76,6 +76,7 @@ namespace PN
 	void  updateItems(xmlNode* node);
 	 bool	showNextBuddy(xmlNode* node);
 	 void setMapChatPath(std::string id_player);
+	  void handleAll();
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
