@@ -67,3 +67,4 @@ static const std::string	PNCHAT_XMLNODE_ROOT		= PNCHAT_XMLDTD_NAME;
 
 
 #endif /* ! _PNCHATXML_H_ */
+
