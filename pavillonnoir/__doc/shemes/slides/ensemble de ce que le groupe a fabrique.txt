@@ -22,6 +22,11 @@ Travaux realises:
   * systeme de configuration : 
   * gestionnaire de modules : charge et initialise l'ensemble des modules
   * systeme d'internationnalisation : permet de gerer de facon simple au niveau du code les differentes langues possibles
+  * outils mathematiques : 
+  * systeme de progression : 
+  * cameras virtuelles : 
+  * enregistration/chargement (serialization) : 
+  * serialization XML : 
 
 * module rendu 3D : 
   * boite d'horizon : 
