@@ -1,5 +1,0 @@
-<?xml version="1.0" ?>
-<Imageset Name="DeathImages" Imagefile="./datafiles/imagesets/DeathScreen.tga" NativeHorzRes="512" NativeVertRes="512" AutoScaled="false">
-	<Image Name="DeathImages/DeathScreen" XPos="0" YPos="0" Width="512" Height="512" />
-</Imageset>
-
