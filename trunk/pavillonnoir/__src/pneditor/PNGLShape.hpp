@@ -44,6 +44,8 @@
 
 #include "IPNXMLSerializable.hpp"
 
+#include "PNScriptConfigurableObject.hpp"
+
 typedef	enum
 {
   PN_GROUND = 0,
