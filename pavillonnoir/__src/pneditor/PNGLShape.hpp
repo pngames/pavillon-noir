@@ -44,7 +44,7 @@
 
 #include "IPNXMLSerializable.hpp"
 
-#include "PNScriptConfigurableObject.hpp"
+//#include "PNScriptConfigurableObject.hpp"
 
 typedef	enum
 {
