@@ -62,7 +62,7 @@ namespace PN
 
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 	hide();
-//	_resolvedDependencies.insert("CHAT-TOTO_player_0");
+	_resolvedDependencies.insert("CHAT-TOTO_player_0");
 	
   }
 
@@ -142,89 +142,58 @@ namespace PN
 
   bool	PNGUIChatWindow::handleListBox(const CEGUI::EventArgs& e)
   {
+	handleAll();
+	return true;
+  }
+
+  bool	PNGUIChatWindow::handleValid(const CEGUI::EventArgs& e)
+  {
+	handleAll();
+	
+	return true;
+  }
+
+  void PNGUIChatWindow::handleAll()
+  {
 	if (_quitBuddy == true && _listBox->getFirstSelectedItem() == NULL)
 	{
 	  resetGUI();
-	  return true;
+	  return;
 	}
 
 	if (_listBox->getFirstSelectedItem() != NULL)
 	{
-	//  PNConsole::writeLine("Vous avez choisi : %s",_listBox->getFirstSelectedItem()->getText().c_str());
+	  //  PNConsole::writeLine("Vous avez choisi : %s",_listBox->getFirstSelectedItem()->getText().c_str());
 
 	  unsigned int tmp = _listBox->getFirstSelectedItem()->getID();
 	  std::string selNodeId = (char *)tmp;
 
 	  xmlNode* selNode = _chatTree->getNodeFromId(_currentNode ,selNodeId);
 
+	  xmlChar* tmpXmlChar = xmlGetProp(selNode, PNCHATXML_CHECKPOINT_ATTR);
 
-	  if ((const char*)xmlGetProp(selNode, PNCHATXML_CHECKPOINT_ATTR) == "true")
+	  if (tmpXmlChar!= NULL && strcmp((const char*)tmpXmlChar, (const char*)PNCHATXML_TRUE_VAL) == 0)
 		_resolvedDependencies.insert(selNodeId);
 	  //.push_back(selNodeId);
 
 
-	  xmlChar* quit = xmlGetProp(selNode, PNCHATXML_QUIT_ATTR);
-
+	  tmpXmlChar = xmlGetProp(selNode, PNCHATXML_QUIT_ATTR);
 
 	  // if ((const char*)xmlGetProp(selNode, PNCHATXML_QUIT_ATTR) == "true")
-	  if (quit!= NULL && strcmp((const char*)quit, (const char*)PNCHATXML_TRUE_VAL) == 0)
+	  if (tmpXmlChar!= NULL && strcmp((const char*)tmpXmlChar, (const char*)PNCHATXML_TRUE_VAL) == 0)
 	  {
 		resetGUI();
-		return true;
+		return;
 	  }
 
 	  if (showNextBuddy(selNode) == false)
 		resetGUI();
-		// showNextBuddy(selNode);
+	  // showNextBuddy(selNode);
 
 	}
 
-	return true;
+	return;
   }
-
-  bool	PNGUIChatWindow::handleValid(const CEGUI::EventArgs& e)
-  {
-	if (_quitBuddy == true && _listBox->getFirstSelectedItem() == NULL)
-	{
-	  resetGUI();
-	  return true;
-	}
-
-	if (_listBox->getFirstSelectedItem() != NULL)
-	{
-	// PNConsole::writeLine("Vous avez choisi : %s",_listBox->getFirstSelectedItem()->getText().c_str());
-
-	 unsigned int tmp = _listBox->getFirstSelectedItem()->getID();
-	 std::string selNodeId = (char *)tmp;
-	 
-	 xmlNode* selNode = _chatTree->getNodeFromId(_currentNode ,selNodeId);
-
-
-	 if ((const char*)xmlGetProp(selNode, PNCHATXML_CHECKPOINT_ATTR) == "true")
-	   _resolvedDependencies.insert(selNodeId);
-	   //.push_back(selNodeId);
-	  
-
-	 xmlChar* quit = xmlGetProp(selNode, PNCHATXML_QUIT_ATTR);
-	 
-
-	// if ((const char*)xmlGetProp(selNode, PNCHATXML_QUIT_ATTR) == "true")
-	 if (quit!= NULL && strcmp((const char*)quit, (const char*)PNCHATXML_TRUE_VAL) == 0)
-	 {
-	  resetGUI();
-	  return true;
-	 }
-
-	 if (showNextBuddy(selNode) == false)
-	   resetGUI();
-	//showNextBuddy(selNode);
-
-	}
-
-	
-	return true;
-  }
-
 
   bool	PNGUIChatWindow::showNextBuddy(xmlNode* node)
   {
