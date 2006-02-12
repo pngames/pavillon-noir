@@ -44,11 +44,13 @@ namespace PN
 
   PNChatTree::PNChatTree()
   {
+	_doc = NULL;
   }
 
   PNChatTree::~PNChatTree()
   {
-	xmlFreeDoc(_doc);
+	if (_doc != NULL)
+	  xmlFreeDoc(_doc);
   }
 
   //////////////////////////////////////////////////////////////////////////

@@ -983,6 +983,9 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
 	//cam->setTargetMode(PN3DObject::TMODE_FREE);
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Run",playerid,"null",false));
     break;
+  case CEGUI::Key::Space :
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION,NULL, new PNGameActionEventData("Chat","id_1","",1.0));
+	break;
   default:
 	std::cout << "not managed key";
 	break;

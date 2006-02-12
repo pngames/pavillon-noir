@@ -85,7 +85,7 @@ PNConsole::addFonction(const std::string& command, const Callback& fonction, con
 
   if (iter == _fonctionMap.end())
   {
-	writeLine("command \"%s\" accepted", command.c_str());
+	//writeLine("command \"%s\" accepted", command.c_str());
 
 	_fonctionMap[command].f = fonction;
 	_fonctionMap[command].desc = desc;
