@@ -76,7 +76,7 @@ namespace PN
 
   PNGUIDeath::~PNGUIDeath()
   {
-
+	_pnDeath->destroy();
   }
 
   PNGUIDeath* PNGUIDeath::getInstance()

@@ -63,6 +63,7 @@ namespace PN{
 	bool handleMainMenu(const CEGUI::EventArgs& e);
 	bool handleNewGame(const CEGUI::EventArgs& e);
 	bool handleQuit(const CEGUI::EventArgs& e);
+	void  inputHandleEsc(pnEventType type, PNObject* source, PNEventData* data);
 
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
