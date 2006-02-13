@@ -60,8 +60,6 @@ PNIAnimationImporter::~PNIAnimationImporter()
 IPNImportedObject*
 PNIAnimationImporter::doImport(const std::string& path)
 {
-  pnerror(PN_LOGLVL_INFO, "Import %s", path.c_str());
-
   PNI3DAnimation* obj = new PNI3DAnimation();
 
   pnuint error = obj->unserializeFromPath(path);

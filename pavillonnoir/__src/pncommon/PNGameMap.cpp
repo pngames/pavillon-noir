@@ -33,6 +33,7 @@
 #include "pndefs.h"
 #include "pnimport.h"
 #include "pnresources.h"
+#include "pnevent.h"
 
 #include "PN3DCamera.hpp"
 #include "PN3DSkeletonObject.hpp"
@@ -55,28 +56,6 @@
 namespace fs = boost::filesystem;
 using namespace PN;
 using namespace std;
-
-//////////////////////////////////////////////////////////////////////////
-
-#define _SEND_LOADING_STEP(d_event, d_cmd, d_eventData, d_name, d_step)	\
-  (d_eventData).cmd = (d_cmd);			\
-  (d_eventData).item = (d_name);		\
-  (d_eventData).progressVal = (d_step);	\
-  PNEventManager::getInstance()->sendEvent(d_event, this, &(d_eventData));	\
-
-#define SEND_LOAD_STEP(d_eventData, d_name, d_step)	\
-  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNLoadingProgressEventData::LSTATE_CMD_NONE, d_eventData, d_name, d_step)
-#define SEND_LOAD_STEP_POP(d_eventData, d_name, d_step)	\
-  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNLoadingProgressEventData::LSTATE_CMD_POP, d_eventData, d_name, d_step)
-#define SEND_LOAD_STEP_PUSH(d_eventData, d_name, d_step)	\
-  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNLoadingProgressEventData::LSTATE_CMD_PUSH, d_eventData, d_name, d_step)
-
-#define SEND_UNLOAD_STEP(d_eventData, d_name, d_step)	\
-  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNLoadingProgressEventData::LSTATE_CMD_NONE, d_eventData, d_name, d_step)
-#define SEND_UNLOAD_STEP_POP(d_eventData, d_name, d_step)	\
-  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNLoadingProgressEventData::LSTATE_CMD_POP, d_eventData, d_name, d_step)
-#define SEND_UNLOAD_STEP_PUSH(d_eventData, d_name, d_step)	\
-  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNLoadingProgressEventData::LSTATE_CMD_PUSH, d_eventData, d_name, d_step)
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -121,6 +100,7 @@ PNGameMap::_unserializeEntity(xmlNode* node)
 
   std::string id = (char *)xmlGetProp(node, PNXML_ID_ATTR);
   std::string className = (char *)xmlGetProp(node, PNXML_CLASS_ATTR);
+  std::string d_name = className + " " + id;
 
   SEND_LOAD_STEP(eaLoadStep, className + " " + id, 0.0f)
 
@@ -135,7 +115,7 @@ PNGameMap::_unserializeEntity(xmlNode* node)
 
   //////////////////////////////////////////////////////////////////////////
 
-  SEND_LOAD_STEP(eaLoadStep, className + " " + id + ": constructing", 1.0f / nbSteps)
+  SEND_LOAD_STEP(eaLoadStep, d_name + ": constructing", 1.0f / nbSteps)
 
   addToMap(className, id);
 
@@ -146,9 +126,13 @@ PNGameMap::_unserializeEntity(xmlNode* node)
     
   //////////////////////////////////////////////////////////////////////////
 
-  SEND_LOAD_STEP(eaLoadStep, className + " " + id + ": parsing", 2.0f / nbSteps)
+  SEND_LOAD_STEP(eaLoadStep, d_name + ": parsing", 2.0f / nbSteps)
 
   pnint		error = -1;
+
+  //////////////////////////////////////////////////////////////////////////
+
+  SEND_LOAD_STEP_PUSH(eaLoadStep, d_name + ": load object", 1.0f / nbSteps)
 
   for (xmlNodePtr n = node->children; n != NULL; n = n->next)
   {
@@ -162,6 +146,8 @@ PNGameMap::_unserializeEntity(xmlNode* node)
   if (error == -1)
 	error = object->unserializeFromPath(DEF::objectFilePath + (const char*)xmlGetProp(node, PNXML_MODELREFERENCE_ATTR));
 
+  SEND_LOAD_STEP_POP(eaLoadStep, d_name + ": load object", 1.0f / nbSteps)
+
   // check for errors
   if (error != PNEC_SUCCESS)
   {
@@ -172,7 +158,7 @@ PNGameMap::_unserializeEntity(xmlNode* node)
 
   //////////////////////////////////////////////////////////////////////////
 
-  SEND_LOAD_STEP(eaLoadStep, className + " " + id + ": initialising", 3.0f / nbSteps)
+  SEND_LOAD_STEP(eaLoadStep, d_name + ": initialising", 3.0f / nbSteps)
 
   // set coordinates
   pnfloat x = (pnfloat)(atof((const char *)(xmlGetProp(node, PNXML_COORDX_ATTR))));
@@ -192,14 +178,14 @@ PNGameMap::_unserializeEntity(xmlNode* node)
   // physical settings
   if (object->getPhysicalObject() != NULL)
   {
-	SEND_LOAD_STEP(eaLoadStep, className + " " + id + ": initialising physics", 4.0f / nbSteps)
+	SEND_LOAD_STEP(eaLoadStep, d_name + ": initialising physics", 4.0f / nbSteps)
 
 	// set the object status (static/dynamic)
 	bool isStatic = (!strcmp((const char*)xmlGetProp(node, PNXML_ENVTYPE_ATTR), "dynamic")) ? false : true;
 	object->getPhysicalObject()->setStatic(isStatic);
   }
 
-  SEND_LOAD_STEP(eaLoadStep, className + " " + id + ": ending", 5.0f / nbSteps)
+  SEND_LOAD_STEP(eaLoadStep, d_name + ": ending", 5.0f / nbSteps)
 
   return PNEC_SUCCESS;
 }
