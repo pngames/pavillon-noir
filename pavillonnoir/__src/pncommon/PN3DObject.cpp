@@ -258,6 +258,13 @@ PN3DObject::serializeInXML(xmlNode* root, pnbool isroot)
 pnint
 PN3DObject::_serializeContent(xmlNode* root)
 {
+  PNLoadingProgressEventData	eaLoadStep;
+  pnfloat						nbSteps = 4.0f;
+
+  SEND_LOAD_STEP(eaLoadStep, getId() + ": load header", 0.0f)
+
+  //////////////////////////////////////////////////////////////////////////
+
   XMLUtils::xmlNewProp(root, PNO_XMLPROP_FRONT, _frontDirection.getVector());
   XMLUtils::xmlNewProp(root, PNO_XMLPROP_RIGHT, _rightDirection.getVector());
   XMLUtils::xmlNewProp(root, PNO_XMLPROP_TOP, _topDirection.getVector());
@@ -266,11 +273,17 @@ PN3DObject::_serializeContent(xmlNode* root)
 
   xmlNode* node = NULL;
 
+  SEND_LOAD_STEP(eaLoadStep, getId() + ": load model", 1.0f / nbSteps)
+
   if (_model != NULL && _model->getFile() != NULL)
   {
 	node = xmlNewChild(root, NULL, BAD_CAST PNO_XMLNODE_MODEL.c_str(), NULL);
 	xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::modelFilePath, *_model->getFile()).c_str());
   }
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  SEND_LOAD_STEP(eaLoadStep, getId() + ": load materials", 2.0f / nbSteps)
 
   if (_materials.size() > 0)
   {
@@ -283,6 +296,8 @@ PN3DObject::_serializeContent(xmlNode* root)
 		xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::materialFilePath, *((PN3DMaterial*)*it)->getFile()).c_str());
 	  }
   }
+
+  SEND_LOAD_STEP(eaLoadStep, getId() + ": object loaded", 3.0f / nbSteps)
 
   return PNEC_SUCCESS;
 }
