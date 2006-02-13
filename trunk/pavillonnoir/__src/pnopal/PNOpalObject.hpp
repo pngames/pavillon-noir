@@ -96,13 +96,17 @@ private:
   opal::SpringMotorData			_movementMotorData;
 
   /* movements sensor */
+  pnbool						_player;
   opal::RaycastSensor*			_playerSensor;
+  opal::RaycastSensor*			_obstacleSensor1;
+  opal::RaycastSensor*			_obstacleSensor2;
   pnfloat						_rayLenght;
   pnfloat						_desiredHeight;
 
   /* rendering */
-  pnfloat						_aabb[6];
-  pndouble						_radius;
+  pnfloat						_aabb[6]; // box
+  pndouble						_radius;  // sphere & capsule
+  pnfloat						_height;  // capsule
   PNPoint3f						_offset;
   PNPoint3f						_renderOffset;
 
@@ -135,11 +139,13 @@ public:
   void							destroyMovementMotor();
 
   //////////////////////////////////////////////////////////////////////////
-  // PNOpalObject specific (debug)
 
+  pnbool						isPlayer();
   opal::RaycastSensor*			getPlayerSensor();
   pnfloat						getRayLenght();
   pnfloat						getDesiredHeight();
+
+  //////////////////////////////////////////////////////////////////////////
 
 protected:
   pnint							_parseTypePnm(const std::string& file);
