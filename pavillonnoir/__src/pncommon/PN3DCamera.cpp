@@ -415,7 +415,7 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   _tFrontDirection.setNorm(1.0f);
 
   //////////////////////////////////////////////////////////////////////////
-  
+
   _tCoord = _coord - _testedObj->getCoord();
   _tCoord = invertOrient * _tCoord;
   _tTargetVector = -_tCoord;
@@ -423,6 +423,28 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   //////////////////////////////////////////////////////////////////////////
 
   return _isSphereVisible() && _isBoxVisible();
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+bool
+PN3DCamera::isIdInList(std::string id)
+{
+  PNGameMap*	gmap = PNGameInterface::getInstance()->getGameMap();
+
+  if (gmap == NULL)
+	return false;
+
+  const PNGameMap::ObjMap&	list = gmap->getEntityList();
+
+  PN3DObjList::iterator		oldIt = _list3DObj.begin();
+
+  for (PNGameMap::ObjMap::const_iterator it = list.begin(); it != list.end(); ++it)
+  {
+	if (it->second->getId() == id)
+	  return true;
+  }
+  return false;
 }
 
 //////////////////////////////////////////////////////////////////////////

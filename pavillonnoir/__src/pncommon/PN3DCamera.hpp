@@ -67,6 +67,9 @@ public:
   /// Return list of 3d objects in camera frustrum
   const PN3DObjList&		getListObj();
   
+  /// Returns true if any object in the list has the given id
+  bool						isIdInList(std::string id);
+
   //////////////////////////////////////////////////////////////////////////
   
   void						setFar(pnfloat near);

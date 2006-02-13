@@ -78,6 +78,7 @@ PNCallBackList::sendEvent(pnEventType type, PNObject* source, PNEventData* data)
 	try
 	{
 	  (*it)(type, source, data);
+	  //pnerror(PN_LOGLVL_DEBUG, "callback ended for %d\n", type);
 	}
 	catch (...)
 	{
