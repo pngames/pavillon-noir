@@ -62,11 +62,10 @@ public:
   PNPropertiesGrid(FXComposite* p);
   virtual ~PNPropertiesGrid();
 
-  void					create();
   void					update();
   PNPPList&				getParams() { return _params; }
 
-  void					setObject(PNConfigurableObject* object);
+  void					setObject(PNConfigurableObject* object, pnbool create = true);
   PNConfigurableObject*	getObject();
 
   //////////////////////////////////////////////////////////////////////////

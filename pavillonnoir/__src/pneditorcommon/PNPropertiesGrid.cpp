@@ -68,13 +68,7 @@ PNPropertiesGrid::~PNPropertiesGrid()
 //////////////////////////////////////////////////////////////////////////
 
 void 
-PNPropertiesGrid::create()
-{
-  FXComposite::create();
-}
-
-void 
-PNPropertiesGrid::setObject(PNConfigurableObject* object)
+PNPropertiesGrid::setObject(PNConfigurableObject* object, pnbool create/* = true*/)
 {
   // FIXME : y'a un bug d'affichage ici, lorsqu'on efface les widgets les unes 
   // apres les autres on apercoit un FXDial en haut a gauche de la grille
@@ -166,7 +160,8 @@ PNPropertiesGrid::setObject(PNConfigurableObject* object)
 	}
   }
 
-  create();
+  if (create)
+	this->create();
   recalc();
 }
 
