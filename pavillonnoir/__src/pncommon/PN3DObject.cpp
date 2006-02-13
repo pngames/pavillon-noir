@@ -43,6 +43,7 @@
 #include "PN3DSkeletonObject.hpp"
 #include "PN3DSkeleton.hpp"
 #include "PNPhysicalObject.hpp"
+#include "PNLoadingProgressEventData.hpp"
 
 #include "pno_format.h"
 

@@ -112,8 +112,6 @@ IPNXMLSerializable::unserializeFromXML(xmlNode* root)
 pnint
 IPNXMLSerializable::unserializeFromFile(const boost::filesystem::path& file)
 {
-  pnerror(PN_LOGLVL_INFO, "Loading XMLObject: %s ...", file.native_file_string().c_str());
-
   if (!fs::exists(file))
 	return PNEC_FILE_NOT_FOUND;
 

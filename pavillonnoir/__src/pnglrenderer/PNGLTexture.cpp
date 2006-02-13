@@ -93,14 +93,10 @@ pnint		PNGLTexture::loadFromFile(const boost::filesystem::path& file, void* ligh
 
   _file = file.string();
 
-  std::cout << "glBindTexture(GL_TEXTURE_2D, " << _ogltexture << ")" << std::endl;
-
   glBindTexture(GL_TEXTURE_2D, _ogltexture);
 
   ILuint imgName = iluGenImage();
   ilBindImage(imgName);
-
-  std::cout << "ilLoadImage((const ILstring)" << file.string().c_str() << std::endl;
 
   if (ilLoadImage((const ILstring)file.string().c_str()) != IL_FALSE)
   {
@@ -115,8 +111,6 @@ pnint		PNGLTexture::loadFromFile(const boost::filesystem::path& file, void* ligh
 	_width = imgInfo.Width;
 	_height = imgInfo.Height;
 	
-	printf("Texture: %s\nw = %d h = %d\nnbsubs = \n", file.string().c_str(), _width, _height/*, t.nbSubs*/);
-
 	//ilutGLTexImage(0);
 	ilutGLBuildMipmaps();
 
@@ -127,7 +121,6 @@ pnint		PNGLTexture::loadFromFile(const boost::filesystem::path& file, void* ligh
   }
   else
   {
-  	std::cout << IL_COULD_NOT_OPEN_FILE << " " << IL_ILLEGAL_OPERATION << " " << IL_INVALID_EXTENSION << " " << IL_INVALID_PARAM << std::endl;
   	int err = ilGetError();
 	std::cout << file.string().c_str() << " : " << err << " (" << ilGetString(err) << ")" << std::endl;
   }
