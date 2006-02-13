@@ -91,10 +91,11 @@ PNGLRenderer*  PNGLRenderer::getInstance()
 }
 
 PNGLRenderer::PNGLRenderer() : 
-_pFullScreen(false, "Plein ecran", "Plein ecran", true),
-_pTitle("Pavillon Noir", PNI18n::getString("title"), PNI18n::getString("title"), true),
-_pEnableTransparency(true, "Activer la transparence", "Activer la transparence", true),
-_pEnableGL_LEQUAL(false, "Tester profondeur egale", "Activer les test de profondeur en egalite", true)
+_pFullScreen(false, "Plein ecran", "Plein ecran"),
+_pTitle("Pavillon Noir", PNI18n::getString("title"), PNI18n::getString("title")),
+_pEnableBFCuling(true, "Activer le backface culling", "Activer le backface culling"),
+_pEnableTransparency(true, "Activer la transparence", "Activer la transparence"),
+_pEnableGL_LEQUAL(false, "Tester profondeur egale", "Activer les test de profondeur en egalite")
 {
   _guirenderer = NULL;
 
@@ -165,6 +166,7 @@ _pEnableGL_LEQUAL(false, "Tester profondeur egale", "Activer les test de profond
 
   _pTitle.setConfigurableObject(this);
   _pFullScreen.setConfigurableObject(this);
+  _pEnableBFCuling.setConfigurableObject(this);
   _pEnableTransparency.setConfigurableObject(this);
   _pEnableGL_LEQUAL.setConfigurableObject(this);
 
@@ -185,6 +187,7 @@ _pEnableGL_LEQUAL(false, "Tester profondeur egale", "Activer les test de profond
 
   addSeparator("Options avancees");
 
+  addParam(&_pEnableBFCuling);
   addParam(&_pEnableTransparency);
   addParam(&_pEnableGL_LEQUAL);
 
@@ -390,6 +393,12 @@ PNGLRenderer::initGL()
   // Initialize GL context
   glRenderMode(GL_RENDER);
 
+  glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+  glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+  glHint(GL_FOG_HINT, GL_NICEST);
+  glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+  glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+
   glShadeModel(GL_SMOOTH);
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -399,17 +408,18 @@ PNGLRenderer::initGL()
   glDepthRange(0.0, 1.0);
   glClearDepth(1.0);
 
-  glEnable(GL_CULL_FACE);
+  if (_pEnableBFCuling)
+	glEnable(GL_CULL_FACE);
+  else
+	glDisable(GL_CULL_FACE);
   glCullFace(GL_BACK);
+  glFrontFace(GL_CCW);
 
   if (_pEnableTransparency)
-  {
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  }
-
-  glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-  glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+  else
+	glDisable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   //////////////////////////////////////////////////////////////////////////
   
