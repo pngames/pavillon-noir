@@ -141,9 +141,11 @@ namespace PN
   {
 	if (_mainSheet->isMuted() == true)
 	  return true;
-	resetGUI();
+	
 	if (_cbBox->getFirstSelectedItem() != NULL)
 	{
+	  resetGUI();
+
 	  PNGameLoadMapEventData* data = new PNGameLoadMapEventData();
 	  data->mapName =  DEF::mapsFilePath;
 	  data->mapName += _cbBox->getFirstSelectedItem()->getText().c_str();

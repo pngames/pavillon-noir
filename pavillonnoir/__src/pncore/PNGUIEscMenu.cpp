@@ -62,27 +62,44 @@ namespace PN {
   void PNGUIEscMenu::startGUI()
   {
 	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME && 
-	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
+	  (PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE  || 
+	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::PAUSE_MENULOAD))
 	{
 	  PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_PAUSE, NULL, NULL);
-	 
-	}
-	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME )
 	  PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::MENUPAUSE);
-	show();
+	  show();
+	  PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIEscMenu::inputHandleEsc));
+
+	}
+//	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME )
 
 	
   }
 
   void PNGUIEscMenu::resetGUI()
   {
+	PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIEscMenu::inputHandleEsc));
 	hide();
-	
   }
   
   CEGUI::Window* PNGUIEscMenu::getWindow()
   {
 	return (_mainSheet);
+  }
+
+  void  PNGUIEscMenu::inputHandleEsc(pnEventType type, PNObject* source, PNEventData* data)
+  {
+	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME &&
+	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::MENUPAUSE)
+	{
+	  if (_mainSheet->isMuted() == true)
+		return;
+	  resetGUI();
+	  PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_UNPAUSE, NULL, NULL);
+	  PNGUIGame::getInstance()->startGUI();
+	 
+	  return;
+	}
   }
 
   void PNGUIEscMenu::setupEventHandlers()

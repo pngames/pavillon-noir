@@ -35,6 +35,7 @@
 #include <set>
 #include "myCEGUI.h"
 
+#include "pnevent.h"
 #include "PNChatTree.hpp"
 
 namespace PN
@@ -51,6 +52,7 @@ namespace PN
 	CEGUI::Window* _mainSheet;
 	CEGUI::Listbox*	_listBox;
 	CEGUI::StaticText* _textQuestion;
+	CEGUI::StaticText* _textName;
 	std::string _currentChatXml;
 	typedef std::set<std::string>			ListResolvedDependencies;
 	ListResolvedDependencies				_resolvedDependencies;
@@ -74,9 +76,12 @@ namespace PN
 	bool  handleListBox(const CEGUI::EventArgs& e);
 	bool  handleValid(const CEGUI::EventArgs& e);
 	void  updateItems(xmlNode* node);
-	 bool	showNextBuddy(xmlNode* node);
-	 void setMapChatPath(std::string id_player);
-	  void handleAll();
+	bool	showNextBuddy(xmlNode* node);
+	void setMapChatPath(std::string id_player);
+	void handleAll();
+	void  cleanResolvedDep(pnEventType type, PNObject* source, PNEventData* data);
+	void  manageInventoryItem(pnEventType type, PNObject* source, PNEventData* data);
+	void setName(xmlNode* node);
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
