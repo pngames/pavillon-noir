@@ -98,8 +98,6 @@ PNI3DModel::parseVertexes()
 pnint
 PNI3DModel::parseMeshes()
 {
-  std::cout << "parseMeshes : " << std::endl;
-
   PNI3DMesh*	mesh = NULL;
   _nbFaces = 0;
 

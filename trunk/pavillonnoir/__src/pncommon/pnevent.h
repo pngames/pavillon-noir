@@ -222,7 +222,29 @@ typedef std::list<boost::filesystem::path*> scriptList;
 typedef std::map<pnEventType, scriptList*> scriptMap;
 
 //////////////////////////////////////////////////////////////////////////
-}
+
+#define _SEND_LOADING_STEP(d_event, d_cmd, d_eventData, d_name, d_step)	\
+  (d_eventData).cmd = (d_cmd);			\
+  (d_eventData).item = (d_name);		\
+  (d_eventData).progressVal = (d_step);	\
+  PNEventManager::getInstance()->sendEvent(d_event, this, &(d_eventData));	\
+
+#define SEND_LOAD_STEP(d_eventData, d_name, d_step)	\
+  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNLoadingProgressEventData::LSTATE_CMD_NONE, d_eventData, d_name, d_step)
+#define SEND_LOAD_STEP_POP(d_eventData, d_name, d_step)	\
+  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNLoadingProgressEventData::LSTATE_CMD_POP, d_eventData, d_name, d_step)
+#define SEND_LOAD_STEP_PUSH(d_eventData, d_name, d_step)	\
+  _SEND_LOADING_STEP(PN_EVENT_ML_STEP, PNLoadingProgressEventData::LSTATE_CMD_PUSH, d_eventData, d_name, d_step)
+
+#define SEND_UNLOAD_STEP(d_eventData, d_name, d_step)	\
+  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNLoadingProgressEventData::LSTATE_CMD_NONE, d_eventData, d_name, d_step)
+#define SEND_UNLOAD_STEP_POP(d_eventData, d_name, d_step)	\
+  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNLoadingProgressEventData::LSTATE_CMD_POP, d_eventData, d_name, d_step)
+#define SEND_UNLOAD_STEP_PUSH(d_eventData, d_name, d_step)	\
+  _SEND_LOADING_STEP(PN_EVENT_MU_STEP, PNLoadingProgressEventData::LSTATE_CMD_PUSH, d_eventData, d_name, d_step)
+
+//////////////////////////////////////////////////////////////////////////
+};
 
 #include "PNEventManager.hpp"
 
