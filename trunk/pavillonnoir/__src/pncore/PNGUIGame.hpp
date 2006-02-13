@@ -76,6 +76,9 @@ namespace PN{
 	float _mapSizeX;
 	float _mapSizeZ;
 
+	PN3DObject* _playerObj;
+	PN3DObject* _mapObj;
+
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
 	/////////////////////////////////////////////////////////////////////////////*/
@@ -104,6 +107,7 @@ namespace PN{
 	void suscribeConsoleCommand();
 	void  startChat(pnEventType type, PNObject* source, PNEventData* data);
 	void  updateCoordPlayer(pnEventType type, PNObject* source, PNEventData* data);
+	void setMiniMapTools();
 
 	//////////////////////////////////////////////////////////////////////////
 	// ConfigurableObject
