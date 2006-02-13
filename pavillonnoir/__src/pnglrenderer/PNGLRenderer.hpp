@@ -103,6 +103,7 @@ private:
   PNBoolParameter			_pFullScreen;
   PNStringParameter			_pTitle;
 
+  PNBoolParameter			_pEnableBFCuling;
   PNBoolParameter			_pEnableTransparency;
   PNBoolParameter			_pEnableGL_LEQUAL;
 
