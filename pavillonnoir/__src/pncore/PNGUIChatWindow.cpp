@@ -54,14 +54,17 @@ namespace PN
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/PNChatWindow.layout"); 
 	_listBox = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Listbox");	
 	_textQuestion = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Text");
+	_textName = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Name");
 	_textQuestion->setFormatting(CEGUI::StaticText::WordWrapLeftAligned ,CEGUI::StaticText::TopAligned); 
-	//_textQuestion->setVerticalScrollbarEnabled(true);
 	_listBox->subscribeEvent(CEGUI::Listbox::EventSelectionChanged, CEGUI::Event::Subscriber(&PNGUIChatWindow::handleListBox, this));
+	
 	CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/ButtonValid")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIChatWindow::handleValid, this));
 
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 	hide();
-	_resolvedDependencies.insert("CHAT-TOTO_player_0");
+
+	PNEventManager::getInstance()->addCallback(PN_EVENT_MP_ENDED, EventCallback(this, &PNGUIChatWindow::cleanResolvedDep));
+	PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNGUIChatWindow::manageInventoryItem));
   }
 
   PNGUIChatWindow::~PNGUIChatWindow()
@@ -75,6 +78,23 @@ namespace PN
 	  _instance = new PNGUIChatWindow(); 
 
 	return _instance;
+  }
+
+  void  PNGUIChatWindow::cleanResolvedDep(pnEventType type, PNObject* source, PNEventData* data)
+  {
+	_resolvedDependencies.clear();
+  }
+
+  void  PNGUIChatWindow::manageInventoryItem(pnEventType type, PNObject* source, PNEventData* data)
+  {
+	if (((PNGameActionEventData*)data)->action == "Item_inv" && ((PNGameActionEventData*)data)->value == 1.0)
+	{
+	  _resolvedDependencies.insert(((PNGameActionEventData*)data)->targetId);
+	}
+	if (((PNGameActionEventData*)data)->action == "Item_inv" && ((PNGameActionEventData*)data)->value == 0.0)
+	{
+	  _resolvedDependencies.erase(((PNGameActionEventData*)data)->targetId);
+	}
   }
 
   void PNGUIChatWindow::setMapChatPath(std::string id_player)
@@ -91,7 +111,6 @@ namespace PN
 	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME && 
 	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
 	{
-	  //  PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_PAUSE, NULL, NULL);
 	  PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::CHAT_WINDOW);
 
 	  setMapChatPath(id_player);
@@ -167,12 +186,12 @@ namespace PN
 	  std::string selNodeId = (const char *)tmpid;
 
 	  xmlNode* selNode = _chatTree->getNodeFromId(_currentNode ,selNodeId);
-	  xmlChar* tmpXmlChar = xmlGetProp(selNode, PNCHATXML_CHECKPOINT_ATTR);
+	  //xmlChar* tmpXmlChar = xmlGetProp(selNode, PNCHATXML_CHECKPOINT_ATTR);
 
 	  //if (tmpXmlChar!= NULL) && strcmp((const char*)tmpXmlChar, (const char*)PNCHATXML_TRUE_VAL) == 0)
 	  _resolvedDependencies.insert(selNodeId);
 
-	  tmpXmlChar = xmlGetProp(selNode, PNCHATXML_QUIT_ATTR);
+	  xmlChar* tmpXmlChar = xmlGetProp(selNode, PNCHATXML_QUIT_ATTR);
 
 	  if (tmpXmlChar!= NULL && strcmp((const char*)tmpXmlChar, (const char*)PNCHATXML_TRUE_VAL) == 0)
 	  {
@@ -187,12 +206,25 @@ namespace PN
 	return;
   }
 
+  void PNGUIChatWindow::setName(xmlNode* node)
+  {
+	xmlChar* tmpXmlChar = xmlGetProp(node, PNCHATXML_BUDDYNAME_ATTR);
+	if (tmpXmlChar!= NULL)
+	{
+	  std::string tmp = (const char*)tmpXmlChar;
+	  _textName->setText(tmp);
+	}
+  }
+
   bool	PNGUIChatWindow::showNextBuddy(xmlNode* node)
   {
+	setName(node);
 	_chatTree->setListDependencies(_resolvedDependencies);
 	_currentNode = _chatTree->getBuddyNode(node);
+	setName(_currentNode);
 	if (_currentNode == NULL) // no available buddy, quit chat windows 
 	  return false;
+
 	updateItems(_currentNode);
 	return true;
   }

@@ -470,6 +470,8 @@ PNGUIGame::PNGUIGame()
   _mapSizeX = 5000.0;
   _mapSizeZ = 5000.0;
 
+  PNGUIChatWindow::getInstance();
+
 //  _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "PNGUIGame/Life");
 /*  _rootWin->addChildWindow(_statImg);
 
