@@ -63,6 +63,7 @@ namespace PN {
 PNOpalObject::PNOpalObject(opal::Simulator* sim) : _blueprint(), _blueprintInstance()
 {
   _sim = sim;
+  _player = false;
 }
 
 /** PNOpalObject destructor
@@ -104,6 +105,7 @@ PNOpalObject::render()
   case opal::CAPSULE_SHAPE:
 	{
 	  opal::CapsuleShapeData* capsuleData = (opal::CapsuleShapeData*)shapeData;
+	  PNRendererInterface::getInstance()->renderBox((pnfloat)_radius, _height, (pnfloat)_radius, color, _offset);
 	  break;
 	}
   case opal::PLANE_SHAPE:
@@ -205,6 +207,11 @@ PNOpalObject::getRayLenght()
   return _rayLenght;
 }
 
+pnbool
+PNOpalObject::isPlayer()
+{
+  return _player;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // Core
@@ -440,7 +447,7 @@ PNOpalObject::_parseTypeOpal(const std::string& path)
   {
 	_solid->getData().getShapeData(0)->getLocalAABB(_aabb);
 	_desiredHeight = abs(_aabb[2]);
-	_rayLenght = _desiredHeight * 4;
+	_rayLenght = _desiredHeight * 2.0f;
 	opal::ShapeData* shapeData = _solid->getData().getShapeData(0);
 
 	// enlarge the local AABB (make the AABB rendering a little bigger)
@@ -455,6 +462,7 @@ PNOpalObject::_parseTypeOpal(const std::string& path)
 		  else
 			_aabb[i] += 0.1f;
 		}
+		_radius = _aabb[5] - _aabb[4]; // ugly hack (see obstacle detection)
 		break;
 	  }
 	case opal::SPHERE_SHAPE:
@@ -463,7 +471,11 @@ PNOpalObject::_parseTypeOpal(const std::string& path)
 		break;
 	  }
 	case opal::CAPSULE_SHAPE:
-	  break;
+	  {
+		_radius = ((opal::CapsuleShapeData*)shapeData)->radius + 0.1;
+		_height = ((opal::CapsuleShapeData*)shapeData)->length + 0.1f;
+		break;
+	  }
 	case opal::PLANE_SHAPE:
 	  break;
 	default:
@@ -487,9 +499,10 @@ PNOpalObject::_parseTypeOpal(const std::string& path)
   // object spring motor
   _movementMotor = _sim->createSpringMotor();
 
-  // create a ground detection ray for PNPlayers
+  // create ground/obstacle detectors for PNPlayers
   if (_solid->getName() == DEFAULT_PLAYER_ID)
   {
+	_player = true;
 	opal::RaycastSensorData data;
 	data.solid = _solid;
 	data.ray.setOrigin(opal::Point3r(0, 0, 0));
