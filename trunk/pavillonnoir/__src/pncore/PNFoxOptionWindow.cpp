@@ -121,7 +121,7 @@ PNFoxOptionWindow::PNFoxOptionWindow(FXWindow* owner)
 		// ConfigurableParameters are displayed in a PropertiesGird, the grid is added to our list so that we 
 		// can check its values later when saving configuration
 		PNPropertiesGrid* grid = new PNPropertiesGrid(tabbook);
-		grid->setObject(interf);
+		grid->setObject(interf, false);
 	  }
 	}
   }
