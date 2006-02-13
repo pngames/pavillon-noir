@@ -27,6 +27,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+#define MAPID "id_1"
+#define PLAYERID "id_4"
+
 #include <iostream>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -55,6 +58,7 @@
 #include "PNGameInterface.hpp"
 #include "PNGameMap.hpp"
 
+#include "PNPoint2f.hpp"
 #include "PNMatrixTR4f.hpp"
 #include "PNQuatf.hpp"
 #include "PNWayPoint.hpp"
@@ -585,8 +589,8 @@ void PNGUIGame::startGUI()
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
   PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_OVER, EventCallback(this, &PNGUIGame::playerDied));
   PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_LIFEVAL, EventCallback(this, &PNGUIGame::changeLife));
-PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNGUIGame::startChat));
-PNEventManager::getInstance()->addCallback(PN_EVENT_OM, EventCallback(this, &PNGUIGame::updateCoordPlayer));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNGUIGame::startChat));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_OM, EventCallback(this, &PNGUIGame::updateCoordPlayer));
 
   suscribeConsoleCommand();
   show();
@@ -661,19 +665,38 @@ void  PNGUIGame::startChat(pnEventType type, PNObject* source, PNEventData* data
   }
 }
 
+void PNGUIGame::setMiniMapTools()
+{
+  PNGameMap::ObjMap tmpMap = PNGameInterface::getInstance()->getGameMap()->getEntityList();
+  _playerObj = tmpMap[PLAYERID];
+  _mapObj = tmpMap[MAPID];
+
+  PNPoint2f mapMin(_mapObj->getMin().x, - _mapObj->getMin().z);
+  PNPoint2f mapMax(_mapObj->getMax().x, - _mapObj->getMax().z);
+
+  
+  float sizeX = mapMax.x - mapMin.x;
+  float sizeY = mapMax.y - mapMin.y;
+
+
+}
+
 void  PNGUIGame::updateCoordPlayer(pnEventType type, PNObject* source, PNEventData* data)
 {
   PNLOCK(this);
-  if (((PN3DObject*)source)->getObjType() == PN3DObject::OBJTYPE_CAMERA)
+
+  //setMiniMapTools();
+  /*if (((PN3DObject*)source)->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ && ((PN3DObject*)source) == playerObj)
   {
 	PNPoint3f coord = ((PN3DObject*)source)->getCoord();
 	float tmpX = coord.x / _mapSizeX;
 	float tmpZ = coord.z / _mapSizeZ;
-	_miniMapPoint->setPosition(CEGUI::Point(tmpZ, tmpX));
+
+	_miniMapPoint->setPosition(CEGUI::Point(tmpX, tmpZ));
 
 	//std::cout << "x = " << coord.x << " z = " << coord.z << std::endl;  
 
-  }
+  }*/
 }
 
 /*!
@@ -1006,9 +1029,6 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
 	//cam->setTargetMode(PN3DObject::TMODE_FREE);
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Run",playerid,"null",false));
     break;
-  case CEGUI::Key::Space :
-	PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION,NULL, new PNGameActionEventData("Chat","id_1","",1.0));
-	break;
   default:
 	std::cout << "not managed key";
 	break;
