@@ -604,8 +604,8 @@ void PNGUIGame::resetGUI()
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_OVER, EventCallback(this, &PNGUIGame::playerDied));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_LIFEVAL, EventCallback(this, &PNGUIGame::changeLife));
-PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNGUIGame::startChat));
-PNEventManager::getInstance()->deleteCallback(PN_EVENT_OM, EventCallback(this, &PNGUIGame::updateCoordPlayer));
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNGUIGame::startChat));
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_OM, EventCallback(this, &PNGUIGame::updateCoordPlayer));
   unsuscribeConsoleCommand();
   hide();
 }
