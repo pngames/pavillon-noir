@@ -30,6 +30,8 @@
 #ifndef _PNIModelImporter_HPP_
 # define _PNIModelImporter_HPP_
 
+#include "pnproperties.h"
+
 #include "PNIImporter.hpp"
 
 #include "pnm_format.h"
@@ -39,17 +41,35 @@ namespace PN {
 
 class					PNIModelImporter : public PNIImporter
 {
-public:
+private:
   PNIModelImporter();
   ~PNIModelImporter();
+
+  static PNIModelImporter*	_instance;
+public:
+  static PNIModelImporter*	getInstance();
+
+  //////////////////////////////////////////////////////////////////////////
   
+private:
+  PNBoolParameter		_pRecalcMinMax;
+
   //////////////////////////////////////////////////////////////////////////
   
   IPNImportedObject*	doImport(const std::string& path);
   importtype			getImportType();
 };
 
-//////////////////////////////////////////////////////////////////////////
+inline PNIModelImporter*
+PNIModelImporter::getInstance()
+{
+  if (_instance == NULL)
+	_instance = new PNIModelImporter();
+
+  return _instance;
 }
+
+//////////////////////////////////////////////////////////////////////////
+};
 
 #endif /*_PNIModelImporter_HPP_*/

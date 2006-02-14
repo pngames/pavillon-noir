@@ -42,12 +42,25 @@ using namespace PN;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-PNIModelImporter::PNIModelImporter()
+PNIModelImporter*	PNIModelImporter::_instance = NULL;
+
+PNIModelImporter::PNIModelImporter() :
+_pRecalcMinMax(true, "Recalculer la boite anglobante a chaque frame", "Recalculer la boite anglobante a chaque frame")
 {
   _name = _label = "PNM Importer";
 
   _magic = PNM_MAGIC;
   _magicSize = PNM_MAGIC_SIZE;
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  _pRecalcMinMax.setConfigurableObject(this);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  addSeparator("Divers");
+
+  addParam(&_pRecalcMinMax);
 }
 
 PNIModelImporter::~PNIModelImporter()
