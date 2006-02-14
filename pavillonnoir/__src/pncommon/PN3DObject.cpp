@@ -1214,6 +1214,54 @@ PN3DObject::updateRotation(pnfloat deltaTime)
   }
 }
 
+void
+PN3DObject::prepareUpdate()
+{
+  PNLOCK(this);
+
+  _updated = false;
+}
+
+pnbool
+PN3DObject::isUpdated()
+{
+  PNLOCK(this);
+
+  return _updated;
+}
+
+void
+PN3DObject::setUpdated()
+{
+  PNLOCK(this);
+
+  _updated = true;
+}
+
+pnbool
+PN3DObject::isPositionTargetUpdated()
+{
+  return _positionTargetUpdated;
+}
+
+void
+PN3DObject::setPositionTargetUpdated(pnbool updated)
+{
+  _positionTargetUpdated = updated;
+}
+
+pnbool
+PN3DObject::isViewTargetUpdated()
+{
+  return _viewTargetUpdated;
+}
+
+void
+PN3DObject::setViewTargetUpdated(pnbool updated)
+{
+  _viewTargetUpdated = updated;
+}
+
 /**
 * updates the position of the object regarding
 * its translation vector.
@@ -1221,6 +1269,13 @@ PN3DObject::updateRotation(pnfloat deltaTime)
 void
 PN3DObject::update(pnuint deltaTime)
 {
+  if (isUpdated())
+	return ;
+
+  setUpdated();
+
+  //////////////////////////////////////////////////////////////////////////
+
   PNLOCK(this);
 
   bool	moving = !_updateTranslation.isNull();
