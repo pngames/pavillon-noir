@@ -68,7 +68,7 @@ public:
   const PN3DObjList&		getListObj();
   
   /// Returns true if any object in the list has the given id
-  bool						isIdInList(std::string id);
+  pnbool					isIdInList(const std::string& id);
 
   //////////////////////////////////////////////////////////////////////////
   
