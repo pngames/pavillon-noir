@@ -475,9 +475,9 @@ PN3DCamera::_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed)
 pnbool
 PN3DCamera::isIdInList(const std::string& id)
 {
-  for (PNGameMap::ObjMap::const_iterator it = _list3DObj.begin(); it != _list3DObj.end(); ++it)
+  for (PN3DObjList::iterator it = _list3DObj.begin(); it != _list3DObj.end(); ++it)
   {
-	if (it->second->getId() == id)
+	if ((*it)->getId() == id)
 	  return true;
   }
 
