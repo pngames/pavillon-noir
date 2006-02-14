@@ -471,8 +471,7 @@ PNGUIGame::PNGUIGame()
 
  _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/fiole");
  _miniMapPoint = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/MiniMapPos");
-  _mapSizeX = 5000.0;
-  _mapSizeZ = 5000.0;
+
 
   PNGUIChatWindow::getInstance();
 
@@ -580,6 +579,7 @@ void PNGUIGame::unsuscribeConsoleCommand()
 
 void PNGUIGame::startGUI()
 {
+  setMiniMapTools();
   PNGUIStateManager::getInstance()->setMainState(PNGUIStateManager::INGAME);
   PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::NONE);
 
@@ -671,32 +671,33 @@ void PNGUIGame::setMiniMapTools()
   _playerObj = tmpMap[PLAYERID];
   _mapObj = tmpMap[MAPID];
 
-  PNPoint2f mapMin(_mapObj->getMin().x, - _mapObj->getMin().z);
-  PNPoint2f mapMax(_mapObj->getMax().x, - _mapObj->getMax().z);
 
-  
-  float sizeX = mapMax.x - mapMin.x;
-  float sizeY = mapMax.y - mapMin.y;
+  PNPoint2f mapMin(_mapObj->getMin().x, _mapObj->getMin().z);
+  PNPoint2f mapMax(_mapObj->getMax().x, _mapObj->getMax().z);
 
 
+  _mapSizeX = mapMax.x - mapMin.x;
+  _mapSizeY = mapMax.y - mapMin.y;
+
+  float tmpX = _playerObj->getCoord().x / _mapSizeX;
+  float tmpZ = (_playerObj->getCoord().z + 3359) / _mapSizeY;
+
+  _miniMapPoint->setPosition(CEGUI::Point(tmpX, tmpZ));
 }
 
 void  PNGUIGame::updateCoordPlayer(pnEventType type, PNObject* source, PNEventData* data)
 {
   PNLOCK(this);
 
-  //setMiniMapTools();
-  /*if (((PN3DObject*)source)->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ && ((PN3DObject*)source) == playerObj)
+  if (((PN3DObject*)source)->getId() == PLAYERID)
   {
 	PNPoint3f coord = ((PN3DObject*)source)->getCoord();
+
 	float tmpX = coord.x / _mapSizeX;
-	float tmpZ = coord.z / _mapSizeZ;
+	float tmpZ =(coord.z + 3359) / _mapSizeY;
 
 	_miniMapPoint->setPosition(CEGUI::Point(tmpX, tmpZ));
-
-	//std::cout << "x = " << coord.x << " z = " << coord.z << std::endl;  
-
-  }*/
+  }
 }
 
 /*!

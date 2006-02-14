@@ -73,11 +73,12 @@ namespace PN{
 	typedef std::map<int, std::string> MapLife;
 	MapLife _mapLife;
 
-	float _mapSizeX;
-	float _mapSizeZ;
+
 
 	PN3DObject* _playerObj;
 	PN3DObject* _mapObj;
+	float _mapSizeX;
+	float _mapSizeY;
 
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
