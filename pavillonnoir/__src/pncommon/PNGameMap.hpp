@@ -58,6 +58,7 @@ protected:
   pnfloat						_mpp;
   ObjMap						_entityList;
   PN3DObject*					_player;
+  PN3DObject*					_ground;
   std::string			  		_wpFile;
 
   pnint							_unserializeSkybox(xmlNode* node);
@@ -90,6 +91,7 @@ public:
   pnfloat						getMpp();
 
   const PN3DObject*				getPlayer() {return _player;}
+  const PN3DObject*				getGround() {return _ground;}
   //////////////////////////////////////////////////////////////////////////
 
   virtual void					executeScript(const std::string& ScriptName) {}
