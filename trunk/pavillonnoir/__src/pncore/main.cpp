@@ -81,6 +81,24 @@ int	  main(int argc, char* argv[])
   std::cout << "angle: " << angle << std::endl;
 
   //////////////////////////////////////////////////////////////////////////
+  
+  std::cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl;
+
+  PNPoint3f  coordTarget(1.0f, 0.0f, 0.0f);
+  PNPoint3f  coordCamera(0.0f, 0.0f, -1.0f);
+
+  PNNormal3f	targetVector(coordTarget - coordCamera);
+
+  pnfloat	norm = sqrtf(SQNBR(targetVector.getX()) + SQNBR(targetVector.getZ()));
+  double	ps = (PNVector3f::NEGATIVE_UNIT_Z.x * targetVector.getX() / norm) + (PNVector3f::NEGATIVE_UNIT_Z.z * targetVector.getZ() / norm);
+  double	pcy = (PNVector3f::NEGATIVE_UNIT_Z.x * targetVector.getX() / norm) - (PNVector3f::NEGATIVE_UNIT_Z.z * targetVector.getZ() / norm);
+
+  pnfloat yangle = ABS(ps) > 1.0f ? 0.0f : acosf((float)ps);
+  yangle = pcy > 0 ? -yangle : yangle;
+
+  std::cout << RADIAN_TO_DEGREE_F(targetVector.radianRange2Pi(PNVector3f::NEGATIVE_UNIT_Z, PNVector3f::NEGATIVE_UNIT_X)) << std::endl;
+
+  //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
   
   /*char c;
