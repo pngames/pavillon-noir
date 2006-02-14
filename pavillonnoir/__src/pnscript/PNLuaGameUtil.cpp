@@ -103,7 +103,7 @@ namespace PN{
     PNGameActionEventData *eventData  = new PNGameActionEventData(eventName, targetId, sourceid, value);
     PNLuaGame* game = (PNLuaGame*) PNLuaGame::getInstance();
     ((PNLuaGameMap*)game->getGameMap())->sendGameActionEvent(eventName, eventData);
-    delete eventData;
+
   }
 
   void GUIChangeLife(int lifeLevel)
