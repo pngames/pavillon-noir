@@ -62,6 +62,7 @@ using namespace std;
 PNGameMap::PNGameMap()
 {
   _player = NULL;
+  _ground = NULL;
 }
 
 PNGameMap::~PNGameMap()
@@ -172,7 +173,8 @@ PNGameMap::_unserializeEntity(xmlNode* node)
   pnfloat zz = (pnfloat)(atof((const char *)(xmlGetProp(node, PNXML_ROTZ_ATTR))));
   pnfloat ww = (pnfloat)(atof((const char *)(xmlGetProp(node, PNXML_ROTW_ATTR))));
   object->setOrient(xx, yy, zz, ww);
-
+  if (!strcmp((const char*)xmlGetProp(node, PNXML_ENVTYPE_ATTR), "ground"))
+    _ground = object;
   //////////////////////////////////////////////////////////////////////////
 
   // physical settings
