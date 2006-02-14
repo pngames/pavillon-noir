@@ -41,9 +41,13 @@ namespace PN {
 
 class					PNIMaterialImporter : public PNIImporter
 {
-public:
+private:
   PNIMaterialImporter();
   ~PNIMaterialImporter();
+
+  static PNIMaterialImporter*	_instance;
+public:
+  static PNIMaterialImporter*	getInstance();
 
   //////////////////////////////////////////////////////////////////////////
   // PNIImporter
@@ -51,6 +55,15 @@ public:
   IPNImportedObject*	doImport(const std::string& file);
   importtype			getImportType();
 };
+
+inline PNIMaterialImporter*
+PNIMaterialImporter::getInstance()
+{
+  if (_instance == NULL)
+	_instance = new PNIMaterialImporter();
+
+  return _instance;
+}
 
 //////////////////////////////////////////////////////////////////////////
 }

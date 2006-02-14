@@ -42,6 +42,8 @@ using namespace PN;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
+PNIAnimationImporter*	PNIAnimationImporter::_instance = NULL;
+
 PNIAnimationImporter::PNIAnimationImporter()
 {
   _name = _label = "PNA Importer";

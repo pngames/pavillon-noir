@@ -93,6 +93,10 @@ PN3DObject::PN3DObject()
   _rotatingPitchSpeed = 1.0f;
   _rotatingRollSpeed = 1.0f;
 
+  _updated = false;
+  _positionTargetUpdated = false;
+  _viewTargetUpdated = false;
+
   _objType = OBJTYPE_3DOBJ;
 }
 
@@ -1220,6 +1224,8 @@ PN3DObject::prepareUpdate()
   PNLOCK(this);
 
   _updated = false;
+  _positionTargetUpdated = false;
+  _viewTargetUpdated = false;
 }
 
 pnbool
@@ -1236,6 +1242,8 @@ PN3DObject::setUpdated()
   PNLOCK(this);
 
   _updated = true;
+  _positionTargetUpdated = false;
+  _viewTargetUpdated = false;
 }
 
 pnbool
@@ -1362,4 +1370,3 @@ PN3DObject::render()
 
 //////////////////////////////////////////////////////////////////////////
 }
-

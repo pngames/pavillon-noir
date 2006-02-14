@@ -42,10 +42,6 @@ class PNIAnimationImporter;
 
 class PNIImporterPlugDesc : public PNPlugDesc
 {
-  PNIModelImporter*		_modelInterface;
-  PNIMaterialImporter*	_materialInterface;
-  PNISkeletonImporter*	_skeletonInterface;
-  PNIAnimationImporter*	_animationInterface;
 public:
   PNInterface*		getInterface(pnuint id);
   pnuint			getNbInterface();

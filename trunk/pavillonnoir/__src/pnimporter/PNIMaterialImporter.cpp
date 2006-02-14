@@ -45,6 +45,8 @@ using namespace PN;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
+PNIMaterialImporter*	PNIMaterialImporter::_instance = NULL;
+
 PNIMaterialImporter::PNIMaterialImporter()
 {
   _name = _label = "PNT Importer";

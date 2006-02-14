@@ -39,9 +39,13 @@ namespace PN {
 
 class					PNIAnimationImporter : public PNIImporter
 {
-public:
+private:
   PNIAnimationImporter();
   ~PNIAnimationImporter();
+
+  static PNIAnimationImporter*	_instance;
+public:
+  static PNIAnimationImporter*	getInstance();
 
   //////////////////////////////////////////////////////////////////////////
   // PNIImporter
@@ -49,6 +53,15 @@ public:
   IPNImportedObject*	doImport(const std::string& file);
   importtype			getImportType();
 };
+
+inline PNIAnimationImporter*
+PNIAnimationImporter::getInstance()
+{
+  if (_instance == NULL)
+	_instance = new PNIAnimationImporter();
+
+  return _instance;
+}
 
 //////////////////////////////////////////////////////////////////////////
 };
