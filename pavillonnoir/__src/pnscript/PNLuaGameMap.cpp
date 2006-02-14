@@ -77,6 +77,7 @@ void  PNLuaGameMap::addToMap(const std::string& entityName, const std::string& i
   {
     if (entityName == "PNPlayer")
         _playerId = id;
+
 	loadLuaScript(std::string(entityName).append(".lua").c_str());
 	luaOrder +=  "entity = " + entityName + "Class(\"" + id + "\")\n gameMap:spawn2(entity, \"" + id + "\")\n";
   }
@@ -88,12 +89,16 @@ void  PNLuaGameMap::addToMap(const std::string& entityName, const std::string& i
 
 void        PNLuaGameMap::addToMap2(PNObject& entity, char* id)
 {
-  puts("[LUA Teste] addToMap2");
+  //puts("[LUA Teste] addToMap2");
   if (!_playerId.empty())
   {
     _player = (PN3DObject*)&entity;
     _playerId.clear();
   }
+
+ // if (((PN3DObject&)entity).getObjType() == PN_GROUND)
+ //   ;
+ //   _ground = (PN3DObject*)&entity;
   this->_entityList[id] = (PN3DObject*)&entity;
 }
 
