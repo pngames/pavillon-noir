@@ -369,6 +369,19 @@ PNQuatf::multiply(const PNPoint3f& point) const
 
 //////////////////////////////////////////////////////////////////////////
 
+void
+PNQuatf::normalize()
+{
+  pnfloat distance = sqrtf(x*x+y*y+z*z+w*w);
+
+  x /= distance;
+  y /= distance;
+  z /= distance;
+  w /= distance;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 PNPoint3f
 PNQuatf::operator*(const PNPoint3f& vec) const
 {
