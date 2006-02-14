@@ -42,6 +42,8 @@ using namespace PN;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
+PNISkeletonImporter*	PNISkeletonImporter::_instance = NULL;
+
 PNISkeletonImporter::PNISkeletonImporter(void)
 {
   _name = _label = "PNS Importer";

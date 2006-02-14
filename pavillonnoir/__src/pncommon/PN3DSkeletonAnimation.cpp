@@ -143,7 +143,7 @@ PN3DSkeletonAnimation::unserializeFromXML(xmlNode* root)
   step = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_STEP, step);
   speed = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_SPEED, speed);
   weight = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_WEIGHT, weight);
-  next = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_WEIGHT, next);
+  next = XMLUtils::xmlGetProp(root, PNO_ANIM_XMLPROP_NEXT, next);
 
   return PNEC_SUCCESS;
 }
@@ -156,6 +156,7 @@ PN3DSkeletonAnimation::serializeInXML(xmlNode* root, pnbool isroot)
   XMLUtils::xmlNewProp(root, PNO_ANIM_XMLPROP_STEP, step);
   XMLUtils::xmlNewProp(root, PNO_ANIM_XMLPROP_SPEED, speed);
   XMLUtils::xmlNewProp(root, PNO_ANIM_XMLPROP_WEIGHT, weight);
+  XMLUtils::xmlNewProp(root, PNO_ANIM_XMLPROP_NEXT, next);
 
   return PNEC_SUCCESS;
 }

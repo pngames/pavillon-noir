@@ -39,15 +39,28 @@ namespace PN {
 
 class					PNISkeletonImporter :  public PNIImporter
 {
+private:
+  PNISkeletonImporter();
+  ~PNISkeletonImporter();
+
+  static PNISkeletonImporter*	_instance;
 public:
-  PNISkeletonImporter(void);
-  ~PNISkeletonImporter(void);
+  static PNISkeletonImporter*	getInstance();
 
   //////////////////////////////////////////////////////////////////////////
 
   IPNImportedObject*	doImport(const std::string& path);
   importtype			getImportType();
 };
+
+inline PNISkeletonImporter*
+PNISkeletonImporter::getInstance()
+{
+  if (_instance == NULL)
+	_instance = new PNISkeletonImporter();
+
+  return _instance;
+}
 
 //////////////////////////////////////////////////////////////////////////
 };

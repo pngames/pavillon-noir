@@ -42,21 +42,12 @@ using namespace PN;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-PNIImporterPlugDesc::PNIImporterPlugDesc() :
-_modelInterface(NULL), _materialInterface(NULL), _skeletonInterface(NULL), _animationInterface(NULL)
+PNIImporterPlugDesc::PNIImporterPlugDesc()
 { 
 }
 
 PNIImporterPlugDesc::~PNIImporterPlugDesc()
 {
-  if (_modelInterface != NULL)
-	delete _modelInterface;
-  if (_materialInterface != NULL)
-	delete _materialInterface;
-  if (_skeletonInterface != NULL)
-	delete _skeletonInterface;
-  if (_animationInterface != NULL)
-	delete _animationInterface;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -66,21 +57,13 @@ PNInterface*	PNIImporterPlugDesc::getInterface(pnuint id)
   switch (id)
   {
   	case 0:
-  	  if (_modelInterface == NULL)
-	    _modelInterface = new PNIModelImporter();
-      return (PNInterface*)_modelInterface;
+	  return (PNInterface*)PNIModelImporter::getInstance();
 	case 1:
-	  if (_materialInterface == NULL)
-		_materialInterface = new PNIMaterialImporter();
-	  return (PNInterface*)_materialInterface;
+	  return (PNInterface*)PNIMaterialImporter::getInstance();
 	case 2:
-	  if (_skeletonInterface == NULL)
-		_skeletonInterface = new PNISkeletonImporter();
-	  return (PNInterface*)_skeletonInterface;
+	  return (PNInterface*)PNISkeletonImporter::getInstance();
 	case 3:
-	  if (_animationInterface == NULL)
-		_animationInterface = new PNIAnimationImporter();
-	  return (PNInterface*)_animationInterface;
+	  return (PNInterface*)PNIAnimationImporter::getInstance();
   }
   
   return NULL;
