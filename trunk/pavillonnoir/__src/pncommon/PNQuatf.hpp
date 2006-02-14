@@ -91,6 +91,8 @@ public:
   PNPoint3f				multiply(const pnfloat *point) const;
   PNPoint3f	  			multiply(const PNPoint3f& point) const;
 
+  void					normalize();
+
   //////////////////////////////////////////////////////////////////////////
 
   PNPoint3f				operator*(const PNPoint3f& vec) const;
