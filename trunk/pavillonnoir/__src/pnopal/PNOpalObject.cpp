@@ -369,6 +369,12 @@ PNOpalObject::destroyMovementMotor()
   _movementMotor->init(_movementMotorData);
 }
 
+pnfloat
+PNOpalObject::getRadius()
+{
+  return (pnfloat)_radius;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // IPNXMLSerializable
 
@@ -503,12 +509,15 @@ PNOpalObject::_parseTypeOpal(const std::string& path)
   if (_solid->getName() == DEFAULT_PLAYER_ID)
   {
 	_player = true;
+
 	opal::RaycastSensorData data;
 	data.solid = _solid;
 	data.ray.setOrigin(opal::Point3r(0, 0, 0));
 	data.ray.setDir(opal::Vec3r(0, -1, 0));
 	_playerSensor = _sim->createRaycastSensor();
 	_playerSensor->init(data);
+
+	_playerJoint = _sim->createJoint();
   }
 
   // enable the object

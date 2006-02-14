@@ -74,7 +74,6 @@ PNOpal::~PNOpal()
 
 /** PNOpal plugin initialization method
 */
-
 void  PNOpal::init()
 {
   pnerror(PN_LOGLVL_DEBUG, "%s", "PNOpal (PNPhysicsInterface implementation) initialization");
@@ -94,7 +93,6 @@ void  PNOpal::init()
 *
 *  \param	state			true to play simulation / false set the pause on
 */
-
 void  PNOpal::setPause(bool state)
 {
   _paused = state;
@@ -104,7 +102,6 @@ void  PNOpal::setPause(bool state)
 
 /** Create the physical simulation (opal::Simulator)
 */
-
 void PNOpal::createSimulation()
 {
   _sim = opal::createSimulator();
@@ -122,7 +119,6 @@ void PNOpal::createSimulation()
 
 /** Destroy the physical simulation (opal::Simulator)
 */
-
 void PNOpal::destroySimulation()
 {
   _sim->destroyAllMotors();
@@ -171,6 +167,24 @@ void
 PNOpal::_onMapLoaded(pnEventType type, PNObject* source, PNEventData* data)
 {
   pn2opal();
+/*
+  for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
+  {
+	PN3DObject* object = it->second;
+	PNOpalObject* physicalObject = (PNOpalObject*)object->getPhysicalObject();
+	if (physicalObject != NULL)
+	{
+	  PNLOCK_BEGIN(object);
+	  {
+		if (physicalObject->getOpalSolid())
+  opal::JointData jointData;
+  jointData.setType(opal::HINGE_JOINT);
+  jointData.solid0 = _solid;
+  jointData.solid1 = NULL;
+  jointData.anchor = opal::Point3r(0.0, -_desiredHeight, 0.0);
+  jointData.axis[0].direction = opal::Vec3r(0.0, 1.0, 0.0);
+  _playerJoint->init(jointData);
+  */
 }
 
 /** invoked by PN_EVENT_MU_ENDED (end of level unload)
@@ -254,49 +268,44 @@ void PNOpal::_onFrame(pnEventType type, PNObject* source, PNEventData* data)
 			opal::RaycastResult resultObstacle2 = physicalObject->getPlayerSensor()->fireRay(physicalObject->getRayLenght());
 
 			// apply obstacle workaround
-			if (resultObstacle1.distance > 0.0f && resultObstacle1.distance < 0.30f)
-			{
-			  if (resultObstacle2.distance == 0.0f || resultObstacle2.distance > resultObstacle1.distance * 2.0f)
+			if (resultObstacle1.distance > 0.0f && resultObstacle1.distance < physicalObject->getRadius() * 1.2f)
+			  if (resultObstacle2.distance == 0.0f || resultObstacle2.distance > resultObstacle1.distance * 1.5f)
 			  {
-				physicalObject->addForce(PNVector3f::UNIT_Y, (physicalObject->getRayLenght()/mpp)*2.0f, 0.0f, true);
-				pnerror(PN_LOGLVL_INFO, "Obstacle workaround force added : %f", (physicalObject->getRayLenght()/mpp)*2.0f);
+				physicalObject->addForce(PNVector3f::UNIT_Y, (physicalObject->getRayLenght()/mpp), 0.0f, true);
+				//pnerror(PN_LOGLVL_INFO, "Obstacle sensor 1, height: %f, distance : %f, point : %f:%f:%f", -physicalObject->getRayLenght()*0.49, resultObstacle1.distance, 
+				//resultObstacle1.intersection[0], resultObstacle1.intersection[1], resultObstacle1.intersection[2]);
+				//pnerror(PN_LOGLVL_INFO, "Obstacle sensor 2, height: %f, distance : %f, point : %f:%f:%f", -physicalObject->getRayLenght()/3, resultObstacle2.distance, 
+				//resultObstacle2.intersection[0], resultObstacle2.intersection[1], resultObstacle2.intersection[2]);
+				//pnerror(PN_LOGLVL_INFO, "Obstacle workaround force added : %f", (physicalObject->getRayLenght()/mpp)*2.0f);
 			  }
-			}
 
 			// reinit RaySensor (which is used to detect ground)
 			ori.set(0, 0, 0);
 			vecDir.set(0, -1, 0);
 			opal::Rayr ground(ori, vecDir);
 			physicalObject->getPlayerSensor()->setRay(ground);
-
-			
-			pnerror(PN_LOGLVL_INFO, "Obstacle sensor 1, height: %f, distance : %f, point : %f:%f:%f", -physicalObject->getRayLenght()*0.49, resultObstacle1.distance, 
-			  resultObstacle1.intersection[0], resultObstacle1.intersection[1], resultObstacle1.intersection[2]);
-			pnerror(PN_LOGLVL_INFO, "Obstacle sensor 2, height: %f, distance : %f, point : %f:%f:%f", -physicalObject->getRayLenght()/3, resultObstacle2.distance, 
-			  resultObstacle2.intersection[0], resultObstacle2.intersection[1], resultObstacle2.intersection[2]);
 			
 			// apply translation
 			physicalObject->addForce(current_obj->getUpdateTranslation(), DEFAULT_FORCE_MAGNITUDE, DEFAULT_FORCE_DURATION, false);
 		  }
-
-		  // rotate players
-		  if (orient != current_obj->getPhysicalObject()->getOrient())
-		  {
-			PNNormal3f vecOri = physicalObject->getOrient() * PNVector3f::NEGATIVE_UNIT_Z;
-			PNNormal3f vecEnd = orient * PNVector3f::NEGATIVE_UNIT_Z;
-			pnfloat angleOri = vecOri.radianRange2Pi(PNVector3f::UNIT_X, PNVector3f::NEGATIVE_UNIT_Z);
-			pnfloat angleEnd = vecEnd.radianRange2Pi(PNVector3f::UNIT_X, PNVector3f::NEGATIVE_UNIT_Z);
-			pnfloat angle = angleOri - angleEnd;
-
-			if (angle > PI)
-			  angle -= (pnfloat)PI * 2.0f;
-			else if (angle < -PI)
-			  angle += (pnfloat)PI * 2.0f;
-
-			physicalObject->addTorque(PNVector3f::UNIT_Y, -angle * DEFAULT_TORQUE_MAGNITUDE, 0.0f, true);
-		  }
 		}
 
+		// rotate players
+		if (orient != current_obj->getPhysicalObject()->getOrient())
+		{
+		  PNNormal3f	vecOri = physicalObject->getOrient() * PNVector3f::NEGATIVE_UNIT_Z;
+		  PNNormal3f	vecEnd = orient * PNVector3f::NEGATIVE_UNIT_Z;
+		  pnfloat		angleOri = vecOri.radianRange2Pi(PNVector3f::UNIT_X, PNVector3f::NEGATIVE_UNIT_Z);
+		  pnfloat		angleEnd = vecEnd.radianRange2Pi(PNVector3f::UNIT_X, PNVector3f::NEGATIVE_UNIT_Z);
+		  pnfloat		angle = angleOri - angleEnd;
+
+		  if (angle > PI)
+			angle -= (pnfloat)PI * 2.0f;
+		  else if (angle < -PI)
+			angle += (pnfloat)PI * 2.0f;
+
+		  physicalObject->addTorque(PNVector3f::UNIT_Y, -angle * DEFAULT_TORQUE_MAGNITUDE, 0.0f, true);
+		}
 	  }
 	  PNLOCK_END(current_obj);
 	}
@@ -384,16 +393,32 @@ void	PNOpal::opal2pn()
 		// Players moves gesture
 		if (object->getObjType() == PN3DObject::OBJTYPE_3DSKELETONOBJ)
 		{
-		  opal::RaycastResult result = physicalObject->getPlayerSensor()->fireRay(physicalObject->getRayLenght());
+		  /*opal::RaycastResult result = physicalObject->getPlayerSensor()->fireRay(physicalObject->getRayLenght());
 		  opal::Point3r hitPoint = result.intersection;
 		  opal::Solid* hitSolid = result.solid;
 
 		  // elevates PNPlayer' from the ground (a little bit)
 		  if (result.distance != 0.0 && result.distance < physicalObject->getDesiredHeight() + DEFAULT_ANTIGRAVITY_CONSTANT)
 		  {
-			//pnerror(PN_LOGLVL_INFO, "Player sensor, Y: %f", result.distance);
 			physicalObject->addForce(PNVector3f::UNIT_Y, (physicalObject->getDesiredHeight() - (pnfloat)result.distance) * DEFAULT_ANTIGRAVITY, 0.0f, true);
-		  }
+			//pnerror(PN_LOGLVL_INFO, "Player sensor, Y: %f", result.distance);
+		  }*/
+
+		  physicalObject->addForce(PNVector3f::UNIT_Y, physicalObject->getOpalSolid()->getMass() * GRAVITY, 0.0f, true);
+
+		  // avoid falls of PNPlayer'
+		  //PNVector3f	vecCurrent = orient * PNVector3f::UNIT_Y;
+		  //if (vecCurrent.y < 0.98f)
+		  //{
+		  //PNVector3f	oriY(vecCurrent.x, 1, vecCurrent.z);
+		  //physicalObject->setMovementMotor()
+			//PNVector3f	vecAxis;
+			//vecAxis.crossProduct(oriY, /*PNVector3f::UNIT_Y*/vecCurrent);
+			//physicalObject->addTorque(vecAxis, DEFAULT_FORCE_MAGNITUDE * 10.0f, 0.0f, true);
+			//pnerror(PN_LOGLVL_INFO, "Player fall              -> %f:%f:%f", vecCurrent.x, vecCurrent.y, vecCurrent.z);
+			//if (abs(vecAxis.x) != 0.0f || abs(vecAxis.y) != 0.0f || abs(vecAxis.z) != 0.0f)
+			  //pnerror(PN_LOGLVL_INFO, "Player fall [correction] -> %f:%f:%f", vecAxis.x, vecAxis.y, vecAxis.z);
+		  //}
 		}
 		
 		// set obj's rendering coordinates according to map's scale (meters per pixel)

@@ -98,6 +98,7 @@ private:
   /* movements sensor */
   pnbool						_player;
   opal::RaycastSensor*			_playerSensor;
+  opal::Joint*					_playerJoint;
   opal::RaycastSensor*			_obstacleSensor1;
   opal::RaycastSensor*			_obstacleSensor2;
   pnfloat						_rayLenght;
@@ -144,6 +145,7 @@ public:
   opal::RaycastSensor*			getPlayerSensor();
   pnfloat						getRayLenght();
   pnfloat						getDesiredHeight();
+  pnfloat						getRadius();
 
   //////////////////////////////////////////////////////////////////////////
 
