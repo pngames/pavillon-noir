@@ -260,8 +260,11 @@ void			PNMatrix4f::addTranslation(const pnfloat* trans)
   _matrix[14] += trans[2];
 }
 
-void			PNMatrix4f::setRotationQuaternion(const PNQuatf& quat)
+void			PNMatrix4f::setRotationQuaternion(const PNQuatf& q)
 {
+  PNQuatf quat = q;
+  quat.normalize();
+
   register pnfloat tx = 2.0f * quat.x;
   register pnfloat ty = 2.0f * quat.y;
   register pnfloat tz = 2.0f * quat.z;

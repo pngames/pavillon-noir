@@ -1147,7 +1147,12 @@ PN3DObject::updateRotation(pnfloat deltaTime)
 	double	pcy = (_targetDirection.getX() * targetVector.z / norm) - (_targetDirection.getZ() * targetVector.x / norm);
 
 	// The test is for handle precision problems
-	pnfloat yangle = ABS(ps) >= 1.0f ? 0.0f : acosf((float)ps);
+	if (ps > 1.0f)
+	  ps = 1.0f;
+	if (ps < -1.0f)
+	  ps = -1.0f;
+
+	pnfloat yangle = (pnfloat)acos(ps);
 	yangle = pcy > 0 ? -yangle : yangle;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -1160,37 +1165,19 @@ PN3DObject::updateRotation(pnfloat deltaTime)
 	PNVector3f	pc;
 	pc.crossProduct(_targetDirection.getVector(), targetVector);
 
+	ps = ABS(ps);
+
 	// The test is for handle precision problems
-	pnfloat xangle = ABS(ps) >= 1.0f ? 0.0f : acosf((float)ABS(ps));
+	if (ps > 1.0f)
+	  ps = 1.0f;
+
+	pnfloat xangle = (pnfloat)acos(ps);
+
 	if (pc.scalarProduct(_rightTargetDirection.getVector()) < 0)
 	  xangle = -xangle;
 
 	_orient.fromAxisRadians(_rightTargetDirection.getVector(), xangle);
 	_orient = PNQuatf(PNVector3f::UNIT_Y, yangle) * _orient;
-  }
-  else if (_targetMode & TMODE_VIEW_LOCKED)
-  {
-	/*PNVector3f	targetVector = _target->getCoord();
-	targetVector -= coord;
-
-	pnfloat	norm = sqrtf(SQNBR(targetVector.x) + SQNBR(targetVector.z));
-	double	ps = (_targetDirection.x * targetVector.x / norm) + (_targetDirection.z * targetVector.z / norm);
-
-	pnfloat yangle = (pnfloat)acos(ps);
-	yangle = targetVector.x > 0 ? -yangle : yangle;
-
-	//////////////////////////////////////////////////////////////////////////
-
-	targetVector = PNQuatf(PNVector3f::UNIT_Y, -yangle) * targetVector;
-
-	norm = sqrtf(SQNBR(targetVector.y) + SQNBR(targetVector.z));
-	ps = (_targetDirection.y * targetVector.y / norm) + (_targetDirection.z * targetVector.z / norm);
-
-	pnfloat xangle = (pnfloat)acos(ABS(ps));
-	xangle = targetVector.y > 0 ? xangle : -xangle;
-
-	_orient.fromAxisRadians(PNVector3f::UNIT_X, xangle);
-	_orient = PNQuatf(PNVector3f::UNIT_Y, yangle) * _orient;*/
   }
   else
   {
