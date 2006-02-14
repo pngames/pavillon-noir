@@ -298,6 +298,16 @@ public:
   /// Return render mode bit mask
   int						getRenderMode();
 
+  void						prepareUpdate();
+  
+  pnbool					isUpdated();
+  void						setUpdated();
+
+  pnbool					isPositionTargetUpdated();
+  void						setPositionTargetUpdated(pnbool updated);
+  pnbool					isViewTargetUpdated();
+  void						setViewTargetUpdated(pnbool updated);
+
   /// Update object informations
    void						update(unsigned int deltaTime);
   /// Update object position

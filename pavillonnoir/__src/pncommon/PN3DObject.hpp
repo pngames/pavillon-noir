@@ -485,6 +485,22 @@ public:
 
   //////////////////////////////////////////////////////////////////////////
 
+protected:
+  pnbool							_updated;
+  pnbool							_positionTargetUpdated;
+  pnbool							_viewTargetUpdated;
+
+public:
+  void								prepareUpdate();
+
+  pnbool							isUpdated();
+  void								setUpdated();
+
+  pnbool							isPositionTargetUpdated();
+  void								setPositionTargetUpdated(pnbool updated);
+  pnbool							isViewTargetUpdated();
+  void								setViewTargetUpdated(pnbool updated);
+
   /// Update object informations
   virtual void						update(pnuint deltaTime);
   /// Update object position
