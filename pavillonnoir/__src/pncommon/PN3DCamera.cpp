@@ -398,7 +398,7 @@ PN3DCamera::_isSphereVisible()
 
 //////////////////////////////////////////////////////////////////////////
 
-bool
+pnbool
 PN3DCamera::_is3DObjVisible(PN3DObject* obj)
 {
   PNLOCK(_testedObj = obj);
@@ -423,28 +423,6 @@ PN3DCamera::_is3DObjVisible(PN3DObject* obj)
   //////////////////////////////////////////////////////////////////////////
 
   return _isSphereVisible() && _isBoxVisible();
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-bool
-PN3DCamera::isIdInList(std::string id)
-{
-  PNGameMap*	gmap = PNGameInterface::getInstance()->getGameMap();
-
-  if (gmap == NULL)
-	return false;
-
-  const PNGameMap::ObjMap&	list = gmap->getEntityList();
-
-  PN3DObjList::iterator		oldIt = _list3DObj.begin();
-
-  for (PNGameMap::ObjMap::const_iterator it = list.begin(); it != list.end(); ++it)
-  {
-	if (it->second->getId() == id)
-	  return true;
-  }
-  return false;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -490,6 +468,20 @@ PN3DCamera::_updateFrustrum(pnEventType type, PNObject* source, PNEventData* ed)
 	else
 	  ++oldIt;
   }
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+pnbool
+PN3DCamera::isIdInList(const std::string& id)
+{
+  for (PNGameMap::ObjMap::const_iterator it = _list3DObj.begin(); it != _list3DObj.end(); ++it)
+  {
+	if (it->second->getId() == id)
+	  return true;
+  }
+
+  return false;
 }
 
 //////////////////////////////////////////////////////////////////////////
