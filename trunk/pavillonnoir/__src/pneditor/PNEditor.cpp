@@ -616,6 +616,7 @@ long PNEditor::onCmdGenView(FXObject* sender, FXSelector, void*)
   }
 
   viewer->setScene(&_genScene);
+  //viewer->update();
   _genScene.bounds(b);
   viewer->fitToBounds(b);
   _state = VIEW_GENERAL;
@@ -654,7 +655,8 @@ PNEditor::onCmdSkyboxView(FXObject* obj, FXSelector sel, void* ptr)
 {
   _genScene.enableOptionView(PNGLGroup::VIEW_SKYBOX, !_genScene.contains(PNGLGroup::VIEW_SKYBOX));
 
-  fitToBounds();
+  viewer->update();
+  //fitToBounds();
 
   return 1;
 }
@@ -663,7 +665,8 @@ long PNEditor::onCmdGroundView(FXObject* sender, FXSelector, void*)
 {
   _genScene.enableOptionView(PNGLGroup::VIEW_GROUND, !_genScene.contains(PNGLGroup::VIEW_GROUND));
 
-  fitToBounds();
+  viewer->update();
+  //fitToBounds();
 
   return 1;
 }
@@ -672,7 +675,8 @@ long PNEditor::onCmdStaticView(FXObject* sender, FXSelector, void*)
 {
   _genScene.enableOptionView(PNGLGroup::VIEW_STATIC, !_genScene.contains(PNGLGroup::VIEW_STATIC));
 
-  fitToBounds();
+  viewer->update();
+  //fitToBounds();
 
   return 1;
 }
@@ -700,13 +704,14 @@ long PNEditor::onCmdWPView(FXObject* sender, FXSelector, void*)
 	  _genScene.remove(wpGroup);
 	  _wpenabled = false;
 	}
-	if (_state == VIEW_GENERAL)
+	viewer->update();
+	/*if (_state == VIEW_GENERAL)
 	{
 	  FXRangef	b;
 	  viewer->setScene(&_genScene);
 	  _genScene.bounds(b);
-	  viewer->fitToBounds(b);
-	}
+	  //viewer->fitToBounds(b);
+	}*/
   }
   else
   {
@@ -737,12 +742,12 @@ long PNEditor::onCmdCopyObj(FXObject* obj, FXSelector sel, void* ptr)
 
   viewer->makeCurrent();
   cp->unserializeFromPath(*orig->getPath()); //FIXME
-  viewer->makeNonCurrent();
+  //viewer->makeNonCurrent();
 
   cp->setCoord(orig->getCoord());
   cp->setOrient(orig->getOrient());
 
-  add3DObject(cp, objPanel, objPanel->getIdMax(), s->getEnvType(), s->getClassStr(), s->getLabel());
+  add3DObject(cp, objPanel, objPanel->getIdMax()+1, s->getEnvType(), s->getClassStr(), s->getLabel());
   objPanel->incrementIdMax();
   return 1;
 }
@@ -852,7 +857,7 @@ PNEditor::removeShape(FXGLShape* s)
 
   viewer->setSelection(NULL);
 
-  fitToBounds();
+  //fitToBounds();
 }
 
 void
@@ -880,7 +885,7 @@ void	  PNEditor::add3DObject(PN3DObject* o, PNPropertiesPanel* p, pnint id, PNEn
 
   objPanel->setObject((PNConfigurableObject*)s);
 
-  fitToBounds();
+  //fitToBounds();
 }
 
 void PNEditor::makeViewerCurrent()
