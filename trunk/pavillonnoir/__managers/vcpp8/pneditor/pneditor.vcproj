@@ -277,6 +277,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pneditor\PNScriptConfigurableObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pneditor\PNScriptConfigurableObject.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pneditor\PNWaypointObject.cpp"
 				>
 			</File>

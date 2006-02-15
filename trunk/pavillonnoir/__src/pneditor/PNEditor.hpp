@@ -128,18 +128,7 @@ private:
   FXMenuPane*       filemenu;
   FXMenuPane*       helpmenu;
   FXGLViewer*		viewer;
-  FXIcon*           filesaveasicon;
-  FXIcon*           filesaveicon;
-  FXIcon*           fileopenicon;
-  FXIcon*           generalicon;
-  FXIcon*           objectsicon;
-  FXIcon*           waypointsicon;
-  FXIcon*           appicon;
-  FXIcon*           winappicon;
-  FXIcon*           cameraicon;
-  FXIcon*           groundicon;
-  FXIcon*           staticicon;
-  FXIcon*           dynicon;
+
 /*  FXIcon            *nolighticon;
   FXIcon            *lighticon;
   FXIcon            *smoothlighticon;*/
@@ -160,6 +149,37 @@ private:
 
   // PN Objects
   PNIAGraph*		_graph;
+
+public:
+  FXIcon*           fileopenicon;
+  FXIcon*           filesaveasicon;
+  FXIcon*           filesaveicon;
+  FXIcon*           exiticon;
+  FXIcon*           infoicon;
+  FXIcon*           helpicon;
+
+  FXIcon*           appicon;
+  FXIcon*           winappicon;
+  FXIcon*           cameraicon;
+
+  FXIcon*           generalicon;
+  FXIcon*           objectsicon;
+  FXIcon*           skyboxicon;
+  FXIcon*           groundicon;
+  FXIcon*           staticicon;
+  FXIcon*           dynicon;
+  FXIcon*           waypointsicon;
+  FXIcon*           unselecticon;
+  FXIcon*           reseticon;
+
+  FXIcon*           addicon;
+  FXIcon*           removeicon;
+  FXIcon*           editicon; // unused
+
+  FXIcon*           okicon;
+  FXIcon*           cancelicon;
+  FXIcon*           browseicon;
+
 protected:
   PNEditor() {}
 public:
