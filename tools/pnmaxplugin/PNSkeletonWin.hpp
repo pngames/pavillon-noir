@@ -40,7 +40,7 @@ public:
 	PNSkeletonWin(PNSkeletonExporter *skeleton, UINT nIDTemplate = IDD, CWnd* pParent = NULL);
 	virtual ~PNSkeletonWin();
 
-	enum { IDD = IDD_S_CONFIG };
+	enum { IDD = IDD_PNS_CONFIG };
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);

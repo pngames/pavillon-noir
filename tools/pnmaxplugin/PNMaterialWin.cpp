@@ -51,6 +51,27 @@ void PNMaterialWin::DoDataExchange(CDataExchange* pDX)
   DDX_Control(pDX, IDC_MATERIALS, _materials);
 }
 
+void PNMaterialWin::pnToMFC()
+{
+  _materials.DeleteAllItems();
+
+  int i = 0;
+  for (VECTOR_MATERIALS::iterator it = _listMaterials.begin(); it != _listMaterials.end(); ++it, ++i)
+  {
+	_materials.InsertItem(LVIF_TEXT|LVIF_STATE, i, (*it).file, 0, 0, 0, 0);
+	ListView_SetItemState(_materials.m_hWnd, i, UINT((int((*it).exported) + 1) << 12), LVIS_STATEIMAGEMASK);
+  }
+}
+
+void PNMaterialWin::mfcToPN()
+{
+  int i = 0;
+  for (VECTOR_MATERIALS::iterator it = _listMaterials.begin(); it != _listMaterials.end(); ++it, ++i)
+  {
+	(*it).file = _materials.GetItemText(i, 0);
+	(*it).exported = _materials.GetCheck(i) == TRUE;//ListView_GetCheckState(_materials.m_hWnd, i) != 0;
+  }
+}
 
 BEGIN_MESSAGE_MAP(PNMaterialWin, CDialog)
   ON_BN_CLICKED(IDOK, OnBnClickedOk)
@@ -67,24 +88,14 @@ BOOL  PNMaterialWin::OnInitDialog()
 
   ListView_SetExtendedListViewStyle(_materials.m_hWnd, LVS_EX_CHECKBOXES | LVS_EX_FULLROWSELECT);
 
-  int i = 0;
-  for (VECTOR_MATERIALS::iterator it = _listMaterials.begin(); it != _listMaterials.end(); ++it, ++i)
-  {
-	_materials.InsertItem(LVIF_TEXT|LVIF_STATE, i, (*it).file, 0, 0, 0, 0);
-	ListView_SetItemState(_materials.m_hWnd, i, UINT((int((*it).exported) + 1) << 12), LVIS_STATEIMAGEMASK);
-  }
+  pnToMFC();
 
   return TRUE;
 }
 
 void PNMaterialWin::OnBnClickedOk()
 {
-  int i = 0;
-  for (VECTOR_MATERIALS::iterator it = _listMaterials.begin(); it != _listMaterials.end(); ++it, ++i)
-  {
-	(*it).file = _materials.GetItemText(i, 0);
-	(*it).exported = _materials.GetCheck(i) == TRUE;//ListView_GetCheckState(_materials.m_hWnd, i) != 0;
-  }
+  mfcToPN();
 
   //////////////////////////////////////////////////////////////////////////
   

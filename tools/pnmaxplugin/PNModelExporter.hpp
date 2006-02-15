@@ -86,6 +86,8 @@ typedef struct		mesh_s
 
   typedef std::list<face_t>				LIST_FACE;
   LIST_FACE			faces;
+
+  CString			name;
 }					mesh_t;
 
 //////////////////////////////////////////////////////////////////////////
@@ -96,7 +98,8 @@ protected:
   PN::pnuint	_nbNormals;
   PN::pnuint	_nbTexCoords;
   PN::pnuint	_nbColorVerts;
-protected:
+
+public:
   //////////////////////////////////////////////////////////////////////////
 
   typedef std::map<IGameMaterial*, int>	MAP_MATERIAL;
@@ -120,6 +123,10 @@ protected:
 
   typedef std::map<int, mesh_t>		MAP_MESH;
   MAP_MESH		_mapMeshes;
+
+  typedef std::pair<int, mesh_t*> 	PAIR_MESH;
+  typedef std::vector<PAIR_MESH>	VECTOR_MESH;
+  VECTOR_MESH	_vectorMesh;
 
   //////////////////////////////////////////////////////////////////////////
 public:

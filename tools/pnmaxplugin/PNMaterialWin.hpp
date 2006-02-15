@@ -31,8 +31,6 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-// Bo�e de dialogue PNMaterialWin
-
 class PNMaterialWin : public CDialog
 {
   DECLARE_DYNAMIC(PNMaterialWin)
@@ -41,14 +39,16 @@ public:
   PNMaterialWin(VECTOR_MATERIALS& materials, CWnd* pParent = NULL);   // constructeur standard
   virtual ~PNMaterialWin();
 
-  // Donn�s de bo�e de dialogue
-  enum { IDD = IDD_T_CONFIG };
+  enum { IDD = IDD_PNT_CONFIG };
 
 protected:
   virtual void DoDataExchange(CDataExchange* pDX);    // Prise en charge DDX/DDV
 
   DECLARE_MESSAGE_MAP()
 public:
+  void pnToMFC();
+  void mfcToPN();
+
   virtual BOOL OnInitDialog();
 private:
   VECTOR_MATERIALS& _listMaterials;
@@ -56,6 +56,9 @@ private:
 public:
   afx_msg void OnBnClickedOk();
   afx_msg void OnLvnEndlabeleditMaterials(NMHDR *pNMHDR, LRESULT *pResult);
+
+  afx_msg void OnBnClickedUp();
+  afx_msg void OnBnClickedDown();
 };
 
 //////////////////////////////////////////////////////////////////////////
