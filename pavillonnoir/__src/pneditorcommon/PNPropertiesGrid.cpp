@@ -46,7 +46,7 @@
 #include "PNFXCheckButtonParameter.hpp"
 #include "PNFXVPPNObjectParameter.hpp"
 #include "PNFXDefaultParameter.hpp"
-#include "PNFXScriptParameter.hpp"
+//#include "PNFXScriptParameter.hpp"
 #include "PNFXSeparatorParameter.hpp"
 
 
