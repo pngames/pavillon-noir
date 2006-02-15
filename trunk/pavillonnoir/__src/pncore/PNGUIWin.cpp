@@ -1,8 +1,8 @@
 /*
-* PNGUIDeath.cpp
+* PNGUIWin.cpp
 * 
 * Description :
-* PNGUIDeath declaration
+* PNGUIWin declaration
 *
 * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
 * This software has been written in EPITECH <http://www.epitech.net>
@@ -32,7 +32,7 @@
 #include "pnrender.h"
 #include "PNGUIGame.hpp"
 #include "PNGUIStateManager.hpp"
-#include "PNGUIDeath.hpp"
+#include "PNGUIWin.hpp"
 
 using namespace PN;
 
@@ -40,77 +40,77 @@ using namespace PN;
 
 namespace PN
 {
-   PNGUIDeath* PNGUIDeath::_instance = NULL;
+   PNGUIWin* PNGUIWin::_instance = NULL;
 
-  PNGUIDeath::PNGUIDeath()
+  PNGUIWin::PNGUIWin()
   {
-	_pnDeath = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNGUIDeath.layout");
-	_pnDeath->hide();
-	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnDeath);
-	_pnStatText = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIDeath/BackMenuText");
+	_pnWin = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNGUIWin.layout");
+	_pnWin->hide();
+	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnWin);
+	_pnStatText = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIWin/BackMenuText");
 	_pnStatText->hide();
 	
-	_deathImage = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "DeathImages/DeathScreen");
-	_deathImage->setImage("DeathImages", "DeathImages/DeathScreen");
-	_deathWnd = (CEGUI::Window*)( CEGUI::WindowManager::getSingleton().createWindow( "DefaultWindow", "death_wnd" ) );
+	_winImage = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "PNGUIWin/WinScreen");
+	_winImage->setImage("WinImages", "WinImages/WinScreen");
+	_winWnd = (CEGUI::Window*)( CEGUI::WindowManager::getSingleton().createWindow( "DefaultWindow", "win_wnd" ) );
 
-	_deathWnd->addChildWindow(_deathImage);
+	_winWnd->addChildWindow(_winImage);
 
-	_pnDeath->addChildWindow(_deathWnd);
+	_pnWin->addChildWindow(_winWnd);
 
-	_deathImage->setBackgroundEnabled( false );
-	_deathImage->setFrameEnabled( false );
+	_winImage->setBackgroundEnabled( false );
+	_winImage->setFrameEnabled( false );
 	
 	_fadeTimer = 0;
-	_pnDeath->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIDeath::eventKeyPressedHandler, this));
+	_pnWin->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIWin::eventKeyPressedHandler, this));
   }
 
-  PNGUIDeath::~PNGUIDeath()
+  PNGUIWin::~PNGUIWin()
   {
-	_pnDeath->destroy();
+	_pnWin->destroy();
   }
 
-  PNGUIDeath* PNGUIDeath::getInstance()
+  PNGUIWin* PNGUIWin::getInstance()
   {
 	if (_instance == NULL)
-	  _instance = new PNGUIDeath();
+	  _instance = new PNGUIWin();
 	return _instance;
   }
 
 
-  void PNGUIDeath::startGUI()
+  void PNGUIWin::startGUI()
   {
 	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME && 
 	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
 	{
 	  PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_PAUSE, NULL, NULL);
-	  PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::DEAD_WINDOW);
+	  PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::WIN_WINDOW);
 	  
-	  _deathWnd->setPosition( CEGUI::Point( 0.5f, 0.5f ) );
-	  _deathImage->setSize( CEGUI::Size( 1.0f, 1.0f ) );
-	  _deathImage->setPosition( CEGUI::Point( 0.0f, 0.0f ) );
+	  _winWnd->setPosition( CEGUI::Point( 0.5f, 0.5f ) );
+	  _winImage->setSize( CEGUI::Size( 1.0f, 1.0f ) );
+	  _winImage->setPosition( CEGUI::Point( 0.0f, 0.0f ) );
 
 	  _pnStatText->hide();
-	  _pnDeath->show();
+	  _pnWin->show();
 	  _winState = winFadeIn;
-	  PNEventManager::getInstance()->addCallback(PN_EVENT_UPDATE_GUI, EventCallback(this, &PNGUIDeath::update));
+	  PNEventManager::getInstance()->addCallback(PN_EVENT_UPDATE_GUI, EventCallback(this, &PNGUIWin::update));
 	}
   }
 
-  void PNGUIDeath::animFinished()
+  void PNGUIWin::animFinished()
   {
-	PNEventManager::getInstance()->deleteCallback(PN_EVENT_UPDATE_GUI, EventCallback(this, &PNGUIDeath::update));
+	PNEventManager::getInstance()->deleteCallback(PN_EVENT_UPDATE_GUI, EventCallback(this, &PNGUIWin::update));
 	
 	_pnStatText->show();
-	_pnDeath->moveToFront();
+	_pnWin->moveToFront();
 
 	
   }
 
-  bool PNGUIDeath::eventKeyPressedHandler(const CEGUI::EventArgs& e)
+  bool PNGUIWin::eventKeyPressedHandler(const CEGUI::EventArgs& e)
   {
 	//dechargement map et retour au menu principal (faire statut dans la classe correspondante)
-	_pnDeath->hide();
+	_pnWin->hide();
 	_winState = winHidden;
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_MP_UNPAUSE, NULL, NULL);
 	PNGUIStateManager::getInstance()->LoadManager(NULL, PNGUIStateManager::MENUROOT);
@@ -118,7 +118,7 @@ namespace PN
 	return true;
   }
 
-  void PNGUIDeath::update(pnEventType type, PNObject* source, PNEventData* data)
+  void PNGUIWin::update(pnEventType type, PNObject* source, PNEventData* data)
   {
 
 	float deltaTime = PNRendererInterface::getInstance()->getCurrentDelta();
@@ -157,11 +157,14 @@ namespace PN
 		{
 		  CEGUI::Point pos = CEGUI::Point( tmpVal, tmpVal );
 		  std::cout << pos.d_x << "  " << pos.d_y << std::endl;
-			_deathWnd->setPosition( pos );
-		  CEGUI::Size sizeTmp( fadefac,  fadefac ); 
+			_winWnd->setPosition( pos );
+
+		//	sizeHeight = _winWnd->getSize().d_height * fadefac / _winWnd->getSize().d_width * 1.33; 
+
+		  CEGUI::Size sizeTmp( fadefac, fadefac/* _winWnd->getSize().d_height * fadefac / _winWnd->getSize().d_width * 1.33*/ ); 
 		  
-		  _deathWnd->setSize( sizeTmp );
-		  _deathWnd->setAlpha( std::max( 0.2f, fadefac ) );
+		  _winWnd->setSize( sizeTmp );
+		  _winWnd->setAlpha( std::max( 0.2f, fadefac ) );
 		}
 		
 

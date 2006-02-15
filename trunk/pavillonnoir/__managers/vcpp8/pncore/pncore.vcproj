@@ -241,6 +241,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\__src\pncore\PNGUIWin.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\__src\pncore\PNLoadPlugins.cpp"
 				>
 			</File>
@@ -300,6 +304,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\__src\pncore\PNGUIStateManager.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncore\PNGUIWin.hpp"
 				>
 			</File>
 			<File

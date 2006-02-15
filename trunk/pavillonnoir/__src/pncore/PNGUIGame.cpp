@@ -43,6 +43,7 @@
 #include "PNGUIGame.hpp"
 #include "PNGUIStateManager.hpp"
 #include "PNGUIDeath.hpp"
+#include "PNGUIWin.hpp"
 #include "PNGUIEscMenu.hpp"
 #include "PN3DCamera.hpp"
 #include "PNGUIChatWindow.hpp"
@@ -470,6 +471,8 @@ PNGUIGame::PNGUIGame()
  _miniMapPoint = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/MiniMapPos");
 
   PNGUIChatWindow::getInstance();
+  PNGUIDeath::getInstance();
+  PNGUIWin::getInstance();
 
   _miniMap->hide(); 
   _miniMapPoint->hide();
@@ -576,6 +579,7 @@ void PNGUIGame::startGUI()
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
   PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_OVER, EventCallback(this, &PNGUIGame::playerDied));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_WIN, EventCallback(this, &PNGUIGame::playerWin));
   PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_LIFEVAL, EventCallback(this, &PNGUIGame::changeLife));
   PNEventManager::getInstance()->addCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNGUIGame::startChat));
   PNEventManager::getInstance()->addCallback(PN_EVENT_OM, EventCallback(this, &PNGUIGame::updateCoordPlayer));
@@ -592,6 +596,7 @@ void PNGUIGame::resetGUI()
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIGame::inputHandleEsc));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_OVER, EventCallback(this, &PNGUIGame::playerDied));
+  PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_WIN, EventCallback(this, &PNGUIGame::playerWin));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_LIFEVAL, EventCallback(this, &PNGUIGame::changeLife));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_GAME_ACTION, EventCallback(this, &PNGUIGame::startChat));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_OM, EventCallback(this, &PNGUIGame::updateCoordPlayer));
@@ -618,6 +623,16 @@ void  PNGUIGame::playerDied(pnEventType type, PNObject* source, PNEventData* dat
   {
 	this->resetGUI();
 	PNGUIDeath::getInstance()->startGUI();
+  }
+}
+
+void  PNGUIGame::playerWin(pnEventType type, PNObject* source, PNEventData* data)
+{
+  if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME &&
+	PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
+  {
+	this->resetGUI();
+	PNGUIWin::getInstance()->startGUI();
   }
 }
 
