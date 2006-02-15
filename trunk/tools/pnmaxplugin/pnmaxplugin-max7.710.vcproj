@@ -259,6 +259,12 @@
 			<File
 				RelativePath=".\PNModelExporter.hpp">
 			</File>
+			<File
+				RelativePath=".\PNModelWin.cpp">
+			</File>
+			<File
+				RelativePath=".\PNModelWin.hpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="pnt"

@@ -31,8 +31,6 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-// Bo�e de dialogue PNAnimationWin
-
 class PNAnimationExporter;
 
 class PNAnimationWin : public PNSkeletonWin
@@ -43,8 +41,7 @@ public:
 	PNAnimationWin(PNAnimationExporter* animation, CWnd* pParent = NULL);   // constructeur standard
 	virtual ~PNAnimationWin();
 
-// Donn�s de bo�e de dialogue
-	enum { IDD = IDD_A_CONFIG };
+	enum { IDD = IDD_PNA_CONFIG };
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // Prise en charge DDX/DDV

@@ -28,6 +28,7 @@
 #include "PNModelExporter.hpp"
 #include "pnmaxplugin.h"
 #include "PNMainWin.hpp"
+#include "PNModelWin.hpp"
 
 using namespace PN;
 
@@ -114,7 +115,9 @@ int	PNModelExporter::releaseExport()
 
 int PNModelExporter::configure()
 {
+  PNModelWin  win(this);
 
+  win.DoModal();
 
   return TRUE;
 }

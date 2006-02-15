@@ -41,7 +41,6 @@ public:
 	PNObjectWindow(PN3DObjectExporter* exporter, CWnd* pParent = NULL);   // constructeur standard
 	virtual ~PNObjectWindow();
 
-// Donn�s de bo�e de dialogue
 	enum { IDD = IDD_OBJ_EXPORT };
 
 public:

@@ -93,6 +93,8 @@ int	PNModelExporter::parseNodeHeader(IGameNode* node)
 		{
 		  matId = _mapMaterialsId[mat];
 
+		  _mapMeshes[matId].name = mat->GetMaterialName();
+
 		  //PNMainWin::WriteLine("%i 0 %f %f", face->vert[0], mesh->GetTexVertex(face->texCoord[0]).x, mesh->GetTexVertex(face->texCoord[0]).y);
 		  //PNMainWin::WriteLine("%i 1 %f %f", face->vert[1], mesh->GetTexVertex(face->texCoord[1]).x, mesh->GetTexVertex(face->texCoord[1]).y);
 		  //PNMainWin::WriteLine("%i 2 %f %f", face->vert[2], mesh->GetTexVertex(face->texCoord[2]).x, mesh->GetTexVertex(face->texCoord[2]).y);
@@ -110,6 +112,8 @@ int	PNModelExporter::parseNodeHeader(IGameNode* node)
 		else
 		{
 		  matId = -1;
+
+		  _mapMeshes[matId].name = "---";
 
 		  memcpy(_mapMeshes[matId].verts_texCoords[vIdTmp0].texCoord[-1].coord, _defaultTexCoord, sizeof(pnpoint2f));
 		  memcpy(_mapMeshes[matId].verts_texCoords[vIdTmp1].texCoord[-1].coord, _defaultTexCoord, sizeof(pnpoint2f));
@@ -200,6 +204,13 @@ int PNModelExporter::initExport()
   PNMainWin::WriteLine("nb TexCoords: %i", _nbTexCoords);
   PNMainWin::WriteLine("nb ColorVerts: %i", _nbColorVerts);
   PNMainWin::WriteLine("nb Meshes: %i", _header.nbMeshes);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  for (MAP_MESH::iterator it = _mapMeshes.begin(); it != _mapMeshes.end(); ++it)
+  {
+	_vectorMesh.push_back(PAIR_MESH(it->first, &it->second));
+  }
 
   //////////////////////////////////////////////////////////////////////////
 
