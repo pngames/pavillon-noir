@@ -52,6 +52,7 @@
 #include "PNPropertiesPanel.hpp"
 #include "pnproperties.h"
 #include "PNEditor.hpp"
+#include "PNGLViewer.hpp"
 
 namespace fs = boost::filesystem;
 using namespace PN;
@@ -255,6 +256,7 @@ void
 PNGLShape::drawshape(FXGLViewer* v)
 {
   PNMatrixTR4f	m;
+  PNGLViewer*	pnviewer = (PNGLViewer*)v;
 
   glPushAttrib(GL_CURRENT_BIT|GL_DEPTH_BUFFER_BIT|GL_ENABLE_BIT|GL_LIGHTING_BIT|GL_POLYGON_BIT|GL_TEXTURE_BIT);
   m.loadIdentity();
@@ -267,18 +269,11 @@ PNGLShape::drawshape(FXGLViewer* v)
   {
 	PNWayPoint* wp = (PNWayPoint*)_obj;
 
-	if (v->getSelection() == (FXObject*)this)
-	{
+	if (pnviewer->isSelected(this))
 	  wp->setSelected();
-	  wp->render();
-	}
-	else
-	{
-	  wp->render();
-	}
   }
-  else
-	_obj->render();
+
+  _obj->render();
 
   glPopMatrix();
   glPopAttrib();

@@ -120,6 +120,8 @@ FXDEFMAP(PNEditor) PNEditorMap[] =
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_STATIC,		PNEditor::onCmdStaticView),
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_DYNAMIC,		PNEditor::onCmdDynView),
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_WAYPOINTS,		PNEditor::onCmdWPView),
+
+  FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_MULTISELECT,	PNEditor::onCmdMultiSelect),
   FXMAPFUNC(SEL_COMMAND,	PNEditor::ID_UNSELECT,		PNEditor::onCmdUnselect),
 
   // grid
@@ -361,8 +363,13 @@ PNEditor::PNEditor(FXApp* a)
   new FXSeparator(toolbar1, SEPARATOR_GROOVE);
 
   new FXToggleButton(toolbar1, 
+	"\tMultiSelection\tActive MultiSelection",
+	"\tMultiSelection\tUnactive MultiSelection", waypointsicon, waypointsicon, this,
+	ID_MULTISELECT, BUTTON_NORMAL | FRAME_RAISED | LAYOUT_TOP | LAYOUT_LEFT);
+
+  new FXToggleButton(toolbar1, 
 	"\tUnselect\tUnselect",
-	"\tUnselect\ttUnselect", reseticon, NULL, this,
+	"\tUnselect\tUnselect", reseticon, NULL, this,
 	ID_UNSELECT, BUTTON_NORMAL | FRAME_RAISED | LAYOUT_TOP | LAYOUT_LEFT);
 
 
@@ -727,6 +734,14 @@ long PNEditor::onCmdUnselect(FXObject* obj, FXSelector sel, void* ptr)
   return 1;
 }
 
+long
+PNEditor::onCmdMultiSelect(FXObject* obj, FXSelector sel, void* ptr)
+{
+  viewer->setMultiselection(!viewer->getMultiSelection());
+
+  return 1;
+}
+
 long PNEditor::onCmdGridObjSel(FXObject* obj, FXSelector sel, void* ptr)
 {
   wpPanel->update();
@@ -737,18 +752,27 @@ long PNEditor::onCmdGridObjSel(FXObject* obj, FXSelector sel, void* ptr)
 long PNEditor::onCmdCopyObj(FXObject* obj, FXSelector sel, void* ptr)
 {
   PNGLShape* s = (PNGLShape*)viewer->getSelection();
-  PN3DObject* orig = s->getObj();
-  PN3DObject* cp = new PN3DObject();
 
-  viewer->makeCurrent();
-  cp->unserializeFromPath(*orig->getPath()); //FIXME
-  //viewer->makeNonCurrent();
+  if (s->getObj()->getObjType() == PN3DObject::OBJTYPE_3DOBJ)
+  {
+	PN3DObject* orig = s->getObj();
+	PN3DObject* cp = new PN3DObject();
 
-  cp->setCoord(orig->getCoord());
-  cp->setOrient(orig->getOrient());
+	viewer->makeCurrent();
+	cp->unserializeFromPath(*orig->getPath()); //FIXME
+	//viewer->makeNonCurrent();
 
-  add3DObject(cp, objPanel, objPanel->getIdMax()+1, s->getEnvType(), s->getClassStr(), s->getLabel());
-  objPanel->incrementIdMax();
+	cp->setCoord(orig->getCoord());
+	cp->setOrient(orig->getOrient());
+
+	add3DObject(cp, objPanel, objPanel->getIdMax()+1, s->getEnvType(), s->getClassStr(), s->getLabel());
+	objPanel->incrementIdMax();
+  }
+  /*else if (s->getObj()->getObjType() == PN3DObject::OBJTYPE_WAYPOINT)
+  {
+	addWayPoint(s->getObj()->getCoord().x, s->getObj()->getCoord().y, s->getObj()->getCoord().z);
+  }*/
+
   return 1;
 }
 
