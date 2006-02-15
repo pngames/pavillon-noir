@@ -157,24 +157,23 @@ long	PNFXLinksParameter::onDelete(FXObject* obj,FXSelector sel,void* ptr)
 long	PNFXLinksParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXLinksParameter::onAdd");
-  _dbox = new FXDialogBox(_parent,"Add Link",DECOR_TITLE|DECOR_BORDER|DECOR_RESIZE, 0,0,200,200);
+  _dbox = new FXDialogBox(_parent,"Add Link",DECOR_TITLE|DECOR_BORDER|DECOR_RESIZE, 0,0,200,160);
 
-  FXHorizontalFrame*	listAndCoef = new FXHorizontalFrame(_dbox);
-  //	FXLabel*  labelWaypoint = new FXLabel(listAndCoef, "Waypoint:"); // UNUSED
-  new FXLabel(listAndCoef, "Waypoint:");
-  _lnkList = new FXListBox(listAndCoef, this, 0,LAYOUT_FILL_X | LAYOUT_CENTER_X | FRAME_SUNKEN | FRAME_THICK);
-  //	FXLabel*  labelCoef = new FXLabel(listAndCoef, "Coef:"); // UNUSED
-  new FXLabel(listAndCoef, "Coef:");
-  _fieldAddCoef = new FXTextField(listAndCoef, 5, NULL, 0, LAYOUT_FILL_X | LAYOUT_CENTER_X | TEXTFIELD_REAL | FRAME_SUNKEN | FRAME_THICK);
+  FXVerticalFrame* vframe = new FXVerticalFrame(_dbox);
+  FXHorizontalFrame*	hframe = new FXHorizontalFrame(vframe, LAYOUT_FILL_X | LAYOUT_CENTER_X );
+  new FXLabel(hframe, "Waypoint:");
+  _lnkList = new FXListBox(hframe, this, 0,LAYOUT_FILL_X | LAYOUT_CENTER_X | FRAME_SUNKEN | FRAME_THICK);
+  new FXLabel(hframe, "Coef:");
+  _fieldAddCoef = new FXTextField(hframe, 5, NULL, 0, LAYOUT_FILL_X | LAYOUT_CENTER_X | TEXTFIELD_REAL | FRAME_SUNKEN | FRAME_THICK);
 
-  //FXHorizontalFrame*	  linkType = new FXHorizontalFrame(_dbox);
-  FXGroupBox*	  linkType = new FXGroupBox(_dbox,"Link type",GROUPBOX_TITLE_CENTER|FRAME_RIDGE|LAYOUT_FILL_X);
+  FXVerticalFrame*	  linkTypeFrame = new FXVerticalFrame(vframe, LAYOUT_FILL_X | LAYOUT_CENTER_X);
+  FXGroupBox*	  linkType = new FXGroupBox(linkTypeFrame,"Link type",GROUPBOX_TITLE_CENTER|FRAME_RIDGE|LAYOUT_FILL_X);
   _simpleLnk = new FXRadioButton(linkType,"Simple", this, ID_RADIO_SIMPLE);
   _doubleLnk = new FXRadioButton(linkType,"Double", this, ID_RADIO_DOUBLE);
 
-  FXHorizontalFrame*	  buttons = new FXHorizontalFrame(_dbox);
-  new FXButton(buttons,"&Cancel",NULL,this,PNFXLinksParameter::ID_CANCEL,BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
+  FXHorizontalFrame*	  buttons = new FXHorizontalFrame(vframe, LAYOUT_FILL_X | LAYOUT_CENTER_X);
   new FXButton(buttons,"&Ok",NULL,this,PNFXLinksParameter::ID_MAKELINK,BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
+  new FXButton(buttons,"&Cancel",NULL,this,PNFXLinksParameter::ID_CANCEL,BUTTON_DEFAULT|LAYOUT_RIGHT|FRAME_RAISED|FRAME_THICK,0,0,0,0, 20,20);
 
   WPLIST& wplist = _graph->getWayPoints();
   for (WPLIST::iterator i = wplist.begin(); i != wplist.end(); i++)
@@ -185,6 +184,7 @@ long	PNFXLinksParameter::onAdd(FXObject* obj,FXSelector sel,void* ptr)
 	if (id != ((PNWayPoint*)_param->getElem())->getId() && (_lnkMap.find(id) == _lnkMap.end()))
 	  _lnkList->appendItem(str,NULL,*i);
   }
+  _lnkList->setNumVisible(_lnkList->getNumItems() < 5 ? _lnkList->getNumItems() : 5);
   _doubleLnk->setCheck(TRUE);
   _fieldAddCoef->setText("1.0");
   _dbox->execute();
