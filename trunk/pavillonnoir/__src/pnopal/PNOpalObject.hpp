@@ -95,14 +95,19 @@ private:
   opal::SpringMotor*		  	_movementMotor;
   opal::SpringMotorData			_movementMotorData;
 
-  /* movements sensor */
+  /* characters */
   pnbool						_player;
+  pnbool						_npc;
+
+  /* characters properties */
+  pnfloat						_rayLenght;
+  pnfloat						_desiredHeight;
+
+  /* characters sensor */
   opal::RaycastSensor*			_playerSensor;
   opal::Joint*					_playerJoint;
   opal::RaycastSensor*			_obstacleSensor1;
   opal::RaycastSensor*			_obstacleSensor2;
-  pnfloat						_rayLenght;
-  pnfloat						_desiredHeight;
 
   /* rendering */
   pnfloat						_aabb[6]; // box
@@ -141,12 +146,16 @@ public:
   void							destroyMovementMotor();
 
   //////////////////////////////////////////////////////////////////////////
+  // PNOpalObjects characters
 
   pnbool						isPlayer();
-  opal::RaycastSensor*			getPlayerSensor();
+  pnbool						isNPC();
+
   pnfloat						getRayLenght();
   pnfloat						getDesiredHeight();
   pnfloat						getRadius();
+
+  opal::RaycastSensor*			getPlayerSensor();
 
   //////////////////////////////////////////////////////////////////////////
 
