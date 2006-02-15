@@ -52,6 +52,7 @@
 #include "PNWayPoint.hpp"
 #include "PNCharacter.hpp"
 #include "PNPropertiesPanel.hpp"
+#include "PNGLViewer.hpp"
 
 /////////////////////////////////////
 
@@ -67,7 +68,8 @@ FXDEFMAP(PNPropertiesPanel) PNPropertiesPanelMap[]={
   FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_RESET,PNPropertiesPanel::onCmdReset),
   FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_ADDWP,PNPropertiesPanel::onAccept),
 //  FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_CANCEL,PNPropertiesPanel::onCancel),
-  FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_ADDOBJECT,PNPropertiesPanel::onAddObject)
+  FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_ADDOBJECT,PNPropertiesPanel::onAddObject),
+  FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_LINK,PNPropertiesPanel::onLink)
 };
 
 
@@ -107,11 +109,18 @@ PNPropertiesPanel::PNPropertiesPanel(FXComposite* p, paneltype_t t, EDITOR::PNEd
   _buttonDelete->setIconPosition(ICON_BEFORE_TEXT);
   _buttonSave = new FXButton(command, "Save", new FXGIFIcon(getApp(), filesave), this, ID_SAVE, FRAME_SUNKEN | FRAME_THICK);
   _buttonSave->setIconPosition(ICON_BEFORE_TEXT);
+  
   if (t == PN_PANELTYPE_3DOBJECTS)
   {
  	_buttonReset = new FXButton(command, "Reset", new FXGIFIcon(getApp(), resetIcon), this, ID_RESET, FRAME_SUNKEN | FRAME_THICK);
 	_buttonReset->setIconPosition(ICON_BEFORE_TEXT);
   }
+  else if (t == PN_PANELTYPE_WAYPOINTS)
+  {
+	_buttonLink = new FXButton(command, "Link", new FXGIFIcon(getApp(), resetIcon), this, ID_LINK, FRAME_SUNKEN | FRAME_THICK);
+	_buttonLink->setIconPosition(ICON_BEFORE_TEXT);
+  }
+
   _groupBox = new FXGroupBox(this, text, LAYOUT_FILL_X | LAYOUT_FILL_Y | FRAME_GROOVE);
   _grid = new PNPropertiesGrid(_groupBox);
 }
@@ -147,7 +156,7 @@ void  PNPropertiesPanel::addObject(PNConfigurableObject* object)
   _objectsListBox->appendItem(object->getLabel().c_str(), NULL, object);
   _objectsListBox->setNumVisible(_objectsListBox->getNumItems() < 10 ? _objectsListBox->getNumItems() : 10);
   updateGrid((PNConfigurableObject*)_objectsListBox->getItemData(_objectsListBox->getCurrentItem()));
-  EDITOR::PNGLShape* s = (EDITOR::PNGLShape*)object;
+  PNGLShape* s = (PNGLShape*)object;
   if (s->getId() > _idMax)
 	_idMax = s->getId();
   return;
@@ -540,6 +549,37 @@ long			PNPropertiesPanel::onAddObject(FXObject* sender, FXSelector sel, void* pt
 
   if (open.execute())
 	_path->setText(open.getFilename().substitute("\\", "/"));
+
+  return 1;
+}
+
+long
+PNPropertiesPanel::onLink(FXObject* sender, FXSelector sel, void* ptr)
+{
+  const PNGLViewer::ObjectSet& list = _ed->getViewer()->getSelectedObjects();
+
+  for (PNGLViewer::ObjectSet::const_iterator it = list.begin(); it != list.end(); ++it)
+  {
+	PN3DObject* object = (*it)->getObj();
+	
+	if (object->getObjType() != PN3DObject::OBJTYPE_WAYPOINT)
+	  continue;
+
+	for (PNGLViewer::ObjectSet::const_iterator itTarget = list.begin(); itTarget != list.end(); ++itTarget)
+	{
+	  PN3DObject* objectTarget = (*itTarget)->getObj();
+
+	  if (objectTarget->getObjType() != PN3DObject::OBJTYPE_WAYPOINT)
+		continue;
+
+	  PNWayPoint* wpSource = (PNWayPoint*)object;
+	  PNWayPoint* wpTarget = (PNWayPoint*)objectTarget;
+
+	  wpSource->getGraph()->makeLink(wpSource->getId(), wpTarget->getId());
+	}
+  }
+
+  _ed->redraw();
 
   return 1;
 }

@@ -33,6 +33,7 @@
 
 /////////////////////////////////////
 
+#include <set>
 #include <fx.h>
 #include <fx3d.h>
 
@@ -47,63 +48,73 @@
  *	This class extends FXGLViewer to allow us to catch some events and add features.
  */
 
-namespace PN
+namespace PN {
+//////////////////////////////////////////////////////////////////////////
+  
+namespace EDITOR {
+//////////////////////////////////////////////////////////////////////////
+
+class PNGLViewer : public FXGLViewer, public PNGLContext
 {
+  FXDECLARE(PNGLViewer);
 
-  //////////////////////////////////////////////////////////////////////////
-  
-  namespace EDITOR
+  enum
   {
-
-	//////////////////////////////////////////////////////////////////////////
-	
-	class PNGLViewer : public FXGLViewer, public PNGLContext
-	{
-  
-	  FXDECLARE(PNGLViewer);
-
-	  enum
-	  {
-		ID_POS_X = FXGLViewer::ID_LAST,
-		ID_POS_Y,
-		ID_POS_Z,
-		ID_LAST
-	  };
-
-	  FXComposite*	_parent;
-	  PNEditor*		_ed;
-
-	protected:
-	  PNGLViewer() {}
-	  ~PNGLViewer() {}
-
-	public:
-
-	  /// Construct GL viewer widget
-	  PNGLViewer(FXComposite* p,FXGLVisual *vis,FXObject* tgt=NULL,FXSelector sel=0,FXuint opts=0,FXint x=0,FXint y=0,FXint w=0,FXint h=0);
-
-	  /// Construct GL viewer widget sharing display list with another GL viewer
-	  PNGLViewer(FXComposite* p,FXGLVisual *vis,FXGLViewer* sharegroup,FXObject* tgt=NULL,FXSelector sel=0,FXuint opts=0,FXint x=0,FXint y=0,FXint w=0,FXint h=0);
-
-	  /// Create all of the server-side resources for this window
-	  virtual void create();
-
-	  long onLeftBtnRelease(FXObject* obj,FXSelector sel,void* ptr);
-	  long onKeyPress(FXObject* obj,FXSelector sel,void* ptr);
-/*	  long onPosX(FXObject* obj,FXSelector sel,void* ptr);
-	  long onPosY(FXObject* obj,FXSelector sel,void* ptr);
-	  long onPosZ(FXObject* obj,FXSelector sel,void* ptr);*/
-
-	  void	makeViewerCurrent();
-	  void	makeViewerNonCurrent();
-	};
-
-	//////////////////////////////////////////////////////////////////////////
-	
+	ID_POS_X = FXGLViewer::ID_LAST,
+	ID_POS_Y,
+	ID_POS_Z,
+	ID_OBJ_SELECTED,
+	ID_LAST
   };
 
-  //////////////////////////////////////////////////////////////////////////
-  
+  FXComposite*	_parent;
+  PNEditor*		_ed;
+
+public:
+  typedef std::set<PNGLShape*>	ObjectSet;
+protected:
+  ObjectSet			_selectedObjects;
+  pnbool			_multiSelection;
+
+public:
+
+  void				setMultiselection(pnbool multiSelection);
+  pnbool			getMultiSelection();
+
+  pnbool			isSelected(PNGLShape* object);
+  const ObjectSet&	getSelectedObjects();
+
+protected:
+  PNGLViewer() {}
+
+public:
+
+  /// Construct GL viewer widget
+  PNGLViewer(FXComposite* p, FXGLVisual *vis,FXObject* tgt=NULL,FXSelector sel=0,FXuint opts=0,FXint x=0,FXint y=0,FXint w=0,FXint h=0);
+
+  /// Construct GL viewer widget sharing display list with another GL viewer
+  PNGLViewer(FXComposite* p, FXGLVisual *vis,FXGLViewer* sharegroup,FXObject* tgt=NULL,FXSelector sel=0,FXuint opts=0,FXint x=0,FXint y=0,FXint w=0,FXint h=0);
+
+  ~PNGLViewer() {}
+
+  /// Create all of the server-side resources for this window
+  virtual void create();
+
+  long onLeftBtnRelease(FXObject* obj,FXSelector sel,void* ptr);
+  long onKeyPress(FXObject* obj,FXSelector sel,void* ptr);
+  long onSelected(FXObject* obj, FXSelector sel, void* ptr);
+
+  /*	  long onPosX(FXObject* obj,FXSelector sel,void* ptr);
+  long onPosY(FXObject* obj,FXSelector sel,void* ptr);
+  long onPosZ(FXObject* obj,FXSelector sel,void* ptr);*/
+
+  void	makeViewerCurrent();
+  void	makeViewerNonCurrent();
+};
+
+//////////////////////////////////////////////////////////////////////////
+};
+//////////////////////////////////////////////////////////////////////////
 };
 
 

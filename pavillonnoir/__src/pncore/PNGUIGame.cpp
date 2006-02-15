@@ -767,8 +767,6 @@ bool PNGUIGame::eventKeyPressedHandler(const CEGUI::EventArgs& e)
 	playerid = PNGameInterface::getInstance()->getGameMap()->getPlayer()->getId();
 
   CEGUI::KeyEventArgs* me = (CEGUI::KeyEventArgs*)&e;
-  // Update keydown map
-  mBufferedKeysDown.insert(static_cast<CEGUI::Key::Scan>(me->scancode));
 
   PN3DCamera*	cam = PN3DCamera::getRenderCam();
   PN3DObject*	obj = NULL;
@@ -927,8 +925,6 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
   if (PNGameInterface::getInstance()->getGameMap()->getPlayer() != 0)
 	playerid = PNGameInterface::getInstance()->getGameMap()->getPlayer()->getId();
   CEGUI::KeyEventArgs* me = (CEGUI::KeyEventArgs*)&e;
-  // Update keydown map
-  mBufferedKeysDown.erase(static_cast<CEGUI::Key::Scan>(me->scancode));
 
   PN3DCamera*	cam = PN3DCamera::getRenderCam();
   PN3DObject*	obj = NULL;

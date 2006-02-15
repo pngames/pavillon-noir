@@ -62,9 +62,6 @@ namespace PN{
 	CEGUI::Window* _rootWin;
 	CEGUI::ProgressBar*	_lifeBar;
 
-	typedef std::set<CEGUI::Key::Scan> BufferedKeysDownSet;
-	BufferedKeysDownSet mBufferedKeysDown;
-
 	std::string		_label;
 	float			_lifeValue; 
 
