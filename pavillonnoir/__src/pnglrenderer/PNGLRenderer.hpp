@@ -85,6 +85,8 @@ private:
   pnuint                    _lastRenderTime;
 
   pnuint					_deltaTime;
+
+  SDL_Surface*				_SDL_surface;
 public:
   static PNGLRenderer*		getInstance();
 
@@ -179,6 +181,7 @@ public:
   void						setSDLFlags(int *flags);
 
   void						initGL();
+  static void				setFullScreen(const std::string& command, std::istream &parameters);
 
   //////////////////////////////////////////////////////////////////////////
   

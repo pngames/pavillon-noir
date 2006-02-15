@@ -98,7 +98,8 @@ _pEnableTransparency(true, "Activer la transparence", "Activer la transparence")
 _pEnableGL_LEQUAL(false, "Tester profondeur egale", "Activer les test de profondeur en egalite")
 {
   _guirenderer = NULL;
-
+  
+  _SDL_surface = NULL;
   //////////////////////////////////////////////////////////////////////////
   
   _converter[PN_TRIANGLES] = GL_TRIANGLES;
@@ -369,7 +370,7 @@ PNGLRenderer::initSDL()
 {
   std::cout << "--== SDL init start ==--" << std::endl;
 	  
-  SDL_Surface		*screen = NULL;
+ 
   int				videoFlags;
 
   setSDLFlags(&videoFlags);
@@ -377,13 +378,20 @@ PNGLRenderer::initSDL()
 
   PNPoint2f*	def = (PNPoint2f*)_definitionsList[_pDefinitionsList->getChoise()];
 
-  screen = SDL_SetVideoMode(def->x, def->y, _pBppList->getElementList(32), videoFlags);
+  _SDL_surface = SDL_SetVideoMode(def->x, def->y, _pBppList->getElementList(32), videoFlags);
   SDL_WM_SetCaption(_pTitle.getString().c_str(), NULL);
   SDL_EnableUNICODE(1);
  // SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
   
   std::cout << "--== SDL init end ==--" << std::endl;
 }
+
+void						PNGLRenderer::setFullScreen(const std::string& command, std::istream &parameters)
+{
+ int toto = SDL_WM_ToggleFullScreen(PNGLRenderer::getInstance()->_SDL_surface);
+ PNConsole::writeLine("fullscreen %i", toto);
+}
+
 
 void
 PNGLRenderer::initGL()
@@ -915,6 +923,9 @@ PNGLRenderer::initGUI()
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("DeathImages") == false)
 	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/DeathScreen.imageset");
 
+	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("WinImages") == false)
+	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/WinScreen.imageset");
+
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("Minimap") == false)
 	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/Minimap.imageset");
 
@@ -946,6 +957,8 @@ PNGLRenderer::initGUI()
 
 	PNEventManager::getInstance()->addCallback(PN_EVENT_RU_ENDING, EventCallback(this, &PNGLRenderer::updateGUI));
 	_infoPanel = new PNInfoPanel();
+
+	PNConsole::addFonction("fullscreen", setFullScreen, "set full screen");
   }
   catch (CEGUI::Exception)
   {
