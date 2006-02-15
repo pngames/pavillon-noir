@@ -135,6 +135,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
   // PNOpalObject specific
 
+  void							resetAngularRotation();
   void							addTorque(const PNVector3f& axis, pnfloat magnitude, pnfloat duration, pnbool isLocal);
   void							setMovementMotor(pnfloat x, pnfloat y, pnfloat z, PNQuatf orient);
   void							destroyMovementMotor();

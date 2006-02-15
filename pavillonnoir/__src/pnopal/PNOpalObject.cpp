@@ -257,10 +257,29 @@ PNOpalObject::setTransform(const PNPoint3f& coord, const PNQuatf& orient, pnfloa
   pntransform.setTranslation(trans);
   pntransform.setRotationQuaternion(orient);
   transform.set(pntransform.getMatrix());
-
-  _solid->setTransform(transform);
+  _solid->setTransform(transform); 
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Avatar hacks
+
+void		
+PNOpalObject::resetAngularRotation()
+{
+  opal::Quaternion opalQuat = _solid->getTransform().getQuaternion();
+  //PNQuatf pnquat;
+  PNQuatf pnquat(opalQuat[1], opalQuat[2], opalQuat[3], opalQuat[0]);
+
+  if (pnquat.isIdentity())
+	return;
+
+  opal::Matrix44r matrix = _solid->getTransform();
+  //opal::Vec3r angles = matrix.getEulerXYZ();
+
+  //pnquat.fromDegrees(angles.getData()[0], angles.getData()[1], angles.getData()[2]);
+  matrix.setRotation(pnquat.w, pnquat.x, pnquat.y, pnquat.z);
+  _solid->setTransform(matrix);
+}
 
 //////////////////////////////////////////////////////////////////////////
 // Forces
@@ -517,7 +536,9 @@ PNOpalObject::_parseTypeOpal(const std::string& path)
 	_playerSensor = _sim->createRaycastSensor();
 	_playerSensor->init(data);
 
-	_playerJoint = _sim->createJoint();
+	opal::Vec3r massTranslation(0.0f, -_desiredHeight * 0.99f, 0.0f);
+	_solid->translateMass(massTranslation);
+
   }
 
   // enable the object
