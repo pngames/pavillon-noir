@@ -46,7 +46,9 @@
 #include "PNFXCheckButtonParameter.hpp"
 #include "PNFXVPPNObjectParameter.hpp"
 #include "PNFXDefaultParameter.hpp"
+#include "PNFXScriptParameter.hpp"
 #include "PNFXSeparatorParameter.hpp"
+
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -59,6 +61,7 @@ FXIMPLEMENT(PNPropertiesGrid,FXComposite,NULL,0)
 PNPropertiesGrid::PNPropertiesGrid(FXComposite* p)
 : FXMatrix(p, 2, LAYOUT_FILL_X|LAYOUT_FILL_Y|MATRIX_BY_COLUMNS)
 {
+  _object = NULL;
 }
 
 PNPropertiesGrid::~PNPropertiesGrid()
@@ -75,15 +78,13 @@ PNPropertiesGrid::setObject(PNConfigurableObject* object, pnbool create/* = true
   while (childAtRowCol(0,0) != NULL)
     delete childAtRowCol(0,0);
 
-  // FIXME: il faut faire un delete sur chaque element sinon ca fait une fuite de memoire monstrueuse
-
   _params.clear();
   _object = object;
   
   for (int idx = 0; idx < _object->getNbParameters(); idx++)
   {
 	PNConfigurableParameter* current_param = _object->getParameter(idx);
-
+	pnerror(PN_LOGLVL_DEBUG, "void PNPropertiesGrid::setObject() : add parameter %s", current_param->getLabel().c_str());
 	if (current_param->getType() == PN_PARAMTYPE_SEPARATOR)
 	{
 	  new PNFXSeparatorParameter(this, current_param);
@@ -153,7 +154,9 @@ PNPropertiesGrid::setObject(PNConfigurableObject* object, pnbool create/* = true
 	case PN_LISTPARAMTYPE_VPPNOBJECT:
 	  _params.push_back(new PNFXVPPNObjectParameter(this, (PNConfigurableParameterList*)current_param));
 	  break;
-
+	//case PN_PARAMTYPE_SCRIPT:
+	//  _params.push_back(new PNFXScriptParameter(this, (PNConfigurableParameterList*)current_param));
+	//  break;
 	default:
 	  _params.push_back(new PNFXDefaultParameter(this, current_param));
 	  break;

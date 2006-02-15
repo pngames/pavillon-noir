@@ -66,7 +66,7 @@ FXDEFMAP(PNPropertiesPanel) PNPropertiesPanelMap[]={
   FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_SAVE,PNPropertiesPanel::onCmdSave),
   FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_RESET,PNPropertiesPanel::onCmdReset),
   FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_ADDWP,PNPropertiesPanel::onAccept),
-  FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_CANCEL,PNPropertiesPanel::onCancel),
+//  FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_CANCEL,PNPropertiesPanel::onCancel),
   FXMAPFUNC(SEL_COMMAND,PNPropertiesPanel::ID_ADDOBJECT,PNPropertiesPanel::onAddObject)
 };
 
@@ -101,11 +101,17 @@ PNPropertiesPanel::PNPropertiesPanel(FXComposite* p, paneltype_t t, EDITOR::PNEd
   _type = t;
   _idMax = 0;
   _objectsListBox = new FXListBox(listbox, this, ID_LISTBOX_SEL,LAYOUT_FILL_X | FRAME_SUNKEN | FRAME_THICK);
-  _buttonAdd = new FXButton(command, "&Add", NULL, this, ID_ADD, FRAME_SUNKEN | FRAME_THICK);
-  _buttonDelete = new FXButton(command, "Delete", NULL, this, ID_DELETE, FRAME_SUNKEN | FRAME_THICK);
-  _buttonSave = new FXButton(command, "Save", NULL, this, ID_SAVE, FRAME_SUNKEN | FRAME_THICK);
+  _buttonAdd = new FXButton(command, "&Add", new FXGIFIcon(getApp(), addIcon), this, ID_ADD, FRAME_SUNKEN | FRAME_THICK);
+  _buttonAdd->setIconPosition(ICON_BEFORE_TEXT);
+  _buttonDelete = new FXButton(command, "Delete", new FXGIFIcon(getApp(), removeIcon), this, ID_DELETE, FRAME_SUNKEN | FRAME_THICK);
+  _buttonDelete->setIconPosition(ICON_BEFORE_TEXT);
+  _buttonSave = new FXButton(command, "Save", new FXGIFIcon(getApp(), filesave), this, ID_SAVE, FRAME_SUNKEN | FRAME_THICK);
+  _buttonSave->setIconPosition(ICON_BEFORE_TEXT);
   if (t == PN_PANELTYPE_3DOBJECTS)
-	_buttonReset = new FXButton(command, "Reset", NULL, this, ID_RESET, FRAME_SUNKEN | FRAME_THICK);
+  {
+ 	_buttonReset = new FXButton(command, "Reset", new FXGIFIcon(getApp(), resetIcon), this, ID_RESET, FRAME_SUNKEN | FRAME_THICK);
+	_buttonReset->setIconPosition(ICON_BEFORE_TEXT);
+  }
   _groupBox = new FXGroupBox(this, text, LAYOUT_FILL_X | LAYOUT_FILL_Y | FRAME_GROOVE);
   _grid = new PNPropertiesGrid(_groupBox);
 }
@@ -435,9 +441,10 @@ long          PNPropertiesPanel::onCmdAdd(FXObject* obj, FXSelector sel, void* p
   new FXHorizontalSeparator(vFrame, LAYOUT_FILL_X);
 
   FXHorizontalFrame*	buttons = new FXHorizontalFrame(vFrame,LAYOUT_FILL_X|LAYOUT_FILL_Y);
-  new FXButton(buttons,"&Ok",NULL,this,PNPropertiesPanel::ID_ADDWP,BUTTON_DEFAULT|LAYOUT_RIGHT|LAYOUT_CENTER_Y|FRAME_RAISED|FRAME_THICK,10,10,0,0, 20,20);
-  new FXButton(buttons,"&Cancel",NULL,this,PNPropertiesPanel::ID_CANCEL,BUTTON_DEFAULT|LAYOUT_RIGHT|LAYOUT_CENTER_Y|FRAME_RAISED|FRAME_THICK,10,10,0,0, 20,20);
-
+  FXButton* okbtn = new FXButton(buttons,"&Ok",new FXGIFIcon(getApp(), okIcon),this,PNPropertiesPanel::ID_ADDWP,BUTTON_DEFAULT|LAYOUT_RIGHT|LAYOUT_CENTER_Y|FRAME_RAISED|FRAME_THICK,10,10,0,0, 20,20);
+  okbtn->setIconPosition(ICON_BEFORE_TEXT);
+  FXButton* kobtn = new FXButton(buttons,"&Cancel",new FXGIFIcon(getApp(), cancelIcon),_dbox,FXDialogBox::ID_CANCEL,BUTTON_DEFAULT|LAYOUT_RIGHT|LAYOUT_CENTER_Y|FRAME_RAISED|FRAME_THICK,10,10,0,0, 20,20);
+  kobtn->setIconPosition(ICON_BEFORE_TEXT);
   _dbox->execute();
   _objectsListBox->setCurrentItem(_objectsListBox->getNumItems()-1);
   update();

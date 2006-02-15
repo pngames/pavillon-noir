@@ -90,6 +90,9 @@ namespace PN
 
 	  long onLeftBtnRelease(FXObject* obj,FXSelector sel,void* ptr);
 	  long onKeyPress(FXObject* obj,FXSelector sel,void* ptr);
+/*	  long onPosX(FXObject* obj,FXSelector sel,void* ptr);
+	  long onPosY(FXObject* obj,FXSelector sel,void* ptr);
+	  long onPosZ(FXObject* obj,FXSelector sel,void* ptr);*/
 
 	  void	makeViewerCurrent();
 	  void	makeViewerNonCurrent();
