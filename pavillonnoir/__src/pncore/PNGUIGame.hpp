@@ -101,6 +101,7 @@ namespace PN{
 	void  inputHandleModifierState(pnEventType type, PNObject* source, PNEventData* data);
 	void  inputHandleEsc(pnEventType type, PNObject* source, PNEventData* data);
 	void  playerDied(pnEventType type, PNObject* source, PNEventData* data);
+	void  playerWin(pnEventType type, PNObject* source, PNEventData* data);
 	static void  test(const std::string& tmp, std::istream& tmp2);
 	void unsuscribeConsoleCommand();
 	void suscribeConsoleCommand();
