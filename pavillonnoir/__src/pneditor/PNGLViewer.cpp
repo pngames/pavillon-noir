@@ -105,7 +105,6 @@ PNGLViewer::create()
 long
 PNGLViewer::onLeftBtnRelease(FXObject* obj,FXSelector sel,void* ptr)
 {
-  // FIXME : les valeurs du switch entre les onglets du tabbook sont en dur
   pnerror(PN_LOGLVL_DEBUG, "long PNGLViewer::onLeftBtnRelease(FXObject*,FXSelector,void*)");
   long rcode = FXGLViewer::handle(obj, sel,ptr);
   PNGLShape* s = (PNGLShape*)getSelection();
@@ -152,7 +151,6 @@ PNGLViewer::onKeyPress(FXObject* obj, FXSelector sel, void* ptr)
   float x = .0f;
   float y = .0f;
   float z = .0f;
-  pnerror(PN_LOGLVL_DEBUG, "BEFORE: eye.x=%f;eye.y=%f;eye.z=%f", eye.x, eye.y, eye.z);
   //if (s != NULL)
   switch(event->code)
   {
@@ -160,48 +158,40 @@ PNGLViewer::onKeyPress(FXObject* obj, FXSelector sel, void* ptr)
   case KEY_D:
   case KEY_Right:
   case KEY_KP_Right:
-	pnerror(PN_LOGLVL_DEBUG, "X++");
 	x = 50.0f;
 	break;
   case KEY_a:
   case KEY_A:
   case KEY_Left:
   case KEY_KP_Left:
-	pnerror(PN_LOGLVL_DEBUG, "X--");
 	x = -50.0f;
 	break;
   case KEY_w:
   case KEY_W:
   case KEY_Up:
   case KEY_KP_Up:
-	pnerror(PN_LOGLVL_DEBUG, "Z--");
 	z = -50.0f;
 	break;
   case KEY_s:
   case KEY_S:
   case KEY_Down:
   case KEY_KP_Down:
-	pnerror(PN_LOGLVL_DEBUG, "Z++");
 	z = 50.0f;
 	break;
   case KEY_e:
   case KEY_E:
   case KEY_Page_Up:
-	pnerror(PN_LOGLVL_DEBUG, "Y++");
 	y = 50.0f;
 	break;
   case KEY_q:
   case KEY_Q:
   case KEY_Page_Down:
-	pnerror(PN_LOGLVL_DEBUG, "Y--");
 	y  = -50.0f;
 	break;
   default:
-	pnerror(PN_LOGLVL_DEBUG, "DEFAULT");
 	FXGLViewer::handle(obj, sel,ptr);
 	;
   }
-  pnerror(PN_LOGLVL_DEBUG, "AFTER: eye.x=%f;eye.y=%f;eye.z=%f", eye.x, eye.y, eye.z);
   translate(invert(getOrientation()) * FXVec3f(x, y, z));
   _ed->redraw();
 

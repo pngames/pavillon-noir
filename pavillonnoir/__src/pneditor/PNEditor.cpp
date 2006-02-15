@@ -55,6 +55,7 @@ PNPropertiesPanel
 
 #include <fx.h>
 #include <fx3d.h>
+#include <FXGIFIcon.h>
 #include <FXPNGIcon.h>
 #include <boost/filesystem/operations.hpp>
 #include <libxml/xmlreader.h>
@@ -277,15 +278,28 @@ PNEditor::PNEditor(FXApp* a)
   // Icons
   fileopenicon = new FXGIFIcon(getApp(), fileopen);
   filesaveicon = new FXGIFIcon(getApp(), filesave);
-  filesaveasicon = new FXGIFIcon(getApp(), filesaveas, 0, IMAGE_ALPHAGUESS);
+  filesaveasicon = new FXGIFIcon(getApp(), filesaveas);
+  exiticon = new FXGIFIcon(getApp(), exitIcon);
+  infoicon = new FXGIFIcon(getApp(), infoIcon);
+  helpicon = new FXGIFIcon(getApp(), helpIcon);
 
-  generalicon = new FXBMPIcon(getApp(), _general);
-  objectsicon = new FXBMPIcon(getApp(), _3DObjects);
+  generalicon = new FXGIFIcon(getApp(), _general);
+  objectsicon = new FXGIFIcon(getApp(), _3DObjects);
+  skyboxicon = new FXGIFIcon(getApp(), skyboxIcon);
+  groundicon = new FXGIFIcon(getApp(), groundIcon);
+  staticicon = new FXGIFIcon(getApp(), staticIcon);
+  dynicon = new FXGIFIcon(getApp(), dynamicIcon);
+  waypointsicon = new FXGIFIcon(getApp(), _waypoints);
+  unselecticon = new FXGIFIcon(getApp(), unselectIcon);
+  reseticon= new FXGIFIcon(getApp(), resetIcon);
+  
+  addicon = new FXGIFIcon(getApp(), addIcon);
+  removeicon = new FXGIFIcon(getApp(), removeIcon);
+  //editicon = new FXGIFIcon(getApp(), editIcon);
 
-  waypointsicon = new FXBMPIcon(getApp(), _waypoints);
-  groundicon = new FXBMPIcon(getApp(), groundIcon);
-  staticicon = new FXBMPIcon(getApp(), staticIcon);
-  dynicon = new FXBMPIcon(getApp(), dynamicIcon);
+  okicon = new FXGIFIcon(getApp(), okIcon);
+  cancelicon = new FXGIFIcon(getApp(), cancelIcon);
+  browseicon = new FXGIFIcon(getApp(), browseIcon);
 
 /*  nolighticon=new FXGIFIcon(getApp(),nolight);
   lighticon=new FXGIFIcon(getApp(),light);
@@ -299,7 +313,7 @@ PNEditor::PNEditor(FXApp* a)
   new FXMenuCommand(filemenu, "Save &As...\t\tSave document to another file.", filesaveasicon, this, ID_SAVEAS);
 // IFDEBUG ?  new FXMenuCommand(filemenu, "&Dump...\t\tDump widgets.", NULL, getApp(), FXApp::ID_DUMP);
 //  new FXMenuCommand(filemenu, "&Export...\t\tExport Space Partioning.", NULL, this, ID_EXPORT);
-  new FXMenuCommand(filemenu, "&Quit\tCtl-Q\tQuit the application.", NULL, getApp(), FXApp::ID_QUIT);
+  new FXMenuCommand(filemenu, "&Quit\tCtl-Q\tQuit the application.", exiticon, getApp(), FXApp::ID_QUIT);
   
   // File manipulation
   new FXButton(toolbar1, "\tOpen\tOpen document file.", fileopenicon, this, 
@@ -321,7 +335,7 @@ PNEditor::PNEditor(FXApp* a)
 
   new FXToggleButton(toolbar1, 
 	"\tSkybox\tHide Skybox",
-	"\tSkybox\tShow Skybox", groundicon, groundicon, this,
+	"\tSkybox\tShow Skybox", skyboxicon, skyboxicon, this,
 	ID_SKYBOX, BUTTON_NORMAL | FRAME_RAISED | LAYOUT_TOP | LAYOUT_LEFT);
 
   new FXToggleButton(toolbar1, 
@@ -348,7 +362,7 @@ PNEditor::PNEditor(FXApp* a)
 
   new FXToggleButton(toolbar1, 
 	"\tUnselect\tReset selection",
-	"\tUnselect\tReset selection", NULL, NULL, this,
+	"\tUnselect\tReset selection", reseticon, NULL, this,
 	ID_UNSELECT, BUTTON_NORMAL | FRAME_RAISED | LAYOUT_TOP | LAYOUT_LEFT);
 
 
@@ -361,9 +375,9 @@ PNEditor::PNEditor(FXApp* a)
   helpmenu = new FXMenuPane(this);
   new FXMenuTitle(menubar, "&Help", NULL, helpmenu);
   new FXMenuCommand(helpmenu, "&About FOX...\t\tDisplay FOX about panel.", 
-	NULL, this, ID_ABOUT, 0);
+	infoicon, this, ID_ABOUT, 0);
   new FXMenuCommand(helpmenu, "&About PNE...\t\tDisplay PNE about panel.", 
-	NULL, this, ID_ABOUT_PNE, 0);
+	infoicon, this, ID_ABOUT_PNE, 0);
 
   // The status bar shows our mode
   statusbar->getStatusLine()->setTarget(this);
@@ -408,6 +422,8 @@ void PNEditor::create()
   dragshell1->create();
   dragshell2->create();
   dragshell3->create();
+  fileopenicon->create();
+  addicon->create();
   show(PLACEMENT_SCREEN);
 
   _genScene.init(this, objPanel);

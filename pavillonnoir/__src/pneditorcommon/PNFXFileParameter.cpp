@@ -56,9 +56,10 @@ FXIMPLEMENT(PNFXFileParameter,FXHorizontalFrame,PNFXFileParameterMap,ARRAYNUMBER
 
 PNFXFileParameter::PNFXFileParameter(FXComposite* p, PNConfigurableParameter* param)
 : FXHorizontalFrame(p), PNPropertiesGridParameter(param)
-{
+{ 
   _field = new FXTextField(this, 24, NULL, 0, TEXTFIELD_NORMAL|FRAME_SUNKEN|FRAME_THICK|LAYOUT_SIDE_TOP);
   _button = new FXButton(this, "Browse", NULL, this, ID_BROWSE,FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_X|LAYOUT_CENTER_Y);
+  _button->setIconPosition(ICON_BEFORE_TEXT);
 }
 
 PNFXFileParameter::~PNFXFileParameter()
