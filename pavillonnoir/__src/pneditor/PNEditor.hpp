@@ -53,6 +53,7 @@ namespace EDITOR {
 
 class PNEDSkyboxPanel;
 class PNPropertiesPanel;
+class PNGLViewer;
 
 // Main Window
 class PNEditor : public FXMainWindow
@@ -84,6 +85,8 @@ public:
 	ID_GROUND,
 	ID_STATIC,
 	ID_DYNAMIC,
+
+	ID_MULTISELECT,
 	ID_UNSELECT,
 
 	// grid
@@ -127,7 +130,7 @@ private:
   FXGLVisual*       glvisual;				// Visual for OpenGL
   FXMenuPane*       filemenu;
   FXMenuPane*       helpmenu;
-  FXGLViewer*		viewer;
+  PNGLViewer*		viewer;
 
 /*  FXIcon            *nolighticon;
   FXIcon            *lighticon;
@@ -208,12 +211,15 @@ public:
   long onCmdDynView(FXObject* obj, FXSelector sel, void* ptr);
   long onCmdWPView(FXObject* obj, FXSelector sel, void* ptr);
   long onCmdUnselect(FXObject* obj, FXSelector sel, void* ptr);
+  long onCmdMultiSelect(FXObject* obj, FXSelector sel, void* ptr);
 
   // grid messages handlers
   long onCmdGridObjSel(FXObject* obj, FXSelector sel, void* ptr);
 
   // Copies an object in the same view
   long onCmdCopyObj(FXObject* obj, FXSelector sel, void* ptr);
+
+  PNGLViewer* getViewer() {return viewer;}
 
   // panels
   PNPropertiesPanel*	getObjPanel() { return objPanel; }

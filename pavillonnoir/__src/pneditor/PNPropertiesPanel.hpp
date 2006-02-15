@@ -71,6 +71,7 @@ private:
   FXButton*							_buttonDelete;
   FXButton*							_buttonSave;
   FXButton*							_buttonReset;
+  FXButton*							_buttonLink;
   PNPropertiesGrid*					_grid;
   PNEditor*							_ed;
 
@@ -101,6 +102,7 @@ public:
   long onAccept(FXObject* obj, FXSelector sel, void* ptr);
   long onCancel(FXObject* obj, FXSelector sel, void* ptr);
   long onAddObject(FXObject* sender, FXSelector sel, void* ptr);
+  long onLink(FXObject* sender, FXSelector sel, void* ptr);
 
   void  addObject(PNConfigurableObject* object);
   void  setObject(PNConfigurableObject* object);
@@ -136,6 +138,7 @@ public:
 	ID_ADDWP,
 	ID_CANCEL,
 	ID_ADDOBJECT,
+	ID_LINK,
 	ID_LAST
   };
 };

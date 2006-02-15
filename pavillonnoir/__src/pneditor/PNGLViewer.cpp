@@ -52,7 +52,8 @@ FXDEFMAP(PNGLViewer) PNGLViewerMap[]=
   /*	  FXMAPFUNC(SEL_CHANGED,ID_POS_X,PNGLViewer::onPosX),
   FXMAPFUNC(SEL_UPDATE,ID_POS_Y,PNGLViewer::onPosY),
   FXMAPFUNC(SEL_COMMAND,ID_POS_Z,PNGLViewer::onPosZ),*/
-  FXMAPFUNC(SEL_KEYPRESS,0,PNGLViewer::onKeyPress)
+  FXMAPFUNC(SEL_KEYPRESS, 0, PNGLViewer::onKeyPress),
+  FXMAPFUNC(SEL_SELECTED, 0, PNGLViewer::onSelected)
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -72,6 +73,7 @@ PNGLViewer::PNGLViewer(FXComposite* p,FXGLVisual *vis,FXObject* tgt,FXSelector s
   _parent=p;
   _ed=(PNEditor*)p;
   _instance = this;
+  _multiSelection = false;
 }
 
 /*! 
@@ -83,6 +85,7 @@ PNGLViewer::PNGLViewer(FXComposite* p,FXGLVisual *vis,FXGLViewer* sharegroup,FXO
 					   : FXGLViewer(p,vis,sharegroup,tgt,sel,opts,x,y,w,h)
 {
   _instance = this;
+  _multiSelection = false;
 }
 
 
@@ -198,6 +201,19 @@ PNGLViewer::onKeyPress(FXObject* obj, FXSelector sel, void* ptr)
   return 1;
 }
 
+long
+PNGLViewer::onSelected(FXObject* obj, FXSelector sel, void* ptr)
+{
+  long result = FXGLViewer::handle(obj, sel, ptr);
+
+  if (!_multiSelection)
+	_selectedObjects.clear();
+  
+  _selectedObjects.insert(((PNGLShape**)ptr)[0]);
+
+  return result;
+}
+
 /*
 long PNGLViewer::onPosX(FXObject* obj,FXSelector sel,void* ptr)
 {
@@ -235,6 +251,32 @@ PNGLViewer::makeViewerNonCurrent()
 {
   makeNonCurrent();
   return;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void
+PNGLViewer::setMultiselection(pnbool multiSelection)
+{
+  _multiSelection = multiSelection;
+}
+
+pnbool
+PNGLViewer::getMultiSelection()
+{
+  return _multiSelection;
+}
+
+pnbool
+PNGLViewer::isSelected(PNGLShape* object)
+{
+  return _selectedObjects.find(object) != _selectedObjects.end();
+}
+
+const PNGLViewer::ObjectSet&
+PNGLViewer::getSelectedObjects()
+{
+  return _selectedObjects;
 }
 
 //////////////////////////////////////////////////////////////////////////
