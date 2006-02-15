@@ -361,8 +361,8 @@ PNEditor::PNEditor(FXApp* a)
   new FXSeparator(toolbar1, SEPARATOR_GROOVE);
 
   new FXToggleButton(toolbar1, 
-	"\tUnselect\tReset selection",
-	"\tUnselect\tReset selection", reseticon, NULL, this,
+	"\tUnselect\tUnselect",
+	"\tUnselect\ttUnselect", reseticon, NULL, this,
 	ID_UNSELECT, BUTTON_NORMAL | FRAME_RAISED | LAYOUT_TOP | LAYOUT_LEFT);
 
 
@@ -442,14 +442,14 @@ PNEditor::update()
 // About
 long PNEditor::onCmdAbout(FXObject*, FXSelector, void*)
 {
-  FXMessageBox::information(this, MBOX_OK, "About FOX", "FOX OpenGL Example.\nCopyright (C) 1998, 2005 Jeroen van der Zijp");
+  FXMessageBox::information(this, MBOX_OK, "About FOX", "FOX OpenGL Example.\nCopyright (C) 1998, 2006 Jeroen van der Zijp");
   return 1;
 }
 
 // About PNE
 long PNEditor::onCmdAboutPNE(FXObject*, FXSelector, void*)
 {
-  FXMessageBox::information(this, MBOX_OK, "About PNE", "Pavillon Noir Editor.\nhttp://www.pavillon-noir.org\nCopyright (C) 2005 Pavillon Noir Team");
+  FXMessageBox::information(this, MBOX_OK, "About PNE", "Pavillon Noir Editor.\nhttp://www.pavillon-noir.org\nCopyright (C) 2006 Pavillon Noir Team");
   return 1;
 }
 

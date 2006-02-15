@@ -377,14 +377,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\__src\pneditorcommon\PNFXScriptParameter.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\__src\pneditorcommon\PNFXScriptParameter.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\__src\pneditorcommon\PNFXStringParameter.cpp"
 					>
 				</File>
