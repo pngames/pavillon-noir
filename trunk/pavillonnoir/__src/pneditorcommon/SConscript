@@ -26,6 +26,7 @@ PNFXListParameter.cpp
 PNFXSeparatorParameter.cpp
 PNFXVPPNObjectParameter.cpp
 PNFXUIntParameter.cpp
+PNFXScriptParameter.cpp
 """.split()
 obj.target = 'libpneditorcommon' + env['suffix']
 obj.vnum = env['package_version']
