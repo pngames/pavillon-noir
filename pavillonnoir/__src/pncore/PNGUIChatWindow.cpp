@@ -182,7 +182,7 @@ namespace PN
 	  tmpXmlChar = xmlGetProp(_currentNode, PNCHATXML_EVENT_ATTR);
 	  if (tmpXmlChar!= NULL)
 	  {
-		PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION,NULL,new PNGameActionEventData("Use","",_currentIdTalking,1.0));
+		PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION,NULL,new PNGameActionEventData("Use",_currentIdTalking,"",1.0));
 	  }
 	  resetGUI();
 	  return;
@@ -199,7 +199,7 @@ namespace PN
 	  tmpXmlChar = xmlGetProp(selNode, PNCHATXML_EVENT_ATTR);
 	  if (tmpXmlChar!= NULL)
 	  {
-		PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION,NULL,new PNGameActionEventData("Use","",_currentIdTalking,1.0));
+		PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION,NULL,new PNGameActionEventData("Use",_currentIdTalking,"",1.0));
 	  }
 
 	  tmpXmlChar = xmlGetProp(selNode, PNCHATXML_QUIT_ATTR);
