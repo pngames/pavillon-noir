@@ -66,6 +66,7 @@ typedef enum
   PN_EVENT_GAME_ERROR,			/// when an fatal erro is raise in game
   PN_EVENT_GAME_DEATH,			/// A PNCharacter just died
   PN_EVENT_GAME_OVER,			/// when the player died
+  PN_EVENT_GAME_WIN,			/// when the player died
 
   PN_EVENT_GAME_LIFEVAL,
 
