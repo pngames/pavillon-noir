@@ -99,6 +99,7 @@ namespace PN
 
   void PNGUIChatWindow::setMapChatPath(std::string id_player)
   {
+	
 	_currentChatXml = "";
 	PNGameMap*	gmap = PNGameInterface::getInstance()->getGameMap();
 	std::string* tmpMap = gmap->getPath();
@@ -111,6 +112,8 @@ namespace PN
 	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME && 
 	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::NONE)
 	{
+	  _currentIdTalking = id_player;
+
 	  PNGUIStateManager::getInstance()->setSubState(PNGUIStateManager::CHAT_WINDOW);
 
 	  setMapChatPath(id_player);
@@ -172,26 +175,34 @@ namespace PN
 
   void PNGUIChatWindow::handleAll()
   {
+	xmlChar* tmpXmlChar;
+
 	if (_quitBuddy == true && _listBox->getFirstSelectedItem() == NULL)
 	{
+	  tmpXmlChar = xmlGetProp(_currentNode, PNCHATXML_EVENT_ATTR);
+	  if (tmpXmlChar!= NULL)
+	  {
+		PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION,NULL,new PNGameActionEventData("Use","",_currentIdTalking,1.0));
+	  }
 	  resetGUI();
 	  return;
 	}
 
 	if (_listBox->getFirstSelectedItem() != NULL)
 	{
-	  //  PNConsole::writeLine("Vous avez choisi : %s",_listBox->getFirstSelectedItem()->getText().c_str());
-
 	  unsigned int tmpid = _listBox->getFirstSelectedItem()->getID();
 	  std::string selNodeId = (const char *)tmpid;
 
 	  xmlNode* selNode = _chatTree->getNodeFromId(_currentNode ,selNodeId);
-	  //xmlChar* tmpXmlChar = xmlGetProp(selNode, PNCHATXML_CHECKPOINT_ATTR);
-
-	  //if (tmpXmlChar!= NULL) && strcmp((const char*)tmpXmlChar, (const char*)PNCHATXML_TRUE_VAL) == 0)
 	  _resolvedDependencies.insert(selNodeId);
 
-	  xmlChar* tmpXmlChar = xmlGetProp(selNode, PNCHATXML_QUIT_ATTR);
+	  tmpXmlChar = xmlGetProp(selNode, PNCHATXML_EVENT_ATTR);
+	  if (tmpXmlChar!= NULL)
+	  {
+		PNEventManager::getInstance()->addEvent(PN_EVENT_GAME_ACTION,NULL,new PNGameActionEventData("Use","",_currentIdTalking,1.0));
+	  }
+
+	  tmpXmlChar = xmlGetProp(selNode, PNCHATXML_QUIT_ATTR);
 
 	  if (tmpXmlChar!= NULL && strcmp((const char*)tmpXmlChar, (const char*)PNCHATXML_TRUE_VAL) == 0)
 	  {

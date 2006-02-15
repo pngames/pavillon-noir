@@ -58,6 +58,7 @@ static const std::string	PNCHAT_XMLNODE_ROOT		= PNCHAT_XMLDTD_NAME;
 #define PNCHATXML_QUIT_ATTR				(const xmlChar *)"quit"
 #define PNCHATXML_CHECKPOINT_ATTR		(const xmlChar *)"checkpoint"
 #define PNCHATXML_ID_ATTR				(const xmlChar *)"id"
+#define PNCHATXML_EVENT_ATTR			(const xmlChar *)"event"
 
 
 // Values

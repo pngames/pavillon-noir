@@ -59,7 +59,7 @@ namespace PN
 	PNChatTree* _chatTree;
 	xmlNode* _currentNode;
 	bool _quitBuddy;
-
+	std::string _currentIdTalking;
 
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                                    Methods                                  /
