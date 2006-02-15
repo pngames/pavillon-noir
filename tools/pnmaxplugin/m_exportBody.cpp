@@ -81,14 +81,14 @@ int					PNModelExporter::exportMeshs()
   pnmMesh_t			meshToExport;
   pnmMeshVertex_t	vertToExport;
 
-  for (MAP_MESH::iterator it = _mapMeshes.begin(); it != _mapMeshes.end(); ++it)
+  for (VECTOR_MESH::iterator it = _vectorMesh.begin(); it != _vectorMesh.end(); ++it)
   {
 	meshToExport.colored = true;
 	meshToExport.materialIdx = it->first;
 
 	PNMainWin::WriteLine(" Export Meshe %i", meshToExport.materialIdx);
 
-	mesh_t&		  mesh = it->second;
+	mesh_t&		  mesh = *it->second;
 
 	//////////////////////////////////////////////////////////////////////////
 	// VERTS

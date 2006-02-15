@@ -4,11 +4,16 @@
 //
 #define IDS_LIBDESCRIPTION              1
 #define IDS_CATEGORY                    2
+#define IDUP                            2
 #define IDS_CLASS_NAME                  3
 #define ID_MWIN_CONFIG                  3
 #define IDS_PARAMS                      4
+#define IDDOWN                          4
 #define IDS_SPIN                        5
+#define IDDOWN2                         5
+#define IDEND                           5
 #define IDS_COMMENT                     6
+#define IDBEGIN                         6
 #define IDS_GIZMOS                      7
 #define IDS_MTL1                        7
 #define IDS_GIZMOPARAM_NAME             7
@@ -37,16 +42,14 @@
 #define IDD_DIALOG1                     129
 #define IDD_PN_MWIN                     129
 #define IDD_OBJ_EXPORT                  134
-#define IDD_S_CONFIG                    135
 #define IDD_PNS_CONFIG                  135
-#define IDD_T_CONFIG                    136
 #define IDD_PNT_CONFIG                  136
-#define IDD_A_CONFIG                    137
 #define IDD_PNA_CONFIG                  137
 #define IDD_PNO_CONFIG                  138
 #define IDD_VEC_EDITOR                  139
 #define IDD_UTILS_VEDIT                 139
 #define IDD_PNP_CONFIG                  140
+#define IDD_PNM_CONFIG                  141
 #define IDC_LIST1                       1001
 #define IDC_CONSOLE                     1001
 #define IDC_MATERIALS                   1001
@@ -153,7 +156,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        141
+#define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1046
 #define _APS_NEXT_SYMED_VALUE           101
