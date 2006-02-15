@@ -444,7 +444,6 @@ PNGUIGame::PNGUIGame()
 
   _rootWin->activate();
 
-//  _lifeBar = (CEGUI::ProgressBar*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/lifeBar");
   _myri = PNRendererInterface::getInstance();
   _skipFirstFrame = false;
   _inputHandleModifier = 0;
@@ -458,9 +457,6 @@ PNGUIGame::PNGUIGame()
   _rootWin->subscribeEvent(CEGUI::Window::EventMouseButtonUp, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseButtonReleasedHandler, this));
   _rootWin->subscribeEvent(CEGUI::Window::EventMouseWheel, CEGUI::Event::Subscriber(&PNGUIGame::eventMouseWheel, this));
 
- // _params.push_back(new PNConfigurableParameter(this, PN_PARAMTYPE_REAL, &_lifeValue, "life bar value", "life bar value"));
- // CEGUI::MouseCursor::getSingleton().hide();
-
   _mapLife[0] = "FioleImages/fiole_OK";
   _mapLife[1] = "FioleImages/fiole_LIGHT";
   _mapLife[2] = "FioleImages/fiole_SERIOUS";
@@ -470,27 +466,19 @@ PNGUIGame::PNGUIGame()
   _mapLife[6] = "FioleImages/fiole_LETHAL";
 
  _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/fiole");
+ _miniMap = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/MiniMap");
  _miniMapPoint = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/MiniMapPos");
-
 
   PNGUIChatWindow::getInstance();
 
-//  _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "PNGUIGame/Life");
-/*  _rootWin->addChildWindow(_statImg);
+  _miniMap->hide(); 
+  _miniMapPoint->hide();
 
-  float sizeHeight = 0.25;
-  float sizeWidth = 213 * sizeHeight / 367 / 1.33;
-  float posX = 0.90f;
-  float posY = 0.75f;
+  _mapObj = NULL;
+  _playerObj = NULL;
+  _mapSizeX = 0.0f;
+  _mapSizeY = 0.0f;
 
- _statImg->setImage("FioleImages", _mapLife[0]);
- //  _statImg->setImage("LoadingScreenImages", "LoadingScreenImages/parrot_red");
- _statImg->setSize(CEGUI::Size(sizeWidth, sizeHeight));
- _statImg->setPosition(CEGUI::Point(posX, posY));
- _statImg->setFrameEnabled(false);
- _statImg->setBackgroundEnabled(false);
- _statImg->disable();
- _statImg->show();*/
 }
 
 PNGUIGame::~PNGUIGame()
@@ -598,6 +586,7 @@ void PNGUIGame::startGUI()
 
 void PNGUIGame::resetGUI()
 {
+  cleanMiniMapTools();
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_CONSOLE, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_GRAB_OFF, EventCallback(this, &PNGUIGame::inputHandleModifierState));
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_GRAB_ON, EventCallback(this, &PNGUIGame::inputHandleModifierState));
@@ -615,20 +604,10 @@ void  PNGUIGame::changeLife(pnEventType type, PNObject* source, PNEventData* dat
   PNLOCK(this);
   
   int val = ((PNGameLifeValEventData*)data)->lifeVal;
+  
   if (val < 7)
   {
-	/*float sizeHeight = 0.25;
-	float sizeWidth = 213 * sizeHeight / 367 / 1.33;
-	float posX = 0.90f;
-	float posY = 0.75f;*/
-
 	_statImg->setImage("FioleImages", _mapLife[val]);
-	/*_statImg->setSize(CEGUI::Size(sizeWidth, sizeHeight));
-	_statImg->setPosition(CEGUI::Point(posX, posY));
-	_statImg->setFrameEnabled(false);
-	_statImg->setBackgroundEnabled(false);
-	_statImg->disable();
-	_statImg->show();*/
   }
 }
 
@@ -667,22 +646,40 @@ void  PNGUIGame::startChat(pnEventType type, PNObject* source, PNEventData* data
 
 void PNGUIGame::setMiniMapTools()
 {
-  PNGameMap::ObjMap tmpMap = PNGameInterface::getInstance()->getGameMap()->getEntityList();
-  _playerObj = tmpMap[PLAYERID];
-  _mapObj = tmpMap[MAPID];
+  _playerObj = PNGameInterface::getInstance()->getGameMap()->getPlayer();
+  _mapObj = PNGameInterface::getInstance()->getGameMap()->getGround();
+
+  if (_playerObj != NULL && _mapObj != NULL)
+  {
+	_miniMap->show();
+	_miniMapPoint->show();
+
+	PNPoint2f mapMin(_mapObj->getMin().x, _mapObj->getMin().z);
+	PNPoint2f mapMax(_mapObj->getMax().x, _mapObj->getMax().z);
 
 
-  PNPoint2f mapMin(_mapObj->getMin().x, _mapObj->getMin().z);
-  PNPoint2f mapMax(_mapObj->getMax().x, _mapObj->getMax().z);
+	_mapSizeX = mapMax.x - mapMin.x;
+	_mapSizeY = mapMax.y - mapMin.y;
 
+	float tmpX = (_playerObj->getCoord().x - _mapObj->getMin().x)/ _mapSizeX;
+	float tmpZ = (_playerObj->getCoord().z - _mapObj->getMin().z /*+ 3359*/) / _mapSizeY;
 
-  _mapSizeX = mapMax.x - mapMin.x;
-  _mapSizeY = mapMax.y - mapMin.y;
+	_miniMapPoint->setPosition(CEGUI::Point(tmpX-0.02f, tmpZ-0.03f));
+  }
+  else
+  {
+	_miniMap->hide(); 
+	_miniMapPoint->hide();
+  }
+}
 
-  float tmpX = _playerObj->getCoord().x / _mapSizeX;
-  float tmpZ = (_playerObj->getCoord().z + 3359) / _mapSizeY;
+void PNGUIGame::cleanMiniMapTools()
+{
+  _playerObj = NULL;
+  _mapObj = NULL;
 
-  _miniMapPoint->setPosition(CEGUI::Point(tmpX, tmpZ));
+  _mapSizeX = 0.0f;
+  _mapSizeY = 0.0f;
 }
 
 void  PNGUIGame::updateCoordPlayer(pnEventType type, PNObject* source, PNEventData* data)
@@ -691,12 +688,15 @@ void  PNGUIGame::updateCoordPlayer(pnEventType type, PNObject* source, PNEventDa
 
   if (((PN3DObject*)source)->getId() == PLAYERID)
   {
-	PNPoint3f coord = ((PN3DObject*)source)->getCoord();
+	if (_playerObj != NULL && _mapObj != NULL)
+	{
+	  PNPoint3f coord = ((PN3DObject*)source)->getCoord();
 
-	float tmpX = coord.x / _mapSizeX;
-	float tmpZ =(coord.z + 3359) / _mapSizeY;
+	  float tmpX = (coord.x - _mapObj->getMin().x)/ _mapSizeX;
+	  float tmpZ = (coord.z - _mapObj->getMin().z) / _mapSizeY;
 
-	_miniMapPoint->setPosition(CEGUI::Point(tmpX, tmpZ));
+	  _miniMapPoint->setPosition(CEGUI::Point(tmpX-0.02f, tmpZ-0.03f));
+	}
   }
 }
 

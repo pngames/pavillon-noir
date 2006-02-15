@@ -70,13 +70,12 @@ namespace PN{
 
 	CEGUI::StaticImage* _statImg;
 	CEGUI::StaticImage* _miniMapPoint;
+	CEGUI::StaticImage* _miniMap;
 	typedef std::map<int, std::string> MapLife;
 	MapLife _mapLife;
 
-
-
-	PN3DObject* _playerObj;
-	PN3DObject* _mapObj;
+	const PN3DObject* _playerObj;
+	const PN3DObject* _mapObj;
 	float _mapSizeX;
 	float _mapSizeY;
 
@@ -90,7 +89,6 @@ namespace PN{
 	CEGUI::Window*  getWindow();
 	void  resetGUI();
 	void  startGUI();
-	//void  setLifeValue(float val);
 	void  changeLife(pnEventType type, PNObject* source, PNEventData* data);
   private:
 	bool eventMouseMoveHandler(const CEGUI::EventArgs& e);
@@ -109,6 +107,7 @@ namespace PN{
 	void  startChat(pnEventType type, PNObject* source, PNEventData* data);
 	void  updateCoordPlayer(pnEventType type, PNObject* source, PNEventData* data);
 	void setMiniMapTools();
+	void cleanMiniMapTools();
 
 	//////////////////////////////////////////////////////////////////////////
 	// ConfigurableObject
