@@ -44,6 +44,7 @@ namespace PN {
 typedef std::list<PN3DObject *> PN3DObjList;
 
 class PNOpalCommonEventHandler;
+class PNOpalObject;
 
 class						PNOpal : public PNPhysicsInterface
 {
@@ -104,6 +105,7 @@ public:
   // Internal
 
 protected:
+  void						preComputeCharactersForces(PN3DObject* pnObject, PNOpalObject* physicalObject);
   pnfloat					getElapsedTime();
   void						opal2pn();
   void						pn2opal();

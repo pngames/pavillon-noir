@@ -52,6 +52,7 @@
 namespace fs = boost::filesystem;
 
 #define DEFAULT_PLAYER_ID "Player"
+#define DEFAULT_NPC_ID "NPC"
 
 namespace PN {
 
@@ -64,6 +65,7 @@ PNOpalObject::PNOpalObject(opal::Simulator* sim) : _blueprint(), _blueprintInsta
 {
   _sim = sim;
   _player = false;
+  _npc = false;
 }
 
 /** PNOpalObject destructor
@@ -211,6 +213,12 @@ pnbool
 PNOpalObject::isPlayer()
 {
   return _player;
+}
+
+pnbool
+PNOpalObject::isNPC()
+{
+  return _npc;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -525,9 +533,12 @@ PNOpalObject::_parseTypeOpal(const std::string& path)
   _movementMotor = _sim->createSpringMotor();
 
   // create ground/obstacle detectors for PNPlayers
-  if (_solid->getName() == DEFAULT_PLAYER_ID)
+  if (_solid->getName() == DEFAULT_PLAYER_ID || _solid->getName() == DEFAULT_NPC_ID)
   {
-	_player = true;
+	if (_solid->getName() == DEFAULT_PLAYER_ID)
+	  _player = true;
+	if (_solid->getName() == DEFAULT_NPC_ID)
+	  _npc = true;
 
 	opal::RaycastSensorData data;
 	data.solid = _solid;
