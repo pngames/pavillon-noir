@@ -915,6 +915,8 @@ PNGLRenderer::initGUI()
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("DeathImages") == false)
 	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/DeathScreen.imageset");
 
+	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("Minimap") == false)
+	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/Minimap.imageset");
 
 	CEGUI::System::getSingleton().setTooltip("Vanilla/Tooltip");
 
