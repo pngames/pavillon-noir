@@ -144,6 +144,7 @@ namespace PN
 
   void	PNGUIChatWindow::show()
   {
+	 PNEventManager::getInstance()->addCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIChatWindow::inputHandleEsc));
 	_mainSheet->show();
 	_mainSheet->setMutedState(false);
 	_mainSheet->activate();
@@ -152,8 +153,18 @@ namespace PN
 
   void	PNGUIChatWindow::hide()
   {
+	 PNEventManager::getInstance()->deleteCallback(PN_EVENT_SDL_ESC, EventCallback(this, &PNGUIChatWindow::inputHandleEsc));
 	_mainSheet->hide();
 	_mainSheet->setMutedState(true);
+  }
+
+  void PNGUIChatWindow::inputHandleEsc(pnEventType type, PNObject* source, PNEventData* data)
+  {
+	if (PNGUIStateManager::getInstance()->getMainState() == PNGUIStateManager::INGAME && 
+	  PNGUIStateManager::getInstance()->getSubState() == PNGUIStateManager::CHAT_WINDOW)
+	{
+	  resetGUI();
+	}
   }
 
   CEGUI::Window*  PNGUIChatWindow::getWindow()

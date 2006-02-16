@@ -82,6 +82,8 @@ namespace PN
 	void  cleanResolvedDep(pnEventType type, PNObject* source, PNEventData* data);
 	void  manageInventoryItem(pnEventType type, PNObject* source, PNEventData* data);
 	void setName(xmlNode* node);
+	void inputHandleEsc(pnEventType type, PNObject* source, PNEventData* data);
+
 	/*/////////////////////////////////////////////////////////////////////////////
 	/                           Constructors / Destructor                         /
 	/////////////////////////////////////////////////////////////////////////////*/
