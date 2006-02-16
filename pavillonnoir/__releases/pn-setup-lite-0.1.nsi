@@ -1,8 +1,8 @@
 /*
- * pn-setup-lite-0.0.1.nsh
+ * pn-setup-lite-0.1.nsh
  *
  * Description :
- * Version 0.0.1 of lite script installer generator for Pavillon-Noir.
+ * Version 0.1 of lite script installer generator for Pavillon-Noir.
  * Adding just version informations to lite script generator.
  *
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
@@ -28,6 +28,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-!define PRODUCT_VERSION "0.0.2"
+!define PRODUCT_VERSION "0.1"
 
 !include "pn-setup-lite.nsh"
