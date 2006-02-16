@@ -66,6 +66,8 @@
 #include "PNGUIStateManager.hpp"
 //////////////////////////////////////////////////////////////////////////
 
+#include "boost/filesystem/operations.hpp"
+
 using namespace PN;
 namespace fs = boost::filesystem;
 
@@ -196,15 +198,21 @@ namespace PN
 	// FIXME -> PNGameMap cree par le script
 	// FIXME -> lancer l'evenement START
 
-	std::string conffilepath = PNConf::getInstance()->getConfPath("config.cfg");
-	FILE* file = fopen(conffilepath.c_str(), "r");
-	char  buffer[1024];
-	memset(buffer, 0, sizeof(buffer));
-	fread(buffer, 1, 1023, file);
-	fclose(file);
-
 	PNGameLoadMapEventData data;
-	data.mapName = DEF::mapsFilePath + buffer;
+	char  buffer[1024];
+	std::string conffilepath = PNConf::getInstance()->getConfPath("config.cfg");
+	if (fs::exists(fs::path(conffilepath, fs::native))) {
+		FILE* file = fopen(conffilepath.c_str(), "r");
+		memset(buffer, 0, sizeof(buffer));
+		fread(buffer, 1, 1023, file);
+		fclose(file);
+	}
+
+	if (buffer != NULL)
+		data.mapName = DEF::mapsFilePath + buffer;
+	else
+		data.mapName = DEF::mapsFilePath;
+	
 	// PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_START, 0, data);
 	//
 	//PNGameMap*  map = new PNGameMap();
