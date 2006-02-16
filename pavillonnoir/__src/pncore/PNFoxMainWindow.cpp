@@ -74,12 +74,13 @@ FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|
   _mapSelector = new FXComboBox(_contentMain,10,NULL,0,COMBOBOX_STATIC|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FIX_WIDTH,0,0,312,45);
 
   std::string	conffilepath = PNConf::getInstance()->getConfPath("config.cfg");
-  std::FILE*	file = fopen(conffilepath.c_str(), "r");
   char		buffer[1024];
-
-  memset(buffer, 0, sizeof(buffer));
-  fread(buffer, 1, 1023, file);
-  fclose(file);
+  if (fs::exists(fs::path(conffilepath, fs::native))) {
+	std::FILE*	file = fopen(conffilepath.c_str(), "r");
+	memset(buffer, 0, sizeof(buffer));
+	fread(buffer, 1, 1023, file);
+	fclose(file);
+  }
 
   std::string	  tmp(buffer);
   tmp = tmp.substr(0,tmp.find("/"));
