@@ -95,7 +95,7 @@ namespace PN
 	PNSoundEventData *data3 = new PNSoundEventData("quit",  DEF::soundsFilePath + "redalert.ogg");
 	//PNSoundEventData *data4 = new PNSoundEventData("theme", 0.3f);
 
-	//PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_ENABLE, 0, 0);
+	PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_DISABLE, 0, 0);
 	//PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_CREATE, 0, data2);
 	//PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_CREATE, 0, data3);
 	//PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_CREATE, 0, data);
