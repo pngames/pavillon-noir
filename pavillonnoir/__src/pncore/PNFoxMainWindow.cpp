@@ -74,7 +74,7 @@ FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|
   _mapSelector = new FXComboBox(_contentMain,10,NULL,0,COMBOBOX_STATIC|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FIX_WIDTH,0,0,312,45);
 
   std::string	conffilepath = PNConf::getInstance()->getConfPath("config.cfg");
-  std::FILE*	file = fopen(conffilepath.c_str(), "a");
+  std::FILE*	file = fopen(conffilepath.c_str(), "r");
   char		buffer[1024];
 
   memset(buffer, 0, sizeof(buffer));
@@ -109,6 +109,11 @@ FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|
 	  }
 	}
   }
+
+  int val = _mapSelector->findItem(tmp.c_str(),SEARCH_WRAP);
+  if (val == -1)
+	val = 0;
+  _mapSelector->setCurrentItem(val);
 
   // Create the 3 main buttons
   FXButton* buttonStart = new FXButton(_contentMain,"&START GAME\tTO LAUNCH GAME",NULL,this,ID_LAUCH_GAME,BUTTON_DEFAULT|FRAME_RAISED|FRAME_THICK|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT,0,0,312,45);
