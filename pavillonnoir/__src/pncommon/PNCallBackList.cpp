@@ -82,7 +82,9 @@ PNCallBackList::sendEvent(pnEventType type, PNObject* source, PNEventData* data)
 	}
 	catch (...)
 	{
+#ifdef DEBUG
 	  pnerror(PN_LOGLVL_ERROR, "Event %s has crashed in a callback.", PNEventManager::getInstance()->getNameByType(type).c_str());
+#endif
 	}
   }
 }

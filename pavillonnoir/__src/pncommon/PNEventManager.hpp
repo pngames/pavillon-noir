@@ -35,6 +35,7 @@
 #endif
 
 #include <queue>
+#include <boost/thread/thread.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition.hpp>
 
@@ -119,6 +120,7 @@ private:
   /// Mutex manager to wait verified condition
   boost::condition				_cond;
 
+  boost::thread_group			_threadGroup;
 public:
   /// Return unique instance of events manager
   static  PNEventManager*		getInstance();
