@@ -321,6 +321,19 @@ void PNOpal::_onFrame(pnEventType type, PNObject* source, PNEventData* data)
 
   // apply simulation into rendering
   opal2pn();
+
+  for (PNGameMap::ObjMap::const_iterator it = PNGameInterface::getInstance()->getGameMap()->getEntityList().begin(); it != PNGameInterface::getInstance()->getGameMap()->getEntityList().end(); it++)
+  {
+	PN3DObject* object = it->second;
+
+	PNLOCK_BEGIN(object);
+	if (object->getPhysicalObject() == NULL && (object->getPositionTarget() != NULL || object->getViewTarget() != NULL))
+	{
+	  object->prepareUpdate();
+	  object->update((pnuint)((PNGameUpdateEventData*)data)->deltaTime);
+	}
+	PNLOCK_END(object);
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -397,6 +410,10 @@ void	PNOpal::opal2pn()
 		//doesn't seems to work well for me, even if it is a method used by others with ODE
 		if (physicalObject->isPlayer())
 		  physicalObject->resetAngularRotation();
+
+		// avoid translation inertia (except gravity)
+		opal::Vec3r gravity = physicalObject->getOpalSolid()->getGlobalLinearVel();
+		physicalObject->getOpalSolid()->setGlobalLinearVel(opal::Vec3r(0, gravity.getData()[1], 0));
 
 		//////////////////////////////////////////////////////////////////////////
 		// elevates PNPlayer' from the ground (a little bit)
