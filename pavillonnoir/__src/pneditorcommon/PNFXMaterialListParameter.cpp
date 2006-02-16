@@ -168,7 +168,8 @@ PNFXMaterialListParameter::_update(void)
   {
 	PN3DMaterial*	material = *it;
 
-	_listBox->appendItem(FXFile::name(material->getFile()->c_str()), NULL, material);
+	if (material != NULL)
+		_listBox->appendItem(FXFile::name(material->getFile()->c_str()), NULL, material);
   }
 
   _listBox->setNumVisible(_listBox->getNumItems() < 5 ? _listBox->getNumItems() : 5 );
