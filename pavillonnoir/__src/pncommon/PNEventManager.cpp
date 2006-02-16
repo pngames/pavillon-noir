@@ -32,7 +32,6 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include <boost/utility.hpp>
-#include <boost/thread/thread.hpp>
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -323,6 +322,34 @@ PNEventManager*	PNEventManager::getInstance()
 
 //////////////////////////////////////////////////////////////////////////
 
+class			ThreadRunner
+{
+  pnEventType	_type;
+  PNObject*		_source;
+  PNEventData*	_data;
+
+public:
+  ~ThreadRunner()
+  {
+	if (_data != NULL && _data->destructData)
+	  delete _data;
+  }
+
+  void	init(pnEventType type, PNObject* source, PNEventData* data)
+  {
+	_type = type;
+	_source = source;
+	_data = data;
+  }
+
+  void	run()
+  {
+	PNEventManager::getInstance()->sendEvent(_type, _source, _data);
+
+	delete this;
+  }
+};
+
 void
 PNEventManager::run()
 {
@@ -334,6 +361,10 @@ PNEventManager::run()
       _cond.wait(lk);
     }
 
+	//PNLOCK(this);
+
+	ThreadRunner*  threadRunner = new ThreadRunner();
+
 	pnEventType type;
 	PNObject* source;
 	PNEventData* data;
@@ -341,6 +372,8 @@ PNEventManager::run()
 	PNLOCK_BEGIN(this);
 	{
 	  pnevent& event = _events.front();
+
+	  threadRunner->init(event.type, event.source, event.data);
 
 	  type = event.type;
 	  //if (type == PN_EVENT_F_IN)
@@ -357,8 +390,7 @@ PNEventManager::run()
 	_lastSentType = type;
 	sendEvent(type, source, data);
 
-	if (data != NULL && data->destructData)
-      delete data;
+	//_threadGroup.create_thread(fastdelegate::FastDelegate0<void>(threadRunner, &ThreadRunner::run));
   }
 }
 
@@ -382,7 +414,7 @@ PNEventManager::addEvent(pnEventType type, PNObject* source, PNEventData* data, 
 	//pnerror(PN_LOGLVL_DEBUG, "adding frustrum in event");
   _events.push(pnevent(type, source, data));
 
-  if (_events.size() == 1)
+  if (_events.size() >= 1)
   {
 	//pnerror(PN_LOGLVL_DEBUG, "stack was empty");
     _cond.notify_all();
