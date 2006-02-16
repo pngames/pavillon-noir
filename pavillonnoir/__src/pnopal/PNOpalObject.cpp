@@ -545,7 +545,7 @@ PNOpalObject::_parseTypeOpal(const std::string& path)
 	data.ray.setOrigin(opal::Point3r(0, 0, 0));
 	data.ray.setDir(opal::Vec3r(0, -1, 0));
 	_playerSensor = _sim->createRaycastSensor();
-	_playerSensor->init(data);
+	//_playerSensor->init(data);
 
 	opal::Vec3r massTranslation(0.0f, -_desiredHeight * 0.99f, 0.0f);
 	_solid->translateMass(massTranslation);
