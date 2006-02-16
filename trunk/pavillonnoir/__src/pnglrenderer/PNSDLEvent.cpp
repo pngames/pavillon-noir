@@ -431,7 +431,7 @@ True when the key is down or False when is up
 */
 void	PNSDLEvent::handleKeyPress(SDL_keysym*	keysym, bool state)
 {
-  if (keysym->sym == SDLK_BACKSPACE)
+  if (keysym->sym == SDLK_F5)
   {
 	if (state == false)
 	{

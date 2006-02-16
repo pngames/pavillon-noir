@@ -998,6 +998,13 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
 	//cam->setMovingState(cam->getMovingState() ^ PN3DObject::STATE_T_RIGHT);
 	break;
 
+  case CEGUI::Key::Add :
+	_miniMap->setAlpha(_miniMap->getAlpha()+0.1f);
+	break;
+
+  case CEGUI::Key::Subtract :
+	_miniMap->setAlpha(_miniMap->getAlpha()-0.1f);
+	break;
 	//////////////////////////////////////////////////////////////////////////
 	// ROTATION
   case CEGUI::Key::ArrowLeft :
@@ -1041,6 +1048,9 @@ bool PNGUIGame::eventKeyReleasedHandler(const CEGUI::EventArgs& e)
 	//cam->setTargetMode(PN3DObject::TMODE_FREE);
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_ACTION, NULL, new PNGameActionEventData("Run",playerid,"null", 0.0));
     break;
+  case CEGUI::Key::Space:
+	PNEventManager::getInstance()->sendEvent(PN_EVENT_GAME_WIN, NULL, NULL);
+	break;
   default:
 	std::cout << "not managed key";
 	break;
