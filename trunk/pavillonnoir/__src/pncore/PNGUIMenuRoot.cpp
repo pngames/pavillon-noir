@@ -92,7 +92,7 @@ namespace PN
 
 	PNSoundEventData *data = new PNSoundEventData("theme", DEF::musicFilePath + "Honneur_PavillonNoir.ogg");
 	PNSoundEventData *data2 = new PNSoundEventData("click",  DEF::soundsFilePath + "menu_click.ogg");
-	PNSoundEventData *data3 = new PNSoundEventData("quit",  DEF::soundsFilePath + "redalert.ogg");
+	//PNSoundEventData *data3 = new PNSoundEventData("quit",  DEF::soundsFilePath + "redalert.ogg");
 	//PNSoundEventData *data4 = new PNSoundEventData("theme", 0.3f);
 
 	PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_DISABLE, 0, 0);
@@ -244,7 +244,7 @@ namespace PN
 	if (_mainSheet->isMuted() == true)
 	  return true;
 
-	PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_PLAY, 0, new PNSoundEventData("quit", 0.5f));
+	PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_PLAY, 0, new PNSoundEventData("click", 0.5f));
 	//PNRendererInterface::getInstance()->endRendering();
 
 	//PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_QUIT, 0, NULL);
