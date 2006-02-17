@@ -205,10 +205,10 @@ void  PNLuaGameMap::onGameAction(pnEventType evt, PNObject* source, PNEventData*
   luaOrder << actionEvent->targetId;
   luaOrder << "\", ";
   luaOrder << (actionEvent->value);
-  luaOrder << ")\n else print(\"[LUA] ";
+  luaOrder << ")\n end";/* else print(\"[LUA] ";
   luaOrder << "gameMap:on";
   luaOrder << actionEvent->action;
-  luaOrder << " is not binded\")\n end";
+  luaOrder << " is not binded\")\n end";*/
   luaOrder << std::ends;
   manageLuaError(this->_LVM.execString(luaOrder.str().c_str()));
 }
@@ -226,7 +226,7 @@ void  PNLuaGameMap::onFrustrumIn(pnEventType evt, PNObject* source, PNEventData*
 
   if (viewer != NULL)
   {
-	pnerror(PN_LOGLVL_DEBUG, "frustrum in : %s views %s", viewer->getId().c_str(), viewed->getId().c_str());
+	//pnerror(PN_LOGLVL_DEBUG, "frustrum in : %s views %s", viewer->getId().c_str(), viewed->getId().c_str());
 	luaOrder = "gameMap:onFrustrumIn(\"";
 	luaOrder += viewer->getId().c_str();
 	luaOrder += "\",\"";
@@ -243,7 +243,7 @@ void  PNLuaGameMap::onFrustrumOut(pnEventType evt, PNObject* source, PNEventData
   PN3DObject*	  viewer = viewerCamera->getPositionTarget();
   std::string	  luaOrder;
 
-  pnerror(PN_LOGLVL_DEBUG, "frustrum out : %s doesn't view %s anymore", viewerCamera->getId().c_str(), viewed->getId().c_str());
+  //pnerror(PN_LOGLVL_DEBUG, "frustrum out : %s doesn't view %s anymore", viewerCamera->getId().c_str(), viewed->getId().c_str());
 
   if (viewer != NULL)
   {
