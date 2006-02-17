@@ -65,6 +65,7 @@ public:
   ** without heuristics for the moment
   */
   PNWayPoint							*closestWP(const PNPoint3f& p);
+  PNPoint3f								closestWPCoord(const PNPoint3f& p);
 
   /* fills specified PNPoint3fwith the coords of WP '_next' */
   void									getNext(PN3DObject& o);

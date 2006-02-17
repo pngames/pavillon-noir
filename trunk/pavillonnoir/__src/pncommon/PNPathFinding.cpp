@@ -54,10 +54,11 @@ PNPathFinding::~PNPathFinding()
 void
 PNPathFinding::moveTo(const PNPoint3f&p)
 {
-
   _dest.set(p);
   _goal = closestWP(p);
   _firstcall = true;
+  _travellist.clear();
+  _travelmap.clear();
 }
 
 void
@@ -68,6 +69,8 @@ PNPathFinding::moveTo(PNWayPoint *wp)
   _goal = wp;
   _dest.set(p.x, p.y, p.z);
   _firstcall = true;
+  _travellist.clear();
+  _travelmap.clear();
 }
 
 /*
@@ -103,6 +106,12 @@ PNPathFinding::closestWP(const PNPoint3f&p)
   return (wp);
 }
 
+PNPoint3f
+PNPathFinding::closestWPCoord(const PNPoint3f&p)
+{
+  return this->closestWP(p)->getCoord();
+}
+
 void
 PNPathFinding::moveNext(PN3DObject& o)
 {
@@ -119,14 +128,17 @@ PNPathFinding::moveNext(PN3DObject& o)
 	_next = closestWP(_pos);
 	_firstcall = false;
 	o.setCoord(_next->getCoord());
+	_travellist.clear();
+	_travelmap.clear();
 	return;
   }
 
   //handle end of travel
   if (_next == _goal || _pos == _dest)
   {
+	//pnerror(PN_LOGLVL_DEBUG, "end of travel");
 	o.setCoord(_dest);
-	if (_pos == _dest)
+	if (_pos.getFlatDistance(_dest) < 30.0f)
 	{
 	  _firstcall = true;
 	  _travellist.clear();
