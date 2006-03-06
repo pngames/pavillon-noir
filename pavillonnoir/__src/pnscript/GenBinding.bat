@@ -1,1 +1,1 @@
-"tolua++" -H pnbind.h -o pnbind.cpp pnbind.pkg
+"..\..\..\tools\tolua++\tolua++.exe" -H pnbind.h -o pnbind.cpp pnbind.pkg
