@@ -1,6 +1,0 @@
-0.0.2 (17/06/2005)
-* [stephane] L'initialisation de la map est maintenat confiee au module de script
-0.0.1 (2005/03/01):
-* [thomas] modif : delete stlport support under Linux
-0.0.1 (2004/02/14):
-* [thomas] new : add CHANGELOG.txt
