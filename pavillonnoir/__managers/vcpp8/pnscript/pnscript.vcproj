@@ -25,7 +25,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="generation de fichiers de bind lua"
-				CommandLine="cd ../../../__src/pnscript&#x0D;&#x0A;./GenBinding.bat&#x0D;&#x0A;"
+				CommandLine="cd ../../../__src/pnscript&#x0D;&#x0A;GenBinding.bat&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -108,7 +108,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="generation de fichiers de bind lua"
-				CommandLine="cd ../../../__src/pnscript&#x0D;&#x0A;./GenBinding.bat&#x0D;&#x0A;"
+				CommandLine="cd ../../../__src/pnscript&#x0D;&#x0A;GenBinding.bat&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
