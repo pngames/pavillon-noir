@@ -46,8 +46,8 @@ SectionEnd
 Section /o "Dépendances" SecDep
   SetOutPath "$INSTDIR\pavillonnoir\__library"
   File /r /x .svn "..\__library\*.*"
-  SetOutPath "$INSTDIR\tolua++"
-  File /r /x .svn "..\..\tolua++\*.*"
+  SetOutPath "$INSTDIR\tools\tolua++"
+  File /r /x .svn "..\..\tools\tolua++\*.*"
 SectionEnd
 SectionGroupEnd
 

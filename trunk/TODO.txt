@@ -6,3 +6,7 @@ pnimporter:
 pnglrenderer:
 	* PNGLRenderer::renderLink(const PNPoint3f& p1, const PNPoint3f& p2, const pnfloat* color, pnuint direction, pnfloat thickness): "draw right arrow"
 	* PNGLRenderer::renderLink(const PNPoint3f& p1, const PNPoint3f& p2, const pnfloat* color, pnuint direction, pnfloat thickness): "draw left arrow"
+
+---------------------------
+* mettre en place la fonction ToggleFullScreen dans le redererinterface
+	 SDL_WM_ToggleFullScreen(this->screen);
