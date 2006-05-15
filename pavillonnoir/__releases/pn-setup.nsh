@@ -82,7 +82,7 @@ var ICONS_GROUP
 !insertmacro MUI_UNPAGE_INSTFILES
 
 ; Language files
-!insertmacro MUI_LANGUAGE "English"
+;!insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "French"
 
 ; MUI end ------
@@ -94,8 +94,8 @@ InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 
 CRCCheck on
 XPStyle on
-ShowInstDetails show
-ShowUnInstDetails show
+ShowInstDetails hide
+ShowUnInstDetails hide
 
 Function .onInit
   !insertmacro MUI_LANGDLL_DISPLAY
@@ -116,7 +116,8 @@ Section "!Binaires" SecBin
 
   SetOutPath "$INSTDIR\pavillonnoir\__binaries\win32"
   File /r /x .svn /x *.ilk /x *.exp /x *.log "..\__binaries\win32\*.*"
-  File "C:\WINDOWS\system32\msvc*d.dll"
+  CopyFiles "$INSTDIR\pavillonnoir\__binaries\win32\Microsoft.VC80.CRT\*.*" "$INSTDIR\pavillonnoir\__binaries\win32\"
+  CopyFiles "$INSTDIR\pavillonnoir\__binaries\win32\Microsoft.VC80.DebugCRT\*.*" "$INSTDIR\pavillonnoir\__binaries\win32\"
   
   SetOutPath "$INSTDIR\pavillonnoir\__doc\quickstart"
   File /x .svn /x *.log "..\__doc\quickstart\*.pdf"
@@ -146,11 +147,11 @@ Section "Données" SecData
 SectionEnd
 SectionGroupEnd
 
-Section -SecOpenAl
-  SetOutPath "$INSTDIR\pavillonnoir\__library\win32\install"
-  File "..\__library\win32\install\OpenALwEAX.exe"
-  ExecWait '"$INSTDIR\pavillonnoir\__library\win32\install\OpenALwEAX.exe"'
-SectionEnd
+;Section -SecOpenAl
+;  SetOutPath "$INSTDIR\pavillonnoir\__library\win32\install"
+;  File "..\__library\win32\install\OpenALwEAX.exe"
+;  ExecWait '"$INSTDIR\pavillonnoir\__library\win32\install\OpenALwEAX.exe"'
+;SectionEnd
 
 Section -AdditionalIcons
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application

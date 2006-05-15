@@ -85,7 +85,7 @@ version 0.1 ()
 	* Remove stlport support
 	* Updates:
 		- CEGUI: 0.4
-		- boost: 1.33
+		- boost: 1.33.1
 		- Opal: 0.3.1
 		- tolua++: 1.0.6
 		- OpenAl: 1.1
@@ -97,7 +97,7 @@ version 0.1 ()
 	
 	Know issues:
 	----------
-	* Physics not activated for now then objects pass through ground and don't fall
+	* Somes graphical bugs with old/low graphics cards
 
 version 0.0.1 (2005/07/29):
 	* First Release ! Technical demonstration of Pavillon Noir engine (3D rendering, physics, scripting...)
