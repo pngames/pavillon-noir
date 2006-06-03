@@ -38,12 +38,19 @@ namespace PN {
 
 class PNConfigurableObject;
 
-class PNAPI				PNBoolParameter : public PNBool, public PNConfigurableParameter
+class /*PNAPI*/				PNBoolParameter : public PNBool, public PNConfigurableParameter
 {
 public:
-  PNBoolParameter(pnbool param, const std::string& label, const std::string& altText, bool editable = true);
-  PNBoolParameter(PNConfigurableObject* p, pnbool param, const std::string& label, const std::string& altText, bool editable = true);
-  virtual ~PNBoolParameter();
+  PNAPI PNBoolParameter(pnbool param, const std::string& label, const std::string& altText, bool editable = true);
+  PNAPI PNBoolParameter(PNConfigurableObject* p, pnbool param, const std::string& label, const std::string& altText, bool editable = true);
+  PNAPI virtual ~PNBoolParameter();
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  PNBool&				operator=(pnbool value)
+  {
+	return (PNBool&)PNBaseValue<pnbool>::operator =(value);
+  }
 };
 
   //////////////////////////////////////////////////////////////////////////

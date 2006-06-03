@@ -1,4 +1,8 @@
 /*
+ * pns_format.h
+ * 
+ * Description :
+ * Squeleton objects files format
  * Copyright (C) 2005 PAVILLON-NOIR TEAM, http://pavillon-noir.org
  * This software has been written in EPITECH <http://www.epitech.net>
  * EPITECH is computer science school in Paris - FRANCE -
@@ -21,17 +25,6 @@
  * Pavillon Noir; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
-/********************************************************************
-	created:	2005/02/16
-	created:	16:2:2005   13:31
-	filename: 	d:\pavillonnoir\svn\__dev\pavillonnoir\__src\pncommon\pns_format.h
-	file path:	d:\pavillonnoir\svn\__dev\pavillonnoir\__src\pncommon
-	file base:	pns_format
-	file ext:	h
-	author:		Thomas Mortagne
-	
-	purpose:	
-*********************************************************************/
 
 #ifndef _PNS_FORMAT_H_
 # define _PNS_FORMAT_H_

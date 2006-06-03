@@ -37,6 +37,7 @@
 #include <fastdelegate/FastDelegate.h>
 
 #include "pnevent.h"
+#include "pnrender.h"
  
 #include "PNGLVideo.hpp"
 
@@ -98,7 +99,13 @@ PNGLVideo::stop()
 void
 PNGLVideo::_playVideo()
 {
+  pnbool fs = PNRendererInterface::getInstance()->getFullScreen();
+
+  PNRendererInterface::getInstance()->setFullScreen(false);
+
   system(_command.c_str());
+
+  PNRendererInterface::getInstance()->setFullScreen(fs);
 
   PNEventManager::getInstance()->addEvent(PN_EVENT_VIDEO_ENDED, this, NULL);
 

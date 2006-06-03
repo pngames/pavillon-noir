@@ -123,6 +123,9 @@ public:
   void						endRendering();
   void						flushSDLEvents();
   bool						getSDLGrabState();
+
+  void						setFullScreen(pnbool fullscreen);
+  pnbool					getFullScreen();
   
   //////////////////////////////////////////////////////////////////////////
   
@@ -181,7 +184,6 @@ public:
   void						setSDLFlags(int *flags);
 
   void						initGL();
-  static void				setFullScreen(const std::string& command, std::istream &parameters);
 
   //////////////////////////////////////////////////////////////////////////
   
