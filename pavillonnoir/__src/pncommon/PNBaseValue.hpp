@@ -98,6 +98,11 @@ public:
 	return _value;
   }
 
+  void					setValue(const _Type& value)
+  {
+	_value = value;
+  }
+
   //////////////////////////////////////////////////////////////////////////
 
   operator				_Type&()

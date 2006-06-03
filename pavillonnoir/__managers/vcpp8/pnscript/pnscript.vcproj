@@ -356,14 +356,6 @@
 			Name="LuaGameDef"
 			>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\Character.lua"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\DragonClass.lua"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__binaries\datafiles\gamedef\gameMap.lua"
 				>
 			</File>
