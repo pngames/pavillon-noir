@@ -71,7 +71,10 @@ public:
   virtual void				run()=0;
   virtual void				endRendering()=0;
   virtual void				flushSDLEvents()=0;
-  virtual bool				getSDLGrabState()=0;
+  virtual pnbool			getSDLGrabState()=0;
+  
+  virtual void				setFullScreen(pnbool fullscreen)=0;
+  virtual pnbool			getFullScreen()=0;
 
   //////////////////////////////////////////////////////////////////////////
   

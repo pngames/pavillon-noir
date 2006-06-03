@@ -386,13 +386,6 @@ PNGLRenderer::initSDL()
   std::cout << "--== SDL init end ==--" << std::endl;
 }
 
-void						PNGLRenderer::setFullScreen(const std::string& command, std::istream &parameters)
-{
- int toto = SDL_WM_ToggleFullScreen(PNGLRenderer::getInstance()->_SDL_surface);
- PNConsole::writeLine("fullscreen %i", toto);
-}
-
-
 void
 PNGLRenderer::initGL()
 {
@@ -604,6 +597,23 @@ PNGLRenderer::getSDLGrabState()
 {
   return SDL_WM_GrabInput(SDL_GRAB_QUERY) != 0;
 }
+
+void
+PNGLRenderer::setFullScreen(pnbool fullscreen)
+{
+  if (fullscreen != _pFullScreen)
+  {
+	SDL_WM_ToggleFullScreen(_SDL_surface);
+	_pFullScreen = fullscreen;
+  }
+}
+
+pnbool
+PNGLRenderer::getFullScreen()
+{
+  return _pFullScreen;
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 PNRendererObject*
@@ -957,17 +967,11 @@ PNGLRenderer::initGUI()
 
 	PNEventManager::getInstance()->addCallback(PN_EVENT_RU_ENDING, EventCallback(this, &PNGLRenderer::updateGUI));
 	_infoPanel = new PNInfoPanel();
-
-	PNConsole::addFonction("fullscreen", setFullScreen, "set full screen");
   }
   catch (CEGUI::Exception)
   {
 	std::cout << "CEGUI init problem, configuration files are missing" << std::endl;
-  }  
-
-  return;
+  }
 }
 //////////////////////////////////////////////////////////////////////////
-
-
 };

@@ -35,12 +35,12 @@
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-class /*PNAPI*/			PNBool : public PNBaseValue<pnbool>
+class					PNBool : public PNBaseValue<pnbool>
 {
   PNDECLARE(PNBool)
 
 public:
-  PNBool();
+  PNBool() {}
   PNBool(pnbool value) : PNBaseValue<pnbool>(value) {}
   virtual ~PNBool() {}
 
