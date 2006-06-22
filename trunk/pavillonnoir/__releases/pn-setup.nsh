@@ -121,6 +121,11 @@ Section "!Binaires" SecBin
   
   SetOutPath "$INSTDIR\pavillonnoir\__doc\quickstart"
   File /x .svn /x *.log "..\__doc\quickstart\*.pdf"
+  
+  ; VCPP redistribuables packages
+  SetOutPath "$TMP"
+  File "vcredist_x86.exe"
+  ExecWait '"$TMP\vcredist_x86.exe" /Q'
 
 ; Shortcuts
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
