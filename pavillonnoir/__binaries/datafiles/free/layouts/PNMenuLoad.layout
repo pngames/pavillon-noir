@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<GUILayout>
+	<Window Type="DefaultWindow" Name="PNMenuLoad">
+    <Window Type="Vanilla/StaticImage" Name="PNMenuLoad/Background">
+      <Property Name="RelativeRect" Value="l:0.000000 t:0.000000 r:1.000000 b:1.000000" />
+      <Property Name="UnifiedAreaRect" Value="{{0.000000,0.000000},{0.000000,0.000000},{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="Image" Value="set:Vanilla-Images image:GenericBrush" />
+      <Property Name="ImageColours" Value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+      <Property Name="FrameEnabled" Value="false"/>
+      <Property Name="Disabled" Value="true"/>
+    </Window>
+		<Window Type="Vanilla/Listbox" Name="MenuLoad/Listbox">
+			<Property Name="AbsoluteRect" Value="l:308.000000 t:170.000000 r:731.000000 b:533.000000" />
+			<Property Name="RelativeRect" Value="l:0.301765 t:0.217391 r:0.716470 b:0.682097" />
+			<Property Name="UnifiedAreaRect" Value="{{0.301765,0.000000},{0.217391,0.000000},{0.716470,0.000000},{0.682097,0.000000}}" />
+
+		</Window>
+		<Window Type="Vanilla/StaticText" Name="MenuLoad/Title">
+			<Property Name="AbsoluteRect" Value="l:383.000000 t:41.000000 r:616.000000 b:100.000000" />
+			<Property Name="RelativeRect" Value="l:0.375294 t:0.052788 r:0.603723 b:0.128747" />
+			<Property Name="Text" Value="Chargement" />
+			<Property Name="UnifiedAreaRect" Value="{{0.375294,0.000000},{0.052788,0.000000},{0.603723,0.000000},{0.128747,0.000000}}" />
+			<Property Name="HorzFormatting" Value="WordWrapCentred" />			
+		</Window>
+		<Window Type="Vanilla/Button" Name="MenuLoad/ButtonOk">
+			<Property Name="AbsoluteRect" Value="l:289.000000 t:691.000000 r:493.000000 b:739.000000" />
+			<Property Name="RelativeRect" Value="l:0.282942 t:0.883068 r:0.482941 b:0.944961" />
+			<Property Name="Text" Value="Valider" />
+			<Property Name="UnifiedAreaRect" Value="{{0.282942,0.000000},{0.883068,0.000000},{0.482941,0.000000},{0.944961,0.000000}}" />
+			</Window>
+		<Window Type="Vanilla/Button" Name="MenuLoad/ButtonBack">
+			<Property Name="AbsoluteRect" Value="l:522.000000 t:691.000000 r:726.000000 b:740.000000" />
+			<Property Name="RelativeRect" Value="l:0.512156 t:0.883989 r:0.712155 b:0.947161" />
+			<Property Name="Text" Value="Retour" />
+			<Property Name="UnifiedAreaRect" Value="{{0.512156,0.000000},{0.883989,0.000000},{0.712155,0.000000},{0.947161,0.000000}}" />
+			</Window>
+		</Window>
+</GUILayout>

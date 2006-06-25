@@ -253,15 +253,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__src\pncommon\pnresources.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\__src\pncommon\PNVRef.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\resource.h"
 				>
 			</File>
 			<Filter
@@ -985,8 +977,32 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="resources"
+			>
+			<File
+				RelativePath="..\..\..\__src\pncommon\datafiles_format.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\pnresources.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNResourcesManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\__src\pncommon\PNResourcesManager.hpp"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\pncommon.rc"
+			>
+		</File>
+		<File
+			RelativePath=".\resource.h"
 			>
 		</File>
 	</Files>

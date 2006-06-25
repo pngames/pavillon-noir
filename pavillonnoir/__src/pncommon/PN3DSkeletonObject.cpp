@@ -95,7 +95,7 @@ PN3DSkeletonObject::_parseAnimations(xmlNode* parent)
 
 	if (attr != NULL)
 	{
-	  if ((anim = (PN3DAnimation*)PNImportManager::getInstance()->import(DEF::animationFilePath + (const char*)attr, PN_IMPORT_3DANIMATION)) == NULL)
+	  if ((anim = (PN3DAnimation*)PNImportManager::getInstance()->import(PNRT_animation, (const char*)attr, PN_IMPORT_3DANIMATION)) == NULL)
 		return PNEC_ERROR;
 	}
 	else
@@ -127,7 +127,7 @@ PN3DSkeletonObject::_parseSkeleton(xmlNode* node)
 
   if ((attr = xmlGetProp(node, (const xmlChar *)PNO_XMLPROP_PATH)) != NULL)
   {
-    _skeleton = (PN3DSkeleton*)PNImportManager::getInstance()->import(DEF::skeletonFilePath + (const char*)attr, PN_IMPORT_3DSKELETON, true);
+    _skeleton = (PN3DSkeleton*)PNImportManager::getInstance()->import(PNRT_skeleton, (const char*)attr, PN_IMPORT_3DSKELETON, true);
 
 	if (_skeleton == NULL)
 	  return PNEC_LOADING_MODEL;
@@ -176,7 +176,7 @@ PN3DSkeletonObject::_serializeContent(xmlNode* root)
   if (_skeleton != NULL && _skeleton->getFile() != NULL)
   {
 	node = xmlNewChild(root, NULL, BAD_CAST PNO_XMLNODE_SKELETON.c_str(), NULL);
-	xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::skeletonFilePath, *_skeleton->getFile()).c_str());
+	xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST PNResourcesManager::getInstance()->convertPath(PNRT_skeleton, *_skeleton->getFile()).c_str());
   }
 
   if (_anims.size() > 0)
@@ -189,7 +189,7 @@ PN3DSkeletonObject::_serializeContent(xmlNode* root)
 		PN3DSkeletonAnimation* skAnimation = *it;
   
 		node = xmlNewChild(root, NULL, BAD_CAST PNOA_XMLNODE_ROOT.c_str(), NULL);
-		xmlNewProp(node, PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::animationFilePath, *skAnimation->anim->getFile()).c_str());
+		xmlNewProp(node, PNO_XMLPROP_PATH, BAD_CAST PNResourcesManager::getInstance()->convertPath(PNRT_animation, *skAnimation->anim->getFile()).c_str());
 
 		skAnimation->serializeInXML(node, true);
 

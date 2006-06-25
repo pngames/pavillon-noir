@@ -120,7 +120,7 @@ int	  main(int argc, char* argv[])
   //////////////////////////////////////////////////////////////////////////
   // Initialize configuration
  
-  PNI18n::getInstance()->unserializeFromPath("datafiles/i18n/default.xml");
+  PNI18n::getInstance()->unserializeFromPath("datafiles/default/i18n/default.xml");
   
   //////////////////////////////////////////////////////////////////////////
   // Load Plugins

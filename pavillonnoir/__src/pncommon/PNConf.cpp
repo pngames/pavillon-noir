@@ -123,7 +123,7 @@ PNConf::_copyDirectory(const fs::path& path, const std::string& target)
 void
 PNConf::_loadDefaultConf()
 {
-  _copyDirectory(fs::path(DEF::confFilePath, fs::no_check), _confPath + PATHSEP);
+  _copyDirectory(fs::path("datafiles/default/configuration", fs::no_check), _confPath + PATHSEP);
 }
 
 //////////////////////////////////////////////////////////////////////////

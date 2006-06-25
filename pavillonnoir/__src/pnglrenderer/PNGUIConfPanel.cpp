@@ -28,6 +28,8 @@
 */
 
 #include "pndefs.h"
+#include "pnresources.h"
+
 #include "PNGUIConfPanel.hpp"
 
 using namespace PN;
@@ -44,7 +46,7 @@ PNGUIConfPanel::PNGUIConfPanel()
   _cursorVisibility = false;
   _nbTAB = 0;
 
-  _pnConfPanel = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNConfPanel.layout");
+  _pnConfPanel = CEGUI::WindowManager::getSingleton().loadWindowLayout(PNResourcesManager::getInstance()->findPath(PNRT_layout, "PNConfPanel.layout"));
   CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnConfPanel);
   _pnConfPanel->hide();
   _tabControl = (CEGUI::TabControl*)CEGUI::WindowManager::getSingleton().getWindow("PNConfPanel/tabControl");

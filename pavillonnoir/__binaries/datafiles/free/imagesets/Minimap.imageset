@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<Imageset Name="Minimap" Imagefile="./datafiles/free/imagesets/Minimap.tga" NativeHorzRes="512" NativeVertRes="512" AutoScaled="false">
+	<Image Name="Minimap/map" XPos="0" YPos="2" Width="512" Height="423" />
+	<Image Name="Minimap/point" XPos="64" YPos="452" Width="15" Height="15" />
+
+</Imageset>
+

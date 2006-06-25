@@ -1,0 +1,8 @@
+<?xml version="1.0"?><!DOCTYPE object SYSTEM "../../object.dtd">
+<object>
+  <model path="animation test.pnm" />
+  <skeleton path="animation test.pns" />
+  <listanims>
+    <anim path="animation test.pna" />
+  </listanims>
+</object>

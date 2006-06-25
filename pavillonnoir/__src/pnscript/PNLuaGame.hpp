@@ -58,8 +58,8 @@ namespace PN
   private:
     PNLuaVm				      _LVM;
 	bool					  debug;
-	boost::filesystem::path	  _modsDirectory;
-    boost::filesystem::path	  _gameRootDirectory;
+	//boost::filesystem::path	  _modsDirectory;
+    //boost::filesystem::path	  _gameRootDirectory;
     PNLuaGameMap*             _gameMap;
     std::set<std::string>     _loadedScripts;
     bool                      _isLoadingMap;
@@ -108,9 +108,9 @@ namespace PN
     pnerrorcode				loadLuaScript(const pnchar* file, bool reload=false);
 
     //defini le repertoire principal ou se trouve le script
-    pnerrorcode						setGameRoot(const pnchar *name);
+    //pnerrorcode						setGameRoot(const pnchar *name);
 
-    const boost::filesystem::path&  getGameRoot();
+    //const boost::filesystem::path&  getGameRoot();
     PNGameMap*                      getGameMap();
 
     //initialize the plugin

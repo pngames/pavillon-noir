@@ -131,7 +131,7 @@ PNI3DMaterial::unserializeFromStream(std::istream& istm)
   {
   	//std::cout << _texture << std::endl;
   	
-	err = _renderMaterial->setTexture(DEF::texturesFilePath + _texture);
+	err = _renderMaterial->setTexture(PNResourcesManager::getInstance()->findPath(PNRT_texture, _texture));
   }
 
   return err;

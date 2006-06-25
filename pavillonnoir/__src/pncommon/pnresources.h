@@ -34,43 +34,42 @@
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
-  namespace DEF
-  {
-	static const std::string	dataFilePath = "datafiles/";
 
-	static const std::string	modelFilePath = dataFilePath + "models/";
-	static const std::string	materialFilePath = dataFilePath + "materials/";
-	static const std::string	texturesFilePath = dataFilePath + "textures/";
-	static const std::string	skeletonFilePath = dataFilePath + "skeletons/";
-	static const std::string	animationFilePath = dataFilePath + "animations/";
-	static const std::string	physicsFilePath = dataFilePath + "physics/";
+typedef enum
+{
+  PNRT_none,
 
-	static const std::string	objectFilePath = dataFilePath + "objects/";
-	static const std::string	defaultObjFilePath = objectFilePath + "3ddynobject.pno";
+  PNRT_model,
+  PNRT_material,
+  PNRT_texture,
+  PNRT_skeleton,
+  PNRT_animation,
+  PNRT_physics,
 
-	static const std::string	mapsFilePath = dataFilePath + "maps/";
+  PNRT_object,
 
-	static const std::string	gamedefFilePath = dataFilePath + "gamedef/";
+  PNRT_map,
 
-	static const std::string	musicFilePath = dataFilePath + "music/";
-	static const std::string	soundsFilePath = dataFilePath + "sounds/";
-	static const std::string	videosFilePath = dataFilePath + "videos/";
+  PNRT_gamedef,
 
-	static const std::string	confFilePath = dataFilePath + "configuration/";
+  PNRT_music,
+  PNRT_sound,
+  PNRT_video,
 
-	static const std::string	chatDirectory = "chats/";
+  PNRT_layout,
+  PNRT_looknfeel,
+  PNRT_scheme,
+  PNRT_imageset,
+  PNRT_font,
 
-	inline std::string			convertPath(const std::string& type, const std::string& path)
-	{
-	  std::string::size_type	  index = path.rfind(type);
+  PNRT_chat,
 
-	  if (index == std::string::npos)
-		return path;
+  PNRT_NB
+} pnResourceType;
 
-	  return path.c_str() + index + type.size();
-	}
-  }
 //////////////////////////////////////////////////////////////////////////
 }
+
+#include "PNResourcesManager.hpp"
 
 #endif /*_PNRESSOURCES_H_*/

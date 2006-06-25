@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE entities SYSTEM "../../../entities.dtd">
+<entities>
+  <entity id="id_0" label="Pirate" mdref="cube_60x60x60.pno" envtype="dynamic" objtype="object" class="PNAIPirate"
+          x="0.0" y="0.0" z="0.0" xx="0.0" yy="0.0" zz="0.000000" ww="1.0">
+  </entity>
+</entities>

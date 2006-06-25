@@ -288,7 +288,7 @@ PNGLShape::setInObjView()
 void
 PNGLShape::addScript(pnEventType type, const char* name)
 {
-  boost::filesystem::path* scriptPath = new boost::filesystem::path(PN::DEF::gamedefFilePath + name);
+  boost::filesystem::path* scriptPath = new boost::filesystem::path(PNResourcesManager::getInstance()->getDefault(PNRT_gamedef) + name);
 
   if (_scripts.find(type) == _scripts.end())
 	_scripts[type] = new scriptList;
@@ -460,10 +460,10 @@ PNGLShape::unserializeFromXML(xmlNode* root)
 
   if (!_objLoaded)
   {
-	pnint obj_error = _obj->unserializeFromPath(DEF::objectFilePath + mdref);
+	pnint obj_error = _obj->unserializeFromPath(PNResourcesManager::getInstance()->getDefault(PNRT_object) + mdref);
 	if (obj_error != PNEC_SUCCESS)
 	{
-	  pnerror(PN_LOGLVL_ERROR, "%s%s : %s", DEF::objectFilePath.c_str(), mdref.c_str(), pnGetErrorString(obj_error));
+	  pnerror(PN_LOGLVL_ERROR, "%s%s : %s", PNResourcesManager::getInstance()->getDefault(PNRT_object).c_str(), mdref.c_str(), pnGetErrorString(obj_error));
 	  return obj_error;
 	}
 
@@ -471,7 +471,7 @@ PNGLShape::unserializeFromXML(xmlNode* root)
   }
   else
   {
-	_obj->setPath(DEF::objectFilePath + mdref);
+	_obj->setPath(PNResourcesManager::getInstance()->getDefault(PNRT_object) + mdref);
 	setModified();
   }
 
@@ -509,7 +509,7 @@ PNGLShape::serializeInXML(xmlNode* root, pnbool isroot/* = false*/)
   xmlNewProp(root, PNXML_ID_ATTR, BAD_CAST os.str().c_str());
 
   xmlNewProp(root, PNXML_LABEL_ATTR, BAD_CAST getLabel().c_str());
-  xmlNewProp(root, PNXML_MODELREFERENCE_ATTR,BAD_CAST DEF::convertPath(DEF::objectFilePath, *_obj->getPath()).c_str());
+  xmlNewProp(root, PNXML_MODELREFERENCE_ATTR,BAD_CAST PNResourcesManager::getInstance()->convertPath(PNRT_object, *_obj->getPath()).c_str());
 
   switch (getEnvType())
   {
@@ -570,8 +570,9 @@ PNGLShape::serializeInXML(xmlNode* root, pnbool isroot/* = false*/)
 
 	for (scriptList::iterator j = i->second->begin(); j != i->second->end(); j++)
 	{
-	  std::string str = (*j)->string().substr(PN::DEF::gamedefFilePath.size(),
-		(*j)->string().size() - PN::DEF::gamedefFilePath.size());
+	  int size = PNResourcesManager::getInstance()->getDefault(PNRT_gamedef).size();
+
+	  std::string str = (*j)->string().substr(size,	(*j)->string().size() - size);
 
 	  xmlNewChild(node, NULL, PNXML_SCRIPT_MKP, NULL);
 	  xmlNewProp(node, PNXML_REFERENCE_ATTR, BAD_CAST str.c_str());

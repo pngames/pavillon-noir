@@ -356,91 +356,91 @@
 			Name="LuaGameDef"
 			>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\gameMap.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\gameMap.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\init.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\init.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PN3DCameraClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PN3DCameraClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PN3DObjectClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PN3DObjectClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PN3DSkeletonObjectClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PN3DSkeletonObjectClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNActionTriggerClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNActionTriggerClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNAICharacterClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNAICharacterClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNAINavyClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNAINavyClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNAIPirateClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNAIPirateClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNCharacterClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNCharacterClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNDieClass.lua"
+				RelativePath="..\..\..\__binaries\free\datafiles\gamedef\PNDieClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNGetItemTriggerClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNGetItemTriggerClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNItemClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNItemClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNModifier.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNModifier.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNModifierClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNModifierClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNPlayerClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNPlayerClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNRenderCam.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNRenderCam.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNSaberWeaponClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNSaberWeaponClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNTimerClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNTimerClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNWeaponClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNWeaponClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\PNWeaponH2HClass.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\PNWeaponH2HClass.lua"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\__binaries\datafiles\gamedef\utilities.lua"
+				RelativePath="..\..\..\__binaries\datafiles\free\gamedef\utilities.lua"
 				>
 			</File>
 		</Filter>

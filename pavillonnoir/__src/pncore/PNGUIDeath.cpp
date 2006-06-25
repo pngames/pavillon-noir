@@ -30,6 +30,8 @@
 
 #include "pndefs.h"
 #include "pnrender.h"
+#include "pnresources.h"
+
 #include "PNGUIGame.hpp"
 #include "PNGUIStateManager.hpp"
 #include "PNGUIDeath.hpp"
@@ -44,7 +46,7 @@ namespace PN
 
   PNGUIDeath::PNGUIDeath()
   {
-	_pnDeath = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNGUIDeath.layout");
+	_pnDeath = CEGUI::WindowManager::getSingleton().loadWindowLayout(PNResourcesManager::getInstance()->findPath(PNRT_layout, "PNGUIDeath.layout"));
 	_pnDeath->hide();
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnDeath);
 	_pnStatText = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIDeath/BackMenuText");
@@ -52,7 +54,7 @@ namespace PN
 	
 	_deathImage = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "DeathImages/DeathScreen");
 	_deathImage->setImage("DeathImages", "DeathImages/DeathScreen");
-	_deathWnd = (CEGUI::Window*)( CEGUI::WindowManager::getSingleton().createWindow( "DefaultWindow", "death_wnd" ) );
+	_deathWnd = (CEGUI::Window*)( CEGUI::WindowManager::getSingleton().createWindow( "DefaultWindow", "death_wnd"));
 
 	_deathWnd->addChildWindow(_deathImage);
 

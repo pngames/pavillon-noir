@@ -38,7 +38,10 @@ extern "C"
 #include <string>
 #include <sstream>
 #include <map>
+
 #include "pndefs.h"
+#include "pnresources.h"
+
 #include "PNObject.hpp"
 #include "PN3DObject.hpp"
 #include "PN3DCamera.hpp"
@@ -69,21 +72,24 @@ PNLuaGameMap::~PNLuaGameMap(void)
 
 void  PNLuaGameMap::addToMap(const std::string& entityName, const std::string& id)
 {
-    _playerId.clear();
+  _playerId.clear();
+
   std::string luaOrder = "";
   if (entityName.length() == 0)
 	luaOrder +=  "entity = PN3DObjectClass(\"" + id + "\")\n gameMap:spawn2(entity, \"" + id + "\")\n";
   else
   {
-    if (entityName == "PNPlayer")
-        _playerId = id;
+	if (entityName == "PNPlayer")
+	  _playerId = id;
 
-	loadLuaScript(std::string(entityName).append(".lua").c_str());
+	//loadLuaScript(PNResourcesManager::getInstance()->findPath(PNRT_gamedef, entityName + ".lua").c_str());
+	loadLuaScript(std::string(entityName).append("Class.lua").c_str());
 	luaOrder +=  "entity = " + entityName + "Class(\"" + id + "\")\n gameMap:spawn2(entity, \"" + id + "\")\n";
   }
+
   pnerror(PN_LOGLVL_DEBUG, "%s -> Lua", luaOrder.c_str());
-  int err  = this->_LVM.execString(luaOrder);
-  return;
+
+  int err  = _LVM.execString(luaOrder);
 }
 
 

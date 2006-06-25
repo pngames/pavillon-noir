@@ -128,6 +128,17 @@ PNImportManager::import(const std::string& path, importtype type, bool copy)
   return obj;
 }
 
+IPNImportedObject*
+PNImportManager::import(pnResourceType rt, const std::string& path, importtype type, bool copy)
+{
+  std::string outPath;
+
+  if (PNResourcesManager::getInstance()->findPath(rt, path, outPath) != PNEC_SUCCESS)
+	return NULL;
+
+  return import(outPath, type, copy);
+}
+
 void
 PNImportManager::clean()
 {

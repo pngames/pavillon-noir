@@ -64,10 +64,9 @@ public:
   static void				luaDebugLineHook(lua_State *S, lua_Debug *ar);
 
   //-------------------------------MANIPULATION METHODS---------------------------------
-  int						execFile(const boost::filesystem::path &path);
-  int						execString(const std::string &orders);
+  int						execFile(const std::string& path);
+  int						execString(const std::string& orders);
   int						registerLuaLibrary(lua_library_register);
-  void						setDebugLogPath(boost::filesystem::path path);
   void						reset();
 };
 

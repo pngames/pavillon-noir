@@ -30,6 +30,8 @@
 
 #include "pndefs.h"
 #include "pnrender.h"
+#include "pnresources.h"
+
 #include "PNGUIGame.hpp"
 #include "PNGUIStateManager.hpp"
 #include "PNGUIWin.hpp"
@@ -44,7 +46,7 @@ namespace PN
 
   PNGUIWin::PNGUIWin()
   {
-	_pnWin = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNGUIWin.layout");
+	_pnWin = CEGUI::WindowManager::getSingleton().loadWindowLayout(PNResourcesManager::getInstance()->findPath(PNRT_layout, "PNGUIWin.layout"));
 	_pnWin->hide();
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnWin);
 	_pnStatText = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIWin/BackMenuText");
