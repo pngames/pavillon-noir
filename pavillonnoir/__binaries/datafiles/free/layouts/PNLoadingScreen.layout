@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<GUILayout>
+	<Window Type="DefaultWindow" Name="LoadingScreen">
+
+<Window Type="Vanilla/StaticImage" Name="LoadingScreen/Background">
+      <Property Name="RelativeRect" Value="l:0.000000 t:0.000000 r:1.000000 b:1.000000" />
+      <Property Name="UnifiedAreaRect" Value="{{0.000000,0.000000},{0.000000,0.000000},{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="Image" Value="set:Vanilla-Images image:GenericBrush" />
+      <Property Name="ImageColours" Value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+      <Property Name="FrameEnabled" Value="false"/>
+      <Property Name="Disabled" Value="true"/>
+    </Window>
+
+<!--		<Window Type="Vanilla/StaticImage" Name="LoadingScreen/Background">
+			<Property Name="AbsoluteRect" Value="l:0.000000 t:0.000000 r:1020.000000 b:782.000000" />
+			<Property Name="FrameEnabled" Value="False" />
+			<Property Name="RelativeRect" Value="l:0.000000 t:0.000000 r:1.000000 b:1.000000" />
+			<Property Name="UnifiedAreaRect" Value="{{0.000000,0.000000},{0.000000,0.000000},{1.000000,0.000000},{1.000000,0.000000}}" />
+			<Property Name="Image" Value="set:LoadingScreenImage image:LoadingScreenBackground" />			
+			<Property Name="FrameEnabled" Value="false"/>
+			<Property Name="Disabled" Value="true"/>
+		</Window>
+-->
+    <Window Type="Vanilla/StaticImage" Name="chargement" >
+      <Property Name="Image" Value="set:LoadingScreenImages image:LoadingScreenImages/chargement" />
+      <Property Name="UnifiedAreaRect" Value="{{0.60000,0.000000},{0.63000,0.000000},{0.95000,0.000000},{0.780000,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="FrameEnabled" Value="false"/>
+      <Property Name="Disabled" Value="true"/>
+      <Property Name="BackgroundEnabled" Value="false" />
+    </Window>
+		<Window Type="Vanilla/ProgressBar" Name="LoadingScreen/ProgressBar">
+			<Property Name="AbsoluteRect" Value="l:51.000000 t:587.000000 r:969.000000 b:622.000000" />
+			<Property Name="RelativeRect" Value="l:0.050000 t:0.750000 r:0.950000 b:0.795000" />
+			<Property Name="UnifiedAreaRect" Value="{{0.050000,0.000000},{0.790000,0.000000},{0.950000,0.000000},{0.835000,0.000000}}" />
+			</Window>
+		<Window Type="Vanilla/StaticText" Name="LoadingScreen/StaticText">
+			<Property Name="UnifiedAreaRect" Value="{{0.250000,0.000000},{0.880000,0.000000},{0.750000,0.000000},{0.940000,0.000000}}" />
+      <Property Name="HorzFormatting" Value="HorzCentred" />
+			</Window>
+		</Window>
+</GUILayout>

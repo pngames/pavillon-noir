@@ -30,6 +30,8 @@
 #include <sstream>
 #include <libxml/xmlreader.h>
 
+#include "pndefs.h"
+
 #include "pneditorcommon.hpp"
 #include "pnimport.h"
 #include "pnexception.h"

@@ -40,6 +40,7 @@
 
 /////////////////////////////////////
 
+#include "pndefs.h"
 #include "pnresources.h"
 #include "pnxml.h"
 
@@ -431,7 +432,7 @@ long          PNPropertiesPanel::onCmdAdd(FXObject* obj, FXSelector sel, void* p
 
 	FXHorizontalFrame* hFramePath = new FXHorizontalFrame(vFrame,LAYOUT_FILL_X | LAYOUT_FILL_Y);
 	_path = new FXTextField(hFramePath, 30, NULL, 0, LAYOUT_FILL_X | LAYOUT_LEFT | TEXTFIELD_READONLY | FRAME_SUNKEN | FRAME_THICK);
-	_path->setText(PN::DEF::defaultObjFilePath.c_str());
+	_path->setText((PNResourcesManager::getInstance()->getDefault(PNRT_object) + "3ddynobject.pno").c_str());
 
 	new FXButton(hFramePath, "&Browse", NULL, this, ID_ADDOBJECT, BUTTON_DEFAULT|FRAME_RAISED|LAYOUT_FILL_X|FRAME_THICK);
 
@@ -544,7 +545,7 @@ long			PNPropertiesPanel::onAddObject(FXObject* sender, FXSelector sel, void* pt
   
   FXString* dir_path = new FXString(open.getDirectory().text());
   dir_path->append("/");
-  dir_path->append(DEF::objectFilePath.c_str());
+  dir_path->append(PNResourcesManager::getInstance()->getDefault(PNRT_object).c_str());
   open.setDirectory(*dir_path);
 
   if (open.execute())

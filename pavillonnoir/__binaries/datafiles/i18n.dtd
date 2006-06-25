@@ -1,0 +1,13 @@
+<!--
+     http://www.pavillon-noir.org/
+     XML DTD for i18n xml files
+-->
+
+<!ELEMENT i18n (string?)>
+<!ELEMENT string EMPTY>
+
+<!ATTLIST string key CDATA #REQUIRED>
+<!ATTLIST string value CDATA #REQUIRED>
+
+<!-- "language_country_variant" -->
+<!ATTLIST string locale CDATA #IMPLIED>

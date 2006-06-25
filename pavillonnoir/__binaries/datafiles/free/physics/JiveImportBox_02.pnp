@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<!DOCTYPE physics SYSTEM "../../physics.dtd">
+<physics>
+  <model type="opal" path="JiveImportBox_02.xml" />
+</physics>

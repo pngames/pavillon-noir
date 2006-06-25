@@ -1,0 +1,7 @@
+<?xml version="1.0"?><!DOCTYPE object SYSTEM "../../object.dtd">
+<object>
+  <model path="groundTeapot.pnm" />
+  <listmaterials>
+    <material path="groundTeapot_01 - Default.pnt" />
+  </listmaterials>
+</object>

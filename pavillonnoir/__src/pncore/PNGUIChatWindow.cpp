@@ -32,6 +32,7 @@
 #include "pndefs.h"
 #include "pnresources.h"
 #include "pnchatxml.h"
+
 #include "PNGUIChatWindow.hpp"
 #include "PNGUIGame.hpp"
 #include "PNConsole.hpp"
@@ -51,7 +52,7 @@ namespace PN
 
   PNGUIChatWindow::PNGUIChatWindow()
   {
-	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/PNChatWindow.layout"); 
+	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout(PNResourcesManager::getInstance()->findPath(PNRT_layout, "PNChatWindow.layout")); 
 	_listBox = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Listbox");	
 	_textQuestion = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Text");
 	_textName = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Name");
@@ -99,12 +100,11 @@ namespace PN
 
   void PNGUIChatWindow::setMapChatPath(std::string id_player)
   {
-	
 	_currentChatXml = "";
 	PNGameMap*	gmap = PNGameInterface::getInstance()->getGameMap();
 	std::string* tmpMap = gmap->getPath();
 	_currentChatXml += *tmpMap;
-	_currentChatXml += "/" + DEF::chatDirectory + id_player + ".xml";
+	_currentChatXml += "/" + PNResourcesManager::getInstance()->findPath(PNRT_chat, id_player + ".xml");
   }
 
   void	PNGUIChatWindow::startGUI(std::string id_player)

@@ -81,7 +81,7 @@ void  PNGUIGame::_commandLoadMap(const std::string&, std::istream& i)
 	PNConsole::writeError(PN_LOGLVL_ERROR, "You have to put a file name");
 
   PNGameLoadMapEventData data;
-  data.mapName =  DEF::mapsFilePath + path;
+  data.mapName = PNResourcesManager::getInstance()->findPath(PNRT_map, path);
 
   fs::path	file(data.mapName, fs::no_check);
 
@@ -439,7 +439,7 @@ PNGUIGame::PNGUIGame()
 {
   _label = "PNGUIGame";
 
-  _rootWin = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNGUIGame.layout");
+  _rootWin = CEGUI::WindowManager::getSingleton().loadWindowLayout(PNResourcesManager::getInstance()->findPath(PNRT_layout, "PNGUIGame.layout"));
 
   CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_rootWin);
 

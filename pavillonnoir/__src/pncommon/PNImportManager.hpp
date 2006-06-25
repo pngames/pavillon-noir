@@ -36,6 +36,7 @@
 #include <boost/filesystem/path.hpp>
 
 #include "pnevent.h"
+#include "pnresources.h"
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -61,6 +62,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
   IPNImportedObject*		import(const std::string& path, importtype type = PN_IMPORT_DEFAULT, bool copy = false);
+  IPNImportedObject*		import(pnResourceType rt, const std::string& path, importtype type = PN_IMPORT_DEFAULT, bool copy = false);
 
   void						clean();
 

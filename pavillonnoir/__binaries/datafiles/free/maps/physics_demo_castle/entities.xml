@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!DOCTYPE entities SYSTEM "../../../entities.dtd">
+<entities>
+<entity id="0" id="New Object" mdref="plane_3000x3000.pno" envtype="static" objtype="object" class="PN3DObject" x="0" y="0" z="0" xx="0" yy="0" zz="0" yy="1">
+</entity>
+<entity id="3" id="New Object" mdref="carre texture1.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="134.658" y="1328.43" z="182.283" xx="0.118665" yy="-0.0727178" zz="-0.517414" yy="-0.844342">
+</entity>
+<entity id="3" id="New Object" mdref="carre texture1.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-150.155" y="1317.21" z="-87.9805" xx="0.121032" yy="-0.179437" zz="0.545938" yy="-0.809386">
+</entity>
+<entity id="4" id="New Object" mdref="carre texture1.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-112.184" y="1252.38" z="260.855" xx="-0.266245" yy="0.248793" zz="-0.0713402" yy="-0.928507">
+</entity>
+<entity id="5" id="New Object" mdref="carre texture1.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="65.2095" y="1124.65" z="150.293" xx="0.089206" yy="0.25191" zz="0.321666" yy="0.908358">
+</entity>
+<entity id="6" id="New Object" mdref="carre texture1.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="22.0677" y="1139.84" z="203.265" xx="-0.213136" yy="-0.40085" zz="-0.418302" yy="0.786712">
+</entity>
+<entity id="8" id="New Object" mdref="carre texture2.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="126.913" y="1265.58" z="203.35" xx="-0.387732" yy="0.214084" zz="-0.0930862" yy="-0.891722">
+</entity>
+<entity id="9" id="New Object" mdref="carre texture2.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="32.0491" y="1256.44" z="168.073" xx="0" yy="0" zz="0.241922" yy="-0.970296">
+</entity>
+<entity id="10" id="New Object" mdref="carre texture2.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-58.4019" y="1178.13" z="199.713" xx="-0.313676" yy="-0.322402" zz="0.114169" yy="0.885793">
+</entity>
+<entity id="11" id="New Object" mdref="carre texture2.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-95.9746" y="1259.28" z="87.6551" xx="0.18961" yy="-0.302813" zz="-0.0616081" yy="-0.931964">
+</entity>
+<entity id="12" id="New Object" mdref="carre texture2.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-54.6809" y="1153.25" z="63.6823" xx="-0.215554" yy="0.440505" zz="-0.10983" yy="-0.86454">
+</entity>
+<entity id="22" id="New Object" mdref="carre texture1.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-54.3502" y="1303.39" z="-17.1313" xx="0" yy="0" zz="0.587785" yy="-0.809017">
+</entity>
+<entity id="23" id="New Object" mdref="carre texture1.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="147.55" y="1204.92" z="121.383" xx="0" yy="0.522499" zz="0" yy="0.85264">
+</entity>
+<entity id="24" id="New Object" mdref="carre texture1.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="134.126" y="1188.13" z="-9.3549" xx="0" yy="0" zz="0" yy="1">
+</entity>
+<entity id="25" id="New Object" mdref="carre texture1.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-115.08" y="1317.22" z="114.097" xx="0" yy="0" zz="0" yy="1">
+</entity>
+<entity id="26" id="New Object" mdref="carre texture1.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="90.9567" y="1330.6" z="48.4559" xx="0.341118" yy="-0.221525" zz="-0.497553" yy="-0.766164">
+</entity>
+<entity id="27" id="New Object" mdref="carre texture2.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="109.2" y="1163.01" z="260.475" xx="-0.220407" yy="-0.678341" zz="0.216593" yy="-0.666604">
+</entity>
+<entity id="28" id="New Object" mdref="carre texture2.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-50.9296" y="1321.28" z="222.574" xx="0.388529" yy="0.206294" zz="-0.089699" yy="0.893556">
+</entity>
+<entity id="29" id="New Object" mdref="carre texture2.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="44.5294" y="1257.4" z="245.305" xx="-0.467192" yy="0.198311" zz="-0.336665" yy="0.793134">
+</entity>
+<entity id="30" id="New Object" mdref="carre texture2.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0.318557" y="1164.29" z="-103.291" xx="0" yy="0" zz="0" yy="1">
+</entity>
+<entity id="41" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="70" z="21.0072" xx="0.156434" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="42" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="70" z="62.8383" xx="-0.156435" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="42" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="70.518" z="147.333" xx="-0.156435" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="43" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="70" z="104.982" xx="0.156434" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="44" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="130" z="84.1164" xx="-0.707079" yy="-0.00617059" zz="-0.00617059" yy="-0.70708">
+</entity>
+<entity id="45" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="70" z="-63.513" xx="0.156434" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="46" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="70" z="-148.711" xx="0.156434" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="47" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="70" z="-106.386" xx="-0.156435" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="48" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="70" z="-21.328" xx="-0.156435" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="49" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0.000244141" y="130" z="-86.671" xx="0.706999" yy="-0.000106845" zz="0.012232" yy="0.707108">
+</entity>
+<entity id="50" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="70" z="316.968" xx="-0.156435" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="51" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="70" z="274.676" xx="0.156434" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="52" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="70" z="231.881" xx="-0.156435" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="53" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="70" z="190.041" xx="0.156434" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="55" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="130" z="249.469" xx="-0.707079" yy="-0.00617059" zz="-0.00617059" yy="-0.70708">
+</entity>
+<entity id="56" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="192" z="-21.32" xx="0.156434" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="57" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="192" z="21.007" xx="-0.156435" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="58" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="192" z="147.3" xx="0.156434" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="59" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="192" z="274.7" xx="-0.156435" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="60" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="192" z="190" xx="-0.156435" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="61" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="192" z="231.9" xx="0.156434" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="62" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-0.000244141" y="317.851" z="231.436" xx="-0.156435" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="63" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-0.000244141" y="316.68" z="188.451" xx="0.156434" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="64" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="192" z="-63.51" xx="-0.156435" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="65" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="192" z="-106.38" xx="0.156434" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="66" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-0.000244141" y="253.325" z="206.11" xx="-0.713222" yy="-0.0062242" zz="-0.00611651" yy="-0.700883">
+</entity>
+<entity id="67" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-0.000244141" y="251.994" z="-44.9756" xx="-0.707079" yy="-0.00617059" zz="-0.00617059" yy="-0.70708">
+</entity>
+<entity id="68" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="315.51" z="-63.6492" xx="0.156434" yy="0" zz="0" yy="0.987688">
+</entity>
+<entity id="69" id="New Object" mdref="domino_60x5x120.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0.000244141" y="316.095" z="-20.5531" xx="-0.156435" yy="0" zz="0" yy="0.987688">
+</entity>
+</entities>

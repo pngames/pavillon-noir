@@ -32,7 +32,8 @@
 #include "PNConsole.hpp"
 
 /*! Gets an instance of the sound manager */
-PNSoundManager*  PNSoundManager::getInstance()
+PNSoundManager*
+PNSoundManager::getInstance()
 {
   if (_instance == NULL)
 	return new PNSoundManager();
@@ -41,29 +42,31 @@ PNSoundManager*  PNSoundManager::getInstance()
 }
 
 /*! clears the sound map */
-void					PNSoundManager::clearSoundMap()
+void
+PNSoundManager::clearSoundMap()
 {
-	soundMap.clear();
+  soundMap.clear();
 }
 
 /*! Disables sound management */
-void			 		PNSoundManager::disableSound()
+void
+PNSoundManager::disableSound()
 {
   PNEventManager::getInstance()->deleteCallback(PN_EVENT_SOUND_PLAY, EventCallback(this, &PNSoundManager::onPlaySound));
-  return;
 }
 
 
 /*! Enables sound management */
-void  					PNSoundManager::enableSound()
+void
+PNSoundManager::enableSound()
 {
   PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PLAY, EventCallback(this, &PNSoundManager::onPlaySound));
-  return;
 }
 
 
 /*! Sound manager's init */
-void PNSoundManager::init()
+void
+PNSoundManager::init()
 {
   printf("==--OpenAL init--==\n");
   // Return value of alutInit is not yep implemented (it will be soon with next OpenAL implementations)
@@ -74,8 +77,8 @@ void PNSoundManager::init()
   setListenerOrientation(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
   setListenerPosition(0.0, 0.0, 0.0);
   //}
+
   _maxId = 0;
-  return;
 }
 
 
@@ -87,53 +90,58 @@ PNSoundManager::~PNSoundManager()
 
 
 /*! Sets the listener's position to x, y, z */
-void PNSoundManager::setListenerPosition(float x, float y, float z)
+void
+PNSoundManager::setListenerPosition(float x, float y, float z)
 {
   alListener3f(AL_POSITION, x,y,z);
 }
 
 
 /*! Sets the listener's orientation */
-void PNSoundManager::setListenerOrientation(float fx, float fy, float fz, float ux, float uy, float uz)
+void
+PNSoundManager::setListenerOrientation(float fx, float fy, float fz, float ux, float uy, float uz)
 {
   float vec[6];
+
   vec[0] = fx;
   vec[1] = fy;
   vec[2] = fz;
   vec[3] = ux;
   vec[4] = uy;
   vec[5] = uz;
+
   alListenerfv(AL_ORIENTATION, vec);
-  return;
 }
 
 
 /*! Sets the Doppler effect */
-void PNSoundManager::setDopplerEffect(ALfloat velocity, ALfloat factor)
+void
+PNSoundManager::setDopplerEffect(ALfloat velocity, ALfloat factor)
 {
   alDopplerFactor(factor);
   alDopplerVelocity(velocity);
-  return;
 }
 
 
 /*! Gets the biggest Id in the map */
-pnint	PNSoundManager::getMaxId()
+pnint
+PNSoundManager::getMaxId()
 {
   return _maxId;
 }
 
 
 /*! Sets the biggest Id in the map */
-void	PNSoundManager::setMaxid(pnint id)
+void
+PNSoundManager::setMaxid(pnint id)
 {
   _maxId = id;
-  return;
 }
 
 
 /*! Creates a new sound and puts it in the map, return the element's Id */
-pnint	PNSoundManager::createNewSound(const std::string &name, const char* file, char looping, pnfloat x, pnfloat y, pnfloat z)
+pnint
+PNSoundManager::createNewSound(const std::string &name, const char* file, char looping, pnfloat x, pnfloat y, pnfloat z)
 {
   pnint newId = getMaxId();
   setMaxid(++newId);
@@ -150,12 +158,14 @@ pnint	PNSoundManager::createNewSound(const std::string &name, const char* file, 
   newSound->setProperties(x, y, z, 0.0, 0.0, 0.0);
   newSound->current_file = file;
   soundMap[name] = newSound;
+
   return (newId);
 }
 
 
 /*! Loads a new sound */
-bool			PNSoundManager::loadSound(const std::string &name, const pnchar *fname, char looping)
+bool
+PNSoundManager::loadSound(const std::string &name, const pnchar *fname, char looping)
 {
   if (soundMap.find(name) != soundMap.end())
   {
@@ -166,73 +176,76 @@ bool			PNSoundManager::loadSound(const std::string &name, const pnchar *fname, c
 	}
 	soundMap[name]->current_file = fname;
 	PNConsole::writeLine("Loaded file : %s", soundMap[name]->current_file.c_str());
+
 	return true;
   }
   PNConsole::writeLine("Error loading file : %s", fname);
+
   return false;
 }
 
 
 /*! Sets the proprieties for sound \"name\" in the map */
-void			PNSoundManager::setProperties(const std::string &name, pnfloat x, pnfloat y, pnfloat z, pnfloat vx, pnfloat vy, pnfloat vz)
+void
+PNSoundManager::setProperties(const std::string &name, pnfloat x, pnfloat y, pnfloat z, pnfloat vx, pnfloat vy, pnfloat vz)
 {
   if (soundMap.find(name) != soundMap.end())
 	soundMap[name]->setProperties(x, y, z, vx, vy, vz);
-  return;
 }
 
 
 /*! Plays sound \"name\" */
-void			PNSoundManager::playSound(const std::string &name)
+void
+PNSoundManager::playSound(const std::string &name)
 {
   printf("*Playing sound \"%s\"\n", name.c_str());
   if (soundMap.find(name) != soundMap.end())
 	soundMap[name]->playSound();
-  return;
 }
 
 
 /*! Stops sound \"name\" */
-void			PNSoundManager::stopSound(const std::string &name)
+void
+PNSoundManager::stopSound(const std::string &name)
 {
   printf("*Stopping sound \"%s\"\n", name.c_str());
   if (soundMap.find(name) != soundMap.end())
 	soundMap[name]->stopSound();
-  return;
 }
 
 
 /*! Pauses sound \"name\" */
-void			PNSoundManager::pauseSound(const std::string &name)
+void
+PNSoundManager::pauseSound(const std::string &name)
 {
   printf("*Paused sound \"%s\"\n", name.c_str());
   if (soundMap.find(name) != soundMap.end())
 	soundMap[name]->pauseSound();
-  return;
 }
 
 
 /*! Sets sound volume to value (between 0.1 and 1.0) for sound \"name\" */
-void			PNSoundManager::changeSoundVolume(const std::string &name, float value)
+void
+PNSoundManager::changeSoundVolume(const std::string &name, float value)
 {
   printf("*Change sound volume sound \"%s\" : value = %f\n", name.c_str(), value);
   if (soundMap.find(name) != soundMap.end())
 	soundMap[name]->changeSoundVolume(value);
-  return;
 }
 
 
 /*! Destroys sound \"name\" */
-void			PNSoundManager::destroySound(const std::string &name)
+void
+PNSoundManager::destroySound(const std::string &name)
 {
   if (soundMap.find(name) != soundMap.end())
 	soundMap[name]->destroySound();
-  return;
 }
 
 
 /*! Shows actually loaded sounds in the console */
-void			PNSoundManager::showLoadedSounds()
+void
+PNSoundManager::showLoadedSounds()
 {
   std::map<std::string , PNSound *>::iterator it;
 
@@ -242,108 +255,113 @@ void			PNSoundManager::showLoadedSounds()
   {
 	PNConsole::writeLine("+ Identifier \"%s\" for file \"%s\" | volume => %f", it->first.c_str(), it->second->current_file.c_str(), it->second->_volume);
   }
-  return;
 }
 
-void					PNSoundManager::pauseAllSounds()
+void
+PNSoundManager::pauseAllSounds()
 {
-	std::map<std::string , PNSound *>::iterator it;
+  std::map<std::string , PNSound *>::iterator it;
 
-	it = soundMap.begin();
-	PNConsole::writeLine("Loaded sounds are :");
-	for (it = soundMap.begin(); it != soundMap.end(); it++)
-	{
-		it->second->pauseSound();		
-	}
-	return;
+  it = soundMap.begin();
+  PNConsole::writeLine("Loaded sounds are :");
+  for (it = soundMap.begin(); it != soundMap.end(); it++)
+  {
+	it->second->pauseSound();		
+  }
 }
 
-void					PNSoundManager::playAllSounds()
+void
+PNSoundManager::playAllSounds()
 {
-	std::map<std::string , PNSound *>::iterator it;
+  std::map<std::string , PNSound *>::iterator it;
 
-	it = soundMap.begin();
-	PNConsole::writeLine("Loaded sounds are :");
-	for (it = soundMap.begin(); it != soundMap.end(); it++)
-	{
-		it->second->playSound();
-	}
-	return;
+  it = soundMap.begin();
+  PNConsole::writeLine("Loaded sounds are :");
+  for (it = soundMap.begin(); it != soundMap.end(); it++)
+  {
+	it->second->playSound();
+  }
 }
 
-void			PNSoundManager::registerCallbacks()
+void
+PNSoundManager::registerCallbacks()
 {
-    PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PLAY, EventCallback(this, &PNSoundManager::onPlaySound));
-	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_CREATE, EventCallback(this, &PNSoundManager::onCreateSound));
-	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_VOLUME, EventCallback(this, &PNSoundManager::onVolumeSound));
-	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_STOP, EventCallback(this, &PNSoundManager::onStopSound));
-	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PAUSE, EventCallback(this, &PNSoundManager::onPauseSound));
-	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_ENABLE, EventCallback(this, &PNSoundManager::onEnableSound));
-	PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_DISABLE, EventCallback(this, &PNSoundManager::onDisableSound));
-	/////////////////////////////////////////////////////////////////////////
-	/// GUI functions
-	/////////////////////////////////////////////////////////////////////////
-	PNConsole::addFonction("newsound", &_commandNewSound, "Loads a new sound in the sound map, parameters : string SoundName | string SoundFile | bool loop [TRUE | FALSE] | float XPosition | pnfloat YPosition | pnfloat ZPosition | volume (between 0.0 and 1.0)");
-	PNConsole::addFonction("playsound", &_commandPlaySound, "Plays an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\" | volume (between 0.0 and 1.0)");
-	PNConsole::addFonction("stopsound", &_commandStopSound, "Stops an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\"");
-	PNConsole::addFonction("pausesound", &_commandPauseSound, "Pauses an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\"");
-	PNConsole::addFonction("loadedsounds", &_commandLoadedSounds, "Shows already loaded sounds, no params");
-	PNConsole::addFonction("changesoundvolume", &_commandChangeSoundVolume, "changes a specific sound volume, parameter : string SoundName, float value (between 0.0 and 1.0)");
-	PNConsole::addFonction("enablesound", &_commandEnableSound, "Enable sound, 1 | 0");
-}
-
-
-void			PNSoundManager::onPlaySound(pnEventType evt, PNObject* source, PNEventData* data)
-{
-	PNSoundEventData* tmp = (PNSoundEventData*) data;
-
-	if (tmp->name == "all")
-		playAllSounds();
-	else
-		this->changeSoundVolume(tmp->name, tmp->sound_volume);
-	playSound(tmp->name);
+  PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PLAY, EventCallback(this, &PNSoundManager::onPlaySound));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_CREATE, EventCallback(this, &PNSoundManager::onCreateSound));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_VOLUME, EventCallback(this, &PNSoundManager::onVolumeSound));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_STOP, EventCallback(this, &PNSoundManager::onStopSound));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_PAUSE, EventCallback(this, &PNSoundManager::onPauseSound));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_ENABLE, EventCallback(this, &PNSoundManager::onEnableSound));
+  PNEventManager::getInstance()->addCallback(PN_EVENT_SOUND_DISABLE, EventCallback(this, &PNSoundManager::onDisableSound));
+  /////////////////////////////////////////////////////////////////////////
+  /// GUI functions
+  /////////////////////////////////////////////////////////////////////////
+  PNConsole::addFonction("newsound", &_commandNewSound, "Loads a new sound in the sound map, parameters : string SoundName | string SoundFile | bool loop [TRUE | FALSE] | float XPosition | pnfloat YPosition | pnfloat ZPosition | volume (between 0.0 and 1.0)");
+  PNConsole::addFonction("playsound", &_commandPlaySound, "Plays an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\" | volume (between 0.0 and 1.0)");
+  PNConsole::addFonction("stopsound", &_commandStopSound, "Stops an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\"");
+  PNConsole::addFonction("pausesound", &_commandPauseSound, "Pauses an already loaded sound, parameter : string SoundName (Sound identifier given by command \"loadedsounds)\"");
+  PNConsole::addFonction("loadedsounds", &_commandLoadedSounds, "Shows already loaded sounds, no params");
+  PNConsole::addFonction("changesoundvolume", &_commandChangeSoundVolume, "changes a specific sound volume, parameter : string SoundName, float value (between 0.0 and 1.0)");
+  PNConsole::addFonction("enablesound", &_commandEnableSound, "Enable sound, 1 | 0");
 }
 
 
-void			PNSoundManager::onCreateSound(pnEventType evt, PNObject* source, PNEventData* data)
+void
+PNSoundManager::onPlaySound(pnEventType evt, PNObject* source, PNEventData* data)
 {
-	PNSoundEventData* tmp = (PNSoundEventData*) data;
+  PNSoundEventData* tmp = (PNSoundEventData*) data;
 
-	this->createNewSound(tmp->name, tmp->fname.c_str(), tmp->looping, tmp->px, tmp->py, tmp->pz);
-}
-
-void			PNSoundManager::onVolumeSound(pnEventType evt, PNObject* source, PNEventData* data)
-{
-	PNSoundEventData* tmp = (PNSoundEventData*) data;
-
+  if (tmp->name == "all")
+	playAllSounds();
+  else
 	this->changeSoundVolume(tmp->name, tmp->sound_volume);
+  playSound(tmp->name);
 }
 
- void			PNSoundManager::onStopSound(pnEventType evt, PNObject* source, PNEventData* data)
- {
-	PNSoundEventData* tmp = (PNSoundEventData*) data;
 
-	this->stopSound(tmp->name);
- }
-  
- void			PNSoundManager::onPauseSound(pnEventType evt, PNObject* source, PNEventData* data)
- {
-	PNSoundEventData* tmp = (PNSoundEventData*) data;
-
-	if (tmp->name == "all")
-		pauseAllSounds();
-	else
-		this->pauseSound(tmp->name);
- }
-
-void			PNSoundManager::onEnableSound(pnEventType evt, PNObject* source, PNEventData* data)
+void
+PNSoundManager::onCreateSound(pnEventType evt, PNObject* source, PNEventData* data)
 {
-	this->enableSound();
+  PNSoundEventData* tmp = (PNSoundEventData*) data;
+
+  this->createNewSound(tmp->name, tmp->fname.c_str(), tmp->looping, tmp->px, tmp->py, tmp->pz);
 }
 
-void			PNSoundManager::onDisableSound(pnEventType evt, PNObject* source, PNEventData* data)
+void
+PNSoundManager::onVolumeSound(pnEventType evt, PNObject* source, PNEventData* data)
 {
-	this->disableSound();
+  PNSoundEventData* tmp = (PNSoundEventData*) data;
+
+  this->changeSoundVolume(tmp->name, tmp->sound_volume);
 }
 
+void
+PNSoundManager::onStopSound(pnEventType evt, PNObject* source, PNEventData* data)
+{
+  PNSoundEventData* tmp = (PNSoundEventData*) data;
 
+  this->stopSound(tmp->name);
+}
+
+void
+PNSoundManager::onPauseSound(pnEventType evt, PNObject* source, PNEventData* data)
+{
+  PNSoundEventData* tmp = (PNSoundEventData*) data;
+
+  if (tmp->name == "all")
+	pauseAllSounds();
+  else
+	this->pauseSound(tmp->name);
+}
+
+void
+PNSoundManager::onEnableSound(pnEventType evt, PNObject* source, PNEventData* data)
+{
+  this->enableSound();
+}
+
+void
+PNSoundManager::onDisableSound(pnEventType evt, PNObject* source, PNEventData* data)
+{
+  this->disableSound();
+}

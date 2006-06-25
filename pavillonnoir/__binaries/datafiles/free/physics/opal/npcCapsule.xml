@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<OpalBlueprint>
+	<Solid>
+		<Name value="NPC"/>
+		<Offset>
+			<Transform type="translate" x="2.03002" y="35.0" z="0.332632"/>
+		</Offset>
+		<Shape type="capsule">
+			<Dimensions radius="22.0" length="100.0"/>
+			<Material hardness="1.0" friction="0.0" bounciness="0.0" density="1.0"/>
+		</Shape>
+	</Solid>
+</OpalBlueprint>

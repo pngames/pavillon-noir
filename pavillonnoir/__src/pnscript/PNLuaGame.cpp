@@ -77,28 +77,18 @@ void		PNLuaGame::manageLuaError(int errorcode)
 pnerrorcode PNLuaGame::run(void)
 {
   DEBUG_PRINTER("Entering PNLuaGame::run()\n");	
-  this->_LVM.registerLuaLibrary(&lua_baselibopen);
-  this->_LVM.registerLuaLibrary(&lua_iolibopen);
-  this->_LVM.registerLuaLibrary(&lua_strlibopen); 
-  this->_LVM.registerLuaLibrary(&lua_tablibopen);
-  this->_LVM.registerLuaLibrary(&lua_mathlibopen);
-  this->_LVM.registerLuaLibrary(&tolua_pnbind_open);
-  fs::path initScriptFile = this->_gameRootDirectory / fs::path("init.lua");
-  if (!fs::exists(initScriptFile))
-  {
-	DEBUG_PRINTER("Leaving PNLuaGame::run() -> PNEC_FILE_NOT_FOUND\n");
-	return PNEC_FILE_NOT_FOUND;
-  }
-  if (fs::is_directory(initScriptFile))
-  {
-	DEBUG_PRINTER("Leaving PNLuaGame::run() -> PNEC_NOT_A_FILE\n");
-	return PNEC_NOT_A_FILE;
-  }
-  manageLuaError(this->_LVM.execFile(initScriptFile));
+  _LVM.registerLuaLibrary(&lua_baselibopen);
+  _LVM.registerLuaLibrary(&lua_iolibopen);
+  _LVM.registerLuaLibrary(&lua_strlibopen); 
+  _LVM.registerLuaLibrary(&lua_tablibopen);
+  _LVM.registerLuaLibrary(&lua_mathlibopen);
+  _LVM.registerLuaLibrary(&tolua_pnbind_open);
+
+  manageLuaError(_LVM.execFile(PNResourcesManager::getInstance()->findPath(PNRT_gamedef, "init.lua")));
 
   DEBUG_PRINTER("Leaving PNLuaGame::run() -> PNEC_SUCCESS\n");
-  return PNEC_SUCCESS;
 
+  return PNEC_SUCCESS;
 }
 
 
@@ -127,7 +117,7 @@ const pnchar* PNLuaGame::getId(void)
 }
 
 //defini le repertoir principal ou se trouve le script
-pnerrorcode PNLuaGame::setGameRoot(const pnchar *name)
+/*pnerrorcode PNLuaGame::setGameRoot(const pnchar *name)
 {
   DEBUG_PRINTER("Entering PNLuaGame::setGameRoot()\n");
   this->_gameRootDirectory = this->_modsDirectory / fs::path(name);
@@ -142,13 +132,13 @@ pnerrorcode PNLuaGame::setGameRoot(const pnchar *name)
   DEBUG_PRINTER("GameRootPath : %s\n", this->_gameRootDirectory.native_file_string().c_str());
   DEBUG_PRINTER("Leaving PNLuaGame::setGameRoot()\n");
   return (PNEC_SUCCESS);
-}
+}*/
 
 
-const fs::path& PNLuaGame::getGameRoot()
+/*const fs::path& PNLuaGame::getGameRoot()
 {
   return (this->_gameRootDirectory);
-}
+}*/
 
 
 void PNLuaGame::init()
@@ -159,7 +149,7 @@ void PNLuaGame::init()
   int errorCode = PNEC_SUCCESS;
 
   ////////////////////////////////
-  this->_modsDirectory = currentDiectory / fs::path(DEF::gamedefFilePath);
+  /*this->_modsDirectory = currentDiectory / fs::path(PNResourcesManager::getInstance()->getDefault(PNRT_gamedef), fs::no_check);
   errorCode =  this->setGameRoot(".");
 #ifdef _DEBUG
   if (errorCode != PNEC_SUCCESS)
@@ -168,10 +158,11 @@ void PNLuaGame::init()
 	  pnGetErrorString(errorCode));
 	return;
   }
-#endif
+#endif*/
+
   registerCallbacks();
+
   DEBUG_PRINTER("Leaving PNLuaGame::init()\n");
-  return;
 }
 
 PNLuaGame::~PNLuaGame()
@@ -186,7 +177,6 @@ PNLuaGame::PNLuaGame()
   this->_isUnloadingMap = false;
 
   //this->debug = false;
-  this->_LVM.setDebugLogPath(DEF_LUA_LOG_FILE);
   _gameMap = NULL;
 }
 
@@ -195,26 +185,15 @@ PNLuaGame::PNLuaGame()
 
 pnerrorcode PNLuaGame::loadLuaScript(const pnchar* file, bool reload/*=0*/)
 {
-
   //si le flag de reload est pas sette et que le fichier est deja loader dans la vm 
   //on relance pas le script;
-  if (reload == false && (this->_loadedScripts.find(file) != this->_loadedScripts.end()))
+  if (reload == false && (_loadedScripts.find(file) != _loadedScripts.end()))
 	return PNEC_SUCCESS;
   else 
-	this->_loadedScripts.insert(file); // it could be only one instance of an item in a set
-  fs::path filePath = this->getGameRoot();
-  filePath /= fs::path(file, fs::native);
-  if (!fs::exists(filePath))
-  {
-	DEBUG_PRINTER("Leaving PNLuaGame::loadLuaScript()\n");
-	return PNEC_FILE_NOT_FOUND;
-  }
-  if (fs::is_directory(filePath))
-  {
-	DEBUG_PRINTER("Leaving PNLuaGame::loadLuaScript()\n");
-	return PNEC_NOT_A_FILE;
-  }
-  manageLuaError(this->_LVM.execFile(filePath));
+	_loadedScripts.insert(file); // it could be only one instance of an item in a set
+  
+  manageLuaError(_LVM.execFile(PNResourcesManager::getInstance()->findPath(PNRT_gamedef, file)));
+
   return PNEC_SUCCESS;
 }
 

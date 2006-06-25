@@ -31,7 +31,9 @@
 #include <time.h>
 
 #include "pndefs.h"
+#include "pnresources.h"
 #include "pnrender.h"
+
 #include "PNGameEventData.hpp"
 #include "PNGUILoadingScreen.hpp"
 
@@ -59,7 +61,7 @@ PNGUILoadingScreen::PNGUILoadingScreen()
 	imgSetIte++;
   }
 
-  _mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNLoadingScreen.layout");
+  _mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout(PNResourcesManager::getInstance()->findPath(PNRT_layout, "PNLoadingScreen.layout"));
   _backGround = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/Background");
   _progBar = (CEGUI::ProgressBar*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/ProgressBar");
   _staticText = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/StaticText");

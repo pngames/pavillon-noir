@@ -81,7 +81,7 @@ namespace PN
 	//if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("MenuRootImage") == false)
 	 // CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/MenuRoot.imageset");
 	
-	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout((CEGUI::utf8*)"./datafiles/layouts/MenuRoot.layout"); 
+	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout(PNResourcesManager::getInstance()->findPath(PNRT_layout, "MenuRoot.layout")); 
 
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 
@@ -90,8 +90,8 @@ namespace PN
 	//////////////////////////////////////////////////////////////////////////
 	// Sound loading for menu
 
-	PNSoundEventData *data = new PNSoundEventData("theme", DEF::musicFilePath + "Honneur_PavillonNoir.ogg");
-	PNSoundEventData *data2 = new PNSoundEventData("click",  DEF::soundsFilePath + "menu_click.ogg");
+	PNSoundEventData *data = new PNSoundEventData("theme", PNResourcesManager::getInstance()->findPath(PNRT_music, "Honneur_PavillonNoir.ogg"));
+	PNSoundEventData *data2 = new PNSoundEventData("click", PNResourcesManager::getInstance()->findPath(PNRT_sound, "menu_click.ogg"));
 	//PNSoundEventData *data3 = new PNSoundEventData("quit",  DEF::soundsFilePath + "redalert.ogg");
 	//PNSoundEventData *data4 = new PNSoundEventData("theme", 0.3f);
 
@@ -201,18 +201,19 @@ namespace PN
 	PNGameLoadMapEventData data;
 	char  buffer[1024];
 	std::string conffilepath = PNConf::getInstance()->getConfPath("config.cfg");
-	if (fs::exists(fs::path(conffilepath, fs::native))) {
-		FILE* file = fopen(conffilepath.c_str(), "r");
-		memset(buffer, 0, sizeof(buffer));
-		fread(buffer, 1, 1023, file);
-		fclose(file);
+	if (fs::exists(fs::path(conffilepath, fs::native)))
+	{
+	  FILE* file = fopen(conffilepath.c_str(), "r");
+	  memset(buffer, 0, sizeof(buffer));
+	  fread(buffer, 1, 1023, file);
+	  fclose(file);
 	}
 
 	if (buffer != NULL)
-		data.mapName = DEF::mapsFilePath + buffer;
+	  data.mapName = PNResourcesManager::getInstance()->findPath(PNRT_map, buffer);
 	else
-		data.mapName = DEF::mapsFilePath;
-	
+	  data.mapName = PNResourcesManager::getInstance()->getDefault(PNRT_map);
+
 	// PNEventManager::getInstance()->sendEvent(PN_EVENT_ML_START, 0, data);
 	//
 	//PNGameMap*  map = new PNGameMap();
@@ -232,6 +233,7 @@ namespace PN
 	// PNEventManager::getInstance()->sendEvent(PN_EVENT_GUI_NEW_GAME, NULL, data);
 	//PNGUIGame*		guigame = new PNGUIGame();
 	//State::gStateMgr->changeState(GAME);
+	
 	return true;
   }
 
@@ -295,7 +297,7 @@ namespace PN
 	// PNSoundEventData *data4 = new PNSoundEventData("theme", 0.0f);
 	// PNEventManager::getInstance()->addEvent(PN_EVENT_SOUND_VOLUME, 0 ,data4)
 
-	PNVideoEventData* videoEventData = new PNVideoEventData(DEF::videosFilePath + "scene1.avi");
+	PNVideoEventData* videoEventData = new PNVideoEventData(PNResourcesManager::getInstance()->findPath(PNRT_video, "scene1.avi"));
 	PNEventManager::getInstance()->addEvent(PN_EVENT_VIDEO_START, NULL, videoEventData);
 
 	return true;

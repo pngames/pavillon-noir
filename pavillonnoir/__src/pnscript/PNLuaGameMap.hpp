@@ -27,8 +27,8 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#ifndef _PN_LUA_GAME_MAP_HPP
-#define _PN_LUA_GAME_MAP_HPP
+#ifndef _PNLUAGAMEMAP_HPP
+# define _PNLUAGAMEMAP_HPP
 
 
 #include "pnevent.h"
@@ -43,53 +43,59 @@
 
 namespace PN
 {
-    /*typedef std::map<std::string , t_scripts_infos *>  scriptInfosMap;*/
-    class PN3DSkeletonObject;
-    class PNLuaGameMap : public PNGameMap
-    {
-    protected:
-        PNLuaVm&		_LVM;
-        bool            _mapStarted;
-        bool            _mapPaused;
-        std::string     _playerId;
-        /*scriptInfosMap	_entitiesActions;*/
-    public:
-        PNLuaGameMap(PNLuaVm &lvm);
-        ~PNLuaGameMap(void);
-        void addToMap(const std::string& entityName,const std::string& id);
-        void addToMap2(PNObject& entity, char* id);
-        //execute mapScript
-        void executeScript(const std::string& ScriptName);
-        // void addToMap2(PNObject& entity);
-        void clear();
-        bool isStarted(){return _mapStarted;}
-        bool isPaused(){return _mapPaused;}
-        void loadScript(const std::string& file, const std::string& id, const std::string& events);
-        void unloadScript(const std::string& file, const std::string& id, const std::string& events);
-		//managed lua error
-	    void manageLuaError(int errorcode); 
-	    // register all the needed callbacks to the event manager.
-        void registerInGameCallbacks();
-		void unregisterInGameCallbacks();
-		void sendEventFromLua(PNObject* source, pnint eventId);
-        ///////////////////////////////////////////////////////////////////
-        //        game maps callbacks
-        ///////////////////////////////////////////////////////////////////
-        void onUpdate(pnEventType evt, PNObject* source, PNEventData* data);
-        void onInit(pnEventType evt, PNObject* source, PNEventData* data);
-        void onReset(pnEventType evt, PNObject* source, PNEventData* data);
-        void onPlayMapEnd(pnEventType evt, PNObject* source, PNEventData* data);   
-        void onPlayMapStart(pnEventType evt, PNObject* source, PNEventData* data);
-        void onPlayMapPause(pnEventType evt, PNObject* source, PNEventData* data);
-        void onGameAction(pnEventType evt, PNObject* source, PNEventData* data);
-        void onColision(pnEventType evt, PNObject* source, PNEventData* data);
-        void onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* data);
-        void onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* data);
-		void onAnimEnd(pnEventType evt, PNObject* source, PNEventData* data);
-        void onMouseMove(pnEventType evt, PNObject* source, PNEventData* data);
-		void onDeath(pnEventType evt, PNObject* source, PNEventData* data);
-		////////////////////////////////////////////////////////////////////////
-        void sendGameActionEvent(std::string eventName, PNGameActionEventData *eventData);
-    };
-}
-#endif
+//////////////////////////////////////////////////////////////////////////
+  
+/*typedef std::map<std::string , t_scripts_infos *>  scriptInfosMap;*/
+class PN3DSkeletonObject;
+
+class PNLuaGameMap : public PNGameMap
+{
+protected:
+  PNLuaVm&		_LVM;
+  bool            _mapStarted;
+  bool            _mapPaused;
+  std::string     _playerId;
+  /*scriptInfosMap	_entitiesActions;*/
+public:
+  PNLuaGameMap(PNLuaVm &lvm);
+  ~PNLuaGameMap(void);
+  void addToMap(const std::string& entityName,const std::string& id);
+  void addToMap2(PNObject& entity, char* id);
+  //execute mapScript
+  void executeScript(const std::string& ScriptName);
+  // void addToMap2(PNObject& entity);
+  void clear();
+  bool isStarted(){return _mapStarted;}
+  bool isPaused(){return _mapPaused;}
+  void loadScript(const std::string& file, const std::string& id, const std::string& events);
+  void unloadScript(const std::string& file, const std::string& id, const std::string& events);
+  //managed lua error
+  void manageLuaError(int errorcode); 
+  // register all the needed callbacks to the event manager.
+  void registerInGameCallbacks();
+  void unregisterInGameCallbacks();
+  void sendEventFromLua(PNObject* source, pnint eventId);
+  ///////////////////////////////////////////////////////////////////
+  //        game maps callbacks
+  ///////////////////////////////////////////////////////////////////
+  void onUpdate(pnEventType evt, PNObject* source, PNEventData* data);
+  void onInit(pnEventType evt, PNObject* source, PNEventData* data);
+  void onReset(pnEventType evt, PNObject* source, PNEventData* data);
+  void onPlayMapEnd(pnEventType evt, PNObject* source, PNEventData* data);   
+  void onPlayMapStart(pnEventType evt, PNObject* source, PNEventData* data);
+  void onPlayMapPause(pnEventType evt, PNObject* source, PNEventData* data);
+  void onGameAction(pnEventType evt, PNObject* source, PNEventData* data);
+  void onColision(pnEventType evt, PNObject* source, PNEventData* data);
+  void onFrustrumIn(pnEventType evt, PNObject* source, PNEventData* data);
+  void onFrustrumOut(pnEventType evt, PNObject* source, PNEventData* data);
+  void onAnimEnd(pnEventType evt, PNObject* source, PNEventData* data);
+  void onMouseMove(pnEventType evt, PNObject* source, PNEventData* data);
+  void onDeath(pnEventType evt, PNObject* source, PNEventData* data);
+  ////////////////////////////////////////////////////////////////////////
+  void sendGameActionEvent(std::string eventName, PNGameActionEventData *eventData);
+};
+
+//////////////////////////////////////////////////////////////////////////
+};
+
+#endif /*! _PNLUAGAMEMAP_HPP */

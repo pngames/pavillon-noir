@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<GUILayout>
+	<Window Type="DefaultWindow" Name="PNChatWindow">
+<Property Name="Visible" Value="false" />
+    <Window Type="Vanilla/StaticText" Name="PNChatWindow/Text">
+      <Property Name="Text" Value="" />
+      <Property Name="UnifiedAreaRect" Value="{{0.010000,0.000000},{0.710000,0.000000},{0.990000,0.000000},{0.790000,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="Font" Value="VeraSe-8" />
+    </Window>
+    
+    <Window Type="Vanilla/Listbox" Name="PNChatWindow/Listbox">
+      <Property Name="UnifiedAreaRect" Value="{{0.010000,0.000000},{0.800000,0.000000},{0.990000,0.000000},{0.940000,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="Font" Value="VeraSe-8" />
+    </Window>
+    
+    <Window Type="Vanilla/Button" Name="PNChatWindow/ButtonValid">
+      <Property Name="Text" Value="Valider" />
+      <Property Name="UnifiedAreaRect" Value="{{0.010000,0.000000},{0.950000,0.000000},{0.210000,0.000000},{0.994000,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="Tooltip" Value="Selectionnez une reponse." />
+    </Window>
+    <Window Type="Vanilla/StaticText" Name="PNChatWindow/Name" >
+      <Property Name="Font" Value="VeraSe-10" />
+      <Property Name="TextColours" Value="tl:FFB90000 tr:FFB90000 bl:FFB90000 br:FFB90000" />
+      <Property Name="UnifiedAreaRect" Value="{{0.010000,0.000000},{0.650000,0.000000},{0.260000,0.000000},{0.700000,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+    </Window>	
+		</Window>
+</GUILayout>

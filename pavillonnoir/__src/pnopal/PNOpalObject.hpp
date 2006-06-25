@@ -50,10 +50,7 @@ namespace PN {
 namespace PNOPAL_XML_DEF {
 //////////////////////////////////////////////////////////////////////////
 
-static const std::string		dataFilePath = "datafiles/";
-static const std::string		modelFilePath = dataFilePath + "models/";
-static const std::string		physicsFilePath = dataFilePath + "physics/";
-static const std::string		opalFilePath = physicsFilePath + "opal/";
+//static const std::string		opalFilePath = physicsFilePath + "opal/";
 
 inline std::string				convertPath(const std::string& type, const std::string& path)
 {

@@ -86,26 +86,34 @@ FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|
   tmp = tmp.substr(0,tmp.find("/"));
   //_mapSelector->findItem(tmp.c_str(),);
 
-  fs::path mapPath(PN::DEF::mapsFilePath, fs::no_check);
+  PNResourcesManager* rm = PNResourcesManager::getInstance();
+
+  const PNResourcesManager::DatafileList& dfList = rm->getDatafiles();
+
   unsigned long dir_count = 0;
 
-  if (fs::is_directory(mapPath))
+  for (PNResourcesManager::DatafileList::const_iterator it = dfList.begin(); it != dfList.end(); ++it)
   {
-	fs::directory_iterator end_iter;
-	std::string entitiesPath;
+	const PNResourcesManager::datafile& df = *it;
 
-	for (fs::directory_iterator dir_itr(mapPath); dir_itr != end_iter; ++dir_itr)
+	fs::path mapPath(rm->getResourcePath(df.id, PNRT_map), fs::no_check);
+
+	if (fs::exists(mapPath) && fs::is_directory(mapPath))
 	{
-	  if (fs::is_directory( *dir_itr ) && strcmp(dir_itr->leaf().c_str(),".svn") == 1)
-	  {
-		entitiesPath = PN::DEF::mapsFilePath + dir_itr->leaf();
-		entitiesPath += "/entities.xml";
+	  fs::directory_iterator end_iter;
 
-		if (fs::exists(fs::path(entitiesPath, fs::native)) == true)
+	  for (fs::directory_iterator dir_itr(mapPath); dir_itr != end_iter; ++dir_itr)
+	  {
+		std::cout << dir_itr->leaf() << std::endl;
+
+		if (fs::is_directory(*dir_itr))
 		{
-		  ++dir_count;
-		  _mapSelector->setNumVisible(dir_count);
-		  _mapSelector->appendItem(dir_itr->leaf().c_str());
+		  if (fs::exists(*dir_itr / "entities.xml"))
+		  {
+			++dir_count;
+			_mapSelector->setNumVisible(dir_count);
+			_mapSelector->appendItem(dir_itr->leaf().c_str());
+		  }
 		}
 	  }
 	}
@@ -114,7 +122,9 @@ FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|
   int val = _mapSelector->findItem(tmp.c_str(),SEARCH_WRAP);
   if (val == -1)
 	val = 0;
-  _mapSelector->setCurrentItem(val);
+
+  if (_mapSelector->getNumItems() == 0)
+	_mapSelector->setCurrentItem(val);
 
   // Create the 3 main buttons
   FXButton* buttonStart = new FXButton(_contentMain,"&START GAME\tTO LAUNCH GAME",NULL,this,ID_LAUCH_GAME,BUTTON_DEFAULT|FRAME_RAISED|FRAME_THICK|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT,0,0,312,45);

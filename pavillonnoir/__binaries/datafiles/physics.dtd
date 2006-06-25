@@ -1,0 +1,9 @@
+<!--
+     http://www.pavillon-noir.org/
+     XML DTD for physics.pnp
+-->
+
+<!ELEMENT physics (model?)>
+<!ELEMENT model EMPTY>
+<!ATTLIST model type CDATA #IMPLIED>
+<!ATTLIST model path CDATA #IMPLIED>

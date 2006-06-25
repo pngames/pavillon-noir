@@ -145,7 +145,7 @@ PNGameMap::_unserializeEntity(xmlNode* node)
   }
 
   if (error == -1)
-	error = object->unserializeFromPath(DEF::objectFilePath + (const char*)xmlGetProp(node, PNXML_MODELREFERENCE_ATTR));
+	error = object->unserializeFromPath(PNResourcesManager::getInstance()->findPath(PNRT_object, (const char*)xmlGetProp(node, PNXML_MODELREFERENCE_ATTR)));
 
   SEND_LOAD_STEP_POP(eaLoadStep, d_name + ": load object", 1.0f / nbSteps)
 

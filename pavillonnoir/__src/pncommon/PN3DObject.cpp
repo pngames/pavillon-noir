@@ -148,7 +148,7 @@ PN3DObject::_parseMaterials(xmlNode* parent)
 	PN3DMaterial*		material = NULL;
 
 	if (attr != NULL)
-	  material = (PN3DMaterial*)PNImportManager::getInstance()->import(DEF::materialFilePath + (const char*)attr, PN_IMPORT_MATERIAL);
+	  material = (PN3DMaterial*)PNImportManager::getInstance()->import(PNRT_material, (const char*)attr, PN_IMPORT_MATERIAL);
 
 	_materials.push_back(material);
   }
@@ -165,7 +165,7 @@ PN3DObject::_parseModel(xmlNode* node)
 
   if ((attr = xmlGetProp(node, PNO_XMLPROP_PATH)) != NULL)
   {
-    _model = (PN3DModel*)PNImportManager::getInstance()->import(DEF::modelFilePath + (const char*)attr, PN_IMPORT_3DMODEL);
+    _model = (PN3DModel*)PNImportManager::getInstance()->import(PNRT_model, (const char*)attr, PN_IMPORT_3DMODEL);
 
 	if (_model == NULL)
 	  return PNEC_LOADING_MODEL;
@@ -183,7 +183,7 @@ PN3DObject::_parsePhysics(xmlNode* node)
 
   if ((attr = xmlGetProp(node, PNO_XMLPROP_PATH)) != NULL)
   {
-    _physicalObject = (PNPhysicalObject*)PNImportManager::getInstance()->import(DEF::physicsFilePath + (const char*)attr, PN_IMPORT_PHYSICS, true);
+    _physicalObject = (PNPhysicalObject*)PNImportManager::getInstance()->import(PNRT_physics, (const char*)attr, PN_IMPORT_PHYSICS, true);
 
 	if (_physicalObject == NULL)
 	  return PNEC_LOADING_PHYSICS;
@@ -282,7 +282,7 @@ PN3DObject::_serializeContent(xmlNode* root)
   if (_model != NULL && _model->getFile() != NULL)
   {
 	node = xmlNewChild(root, NULL, BAD_CAST PNO_XMLNODE_MODEL.c_str(), NULL);
-	xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::modelFilePath, *_model->getFile()).c_str());
+	xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST PNResourcesManager::getInstance()->convertPath(PNRT_model, *_model->getFile()).c_str());
   }
 
   //////////////////////////////////////////////////////////////////////////
@@ -297,7 +297,7 @@ PN3DObject::_serializeContent(xmlNode* root)
 	  if (*it != NULL && ((PN3DMaterial*)*it)->getFile() != NULL)
 	  {
 		node = xmlNewChild(root, NULL, BAD_CAST PNO_XMLNODE_MATERIAL.c_str(), NULL);
-		xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST DEF::convertPath(DEF::materialFilePath, *((PN3DMaterial*)*it)->getFile()).c_str());
+		xmlNewProp(node, BAD_CAST PNO_XMLPROP_PATH, BAD_CAST PNResourcesManager::getInstance()->convertPath(PNRT_material, *((PN3DMaterial*)*it)->getFile()).c_str());
 	  }
   }
 
