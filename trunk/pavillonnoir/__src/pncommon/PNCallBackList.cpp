@@ -75,17 +75,17 @@ PNCallBackList::sendEvent(pnEventType type, PNObject* source, PNEventData* data)
 
   for (CallbackSet::iterator it = tmp.begin(); it != tmp.end(); ++it)
   {
-	try
+	//try
 	{
 	  (*it)(type, source, data);
 	  //pnerror(PN_LOGLVL_DEBUG, "callback ended for %d\n", type);
 	}
-	catch (...)
+	/*catch (...)
 	{
 #ifdef DEBUG
 	  pnerror(PN_LOGLVL_ERROR, "Event %s has crashed in a callback.", PNEventManager::getInstance()->getNameByType(type).c_str());
 #endif
-	}
+	}*/
   }
 }
 

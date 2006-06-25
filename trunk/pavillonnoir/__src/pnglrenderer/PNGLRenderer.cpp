@@ -293,18 +293,20 @@ PNGLRenderer::initRender()
   //////////////////////////////////////////////////////////////////////////
   // FIXME : TEST
 
+  PNResourcesManager*  rm = PNResourcesManager::getInstance();
+
   PNRenderMaterial*		top = newMaterial();
-  top->setTexture(DEF::texturesFilePath + "SB_TOP.BMP");
+  top->setTexture(rm->findPath(PNRT_texture, "SB_TOP.BMP"));
   PNRenderMaterial*		bottom = newMaterial();
-  bottom->setTexture(DEF::texturesFilePath + "sb_bottom.bmp");
+  bottom->setTexture(rm->findPath(PNRT_texture, "sb_bottom.bmp"));
   PNRenderMaterial*		left = newMaterial();
-  left->setTexture(DEF::texturesFilePath + "SB_LEFT.BMP");
+  left->setTexture(rm->findPath(PNRT_texture, "SB_LEFT.BMP"));
   PNRenderMaterial*		right = newMaterial();
-  right->setTexture(DEF::texturesFilePath + "SB_RIGHT.BMP");
+  right->setTexture(rm->findPath(PNRT_texture, "SB_RIGHT.BMP"));
   PNRenderMaterial*		front = newMaterial();
-  front->setTexture(DEF::texturesFilePath + "SB_FRONT.BMP");
+  front->setTexture(rm->findPath(PNRT_texture, "SB_FRONT.BMP"));
   PNRenderMaterial*		back = newMaterial();
-  back->setTexture(DEF::texturesFilePath + "SB_BACK.BMP");
+  back->setTexture(rm->findPath(PNRT_texture, "SB_BACK.BMP"));
 
   PNGLSkyBox::getInstance()->set(top, bottom, left, right, front, back);
 }
@@ -917,38 +919,40 @@ PNGLRenderer::initGUI()
 {
   try
   {
+	PNResourcesManager* rm = PNResourcesManager::getInstance();
+
 	CEGUI::Logger::getSingleton().setLogFilename(PNConf::getInstance()->getConfPath("CEGUI.log"));
 	CEGUI::Logger::getSingleton().setLoggingLevel(CEGUI::Insane);
 
-	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/TaharezLook.scheme");
-	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/WindowsLook.scheme");
-	CEGUI::SchemeManager::getSingleton().loadScheme("./datafiles/schemes/VanillaSkin.scheme");
+	CEGUI::SchemeManager::getSingleton().loadScheme(rm->findPath(PNRT_scheme, "TaharezLook.scheme"));
+	CEGUI::SchemeManager::getSingleton().loadScheme(rm->findPath(PNRT_scheme, "WindowsLook.scheme"));
+	CEGUI::SchemeManager::getSingleton().loadScheme(rm->findPath(PNRT_scheme, "VanillaSkin.scheme"));
 	
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("LoadingScreenImages") == false)
-	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/LoadingBackground.imageset");
+	  CEGUI::ImagesetManager::getSingleton().createImageset(rm->findPath(PNRT_imageset, "LoadingBackground.imageset"));
 
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("FioleImages") == false)
-	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/fiole_final.imageset");
+	  CEGUI::ImagesetManager::getSingleton().createImageset(rm->findPath(PNRT_imageset, "fiole_final.imageset"));
 
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("DeathImages") == false)
-	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/DeathScreen.imageset");
+	  CEGUI::ImagesetManager::getSingleton().createImageset(rm->findPath(PNRT_imageset, "DeathScreen.imageset"));
 
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("WinImages") == false)
-	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/WinScreen.imageset");
+	  CEGUI::ImagesetManager::getSingleton().createImageset(rm->findPath(PNRT_imageset, "WinScreen.imageset"));
 
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("Minimap") == false)
-	  CEGUI::ImagesetManager::getSingleton().createImageset("./datafiles/imagesets/Minimap.imageset");
+	  CEGUI::ImagesetManager::getSingleton().createImageset(rm->findPath(PNRT_imageset, "Minimap.imageset"));
 
 	CEGUI::System::getSingleton().setTooltip("Vanilla/Tooltip");
 
 	CEGUI::System::getSingleton().setDefaultMouseCursor("Vanilla-Images", "MouseArrow");
 	//CEGUI::System::getSingleton().setDefaultMouseCursor("TaharezLook", "MouseArrow");
 
-	CEGUI::FontManager::getSingleton().createFont("./datafiles/fonts/verase-12.font");
-	CEGUI::FontManager::getSingleton().createFont("./datafiles/fonts/verase-10.font");
-	CEGUI::FontManager::getSingleton().createFont("./datafiles/fonts/verase-8.font");
-	CEGUI::FontManager::getSingleton().createFont("./datafiles/fonts/verasebd-12.font");
-	CEGUI::FontManager::getSingleton().createFont("./datafiles/fonts/verasebd-8.font");
+	CEGUI::FontManager::getSingleton().createFont(rm->findPath(PNRT_font, "verase-12.font"));
+	CEGUI::FontManager::getSingleton().createFont(rm->findPath(PNRT_font, "verase-10.font"));
+	CEGUI::FontManager::getSingleton().createFont(rm->findPath(PNRT_font, "verase-8.font"));
+	CEGUI::FontManager::getSingleton().createFont(rm->findPath(PNRT_font, "verasebd-12.font"));
+	CEGUI::FontManager::getSingleton().createFont(rm->findPath(PNRT_font, "verasebd-8.font"));
 
 	CEGUI::Window*	rootSheet =  CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"DefaultWindow", (CEGUI::utf8*)"rootSheet");
 	rootSheet->setMetricsMode(CEGUI::Absolute);

@@ -1,0 +1,12 @@
+<!--
+     http://www.pavillon-noir.org/
+     XML DTD for i18n xml files
+-->
+
+<!ELEMENT datafiles (datadirectory*)>
+
+<!ELEMENT datadirectory EMPTY>
+
+<!ATTLIST datadirectory path CDATA #REQUIRED>
+<!ATTLIST datadirectory id CDATA #IMPLIED>
+

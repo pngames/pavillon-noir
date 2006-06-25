@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+<GUILayout>
+	<Window Type="DefaultWindow" Name="PNGUIGame">
+    
+		<!--	<Window Type="Vanilla/ProgressBar" Name="PNGUIGame/lifeBar">
+			<Property Name="RelativeRect" Value="l:0.620000 t:0.007500 r:0.990000 b:0.060000" />
+			</Window> -->
+    <Window Type="Vanilla/StaticImage" Name="PNGUIGame/fiole" >
+      <Property Name="Image" Value="set:FioleImages image:FioleImages/fiole_OK" />
+      <Property Name="UnifiedAreaRect" Value="{{0.880000,0.000000},{0.750000,0.000000},{0.989094,0.000000},{1.000000,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="FrameEnabled" Value="false"/>
+      <Property Name="Disabled" Value="true"/>
+      <Property Name="BackgroundEnabled" Value="false" />
+    </Window>
+
+    <!--<Window Type="DefaultWindow" Name="PNGUIGame/empty">
+      <Property Name="UnifiedAreaRect" Value="{{0.00000,0.000000},{0.75,0.000000},{0.25,0.000000},{1.000000,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+     
+    </Window>-->
+    
+    <Window Type="Vanilla/StaticImage" Name="PNGUIGame/MiniMap" >
+      <Property Name="Alpha" Value="0.7f" />
+      <Property Name="Image" Value="set:Minimap image:Minimap/map" />
+      <Property Name="UnifiedAreaRect" Value="{{0.00000,0.000000},{0.75,0.000000},{0.25,0.000000},{1.000000,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="FrameEnabled" Value="false"/>
+      <Property Name="Disabled" Value="true"/>
+      <Property Name="BackgroundEnabled" Value="false" />
+      <Property Name="Visible" Value="false"/>
+      <Window Type="Vanilla/StaticImage" Name="PNGUIGame/MiniMapPos">
+        <Property Name="Alpha" Value="0.7f" />
+        <Property Name="Image" Value="set:Minimap image:Minimap/point" />
+        <Property Name="UnifiedAreaRect" Value="{{0.000000,0.000000},{0.940000,0.000000},{0.040000,0.000000},{1.000000,0.000000}}" />
+        <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+        <Property Name="FrameEnabled" Value="false"/>
+        <Property Name="Disabled" Value="true"/>
+        <Property Name="Visible" Value="false"/>
+      </Window>
+    </Window>
+    <!--<Window Type="Vanilla/StaticImage" Name="PNGUIGame/Life" >
+      <Property Name="UnifiedAreaRect" Value="{{0.00000,0.000000},{0.00000,0.000000},{0.9000,0.000000},{0.45800,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="Image" Value="set:FioleImages image:FioleImages/fiole_OK" />
+      <Property Name="FrameEnabled" Value="false"/>
+      <Property Name="Disabled" Value="true"/>
+      <Property Name="BackgroundEnabled" Value="false" />
+    </Window>-->
+		</Window>
+</GUILayout>

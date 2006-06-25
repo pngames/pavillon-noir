@@ -34,6 +34,7 @@
 #include "pnplugins.h"
 #include "pnimport.h"
 #include "pnp_format.h"
+#include "pnresources.h"
 
 #include "PNPhysicsInterface.hpp"
 #include "PNPhysicalObject.hpp"
@@ -568,12 +569,12 @@ PNOpalObject::_parsePhysics(xmlNode* node)
 	if (PNP_XMLATTR_TYPEOPAL == (const char*)attr)
 	{
 	  if ((attr = xmlGetProp(node, (const xmlChar *)PNP_XMLPROP_PATH)) != NULL)
-		_parseTypeOpal(PNOPAL_XML_DEF::opalFilePath + (const char*)attr);
+		_parseTypeOpal(PNResourcesManager::getInstance()->findPath("physics/opal", (const char*)attr));
 	}
 	else if (PNP_XMLATTR_TYPEPNM == (const char *)attr)
 	{
 	  if ((attr = xmlGetProp(node, (const xmlChar *)PNP_XMLPROP_PATH)) != NULL)
-		_parseTypePnm(PNOPAL_XML_DEF::modelFilePath + (const char*)attr);
+		_parseTypePnm(PNResourcesManager::getInstance()->findPath(PNRT_model, (const char*)attr));
 	}
 	else
 	  return PNEC_FAILED_TO_PARSE;

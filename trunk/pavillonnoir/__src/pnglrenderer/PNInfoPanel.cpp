@@ -30,7 +30,10 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
+
 #include "pndefs.h"
+#include "pnresources.h"
+
 #include "PNInfoPanel.hpp"
 #include "PNConsole.hpp"
 
@@ -58,7 +61,7 @@ _FPS = 0;
   _nbTriTOTAL = 0;
 
   CEGUI::Window* sheet = CEGUI::System::getSingleton().getGUISheet();
-  CEGUI::Window* panel = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNInfoPanel.layout");
+  CEGUI::Window* panel = CEGUI::WindowManager::getSingleton().loadWindowLayout(PNResourcesManager::getInstance()->findPath(PNRT_layout, "PNInfoPanel.layout"));
   sheet->addChildWindow(panel);
   panel->hide();
  

@@ -1,0 +1,12 @@
+<?xml version="1.0"?><!DOCTYPE object SYSTEM "../../object.dtd">
+<object>
+  <model path="skybox_poor.pnm" />
+  <listmaterials>
+    <material path="skybox_poor_09 - Par defaut.pnt" />
+    <material path="skybox_poor_08 - Par defaut.pnt" />
+    <material path="skybox_poor_03 - Par defaut.pnt" />
+    <material path="skybox_poor_07 - Par defaut.pnt" />
+    <material path="skybox_poor_01 - Par defaut.pnt" />
+    <material path="skybox_poor_02 - Par defaut.pnt" />
+  </listmaterials>
+</object>

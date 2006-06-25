@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE entities SYSTEM "../../../entities.dtd">
+<entities mpp="0.01">
+  <entity id="id_0" label="Ground" mdref="JiveImportPlan.pno" envtype="static" objtype="object" class="PN3DObject" x="0" y="0" z="0" xx="0" yy="0" zz="0" ww="1">
+  </entity>
+  <entity id="id_1" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="500" z="0" xx="0" yy="0" zz="0" ww="1">
+  </entity>
+  <entity id="id_2" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="1000" z="100" xx="0" yy="0" zz="0" ww="1">
+  </entity>
+  <entity id="id_3" label="CollidePave" mdref="JiveImportPave.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="800" z="100" xx="0" yy="0" zz="0" ww="1">
+  </entity>
+  <entity id="id_4" label="CollideSphere" mdref="JiveImportSphere.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="0" y="500" z="300" xx="0" yy="0" zz="0" ww="1">
+  </entity>
+  <entity id="id_5" label="CollideSphere" mdref="JiveImportSphere.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="8.67715" y="572.14" z="-30.7497" xx="0" yy="0" zz="0" ww="1">
+  </entity>
+  <entity id="id_6" label="CollideSphere" mdref="JiveImportSphere.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="100" y="600" z="30" xx="0" yy="0" zz="0" ww="1">
+  </entity>
+  <entity id="id_7" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="17.3555" y="416.593" z="-92.6264" xx="-0.420192" yy="0.709214" zz="0.40909" ww="0.391279">
+  </entity>
+  <entity id="id_8" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-71.2091" y="391.919" z="68.919" xx="0" yy="0" zz="0" ww="1">
+  </entity>
+  <entity id="id_9" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-53.2648" y="453.644" z="187.284" xx="0" yy="0" zz="0" ww="1">
+  </entity>
+  <entity id="id_10" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="46.2981" y="471.516" z="125.522" xx="0.413114" yy="-0.369494" zz="0.188267" ww="-0.810781">
+  </entity>
+  <entity id="id_11" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-73.5249" y="528.992" z="114.229" xx="0" yy="0" zz="0" ww="1">
+  </entity>
+  <entity id="id_12" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="63.0847" y="461.836" z="56.2879" xx="0.226159" yy="-0.234194" zz="-0.656813" ww="-0.680149">
+  </entity>
+  <entity id="id_13" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="120.391" y="452.593" z="-34.2616" xx="-0.385006" yy="0.472162" zz="-0.240578" ww="-0.755617">
+  </entity>
+  <entity id="id_14" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-28.8361" y="489.968" z="-55.5319" xx="-0.254159" yy="0.0825812" zz="0.297778" ww="0.916467">
+  </entity>
+  <entity id="id_15" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="-112.887" y="406.819" z="-27.8034" xx="0.290765" yy="-0.566402" zz="0.223112" ww="-0.73815">
+  </entity>
+  <entity id="id_16" label="CollideBox" mdref="JiveImportBox_02.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="116.339" y="372.552" z="167.395" xx="0.452497" yy="0.261249" zz="0.42632" ww="-0.738408">
+  </entity>
+  <entity id="id_17" label="CollideSphere" mdref="JiveImportSphere.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="96.5872" y="592.391" z="159.311" xx="0" yy="0" zz="-0.325568" ww="0.945518">
+  </entity>
+  <entity id="id_18" label="CollideSphere" mdref="JiveImportSphere.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="8.67722" y="521.996" z="185.555" xx="-0.431469" yy="-0.583097" zz="0.409449" ww="0.553338">
+  </entity>
+  <entity id="id_19" label="CollideSphere" mdref="JiveImportSphere.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="8.67718" y="542.643" z="62.6547" xx="0" yy="0" zz="0" ww="1">
+  </entity>
+  <entity id="id_20" label="CollideSphere" mdref="JiveImportSphere.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="8.67721" y="435.474" z="138.361" xx="0" yy="0" zz="0" ww="1">
+  </entity>
+  <entity id="id_21" label="CollideSphere" mdref="JiveImportSphere.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="8.67716" y="723.553" z="-14.0353" xx="0" yy="0.382683" zz="0" ww="0.92388">
+  </entity>
+  <entity id="id_22" label="CollideSphere" mdref="JiveImportSphere.pno" envtype="dynamic" objtype="object" class="PN3DObject" x="8.67719" y="614.417" z="92.1508" xx="0.681998" yy="0" zz="0" ww="-0.731354">
+  </entity>
+</entities>

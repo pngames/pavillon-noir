@@ -105,7 +105,7 @@ PNFXAnimListParameter::openAnim()
   
   FXString* dir_path = new FXString(fd.getDirectory().text());
   dir_path->append("/");
-  dir_path->append(DEF::animationFilePath.c_str());
+  dir_path->append(PNResourcesManager::getInstance()->getDefault(PNRT_animation).c_str());
   fd.setDirectory(*dir_path);
 
   if (fd.execute())

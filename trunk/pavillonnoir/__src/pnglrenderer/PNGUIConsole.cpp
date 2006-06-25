@@ -28,6 +28,7 @@
  */
 
 #include "pndefs.h"
+#include "pnresources.h"
 
 #include <stdarg.h>
 #include <iostream>
@@ -51,7 +52,7 @@ PNGUIConsole::PNGUIConsole()
   _historyCount = 1;
   ite = _ConsoleHistory.begin();
 
-  _pnConsole = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/PNConsole.layout");
+  _pnConsole = CEGUI::WindowManager::getSingleton().loadWindowLayout(PNResourcesManager::getInstance()->findPath(PNRT_layout, "PNConsole.layout"));
   CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnConsole);
   _pnConsole->setAlpha(0.0f);
   _pnConsole->setSize(CEGUI::Size(0.0f, 0.0f));
@@ -60,13 +61,13 @@ PNGUIConsole::PNGUIConsole()
   _consoleVisibility = false;
 
   _editBox = (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().getWindow("PNConsole/EditBox");
-  
+
   _listBox = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNConsole/ListBox");
 
   _editBox->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIConsole::textChangedHandler, this));
 
   //////////////////////////////////////////////////////////////////////////
- // addFonction("setalpha", changeAlpha, "change alpha to the console");
+  // addFonction("setalpha", changeAlpha, "change alpha to the console");
   addFonction("quit", quitGame, "quit game");
   addFonction("exit", quitGame, "quit game");
 
@@ -192,11 +193,11 @@ PNGUIConsole::eventKeyPressedHandler(const CEGUI::EventArgs& e)
 
   /* if (me->scancode == CEGUI::Key::F1)
   {
-	if (_consoleVisibility == false)
-	  PNEventManager::getInstance()->sendEvent(PN_EVENT_CONSOLE_SHOW, this, NULL);
-	else if (_consoleVisibility == true)
-	  PNEventManager::getInstance()->sendEvent(PN_EVENT_CONSOLE_HIDE, this, NULL);
-	//showhideConsole();
+  if (_consoleVisibility == false)
+  PNEventManager::getInstance()->sendEvent(PN_EVENT_CONSOLE_SHOW, this, NULL);
+  else if (_consoleVisibility == true)
+  PNEventManager::getInstance()->sendEvent(PN_EVENT_CONSOLE_HIDE, this, NULL);
+  //showhideConsole();
   }*/
   return true;
 }
@@ -211,40 +212,40 @@ void
 PNGUIConsole::addItemToListBox(CEGUI::ListboxTextItem* item)
 {
   PNLOCK(this);
-  
-/*  if (_ConsoleListboxItem.size() > 0)
+
+  /*  if (_ConsoleListboxItem.size() > 0)
   {
-	_listBox->removeItem(_hackItem1);
-	_listBox->removeItem(_hackItem2);
+  _listBox->removeItem(_hackItem1);
+  _listBox->removeItem(_hackItem2);
   }*/
 
   _ConsoleListboxItem.push_back(item);
   /*if (_ConsoleListboxItem.size() > _listboxItemSize)
   {
-	ConsoleListboxItem::iterator iter = _ConsoleListboxItem.begin();
-	_listBox->removeItem((CEGUI::ListboxItem*)*iter);
-	_ConsoleListboxItem.pop_front();
+  ConsoleListboxItem::iterator iter = _ConsoleListboxItem.begin();
+  _listBox->removeItem((CEGUI::ListboxItem*)*iter);
+  _ConsoleListboxItem.pop_front();
   }*/
-  
+
   //hack for the vertical scrollbar
- /* std::string tmp = item->getText().c_str();
+  /* std::string tmp = item->getText().c_str();
   tmp += "          ";
   item->setText(tmp.c_str());*/
-  
- // _listBox->addItem(item);
-   _listBox->insertItem(item, NULL);
- // _listBox->ensureItemIsVisible(item);
 
- //hack for the horizontal scrollbar
+  // _listBox->addItem(item);
+  _listBox->insertItem(item, NULL);
+  // _listBox->ensureItemIsVisible(item);
+
+  //hack for the horizontal scrollbar
   /*if (_ConsoleListboxItem.size() > 0)
   {
-	_hackItem1 = new CEGUI::ListboxTextItem("");
-	_hackItem2 = new CEGUI::ListboxTextItem("");
+  _hackItem1 = new CEGUI::ListboxTextItem("");
+  _hackItem2 = new CEGUI::ListboxTextItem("");
 
-	_listBox->addItem(_hackItem1);
-	_listBox->ensureItemIsVisible(_hackItem1);
-	_listBox->addItem(_hackItem2);
-	_listBox->ensureItemIsVisible(_hackItem2);
+  _listBox->addItem(_hackItem1);
+  _listBox->ensureItemIsVisible(_hackItem1);
+  _listBox->addItem(_hackItem2);
+  _listBox->ensureItemIsVisible(_hackItem2);
   }*/
 
   ite = _ConsoleHistory.begin();
@@ -393,6 +394,7 @@ PNGUIConsole::textChangedHandler(const CEGUI::EventArgs& e)
   {
 	textAccepteddHandler();
   }
+
   return true;
 }
 
@@ -412,9 +414,9 @@ PNGUIConsole::consoleVisibility(pnEventType type, PNObject* source, PNEventData*
 	/*_editBox->activate();
 	_cursorVisibility = CEGUI::MouseCursor::getSingleton().isVisible();
 	if (_cursorVisibility == false) 
-	  CEGUI::MouseCursor::getSingleton().show();
+	CEGUI::MouseCursor::getSingleton().show();
 	_consoleVisibility = true;*/
-	
+
   }
   else if (_consoleVisibility == true)
   {
@@ -423,7 +425,7 @@ PNGUIConsole::consoleVisibility(pnEventType type, PNObject* source, PNEventData*
 	////_pnConsole->hide();
 	//_editBox->deactivate();
 	//_consoleVisibility = false;
- _winState = winFadeOut;
+	_winState = winFadeOut;
   } 
 }
 
@@ -440,7 +442,7 @@ PNGUIConsole::changeAlpha(const std::string& command, std::istream& parameters)
 
   if (tmp == 1)
 	pnConsole->setAlpha(1.0f);
- 
+
   if (tmp == 0)
 	pnConsole->setAlpha(0.85f);
 }
@@ -470,10 +472,9 @@ PNGUIConsole::setlistboxItemSize(int size)
 void
 PNGUIConsole::update(pnEventType type, PNObject* source, PNEventData* data)
 {
+  float deltaTime = PNRendererInterface::getInstance()->getCurrentDelta();
 
- float deltaTime = PNRendererInterface::getInstance()->getCurrentDelta();
-
-  switch( _winState )
+  switch (_winState)
   {
   case winVisible:
 	break;
@@ -483,17 +484,17 @@ PNGUIConsole::update(pnEventType type, PNObject* source, PNEventData* data)
 
   case winFadeIn:
 	{
-	
 	  if (_consoleVisibility == false)
 		_pnConsole->show();
-	  if ( _fadeTimer > FADE_TIME )
+
+	  if (_fadeTimer > FADE_TIME)
 	  {
 		_winState = winVisible;
 		_fadeTimer = 0;
-		
+
 		CEGUI::Size sizeTmp( 1.0, 1.0); 
 		_pnConsole->setSize(sizeTmp);
-		
+
 		_pnConsole->setAlpha( _frameAlphaValue );
 
 		_editBox->activate();
@@ -502,11 +503,12 @@ PNGUIConsole::update(pnEventType type, PNObject* source, PNEventData* data)
 		  CEGUI::MouseCursor::getSingleton().show();
 		break;
 	  }
+
 	  _consoleVisibility = true;
 	  _fadeTimer += deltaTime;
-	  
+
 	  float fadefac = _fadeTimer / FADE_TIME;
-	 // std::cout << "fadefac = " << fadefac << std::endl;
+	  // std::cout << "fadefac = " << fadefac << std::endl;
 
 	  float tempAlpha = fadefac * _frameAlphaValue;
 	  //std::cout << "tempalpha = " << tempAlpha << std::endl;
@@ -523,9 +525,9 @@ PNGUIConsole::update(pnEventType type, PNObject* source, PNEventData* data)
 
   case winFadeOut:
 	{
-	
 	  if (_consoleVisibility == true)
 		_editBox->deactivate();
+
 	  if ( _fadeTimer > FADE_TIME )
 	  {
 		_winState = winHidden;
@@ -537,9 +539,10 @@ PNGUIConsole::update(pnEventType type, PNObject* source, PNEventData* data)
 
 		if (_cursorVisibility == false) 
 		  CEGUI::MouseCursor::getSingleton().hide();
-		
+
 		break;
 	  }
+
 	  _consoleVisibility = false;
 	  _fadeTimer += deltaTime;
 	  float fadefac = std::max( 0.0f, 1.0f - ( _fadeTimer / FADE_TIME ) );
@@ -554,8 +557,6 @@ PNGUIConsole::update(pnEventType type, PNObject* source, PNEventData* data)
 	break;
 
   }
-
- 
 }
 
 //////////////////////////////////////////////////////////////////////////

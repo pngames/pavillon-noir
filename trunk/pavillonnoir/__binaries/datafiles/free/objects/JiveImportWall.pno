@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE object SYSTEM "../../object.dtd">
+<object>
+  <model path="JiveImportWall.pnm" />
+  <listmaterials>
+    <material path="JiveImportWall_02 - Par defaut.pnt" />
+  </listmaterials>
+  <physics path="JiveImportWall.pnp" />
+</object>

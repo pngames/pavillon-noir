@@ -467,7 +467,7 @@ long PNEditor::onCmdOpen(FXObject*, FXSelector, void*)
   
   FXString* dir_path = new FXString(open.getDirectory().text());
   dir_path->append("/");
-  dir_path->append(DEF::mapsFilePath.c_str());
+  dir_path->append(PNResourcesManager::getInstance()->getDefault(PNRT_map).c_str());
   open.setDirectory(*dir_path);
 
   if (open.execute())
@@ -543,7 +543,7 @@ long PNEditor::onCmdSave(FXObject* sender, FXSelector, void*)
 	
 	FXString* dir_path = new FXString(open.getDirectory().text());
 	dir_path->append("/");
-	dir_path->append(DEF::mapsFilePath.c_str());
+	dir_path->append(PNResourcesManager::getInstance()->getDefault(PNRT_map).c_str());
 	open.setDirectory(*dir_path);
 
 	if (open.execute())

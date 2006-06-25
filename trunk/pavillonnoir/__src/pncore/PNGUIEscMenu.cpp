@@ -28,6 +28,8 @@
  */
 
 #include "pndefs.h"
+#include "pnresources.h"
+
 #include "PNGUIEscMenu.hpp"
 #include "PNGUIMenuLoad.hpp"
 #include "PNGUIGame.hpp"
@@ -40,7 +42,7 @@ namespace PN {
 
   PNGUIEscMenu::PNGUIEscMenu()
   {
-	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout("./datafiles/layouts/ESCMenu.layout");
+	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout(PNResourcesManager::getInstance()->findPath(PNRT_layout, "ESCMenu.layout"));
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);
 	
 	setupEventHandlers();

@@ -39,6 +39,7 @@
 
 /////////////////////////////////////
 
+#include "pndefs.h"
 #include "pnresources.h"
 #include "pnxml.h"
 

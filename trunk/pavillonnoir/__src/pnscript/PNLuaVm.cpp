@@ -64,12 +64,12 @@ PNLuaVm::~PNLuaVm()
 //-------------------------------------------------------------------------
 
 //-------------------------------MANIPULATION METHODS----------------------
-int    PNLuaVm::execFile(const boost::filesystem::path &path)
+int    PNLuaVm::execFile(const std::string& path)
 {
   PNLOCK(this);
 
   pnerrorcode myret;
-  int lret = lua_dofile(_luaVm, path.native_file_string().c_str());
+  int lret = lua_dofile(_luaVm, path.c_str());
   //switch (lret)
   //{
   //case LUA_ERRSYNTAX:
@@ -129,11 +129,6 @@ int    PNLuaVm::registerLuaLibrary(lua_library_register f)
 
   return f(_luaVm);
 
-}
-
-void       PNLuaVm::setDebugLogPath(boost::filesystem::path path)
-{
-  PNLOCK(this);
 }
 
 void	PNLuaVm::luaDebugLineHook(lua_State *S, lua_Debug *ar)

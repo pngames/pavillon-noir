@@ -68,10 +68,10 @@ public:
   virtual const pnchar*						getId(void)=0;
 
   //defini le repertoir principal ou se trouve le script
-  virtual pnerrorcode						setGameRoot(const pnchar *name)=0;
+  //virtual pnerrorcode						setGameRoot(const pnchar *name)=0;
 
   //recupere le chemin racine du jeu 
-  virtual const boost::filesystem::path&	getGameRoot()=0;
+  //virtual const boost::filesystem::path&	getGameRoot()=0;
 
   //return the gameMap
   virtual PNGameMap*						getGameMap()=0;

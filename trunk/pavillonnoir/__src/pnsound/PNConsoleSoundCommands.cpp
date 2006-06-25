@@ -66,7 +66,7 @@ void  PNSoundManager::_commandNewSound(const std::string&, std::istream& i)
 	PNConsole::writeLine("Error : wrong arguments to function newsound");
   else
   {
-	data = new PNSoundEventData(name, DEF::soundsFilePath + file.c_str(), loop_flag, x, y, z, volume);
+	data = new PNSoundEventData(name, PNResourcesManager::getInstance()->findPath(PNRT_sound, file), loop_flag, x, y, z, volume);
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_CREATE, 0, data);
 	PNEventManager::getInstance()->sendEvent(PN_EVENT_SOUND_PLAY, 0, data);
 	
