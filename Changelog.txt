@@ -9,8 +9,7 @@ version 0.1 ()
 		- Adding first version of first scene video (pavillonnoir/__binaries/datafiles/videos)
 		- [Temporary] Adding button in main menu ("scene 1") to lauch video
 
-	* Level1:
-		- 
+	* Level1
 
 	New Features:
 	-------------
