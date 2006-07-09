@@ -97,6 +97,10 @@
 				Name="VCPostBuildEventTool"
 				CommandLine=""
 			/>
+			<DebugSettings
+				Command="$(TargetPath)"
+				WorkingDirectory="$(TargetDir)"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -177,6 +181,10 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine=""
+			/>
+			<DebugSettings
+				Command="$(TargetPath)"
+				WorkingDirectory="$(TargetDir)"
 			/>
 		</Configuration>
 	</Configurations>
