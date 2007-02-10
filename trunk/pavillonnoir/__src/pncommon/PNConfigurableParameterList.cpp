@@ -95,7 +95,7 @@ PNConfigurableParameterList::getElementList(pnint def)
 {
   std::list<pnint>*	lst = (std::list<pnint>*)_elem;
   std::list<pnint>::iterator	it = lst->begin();
-  for (int i = 0; it != lst->end(); ++i, ++it)
+  for (pnuint i = 0; it != lst->end(); ++i, ++it)
   {
 	if  (i == _choise)
 	{
