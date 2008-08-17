@@ -1,6 +1,6 @@
 /*
  * IPNSerializable.hpp
- * 
+ *
  * Description :
  * Base interface for serialization support
  *
@@ -26,14 +26,14 @@
  * Pavillon Noir; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
- 
+
 #ifndef _IPNSERIALIZATION_HPP_
 # define _IPNSERIALIZATION_HPP_
 
 #include <iostream>
 #include <string>
 
-namespace boost { namespace filesystem { class path; };};
+#include <boost/filesystem/path.hpp>
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////

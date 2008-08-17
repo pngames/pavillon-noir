@@ -1,6 +1,6 @@
 /*
 * PNFoxMainWindow.cpp
-* 
+*
 * Description :
 * PNFoxMainWindow definition
 *
@@ -128,7 +128,7 @@ FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|
 
   // Create the 3 main buttons
   FXButton* buttonStart = new FXButton(_contentMain,"&START GAME\tTO LAUNCH GAME",NULL,this,ID_LAUCH_GAME,BUTTON_DEFAULT|FRAME_RAISED|FRAME_THICK|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT,0,0,312,45);
-  buttonStart->setFocus();	
+  buttonStart->setFocus();
   FXButton* buttonOptions = new FXButton(_contentMain,"&OPTIONS\tTO SET THE OPTIONS",NULL,this,ID_SHOWOPTIONDIALOG,FRAME_RAISED|FRAME_THICK|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT,0,0,312,45);
   //buttonOptions->setState(FX::STATE_CHECKED);
   new FXButton(_contentMain,"&QUIT\tTO QUIT THE GAME",NULL,this,ID_CLOSE,FRAME_RAISED|FRAME_THICK|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT,0,0,312,45);
