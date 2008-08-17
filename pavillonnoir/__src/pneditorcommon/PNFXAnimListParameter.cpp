@@ -1,6 +1,6 @@
 /*
  * PNFXAnimListParameter.cpp
- * 
+ *
  * Description :
  * PNFXAnimListParameter definition
  *
@@ -70,7 +70,7 @@ FXIMPLEMENT(PNFXAnimListParameter, PNFXListParameter, NULL, 0)
 
 PNFXAnimListParameter::PNFXAnimListParameter(FXComposite* p, PNConfigurableParameterList* param) :
 PNFXListParameter(p, param)
-{ 
+{
 }
 
 PNFXAnimListParameter::~PNFXAnimListParameter()
@@ -89,7 +89,7 @@ bool
 PNFXAnimListParameter::_deleteObject(FXint index)
 {
   pnerror(PN_LOGLVL_DEBUG, "PNFXAnimListParameter::deleteObject");
-  PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem(); 
+  PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem();
 
   v->erase(v->begin() + index);
   _update();
@@ -97,12 +97,12 @@ PNFXAnimListParameter::_deleteObject(FXint index)
   return true;
 }
 
-PN3DAnimation*  
+PN3DAnimation*
 PNFXAnimListParameter::openAnim()
 {
   FXFileDialog fd(this, "Choose animation file to add");
   fd.setPatternList("PN Animations (*.pna)\nAll Files (*)");
-  
+
   FXString* dir_path = new FXString(fd.getDirectory().text());
   dir_path->append("/");
   dir_path->append(PNResourcesManager::getInstance()->getDefault(PNRT_animation).c_str());
@@ -118,7 +118,7 @@ PNFXAnimListParameter::openAnim()
 
 	if (str.find(cwd.substitute('\\', '/')) == -1)
 	{
-	  FXMessageBox::error(this, MBOX_OK, "Path Error", "An error occurred. Please check file path.");	  	
+	  FXMessageBox::error(this, MBOX_OK, "Path Error", "An error occurred. Please check file path.");
 	}
 	else
 	{
@@ -142,13 +142,13 @@ PNFXAnimListParameter::_addNewObject(FXint index)
   PN3DAnimation* anim = openAnim();
 
   if (anim != NULL)
-  {  
+  {
 	PN3DSkeletonAnimation* skanim = new PN3DSkeletonAnimation(anim, NULL);
 
 	_skanim = skanim;
 	if (showAnim(skanim))
 	{
-	  PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem(); 
+	  PN3DSkeletonObject::AnimationVector* v = (PN3DSkeletonObject::AnimationVector*)_param->getElem();
 
 	  v->insert(v->begin() + index, _skanim);
 	  return true;
@@ -165,11 +165,11 @@ PNFXAnimListParameter::showAnim(PNConfigurableObject* skanim)
   FXVerticalFrame* vframe = new FXVerticalFrame(_animDialBox, LAYOUT_FILL_X | LAYOUT_FILL_Y);
   FXGroupBox* group = new FXGroupBox(vframe, "Animation properties", LAYOUT_FILL_X | LAYOUT_FILL_Y | FRAME_GROOVE);
   PNPropertiesGrid* grid = new PNPropertiesGrid(group);
-  
+
   _animDialBox->create();
   vframe->create();
   group->create();
-  
+
   grid->setObject(skanim);
 
   new FXHorizontalSeparator(vframe, LAYOUT_FILL_X);
@@ -177,11 +177,11 @@ PNFXAnimListParameter::showAnim(PNConfigurableObject* skanim)
   new FXButton(buttons, "&Ok", NULL, _animDialBox, FXDialogBox::ID_ACCEPT, BUTTON_DEFAULT | LAYOUT_RIGHT | LAYOUT_CENTER_Y | FRAME_RAISED | FRAME_THICK, 10, 10, 0, 0, 20, 20);
   new FXButton(buttons, "&Cancel", NULL, _animDialBox, FXDialogBox::ID_CANCEL, BUTTON_DEFAULT | LAYOUT_RIGHT | LAYOUT_CENTER_Y | FRAME_RAISED | FRAME_THICK, 10, 10, 0, 0, 20, 20);
   buttons->create();
-  
+
   // FIXME : dialog box does not automatically resize, so we force it. Correct that.
   _animDialBox->setHeight(180);
   _animDialBox->setWidth(170);
-  
+
   return _animDialBox->execute();
 }
 

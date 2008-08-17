@@ -32,7 +32,7 @@ def generate(env):
 	# Detect the SDL
 	optionfile = env['CACHEDIR']+'sdl.cache.py'
         opts = Options(optionfile)
-	min_ver = "1.2.7"
+	min_ver = "1.2.0"
 	lib_config = "sdl-config"
 
         opts.AddOptions(

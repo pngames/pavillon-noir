@@ -1,6 +1,6 @@
 /*
  * pnevent.h
- * 
+ *
  * Description :
  * Meta-include for events management
  *
@@ -34,7 +34,7 @@
 #include <map>
 #include <fastdelegate/FastDelegate.h>
 
-namespace boost{namespace filesystem{class path;};};
+#include <boost/filesystem/path.hpp>
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
@@ -59,10 +59,10 @@ typedef enum
   PN_EVENT_GAME_SAVE,			/// save game
   PN_EVENT_GAME_LOAD,			/// Load saved game
   PN_EVENT_GAME_PAUSE,			/// pause game
-  PN_EVENT_GAME_ACTION,			/// lunch a game action event	
+  PN_EVENT_GAME_ACTION,			/// lunch a game action event
   PN_EVENT_GAME_QUIT,			/// quit game
   PN_EVENT_GAME_QUIT_STARTED,
-  PN_EVENT_GAME_QUIT_ENDED,	
+  PN_EVENT_GAME_QUIT_ENDED,
   PN_EVENT_GAME_ERROR,			/// when an fatal erro is raise in game
   PN_EVENT_GAME_DEATH,			/// A PNCharacter just died
   PN_EVENT_GAME_OVER,			/// when the player died
@@ -100,7 +100,7 @@ typedef enum
   PN_EVENT_ML_END,				/// end loading map
   PN_EVENT_ML_ENDED,			/// loading map ended
   PN_EVENT_ML_STEP,				/// step loading map
-  
+
   PN_EVENT_MU_START,			/// start unloading map
   PN_EVENT_MU_STARTED,			/// unloading map
   PN_EVENT_MU_END,				/// end unloading map
