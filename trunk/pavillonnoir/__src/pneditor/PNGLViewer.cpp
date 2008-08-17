@@ -1,6 +1,6 @@
 /*
  * PNGLViewer.cpp
- * 
+ *
  * Description :
  * PNGLViewer definition
  *
@@ -28,7 +28,7 @@
  */
 
 
-#include "fxkeys.h"
+#include <fxkeys.h>
 
 /////////////////////////////////////
 
@@ -42,10 +42,10 @@
 
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
-  
+
 namespace EDITOR {
 //////////////////////////////////////////////////////////////////////////
-	
+
 FXDEFMAP(PNGLViewer) PNGLViewerMap[]=
 {
   FXMAPFUNC(SEL_LEFTBUTTONRELEASE,0,PNGLViewer::onLeftBtnRelease),
@@ -62,7 +62,7 @@ FXIMPLEMENT(PNGLViewer,FXGLViewer,PNGLViewerMap,ARRAYNUMBER(PNGLViewerMap))
 
 //////////////////////////////////////////////////////////////////////////
 
-/*! 
+/*!
 *	\brief
 *	Default PNGLViewer constructor.
 */
@@ -76,7 +76,7 @@ PNGLViewer::PNGLViewer(FXComposite* p,FXGLVisual *vis,FXObject* tgt,FXSelector s
   _multiSelection = false;
 }
 
-/*! 
+/*!
 *	\brief
 *	Construct GL viewer widget sharing display list with another GL viewer
 */
@@ -99,7 +99,7 @@ PNGLViewer::create()
 
 // events ////////////////////////////////////////////////////////////////
 
-/*! 
+/*!
 *	\brief
 *	Handles left button released event.
 *
@@ -114,7 +114,7 @@ PNGLViewer::onLeftBtnRelease(FXObject* obj,FXSelector sel,void* ptr)
 
   if (s != NULL)
   {
-	switch(s->getObj()->getObjType()) 
+	switch(s->getObj()->getObjType())
 	{
 	case PN3DObject::OBJTYPE_3DOBJ:
 	case PN3DObject::OBJTYPE_3DSKELETONOBJ:
@@ -136,7 +136,7 @@ PNGLViewer::onLeftBtnRelease(FXObject* obj,FXSelector sel,void* ptr)
   return rcode;
 }
 
-/*! 
+/*!
 *	\brief
 *	Handles key pressed event.
 *
@@ -208,7 +208,7 @@ PNGLViewer::onSelected(FXObject* obj, FXSelector sel, void* ptr)
 
   if (!_multiSelection)
 	_selectedObjects.clear();
-  
+
   _selectedObjects.insert(((PNGLShape**)ptr)[0]);
 
   return result;
@@ -233,7 +233,7 @@ return 1;
 // viewer ////////////////////////////////////////////////////////////////
 
 
-/*! 
+/*!
 *	\brief
 */
 void
@@ -243,7 +243,7 @@ PNGLViewer::makeViewerCurrent()
   return;
 }
 
-/*! 
+/*!
 *	\brief
 */
 void

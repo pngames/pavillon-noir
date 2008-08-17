@@ -1,6 +1,6 @@
 /*
  * IPNSerializable.cpp
- * 
+ *
  * Description :
  * Base interface for serialization support
  *
@@ -32,7 +32,6 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include <fstream>
-#include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 
 #include "IPNSerializable.hpp"

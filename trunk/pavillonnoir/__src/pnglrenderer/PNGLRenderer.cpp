@@ -1,6 +1,6 @@
 /*
  * PNGLRenderer.cpp
- * 
+ *
  * Description :
  * PNGLRenderer definition
  *
@@ -90,7 +90,7 @@ PNGLRenderer*  PNGLRenderer::getInstance()
   return (PNGLRenderer*)_instance;
 }
 
-PNGLRenderer::PNGLRenderer() : 
+PNGLRenderer::PNGLRenderer() :
 _pFullScreen(false, "Plein ecran", "Plein ecran"),
 _pTitle("Pavillon Noir", PNI18n::getString("title"), PNI18n::getString("title")),
 _pEnableBFCuling(true, "Activer le backface culling", "Activer le backface culling"),
@@ -98,10 +98,10 @@ _pEnableTransparency(true, "Activer la transparence", "Activer la transparence")
 _pEnableGL_LEQUAL(false, "Tester profondeur egale", "Activer les test de profondeur en egalite")
 {
   _guirenderer = NULL;
-  
+
   _SDL_surface = NULL;
   //////////////////////////////////////////////////////////////////////////
-  
+
   _converter[PN_TRIANGLES] = GL_TRIANGLES;
   _converter[PN_TRIANGLE_STRIP] = GL_TRIANGLE_STRIP;
   _converter[PN_TRIANGLE_FAN] = GL_TRIANGLE_FAN;
@@ -113,7 +113,7 @@ _pEnableGL_LEQUAL(false, "Tester profondeur egale", "Activer les test de profond
   _converter[PN_T2F_C4F_N3F_V3F] = GL_T2F_C4F_N3F_V3F;
 
   //////////////////////////////////////////////////////////////////////////
-  
+
   if (SDL_Init(SDL_INIT_VIDEO) == -1)
   {
 	pnerror(PN_LOGLVL_CRITICAL, "Error in SDL initialization!");
@@ -153,7 +153,7 @@ _pEnableGL_LEQUAL(false, "Tester profondeur egale", "Activer les test de profond
   }
 
   //////////////////////////////////////////////////////////////////////////
-  
+
   _bppList.push_back(16);
   _bppList.push_back(24);
   _bppList.push_back(32);
@@ -174,7 +174,7 @@ _pEnableGL_LEQUAL(false, "Tester profondeur egale", "Activer les test de profond
   PNGLVideo::getPMoviePlayer()->setConfigurableObject(this);
 
   //////////////////////////////////////////////////////////////////////////
-  
+
   addSeparator("Fenetre");
 
   addParam(&_pTitle);
@@ -221,7 +221,7 @@ PNGLRenderer::_onPlayVideo(pnEventType type, PNObject* source, PNEventData* ed)
   PNVideoEventData*	videoEventData = (PNVideoEventData*)ed;
 
   PNGLVideo*	video = new PNGLVideo(videoEventData->path);
-  
+
   video->play();
 }
 
@@ -251,13 +251,13 @@ PNGLRenderer::getCurrentDelta()
 void
 PNGLRenderer::enable(pnrenderflag flag)
 {
-  
+
 }
 
 void
 PNGLRenderer::disable(pnrenderflag flag)
 {
-  
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -277,7 +277,7 @@ PNGLRenderer::init()
   ilutEnable(ILUT_OPENGL_CONV);
 
   //////////////////////////////////////////////////////////////////////////
-  
+
   PNEventManager::getInstance()->addCallback(PN_EVENT_VIDEO_START, EventCallback(this, &PNGLRenderer::_onPlayVideo));
   PNEventManager::getInstance()->addCallback(PN_EVENT_RU_END, EventCallback(this, &PNGLRenderer::_endRenderLoop));
 }
@@ -349,7 +349,7 @@ PNGLRenderer::setSDLFlags(int *flags)
 
   if (_pFullScreen)
 	videoFlags |= SDL_FULLSCREEN;
-  
+
   *flags = videoFlags;
 }
 
@@ -365,14 +365,14 @@ Int describes bits per pixel of the SDL window.
 \param title
 String describes the SDL window title.
 \param fullscreen
-Bool specifies the fullscreen state of the SDL window. 
+Bool specifies the fullscreen state of the SDL window.
 */
 void
 PNGLRenderer::initSDL()
 {
   std::cout << "--== SDL init start ==--" << std::endl;
-	  
- 
+
+
   int				videoFlags;
 
   setSDLFlags(&videoFlags);
@@ -384,7 +384,7 @@ PNGLRenderer::initSDL()
   SDL_WM_SetCaption(_pTitle.getString().c_str(), NULL);
   SDL_EnableUNICODE(1);
  // SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
-  
+
   std::cout << "--== SDL init end ==--" << std::endl;
 }
 
@@ -427,7 +427,7 @@ PNGLRenderer::initGL()
 	glDisable(GL_BLEND);
 
   //////////////////////////////////////////////////////////////////////////
-  
+
   //float Light1Dif[4] = {1.0f, 1.0f, 1.0f, 1.0f};
   //float Light1Spec[4] = {1.0f, 1.0f, 1.0f, 1.0f};
   //float Light1Amb[4] = {0.5f, 0.5f, 0.5f, 1.0f};
@@ -435,7 +435,7 @@ PNGLRenderer::initGL()
   //glLightfv(GL_LIGHT0, GL_DIFFUSE, Light1Dif);
   //glLightfv(GL_LIGHT0, GL_SPECULAR, Light1Spec);
   //glLightfv(GL_LIGHT0, GL_AMBIENT, Light1Amb);
-  
+
   float ambient[4] = {0.7f, 0.7f, 0.7f, 1.0f};
   float diffuse[4] = {0.8f, 0.8f, 0.8f, 1.0f};
   float specular[4] = {0.0f, 0.0f, 0.0f, 1.0f};
@@ -447,8 +447,8 @@ PNGLRenderer::initGL()
   float cutoff= 180.0f;                          // Light spot cutoff
   float c_attn= 1.0f;                            // Light constant attenuation
   float l_attn= 0.0f;                            // Light linear attenuation
-  float q_attn= 0.0f;      
-  
+  float q_attn= 0.0f;
+
   // Light on
   glEnable(GL_LIGHT0);
   glLightfv(GL_LIGHT0,GL_AMBIENT, ambient);
@@ -462,7 +462,7 @@ PNGLRenderer::initGL()
   glLightf(GL_LIGHT0,GL_LINEAR_ATTENUATION, l_attn);
   glLightf(GL_LIGHT0,GL_QUADRATIC_ATTENUATION, q_attn);
   glEnable(GL_LIGHTING);
-  
+
   //// Viewer is close0
   glLightModelfv(GL_LIGHT_MODEL_AMBIENT,ambient);
 //  glLightModeli(GL_LIGHT_MODEL_AMBIENT, TRUE);
@@ -486,11 +486,11 @@ PNGLRenderer::initGL()
 
 
   //////////////////////////////////////////////////////////////////////////
-  
+
   PNPoint2f*	def = (PNPoint2f*)_definitionsList[_pDefinitionsList->getChoise()];
 
   _scene.resizeGLWindow(def->x, def->y);
-  
+
   std::cout << "--== OpenGL init end ==--" << std::endl;
 }
 
@@ -506,12 +506,12 @@ PNGLRenderer::run()
   pnuint		currentLoopDate = getTicks();
   SDL_Event		event;
 
- 
+
   PNSDLEvent	sdlEvent;
 
   //float Light1Pos[4] = {0.0f, 0.0f, 40.0f, 1.0f};
 
-  while (_isProgramLooping)												
+  while (_isProgramLooping)
   {
     //timer
     currentLoopDate = getTicks();
@@ -528,7 +528,7 @@ PNGLRenderer::run()
 	  //////////////////////////////////////////////////////////////////////////
 	  // INIT
 	  //////////////////////////////////////////////////////////////////////////
-	  
+
 	  // Reset matrices
 	  glMatrixMode(GL_MODELVIEW);
 	  glLoadIdentity();
@@ -546,7 +546,7 @@ PNGLRenderer::run()
 	  //////////////////////////////////////////////////////////////////////////
 	  // END
 	  //////////////////////////////////////////////////////////////////////////
-	  
+
 	  PNEventManager::getInstance()->sendEvent(PN_EVENT_RU_END, this, NULL);
 	}
   }
@@ -641,7 +641,7 @@ PNGLRenderer::newObj(void *interleave, pnuint size, pnrenderflag format,
 }
 
 PNRendererObject*
-PNGLRenderer::newObj(pnfloat *vertices, pnfloat *normals, 
+PNGLRenderer::newObj(pnfloat *vertices, pnfloat *normals,
 					 pnfloat *colors, 	pnfloat *textures, pnuint nbVerts,
 					 pnuint  *index, pnuint nbIndex, pnrenderflag mode)
 {
@@ -758,7 +758,7 @@ PNGLRenderer::renderSphere(pndouble radius, pnint slices, pnint stacks, const pn
 	  gluQuadricOrientation(quad, GLU_INSIDE);
 
 	gluSphere(quad, radius, slices, stacks);
-	
+
 	gluDeleteQuadric(quad);
   }
   glPopMatrix();
@@ -927,7 +927,7 @@ PNGLRenderer::initGUI()
 	CEGUI::SchemeManager::getSingleton().loadScheme(rm->findPath(PNRT_scheme, "TaharezLook.scheme"));
 	CEGUI::SchemeManager::getSingleton().loadScheme(rm->findPath(PNRT_scheme, "WindowsLook.scheme"));
 	CEGUI::SchemeManager::getSingleton().loadScheme(rm->findPath(PNRT_scheme, "VanillaSkin.scheme"));
-	
+
 	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("LoadingScreenImages") == false)
 	  CEGUI::ImagesetManager::getSingleton().createImageset(rm->findPath(PNRT_imageset, "LoadingBackground.imageset"));
 
