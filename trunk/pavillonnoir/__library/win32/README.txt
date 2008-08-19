@@ -2,15 +2,15 @@ Third party library:
 
 name		| version included on svn
 
-* libxml2 	: 2.6.22 (http://xmlsoft.org/news.html)
+* libxml2 	: 2.6.32 (http://xmlsoft.org/news.html)
 * Fox 		: 1.4.29 (http://fox-toolkit.org)
-* SDL 		: 1.2.9 (http://www.libsdl.org/news.php)
+* SDL 		: 1.2.13 (http://www.libsdl.org/news.php)
 * CEGUI		: 0.4
-* boost		: 1.33.1 (http://sourceforge.net/project/showfiles.php?group_id=7586)
+* boost		: 1.33.1 (http://sourceforge.net/project/showfiles.php?group_id=7586) - installer for Visual Studio at http://www.boostpro.com/products/free
 * openal	: 1.1
 		- Installeur dans le rep "install", obligatoire sous windows.
 * ogg-vorbis: 1.0.1
-* lua		: 5.0.2
+* lua		: 5.0.2 (http://luaforwindows.luaforge.net/)
 * tolua++	: 1.0.6
 		- Installeur dans /__dev/tolua++
 * glew		: 1.3.3 (http://glew.sourceforge.net)
