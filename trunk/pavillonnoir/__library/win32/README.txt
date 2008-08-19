@@ -12,7 +12,7 @@ name		| version included on svn
 * ogg-vorbis: 1.0.1
 * lua		: 5.0.2 (http://luaforwindows.luaforge.net/)
 * tolua++	: 1.0.6
-		- Installeur dans /__dev/tolua++
+		- wn32 installer in /tools/tolua++
 * glew		: 1.3.3 (http://glew.sourceforge.net)
 * devIL		: 1.6.7 (http://openil.sourceforge.net/download.php)
 * opal		: 0.3.1 (http://ox.slug.louisville.edu/~o0lozi01/opal_wiki/index.php/OPAL:Downloads)
