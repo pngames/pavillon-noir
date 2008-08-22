@@ -108,11 +108,11 @@ FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|
 
 		if (fs::is_directory(*dir_itr))
 		{
-		  if (fs::exists(*dir_itr / "entities.xml"))
+			if (fs::exists(*dir_itr / std::string("entities.xml")))
 		  {
 			++dir_count;
 			_mapSelector->setNumVisible(dir_count);
-			_mapSelector->appendItem(dir_itr->leaf().c_str());
+			_mapSelector->appendItem(dir_itr->string().c_str());
 		  }
 		}
 	  }

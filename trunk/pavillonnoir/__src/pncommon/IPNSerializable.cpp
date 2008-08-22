@@ -94,7 +94,7 @@ IPNSerializable::unserializeFromPath(const std::string& path)
 {
   setPath(path);
 
-  return unserializeFromFile(fs::path(path, fs::no_check));
+  return unserializeFromFile(fs::path(path));
 }
 
 /**
@@ -150,7 +150,7 @@ IPNSerializable::serializeInPath(const std::string& path)
 {
   setPath(path);
 
-  return serializeInFile(fs::path(path, fs::no_check));
+  return serializeInFile(fs::path(path));
 }
 
 /**
