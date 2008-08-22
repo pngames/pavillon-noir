@@ -545,7 +545,7 @@ PNGUIConsole::update(pnEventType type, PNObject* source, PNEventData* data)
 
 	  _consoleVisibility = false;
 	  _fadeTimer += deltaTime;
-	  float fadefac = std::max( 0.0f, 1.0f - ( _fadeTimer / FADE_TIME ) );
+	  float fadefac = PNMAX( 0.0f, (1.0f - ( _fadeTimer / FADE_TIME )) );
 	  _pnConsole->setAlpha( fadefac * _frameAlphaValue );
 
 	  CEGUI::Size sizeTmp( fadefac,  fadefac ); 

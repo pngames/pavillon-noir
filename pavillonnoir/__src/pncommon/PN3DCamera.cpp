@@ -76,19 +76,19 @@ PN3DCamera::~PN3DCamera()
 //////////////////////////////////////////////////////////////////////////
 
 void
-PN3DCamera::setFar(pnfloat far)
+PN3DCamera::setFar(pnfloat viewFar)
 {
   PNLOCK(this);
 
-  _viewFar = far;
+  _viewFar = viewFar;
 }
 
 void
-PN3DCamera::setNear(pnfloat near)
+PN3DCamera::setNear(pnfloat viewNear)
 {
   PNLOCK(this);
 
-  _viewNear = near;
+  _viewNear = viewNear;
 }
 
 void

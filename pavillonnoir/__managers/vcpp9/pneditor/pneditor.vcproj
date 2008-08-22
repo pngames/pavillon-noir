@@ -49,18 +49,14 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../../__src/pneditorcommon;../../../__src/pncommon;../../../__library/win32/include/fox;../../../__library/win32/include/;../../../__library/common/"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;HAVE_GL_H;HAVE_GLU_H;FOXDLL;BOOST_ALL_DYN_LINK;BOOST_THREAD_USE_DLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;HAVE_GL_H;HAVE_GLU_H;FOXDLL;BOOST_ALL_DYN_LINK"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				RuntimeTypeInfo="true"
 				PrecompiledHeaderFile=""
 				AssemblerListingLocation=""
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
 				WarningLevel="3"
-				DebugInformationFormat="4"
-				CompileAs="2"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -143,7 +139,7 @@
 				Optimization="2"
 				InlineFunctionExpansion="0"
 				AdditionalIncludeDirectories="../../../__src/pneditorcommon;../../../__src/pncommon;../../../__library/win32/include/fox;../../../__library/win32/include/;../../../__library/common/"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;HAVE_GL_H;HAVE_GLU_H;FOXDLL;BOOST_ALL_DYN_LINK;BOOST_THREAD_USE_DLL"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;HAVE_GL_H;HAVE_GLU_H;FOXDLL;BOOST_ALL_DYN_LINK"
 				StringPooling="false"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="false"
@@ -153,6 +149,7 @@
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="3"
+				DebugInformationFormat="3"
 				CompileAs="0"
 			/>
 			<Tool
