@@ -157,10 +157,8 @@ namespace PN {
 }
 
 #ifdef WIN32
-
 # define chdir(path)		_chdir(path)
 # define getcwd(buf, nb)	_getcwd(buf, nb)
-
 #endif
 
 //////////////////////////////////////////////////////////////////////////

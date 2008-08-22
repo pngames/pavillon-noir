@@ -42,13 +42,13 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PNSOUND_EXPORTS;BOOST_ALL_DYN_LINK;BOOST_THREAD_USE_DLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PNSOUND_EXPORTS;BOOST_ALL_DYN_LINK"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -120,7 +120,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PNSOUND_EXPORTS;BOOST_ALL_DYN_LINK;BOOST_THREAD_USE_DLL"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PNSOUND_EXPORTS;BOOST_ALL_DYN_LINK"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
