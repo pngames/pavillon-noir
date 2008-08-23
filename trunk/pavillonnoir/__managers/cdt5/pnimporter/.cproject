@@ -54,6 +54,7 @@
 <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 <additionalInput kind="additionalinput" paths="$(LIBS)"/>
 </inputType>
+<outputType id="cdt.managedbuild.tool.gnu.cpp.linker.so.debug.output.730155752" outputPrefix="lib" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.debug.output"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.debug.1648013005" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.debug">
 <inputType id="cdt.managedbuild.tool.gnu.assembler.input.1420130912" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
@@ -61,6 +62,10 @@
 <tool id="cdt.managedbuild.tool.gnu.archiver.base.1940928225" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 </toolChain>
 </folderInfo>
+<sourceEntries>
+<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+<entry excluding="src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+</sourceEntries>
 </configuration>
 </storageModule>
 <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
@@ -480,6 +485,7 @@
 </profile>
 </scannerConfigBuildInfo>
 </storageModule>
+<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cconfiguration>
 <cconfiguration id="cdt.managedbuild.config.gnu.so.release.1298471348">
 <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.so.release.1298471348" moduleId="org.eclipse.cdt.core.settings" name="Release">
@@ -529,6 +535,7 @@
 <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 <additionalInput kind="additionalinput" paths="$(LIBS)"/>
 </inputType>
+<outputType id="cdt.managedbuild.tool.gnu.cpp.linker.so.release.output.2123722462" outputPrefix="" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.release.output"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.assembler.so.release.2056303343" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.release">
 <inputType id="cdt.managedbuild.tool.gnu.assembler.input.652236017" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
@@ -536,6 +543,10 @@
 <tool id="cdt.managedbuild.tool.gnu.archiver.base.642373730" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 </toolChain>
 </folderInfo>
+<sourceEntries>
+<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+<entry excluding="src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+</sourceEntries>
 </configuration>
 </storageModule>
 <storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
@@ -955,6 +966,7 @@
 </profile>
 </scannerConfigBuildInfo>
 </storageModule>
+<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cconfiguration>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
