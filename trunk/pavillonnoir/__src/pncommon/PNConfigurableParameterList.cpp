@@ -1,6 +1,6 @@
 /*
  * PNConfigurableParameterList.cpp
- * 
+ *
  * Description :
  * PNConfigurableParameterList definition
  *
@@ -43,10 +43,10 @@ using namespace std;
 namespace PN {
 //////////////////////////////////////////////////////////////////////////
 
-PNConfigurableParameterList::PNConfigurableParameterList(PNConfigurableObject* p, 
-														 pnlistparamtype type, 
-														 void* elem, 
-														 const string& label, 
+PNConfigurableParameterList::PNConfigurableParameterList(PNConfigurableObject* p,
+														 pnlistparamtype type,
+														 void* elem,
+														 const string& label,
 														 const string& altText,
 														 pnbool choosable/* = true*/,
 														 pnbool editable,
@@ -90,7 +90,7 @@ PNConfigurableParameterList::getChoise()
 
 //////////////////////////////////////////////////////////////////////////
 
-pnint		
+pnint
 PNConfigurableParameterList::getElementList(pnint def)
 {
   std::list<pnint>*	lst = (std::list<pnint>*)_elem;
@@ -106,12 +106,12 @@ PNConfigurableParameterList::getElementList(pnint def)
   return def;
 }
 
-pnuint	
+pnuint
 PNConfigurableParameterList::getElementList(pnuint def)
 {
   std::list<pnuint>*	lst = (std::list<pnuint>*)_elem;
   std::list<pnuint>::iterator	it = lst->begin();
-  for (int i = 0; it != lst->end(); ++i, ++it)
+  for (pnuint i = 0; it != lst->end(); ++i, ++it)
   {
 	if  (i == _choise)
 	{
@@ -127,7 +127,7 @@ PNConfigurableParameterList::getElementList(pnfloat def)
 {
   std::list<pnfloat>*	lst = (std::list<pnfloat>*)_elem;
   std::list<pnfloat>::iterator	it = lst->begin();
-  for (int i = 0; it != lst->end(); ++i, ++it)
+  for (puint i = 0; it != lst->end(); ++i, ++it)
   {
 	if  (i == _choise)
 	{
@@ -284,7 +284,7 @@ PNConfigurableParameterList::_unserializeNode(xmlNode* node)
   if (PCF_PARAMV_XMLDTD_NAME == (const char*)node->name)
   {
 	xmlChar* attr = xmlGetProp(node, PCF_XMLPROP_DATA);
-	
+
 	addToList((const char*)attr);
   }
 
