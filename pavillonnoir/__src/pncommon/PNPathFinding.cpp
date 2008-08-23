@@ -1,6 +1,6 @@
 /*
  * PNPathFinding.cpp
- * 
+ *
  * Description :
  * PNPathFinding definition
  *
@@ -89,9 +89,9 @@ PNPathFinding::closestWP(const PNPoint3f&p)
 
   for (ls = getWayPoints(), i = ls.begin(); i != ls.end(); i++)
   {
-	PNPoint3f						  coord = (*i)->getCoord();
-	pnfloat						  dist = coord.getDistance(p);
-	pnfloat						  fdist = _pos.getFlatDistance(coord);
+	PNPoint3f						coord = (*i)->getCoord();
+	pnfloat						      dist = coord.getDistance(p);
+	pnfloat			                 fdist = _pos.getFlatDistance(coord);
 
 //	if (fdist > 50.0f)
 //	{
@@ -166,7 +166,7 @@ PNPathFinding::moveNext(PN3DObject& o)
 		fulldistance = (*i)->weight * (*i)->coef +
 		  _dest.getDistance((PNPoint3f&)wp->getCoord());
 		begin = false;
-	  }	
+	  }
 	  else
 	  {
 		temp = (*i)->weight * (*i)->coef +

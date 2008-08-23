@@ -1,6 +1,6 @@
 /*
  * main.cpp
- * 
+ *
  * Description :
  * Entry point of pncore
  *
@@ -81,7 +81,7 @@ int	  main(int argc, char* argv[])
   std::cout << "angle: " << angle << std::endl;
 
   //////////////////////////////////////////////////////////////////////////
-  
+
   std::cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl;
 
   PNPoint3f  coordTarget(1.0f, 0.0f, 0.0f);
@@ -100,11 +100,11 @@ int	  main(int argc, char* argv[])
 
   //////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////
-  
+
   /*char c;
   std::cout << "Appuyez sur une touche pour continuer" << std::endl;
   fread(&c, 1, 1, stdin);
-  
+
   if (c == 'q')
     return 0;*/
 
@@ -119,9 +119,9 @@ int	  main(int argc, char* argv[])
 
   //////////////////////////////////////////////////////////////////////////
   // Initialize configuration
- 
+
   PNI18n::getInstance()->unserializeFromPath("datafiles/default/i18n/default.xml");
-  
+
   //////////////////////////////////////////////////////////////////////////
   // Load Plugins
 
@@ -144,9 +144,9 @@ int	  main(int argc, char* argv[])
   gameWindowLauncher.create();
   mainWindow->show(PLACEMENT_SCREEN);
   gameWindowLauncher.run();
-  
+
   if (returnState == true)
-  {  	
+  {
 	loadPlugins->launchPlugins();
 	PNConsole::init();
 
@@ -158,7 +158,7 @@ int	  main(int argc, char* argv[])
 
 	new CEGUI::System((CEGUI::Renderer*)ri->getGUIRenderer());
 	ri->initGUI();
-	
+
 	PNGUILoadingScreen::getInstance();
 
 	PNGUIStateManager::getInstance();
@@ -168,16 +168,16 @@ int	  main(int argc, char* argv[])
 	//////////////////////////////////////////////////////////////////////////
 	///					Init of the event's manager						   ///
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	PNEventManager*		pneventmngr;
-	
+
 	pneventmngr = PNEventManager::getInstance();
 	pneventmngr->init();
 
 	//////////////////////////////////////////////////////////////////////////
 	////                Starts rendering                                  ////
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	ri->run();
   }
 
