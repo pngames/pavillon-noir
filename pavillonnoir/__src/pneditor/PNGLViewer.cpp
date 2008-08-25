@@ -195,7 +195,7 @@ PNGLViewer::onKeyPress(FXObject* obj, FXSelector sel, void* ptr)
 	FXGLViewer::handle(obj, sel,ptr);
 	;
   }
-  translate(invert(getOrientation()) * FXVec3f(x, y, z));
+  translate(getOrientation().invert() * FXVec3f(x, y, z));
   _ed->redraw();
 
   return 1;

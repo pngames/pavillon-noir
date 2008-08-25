@@ -127,7 +127,7 @@ PNConfigurableParameterList::getElementList(pnfloat def)
 {
   std::list<pnfloat>*	lst = (std::list<pnfloat>*)_elem;
   std::list<pnfloat>::iterator	it = lst->begin();
-  for (puint i = 0; it != lst->end(); ++i, ++it)
+  for (pnuint i = 0; it != lst->end(); ++i, ++it)
   {
 	if  (i == _choise)
 	{

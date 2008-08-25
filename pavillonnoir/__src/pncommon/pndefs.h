@@ -83,7 +83,7 @@
 
 // Shared library support
 #ifdef WIN32
-# pragma warning( disable: 4251 4275 )
+# pragma warning( disable: 4251 4275)
 # define PNEXPORT	__declspec(dllexport)
 # define PNIMPORT	__declspec(dllimport)
 #else
