@@ -78,8 +78,6 @@
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				EntryPointSymbol="mainCRTStartup"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -171,8 +169,6 @@
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
 				SubSystem="2"
 				EntryPointSymbol="mainCRTStartup"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
