@@ -68,10 +68,7 @@
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				EntryPointSymbol="mainCRTStartup"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
-				Profile="false"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -148,8 +145,6 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				EntryPointSymbol="mainCRTStartup"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
