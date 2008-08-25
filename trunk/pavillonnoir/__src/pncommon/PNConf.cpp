@@ -107,12 +107,12 @@ PNConf::_copyDirectory(const fs::path& path, const std::string& target)
   {
 	if (fs::is_directory(dir_itr->status()))
 	{
-	  if (dir_itr->string() != ".svn")
-		_copyDirectory(*dir_itr, target + dir_itr->string() + PATHSEP);
+	  if (dir_itr->leaf() != ".svn")
+		_copyDirectory(*dir_itr, target + dir_itr->leaf() + PATHSEP);
 	}
 	else
 	{
-	  fs::path targetFile(target + dir_itr->string(), fs::no_check);
+	  fs::path targetFile(target + dir_itr->leaf());
 
 	  if (!fs::exists(targetFile))
 		copy_file(*dir_itr, targetFile);

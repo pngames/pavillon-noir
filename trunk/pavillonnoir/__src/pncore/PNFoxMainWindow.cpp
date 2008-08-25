@@ -96,7 +96,7 @@ FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|
   {
 	const PNResourcesManager::datafile& df = *it;
 
-	fs::path mapPath(rm->getResourcePath(df.id, PNRT_map), fs::no_check);
+	fs::path mapPath(rm->getResourcePath(df.id, PNRT_map));
 
 	if (fs::exists(mapPath) && fs::is_directory(mapPath))
 	{
@@ -106,9 +106,9 @@ FXMainWindow(a,"Pavillon Noir",NULL,NULL,DECOR_TITLE|DECOR_MINIMIZE|DECOR_CLOSE|
 	  {
 		std::cout << dir_itr->leaf() << std::endl;
 
-		if (fs::is_directory(*dir_itr))
+		if (fs::is_directory(dir_itr->path()))
 		{
-			if (fs::exists(*dir_itr / std::string("entities.xml")))
+			if (fs::exists(dir_itr->path() / std::string("entities.xml")))
 		  {
 			++dir_count;
 			_mapSelector->setNumVisible(dir_count);

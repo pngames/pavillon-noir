@@ -124,7 +124,7 @@ PNGUIMenuLoad::updateList()
   {
 	const PNResourcesManager::datafile& df = *it;
 
-	fs::path mapPath(rm->getResourcePath(df.id, PNRT_map), fs::no_check);
+	fs::path mapPath(rm->getResourcePath(df.id, PNRT_map));
 
 	if (fs::exists(mapPath) && fs::is_directory(mapPath))
 	{
@@ -134,9 +134,9 @@ PNGUIMenuLoad::updateList()
 	  {
 		std::cout << dir_itr->leaf() << std::endl;
 
-		if (fs::is_directory(*dir_itr))
+		if (fs::is_directory(dir_itr->path()))
 		{
-		  if (fs::exists(*dir_itr / "entities.xml"))
+		  if (fs::exists(dir_itr->path() / "entities.xml"))
 		  {
 			++dir_count;
 			CEGUI::ListboxTextItem* item = new CEGUI::ListboxTextItem(dir_itr->leaf().c_str());

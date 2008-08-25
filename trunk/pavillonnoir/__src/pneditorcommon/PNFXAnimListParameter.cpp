@@ -211,7 +211,7 @@ PNFXAnimListParameter::_update(void)
   {
 	PN3DSkeletonAnimation*	skanim = *it;
 
-	_listBox->appendItem(FXFile::name(skanim->anim->getFile()->c_str()), NULL,  skanim->anim);
+	_listBox->appendItem(FXPath::name(skanim->anim->getFile()->c_str()), NULL,  skanim->anim);
   }
 
   _listBox->setNumVisible(_listBox->getNumItems()< 5 ? _listBox->getNumItems() : 5);

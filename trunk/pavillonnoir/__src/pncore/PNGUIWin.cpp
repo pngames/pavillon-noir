@@ -166,7 +166,7 @@ namespace PN
 		  CEGUI::Size sizeTmp( fadefac, fadefac/* _winWnd->getSize().d_height * fadefac / _winWnd->getSize().d_width * 1.33*/ ); 
 		  
 		  _winWnd->setSize( sizeTmp );
-		  _winWnd->setAlpha( std::max( 0.2f, fadefac ) );
+		  _winWnd->setAlpha( max( 0.2f, fadefac ) );
 		}
 		
 

@@ -163,7 +163,7 @@ namespace PN
 		  CEGUI::Size sizeTmp( fadefac,  fadefac ); 
 		  
 		  _deathWnd->setSize( sizeTmp );
-		  _deathWnd->setAlpha( std::max max( 0.2f, fadefac ) );
+		  _deathWnd->setAlpha( max( 0.2f, fadefac ) );
 		}
 		
 
