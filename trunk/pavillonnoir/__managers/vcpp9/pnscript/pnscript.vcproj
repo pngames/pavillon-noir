@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="lua.lib lualib.lib tolua++.lib"
+				AdditionalDependencies="lua5.1.lib tolua++.lib"
 				OutputFile="../../../__binaries/win32/plugins/Debug/pnscript-dbg.pnp"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
@@ -139,7 +139,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="lua.lib lualib.lib tolua++.lib"
+				AdditionalDependencies="lua5.1.lib tolua++.lib"
 				OutputFile="../../../__binaries/win32/plugins/pnscript.pnp"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"

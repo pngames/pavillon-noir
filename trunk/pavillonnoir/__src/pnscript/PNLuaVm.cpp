@@ -68,8 +68,13 @@ int    PNLuaVm::execFile(const std::string& path)
 {
   PNLOCK(this);
 
-  pnerrorcode myret;
-  int lret = lua_dofile(_luaVm, path.c_str());
+  //this does not exist anymore in lua 5.1
+  //int lret = lua_dofile(_luaVm, path.c_str());
+
+  luaL_loadfile(_luaVm, path.c_str());
+  int lret = lua_pcall(_luaVm, 0, 0, 0);
+
+  //pnerrorcode myret;
   //switch (lret)
   //{
   //case LUA_ERRSYNTAX:
@@ -99,8 +104,13 @@ int    PNLuaVm::execString(const std::string &orders)
 {   
   PNLOCK(this);
 
-  pnerrorcode myret;
-  int lret = lua_dostring(_luaVm, orders.c_str());
+  //this does not exist anymore in lua 5.1
+  //int lret = lua_dostring(_luaVm, orders.c_str());
+
+  luaL_loadstring(_luaVm, orders.c_str());
+  int lret = lua_pcall(_luaVm, 0, 0, 0);
+
+  //pnerrorcode myret;
   //switch (lret)
   //{
   //case LUA_ERRSYNTAX:
