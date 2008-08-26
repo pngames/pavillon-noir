@@ -77,11 +77,11 @@ void		PNLuaGame::manageLuaError(int errorcode)
 pnerrorcode PNLuaGame::run(void)
 {
   DEBUG_PRINTER("Entering PNLuaGame::run()\n");	
-  _LVM.registerLuaLibrary(&lua_baselibopen);
-  _LVM.registerLuaLibrary(&lua_iolibopen);
-  _LVM.registerLuaLibrary(&lua_strlibopen); 
-  _LVM.registerLuaLibrary(&lua_tablibopen);
-  _LVM.registerLuaLibrary(&lua_mathlibopen);
+  _LVM.registerLuaLibrary(&luaopen_base);
+  _LVM.registerLuaLibrary(&luaopen_io);
+  _LVM.registerLuaLibrary(&luaopen_string); 
+  _LVM.registerLuaLibrary(&luaopen_table);
+  _LVM.registerLuaLibrary(&luaopen_math);
   _LVM.registerLuaLibrary(&tolua_pnbind_open);
 
   manageLuaError(_LVM.execFile(PNResourcesManager::getInstance()->findPath(PNRT_gamedef, "init.lua")));
