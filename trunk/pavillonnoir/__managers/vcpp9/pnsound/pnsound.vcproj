@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/"
+				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/;../../../__library/win32/include/AL"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;PNSOUND_EXPORTS;BOOST_ALL_DYN_LINK"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -60,7 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OpenAL32.lib ogg_static.lib vorbis_static.lib vorbisfile_static.lib ALut.lib"
+				AdditionalDependencies="OpenAL32.lib ogg_d.lib vorbis_d.lib vorbisfile_d.lib ALut.lib"
 				OutputFile="../../../__binaries/win32/plugins/Debug/pnsound-dbg.pnp"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
@@ -116,7 +116,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/"
+				AdditionalIncludeDirectories="../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/;../../../__library/win32/include/AL"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PNSOUND_EXPORTS;BOOST_ALL_DYN_LINK"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -135,7 +135,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OpenAL32.lib ogg_static.lib vorbis_static.lib vorbisfile_static.lib ALut.lib"
+				AdditionalDependencies="OpenAL32.lib ogg.lib vorbis.lib vorbisfile.lib ALut.lib"
 				OutputFile="../../../__binaries/win32/plugins/pnsound.pnp"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\__library\win32\lib"
