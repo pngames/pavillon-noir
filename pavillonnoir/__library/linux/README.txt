@@ -2,8 +2,8 @@ Third party library:
 
 name		| comment
 
-* libxml2	: 2.6.16
-* bz2		: 1.0.2
+* libxml2	: 2.6.*
+* bz2		: 1.0.*
 * Fox		: 1.6.*
 * SDL		: 1.2.*
 * CEGUI		: 0.4.0
@@ -13,7 +13,7 @@ name		| comment
 * openal	: 0.2004090900
 * tinyxml	: 2.3.4
 * glew		: 1.5.*
-* DevIL		: 1.6.7
-* libogg	: 1.1.2
-* libvorbis	: 1.1.0
+* DevIL		: 1.6.*
+* libogg	: 1.1.*
+* libvorbis	: 1.1.*
 
