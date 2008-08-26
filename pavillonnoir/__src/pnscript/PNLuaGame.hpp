@@ -32,11 +32,8 @@
 
 #include <boost/filesystem/path.hpp>
 #include <set>
-extern "C"
-{
-#include <lua.h>
-#include <lualib.h>
-}
+#include <lua.hpp>
+
 #include "pnevent.h"
 #include "PNGameInterface.hpp"
 #include "PNLuaVm.hpp"
