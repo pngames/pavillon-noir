@@ -1,8 +1,16 @@
 #if !defined(AL_ALUT_H)
 #define AL_ALUT_H
 
+#if defined(_MSC_VER)
+#include <alc.h>
+#include <al.h>
+#elif defined(__APPLE__)
+#include <OpenAL/alc.h>
+#include <OpenAL/al.h>
+#else
 #include <AL/al.h>
 #include <AL/alc.h>
+#endif
 
 #if defined(__cplusplus)
 extern "C" {
@@ -42,7 +50,7 @@ extern "C" {
 #endif
 
 #define ALUT_API_MAJOR_VERSION                 1
-#define ALUT_API_MINOR_VERSION                 0
+#define ALUT_API_MINOR_VERSION                 1
 
 #define ALUT_ERROR_NO_ERROR                    0
 #define ALUT_ERROR_OUT_OF_MEMORY               0x200
@@ -82,12 +90,15 @@ ALUT_API const char *ALUT_APIENTRY alutGetErrorString (ALenum error);
 
 ALUT_API ALuint ALUT_APIENTRY alutCreateBufferFromFile (const char *fileName);
 ALUT_API ALuint ALUT_APIENTRY alutCreateBufferFromFileImage (const ALvoid *data, ALsizei length);
-ALUT_API ALvoid *ALUT_APIENTRY alutLoadMemoryFromFile (const char *fileName, ALenum *format, ALsizei *size, ALfloat *frequency);
-ALUT_API ALvoid *ALUT_APIENTRY alutLoadMemoryFromFileImage (const ALvoid *data, ALsizei length, ALenum *format, ALsizei *size, ALfloat *frequency);
-ALUT_API const char *ALUT_APIENTRY alutGetMIMETypes (ALenum loader);
-
 ALUT_API ALuint ALUT_APIENTRY alutCreateBufferHelloWorld (void);
 ALUT_API ALuint ALUT_APIENTRY alutCreateBufferWaveform (ALenum waveshape, ALfloat frequency, ALfloat phase, ALfloat duration);
+
+ALUT_API ALvoid *ALUT_APIENTRY alutLoadMemoryFromFile (const char *fileName, ALenum *format, ALsizei *size, ALfloat *frequency);
+ALUT_API ALvoid *ALUT_APIENTRY alutLoadMemoryFromFileImage (const ALvoid *data, ALsizei length, ALenum *format, ALsizei *size, ALfloat *frequency);
+ALUT_API ALvoid *ALUT_APIENTRY alutLoadMemoryHelloWorld (ALenum *format, ALsizei *size, ALfloat *frequency);
+ALUT_API ALvoid *ALUT_APIENTRY alutLoadMemoryWaveform (ALenum waveshape, ALfloat frequency, ALfloat phase, ALfloat duration, ALenum *format, ALsizei *size, ALfloat *freq);
+
+ALUT_API const char *ALUT_APIENTRY alutGetMIMETypes (ALenum loader);
 
 ALUT_API ALint ALUT_APIENTRY alutGetMajorVersion (void);
 ALUT_API ALint ALUT_APIENTRY alutGetMinorVersion (void);
