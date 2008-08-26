@@ -13,7 +13,7 @@ name			| version included on svn
 * lua			: 5.1.3 (http://luabinaries.luaforge.net/)
 * tolua++		: 1.0.92 (http://www.codenix.com/~tolua/#download)
 		- win32 installer in /tools/tolua++
-* glew			: 1.3.3 (http://glew.sourceforge.net)
+* glew			: 1.5.0 (http://glew.sourceforge.net)
 * devIL			: 1.6.7 (http://openil.sourceforge.net/download.php)
 * opal			: 0.3.1 (http://ox.slug.louisville.edu/~o0lozi01/opal_wiki/index.php/OPAL:Downloads)
 
