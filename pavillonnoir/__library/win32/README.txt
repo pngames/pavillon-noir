@@ -17,7 +17,7 @@ name			| version included on svn
 		- win32 installer in /tools/tolua++
 * glew			: 1.5.0 (http://glew.sourceforge.net)
 * devIL			: 1.6.7 (http://openil.sourceforge.net/download.php)
-* opal			: 0.3.1 (http://ox.slug.louisville.edu/~o0lozi01/opal_wiki/index.php/OPAL:Downloads)
+* opal			: 0.3.1 (http://sourceforge.net/project/showfiles.php?group_id=119663)
 
 ______________________________
 Sub dependents
