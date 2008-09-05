@@ -36,6 +36,7 @@
 <option id="gnu.cpp.compiler.so.debug.option.debugging.level.351488461" name="Debug Level" superClass="gnu.cpp.compiler.so.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 <option id="gnu.cpp.compiler.option.include.paths.85552667" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="/usr/include/libxml2/"/>
+<listOptionValue builtIn="false" value="../../../../__library/common/"/>
 </option>
 <inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.639518658" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 </tool>
