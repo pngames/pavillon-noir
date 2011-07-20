@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5E3085FC-E465-40AF-A13C-10AEC29E6497}</ProjectGuid>
+    <RootNamespace>pnimporter</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PNIMPORTER_EXPORTS;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>-DBOOST_FILESYSTEM_VERSION=2 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <OutputFile>../../../__binaries/win32/plugins/Debug/pnimporter-dbg.pnp</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\__library\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../../__src/pncommon;../../../__library/win32/include;../../../__library/common/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PNIMPORTER_EXPORTS;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>-DBOOST_FILESYSTEM_VERSION=2 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <OutputFile>../../../__binaries/win32/plugins/pnimporter.pnp</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\__library\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\__src\pnimporter\pndlmain.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIImporter.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIImporterPlugDesc.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\a_parseBody.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\a_parseHeader.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\PNI3DAnimation.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIAnimationBone.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIAnimationImporter.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\m_parseBody.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\m_parseHeader.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\PNI3DMesh.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\PNI3DModel.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIModelImporter.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIVertex.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\PNI3DMaterial.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIMaterialImporter.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\PNI3DSkeleton.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIBone.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\PNISkeletonImporter.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\s_parseBody.cpp" />
+    <ClCompile Include="..\..\..\__src\pnimporter\s_parseHeader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIException.hpp" />
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIImporter.hpp" />
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIImporterPlugDesc.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\pna_format.h" />
+    <ClInclude Include="..\..\..\__src\pnimporter\PNI3DAnimation.hpp" />
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIAnimationBone.hpp" />
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIAnimationImporter.hpp" />
+    <ClInclude Include="..\..\..\__src\pnimporter\PNI3DMesh.hpp" />
+    <ClInclude Include="..\..\..\__src\pnimporter\PNI3DModel.hpp" />
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIModelImporter.hpp" />
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIVertex.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnm_format.h" />
+    <ClInclude Include="..\..\..\__src\pnimporter\PNI3DMaterial.hpp" />
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIMaterialImporter.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnt_format.h" />
+    <ClInclude Include="..\..\..\__src\pnimporter\PNI3DSkeleton.hpp" />
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIBone.hpp" />
+    <ClInclude Include="..\..\..\__src\pnimporter\PNISkeletonImporter.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pns_format.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="pnimporter.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\pncommon\pncommon.vcxproj">
+      <Project>{8fa92b12-d5d9-413b-8abc-9bfded44ede6}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

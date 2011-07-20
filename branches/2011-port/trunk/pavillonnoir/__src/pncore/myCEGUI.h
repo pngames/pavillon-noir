@@ -36,6 +36,8 @@
 #endif
 
 #include <CEGUI.h>
+#include <WindowRendererSets/Falagard/FalStaticText.h>
+#include <WindowRendererSets/Falagard/FalStaticImage.h>
 
 #ifdef WIN32
 # pragma warning( pop )

@@ -1,0 +1,234 @@
+﻿La génération a démarré 15.07.2011 13:25:20.
+     1>Projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pncommon\pncommon.vcxproj" sur le nœud 2 (rebuild cible(s)).
+     1>_PrepareForClean:
+         Suppression du fichier "Debug\pncommon.lastbuildstate".
+       InitializeBuildStatus:
+         Création de "Debug\pncommon.unsuccessfulbuild", car "AlwaysCreate" a été spécifié.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../../__library/win32/include/ /I../../../__library/common/ /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PNCOMMON_EXPORTS /D BOOST_ALL_DYN_LINK /D _WINDLL /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\__src\pncommon\PNCallBackList.cpp ..\..\..\__src\pncommon\PNEventManager.cpp ..\..\..\__src\pncommon\PNLockableObject.cpp ..\..\..\__src\pncommon\PNObject.cpp ..\..\..\__src\pncommon\PN3DGround.cpp ..\..\..\__src\pncommon\PN3DObject.cpp ..\..\..\__src\pncommon\PN3DSkeletonAnimation.cpp ..\..\..\__src\pncommon\PN3DSkeletonObject.cpp ..\..\..\__src\pncommon\PNWorldCollision.cpp ..\..\..\__src\pncommon\IPNAnimated.cpp ..\..\..\__src\pncommon\PNBoundingBox.cpp ..\..\..\__src\pncommon\PNBoundingSphere.cpp ..\..\..\__src\pncommon\PNFace.cpp ..\..\..\__src\pncommon\PNCharacter.cpp ..\..\..\__src\pncommon\PNIAGraph.cpp ..\..\..\__src\pncommon\PNPathFinding.cpp ..\..\..\__src\pncommon\PNWayPoint.cpp ..\..\..\__src\pncommon\PNWPModel.cpp ..\..\..\__src\pncommon\PNDie.cpp ..\..\..\__src\pncommon\PNGameInterface.cpp ..\..\..\__src\pncommon\PNGameMap.cpp ..\..\..\__src\pncommon\PNSoundInterface.cpp ..\..\..\__src\pncommon\PNInterface.cpp ..\..\..\__src\pncommon\PNPlugin.cpp ..\..\..\__src\pncommon\PNPluginManager.cpp ..\..\..\__src\pncommon\PNConsole.cpp ..\..\..\__src\pncommon\PNPhysicsInterface.cpp ..\..\..\__src\pncommon\PNConfigurableObject.cpp ..\..\..\__src\pncommon\PNConfigurableParameter.cpp ..\..\..\__src\pncommon\PNConfigurableParameterList.cpp ..\..\..\__src\pncommon\PNPropertiesGridParameter.cpp ..\..\..\__src\pncommon\PNPropertiesGridParameterList.cpp ..\..\..\__src\pncommon\PNBoolParameter.cpp ..\..\..\__src\pncommon\PNFloatParameter.cpp ..\..\..\__src\pncommon\PNIntParameter.cpp ..\..\..\__src\pncommon\PNStringParameter.cpp ..\..\..\__src\pncommon\PNUIntParameter.cpp ..\..\..\__src\pncommon\PNImportInterface.cpp ..\..\..\__src\pncommon\PNImportManager.cpp ..\..\..\__src\pncommon\PNExportInterface.cpp ..\..\..\__src\pncommon\PNExportManager.cpp ..\..\..\__src\pncommon\PN3DCamera.cpp ..\..\..\__src\pncommon\PN3DCameraModel.cpp ..\..\..\__src\pncommon\PNRendererInterface.cpp ..\..\..\__src\pncommon\PNConf.cpp ..\..\..\__src\pncommon\pnerror.cpp ..\..\..\__src\pncommon\PNException.cpp ..\..\..\__src\pncommon\PNLine.cpp ..\..\..\__src\pncommon\PNMatrix4f.cpp ..\..\..\__src\pncommon\PNMatrixTR4f.cpp ..\..\..\__src\pncommon\PNNormal3f.cpp ..\..\..\__src\pncommon\PNPlane.cpp ..\..\..\__src\pncommon\PNPoint2f.cpp ..\..\..\__src\pncommon\PNPoint3f.cpp ..\..\..\__src\pncommon\PNQuatf.cpp ..\..\..\__src\pncommon\PNTriangle.cpp ..\..\..\__src\pncommon\PNVector3f.cpp ..\..\..\__src\pncommon\IPNSerializable.cpp ..\..\..\__src\pncommon\IPNXMLSerializable.cpp ..\..\..\__src\pncommon\PNConfPanel.cpp ..\..\..\__src\pncommon\IPNLoadingProgess.cpp ..\..\..\__src\pncommon\PNI18n.cpp ..\..\..\__src\pncommon\PNLocale.cpp ..\..\..\__src\pncommon\PNResourcesManager.cpp -DBOOST_FILESYSTEM_VERSION=2 
+         PNResourcesManager.cpp
+         PNLocale.cpp
+         PNI18n.cpp
+         IPNLoadingProgess.cpp
+         PNConfPanel.cpp
+         IPNXMLSerializable.cpp
+         IPNSerializable.cpp
+         PNVector3f.cpp
+         PNTriangle.cpp
+         PNQuatf.cpp
+         PNPoint3f.cpp
+         PNPoint2f.cpp
+         PNPlane.cpp
+         PNNormal3f.cpp
+         PNMatrixTR4f.cpp
+         PNMatrix4f.cpp
+         PNLine.cpp
+         PNException.cpp
+         pnerror.cpp
+         PNConf.cpp
+         Generating Code...
+         Compiling...
+         PNRendererInterface.cpp
+         PN3DCameraModel.cpp
+         PN3DCamera.cpp
+         PNExportManager.cpp
+         PNExportInterface.cpp
+         PNImportManager.cpp
+         PNImportInterface.cpp
+         PNUIntParameter.cpp
+         PNStringParameter.cpp
+         PNIntParameter.cpp
+         PNFloatParameter.cpp
+         PNBoolParameter.cpp
+         PNPropertiesGridParameterList.cpp
+         PNPropertiesGridParameter.cpp
+         PNConfigurableParameterList.cpp
+         PNConfigurableParameter.cpp
+         PNConfigurableObject.cpp
+         PNPhysicsInterface.cpp
+         PNConsole.cpp
+         PNPluginManager.cpp
+         Generating Code...
+         Compiling...
+         PNPlugin.cpp
+         PNInterface.cpp
+         PNSoundInterface.cpp
+         PNGameMap.cpp
+         PNGameInterface.cpp
+         PNDie.cpp
+         PNWPModel.cpp
+         PNWayPoint.cpp
+         PNPathFinding.cpp
+         PNIAGraph.cpp
+         PNCharacter.cpp
+         PNFace.cpp
+         PNBoundingSphere.cpp
+         PNBoundingBox.cpp
+         IPNAnimated.cpp
+         PNWorldCollision.cpp
+         PN3DSkeletonObject.cpp
+         PN3DSkeletonAnimation.cpp
+         PN3DObject.cpp
+         PN3DGround.cpp
+         Generating Code...
+         Compiling...
+         PNObject.cpp
+         PNLockableObject.cpp
+         PNEventManager.cpp
+         PNCallBackList.cpp
+         Generating Code...
+       ResourceCompile:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /l"0x0409" /nologo /fo"Debug\pncommon.res" pncommon.rc 
+       ManifestResourceCompile:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\pncommon.dll.embed.manifest.res" Debug\pncommon_manifest.rc 
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pncommon.dll) ne correspond pas à la valeur de la propriété OutputFile (D:\Pavillon noir\Code\trunk\pavillonnoir\__binaries\win32\pncommon-dbg.dll) de Linker. Cela peut entraîner une génération incorrecte de votre projet. Pour corriger ce problème, vérifiez que les valeurs des propriétés $(OutDir), $(TargetName) et $(TargetExt) correspondent à la valeur spécifiée dans %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(992,5): warning MSB8012: TargetName(pncommon) ne correspond pas à la valeur de la propriété OutputFile (pncommon-dbg) de Linker. Cela peut entraîner une génération incorrecte de votre projet. Pour corriger ce problème, vérifiez que les valeurs des propriétés $(OutDir), $(TargetName) et $(TargetExt) correspondent à la valeur spécifiée dans %(Link.OutputFile).
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../../../__binaries/win32/pncommon-dbg.dll" /INCREMENTAL /NOLOGO /LIBPATH:..\..\..\__library\win32\lib libxml2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\pncommon.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pncommon.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Debug\pncommon.lib" /MACHINE:X86 /DLL Debug\pncommon.res
+         Debug\pncommon.dll.embed.manifest.res
+         Debug\PNCallBackList.obj
+         Debug\PNEventManager.obj
+         Debug\PNLockableObject.obj
+         Debug\PNObject.obj
+         Debug\PN3DGround.obj
+         Debug\PN3DObject.obj
+         Debug\PN3DSkeletonAnimation.obj
+         Debug\PN3DSkeletonObject.obj
+         Debug\PNWorldCollision.obj
+         Debug\IPNAnimated.obj
+         Debug\PNBoundingBox.obj
+         Debug\PNBoundingSphere.obj
+         Debug\PNFace.obj
+         Debug\PNCharacter.obj
+         Debug\PNIAGraph.obj
+         Debug\PNPathFinding.obj
+         Debug\PNWayPoint.obj
+         Debug\PNWPModel.obj
+         Debug\PNDie.obj
+         Debug\PNGameInterface.obj
+         Debug\PNGameMap.obj
+         Debug\PNSoundInterface.obj
+         Debug\PNInterface.obj
+         Debug\PNPlugin.obj
+         Debug\PNPluginManager.obj
+         Debug\PNConsole.obj
+         Debug\PNPhysicsInterface.obj
+         Debug\PNConfigurableObject.obj
+         Debug\PNConfigurableParameter.obj
+         Debug\PNConfigurableParameterList.obj
+         Debug\PNPropertiesGridParameter.obj
+         Debug\PNPropertiesGridParameterList.obj
+         Debug\PNBoolParameter.obj
+         Debug\PNFloatParameter.obj
+         Debug\PNIntParameter.obj
+         Debug\PNStringParameter.obj
+         Debug\PNUIntParameter.obj
+         Debug\PNImportInterface.obj
+         Debug\PNImportManager.obj
+         Debug\PNExportInterface.obj
+         Debug\PNExportManager.obj
+         Debug\PN3DCamera.obj
+         Debug\PN3DCameraModel.obj
+         Debug\PNRendererInterface.obj
+         Debug\PNConf.obj
+         Debug\pnerror.obj
+         Debug\PNException.obj
+         Debug\PNLine.obj
+         Debug\PNMatrix4f.obj
+         Debug\PNMatrixTR4f.obj
+         Debug\PNNormal3f.obj
+         Debug\PNPlane.obj
+         Debug\PNPoint2f.obj
+         Debug\PNPoint3f.obj
+         Debug\PNQuatf.obj
+         Debug\PNTriangle.obj
+         Debug\PNVector3f.obj
+         Debug\IPNSerializable.obj
+         Debug\IPNXMLSerializable.obj
+         Debug\PNConfPanel.obj
+         Debug\IPNLoadingProgess.obj
+         Debug\PNI18n.obj
+         Debug\PNLocale.obj
+         Debug\PNResourcesManager.obj
+            Creating library Debug\pncommon.lib and object Debug\pncommon.exp
+       Manifest:
+         Suppression du fichier "Debug\pncommon.dll.embed.manifest".
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\pncommon.dll.embed.manifest" /manifest Debug\pncommon.dll.intermediate.manifest
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\pncommon.dll.embed.manifest.res" Debug\pncommon_manifest.rc 
+       LinkEmbedManifest:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../../../__binaries/win32/pncommon-dbg.dll" /INCREMENTAL /NOLOGO /LIBPATH:..\..\..\__library\win32\lib libxml2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\pncommon.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pncommon.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Debug\pncommon.lib" /MACHINE:X86 /DLL Debug\pncommon.res
+         Debug\pncommon.dll.embed.manifest.res
+         Debug\PNCallBackList.obj
+         Debug\PNEventManager.obj
+         Debug\PNLockableObject.obj
+         Debug\PNObject.obj
+         Debug\PN3DGround.obj
+         Debug\PN3DObject.obj
+         Debug\PN3DSkeletonAnimation.obj
+         Debug\PN3DSkeletonObject.obj
+         Debug\PNWorldCollision.obj
+         Debug\IPNAnimated.obj
+         Debug\PNBoundingBox.obj
+         Debug\PNBoundingSphere.obj
+         Debug\PNFace.obj
+         Debug\PNCharacter.obj
+         Debug\PNIAGraph.obj
+         Debug\PNPathFinding.obj
+         Debug\PNWayPoint.obj
+         Debug\PNWPModel.obj
+         Debug\PNDie.obj
+         Debug\PNGameInterface.obj
+         Debug\PNGameMap.obj
+         Debug\PNSoundInterface.obj
+         Debug\PNInterface.obj
+         Debug\PNPlugin.obj
+         Debug\PNPluginManager.obj
+         Debug\PNConsole.obj
+         Debug\PNPhysicsInterface.obj
+         Debug\PNConfigurableObject.obj
+         Debug\PNConfigurableParameter.obj
+         Debug\PNConfigurableParameterList.obj
+         Debug\PNPropertiesGridParameter.obj
+         Debug\PNPropertiesGridParameterList.obj
+         Debug\PNBoolParameter.obj
+         Debug\PNFloatParameter.obj
+         Debug\PNIntParameter.obj
+         Debug\PNStringParameter.obj
+         Debug\PNUIntParameter.obj
+         Debug\PNImportInterface.obj
+         Debug\PNImportManager.obj
+         Debug\PNExportInterface.obj
+         Debug\PNExportManager.obj
+         Debug\PN3DCamera.obj
+         Debug\PN3DCameraModel.obj
+         Debug\PNRendererInterface.obj
+         Debug\PNConf.obj
+         Debug\pnerror.obj
+         Debug\PNException.obj
+         Debug\PNLine.obj
+         Debug\PNMatrix4f.obj
+         Debug\PNMatrixTR4f.obj
+         Debug\PNNormal3f.obj
+         Debug\PNPlane.obj
+         Debug\PNPoint2f.obj
+         Debug\PNPoint3f.obj
+         Debug\PNQuatf.obj
+         Debug\PNTriangle.obj
+         Debug\PNVector3f.obj
+         Debug\IPNSerializable.obj
+         Debug\IPNXMLSerializable.obj
+         Debug\PNConfPanel.obj
+         Debug\IPNLoadingProgess.obj
+         Debug\PNI18n.obj
+         Debug\PNLocale.obj
+         Debug\PNResourcesManager.obj
+            Creating library Debug\pncommon.lib and object Debug\pncommon.exp
+         pncommon.vcxproj -> D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pncommon.dll
+       FinalizeBuildStatus:
+         Suppression du fichier "Debug\pncommon.unsuccessfulbuild".
+         Mise à jour de l'horodatage "Debug\pncommon.lastbuildstate".
+     1>Génération du projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pncommon\pncommon.vcxproj" terminée (rebuild cible(s)).
+
+La génération a réussi.
+
+Temps écoulé 00:02:00.39

@@ -1,0 +1,615 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="event">
+      <UniqueIdentifier>{0f9df4a0-27c7-4800-9be8-551e8f1d3523}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base objects">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="base objects\types">
+      <UniqueIdentifier>{54ef1660-c875-4a02-b51e-f897dd2adaa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3D">
+      <UniqueIdentifier>{31d15a4b-a60a-4590-b346-233e25099c73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3D\tools">
+      <UniqueIdentifier>{775816fc-4e42-4780-a23f-86f9d6b5e548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ia">
+      <UniqueIdentifier>{b3cf78a5-1cb9-4561-afc2-802c34d61c2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{ba33d099-1ed4-4180-b4ba-7515715a8e49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sound">
+      <UniqueIdentifier>{7e833a4e-7361-46e0-b6b4-a12d814b9ff4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="plugin">
+      <UniqueIdentifier>{0bd71900-43c2-44cc-94f7-bcad475798f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="console">
+      <UniqueIdentifier>{b0cdd989-a26a-4230-be41-cc6d69e78a85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics">
+      <UniqueIdentifier>{07cc4d17-163d-48bb-a9d1-969754416550}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="properties">
+      <UniqueIdentifier>{8580a0ae-18d3-4a5d-9f74-1b45f3140656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="properties\parameters">
+      <UniqueIdentifier>{b830dcd1-c06c-4772-9be7-50a806eb1fc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="import">
+      <UniqueIdentifier>{b7e51340-7d21-4824-b0ab-df22f034b3de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="export">
+      <UniqueIdentifier>{cb8b5bb1-cb32-4abf-a2b4-3736bd8c0aee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render">
+      <UniqueIdentifier>{3ef2fd97-92f9-4f72-b775-10c0e9778636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="conf">
+      <UniqueIdentifier>{0d4336f1-c5dc-4554-a2a0-8fdab8b988c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="error">
+      <UniqueIdentifier>{07a2fb9f-c017-4b6e-8bee-366cfb043b5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maths">
+      <UniqueIdentifier>{d9b89df6-882b-44a1-b683-8a85e935e828}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="serialization">
+      <UniqueIdentifier>{40e53feb-4926-4013-980f-41983f93d81e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="confpanel">
+      <UniqueIdentifier>{bd01dabf-bc62-4bb9-8a5d-e260995d324f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="progress">
+      <UniqueIdentifier>{118f82c2-b4a3-4004-aa6f-d0b307f0878b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="i18n">
+      <UniqueIdentifier>{8ee731e3-b85e-43f4-8c29-973b7cacebf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{9b96d6bd-c71a-4350-8484-d04b3883b7bb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\__src\pncommon\PNCallBackList.cpp">
+      <Filter>event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNEventManager.cpp">
+      <Filter>event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNLockableObject.cpp">
+      <Filter>base objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNObject.cpp">
+      <Filter>base objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PN3DGround.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PN3DObject.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PN3DSkeletonAnimation.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PN3DSkeletonObject.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNWorldCollision.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\IPNAnimated.cpp">
+      <Filter>3D\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNBoundingBox.cpp">
+      <Filter>3D\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNBoundingSphere.cpp">
+      <Filter>3D\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNFace.cpp">
+      <Filter>3D\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNCharacter.cpp">
+      <Filter>ia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNIAGraph.cpp">
+      <Filter>ia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNPathFinding.cpp">
+      <Filter>ia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNWayPoint.cpp">
+      <Filter>ia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNWPModel.cpp">
+      <Filter>ia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNDie.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNGameInterface.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNGameMap.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNSoundInterface.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNInterface.cpp">
+      <Filter>plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNPlugin.cpp">
+      <Filter>plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNPluginManager.cpp">
+      <Filter>plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNConsole.cpp">
+      <Filter>console</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNPhysicsInterface.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNConfigurableObject.cpp">
+      <Filter>properties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNConfigurableParameter.cpp">
+      <Filter>properties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNConfigurableParameterList.cpp">
+      <Filter>properties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNPropertiesGridParameter.cpp">
+      <Filter>properties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNPropertiesGridParameterList.cpp">
+      <Filter>properties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNBoolParameter.cpp">
+      <Filter>properties\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNFloatParameter.cpp">
+      <Filter>properties\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNIntParameter.cpp">
+      <Filter>properties\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNStringParameter.cpp">
+      <Filter>properties\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNUIntParameter.cpp">
+      <Filter>properties\parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNImportInterface.cpp">
+      <Filter>import</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNImportManager.cpp">
+      <Filter>import</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNExportInterface.cpp">
+      <Filter>export</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNExportManager.cpp">
+      <Filter>export</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PN3DCamera.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PN3DCameraModel.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNRendererInterface.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNConf.cpp">
+      <Filter>conf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\pnerror.cpp">
+      <Filter>error</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNException.cpp">
+      <Filter>error</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNLine.cpp">
+      <Filter>maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNMatrix4f.cpp">
+      <Filter>maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNMatrixTR4f.cpp">
+      <Filter>maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNNormal3f.cpp">
+      <Filter>maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNPlane.cpp">
+      <Filter>maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNPoint2f.cpp">
+      <Filter>maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNPoint3f.cpp">
+      <Filter>maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNQuatf.cpp">
+      <Filter>maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNTriangle.cpp">
+      <Filter>maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNVector3f.cpp">
+      <Filter>maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\IPNSerializable.cpp">
+      <Filter>serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\IPNXMLSerializable.cpp">
+      <Filter>serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNConfPanel.cpp">
+      <Filter>confpanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\IPNLoadingProgess.cpp">
+      <Filter>progress</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNI18n.cpp">
+      <Filter>i18n</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNLocale.cpp">
+      <Filter>i18n</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pncommon\PNResourcesManager.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\__src\pncommon\PNCallBackList.hpp">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnevent.h">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNEventData.hpp">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNEventManager.hpp">
+      <Filter>event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pndefs.h">
+      <Filter>base objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNLockableObject.hpp">
+      <Filter>base objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNObject.hpp">
+      <Filter>base objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNVRef.hpp">
+      <Filter>base objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnbasetypes.h">
+      <Filter>base objects\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNBaseValue.hpp">
+      <Filter>base objects\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNBool.hpp">
+      <Filter>base objects\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNFloat.hpp">
+      <Filter>base objects\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNInt.hpp">
+      <Filter>base objects\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pntypes.h">
+      <Filter>base objects\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNUInt.hpp">
+      <Filter>base objects\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DAnimation.hpp">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DGround.hpp">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DMaterial.hpp">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DModel.hpp">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DObject.hpp">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DSkeleton.hpp">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DSkeletonAnimation.hpp">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DSkeletonObject.hpp">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pna_format.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnm_format.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pno_format.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnp_format.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pns_format.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnt_format.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNWorldCollision.hpp">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\IPNAnimated.hpp">
+      <Filter>3D\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNBoundingBox.hpp">
+      <Filter>3D\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNBoundingSphere.hpp">
+      <Filter>3D\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNFace.hpp">
+      <Filter>3D\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNCharacter.hpp">
+      <Filter>ia</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNIAGraph.hpp">
+      <Filter>ia</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNPathFinding.hpp">
+      <Filter>ia</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNWayPoint.hpp">
+      <Filter>ia</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNWPModel.hpp">
+      <Filter>ia</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnchatxml.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNDie.hpp">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNGameEventData.hpp">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNGameInterface.hpp">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNGameMap.hpp">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnxml.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNSoundEventData.hpp">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNSoundInterface.hpp">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNInterface.hpp">
+      <Filter>plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNPlugDesc.hpp">
+      <Filter>plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNPlugin.hpp">
+      <Filter>plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNPluginManager.hpp">
+      <Filter>plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnplugins.h">
+      <Filter>plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNConsole.hpp">
+      <Filter>console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNPhysicalObject.hpp">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNPhysicsInterface.hpp">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pcf_format.h">
+      <Filter>properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNConfigurableObject.hpp">
+      <Filter>properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNConfigurableParameter.hpp">
+      <Filter>properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNConfigurableParameterList.hpp">
+      <Filter>properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnproperties.h">
+      <Filter>properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNPropertiesGridParameter.hpp">
+      <Filter>properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNPropertiesGridParameterList.hpp">
+      <Filter>properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNBoolParameter.hpp">
+      <Filter>properties\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNFloatParameter.hpp">
+      <Filter>properties\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNIntParameter.hpp">
+      <Filter>properties\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNStringParameter.hpp">
+      <Filter>properties\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNUIntParameter.hpp">
+      <Filter>properties\parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\IPNImportedObject.hpp">
+      <Filter>import</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnimport.h">
+      <Filter>import</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNImportInterface.hpp">
+      <Filter>import</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNImportManager.hpp">
+      <Filter>import</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnexport.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNExportInterface.hpp">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNExportManager.hpp">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DCamera.hpp">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DCameraModel.hpp">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnrender.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNRendererInterface.hpp">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNRendererObject.hpp">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNRenderMaterial.hpp">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNSkyBox.hpp">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNTexture.hpp">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNVideoEventData.hpp">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNConf.hpp">
+      <Filter>conf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnerror.h">
+      <Filter>error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnexception.h">
+      <Filter>error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNException.hpp">
+      <Filter>error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNLine.hpp">
+      <Filter>maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnmath.h">
+      <Filter>maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNMatrix4f.hpp">
+      <Filter>maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNMatrixTR4f.hpp">
+      <Filter>maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNNormal3f.hpp">
+      <Filter>maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNPlane.hpp">
+      <Filter>maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNPoint2f.hpp">
+      <Filter>maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNPoint3f.hpp">
+      <Filter>maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNQuatf.hpp">
+      <Filter>maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNTriangle.hpp">
+      <Filter>maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNVector3f.hpp">
+      <Filter>maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\IPNSerializable.hpp">
+      <Filter>serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\IPNXMLSerializable.hpp">
+      <Filter>serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNConfPanel.hpp">
+      <Filter>confpanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\IPNLoadingProgess.hpp">
+      <Filter>progress</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNLoadingProgressEventData.hpp">
+      <Filter>progress</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\i18n_format.h">
+      <Filter>i18n</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pni18n.h">
+      <Filter>i18n</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNI18n.hpp">
+      <Filter>i18n</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNLocale.hpp">
+      <Filter>i18n</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\datafiles_format.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnresources.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\PNResourcesManager.hpp">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>base objects</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\__binaries\datafiles\configuration\configuration.dtd">
+      <Filter>properties</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="pncommon.rc" />
+  </ItemGroup>
+</Project>

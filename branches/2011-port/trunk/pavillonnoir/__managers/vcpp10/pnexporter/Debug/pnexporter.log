@@ -1,0 +1,48 @@
+﻿La génération a démarré 15.07.2011 13:27:21.
+     1>Projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pnexporter\pnexporter.vcxproj" sur le nœud 2 (rebuild cible(s)).
+     1>_PrepareForClean:
+         Suppression du fichier "Debug\pnexporter.lastbuildstate".
+       InitializeBuildStatus:
+         Création de "Debug\pnexporter.unsuccessfulbuild", car "AlwaysCreate" a été spécifié.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../../__src/pncommon /I../../../__library/win32/include /I../../../__library/common/ /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PNEXPORTER_EXPORTS /D BOOST_ALL_DYN_LINK /D _WINDLL /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\__src\pnexporter\pndlmain.cpp ..\..\..\__src\pnexporter\PNEExporterPlugDesc.cpp ..\..\..\__src\pnexporter\PNEOctreeCompiler.cpp -DBOOST_FILESYSTEM_VERSION=2 
+         PNEOctreeCompiler.cpp
+         PNEExporterPlugDesc.cpp
+         pndlmain.cpp
+         Generating Code...
+       ResourceCompile:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /l"0x0409" /nologo /fo"Debug\pnexporter.res" pnexporter.rc 
+       ManifestResourceCompile:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\pnexporter.dll.embed.manifest.res" Debug\pnexporter_manifest.rc 
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pnexporter.dll) ne correspond pas à la valeur de la propriété OutputFile (D:\Pavillon noir\Code\trunk\pavillonnoir\__binaries\win32\plugins\Debug\pnexporter-dbg.pnp) de Linker. Cela peut entraîner une génération incorrecte de votre projet. Pour corriger ce problème, vérifiez que les valeurs des propriétés $(OutDir), $(TargetName) et $(TargetExt) correspondent à la valeur spécifiée dans %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(991,5): warning MSB8012: TargetExt(.dll) ne correspond pas à la valeur de la propriété OutputFile (.pnp) de Linker. Cela peut entraîner une génération incorrecte de votre projet. Pour corriger ce problème, vérifiez que les valeurs des propriétés $(OutDir), $(TargetName) et $(TargetExt) correspondent à la valeur spécifiée dans %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(992,5): warning MSB8012: TargetName(pnexporter) ne correspond pas à la valeur de la propriété OutputFile (pnexporter-dbg) de Linker. Cela peut entraîner une génération incorrecte de votre projet. Pour corriger ce problème, vérifiez que les valeurs des propriétés $(OutDir), $(TargetName) et $(TargetExt) correspondent à la valeur spécifiée dans %(Link.OutputFile).
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../../../__binaries/win32/plugins/Debug/pnexporter-dbg.pnp" /INCREMENTAL /NOLOGO /LIBPATH:..\..\..\__library\win32\lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\pnexporter.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pnexporter.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Debug\pnexporter.lib" /MACHINE:X86 /DLL Debug\pnexporter.res
+         Debug\pnexporter.dll.embed.manifest.res
+         Debug\pndlmain.obj
+         Debug\PNEExporterPlugDesc.obj
+         Debug\PNEOctreeCompiler.obj
+         "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pncommon\Debug\pncommon.lib"
+            Creating library Debug\pnexporter.lib and object Debug\pnexporter.exp
+       Manifest:
+         Suppression du fichier "Debug\pnexporter.dll.embed.manifest".
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\pnexporter.dll.embed.manifest" /manifest Debug\pnexporter.dll.intermediate.manifest
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\pnexporter.dll.embed.manifest.res" Debug\pnexporter_manifest.rc 
+       LinkEmbedManifest:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../../../__binaries/win32/plugins/Debug/pnexporter-dbg.pnp" /INCREMENTAL /NOLOGO /LIBPATH:..\..\..\__library\win32\lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\pnexporter.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pnexporter.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Debug\pnexporter.lib" /MACHINE:X86 /DLL Debug\pnexporter.res
+         Debug\pnexporter.dll.embed.manifest.res
+         Debug\pndlmain.obj
+         Debug\PNEExporterPlugDesc.obj
+         Debug\PNEOctreeCompiler.obj
+         "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pncommon\Debug\pncommon.lib"
+            Creating library Debug\pnexporter.lib and object Debug\pnexporter.exp
+         pnexporter.vcxproj -> D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pnexporter.dll
+       FinalizeBuildStatus:
+         Suppression du fichier "Debug\pnexporter.unsuccessfulbuild".
+         Mise à jour de l'horodatage "Debug\pnexporter.lastbuildstate".
+     1>Génération du projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pnexporter\pnexporter.vcxproj" terminée (rebuild cible(s)).
+
+La génération a réussi.
+
+Temps écoulé 00:00:08.63

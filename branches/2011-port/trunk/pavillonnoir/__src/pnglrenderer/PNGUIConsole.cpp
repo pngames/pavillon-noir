@@ -55,8 +55,10 @@ PNGUIConsole::PNGUIConsole()
   _pnConsole = CEGUI::WindowManager::getSingleton().loadWindowLayout(PNResourcesManager::getInstance()->findPath(PNRT_layout, "PNConsole.layout"));
   CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnConsole);
   _pnConsole->setAlpha(0.0f);
-  _pnConsole->setSize(CEGUI::Size(0.0f, 0.0f));
-  _pnConsole->setMinimumSize(CEGUI::Size(0.2f, 0.2f));
+  //_pnConsole->setSize(CEGUI::Size(0.0f, 0.0f));
+  _pnConsole->setSize(CEGUI::UVector2(CEGUI::UDim(0.0f, 0), CEGUI::UDim(0.0f, 0)));
+  //_pnConsole->setMinimumSize(CEGUI::Size(0.2f, 0.2f));
+  _pnConsole->setMinSize(CEGUI::UVector2(CEGUI::UDim(0.2f, 0), CEGUI::UDim(0.2f, 0)));
   _pnConsole->hide();
   _consoleVisibility = false;
 
@@ -492,7 +494,9 @@ PNGUIConsole::update(pnEventType type, PNObject* source, PNEventData* data)
 		_winState = winVisible;
 		_fadeTimer = 0;
 
-		CEGUI::Size sizeTmp( 1.0, 1.0); 
+		//CEGUI::Size sizeTmp( 1.0, 1.0); 
+		CEGUI::UVector2 sizeTmp(CEGUI::UDim(1.0,0), CEGUI::UDim(1.0,0));
+		
 		_pnConsole->setSize(sizeTmp);
 
 		_pnConsole->setAlpha( _frameAlphaValue );
@@ -518,7 +522,8 @@ PNGUIConsole::update(pnEventType type, PNObject* source, PNEventData* data)
 	  else
 		_pnConsole->setAlpha(tempAlpha);
 
-	  CEGUI::Size sizeTmp( fadefac,  fadefac ); 
+	  //CEGUI::Size sizeTmp( fadefac,  fadefac );
+	  CEGUI::UVector2 sizeTmp(CEGUI::UDim(fadefac,0), CEGUI::UDim(fadefac,0));
 	  _pnConsole->setSize( sizeTmp );
 	}
 	break;
@@ -532,7 +537,8 @@ PNGUIConsole::update(pnEventType type, PNObject* source, PNEventData* data)
 	  {
 		_winState = winHidden;
 		_fadeTimer = 0;
-		CEGUI::Size sizeTmp( 0, 0 ); 
+		//CEGUI::Size sizeTmp( 0, 0 ); 
+		CEGUI::UVector2 sizeTmp(CEGUI::UDim(0,0), CEGUI::UDim(0,0));
 		_pnConsole->setSize( sizeTmp );
 
 		_pnConsole->hide();
@@ -548,7 +554,8 @@ PNGUIConsole::update(pnEventType type, PNObject* source, PNEventData* data)
 	  float fadefac = PNMAX( 0.0f, (1.0f - ( _fadeTimer / FADE_TIME )) );
 	  _pnConsole->setAlpha( fadefac * _frameAlphaValue );
 
-	  CEGUI::Size sizeTmp( fadefac,  fadefac ); 
+	  //CEGUI::Size sizeTmp( fadefac,  fadefac ); 
+	  CEGUI::UVector2 sizeTmp(CEGUI::UDim(fadefac,0), CEGUI::UDim(fadefac,0));
 	  _pnConsole->setSize( sizeTmp );
 	}
 	break;

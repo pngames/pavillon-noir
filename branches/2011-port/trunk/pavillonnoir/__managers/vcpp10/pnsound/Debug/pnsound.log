@@ -1,0 +1,23 @@
+﻿La génération a démarré 07.07.2011 15:34:35.
+     1>Projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pnsound\pnsound.vcxproj" sur le nœud 5 (build cible(s)).
+     1>InitializeBuildStatus:
+         Création de "Debug\pnsound.unsuccessfulbuild", car "AlwaysCreate" a été spécifié.
+       ClCompile:
+         Toutes les sorties sont à jour.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../../__src/pncommon /I../../../__library/win32/include /I../../../__library/common/ /I../../../__library/win32/include/AL /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PNSOUND_EXPORTS /D BOOST_ALL_DYN_LINK /D _WINDLL /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\__src\pnsound\PNConsoleSoundCommands.cpp ..\..\..\__src\pnsound\pndlmain.cpp ..\..\..\__src\pnsound\PNSound.cpp ..\..\..\__src\pnsound\PNSoundManager.cpp -DBOOST_FILESYSTEM_VERSION=2 
+         PNSoundManager.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNSound.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\vorbis/vorbisfile.h(53): warning C4244: 'argument' : conversion from 'ogg_int64_t' to 'long', possible loss of data
+     1>..\..\..\__src\pnsound\PNSound.cpp(189): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+         pndlmain.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNConsoleSoundCommands.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         Generating Code...
+     1>Génération du projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pnsound\pnsound.vcxproj" terminée (build cible(s)) -- ÉCHEC.
+
+ÉCHEC de la build.
+
+Temps écoulé 00:00:03.27

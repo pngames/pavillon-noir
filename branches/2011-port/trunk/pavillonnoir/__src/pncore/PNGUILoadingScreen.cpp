@@ -62,12 +62,14 @@ PNGUILoadingScreen::PNGUILoadingScreen()
   }
 
   _mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout(PNResourcesManager::getInstance()->findPath(PNRT_layout, "PNLoadingScreen.layout"));
-  _backGround = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/Background");
+  //_backGround = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/Background");
+  _backGround = (CEGUI::FalagardStaticImage*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/Background");
   _progBar = (CEGUI::ProgressBar*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/ProgressBar");
-  _staticText = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/StaticText");
-  
+  //_staticText = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/StaticText");
+  _staticText = (CEGUI::FalagardStaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"LoadingScreen/StaticText");  
 
-  _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "LoadingScreenImages/randomBack");
+  //_statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "LoadingScreenImages/randomBack");
+  _statImg = (CEGUI::FalagardStaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "LoadingScreenImages/randomBack");
   _mainSheet->addChildWindow(_statImg);
 
   CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_mainSheet);

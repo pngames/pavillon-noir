@@ -73,7 +73,8 @@
 
 #include "PNGLVideo.hpp"
 
-#include <renderers/OpenGLGUIRenderer/openglrenderer.h>
+//#include <renderers/OpenGLGUIRenderer/openglrenderer.h>
+#include <RendererModules/OpenGL/CEGUIOpenGLRenderer.h>
 
 using namespace PN;
 using namespace std;
@@ -202,7 +203,8 @@ PNGLRenderer::~PNGLRenderer()
   if (_guirenderer != NULL)
 	delete _guirenderer;
 
-  delete CEGUI::System::getSingletonPtr();
+  //delete CEGUI::System::getSingletonPtr();
+  CEGUI::System::getSingletonPtr()->destroy();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -904,8 +906,9 @@ PNGLRenderer::getGUIType()
 void*
 PNGLRenderer::getGUIRenderer()
 {
-  if (_guirenderer == NULL)
-	_guirenderer = new CEGUI::OpenGLRenderer(0, (int)_scene.getRenderCamera().getWidth(), (int)_scene.getRenderCamera().getHeight());
+  if (_guirenderer == NULL) {
+	_guirenderer = &CEGUI::OpenGLRenderer::create(CEGUI::Size(_scene.getRenderCamera().getWidth(), _scene.getRenderCamera().getHeight()), CEGUI::OpenGLRenderer::TTT_AUTO);
+  }
 
   return (_guirenderer);
 }
@@ -924,40 +927,44 @@ PNGLRenderer::initGUI()
 	CEGUI::Logger::getSingleton().setLogFilename(PNConf::getInstance()->getConfPath("CEGUI.log"));
 	CEGUI::Logger::getSingleton().setLoggingLevel(CEGUI::Insane);
 
-	CEGUI::SchemeManager::getSingleton().loadScheme(rm->findPath(PNRT_scheme, "TaharezLook.scheme"));
-	CEGUI::SchemeManager::getSingleton().loadScheme(rm->findPath(PNRT_scheme, "WindowsLook.scheme"));
-	CEGUI::SchemeManager::getSingleton().loadScheme(rm->findPath(PNRT_scheme, "VanillaSkin.scheme"));
+	CEGUI::SchemeManager::getSingleton().create(rm->findPath(PNRT_scheme, "TaharezLook.scheme"));
+	CEGUI::SchemeManager::getSingleton().create(rm->findPath(PNRT_scheme, "WindowsLook.scheme"));
+	CEGUI::SchemeManager::getSingleton().create(rm->findPath(PNRT_scheme, "VanillaSkin.scheme"));
 
-	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("LoadingScreenImages") == false)
-	  CEGUI::ImagesetManager::getSingleton().createImageset(rm->findPath(PNRT_imageset, "LoadingBackground.imageset"));
+	if (CEGUI::ImagesetManager::getSingleton().isDefined("LoadingScreenImages") == false)
+	  CEGUI::ImagesetManager::getSingleton().create(rm->findPath(PNRT_imageset, "LoadingBackground.imageset"));
 
-	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("FioleImages") == false)
-	  CEGUI::ImagesetManager::getSingleton().createImageset(rm->findPath(PNRT_imageset, "fiole_final.imageset"));
+	if (CEGUI::ImagesetManager::getSingleton().isDefined("FioleImages") == false)
+	  CEGUI::ImagesetManager::getSingleton().create(rm->findPath(PNRT_imageset, "fiole_final.imageset"));
 
-	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("DeathImages") == false)
-	  CEGUI::ImagesetManager::getSingleton().createImageset(rm->findPath(PNRT_imageset, "DeathScreen.imageset"));
+	if (CEGUI::ImagesetManager::getSingleton().isDefined("DeathImages") == false)
+	  CEGUI::ImagesetManager::getSingleton().create(rm->findPath(PNRT_imageset, "DeathScreen.imageset"));
 
-	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("WinImages") == false)
-	  CEGUI::ImagesetManager::getSingleton().createImageset(rm->findPath(PNRT_imageset, "WinScreen.imageset"));
+	if (CEGUI::ImagesetManager::getSingleton().isDefined("WinImages") == false)
+	  CEGUI::ImagesetManager::getSingleton().create(rm->findPath(PNRT_imageset, "WinScreen.imageset"));
 
-	if (CEGUI::ImagesetManager::getSingleton().isImagesetPresent("Minimap") == false)
-	  CEGUI::ImagesetManager::getSingleton().createImageset(rm->findPath(PNRT_imageset, "Minimap.imageset"));
+	if (CEGUI::ImagesetManager::getSingleton().isDefined("Minimap") == false)
+	  CEGUI::ImagesetManager::getSingleton().create(rm->findPath(PNRT_imageset, "Minimap.imageset"));
 
-	CEGUI::System::getSingleton().setTooltip("Vanilla/Tooltip");
+	CEGUI::System::getSingleton().setDefaultTooltip("Vanilla/Tooltip");
 
 	CEGUI::System::getSingleton().setDefaultMouseCursor("Vanilla-Images", "MouseArrow");
 	//CEGUI::System::getSingleton().setDefaultMouseCursor("TaharezLook", "MouseArrow");
 
-	CEGUI::FontManager::getSingleton().createFont(rm->findPath(PNRT_font, "verase-12.font"));
-	CEGUI::FontManager::getSingleton().createFont(rm->findPath(PNRT_font, "verase-10.font"));
-	CEGUI::FontManager::getSingleton().createFont(rm->findPath(PNRT_font, "verase-8.font"));
-	CEGUI::FontManager::getSingleton().createFont(rm->findPath(PNRT_font, "verasebd-12.font"));
-	CEGUI::FontManager::getSingleton().createFont(rm->findPath(PNRT_font, "verasebd-8.font"));
+	CEGUI::FontManager::getSingleton().create(rm->findPath(PNRT_font, "verase-12.font"));
+	CEGUI::FontManager::getSingleton().create(rm->findPath(PNRT_font, "verase-10.font"));
+	CEGUI::FontManager::getSingleton().create(rm->findPath(PNRT_font, "verase-8.font"));
+	CEGUI::FontManager::getSingleton().create(rm->findPath(PNRT_font, "verasebd-12.font"));
+	CEGUI::FontManager::getSingleton().create(rm->findPath(PNRT_font, "verasebd-8.font"));
 
 	CEGUI::Window*	rootSheet =  CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"DefaultWindow", (CEGUI::utf8*)"rootSheet");
-	rootSheet->setMetricsMode(CEGUI::Absolute);
-	rootSheet->setPosition(CEGUI::Point(0, 0));
-	rootSheet->setSize(CEGUI::Size(_scene.getRenderCamera().getWidth(), _scene.getRenderCamera().getHeight()));
+	//TODO MBO OBSOLETE METHOD, FIND AN EQUIVALENT in CEGUI 0.7.5...
+	//rootSheet->setMetricsMode(CEGUI::Absolute);
+	
+	//rootSheet->setPosition(CEGUI::Point(0, 0));
+	rootSheet->setPosition(CEGUI::UVector2(CEGUI::UDim(0,0), CEGUI::UDim(0,0)));
+	//rootSheet->setSize(CEGUI::Size(_scene.getRenderCamera().getWidth(), _scene.getRenderCamera().getHeight()));
+	rootSheet->setSize(CEGUI::UVector2(CEGUI::UDim(_scene.getRenderCamera().getWidth(), 0), CEGUI::UDim(_scene.getRenderCamera().getHeight(), 0)));
 	CEGUI::System::getSingleton().setGUISheet(rootSheet);
 	rootSheet->activate();
 

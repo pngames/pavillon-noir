@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+    <Filter Include="animation">
+      <UniqueIdentifier>{d569c043-de48-4613-918a-32567bb21291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="model">
+      <UniqueIdentifier>{6140bca9-f66e-407c-89bd-f03338f5bb0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="material">
+      <UniqueIdentifier>{ddcaf1aa-ae7f-404b-9a6c-9ca4f00ad0e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="skeleton">
+      <UniqueIdentifier>{c30cf60d-7e6a-457f-a64b-43df3e533f54}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\__src\pnimporter\pndlmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIImporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIImporterPlugDesc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\a_parseBody.cpp">
+      <Filter>animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\a_parseHeader.cpp">
+      <Filter>animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\PNI3DAnimation.cpp">
+      <Filter>animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIAnimationBone.cpp">
+      <Filter>animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIAnimationImporter.cpp">
+      <Filter>animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\m_parseBody.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\m_parseHeader.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\PNI3DMesh.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\PNI3DModel.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIModelImporter.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIVertex.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\PNI3DMaterial.cpp">
+      <Filter>material</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIMaterialImporter.cpp">
+      <Filter>material</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\PNI3DSkeleton.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\PNIBone.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\PNISkeletonImporter.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\s_parseBody.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnimporter\s_parseHeader.cpp">
+      <Filter>skeleton</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIException.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIImporter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIImporterPlugDesc.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pna_format.h">
+      <Filter>animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNI3DAnimation.hpp">
+      <Filter>animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIAnimationBone.hpp">
+      <Filter>animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIAnimationImporter.hpp">
+      <Filter>animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNI3DMesh.hpp">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNI3DModel.hpp">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIModelImporter.hpp">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIVertex.hpp">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnm_format.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNI3DMaterial.hpp">
+      <Filter>material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIMaterialImporter.hpp">
+      <Filter>material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pnt_format.h">
+      <Filter>material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNI3DSkeleton.hpp">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNIBone.hpp">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnimporter\PNISkeletonImporter.hpp">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pncommon\pns_format.h">
+      <Filter>skeleton</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="pnimporter.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

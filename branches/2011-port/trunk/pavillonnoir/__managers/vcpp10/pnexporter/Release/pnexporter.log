@@ -1,0 +1,34 @@
+﻿La génération a démarré 15.07.2011 14:53:30.
+     1>Projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pnexporter\pnexporter.vcxproj" sur le nœud 2 (rebuild cible(s)).
+     1>_PrepareForClean:
+         Suppression du fichier "Release\pnexporter.lastbuildstate".
+       InitializeBuildStatus:
+         Création de "Release\pnexporter.unsuccessfulbuild", car "AlwaysCreate" a été spécifié.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../../__src/pncommon /I../../../__library/win32/include /I../../../__library/common/ /Zi /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D PNEXPORTER_EXPORTS /D BOOST_ALL_DYN_LINK /D _WINDLL /D _MBCS /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\__src\pnexporter\pndlmain.cpp ..\..\..\__src\pnexporter\PNEExporterPlugDesc.cpp ..\..\..\__src\pnexporter\PNEOctreeCompiler.cpp -DBOOST_FILESYSTEM_VERSION=2 
+         pndlmain.cpp
+         PNEExporterPlugDesc.cpp
+         PNEOctreeCompiler.cpp
+         Generating Code...
+       ResourceCompile:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /l"0x0409" /nologo /fo"Release\pnexporter.res" pnexporter.rc 
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Release\pnexporter.dll) ne correspond pas à la valeur de la propriété OutputFile (D:\Pavillon noir\Code\trunk\pavillonnoir\__binaries\win32\plugins\pnexporter.pnp) de Linker. Cela peut entraîner une génération incorrecte de votre projet. Pour corriger ce problème, vérifiez que les valeurs des propriétés $(OutDir), $(TargetName) et $(TargetExt) correspondent à la valeur spécifiée dans %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(991,5): warning MSB8012: TargetExt(.dll) ne correspond pas à la valeur de la propriété OutputFile (.pnp) de Linker. Cela peut entraîner une génération incorrecte de votre projet. Pour corriger ce problème, vérifiez que les valeurs des propriétés $(OutDir), $(TargetName) et $(TargetExt) correspondent à la valeur spécifiée dans %(Link.OutputFile).
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../../../__binaries/win32/plugins/pnexporter.pnp" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\..\..\__library\win32\lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\pnexporter.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:"D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Release\pnexporter.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Release\pnexporter.lib" /MACHINE:X86 /DLL Release\pnexporter.res
+         Release\pndlmain.obj
+         Release\PNEExporterPlugDesc.obj
+         Release\PNEOctreeCompiler.obj
+         "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pncommon\Release\pncommon.lib"
+            Creating library Release\pnexporter.lib and object Release\pnexporter.exp
+         pnexporter.vcxproj -> D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Release\pnexporter.dll
+       Manifest:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"../../../__binaries/win32/plugins/pnexporter.pnp;#2" /manifest Release\pnexporter.dll.intermediate.manifest
+       FinalizeBuildStatus:
+         Suppression du fichier "Release\pnexporter.unsuccessfulbuild".
+         Mise à jour de l'horodatage "Release\pnexporter.lastbuildstate".
+     1>Génération du projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pnexporter\pnexporter.vcxproj" terminée (rebuild cible(s)).
+
+La génération a réussi.
+
+Temps écoulé 00:00:06.66

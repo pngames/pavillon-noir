@@ -49,10 +49,12 @@ namespace PN
 	_pnDeath = CEGUI::WindowManager::getSingleton().loadWindowLayout(PNResourcesManager::getInstance()->findPath(PNRT_layout, "PNGUIDeath.layout"));
 	_pnDeath->hide();
 	CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnDeath);
-	_pnStatText = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIDeath/BackMenuText");
+	//_pnStatText = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIDeath/BackMenuText");
+	_pnStatText = CEGUI::WindowManager::getSingleton().getWindow("PNGUIDeath/BackMenuText");
 	_pnStatText->hide();
 	
-	_deathImage = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "DeathImages/DeathScreen");
+	//_deathImage = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "DeathImages/DeathScreen");
+	_deathImage = CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "DeathImages/DeathScreen");
 	_deathImage->setImage("DeathImages", "DeathImages/DeathScreen");
 	_deathWnd = (CEGUI::Window*)( CEGUI::WindowManager::getSingleton().createWindow( "DefaultWindow", "death_wnd"));
 
@@ -119,6 +121,10 @@ namespace PN
 	
 	return true;
   }
+
+  float PNGUIDeath::max(float a, float b) { 
+     return (a < b) ? b : a; 
+  } 
 
   void PNGUIDeath::update(pnEventType type, PNObject* source, PNEventData* data)
   {

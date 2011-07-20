@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Parameters">
+      <UniqueIdentifier>{c0cecd52-036c-4638-849d-d29a28b158ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parameters\base">
+      <UniqueIdentifier>{fb0fd925-3670-4464-86a6-5a6689208401}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parameters\parameterlist">
+      <UniqueIdentifier>{9fd5e516-21d4-43ee-ad1f-8bf06c0152bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parameters\parameterlist\base">
+      <UniqueIdentifier>{5b785874-c7f4-4862-a3c4-f8ba0e543bd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parameters\parameter">
+      <UniqueIdentifier>{cbcfe5d6-7bb2-41c6-ac31-af0bab78da18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parameters\parameter\bases">
+      <UniqueIdentifier>{4a8e6a17-fb19-4388-9518-522358864bb7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\pneditorcommon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNGLContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNPropertiesGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNPropertiesPopup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXDefaultParameter.cpp">
+      <Filter>Parameters\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXSeparatorParameter.cpp">
+      <Filter>Parameters\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXAnimListParameter.cpp">
+      <Filter>Parameters\parameterlist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXMaterialListParameter.cpp">
+      <Filter>Parameters\parameterlist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXScriptListParameter.cpp">
+      <Filter>Parameters\parameterlist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXStringListParameter.cpp">
+      <Filter>Parameters\parameterlist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXVPPNObjectParameter.cpp">
+      <Filter>Parameters\parameterlist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXListParameter.cpp">
+      <Filter>Parameters\parameterlist\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXCheckButtonParameter.cpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXDialXYZParameter.cpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXDirParameter.cpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXEventBoxParameter.cpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXFileParameter.cpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXIntParameter.cpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXLinksParameter.cpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXRealParameter.cpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXStringParameter.cpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXUIntParameter.cpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXTextFieldParameter.cpp">
+      <Filter>Parameters\parameter\bases</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\pneditorcommon.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\pneditorcommon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNGLContext.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNPropertiesGrid.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNPropertiesPopup.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXDefaultParameter.hpp">
+      <Filter>Parameters\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXSeparatorParameter.hpp">
+      <Filter>Parameters\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXAnimListParameter.hpp">
+      <Filter>Parameters\parameterlist</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXMaterialListParameter.hpp">
+      <Filter>Parameters\parameterlist</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXScriptListParameter.hpp">
+      <Filter>Parameters\parameterlist</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXStringListParameter.hpp">
+      <Filter>Parameters\parameterlist</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXVPPNObjectParameter.hpp">
+      <Filter>Parameters\parameterlist</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXListParameter.hpp">
+      <Filter>Parameters\parameterlist\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXCheckButtonParameter.hpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXDialXYZParameter.hpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXDirParameter.hpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXEventBoxParameter.hpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXFileParameter.hpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXIntParameter.hpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXLinksParameter.hpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXRealParameter.hpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXStringParameter.hpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXUIntParameter.hpp">
+      <Filter>Parameters\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXTextFieldParameter.hpp">
+      <Filter>Parameters\parameter\bases</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="pneditorcommon.rc" />
+  </ItemGroup>
+</Project>

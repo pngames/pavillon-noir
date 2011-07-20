@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{48EFC9E1-605C-4AF8-9A63-56B20CFF81A8}</ProjectGuid>
+    <RootNamespace>pnglrenderer</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../../__library/win32/include/CEGUI;../../../__library/win32/include/sdl;../../../__library/win32/include;../../../__library/common/;../../../__src/pncommon;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PNGLRENDERER_EXPORTS;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>-DBOOST_FILESYSTEM_VERSION=2 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>DevIL.lib;ILU.lib;ILUT.lib;SDL.lib;SDLmain.lib;opengl32.lib;glu32.lib;glew32.lib;CEGUIBase_d.lib;CEGUIFalagardWRBase_d.lib;CEGUIOpenGLRenderer_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../../../__binaries/win32/plugins/Debug/pnglrenderer-dbg.pnp</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\__library\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>../../../__library/win32/include/CEGUI;../../../__library/win32/include/sdl;../../../__library/win32/include;../../../__library/common/;../../../__src/pncommon;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PNGLRENDERER_EXPORTS;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>-DBOOST_FILESYSTEM_VERSION=2 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>DevIL.lib;ILU.lib;ILUT.lib;SDL.lib;SDLmain.lib;opengl32.lib;glu32.lib;glew32.lib;CEGUIBase.lib;CEGUIFalagardWRBase.lib;CEGUIOpenGLRenderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../../../__binaries/win32/plugins/pnglrenderer.pnp</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\__library\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\__src\pnglrenderer\pndlmain.cpp" />
+    <ClCompile Include="..\..\..\__src\pnglrenderer\PNGLMaterial.cpp" />
+    <ClCompile Include="..\..\..\__src\pnglrenderer\PNGLRenderer.cpp" />
+    <ClCompile Include="..\..\..\__src\pnglrenderer\PNGLRendererCamera.cpp" />
+    <ClCompile Include="..\..\..\__src\pnglrenderer\PNGLRendererObject.cpp" />
+    <ClCompile Include="..\..\..\__src\pnglrenderer\PNGLRendererPlugDesc.cpp" />
+    <ClCompile Include="..\..\..\__src\pnglrenderer\PNGLSceneGraph.cpp" />
+    <ClCompile Include="..\..\..\__src\pnglrenderer\PNGLSkyBox.cpp" />
+    <ClCompile Include="..\..\..\__src\pnglrenderer\PNGLTexture.cpp" />
+    <ClCompile Include="..\..\..\__src\pnglrenderer\PNGLTextureManager.cpp" />
+    <ClCompile Include="..\..\..\__src\pnglrenderer\PNGLVideo.cpp" />
+    <ClCompile Include="..\..\..\__src\pnglrenderer\PNGUIConfPanel.cpp" />
+    <ClCompile Include="..\..\..\__src\pnglrenderer\PNGUIConsole.cpp" />
+    <ClCompile Include="..\..\..\__src\pnglrenderer\PNInfoPanel.cpp" />
+    <ClCompile Include="..\..\..\__src\pnglrenderer\PNSDLEvent.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\__src\pnglrenderer\myCEGUI.h" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNGLMaterial.hpp" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNGLRenderer.hpp" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNGLRendererCamera.hpp" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNGLRendererObject.hpp" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNGLRendererPlugDesc.hpp" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNGLRenderUpdateEventData.hpp" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNGLSceneGraph.hpp" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNGLSkyBox.hpp" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNGLTexture.hpp" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNGLTextureManager.hpp" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNGLVideo.hpp" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNGUIConfPanel.hpp" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNGUIConsole.hpp" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNInfoPanel.hpp" />
+    <ClInclude Include="..\..\..\__src\pnglrenderer\PNSDLEvent.hpp" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="pnglrenderer.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\pncommon\pncommon.vcxproj">
+      <Project>{8fa92b12-d5d9-413b-8abc-9bfded44ede6}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9AC16F21-A703-4526-8899-084020BF8313}</ProjectGuid>
+    <RootNamespace>pnscript</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Message>generation de fichiers de bind lua</Message>
+      <Command>cd ../../../__src/pnscript
+GenBinding.bat
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../../__src/pncore;../../../__src/pncommon;../../../__library/win32/include/CEGUI;../../../__library/win32/include;../../../__library/win32/include/lua;../../../__library/common/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PNSCRIPT_EXPORTS;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>-DBOOST_FILESYSTEM_VERSION=2 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>lua5.1.lib;tolua++.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../../../__binaries/win32/plugins/Debug/pnscript-dbg.pnp</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\__library\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+      <Message>generation de fichiers de bind lua</Message>
+      <Command>cd ../../../__src/pnscript
+GenBinding.bat
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../../__src/pncore;../../../__src/pncommon;../../../__library/win32/include;../../../__library/win32/include/CEGUI;../../../__library/win32/include/lua;../../../__library/common/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PNSCRIPT_EXPORTS;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>-DBOOST_FILESYSTEM_VERSION=2 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>lua5.1.lib;tolua++.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../../../__binaries/win32/plugins/pnscript.pnp</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\__library\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Data">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Xml">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\__src\pnscript\pndlmain.cpp" />
+    <ClCompile Include="..\..\..\__src\pnscript\PNLuaGame.cpp" />
+    <ClCompile Include="..\..\..\__src\pnscript\PNLuaGameMap.cpp" />
+    <ClCompile Include="..\..\..\__src\pnscript\PNLuaGameUtil.cpp" />
+    <ClCompile Include="..\..\..\__src\pnscript\PNLuaVm.cpp" />
+    <ClCompile Include="..\..\..\__src\pnscript\PNScriptPlugDesc.cpp" />
+    <ClCompile Include="..\..\..\__src\pnscript\pnbind.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\__src\pnscript\PNLuaGame.hpp" />
+    <ClInclude Include="..\..\..\__src\pnscript\PNLuaGameMap.hpp" />
+    <ClInclude Include="..\..\..\__src\pnscript\PNLuaGameUtil.h" />
+    <ClInclude Include="..\..\..\__src\pnscript\PNLuaVm.hpp" />
+    <ClInclude Include="..\..\..\__src\pnscript\PNScriptPlugDesc.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="..\..\..\__src\pnscript\pnbind.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="pnscript.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\__src\pnscript\includes.pkg" />
+    <None Include="..\..\..\__src\pnscript\PN3DCamera.pkg" />
+    <None Include="..\..\..\__src\pnscript\PN3DObject.pkg" />
+    <None Include="..\..\..\__src\pnscript\PN3DSkeletonObject.pkg" />
+    <CustomBuildStep Include="..\..\..\__src\pnscript\pnbind.pkg">
+      <FileType>Document</FileType>
+    </CustomBuildStep>
+    <None Include="..\..\..\__src\pnscript\PNCharacter.pkg" />
+    <None Include="..\..\..\__src\pnscript\PNGameMap.pkg" />
+    <None Include="..\..\..\__src\pnscript\PNLuaGameUtils.pkg" />
+    <None Include="..\..\..\__src\pnscript\PNNormal3f.pkg" />
+    <None Include="..\..\..\__src\pnscript\PNPathFinding.pkg" />
+    <None Include="..\..\..\__src\pnscript\PNPoint3f.pkg" />
+    <None Include="..\..\..\__src\pnscript\PNQuatf.pkg" />
+    <None Include="..\..\..\__src\pnscript\PNVector3f.pkg" />
+    <None Include="..\..\..\__src\pnscript\PNWayPoint.pkg" />
+    <None Include="..\..\..\__src\pnscript\test.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\gameMap.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\init.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PN3DCameraClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PN3DObjectClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PN3DSkeletonObjectClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNActionTriggerClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNAICharacterClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNAINavyClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNAIPirateClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNCharacterClass.lua" />
+    <None Include="..\..\..\__binaries\free\datafiles\gamedef\PNDieClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNGetItemTriggerClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNItemClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNModifier.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNModifierClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNPlayerClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNRenderCam.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNSaberWeaponClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNTimerClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNWeaponClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNWeaponH2HClass.lua" />
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\utilities.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\pncommon\pncommon.vcxproj">
+      <Project>{8fa92b12-d5d9-413b-8abc-9bfded44ede6}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

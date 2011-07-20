@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8FA92B12-D5D9-413B-8ABC-9BFDED44EDE6}</ProjectGuid>
+    <RootNamespace>pncommon</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../../__library/win32/include/;../../../__library/common/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PNCOMMON_EXPORTS;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>-DBOOST_FILESYSTEM_VERSION=2 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../../../__binaries/win32/pncommon-dbg.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\__library\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../../__library/win32/include/;../../../__library/common/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PNCOMMON_EXPORTS;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>-DBOOST_FILESYSTEM_VERSION=2 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../../../__binaries/win32/pncommon.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\__library\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Data">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Xml">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\__src\pncommon\PNCallBackList.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNEventManager.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNLockableObject.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNObject.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PN3DGround.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PN3DObject.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PN3DSkeletonAnimation.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PN3DSkeletonObject.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNWorldCollision.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\IPNAnimated.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNBoundingBox.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNBoundingSphere.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNFace.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNCharacter.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNIAGraph.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNPathFinding.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNWayPoint.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNWPModel.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNDie.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNGameInterface.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNGameMap.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNSoundInterface.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNInterface.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNPlugin.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNPluginManager.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNConsole.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNPhysicsInterface.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNConfigurableObject.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNConfigurableParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNConfigurableParameterList.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNPropertiesGridParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNPropertiesGridParameterList.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNBoolParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNFloatParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNIntParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNStringParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNUIntParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNImportInterface.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNImportManager.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNExportInterface.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNExportManager.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PN3DCamera.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PN3DCameraModel.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNRendererInterface.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNConf.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\pnerror.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNException.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNLine.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNMatrix4f.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNMatrixTR4f.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNNormal3f.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNPlane.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNPoint2f.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNPoint3f.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNQuatf.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNTriangle.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNVector3f.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\IPNSerializable.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\IPNXMLSerializable.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNConfPanel.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\IPNLoadingProgess.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNI18n.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNLocale.cpp" />
+    <ClCompile Include="..\..\..\__src\pncommon\PNResourcesManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\__src\pncommon\PNCallBackList.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnevent.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNEventData.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNEventManager.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pndefs.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNLockableObject.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNObject.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNVRef.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnbasetypes.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNBaseValue.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNBool.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNFloat.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNInt.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pntypes.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNUInt.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DAnimation.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DGround.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DMaterial.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DModel.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DObject.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DSkeleton.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DSkeletonAnimation.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DSkeletonObject.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pna_format.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnm_format.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\pno_format.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnp_format.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\pns_format.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnt_format.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNWorldCollision.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\IPNAnimated.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNBoundingBox.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNBoundingSphere.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNFace.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNCharacter.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNIAGraph.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNPathFinding.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNWayPoint.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNWPModel.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnchatxml.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNDie.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNGameEventData.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNGameInterface.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNGameMap.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnxml.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNSoundEventData.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNSoundInterface.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNInterface.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNPlugDesc.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNPlugin.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNPluginManager.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnplugins.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNConsole.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNPhysicalObject.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNPhysicsInterface.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pcf_format.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNConfigurableObject.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNConfigurableParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNConfigurableParameterList.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnproperties.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNPropertiesGridParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNPropertiesGridParameterList.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNBoolParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNFloatParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNIntParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNStringParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNUIntParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\IPNImportedObject.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnimport.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNImportInterface.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNImportManager.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnexport.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNExportInterface.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNExportManager.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DCamera.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PN3DCameraModel.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnrender.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNRendererInterface.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNRendererObject.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNRenderMaterial.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNSkyBox.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNTexture.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNVideoEventData.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNConf.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnerror.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnexception.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNException.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNLine.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnmath.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNMatrix4f.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNMatrixTR4f.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNNormal3f.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNPlane.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNPoint2f.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNPoint3f.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNQuatf.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNTriangle.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNVector3f.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\IPNSerializable.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\IPNXMLSerializable.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNConfPanel.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\IPNLoadingProgess.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNLoadingProgressEventData.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\i18n_format.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\pni18n.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNI18n.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNLocale.hpp" />
+    <ClInclude Include="..\..\..\__src\pncommon\datafiles_format.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\pnresources.h" />
+    <ClInclude Include="..\..\..\__src\pncommon\PNResourcesManager.hpp" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\__binaries\datafiles\configuration\configuration.dtd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="pncommon.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -51,8 +51,10 @@ namespace PN
 	static PNGUIChatWindow* _instance;
 	CEGUI::Window* _mainSheet;
 	CEGUI::Listbox*	_listBox;
-	CEGUI::StaticText* _textQuestion;
-	CEGUI::StaticText* _textName;
+	//CEGUI::StaticText* _textQuestion;
+	CEGUI::FalagardStaticText* _textQuestion;
+	//CEGUI::StaticText* _textName;
+	CEGUI::FalagardStaticText* _textName;
 	std::string _currentChatXml;
 	typedef std::set<std::string>			ListResolvedDependencies;
 	ListResolvedDependencies				_resolvedDependencies;

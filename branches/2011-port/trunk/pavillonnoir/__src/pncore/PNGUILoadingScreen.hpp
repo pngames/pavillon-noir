@@ -50,10 +50,13 @@ protected:
 private:
   static PNGUILoadingScreen*		_instance;
   CEGUI::Window*					_mainSheet;
-  CEGUI::StaticImage*				_backGround;
+  //CEGUI::StaticImage*				_backGround;
+  CEGUI::FalagardStaticImage*		_backGround;
   CEGUI::ProgressBar*				_progBar;
-  CEGUI::StaticText*					_staticText;
-  CEGUI::StaticImage*				_statImg;
+  //CEGUI::StaticText*				_staticText;
+  CEGUI::FalagardStaticText*		_staticText;
+  //CEGUI::StaticImage*				_statImg;
+  CEGUI::FalagardStaticImage*		_statImg;
   typedef std::list<std::string>	listImagesetAll;
   listImagesetAll					_listImagesetAll;
   /*/////////////////////////////////////////////////////////////////////////////

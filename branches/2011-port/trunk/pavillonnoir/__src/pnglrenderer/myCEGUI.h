@@ -42,6 +42,8 @@
 #include <CEGUIBase.h>
 #include <CEGUIRenderer.h>
 #include <CEGUITexture.h>
+#include <WindowRendererSets/Falagard/FalStaticText.h>
+#include <WindowRendererSets/Falagard/FalStaticImage.h>
 
 #ifdef WIN32
 # pragma warning( pop )

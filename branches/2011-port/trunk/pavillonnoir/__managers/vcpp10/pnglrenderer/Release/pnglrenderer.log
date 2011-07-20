@@ -1,0 +1,65 @@
+﻿La génération a démarré 15.07.2011 09:55:25.
+     1>Projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pnglrenderer\pnglrenderer.vcxproj" sur le nœud 3 (rebuild cible(s)).
+     1>_PrepareForClean:
+         Suppression du fichier "Release\pnglrenderer.lastbuildstate".
+       InitializeBuildStatus:
+         Création de "Release\pnglrenderer.unsuccessfulbuild", car "AlwaysCreate" a été spécifié.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../../__library/win32/include/CEGUI /I../../../__library/win32/include/sdl /I../../../__library/win32/include /I../../../__library/common/ /I../../../__src/pncommon /Zi /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D PNGLRENDERER_EXPORTS /D BOOST_ALL_DYN_LINK /D _WINDLL /D _MBCS /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\__src\pnglrenderer\pndlmain.cpp ..\..\..\__src\pnglrenderer\PNGLMaterial.cpp ..\..\..\__src\pnglrenderer\PNGLRenderer.cpp ..\..\..\__src\pnglrenderer\PNGLRendererCamera.cpp ..\..\..\__src\pnglrenderer\PNGLRendererObject.cpp ..\..\..\__src\pnglrenderer\PNGLRendererPlugDesc.cpp ..\..\..\__src\pnglrenderer\PNGLSceneGraph.cpp ..\..\..\__src\pnglrenderer\PNGLSkyBox.cpp ..\..\..\__src\pnglrenderer\PNGLTexture.cpp ..\..\..\__src\pnglrenderer\PNGLTextureManager.cpp ..\..\..\__src\pnglrenderer\PNGLVideo.cpp ..\..\..\__src\pnglrenderer\PNGUIConfPanel.cpp ..\..\..\__src\pnglrenderer\PNGUIConsole.cpp ..\..\..\__src\pnglrenderer\PNInfoPanel.cpp ..\..\..\__src\pnglrenderer\PNSDLEvent.cpp -DBOOST_FILESYSTEM_VERSION=2 
+         pndlmain.cpp
+         PNGLMaterial.cpp
+         PNGLRenderer.cpp
+         Macro definition of max detected - undefining
+         Macro definition of min detected - undefining
+     1>..\..\..\__src\pnglrenderer\PNGLRenderer.cpp(385): warning C4244: 'argument' : conversion from 'PN::pnfloat' to 'int', possible loss of data
+     1>..\..\..\__src\pnglrenderer\PNGLRenderer.cpp(385): warning C4244: 'argument' : conversion from 'PN::pnfloat' to 'int', possible loss of data
+     1>..\..\..\__src\pnglrenderer\PNGLRenderer.cpp(494): warning C4244: 'argument' : conversion from 'PN::pnfloat' to 'PN::pnint', possible loss of data
+     1>..\..\..\__src\pnglrenderer\PNGLRenderer.cpp(494): warning C4244: 'argument' : conversion from 'PN::pnfloat' to 'PN::pnint', possible loss of data
+         PNGLRendererCamera.cpp
+         PNGLRendererObject.cpp
+         PNGLRendererPlugDesc.cpp
+         PNGLSceneGraph.cpp
+         PNGLSkyBox.cpp
+         PNGLTexture.cpp
+         PNGLTextureManager.cpp
+         PNGLVideo.cpp
+         PNGUIConfPanel.cpp
+         PNGUIConsole.cpp
+     1>..\..\..\__src\pnglrenderer\PNGUIConsole.cpp(477): warning C4244: 'initializing' : conversion from 'PN::pnuint' to 'float', possible loss of data
+         PNInfoPanel.cpp
+         PNSDLEvent.cpp
+         Generating Code...
+       ResourceCompile:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /l"0x0409" /nologo /fo"Release\pnglrenderer.res" pnglrenderer.rc 
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Release\pnglrenderer.dll) ne correspond pas à la valeur de la propriété OutputFile (D:\Pavillon noir\Code\trunk\pavillonnoir\__binaries\win32\plugins\pnglrenderer.pnp) de Linker. Cela peut entraîner une génération incorrecte de votre projet. Pour corriger ce problème, vérifiez que les valeurs des propriétés $(OutDir), $(TargetName) et $(TargetExt) correspondent à la valeur spécifiée dans %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(991,5): warning MSB8012: TargetExt(.dll) ne correspond pas à la valeur de la propriété OutputFile (.pnp) de Linker. Cela peut entraîner une génération incorrecte de votre projet. Pour corriger ce problème, vérifiez que les valeurs des propriétés $(OutDir), $(TargetName) et $(TargetExt) correspondent à la valeur spécifiée dans %(Link.OutputFile).
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../../../__binaries/win32/plugins/pnglrenderer.pnp" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\..\..\__library\win32\lib DevIL.lib ILU.lib ILUT.lib SDL.lib SDLmain.lib opengl32.lib glu32.lib glew32.lib CEGUIBase.lib CEGUIOpenGLRenderer.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\pnglrenderer.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:"D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Release\pnglrenderer.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Release\pnglrenderer.lib" /MACHINE:X86 /DLL Release\pnglrenderer.res
+         Release\pndlmain.obj
+         Release\PNGLMaterial.obj
+         Release\PNGLRenderer.obj
+         Release\PNGLRendererCamera.obj
+         Release\PNGLRendererObject.obj
+         Release\PNGLRendererPlugDesc.obj
+         Release\PNGLSceneGraph.obj
+         Release\PNGLSkyBox.obj
+         Release\PNGLTexture.obj
+         Release\PNGLTextureManager.obj
+         Release\PNGLVideo.obj
+         Release\PNGUIConfPanel.obj
+         Release\PNGUIConsole.obj
+         Release\PNInfoPanel.obj
+         Release\PNSDLEvent.obj
+         "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pncommon\Release\pncommon.lib"
+            Creating library Release\pnglrenderer.lib and object Release\pnglrenderer.exp
+         pnglrenderer.vcxproj -> D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Release\pnglrenderer.dll
+       Manifest:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"../../../__binaries/win32/plugins/pnglrenderer.pnp;#2" /manifest Release\pnglrenderer.dll.intermediate.manifest
+       FinalizeBuildStatus:
+         Suppression du fichier "Release\pnglrenderer.unsuccessfulbuild".
+         Mise à jour de l'horodatage "Release\pnglrenderer.lastbuildstate".
+     1>Génération du projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pnglrenderer\pnglrenderer.vcxproj" terminée (rebuild cible(s)).
+
+La génération a réussi.
+
+Temps écoulé 00:00:41.21

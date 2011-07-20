@@ -1,0 +1,29 @@
+﻿Build started 12.07.2011 09:57:40.
+     1>Project "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\test_pncommon\test_pncommon.vcxproj" on node 4 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Release\test_pncommon.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../../__src/pncommon /I../../../__library/common/ /I../../../__library/win32/include/ /Zi /nologo /W3 /WX- /O2 /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D BOOST_ALL_DYN_LINK /D BOOST_THREAD_USE_DLL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\__src\test_pncommon\main.cpp ..\..\..\__src\test_pncommon\test_events.cpp
+         main.cpp
+         test_events.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/thread/detail/config.hpp(31): warning C4005: 'BOOST_THREAD_USE_DLL' : macro redefinition
+                 command-line arguments :  see previous definition of 'BOOST_THREAD_USE_DLL'
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Release\test_pncommon.exe) does not match the Linker's OutputFile property value (D:\Pavillon noir\Code\trunk\pavillonnoir\__binaries\win32\test_pncommon-dbg.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(992,5): warning MSB8012: TargetName(test_pncommon) does not match the Linker's OutputFile property value (test_pncommon-dbg). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\..\__binaries\win32\test_pncommon-dbg.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\..\..\__library\win32\lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\test_pncommon.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Release\test_pncommon.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Release\test_pncommon.lib" /MACHINE:X86 Release\main.obj
+         Release\test_events.obj
+         "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pncommon\Release\pncommon.lib"
+         Generating code
+         Finished generating code
+         test_pncommon.vcxproj -> D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Release\test_pncommon.exe
+       Manifest:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"..\..\..\__binaries\win32\test_pncommon-dbg.exe;#1" /manifest Release\test_pncommon.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Release\test_pncommon.unsuccessfulbuild".
+         Touching "Release\test_pncommon.lastbuildstate".
+     1>Done Building Project "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\test_pncommon\test_pncommon.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:11.01

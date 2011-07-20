@@ -1,0 +1,70 @@
+﻿La génération a démarré 15.07.2011 13:28:19.
+     1>Projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pneditor\pneditor.vcxproj" sur le nœud 3 (rebuild cible(s)).
+     1>_PrepareForClean:
+         Suppression du fichier "Debug\pneditor.lastbuildstate".
+       InitializeBuildStatus:
+         Création de "Debug\pneditor.unsuccessfulbuild", car "AlwaysCreate" a été spécifié.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../../__src/pneditorcommon /I../../../__src/pncommon /I../../../__library/win32/include/fox /I../../../__library/win32/include/ /I../../../__library/common/ /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D HAVE_GL_H /D HAVE_GLU_H /D FOXDLL /D BOOST_ALL_DYN_LINK /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\__src\pneditor\PNEditor.cpp ..\..\..\__src\pneditor\PNEDMapPanel.cpp ..\..\..\__src\pneditor\PNEDSkyBox.cpp ..\..\..\__src\pneditor\PNEDSkyboxPanel.cpp ..\..\..\__src\pneditor\PNGLGroup.cpp ..\..\..\__src\pneditor\PNGLShape.cpp ..\..\..\__src\pneditor\PNGLViewer.cpp ..\..\..\__src\pneditor\PNPropertiesPanel.cpp ..\..\..\__src\pneditor\PNScriptConfigurableObject.cpp ..\..\..\__src\pneditor\PNWaypointObject.cpp -DBOOST_FILESYSTEM_VERSION=2 
+         PNWaypointObject.cpp
+         PNScriptConfigurableObject.cpp
+         PNPropertiesPanel.cpp
+         PNGLViewer.cpp
+         PNGLShape.cpp
+         PNGLGroup.cpp
+         PNEDSkyboxPanel.cpp
+         PNEDSkyBox.cpp
+         PNEDMapPanel.cpp
+         PNEditor.cpp
+         Generating Code...
+       ResourceCompile:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _DEBUG /l"0x0409" /nologo /fo"Debug\ressources.res" ressources.rc 
+       ManifestResourceCompile:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\pneditor.exe.embed.manifest.res" Debug\pneditor_manifest.rc 
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pneditor.exe) ne correspond pas à la valeur de la propriété OutputFile (D:\Pavillon noir\Code\trunk\pavillonnoir\__binaries\win32\pneditor-dbg.exe) de Linker. Cela peut entraîner une génération incorrecte de votre projet. Pour corriger ce problème, vérifiez que les valeurs des propriétés $(OutDir), $(TargetName) et $(TargetExt) correspondent à la valeur spécifiée dans %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(992,5): warning MSB8012: TargetName(pneditor) ne correspond pas à la valeur de la propriété OutputFile (pneditor-dbg) de Linker. Cela peut entraîner une génération incorrecte de votre projet. Pour corriger ce problème, vérifiez que les valeurs des propriétés $(OutDir), $(TargetName) et $(TargetExt) correspondent à la valeur spécifiée dans %(Link.OutputFile).
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\..\__binaries\win32\pneditor-dbg.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\..\..\__library\win32\lib /LIBPATH:..\..\pncommon\Debug opengl32.lib glu32.lib comctl32.lib wsock32.lib ws2_32.lib mpr.lib "FOXDLLD-1.6.lib" libxml2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\pneditor.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pneditor.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /ENTRY:"mainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pneditor.lib" /MACHINE:X86 Debug\ressources.res
+         Debug\pneditor.exe.embed.manifest.res
+         Debug\PNEditor.obj
+         Debug\PNEDMapPanel.obj
+         Debug\PNEDSkyBox.obj
+         Debug\PNEDSkyboxPanel.obj
+         Debug\PNGLGroup.obj
+         Debug\PNGLShape.obj
+         Debug\PNGLViewer.obj
+         Debug\PNPropertiesPanel.obj
+         Debug\PNScriptConfigurableObject.obj
+         Debug\PNWaypointObject.obj
+         "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pncommon\Debug\pncommon.lib"
+         "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pneditorcommon\Debug\pneditorcommon.lib"
+         "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pnexporter\Debug\pnexporter.lib"
+       Manifest:
+         Suppression du fichier "Debug\pneditor.exe.embed.manifest".
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\pneditor.exe.embed.manifest" /manifest Debug\pneditor.exe.intermediate.manifest
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\pneditor.exe.embed.manifest.res" Debug\pneditor_manifest.rc 
+       LinkEmbedManifest:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\..\__binaries\win32\pneditor-dbg.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\..\..\__library\win32\lib /LIBPATH:..\..\pncommon\Debug opengl32.lib glu32.lib comctl32.lib wsock32.lib ws2_32.lib mpr.lib "FOXDLLD-1.6.lib" libxml2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\pneditor.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pneditor.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /ENTRY:"mainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pneditor.lib" /MACHINE:X86 Debug\ressources.res
+         Debug\pneditor.exe.embed.manifest.res
+         Debug\PNEditor.obj
+         Debug\PNEDMapPanel.obj
+         Debug\PNEDSkyBox.obj
+         Debug\PNEDSkyboxPanel.obj
+         Debug\PNGLGroup.obj
+         Debug\PNGLShape.obj
+         Debug\PNGLViewer.obj
+         Debug\PNPropertiesPanel.obj
+         Debug\PNScriptConfigurableObject.obj
+         Debug\PNWaypointObject.obj
+         "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pncommon\Debug\pncommon.lib"
+         "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pneditorcommon\Debug\pneditorcommon.lib"
+         "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pnexporter\Debug\pnexporter.lib"
+         pneditor.vcxproj -> D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pneditor.exe
+       FinalizeBuildStatus:
+         Suppression du fichier "Debug\pneditor.unsuccessfulbuild".
+         Mise à jour de l'horodatage "Debug\pneditor.lastbuildstate".
+     1>Génération du projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pneditor\pneditor.vcxproj" terminée (rebuild cible(s)).
+
+La génération a réussi.
+
+Temps écoulé 00:00:34.16
