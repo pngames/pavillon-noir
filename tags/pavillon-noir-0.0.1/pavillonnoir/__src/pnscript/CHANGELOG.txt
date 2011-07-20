@@ -1,0 +1,33 @@
+0.0.4 (2005/05/04):
+* [Stephane] new :
+
+	Gros coup de refractor pour tranfaormer PNLuaSandBox en PNLuaGame pour plus de lisibilite du code
+	
+
+0.0.3 (2005/04/15):
+* [Stephane] new :
+
+	Visual studio 7: rajout de l'automatisation de la generation du fichier de binding juste
+	avant la compilation.  
+	
+0.0.3 (2005/04/13):
+* [Matt] new :
+
+	Decoupage du binding en plusieurs fichiers .pkg
+
+	Il y a maintenant un fichier "includes.pkg" qui rassemble tous 
+	les includes necessaires au binding et un .pkg par classe bindee.
+
+	"pnbing.pkg" est le fichier qui inclus tous les packets a binder.
+
+0.0.2 (2005/03/24):
+* [stephane] new : 
+	- Ajout d'un script de generation des fichiers de binding: 
+		- sous windows "GenBinding.bat"
+		- sous linux "GenBinding.sh"
+	- Ce script necessite d'avoir l'utilitaire tolua++ installe en tant que commande windows.
+	  Il y a un INSTALL.BAT  et un UNINSTALL.BAT dans le repertoire "__dev\tolua++\" 
+
+
+0.0.1 (2004/02/14):
+* [thomas] new : add CHANGELOG.txt
