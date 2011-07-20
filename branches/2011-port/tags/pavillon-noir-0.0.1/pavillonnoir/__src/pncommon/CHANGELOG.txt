@@ -1,0 +1,43 @@
+0.0.1 (2005/05/28):
+* [Irenee] .: Added new utility function to sort an array of triangles according a specified orientation
+			: Deleted useless computation for calculating the closest vertex from a triangle
+			: Fixed a bug in crossProduct() method			  
+0.0.1 (2005/05/07):
+* [Irenee] 	fixing  : shake artefact collision fixed
+0.0.1 (2005/04/16):
+* [Irenee] 	adding  : adding of method able to handle collision between a bounding sphere and a triangle
+0.0.1 (2005/08/01):
+* [stephane]	adding	: adding path to gamedef and texture to pnresources.h
+* [stephane]	modif	: rename pnressources.h into pnresources.h
+0.0.1 (2005/04/01):
+* [thomas]	add	: add direct sending event method in EventManager
+0.0.1 (2005/03/30):
+* [thomas]	modif	: deserialize --> unserialize in PNObject
+* [thomas]	add	: 2 new fonctions in PNObject for serialize/unserialize with ostrem and istream
+0.0.1 (2005/03/19):
+* [Irenee]	add	: Objet PNTriangle derivant de PNPlane, fini a 80 %
+* [Irenee]	modif	: PNNormal3f derive de PNVector3f
+* [Irenee]	modif	: ajout d'une convenient methode dans PNPlane / Renommage certains enum et methodes  
+0.0.1 (2005/03/15):
+* [Marti]	add	: New class PNCharacter with cpp and hpp files added.
+* [Marti]	modif	: added comments on all AI classes.
+0.0.1 (2005/03/12)
+* [Irenee]	new	: Implementation/test unitaire/documentation technique de l'objet PNPlane
+			add		: ajout d'un autre constructeur dans l'objet PNVector
+0.0.1 (2005/03/05):
+* [Irenee]	new	: Ajout de l'objet PNNormal3f
+0.0.1 (0225/03/02):
+* [Cedric]	modif	: supplement PN3DGround methodes.
+0.0.1 (2005/03/01):
+* [thomas]	modif	: delete stlport support under Linux
+0.0.1 (2005/02/26):
+* [patate]	new	: event manager modified, functionnal with the use of a mutex from the boost::thread library
+* [patate]	new	: add new test report and anomaly report for the event manager
+0.0.1 (2004/02/18):
+* [thomas]	new	: add PNRendererInterface and PNRenderObject
+0.0.1 (2005/02/18):
+* [thomas]	new	: add std::ostream&	operator<<(std::ostream& o, const PNPoint* p); in PNPoint.hpp
+0.0.1 (2005/02/16):
+* [patate]	new	: changement de PNEventList.* en PNCallBackList.* et tout ce qui s'ensuit.
+0.0.1 (2005/02/14):
+* [thomas]	new	: add CHANGELOG.txt

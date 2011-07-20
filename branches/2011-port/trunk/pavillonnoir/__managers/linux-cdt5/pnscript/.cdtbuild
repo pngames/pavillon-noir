@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 3.0.0?>
+
+<ManagedProjectBuildInfo>
+<project id="pnscript.cdt.managedbuild.target.gnu.so.1676244574" name="Shared Library (Gnu)" projectType="cdt.managedbuild.target.gnu.so">
+<configuration artifactExtension="so" artifactName="pnscript-dbg" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.so.debug.1958503475" name="Debug" parent="cdt.managedbuild.config.gnu.so.debug" postannouncebuildStep="Copy to plugin directory" postbuildStep="@mkdir -vp ../../../../__binaries/linux ../../../../__binaries/linux/plugins ../../../../__binaries/linux/plugins/debug ; cp -vf libpnscript-dbg.so ../../../../__binaries/linux/plugins/Debug/pnscript-dbg.pnp" preannouncebuildStep="Generate toolua++ packages files" prebuildStep="cd ../../../../__src/pnscript/ &amp;&amp; ./GenBinding.sh &amp;&amp; cd -">
+<toolChain id="cdt.managedbuild.toolchain.gnu.so.debug.656863591" name="%ToolChainName.Dbg" superClass="cdt.managedbuild.toolchain.gnu.so.debug">
+<builder id="cdt.managedbuild.target.gnu.builder.so.debug.1813829535" name="Gnu Make.Debug" superClass="cdt.managedbuild.target.gnu.builder.so.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.so.debug.1636094754" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.so.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.so.debug.1504765167" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.so.debug">
+<option id="gnu.cpp.compiler.option.include.paths.2134092438" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+<listOptionValue builtIn="false" value="../../../../__src/pncommon"/>
+<listOptionValue builtIn="false" value="../../../../__library/common/"/>
+</option>
+<option id="gnu.cpp.compiler.option.preprocessor.def.1275297449" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+<listOptionValue builtIn="false" value="_DEBUG"/>
+</option>
+<option id="gnu.cpp.compiler.option.other.other.1098355954" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `lua-config50 --include`" valueType="string"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.c.linker.so.debug.873860953" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.debug.2034109341" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.debug">
+<option id="gnu.cpp.link.option.libs.714289502" superClass="gnu.cpp.link.option.libs" valueType="libs">
+<listOptionValue builtIn="false" value="tolua++"/>
+</option>
+<option id="gnu.cpp.link.option.flags.696644375" superClass="gnu.cpp.link.option.flags" value="`lua-config50 --libs`" valueType="string"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.assembler.so.debug.697374576" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.debug"/>
+<macros/>
+</toolChain>
+</configuration>
+<configuration artifactExtension="so" artifactName="pnscript" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.so.release.2035933263" name="Release" parent="cdt.managedbuild.config.gnu.so.release" postannouncebuildStep="Copy to plugin directory" postbuildStep="@mkdir -vp ../../../../__binaries/linux ../../../../__binaries/linux/plugins ; cp -vf libpnscript.so ../../../../__binaries/linux/plugins/pnscript.pnp" preannouncebuildStep="Generate toolua++ packages files" prebuildStep="cd ../../../../__src/pnscript/ &amp;&amp; ./GenBinding.sh &amp;&amp; cd -">
+<toolChain id="cdt.managedbuild.toolchain.gnu.so.release.654713337" name="%ToolChainName.Rel" superClass="cdt.managedbuild.toolchain.gnu.so.release">
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.so.release.728731017" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.so.release"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.so.release.400068170" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.so.release">
+<option id="gnu.cpp.compiler.option.include.paths.1479907553" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+<listOptionValue builtIn="false" value="../../../../__src/pncommon"/>
+<listOptionValue builtIn="false" value="../../../../__library/common/"/>
+</option>
+<option id="gnu.cpp.compiler.option.other.other.1922355029" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `lua-config50 --include`" valueType="string"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.c.linker.so.release.914743750" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.so.release"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.release.202905293" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.release">
+<option id="gnu.cpp.link.option.libs.968832659" superClass="gnu.cpp.link.option.libs" valueType="libs">
+<listOptionValue builtIn="false" value="tolua++"/>
+</option>
+<option id="gnu.cpp.link.option.flags.1111151382" superClass="gnu.cpp.link.option.flags" value="`lua-config50 --libs`" valueType="string"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.assembler.so.release.1576415581" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.release"/>
+<macros/>
+</toolChain>
+</configuration>
+<macros/>
+</project>
+</ManagedProjectBuildInfo>

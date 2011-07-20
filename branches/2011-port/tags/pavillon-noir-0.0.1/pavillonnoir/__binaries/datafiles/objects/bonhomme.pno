@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE model SYSTEM "model-1.0.dtd">
+<model path="bonhomme.pnm">
+  <listmaterials>
+    <material path="bonhomme10_Materiau.pnt" />
+  </listmaterials>
+  <skeleton path="bonhomme.pns" />
+  <listanims>
+    <anim path="bonhomme.pna" />
+  </listanims>
+</model>

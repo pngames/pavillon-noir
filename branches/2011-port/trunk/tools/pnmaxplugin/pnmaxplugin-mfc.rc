@@ -1,0 +1,452 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Français (France) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
+#ifdef _WIN32
+LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)\r\n"
+    "LANGUAGE 12, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\pnmaxplugin-mfc.rc2""  // ressources non modifiées par Microsoft Visual C++\r\n"
+    "#include ""afxres.rc""         // Composants standard\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\pnmaxplugin-mfc.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PN_MWIN DIALOGEX 0, 0, 441, 225
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,384,7,50,14
+    PUSHBUTTON      "Quit",IDCANCEL,384,24,50,14
+    LISTBOX         IDC_CONSOLE,7,7,372,211,LBS_NOINTEGRALHEIGHT | 
+                    LBS_DISABLENOSCROLL | LBS_NOSEL | WS_VSCROLL | 
+                    WS_HSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "Config",ID_MWIN_CONFIG,384,204,50,14
+END
+
+IDD_OBJ_EXPORT DIALOGEX 0, 0, 231, 324
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "PN3DObject exporter"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,7,303,50,14
+    PUSHBUTTON      "Annuler",IDCANCEL,174,303,50,14
+    CONTROL         "Materials",IDC_C_MATERIALS,"Button",BS_AUTOCHECKBOX | 
+                    BS_FLAT | WS_TABSTOP,28,78,42,10
+    CONTROL         "Model",IDC_C_MODEL,"Button",BS_AUTOCHECKBOX | BS_FLAT | 
+                    WS_TABSTOP,28,45,33,10
+    CONTROL         "Skeleton",IDC_C_SKELETON,"Button",BS_AUTOCHECKBOX | 
+                    BS_FLAT | WS_TABSTOP,28,135,45,10
+    CONTROL         "Animation",IDC_C_ANIMATION,"Button",BS_AUTOCHECKBOX | 
+                    BS_FLAT | WS_TABSTOP,27,169,47,10
+    EDITTEXT        IDC_T_MODEL,39,56,145,12,ES_AUTOHSCROLL | ES_READONLY,
+                    WS_EX_ACCEPTFILES
+    EDITTEXT        IDC_T_SKELETON,39,147,146,12,ES_AUTOHSCROLL | 
+                    ES_READONLY,WS_EX_ACCEPTFILES
+    EDITTEXT        IDC_T_ROOT,17,16,177,12,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "...",IDC_BB_ROOT,196,16,17,13,BS_FLAT
+    PUSHBUTTON      "...",IDC_BB_MODEL,185,56,17,13,BS_FLAT
+    PUSHBUTTON      "...",IDC_BB_ANIMATION,186,182,17,13,BS_FLAT
+    PUSHBUTTON      "...",IDC_BB_MATERIAL,185,89,17,13,BS_FLAT
+    PUSHBUTTON      "...",IDC_BB_SKELETON,186,147,17,13,BS_FLAT
+    LTEXT           "Root:",IDC_L_MODEL2,7,7,69,8
+    GROUPBOX        "3DObject",IDC_STATIC,17,32,196,85,BS_FLAT
+    GROUPBOX        "3DDynObject",IDC_STATIC,18,122,196,81,BS_FLAT
+    EDITTEXT        IDC_T_ANIMATION,39,182,146,12,ES_AUTOHSCROLL | 
+                    ES_READONLY,WS_EX_ACCEPTFILES
+    EDITTEXT        IDC_T_MATERIALS,39,89,146,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    PUSHBUTTON      "options",IDC_BO_ANIMATION,173,170,30,11,BS_FLAT
+    PUSHBUTTON      "options",IDC_BO_SKELETON,173,135,30,11,BS_FLAT
+    PUSHBUTTON      "options",IDC_BO_MATERIALS,172,77,30,11,BS_FLAT
+    PUSHBUTTON      "options",IDC_BO_MODEL,172,44,30,11,BS_FLAT
+    PUSHBUTTON      "options",IDC_BO_GENERAL,183,284,30,11,BS_FLAT
+    GROUPBOX        "Physics",IDC_STATIC,18,211,196,67,BS_FLAT
+    CONTROL         "Physics",IDC_C_PHYSICS,"Button",BS_AUTOCHECKBOX | 
+                    BS_FLAT | WS_TABSTOP,28,226,45,10
+    EDITTEXT        IDC_T_PHYSICS,40,239,146,12,ES_AUTOHSCROLL | ES_READONLY,
+                    WS_EX_ACCEPTFILES
+    PUSHBUTTON      "...",IDC_BB_PHYSICS,186,239,17,13,BS_FLAT
+    PUSHBUTTON      "options",IDC_BO_PHYSICS,174,226,30,11,BS_FLAT
+    CONTROL         "Save File",IDC_C_MODEL_SAVE,"Button",BS_AUTOCHECKBOX | 
+                    BS_FLAT | WS_TABSTOP,86,45,43,10
+    CONTROL         "Save File",IDC_C_MATERIALS_SAVE,"Button",
+                    BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,83,79,43,10
+    CONTROL         "Save File",IDC_C_SKELETON_SAVE,"Button",BS_AUTOCHECKBOX | 
+                    BS_FLAT | WS_TABSTOP,85,135,43,10
+    CONTROL         "Save File",IDC_C_PHYSICS_SAVE,"Button",BS_AUTOCHECKBOX | 
+                    BS_FLAT | WS_TABSTOP,86,226,43,10
+    CONTROL         "Save File",IDC_C_ANIMATION_SAVE,"Button",
+                    BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,86,169,43,10
+    CONTROL         "Model",IDC_RB_PHYS_MODEL,"Button",BS_AUTORADIOBUTTON,28,
+                    254,43,9
+    CONTROL         "Options",IDC_RB_PHYS_OPTIONS,"Button",
+                    BS_AUTORADIOBUTTON,28,265,43,9
+END
+
+IDD_PNS_CONFIG DIALOGEX 0, 0, 337, 154
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Squeletor"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,280,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,280,24,50,14
+    CONTROL         "",IDC_TREE_SQUELETOR,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_LINESATROOT | TVS_EDITLABELS | TVS_DISABLEDRAGDROP | 
+                    TVS_CHECKBOXES | TVS_FULLROWSELECT | WS_BORDER | 
+                    WS_TABSTOP,7,7,262,140
+END
+
+IDD_PNT_CONFIG DIALOGEX 0, 0, 217, 231
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Materials"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,160,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,160,24,50,14
+    CONTROL         "",IDC_MATERIALS,"SysListView32",LVS_LIST | 
+                    LVS_EDITLABELS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,
+                    7,7,149,217
+END
+
+IDD_PNA_CONFIG DIALOGEX 0, 0, 337, 241
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Animation"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,280,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,280,24,50,14
+    CONTROL         "",IDC_TREE_SQUELETOR,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_LINESATROOT | TVS_EDITLABELS | TVS_DISABLEDRAGDROP | 
+                    TVS_CHECKBOXES | TVS_FULLROWSELECT | WS_BORDER | 
+                    WS_TABSTOP,14,78,255,151
+    GROUPBOX        "Animation",IDC_STATIC,7,7,269,53
+    GROUPBOX        "Squeletor",IDC_STATIC,7,66,269,169
+    EDITTEXT        IDC_A_T_NAME,84,20,146,12,ES_AUTOHSCROLL
+    LTEXT           "Name :",IDC_A_L_NAME,32,22,47,8
+    EDITTEXT        IDC_A_T_FRAMERATE,84,34,146,12,ES_AUTOHSCROLL
+    LTEXT           "Framerate :",IDC_A_L_FRAMERATE,31,35,46,8
+END
+
+IDD_PNO_CONFIG DIALOGEX 0, 0, 210, 124
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Object"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,77,103,50,14
+    PUSHBUTTON      "Annuler",IDCANCEL,153,103,50,14
+    GROUPBOX        "Direction",IDC_STATIC,7,7,196,92,BS_FLAT
+    CONTROL         "Default",IDC_RB_DEFAULT,"Button",BS_AUTORADIOBUTTON,17,
+                    19,43,9
+    CONTROL         "Custom",IDC_RB_CUSTOM,"Button",BS_AUTORADIOBUTTON,17,42,
+                    40,8
+    LTEXT           "Front:",IDC_L_FRONT,20,58,23,8
+    LTEXT           "Right:",IDC_L_RIGHT,19,70,22,8
+    LTEXT           "Top:",IDC_L_TOP,19,82,18,8
+    EDITTEXT        IDC_T_FRONT,59,57,120,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "ed",IDC_BT_FRONT,181,57,14,11,BS_FLAT
+    EDITTEXT        IDC_T_RIGHT,59,69,120,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "ed",IDC_BT_RIGHT,181,69,14,11,BS_FLAT
+    EDITTEXT        IDC_T_TOP,59,81,120,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "ed",IDC_BT_TOP,181,81,14,11,BS_FLAT
+    CONTROL         "Invert Z",IDC_RB_180,"Button",BS_AUTORADIOBUTTON,17,30,
+                    41,9
+END
+
+IDD_UTILS_VEDIT DIALOGEX 0, 0, 184, 71
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Vector Editor"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,77,50,50,14
+    PUSHBUTTON      "Annuler",IDCANCEL,127,50,50,14
+    CONTROL         "Default Front",IDC_RB_FDEFAULT,"Button",
+                    BS_AUTORADIOBUTTON,7,7,57,9
+    CONTROL         "Default Right",IDC_RB_RDEFAULT,"Button",
+                    BS_AUTORADIOBUTTON,7,17,55,9
+    CONTROL         "Default Top",IDC_RB_TDEFAULT,"Button",
+                    BS_AUTORADIOBUTTON,7,27,57,9
+    CONTROL         "Custom",IDC_RB_CUSTOM,"Button",BS_AUTORADIOBUTTON,7,38,
+                    43,9
+    EDITTEXT        IDC_T_X,111,7,66,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_T_Z,111,34,66,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_T_Y,111,20,66,12,ES_AUTOHSCROLL
+    LTEXT           "X:",IDC_L_X,99,9,11,8
+    LTEXT           "Y:",IDC_L_Y,100,22,11,8
+    LTEXT           "Z:",IDC_L_Z,100,35,11,8
+END
+
+IDD_PNP_CONFIG DIALOGEX 0, 0, 221, 57
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Physics"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,43,36,50,14
+    PUSHBUTTON      "Annuler",IDCANCEL,121,36,50,14
+    EDITTEXT        IDC_T_PATH,7,18,175,12,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "...",IDC_BB_PATH,197,18,17,13,BS_FLAT
+    CONTROL         "Save File",IDC_C_SAVE,"Button",BS_AUTOCHECKBOX | 
+                    BS_FLAT | WS_TABSTOP,7,7,43,10
+END
+
+IDD_PNM_CONFIG DIALOGEX 0, 0, 233, 239
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Model"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Close",IDOK,176,7,50,14
+    CONTROL         "",IDC_MATERIALS,"SysListView32",LVS_LIST | 
+                    LVS_EDITLABELS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,
+                    7,7,149,217
+    DEFPUSHBUTTON   "Up",IDUP,176,36,50,14
+    DEFPUSHBUTTON   "Down",IDDOWN,176,53,50,14
+    DEFPUSHBUTTON   "End",IDEND,176,92,50,14
+    DEFPUSHBUTTON   "Begin",IDBEGIN,176,78,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 0,0,0,1
+ PRODUCTVERSION 0,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "Pavillon-Noir Team"
+            VALUE "FileDescription", "3DS Max plugin to export to Pavillon-Noir formats"
+            VALUE "FileVersion", "0.0.0.1"
+            VALUE "InternalName", "pnmaxplugin-mfc.exe"
+            VALUE "LegalCopyright", "(c) Pavillon-Noir Team. Tous droits réservés."
+            VALUE "OriginalFilename", "pnmaxplugin-mfc.exe"
+            VALUE "ProductName", "Pavillon-Noir 3DS Max exporter"
+            VALUE "ProductVersion", "0.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_PN_MWIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 434
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 218
+    END
+
+    IDD_OBJ_EXPORT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 224
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 317
+    END
+
+    IDD_PNS_CONFIG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 330
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 147
+    END
+
+    IDD_PNT_CONFIG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 210
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 224
+    END
+
+    IDD_PNA_CONFIG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 330
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 234
+    END
+
+    IDD_PNO_CONFIG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 203
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 117
+    END
+
+    IDD_UTILS_VEDIT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 177
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 64
+    END
+
+    IDD_PNP_CONFIG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 214
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 50
+    END
+
+    IDD_PNM_CONFIG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 226
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 232
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_LIBDESCRIPTION      "Pavillon Noir 3D format"
+    IDS_CATEGORY            "Game Utilities"
+    IDS_CLASS_NAME          "pnmaxplugin"
+    IDS_PARAMS              "Parameters"
+    IDS_SPIN                "Spin"
+    IDS_COMMENT             "Appwizard generated Plugin"
+    IDS_MN_NONE             "None"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_COPYRIGHT           "Tss tss pas touche, tention je surveille"
+    IDS_AUTHORNAME          "Pavillon-Noir Team"
+END
+
+#endif    // Français (France) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
+LANGUAGE 12, 1
+#pragma code_page(1252)
+#include "res\pnmaxplugin-mfc.rc2"  // ressources non modifiées par Microsoft Visual C++
+#include "afxres.rc"         // Composants standard
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,102 @@
+Pavillon Noir, Le Jeu: 
+
+version 0.1 ()
+	Title : Big improvement of game framework. Starting game desing.
+
+	GAME:
+	-----
+	* Starting movie:
+		- Adding first version of first scene video (pavillonnoir/__binaries/datafiles/videos)
+		- [Temporary] Adding button in main menu ("scene 1") to lauch video
+
+	* Level1
+
+	New Features:
+	-------------
+	* this Changelog
+	* GAMEPLAY:
+		- Add animation/displacement link for characters
+	* IA:
+		- Adding Path Finding system based on waypoints
+		- Adding basic fight handling
+	* GUI:
+		- Add auto generated plugins configuration panel base on PNConfigurable systeme created for editor
+		- New design based on CEGUI falagard system
+		- Add map loading/unloading panel
+		- Console improvement:
+			- fade in / fade out
+			- add completion
+	* EDITOR:
+		- Add local modification for objects in map
+	* 3DS MAX Exporter:
+		- Add physical exporter
+		- Can now create skeleton limited animation (for multi-animations management)
+		- Add physical exporter max script (based on Opal one) in /tools
+	* INSTALLER/PACKAGES:
+		- Add OpenAl installer into win32 installer
+		- Add Scons script for linux source package (see INSTALL file for howto use it)
+		- Updated Ubuntu and Debian Sid packages
+		- Add bacground image to win32 installer
+	* SCRIPTING :
+		- Rewrite module to work better with events system
+		- Externalize the virtual machine from the map
+
+	Bug Fixes:
+	----------
+	* Fix release shortcut problem in win32 installer : it was overriden by web site shortcut
+	* Fix rendering deth tests that makes some times objects transparent or switch them
+	* version update:
+		- Fix CEGUI problems with win32 release mode, some linux distribs
+		- Fix Opal/Ode problems under linux
+	* Fix a lot of bugs hard to detail
+
+	Common Libs:
+	------------
+	* Add various functions in maths class
+	* base :
+		- PNObject contains now toString and fromStrong virtual functions
+		- Add PNBaseValue base type PNObject implementation based on template
+		- Adding PNBool, PNInt, PNUint and PNFloat based on PNBaseValue
+	* 3d objects :
+		- Separate target system in two target: view target and position target
+		- Adding target modes for PN3DObjects:
+			- distance management (absolute and non-absolute)
+			- position management (absolute and non-absolute)
+			- orientation management
+		- Adding bone targeting for all modes		
+		- Adding physical object in 3dobjects based on xml definition object of Opal
+		- Modif pno xml format to have "objet" node in root with a "modele" node in same level than materials, skeletton, etc...
+		- Add multi-animations support
+	* Render :
+		- Add frustrum test for characters cameras and render cameras to filter viewed objects and generate IN/OUT frustrum events
+		- Add Skybox management in RendererInterface
+		- Add new option in PNTExtures: can now choise to bing enlarged or repeated textures
+		- Importer auto-determine the textures binding repeat options
+	* Configurable system :
+		- add lots of new widgets in Fox implementation
+		- great improvement of Fox implementation by rewrite cleaner lots of widgets
+		- add CEGUI implementation for int, bool, float and string parameters
+	* Internationnalization system based on xml files (see: http://pavillon-noir.org/wiki/doku.php?id=doxtech:i18n)
+
+	Dependencies:
+	-------------
+	* Add glew for opengl extensions management
+	* Remove stlport support
+	* Updates:
+		- CEGUI: 0.4
+		- boost: 1.33.1
+		- Opal: 0.3.1
+		- tolua++: 1.0.6
+		- OpenAl: 1.1
+
+	SRC:
+	----
+	* Update to CDT 3.0 project configuration files for Eclipse 3.x
+	* Update to Visual Studio 2005 project configuration files for Windows
+	
+	Know issues:
+	----------
+	* Somes graphical bugs with old/low graphics cards
+
+version 0.0.1 (2005/07/29):
+	* First Release ! Technical demonstration of Pavillon Noir engine (3D rendering, physics, scripting...)

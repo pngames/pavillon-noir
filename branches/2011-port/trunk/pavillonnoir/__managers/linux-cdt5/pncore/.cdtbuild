@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 3.0.0?>
+
+<ManagedProjectBuildInfo>
+<project id="pncore.cdt.managedbuild.target.gnu.exe.2047668870" name="Executable (Gnu)" projectType="cdt.managedbuild.target.gnu.exe">
+<configuration artifactExtension="" artifactName="pncore-dbg" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.exe.debug.95448706" name="Debug" parent="cdt.managedbuild.config.gnu.exe.debug" postannouncebuildStep="Copy to binaries directory" postbuildStep="@mkdir -vp ../../../../__binaries/linux ; cp -vf pncore-dbg ../../../../__binaries/linux/pncore-dbg" preannouncebuildStep="" prebuildStep="">
+<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.735541163" name="%ToolChainName.Dbg" superClass="cdt.managedbuild.toolchain.gnu.exe.debug">
+<builder id="cdt.managedbuild.target.gnu.builder.exe.debug.1614954141" name="%BuilderName.Dbg.Debug" superClass="cdt.managedbuild.target.gnu.builder.exe.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.246786146" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.504708856" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug">
+<option id="gnu.cpp.compiler.option.include.paths.502891765" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+<listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
+<listOptionValue builtIn="false" value="../../../../__src/pneditorcommon/"/>
+<listOptionValue builtIn="false" value="../../../../__library/common/"/>
+</option>
+<option id="gnu.cpp.compiler.option.warnings.allwarn.751451296" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
+<option id="gnu.cpp.compiler.option.other.other.1227422543" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `fox-config --cflags` `xml2-config --cflags` `pkg-config --cflags CEGUI`" valueType="string"/>
+<option id="gnu.cpp.compiler.option.preprocessor.def.983818065" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+<listOptionValue builtIn="false" value="_DEBUG"/>
+</option>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.559439326" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.750910634" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
+<option id="gnu.cpp.link.option.paths.812585443" superClass="gnu.cpp.link.option.paths" valueType="stringList">
+<listOptionValue builtIn="false" value="../../pncommon/Debug/"/>
+<listOptionValue builtIn="false" value="../../pneditorcommon/Debug/"/>
+</option>
+<option id="gnu.cpp.link.option.libs.578073546" superClass="gnu.cpp.link.option.libs" valueType="libs">
+<listOptionValue builtIn="false" value="pncommon-dbg"/>
+<listOptionValue builtIn="false" value="pneditorcommon-dbg"/>
+<listOptionValue builtIn="false" value="boost_thread"/>
+<listOptionValue builtIn="false" value="boost_filesystem"/>
+</option>
+<option id="gnu.cpp.link.option.flags.1831673588" superClass="gnu.cpp.link.option.flags" value="`fox-config --libs` `xml2-config --libs` `pkg-config --libs CEGUI`" valueType="string"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.assembler.exe.debug.1537256490" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug">
+<option id="gnu.both.asm.option.include.paths.915684678" superClass="gnu.both.asm.option.include.paths"/>
+</tool>
+<macros/>
+</toolChain>
+</configuration>
+<configuration artifactName="pncore" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.exe.release.1282662" name="Release" parent="cdt.managedbuild.config.gnu.exe.release" postannouncebuildStep="Copy to binaries directory" postbuildStep="@mkdir -vp ../../../../__binaries/linux ; cp -vf pncore ../../../../__binaries/linux/pncore" preannouncebuildStep="" prebuildStep="">
+<toolChain id="cdt.managedbuild.toolchain.gnu.exe.release.1257574581" name="%ToolChainName.Rel" superClass="cdt.managedbuild.toolchain.gnu.exe.release">
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1974340792" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.1267470840" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release">
+<option id="gnu.cpp.compiler.option.include.paths.969162029" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+<listOptionValue builtIn="false" value="../../../../__src/pncommon/"/>
+<listOptionValue builtIn="false" value="../../../../__src/pneditorcommon/"/>
+<listOptionValue builtIn="false" value="../../../../__library/common/"/>
+</option>
+<option id="gnu.cpp.compiler.option.preprocessor.def.2016347140" superClass="gnu.cpp.compiler.option.preprocessor.def"/>
+<option id="gnu.cpp.compiler.option.other.other.1462513422" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -pthread `fox-config --cflags` `xml2-config --cflags` `pkg-config --cflags CEGUI`" valueType="string"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.release.500377245" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.990910901" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
+<option id="gnu.cpp.link.option.libs.9783303" superClass="gnu.cpp.link.option.libs" valueType="libs">
+<listOptionValue builtIn="false" value="pncommon"/>
+<listOptionValue builtIn="false" value="pneditorcommon"/>
+<listOptionValue builtIn="false" value="boost_filesystem"/>
+<listOptionValue builtIn="false" value="boost_thread"/>
+</option>
+<option id="gnu.cpp.link.option.paths.1093224746" superClass="gnu.cpp.link.option.paths" valueType="stringList">
+<listOptionValue builtIn="false" value="../../pncommon/Release"/>
+<listOptionValue builtIn="false" value="../../pneditorcommon/Release"/>
+</option>
+<option id="gnu.cpp.link.option.flags.1609805445" superClass="gnu.cpp.link.option.flags" value="`fox-config --libs` `xml2-config --libs` `pkg-config --libs CEGUI`" valueType="string"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.assembler.exe.release.1931479239" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.release"/>
+<macros/>
+</toolChain>
+</configuration>
+</project>
+</ManagedProjectBuildInfo>

@@ -1,0 +1,53 @@
+Building/Installing Pavillon Noir
+---------------------------------
+
+Step 1 :
+=======
+
+This project needs a c++ compiler and its development files (STL includes, etc.)
+The following libraries are also needed :
+ - SDL >= 1.2.7
+ - Boost (filesystem and threads) >= 1.33
+ - LibXml2 >= 2.6.16
+ - FOX >= 1.4.10
+ - DevIL
+ - GLEW
+ - CEGUI >= 0.4.0
+ - Lua 5.0
+ - ToLua++
+ - OPAL (provided for both linux and windows x86 platforms)
+ - OpenAL
+ - Ogg >= 1.1.2
+ - VorbisFile >= 1.1.0
+
+Optionally, you could have the Scons building system installed onto your system. 
+If not we provide a mini-scons archive that'll do the work.
+
+Step 2 :
+=======
+
+Build the project. To achieve this, just type 'scons' and it'll do the work. By
+default, Pavillon Noir will be installed in /usr/local/games. It will also be 
+built with no debug symbols. If you want to install in another place, just give
+the prefix to scons as this :
+	scons prefix=/another/place
+
+It will so install to /another/place/pavillon-noir.
+To enable a build with debug symbols just give the 'debug=full' to scons as this :
+	scons debug=full
+
+You can indeed enable a debug build with a prefix of your choice.
+
+If you don't have Scons installed on your system, don't worry. Just use the 
+./configure script provided with the same flags explained above and run 'make'.
+It will do the job as scons would.
+
+Step 3 :
+=======
+
+Now that Pavillon Noir is fully builded, just run 'scons install' (with root
+permissions if you don't install in your home directory) and it will be fine.
+If you used the configure script, a make install will do the same thing.
+
+Now you just have to fire up pavillon-noir from its location and enjoy !
+

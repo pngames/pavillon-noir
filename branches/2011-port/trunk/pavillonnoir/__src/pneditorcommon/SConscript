@@ -1,0 +1,36 @@
+#! /usr/bin/env python
+
+Import('env')
+
+obj = env.genobj('shlib', env)
+obj.src = """PNFXAnimListParameter.cpp
+PNFXDialXYZParameter.cpp
+PNFXDirParameter.cpp
+PNFXFileParameter.cpp
+PNFXIntParameter.cpp
+PNFXLinksParameter.cpp
+PNFXMaterialListParameter.cpp
+PNFXRealParameter.cpp
+PNFXScriptListParameter.cpp
+PNFXStringParameter.cpp
+PNGLContext.cpp
+PNPropertiesGrid.cpp
+PNPropertiesPopup.cpp
+pneditorcommon.cpp
+PNFXStringListParameter.cpp
+PNFXEventBoxParameter.cpp
+PNFXCheckButtonParameter.cpp
+PNFXDefaultParameter.cpp
+PNFXTextFieldParameter.cpp
+PNFXListParameter.cpp
+PNFXSeparatorParameter.cpp
+PNFXVPPNObjectParameter.cpp
+PNFXUIntParameter.cpp
+PNFXScriptParameter.cpp
+""".split()
+obj.target = 'libpneditorcommon' + env['suffix']
+obj.vnum = env['package_version']
+obj.instdir = env['install_prefix'] + env['install_path'] + '/linux'
+obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],env['FOX_FLAGS'],env['XML_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath])
+obj.linkflags = ' '.join([env['FOX_LDFLAGS'],env['XML_LDFLAGS']])
+obj.execute()

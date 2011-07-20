@@ -1,0 +1,43 @@
+class  					PN3DSkeletonObject: public PN3DObject
+{
+public:
+  /// Sub Objects to render
+  typedef enum
+  {
+	RENDER_SKELETON		= PN3DObject::RENDER_LAST,
+	RENDER_LAST			= RENDER_SKELETON << 1
+  }						rendermode;
+
+//////////////////////////////////////////////////////////////////////////
+  pnuint				setEnabled(pnuint animId, pnbool enabled);
+  pnbool				isEnabled(pnuint animId) const;
+  
+  pnuint				startAnimation();
+  
+  pnuint				startAnimation(pnuint animId);
+
+  /// Stop current animation and reset position
+  pnuint				stopAnimation();
+  pnuint				stopAnimation(pnuint animId);
+
+  /// Set speed for current animation, ex: 2.0f = 2 times normal speed
+  pnuint				setAnimSpeed(pnfloat speed);
+  pnuint				setAnimSpeed(pnint animId, pnfloat speed);
+  
+  pnuint				setAnimWeight(pnfloat weight);
+  pnuint				setAnimWeight(pnint animId, pnfloat weight);
+  
+  pnuint				setAnimNext(pnint animId, pnint nextAnimId);
+  
+  /// Set the automatic looping of animation enable or disable
+  pnuint				setEnableLoop(pnbool enabled);
+  pnuint				setEnableLoop(pnint animId, pnbool loop);
+  
+  //////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////////
+
+public:
+  PN3DSkeletonObject();
+  ~PN3DSkeletonObject();
+};

@@ -1,0 +1,13 @@
+GENERAL:
+
+* mettre en place l'arborescence make ou cons pour linux avant la premiere release jeux vu ke cdt est trop casse couille et puis c'est plus general
+
+EDITEUR:
+
+* mettre les proprietes des objets modifies dans l'editeur au niveau de la map. Comme ca on considerera le pno comme les proprietes par defaut. Ca permet de pouvoir prendre en comptes des modif sans creer un nouveau pno.
+
+PNGLRENDERER:
+
+* trouver une solution concernant CEGUI sous ubuntu
+* trouver pourquoi cette connerie de test de profondeur de fonctionne pas
+* utiliser le systeme de PNConfigurable avec le lanceur fox pour pouvoir choisir definition, plein ecran...

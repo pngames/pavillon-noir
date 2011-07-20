@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+Import ('env')
+
+SConscript("""pncommon/SConscript
+pneditorcommon/SConscript
+pncore/SConscript
+pneditor/SConscript
+pnexporter/SConscript
+pnimporter/SConscript
+pnopal/SConscript
+pnscript/SConscript
+pnsound/SConscript
+pnglrenderer/SConscript
+""".split())
+

@@ -1,0 +1,22 @@
+///////////////////////////////////////////////////////////////////////////////
+class 					PNPoint : public PNObject
+{
+public:
+  pnfloat		x;
+  pnfloat		y;
+  pnfloat		z;
+public:
+  PNPoint(void);
+  PNPoint(const float& , const float& , const float& );
+  PNPoint(const float * );
+  PNPoint(const PNPoint& );
+  ~PNPoint(void);
+/*
+  pnint			deserialize(const path& );
+  pnint			serialize(const path& );
+*/
+  void			set(const float&, const float&, const float&);
+  void			set(const float*);
+  void			set(const PNPoint&);
+  pnfloat		getDistance(PNPoint&);
+};

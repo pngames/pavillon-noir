@@ -1,0 +1,20 @@
+[function to implement]
+pncommon:
+	* PNImportManager::import(const std::string& path, importtype type, bool copy) : "Faire une copie de l'objet"
+pnimporter:
+	* PNIBone::reinit(pndouble rtime) : "faire le calcul en fonction de rtime comme dans "update(pndouble rtime, const AnimationSet& anims)""
+pnglrenderer:
+	* PNGLRenderer::renderLink(const PNPoint3f& p1, const PNPoint3f& p2, const pnfloat* color, pnuint direction, pnfloat thickness): "draw right arrow"
+	* PNGLRenderer::renderLink(const PNPoint3f& p1, const PNPoint3f& p2, const pnfloat* color, pnuint direction, pnfloat thickness): "draw left arrow"
+
+[big refactor]
+* we generally needs to be more optimised on restricted kind of game which is Pavillon-Noir and not make game engine that support everything (for that there is delta3d, ogre3d, etc.). This means:
+  * get rid of ODE and implements our own very simple "false" physical engine based on something like an x/y map of heights and that does not support bounce, etc.
+    Well... maybe not after all as ODE seems to be very active theses days. But we should use it directly in place of opal wich seems pretty dead. Plus ODE now has c++ api (maybe the reason why opal stopped).
+* look at CMake (http://www.cmake.org/) as root build system. It sounds really good.
+	
+[new possible dependencies]
+* xerces-c++ (http://xerces.apache.org/xerces-c/): to replace libxml2
+* luabind (http://www.rasterbar.com/products/luabind.html): to replace tolua++
+* OpenSceneGraph (http://www.openscenegraph.org/projects/osg): to manage partitionned space etc.
+* Game Networking Engine (http://www.gillius.org/gne/): can be used latter when implementing multiplayer

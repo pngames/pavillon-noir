@@ -1,0 +1,57 @@
+# [$NAME] : 	= request
+#  - 		= infos
+#  #		= comments dev
+
+
+[jv] : ajouter un plan (grille) dans la fenetere opengl
+
+
+[jv] : possibilite de reinitialiser la position/l'orientation d'un objet
+ - un bouton dans les proprietes/dans le panel apres add, qui replace l'objet en (0,0,0)
+
+
+[jv] : bindings clavier (deplacement objet/camera, suppression objets)
+ # deja certains trucs de prevu dans le code de PNGLViewer, a implementer
+ # faire une liste des raccourcis utiles {max}
+
+
+[jv] : positionnement de la camera en 0 0 0 par defaut
+ - dans le cas de l'ajout d'un plan au meme endroit il faut deplacer la camera pour le voir, placer la camera un peu en hauteur ?
+
+
+[jv] : dialogbox "add object" = changer l'ordre des types pour dynamic/static/ground -[OK]- 
+ # passer par des boutons radio ? 
+ # peut-etre definir certaines contraintes/regles pour la GUI, a voir avec les utilisateurs {max}
+
+
+[jv] : possiblite de copier/dupliquer un objet existant 
+ # on pourrait par exemple lorsque l'on veut ajouter un objet prendre par defaut les proprietes de l'objet courant, 
+ # dans ce proposer un bouton "reinistialiser" lors de l'ajout de l'objet {max}
+
+
+[jv] : dialogbox "add object" = changer le rep par defaut pour datafiles/object
+
+
+[jv] : toujours un probleme de decoupage des objets opengl
+ # c'est tres destabilisant de voir des moities d'objets
+ # si j'ai bien compris c'est pas le frustrum mais un probleme de boundingbox {max}
+
+
+[jv] : dialogbox "add object" = apres validation la console reprends le focus
+ # worksforme {max}
+
+
+[jv] : dialogbox "add object" = selectionner par defaut l'objet ajoute -[OK]-
+
+
+[jv] : boite "add object" = la placer par dessus le panneau de proprietes 
+ - ideal = pas de dialogbox mais plutot un tabbook par exemple
+ # on peut peut-etree commencer par positionne la dialog box par dessus le properties panel {max}
+
+
+[max] : definir regles de GUI
+ # on pourrait trouver certaines fontionnalites specifiques dans les menus ("file", "edit", "view", "object", "actions" ...) 
+ # et pas dans les panneaux ca permettrait d'ajouter des fonctionnalites sans allourdir l'interface {max}
+
+
+[max] : proposer la liste de tous les objets presents

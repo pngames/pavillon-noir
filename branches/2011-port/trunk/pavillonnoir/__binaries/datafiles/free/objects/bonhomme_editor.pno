@@ -1,0 +1,13 @@
+<?xml version="1.0"?><!DOCTYPE object SYSTEM "../../object.dtd">
+<object>
+  <model path="bonhomme.pnm" />
+  <listmaterials>
+    <material path="groundLevel1_01 - Default.pnt" />
+    <material path="groundLevel3_Material #37.pnt" />
+  </listmaterials>
+  <skeleton path="bonhomme.pns" />
+  <listanims>
+    <anim path="animation test.pna" />
+  </listanims>
+</object>
+

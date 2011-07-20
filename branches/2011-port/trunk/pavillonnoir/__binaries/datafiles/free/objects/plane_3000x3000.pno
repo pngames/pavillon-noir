@@ -1,0 +1,7 @@
+<?xml version="1.0"?><!DOCTYPE object SYSTEM "../../object.dtd">
+<object>
+  <model path="plane_3000x3000.pnm" />
+  <listmaterials>
+    <material path="plane_3000x3000_02 - Par defaut.pnt" />
+  </listmaterials>
+</object>

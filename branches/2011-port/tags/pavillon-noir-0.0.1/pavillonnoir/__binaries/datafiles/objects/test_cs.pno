@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE model SYSTEM "model-1.0.dtd">
+<model path="test_cs.pnm">
+  <listmaterials>
+    <material path="test_cs_01 - Par défaut.pnt" />
+  </listmaterials>
+</model>

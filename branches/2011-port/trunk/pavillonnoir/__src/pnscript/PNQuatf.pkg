@@ -1,0 +1,47 @@
+class 			PNQuatf : public PNObject
+{
+ 
+  //////////////////////////////////////////////////////////////////////////
+public:
+  float				x;
+  float				y;
+  float				z;
+  float				w;
+public:
+  PNQuatf();
+  PNQuatf(const float* quat);
+  PNQuatf(const PNQuatf& quat);
+  PNQuatf(float r1, float r2, float r3, float r4);
+  PNQuatf(const PNQuatf& q1, PNQuatf& q2, float interp);
+  PNQuatf(const PNVector3f& axis, float phi);
+  ~PNQuatf();
+
+  void					invert();
+  PNQuatf				getInvert();
+
+  void					set(float r1, float r2, float r3, float r4);
+  void					set(const float* quat);
+  void					fromDegrees(const float* angles);
+  void					fromDegrees(float x, float y, float z);
+  void					fromRadians(const float* angles);
+  void					fromRadians(float x, float y, float z);
+
+  void					getDegrees(pnfloat* angles) const;
+  void					getDegrees(pnfloat& x, pnfloat& y, pnfloat& z) const;
+  void					getRadians(pnfloat* angles) const;
+  void					getRadians(pnfloat& x, pnfloat& y, pnfloat& z) const;
+
+  void					fromAxisDegrees(const PNVector3f& axis, float phi);
+  void					fromAxisRadians(const PNVector3f& axis, float phi);
+  
+  void					slerp(const PNQuatf& q1, PNQuatf& q2, float interp);
+
+  //////////////////////////////////////////////////////////////////////////
+
+  //friend PNAPI PNPoint3f	operator*(const PNQuatf& p, const PNPoint3f& vec);
+  //friend PNAPI PNQuatf	operator*(const PNQuatf& p, const PNQuatf& quat);
+
+  //////////////////////////////////////////////////////////////////////////
+  
+  //PNQuatf&				operator=(const float* q);
+};

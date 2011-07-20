@@ -1,0 +1,10 @@
+0.0.1 (2004/04/03):
+* [thomas] modif : material importer now use ifstream in place of fopen, fread...
+0.0.1 (2005/03/23):
+* [thomas] new : skeletor exported
+0.0.1 (2005/03/20):
+* [thomas] new : materials exported and configurable
+0.0.1 (2005/03/10):
+* [thomas] finish : 3DModel export optimized for buffer render finished
+0.0.1 (2005/03/09):
+* [thomas] new : add CHANGELOG.txt

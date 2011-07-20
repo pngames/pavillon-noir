@@ -1,0 +1,16 @@
+#! /usr/bin/env python
+
+Import('env')
+
+obj = env.genobj('shlib', env)
+obj.src = """PNEExporterPlugDesc.cpp
+PNEOctreeCompiler.cpp
+pndlmain.cpp
+""".split()
+obj.target = 'pnexporter' + env['suffix'] + '.pnp'
+obj.instdir = env['install_prefix'] + env['install_path'] + '/linux/plugins' + env['debug_path']
+obj.libpaths = [env.Dir('#./build/pncommon/').abspath]
+obj.libs = ['pncommon'+env['suffix']]
+obj.cxxflags = ' '.join([env['FastDelegate_FLAGS'],'-I'+env.Dir('#./__src/pncommon/').abspath])
+obj.linkflags = ' '.join([env['Boost_LDFLAGS'],'-lpncommon'+env['suffix']])
+obj.execute()

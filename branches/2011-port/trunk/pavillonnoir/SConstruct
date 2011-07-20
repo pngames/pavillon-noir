@@ -1,0 +1,122 @@
+#! /usr/bin/env python
+
+"""
+help       -> scons -h
+compile    -> scons
+clean      -> scons -c
+install    -> scons install
+uninstall  -> scons -c install
+configure  -> scons configure prefix=/tmp/ita debug=full extraincludes=/usr/local/include:/tmp/include prefix=/usr/local
+
+Run from a subdirectory -> scons -u
+The variables are saved automatically after the first run
+"""
+
+###################################################################
+# LOAD THE ENVIRONMENT AND SET UP THE TOOLS
+###################################################################
+
+import os
+
+# custom functions
+
+def find_path(path):
+	path_list = path.split('/')
+	path_list.pop()
+	return '/'.join(path_list)
+
+## Load the builders in config
+env = Environment( tools="""
+default
+generic
+fastdelegate
+boost
+libxml2
+fox
+sdl
+devil
+glew
+cegui
+lua50
+tolua++
+opal
+openal
+ogg
+vorbisfile
+efence
+""".split(), toolpath=['./','./bksys'])
+env['package_version'] = "0.0.2"
+env['package_name'] = "pavillon-noir"
+
+if os.environ.has_key('CXX'):
+	env['CXX'] = os.environ['CXX']
+
+if os.environ.has_key('CC'):
+	env['CC'] = os.environ['CC']
+
+if env.has_key('PREFIX'):
+	env['install_prefix'] = env['PREFIX']
+else:
+	env['install_prefix'] = '/usr/local/games'
+env['install_path'] = '/'+env['package_name']+'/__binaries'
+
+if env['DEBUG'] == 1:
+	env['suffix'] = '-dbg'
+	env['debug_path'] = '/Debug'
+else:
+	env['suffix'] = ''
+	env['debug_path'] = ''
+
+###################################################################
+# SCRIPTS FOR BUILDING THE TARGETS
+###################################################################
+
+## target processing is done in the subdirectory
+#env.subdirs('src')
+
+## builddir/srcdir example
+SetOption('duplicate', 'soft-copy')
+env.BuildDir('#build/', '#__src/', 0)
+env.subdirs('build')
+
+if env['_INSTALL'] == 1:
+	env.bksys_install(env['install_prefix']+'/'+env['package_name']+'/__binaries/linux','#./__library/linux/lib/opal/libopal-ode.so')
+	install_abspath = '"'+env['install_prefix']+'/'+env['package_name']+'/__binaries/linux"'
+	exec_file = open(env.Dir('#./build').abspath+'/'+env['package_name'], 'w')
+	editor_file = open(env.Dir('#./build').abspath+'/'+env['package_name']+'-editor', 'w')
+
+	exec_file.write("""#!/bin/sh
+# Needed to make symlinks/shortcuts work.
+# the binaries must run with correct working directory
+"""+'cd '+install_abspath+"""
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"""+install_abspath+"""
+"""+'exec ./pncore'+env['suffix']+' "$@"\n')
+
+	editor_file.write("""#!/bin/sh
+# Needed to make symlinks/shortcuts work.
+# the binaries must run with correct working directory
+"""+'cd '+install_abspath+"""
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"""+install_abspath+"""
+"""+'exec ./pneditor'+env['suffix']+' "$@"\n')
+
+	exec_file.close()
+	editor_file.close()
+
+	os.chmod(env.Dir('#./build').abspath+'/'+env['package_name'], 0755)
+	os.chmod(env.Dir('#./build').abspath+'/'+env['package_name']+'-editor', 0755)
+
+	env.bksys_install(env['install_prefix']+'/'+env['package_name']+'/',[env.Dir('#./build').abspath+'/'+env['package_name']])
+	env.bksys_install(env['install_prefix']+'/'+env['package_name']+'/',[env.Dir('#./build').abspath+'/'+env['package_name']+'-editor'])
+	
+	datafiles = os.popen("find __binaries/datafiles -type f | grep -v '.svn'").read().split('\n')
+	for i in datafiles:
+		if len(i) < 1:
+			datafiles.remove(i)
+	for i in datafiles:
+		env.bksys_install(env['install_prefix']+'/'+env['package_name']+'/'+find_path(i),[i])
+
+###################################################################
+# CONVENIENCE FUNCTIONS TO EMULATE 'make dist' and 'make distclean'
+###################################################################
+
+env.dist(env['package_name'], env['package_version'])
