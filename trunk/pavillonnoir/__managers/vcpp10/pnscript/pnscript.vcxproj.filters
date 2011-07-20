@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+    <Filter Include="game_wrapper">
+      <UniqueIdentifier>{ea430c6f-30f3-4b54-9ffb-14261302fb55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaGameDef">
+      <UniqueIdentifier>{ac4d075d-e3ee-4fed-ad5a-5a51996eb154}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\__src\pnscript\pndlmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnscript\PNLuaGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnscript\PNLuaGameMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnscript\PNLuaGameUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnscript\PNLuaVm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnscript\PNScriptPlugDesc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\__src\pnscript\pnbind.cpp">
+      <Filter>game_wrapper</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\__src\pnscript\PNLuaGame.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnscript\PNLuaGameMap.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnscript\PNLuaGameUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnscript\PNLuaVm.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnscript\PNScriptPlugDesc.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\__src\pnscript\pnbind.h">
+      <Filter>game_wrapper</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="pnscript.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\__src\pnscript\includes.pkg">
+      <Filter>game_wrapper</Filter>
+    </None>
+    <None Include="..\..\..\__src\pnscript\PN3DCamera.pkg">
+      <Filter>game_wrapper</Filter>
+    </None>
+    <None Include="..\..\..\__src\pnscript\PN3DObject.pkg">
+      <Filter>game_wrapper</Filter>
+    </None>
+    <None Include="..\..\..\__src\pnscript\PN3DSkeletonObject.pkg">
+      <Filter>game_wrapper</Filter>
+    </None>
+    <None Include="..\..\..\__src\pnscript\PNCharacter.pkg">
+      <Filter>game_wrapper</Filter>
+    </None>
+    <None Include="..\..\..\__src\pnscript\PNGameMap.pkg">
+      <Filter>game_wrapper</Filter>
+    </None>
+    <None Include="..\..\..\__src\pnscript\PNLuaGameUtils.pkg">
+      <Filter>game_wrapper</Filter>
+    </None>
+    <None Include="..\..\..\__src\pnscript\PNNormal3f.pkg">
+      <Filter>game_wrapper</Filter>
+    </None>
+    <None Include="..\..\..\__src\pnscript\PNPathFinding.pkg">
+      <Filter>game_wrapper</Filter>
+    </None>
+    <None Include="..\..\..\__src\pnscript\PNPoint3f.pkg">
+      <Filter>game_wrapper</Filter>
+    </None>
+    <None Include="..\..\..\__src\pnscript\PNQuatf.pkg">
+      <Filter>game_wrapper</Filter>
+    </None>
+    <None Include="..\..\..\__src\pnscript\PNVector3f.pkg">
+      <Filter>game_wrapper</Filter>
+    </None>
+    <None Include="..\..\..\__src\pnscript\PNWayPoint.pkg">
+      <Filter>game_wrapper</Filter>
+    </None>
+    <None Include="..\..\..\__src\pnscript\test.lua">
+      <Filter>game_wrapper</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\gameMap.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\init.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PN3DCameraClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PN3DObjectClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PN3DSkeletonObjectClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNActionTriggerClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNAICharacterClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNAINavyClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNAIPirateClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNCharacterClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\free\datafiles\gamedef\PNDieClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNGetItemTriggerClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNItemClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNModifier.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNModifierClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNPlayerClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNRenderCam.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNSaberWeaponClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNTimerClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNWeaponClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\PNWeaponH2HClass.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+    <None Include="..\..\..\__binaries\datafiles\free\gamedef\utilities.lua">
+      <Filter>LuaGameDef</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="..\..\..\__src\pnscript\pnbind.pkg">
+      <Filter>game_wrapper</Filter>
+    </CustomBuildStep>
+  </ItemGroup>
+</Project>

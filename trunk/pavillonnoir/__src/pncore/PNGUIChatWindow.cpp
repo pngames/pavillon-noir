@@ -54,9 +54,12 @@ namespace PN
   {
 	_mainSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout(PNResourcesManager::getInstance()->findPath(PNRT_layout, "PNChatWindow.layout")); 
 	_listBox = (CEGUI::Listbox*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Listbox");	
-	_textQuestion = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Text");
-	_textName = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Name");
-	_textQuestion->setFormatting(CEGUI::StaticText::WordWrapLeftAligned ,CEGUI::StaticText::TopAligned); 
+	//_textQuestion = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Text");
+	//_textName = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Name");
+	//_textQuestion->setFormatting(CEGUI::StaticText::WordWrapLeftAligned ,CEGUI::StaticText::TopAligned); 
+	_textQuestion = (CEGUI::FalagardStaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Text");
+	_textName = (CEGUI::FalagardStaticText*)CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/Name");
+	_textQuestion->setFormatting(CEGUI::FalagardStaticText::WordWrapLeftAligned ,CEGUI::FalagardStaticText::TopAligned); 
 	_listBox->subscribeEvent(CEGUI::Listbox::EventSelectionChanged, CEGUI::Event::Subscriber(&PNGUIChatWindow::handleListBox, this));
 	
 	CEGUI::WindowManager::getSingleton().getWindow((CEGUI::utf8*)"PNChatWindow/ButtonValid")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&PNGUIChatWindow::handleValid, this));

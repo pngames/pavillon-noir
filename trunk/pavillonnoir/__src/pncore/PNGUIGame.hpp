@@ -65,9 +65,12 @@ namespace PN{
 	std::string		_label;
 	float			_lifeValue; 
 
-	CEGUI::StaticImage* _statImg;
-	CEGUI::StaticImage* _miniMapPoint;
-	CEGUI::StaticImage* _miniMap;
+	//CEGUI::StaticImage* _statImg;
+	//CEGUI::StaticImage* _miniMapPoint;
+	//CEGUI::StaticImage* _miniMap;
+	CEGUI::FalagardStaticImage* _statImg;
+	CEGUI::FalagardStaticImage* _miniMapPoint;
+	CEGUI::FalagardStaticImage* _miniMap;
 	typedef std::map<int, std::string> MapLife;
 	MapLife _mapLife;
 

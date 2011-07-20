@@ -58,7 +58,8 @@ namespace PN
   private:
 	MsgBoxCallback			fonctionCallback;
 	CEGUI::FrameWindow*	_frameWin;
-	CEGUI::StaticText*	_msgTxt;
+	//CEGUI::StaticText*	_msgTxt;
+	CEGUI::FalagardStaticText*	_msgTxt;
 	CEGUI::Window*		_parentWin;
 	CEGUI::Window*		_backWin;
 	CEGUI::Font*		_defaultFont;

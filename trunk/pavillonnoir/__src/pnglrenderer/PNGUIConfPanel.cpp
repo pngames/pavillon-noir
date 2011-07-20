@@ -50,7 +50,7 @@ PNGUIConfPanel::PNGUIConfPanel()
   CEGUI::System::getSingleton().getGUISheet()->addChildWindow(_pnConfPanel);
   _pnConfPanel->hide();
   _tabControl = (CEGUI::TabControl*)CEGUI::WindowManager::getSingleton().getWindow("PNConfPanel/tabControl");
-  _tabControl->setTabTextPadding(0.00f);
+  _tabControl->setTabTextPadding(CEGUI::UDim(0.00f, 0));
 
   PNEventManager::getInstance()->addCallback(PN_EVENT_CONFPANEL, EventCallback(this, &PNGUIConfPanel::confPanelVisibility));
 }
@@ -112,12 +112,16 @@ bool  PNGUIConfPanel::mainEventHandler(const CEGUI::EventArgs& e)
 	{
 	  obj->fromString(tmpWin->getText().c_str());
 	  obj->getConfigurableObject()->update(obj);
-	  tmpEB->setNormalTextColour(CEGUI::colour(RGBA(0,0,0,255)));
+	  //TODO MBO OBSOLETE METHOD, FIND AN EQUIVALENT in CEGUI 0.7.5...
+	  //tmpEB->setNormalTextColour(CEGUI::colour(RGBA(0,0,0,255)));
+	  tmpEB->setProperty("TextColours", "tl:00000000 tr:00000000 bl:00000000 br:FFFF0000");
+
 	}
 	else if (tmpEB->isTextValid() == true)
 	{
-
-	  tmpEB->setNormalTextColour(CEGUI::colour(RGBA(255,0,0,255)));
+	   //TODO MBO OBSOLETE METHOD, FIND AN EQUIVALENT in CEGUI 0.7.5...
+	  //tmpEB->setNormalTextColour(CEGUI::colour(RGBA(255,0,0,255)));
+	  tmpEB->setProperty("TextColours", "tl:FFFF0000 tr:00000000 bl:00000000 br:FFFF0000");
 	}
   }
   return true;
@@ -229,7 +233,7 @@ void  PNGUIConfPanel::addItem(CEGUI::Window* curTab,  PNConfigurableParameter* c
 {
   CEGUI::Editbox* eb = NULL;
   CEGUI::Checkbox* cb = NULL;
-  CEGUI::StaticText* st = NULL;
+  CEGUI::Window* st = NULL;
 
   float incVal = 0.05f * idx;
 
@@ -244,8 +248,10 @@ void  PNGUIConfPanel::addItem(CEGUI::Window* curTab,  PNConfigurableParameter* c
   {
 	tmpName = isWinPresent(CBname, "_");
 	cb =  (CEGUI::Checkbox*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"WindowsLook/Checkbox", tmpName.c_str());
-	cb->setSize(CEGUI::Size(0.30f, 0.05f));
-	cb->setPosition(CEGUI::Point(0.10f, incVal));
+	//cb->setSize(CEGUI::Size(0.30f, 0.05f));
+	cb->setSize(CEGUI::UVector2(CEGUI::UDim(0.30f, 0), CEGUI::UDim(0.05f, 0)));
+	//cb->setPosition(CEGUI::Point(0.10f, incVal));
+	cb->setPosition(CEGUI::UVector2(CEGUI::UDim(0.10f, 0), CEGUI::UDim(incVal, 0)));
 	cb->subscribeEvent(CEGUI::Checkbox::EventCheckStateChanged, CEGUI::Event::Subscriber(&PNGUIConfPanel::mainEventHandler, this));
 	curTab->addChildWindow(cb);
 	_confPanelMap[tmpName]  = current_param;
@@ -254,8 +260,10 @@ void  PNGUIConfPanel::addItem(CEGUI::Window* curTab,  PNConfigurableParameter* c
   {
 	tmpName = isWinPresent(EBname, "_");
 	eb =  (CEGUI::Editbox*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"Vanilla/Editbox", tmpName.c_str());
-	eb->setSize(CEGUI::Size(0.30f, 0.05f));
-	eb->setPosition(CEGUI::Point(0.0f, incVal));
+	//eb->setSize(CEGUI::Size(0.30f, 0.05f));
+	eb->setSize(CEGUI::UVector2(CEGUI::UDim(0.30f, 0), CEGUI::UDim(0.05f, 0)));
+	//eb->setPosition(CEGUI::Point(0.0f, incVal));
+	eb->setPosition(CEGUI::UVector2(CEGUI::UDim(0.10f, 0), CEGUI::UDim(incVal, 0)));
 	eb->setFont("VeraSe-8");
 	eb->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(&PNGUIConfPanel::mainEventHandler, this));
 
@@ -277,9 +285,12 @@ void  PNGUIConfPanel::addItem(CEGUI::Window* curTab,  PNConfigurableParameter* c
   update(tmpName,current_param);
 
   tmpName = isWinPresent(STname, "_");
-  st = (CEGUI::StaticText*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"Vanilla/StaticText", tmpName.c_str());
-  st->setSize(CEGUI::Size(0.70f, 0.05f));
-  st->setPosition(CEGUI::Point(0.30f, incVal));
+  //st = (CEGUI::FalagardStaticText*)CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"Vanilla/StaticText", tmpName.c_str());
+  st = CEGUI::WindowManager::getSingleton().createWindow((CEGUI::utf8*)"Vanilla/StaticText", tmpName.c_str());
+  //st->setSize(CEGUI::Size(0.70f, 0.05f));
+  st->setSize(CEGUI::UVector2(CEGUI::UDim(0.7f, 0), CEGUI::UDim(0.05f, 0)));
+  //st->setPosition(CEGUI::Point(0.30f, incVal));
+  st->setPosition(CEGUI::UVector2(CEGUI::UDim(0.30f, 0), CEGUI::UDim(incVal, 0)));
   st->setFont("VeraSe-8");
   st->setText(current_param->getLabel().c_str());
   std::string tooltip = current_param->getAltText() + getStringByType(current_param);
@@ -304,13 +315,17 @@ CEGUI::Window*  PNGUIConfPanel::addTab(std::string tabName)
   // on doit augmenter la largeur
   if (_nbTAB > 5 && _nbTAB < 10)
   {
-	_tabControl->setPosition(CEGUI::Point(0.50f, 0.01f));
-	_tabControl->setSize(CEGUI::Size(0.50f, 0.99f));
+	//_tabControl->setPosition(CEGUI::Point(0.50f, 0.01f));
+	//_tabControl->setSize(CEGUI::Size(0.50f, 0.99f));
+	_tabControl->setPosition(CEGUI::UVector2(CEGUI::UDim(0.50f, 0), CEGUI::UDim(0.01f, 0)));
+	_tabControl->setSize(CEGUI::UVector2(CEGUI::UDim(0.50f, 0), CEGUI::UDim(0.99f, 0)));
   }
   if (_nbTAB >= 10)
   {
-	_tabControl->setPosition(CEGUI::Point(0.01f, 0.01f));
-	_tabControl->setSize(CEGUI::Size(0.98f, 0.99f));
+	//_tabControl->setPosition(CEGUI::Point(0.01f, 0.01f));
+	//_tabControl->setSize(CEGUI::Size(0.98f, 0.99f));
+	_tabControl->setPosition(CEGUI::UVector2(CEGUI::UDim(0.01f, 0), CEGUI::UDim(0.01f, 0)));
+	_tabControl->setSize(CEGUI::UVector2(CEGUI::UDim(0.98f, 0), CEGUI::UDim(0.99f, 0)));
   }
   return win;
 }

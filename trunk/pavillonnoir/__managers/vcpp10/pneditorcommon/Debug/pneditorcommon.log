@@ -1,0 +1,109 @@
+﻿La génération a démarré 15.07.2011 13:27:21.
+     1>Projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pneditorcommon\pneditorcommon.vcxproj" sur le nœud 3 (rebuild cible(s)).
+     1>_PrepareForClean:
+         Suppression du fichier "Debug\pneditorcommon.lastbuildstate".
+       InitializeBuildStatus:
+         Création de "Debug\pneditorcommon.unsuccessfulbuild", car "AlwaysCreate" a été spécifié.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../../__library/win32/include/fox /I../../../__library/win32/include /I../../../__src/pncommon /I../../../__library/common /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PNEDITORCOMMON_EXPORTS /D FOXDLL /D BOOST_ALL_DYN_LINK /D _WINDLL /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\__src\pneditorcommon\pneditorcommon.cpp ..\..\..\__src\pneditorcommon\PNGLContext.cpp ..\..\..\__src\pneditorcommon\PNPropertiesGrid.cpp ..\..\..\__src\pneditorcommon\PNPropertiesPopup.cpp ..\..\..\__src\pneditorcommon\PNFXDefaultParameter.cpp ..\..\..\__src\pneditorcommon\PNFXSeparatorParameter.cpp ..\..\..\__src\pneditorcommon\PNFXAnimListParameter.cpp ..\..\..\__src\pneditorcommon\PNFXMaterialListParameter.cpp ..\..\..\__src\pneditorcommon\PNFXScriptListParameter.cpp ..\..\..\__src\pneditorcommon\PNFXStringListParameter.cpp ..\..\..\__src\pneditorcommon\PNFXVPPNObjectParameter.cpp ..\..\..\__src\pneditorcommon\PNFXListParameter.cpp ..\..\..\__src\pneditorcommon\PNFXCheckButtonParameter.cpp ..\..\..\__src\pneditorcommon\PNFXDialXYZParameter.cpp ..\..\..\__src\pneditorcommon\PNFXDirParameter.cpp ..\..\..\__src\pneditorcommon\PNFXEventBoxParameter.cpp ..\..\..\__src\pneditorcommon\PNFXFileParameter.cpp ..\..\..\__src\pneditorcommon\PNFXIntParameter.cpp ..\..\..\__src\pneditorcommon\PNFXLinksParameter.cpp ..\..\..\__src\pneditorcommon\PNFXRealParameter.cpp ..\..\..\__src\pneditorcommon\PNFXStringParameter.cpp ..\..\..\__src\pneditorcommon\PNFXUIntParameter.cpp ..\..\..\__src\pneditorcommon\PNFXTextFieldParameter.cpp -DBOOST_FILESYSTEM_VERSION=2 
+         PNFXTextFieldParameter.cpp
+         PNFXUIntParameter.cpp
+         PNFXStringParameter.cpp
+         PNFXRealParameter.cpp
+         PNFXLinksParameter.cpp
+         PNFXIntParameter.cpp
+         PNFXFileParameter.cpp
+         PNFXEventBoxParameter.cpp
+         PNFXDirParameter.cpp
+         PNFXDialXYZParameter.cpp
+         PNFXCheckButtonParameter.cpp
+         PNFXListParameter.cpp
+         PNFXVPPNObjectParameter.cpp
+         PNFXStringListParameter.cpp
+         PNFXScriptListParameter.cpp
+         PNFXMaterialListParameter.cpp
+         PNFXAnimListParameter.cpp
+         PNFXSeparatorParameter.cpp
+         PNFXDefaultParameter.cpp
+         PNPropertiesPopup.cpp
+         Generating Code...
+         Compiling...
+         PNPropertiesGrid.cpp
+         PNGLContext.cpp
+         pneditorcommon.cpp
+         Generating Code...
+       ResourceCompile:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /l"0x0409" /nologo /fo"Debug\pneditorcommon.res" pneditorcommon.rc 
+       ManifestResourceCompile:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\pneditorcommon.dll.embed.manifest.res" Debug\pneditorcommon_manifest.rc 
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pneditorcommon.dll) ne correspond pas à la valeur de la propriété OutputFile (D:\Pavillon noir\Code\trunk\pavillonnoir\__binaries\win32\pneditorcommon-dbg.dll) de Linker. Cela peut entraîner une génération incorrecte de votre projet. Pour corriger ce problème, vérifiez que les valeurs des propriétés $(OutDir), $(TargetName) et $(TargetExt) correspondent à la valeur spécifiée dans %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(992,5): warning MSB8012: TargetName(pneditorcommon) ne correspond pas à la valeur de la propriété OutputFile (pneditorcommon-dbg) de Linker. Cela peut entraîner une génération incorrecte de votre projet. Pour corriger ce problème, vérifiez que les valeurs des propriétés $(OutDir), $(TargetName) et $(TargetExt) correspondent à la valeur spécifiée dans %(Link.OutputFile).
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../../../__binaries/win32/pneditorcommon-dbg.dll" /INCREMENTAL /NOLOGO /LIBPATH:..\..\..\__library\win32\lib opengl32.lib glu32.lib comctl32.lib wsock32.lib ws2_32.lib mpr.lib "FOXDLLD-1.6.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\pneditorcommon.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pneditorcommon.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Debug\pneditorcommon.lib" /MACHINE:X86 /DLL Debug\pneditorcommon.res
+         Debug\pneditorcommon.dll.embed.manifest.res
+         Debug\pneditorcommon.obj
+         Debug\PNGLContext.obj
+         Debug\PNPropertiesGrid.obj
+         Debug\PNPropertiesPopup.obj
+         Debug\PNFXDefaultParameter.obj
+         Debug\PNFXSeparatorParameter.obj
+         Debug\PNFXAnimListParameter.obj
+         Debug\PNFXMaterialListParameter.obj
+         Debug\PNFXScriptListParameter.obj
+         Debug\PNFXStringListParameter.obj
+         Debug\PNFXVPPNObjectParameter.obj
+         Debug\PNFXListParameter.obj
+         Debug\PNFXCheckButtonParameter.obj
+         Debug\PNFXDialXYZParameter.obj
+         Debug\PNFXDirParameter.obj
+         Debug\PNFXEventBoxParameter.obj
+         Debug\PNFXFileParameter.obj
+         Debug\PNFXIntParameter.obj
+         Debug\PNFXLinksParameter.obj
+         Debug\PNFXRealParameter.obj
+         Debug\PNFXStringParameter.obj
+         Debug\PNFXUIntParameter.obj
+         Debug\PNFXTextFieldParameter.obj
+         "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pncommon\Debug\pncommon.lib"
+            Creating library Debug\pneditorcommon.lib and object Debug\pneditorcommon.exp
+       Manifest:
+         Suppression du fichier "Debug\pneditorcommon.dll.embed.manifest".
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\pneditorcommon.dll.embed.manifest" /manifest Debug\pneditorcommon.dll.intermediate.manifest
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\pneditorcommon.dll.embed.manifest.res" Debug\pneditorcommon_manifest.rc 
+       LinkEmbedManifest:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../../../__binaries/win32/pneditorcommon-dbg.dll" /INCREMENTAL /NOLOGO /LIBPATH:..\..\..\__library\win32\lib opengl32.lib glu32.lib comctl32.lib wsock32.lib ws2_32.lib mpr.lib "FOXDLLD-1.6.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\pneditorcommon.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pneditorcommon.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Debug\pneditorcommon.lib" /MACHINE:X86 /DLL Debug\pneditorcommon.res
+         Debug\pneditorcommon.dll.embed.manifest.res
+         Debug\pneditorcommon.obj
+         Debug\PNGLContext.obj
+         Debug\PNPropertiesGrid.obj
+         Debug\PNPropertiesPopup.obj
+         Debug\PNFXDefaultParameter.obj
+         Debug\PNFXSeparatorParameter.obj
+         Debug\PNFXAnimListParameter.obj
+         Debug\PNFXMaterialListParameter.obj
+         Debug\PNFXScriptListParameter.obj
+         Debug\PNFXStringListParameter.obj
+         Debug\PNFXVPPNObjectParameter.obj
+         Debug\PNFXListParameter.obj
+         Debug\PNFXCheckButtonParameter.obj
+         Debug\PNFXDialXYZParameter.obj
+         Debug\PNFXDirParameter.obj
+         Debug\PNFXEventBoxParameter.obj
+         Debug\PNFXFileParameter.obj
+         Debug\PNFXIntParameter.obj
+         Debug\PNFXLinksParameter.obj
+         Debug\PNFXRealParameter.obj
+         Debug\PNFXStringParameter.obj
+         Debug\PNFXUIntParameter.obj
+         Debug\PNFXTextFieldParameter.obj
+         "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pncommon\Debug\pncommon.lib"
+            Creating library Debug\pneditorcommon.lib and object Debug\pneditorcommon.exp
+         pneditorcommon.vcxproj -> D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\Debug\pneditorcommon.dll
+       FinalizeBuildStatus:
+         Suppression du fichier "Debug\pneditorcommon.unsuccessfulbuild".
+         Mise à jour de l'horodatage "Debug\pneditorcommon.lastbuildstate".
+     1>Génération du projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pneditorcommon\pneditorcommon.vcxproj" terminée (rebuild cible(s)).
+
+La génération a réussi.
+
+Temps écoulé 00:00:58.41

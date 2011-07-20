@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{558963C9-AFFB-4535-87A8-4B421E3E68FB}</ProjectGuid>
+    <RootNamespace>pneditorcommon</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../../__library/win32/include/fox;../../../__library/win32/include;../../../__src/pncommon;../../../__library/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PNEDITORCOMMON_EXPORTS;FOXDLL;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalOptions>-DBOOST_FILESYSTEM_VERSION=2 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;comctl32.lib;wsock32.lib;ws2_32.lib;mpr.lib;FOXDLLD-1.6.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../../../__binaries/win32/pneditorcommon-dbg.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\__library\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../../__library/win32/include/fox;../../../__library/win32/include;../../../__src/pncommon;../../../__library/common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PNEDITORCOMMON_EXPORTS;FOXDLL;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>-DBOOST_FILESYSTEM_VERSION=2 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;comctl32.lib;wsock32.lib;ws2_32.lib;mpr.lib;FOXDLL-1.6.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>../../../__binaries/win32/pneditorcommon.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\__library\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\__src\pneditorcommon\pneditorcommon.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNGLContext.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNPropertiesGrid.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNPropertiesPopup.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXDefaultParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXSeparatorParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXAnimListParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXMaterialListParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXScriptListParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXStringListParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXVPPNObjectParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXListParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXCheckButtonParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXDialXYZParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXDirParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXEventBoxParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXFileParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXIntParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXLinksParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXRealParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXStringParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXUIntParameter.cpp" />
+    <ClCompile Include="..\..\..\__src\pneditorcommon\PNFXTextFieldParameter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\__src\pneditorcommon\pneditorcommon.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\pneditorcommon.h" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNGLContext.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNPropertiesGrid.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNPropertiesPopup.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXDefaultParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXSeparatorParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXAnimListParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXMaterialListParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXScriptListParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXStringListParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXVPPNObjectParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXListParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXCheckButtonParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXDialXYZParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXDirParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXEventBoxParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXFileParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXIntParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXLinksParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXRealParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXStringParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXUIntParameter.hpp" />
+    <ClInclude Include="..\..\..\__src\pneditorcommon\PNFXTextFieldParameter.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="pneditorcommon.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\pncommon\pncommon.vcxproj">
+      <Project>{8fa92b12-d5d9-413b-8abc-9bfded44ede6}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -120,6 +120,10 @@ namespace PN
 	return true;
   }
 
+  float PNGUIWin::max(float a, float b) { 
+     return (a < b) ? b : a; 
+  } 
+
   void PNGUIWin::update(pnEventType type, PNObject* source, PNEventData* data)
   {
 

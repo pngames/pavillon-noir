@@ -1,0 +1,19 @@
+﻿La génération a démarré 07.07.2011 15:34:19.
+     1>Projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\test_pncommon\test_pncommon.vcxproj" sur le nœud 5 (build cible(s)).
+     1>InitializeBuildStatus:
+         Création de "Debug\test_pncommon.unsuccessfulbuild", car "AlwaysCreate" a été spécifié.
+       ClCompile:
+         Toutes les sorties sont à jour.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../../__src/pncommon /I../../../__library/common/ /I../../../__library/win32/include/ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D BOOST_ALL_DYN_LINK /D BOOST_THREAD_USE_DLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\__src\test_pncommon\main.cpp ..\..\..\__src\test_pncommon\test_events.cpp
+         test_events.cpp
+     1>d:\pavillon noir\code\trunk\pavillonnoir\__library\win32\include\boost\thread\detail\config.hpp(31): warning C4005: 'BOOST_THREAD_USE_DLL' : macro redefinition
+                 command-line arguments :  see previous definition of 'BOOST_THREAD_USE_DLL'
+     1>d:\pavillon noir\code\trunk\pavillonnoir\__library\win32\include\boost\config\auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         main.cpp
+     1>d:\pavillon noir\code\trunk\pavillonnoir\__library\win32\include\boost\config\auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         Generating Code...
+     1>Génération du projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\test_pncommon\test_pncommon.vcxproj" terminée (build cible(s)) -- ÉCHEC.
+
+ÉCHEC de la build.
+
+Temps écoulé 00:00:03.40

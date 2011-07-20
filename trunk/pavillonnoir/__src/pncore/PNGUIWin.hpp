@@ -44,9 +44,11 @@ public:
 protected:
 private:
   CEGUI::Window*	_pnWin;
-  CEGUI::StaticImage* _winImage;
+  //CEGUI::StaticImage* _winImage;
+  CEGUI::FalagardStaticImage* _winImage;
   CEGUI::Window* _winWnd;
-  CEGUI::StaticText* _pnStatText;
+  //CEGUI::StaticText* _pnStatText;
+  CEGUI::FalagardStaticText* _pnStatText;
   static PNGUIWin* _instance;
   float	_fadeTimer;
   enum 
@@ -69,7 +71,7 @@ private:
   void animFinished();
   bool eventKeyPressedHandler(const CEGUI::EventArgs& e);
   void	update(pnEventType type, PNObject* source, PNEventData* data);
-
+  float max(float a, float b);
 
   /*/////////////////////////////////////////////////////////////////////////////
   /                           Constructors / Destructor                         /

@@ -466,9 +466,14 @@ PNGUIGame::PNGUIGame()
   _mapLife[5] = "FioleImages/fiole_COMA";
   _mapLife[6] = "FioleImages/fiole_LETHAL";
 
- _statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/fiole");
+ /*_statImg = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/fiole");
  _miniMap = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/MiniMap");
  _miniMapPoint = (CEGUI::StaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/MiniMapPos");
+ */
+
+ _statImg = (CEGUI::FalagardStaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/fiole");
+ _miniMap = (CEGUI::FalagardStaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/MiniMap");
+ _miniMapPoint = (CEGUI::FalagardStaticImage*)CEGUI::WindowManager::getSingleton().getWindow("PNGUIGame/MiniMapPos");
 
   PNGUIChatWindow::getInstance();
   PNGUIDeath::getInstance();

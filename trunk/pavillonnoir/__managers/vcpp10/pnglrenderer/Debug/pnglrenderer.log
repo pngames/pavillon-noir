@@ -1,0 +1,43 @@
+﻿La génération a démarré 07.07.2011 15:34:23.
+     1>Projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pnglrenderer\pnglrenderer.vcxproj" sur le nœud 3 (build cible(s)).
+     1>InitializeBuildStatus:
+         Création de "Debug\pnglrenderer.unsuccessfulbuild", car "AlwaysCreate" a été spécifié.
+       ClCompile:
+         Toutes les sorties sont à jour.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../../__library/win32/include/CEGUI /I../../../__library/win32/include/sdl /I../../../__library/win32/include /I../../../__library/common/ /I../../../__src/pncommon /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PNGLRENDERER_EXPORTS /D BOOST_ALL_DYN_LINK /D _WINDLL /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\__src\pnglrenderer\pndlmain.cpp ..\..\..\__src\pnglrenderer\PNGLMaterial.cpp ..\..\..\__src\pnglrenderer\PNGLRenderer.cpp ..\..\..\__src\pnglrenderer\PNGLRendererCamera.cpp ..\..\..\__src\pnglrenderer\PNGLRendererObject.cpp ..\..\..\__src\pnglrenderer\PNGLRendererPlugDesc.cpp ..\..\..\__src\pnglrenderer\PNGLSceneGraph.cpp ..\..\..\__src\pnglrenderer\PNGLSkyBox.cpp ..\..\..\__src\pnglrenderer\PNGLTexture.cpp ..\..\..\__src\pnglrenderer\PNGLTextureManager.cpp ..\..\..\__src\pnglrenderer\PNGLVideo.cpp ..\..\..\__src\pnglrenderer\PNGUIConfPanel.cpp ..\..\..\__src\pnglrenderer\PNGUIConsole.cpp ..\..\..\__src\pnglrenderer\PNInfoPanel.cpp ..\..\..\__src\pnglrenderer\PNSDLEvent.cpp -DBOOST_FILESYSTEM_VERSION=2 
+         PNSDLEvent.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNInfoPanel.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNGUIConsole.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNGUIConfPanel.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNGLVideo.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNGLTextureManager.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNGLTexture.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNGLSkyBox.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNGLSceneGraph.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNGLRendererPlugDesc.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNGLRendererObject.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNGLRendererCamera.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNGLRenderer.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         PNGLMaterial.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         pndlmain.cpp
+     1>D:\Pavillon noir\Code\trunk\pavillonnoir\__library\win32\include\boost/config/auto_link.hpp(349): fatal error C1189: #error :  "Mixing a dll boost library with a static runtime is a really bad idea..."
+         Generating Code...
+     1>Génération du projet "D:\Pavillon noir\Code\trunk\pavillonnoir\__managers\vcpp10\pnglrenderer\pnglrenderer.vcxproj" terminée (build cible(s)) -- ÉCHEC.
+
+ÉCHEC de la build.
+
+Temps écoulé 00:00:12.07

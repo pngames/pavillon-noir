@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D4FAE652-A4F4-4EE4-81DC-D7D7E2E7D169}</ProjectGuid>
+    <RootNamespace>pncore</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../../__src/pncommon;../../../__src/pneditorcommon;../../../__library/win32/include/fox;../../../__library/win32/include/;../../../__library/win32/include/CEGUI;../../../__library/common/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;FOXDLL;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>-DBOOST_FILESYSTEM_VERSION=2 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>FOXDLLD-1.6.lib;CEGUIBase_d.lib;CEGUIFalagardWRBase_d.lib;libxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\..\__binaries\win32\pncore-dbg.exe</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\__library\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../../__src/pncommon;../../../__src/pneditorcommon;../../../__library/win32/include/fox;../../../__library/win32/include/;../../../__library/win32/include/CEGUI;../../../__library/common/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;FOXDLL;BOOST_ALL_DYN_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>-DBOOST_FILESYSTEM_VERSION=2 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>FOXDLL-1.6.lib;CEGUIBase.lib;CEGUIFalagardWRBase.lib;libxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\..\__binaries\win32\pncore.exe</OutputFile>
+      <Version>
+      </Version>
+      <AdditionalLibraryDirectories>..\..\..\__library\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\__src\pncore\main.cpp" />
+    <ClCompile Include="..\..\..\__src\pncore\PNChatTree.cpp" />
+    <ClCompile Include="..\..\..\__src\pncore\PNFoxMainWindow.cpp" />
+    <ClCompile Include="..\..\..\__src\pncore\PNFoxOptionWindow.cpp" />
+    <ClCompile Include="..\..\..\__src\pncore\PNGUIChatWindow.cpp" />
+    <ClCompile Include="..\..\..\__src\pncore\PNGUIDeath.cpp" />
+    <ClCompile Include="..\..\..\__src\pncore\PNGUIEscMenu.cpp" />
+    <ClCompile Include="..\..\..\__src\pncore\PNGUIGame.cpp" />
+    <ClCompile Include="..\..\..\__src\pncore\PNGUILoadingScreen.cpp" />
+    <ClCompile Include="..\..\..\__src\pncore\PNGUIMenuLoad.cpp" />
+    <ClCompile Include="..\..\..\__src\pncore\PNGUIMenuRoot.cpp" />
+    <ClCompile Include="..\..\..\__src\pncore\PNGUIMsgBox.cpp" />
+    <ClCompile Include="..\..\..\__src\pncore\PNGUIStateManager.cpp" />
+    <ClCompile Include="..\..\..\__src\pncore\PNGUIWin.cpp" />
+    <ClCompile Include="..\..\..\__src\pncore\PNLoadPlugins.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\__src\pncore\myCEGUI.h" />
+    <ClInclude Include="..\..\..\__src\pncore\PNChatTree.hpp" />
+    <ClInclude Include="..\..\..\__src\pncore\PNFoxMainWindow.hpp" />
+    <ClInclude Include="..\..\..\__src\pncore\PNFoxOptionWindow.hpp" />
+    <ClInclude Include="..\..\..\__src\pncore\PNGUIChatWindow.hpp" />
+    <ClInclude Include="..\..\..\__src\pncore\PNGUIDeath.hpp" />
+    <ClInclude Include="..\..\..\__src\pncore\PNGUIEscMenu.hpp" />
+    <ClInclude Include="..\..\..\__src\pncore\PNGUIGame.hpp" />
+    <ClInclude Include="..\..\..\__src\pncore\PNGUILoadingScreen.hpp" />
+    <ClInclude Include="..\..\..\__src\pncore\PNGUIMenuLoad.hpp" />
+    <ClInclude Include="..\..\..\__src\pncore\PNGUIMenuRoot.hpp" />
+    <ClInclude Include="..\..\..\__src\pncore\PNGUIMsgBox.hpp" />
+    <ClInclude Include="..\..\..\__src\pncore\PNGUIStateManager.hpp" />
+    <ClInclude Include="..\..\..\__src\pncore\PNGUIWin.hpp" />
+    <ClInclude Include="..\..\..\__src\pncore\PNLoadPlugins.hpp" />
+    <ClInclude Include="..\..\..\__src\pncore\top_image.h" />
+    <ClInclude Include="..\..\..\__src\pncore\top_image2.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="pncore.ico" />
+    <None Include="..\..\..\__binaries\datafiles\layouts\ESCMenu.layout" />
+    <None Include="..\..\..\__binaries\datafiles\layouts\MenuRoot.layout" />
+    <None Include="..\..\..\__binaries\datafiles\layouts\MenuRootbis.layout" />
+    <None Include="..\..\..\__binaries\datafiles\layouts\MenuRootOptions.layout" />
+    <None Include="..\..\..\__binaries\datafiles\layouts\PNConsole.layout" />
+    <None Include="..\..\..\__binaries\datafiles\layouts\PNGUIGame.layout" />
+    <None Include="..\..\..\__binaries\datafiles\layouts\PNInfoPanel.layout" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ressources.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\pncommon\pncommon.vcxproj">
+      <Project>{8fa92b12-d5d9-413b-8abc-9bfded44ede6}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\pneditorcommon\pneditorcommon.vcxproj">
+      <Project>{558963c9-affb-4535-87a8-4b421e3e68fb}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
