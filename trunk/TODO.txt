@@ -12,6 +12,7 @@ pnglrenderer:
   * get rid of ODE and implements our own very simple "false" physical engine based on something like an x/y map of heights and that does not support bounce, etc.
     Well... maybe not after all as ODE seems to be very active theses days. But we should use it directly in place of opal wich seems pretty dead. Plus ODE now has c++ api (maybe the reason why opal stopped).
 * look at CMake (http://www.cmake.org/) as root build system. It sounds really good.
+* use maven to build PN, see http://mojo.codehaus.org/maven-native/native-maven-plugin/ and http://java.freehep.org/freehep-nar-plugin/intro.html and 
 	
 [new possible dependencies]
 * xerces-c++ (http://xerces.apache.org/xerces-c/): to replace libxml2
